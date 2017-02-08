@@ -1,0 +1,11 @@
+local _LoadText
+function start()
+	-- body
+	_LoadText = self.transform:Find("LoadText").gameObject:GetComponent("Text")
+
+end
+
+function update( ... )
+	-- body
+	_LoadText.text = "Loading..."
+end

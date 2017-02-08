@@ -1,0 +1,40 @@
+local isOn = false
+local _main_ui_sence = "MainUI"
+local _loading_sence = "LoadingSence"
+local _play_sence = "PlaySence"
+local function registerButtonClick(gameObject)
+	-- body
+	local key = gameObject.name
+	switch = {
+		["Register"] = function ( ... )
+			-- body
+			if (isOn) then
+				-- self.gameObject:SetActive(false)
+
+			else
+			end
+			-- print(key)
+		end,
+		["Admit"] = function ( ... )
+			-- body
+			isOn = gameObject:GetComponent("Toggle").isOn
+		end,
+	}
+
+	local fSwitch = switch[key]
+
+	if fSwitch then
+		local result = fSwitch()
+	else
+		print("key no found")
+	end
+
+end
+function start()
+	-- body
+	-- print(self._main_ui_sence)
+	registerButton = self.transform:Find("Register").gameObject
+	admitButton = self.transform:Find("Admit").gameObject
+	registerButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	admitButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+end
