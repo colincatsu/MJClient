@@ -4,6 +4,10 @@ local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
 local _Main_UI
 local _Choose_UI
+local _Player_Message_UI
+local _Other_Message_UI
+local _Store_UI
+local _Creat_Room_UI
 local function registerButtonClick(gameObject)
 	-- body
 	local key = gameObject.name
@@ -24,8 +28,12 @@ local function registerButtonClick(gameObject)
 		end,
 		["ReturnButton"] = function ( ... )
 			-- body
-			_Choose_UI.gameObject:SetActive(false)
-			_Main_UI.gameObject:SetActive(true)
+			_Choose_UI:SetActive(false)
+			_Main_UI:SetActive(true)
+		end,
+		["PlayerLogo"] = function ( ... )
+			-- body
+			_Player_Message_UI:SetActive(true)
 		end,
 		["DiamondPlus"] = function ( ... )
 			-- body
@@ -51,6 +59,34 @@ local function registerButtonClick(gameObject)
 			-- body
 			print("CreatRoom")
 		end,
+		["Store"] = function ( ... )
+			-- body
+		end,
+		["Option"] = function ( ... )
+			-- body
+		end,
+		["Mail"] = function ( ... )
+			-- body
+		end,
+		["Rank"] = function ( ... )
+			-- body
+		end,
+		["Activity"] = function ( ... )
+			-- body
+		end,
+		["Method"] = function ( ... )
+			-- body
+		end,
+		["Reward"] = function ( ... )
+			-- body
+		end,
+		["More"] = function ( ... )
+			-- body
+		end,
+		["ClosePlayerMessagePanel"] = function ( ... )
+			-- body
+			_Player_Message_UI:SetActive(false)
+		end,
 	}
 
 	local fSwitch = switch[key]
@@ -65,17 +101,23 @@ end
 function start()
 	-- body
 	-- print(self._main_ui_sence)
-	--mainui 
 	_Main_UI = self.transform:Find("MainUI").gameObject
+	_Choose_UI = self.transform:Find("ChooseUI").gameObject
+	_Player_Message_UI = self.transform:Find("PlayerMessage").gameObject
+	_Other_Message_UI = self.transform:Find("OtherMessage").gameObject
+	_Store_UI = self.transform:Find("StoreUI").gameObject
+	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
+	--mainui 
 	registerButton = _Main_UI.transform:Find("Register").gameObject
 	admitButton = _Main_UI.transform:Find("Admit").gameObject
 	registerButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	admitButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	isOn = admitButton:GetComponent("Toggle").isOn
 	--chooseui
-	_Choose_UI = self.transform:Find("ChooseUI").gameObject
 	returnButton = _Choose_UI.transform:Find("ReturnButton").gameObject
 	returnButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	playerLogoButton = _Choose_UI.transform:Find("Player/PlayerLogo").gameObject
+	playerLogoButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	diamondPlus = _Choose_UI.transform:Find("Diamond/DiamondPlus").gameObject
 	diamondPlus:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	beanPlus = _Choose_UI.transform:Find("Bean/BeanPlus").gameObject
@@ -88,4 +130,23 @@ function start()
 	joinRoom:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	creatRoom = _Choose_UI.transform:Find("CreatRoom").gameObject
 	creatRoom:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	storeButton = _Choose_UI.transform:Find("Menu/Store").gameObject
+	storeButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	optionButton = _Choose_UI.transform:Find("Menu/Option").gameObject
+	optionButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	mailButton = _Choose_UI.transform:Find("Menu/Mail").gameObject
+	mailButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	rankButton = _Choose_UI.transform:Find("Menu/Rank").gameObject
+	rankButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	activityButton = _Choose_UI.transform:Find("Menu/Activity").gameObject
+	activityButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	methodButton = _Choose_UI.transform:Find("Menu/Method").gameObject
+	methodButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	rewardButton = _Choose_UI.transform:Find("Menu/Reward").gameObject
+	rewardButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	moreButton = _Choose_UI.transform:Find("Menu/More").gameObject
+	moreButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	--playermessageui
+	playerMessageCloseButton = _Player_Message_UI.transform:Find("ClosePlayerMessagePanel").gameObject
+	playerMessageCloseButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 end

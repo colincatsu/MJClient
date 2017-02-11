@@ -1,0 +1,108 @@
+﻿$axure.loadCurrentPage({
+  "url":"新手引导.html",
+  "generationDate":new Date(1486804101913.1),
+  "isCanvasEnabled":false,
+  "variables":["OnLoadVariable"],
+  "page":{
+    "packageId":"c891dd4f416843a7b380d82862b623e3",
+    "type":"Axure:Page",
+    "name":"新手引导",
+    "notes":{
+},
+    "style":{
+      "baseStyle":"627587b6038d43cca051c114ac41ad32",
+      "pageAlignment":"near",
+      "fill":{
+        "fillType":"solid",
+        "color":0xFFFFFFFF},
+      "image":null,
+      "imageHorizontalAlignment":"near",
+      "imageVerticalAlignment":"near",
+      "imageRepeat":"auto",
+      "favicon":null,
+      "sketchFactor":"0",
+      "colorStyle":"appliedColor",
+      "fontName":"应用字体",
+      "borderWidth":"0"},
+    "adaptiveStyles":{
+},
+    "interactionMap":{
+},
+    "diagram":{
+      "objects":[{
+          "id":"c13c08a3dcd84a99a083af5ce54a640d",
+          "label":"",
+          "type":"imageBox",
+          "styleType":"imageBox",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":10,
+              "y":10},
+            "size":{
+              "width":606,
+              "height":341}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"88c400dfea274ebf9993126a89be851f",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":10,
+                  "y":10},
+                "size":{
+                  "width":606,
+                  "height":341}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/新手引导/u0.jpg"}},
+{
+          "id":"d7947c98f3b54694a0fbc69d41581b20",
+          "label":"",
+          "type":"buttonShape",
+          "styleType":"h2",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":644,
+              "y":252},
+            "size":{
+              "width":217,
+              "height":28}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"63f5bee5e2f5402a84d942c1618d4fcf",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":644,
+                  "y":252},
+                "size":{
+                  "width":217,
+                  "height":28}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"resources/images/transparent.gif"}}]}},
+  "masters":{
+},
+  "objectPaths":{
+    "c13c08a3dcd84a99a083af5ce54a640d":{
+      "scriptId":"u0"},
+    "88c400dfea274ebf9993126a89be851f":{
+      "scriptId":"u1"},
+    "d7947c98f3b54694a0fbc69d41581b20":{
+      "scriptId":"u2"},
+    "63f5bee5e2f5402a84d942c1618d4fcf":{
+      "scriptId":"u3"}}});
