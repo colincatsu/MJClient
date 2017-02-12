@@ -11,6 +11,7 @@ local _Creat_Room_UI
 local function registerButtonClick(gameObject)
 	-- body
 	local key = gameObject.name
+	print(gameObject.name)
 	switch = {
 		["Register"] = function ( ... )
 			-- body
@@ -107,13 +108,14 @@ function start()
 	_Other_Message_UI = self.transform:Find("OtherMessage").gameObject
 	_Store_UI = self.transform:Find("StoreUI").gameObject
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
+	self:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	--mainui 
-	registerButton = _Main_UI.transform:Find("Register").gameObject
+	--[[registerButton = _Main_UI.transform:Find("Register").gameObject
 	admitButton = _Main_UI.transform:Find("Admit").gameObject
 	registerButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	admitButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	isOn = admitButton:GetComponent("Toggle").isOn
-	--chooseui
+	--[[--chooseui
 	returnButton = _Choose_UI.transform:Find("ReturnButton").gameObject
 	returnButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
 	playerLogoButton = _Choose_UI.transform:Find("Player/PlayerLogo").gameObject
@@ -149,4 +151,5 @@ function start()
 	--playermessageui
 	playerMessageCloseButton = _Player_Message_UI.transform:Find("ClosePlayerMessagePanel").gameObject
 	playerMessageCloseButton:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	--]]
 end

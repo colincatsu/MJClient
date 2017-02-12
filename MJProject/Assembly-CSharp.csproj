@@ -45,8 +45,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\LuaCommon.cs" />
      <Compile Include="Assets\Scripts\MainCT\EventTriggerListener.cs" />
      <Compile Include="Assets\Scripts\MainCT\LuaBehaviour.cs" />
+     <Compile Include="Assets\Scripts\MainCT\Main.cs" />
+     <Compile Include="Assets\Scripts\Network\ByteBuffer.cs" />
+     <Compile Include="Assets\Scripts\Network\SocketClient.cs" />
      <Compile Include="Assets\XLua\Examples\01_Helloworld\Helloworld.cs" />
      <Compile Include="Assets\XLua\Examples\04_LuaObjectOrented\InvokeLua.cs" />
      <Compile Include="Assets\XLua\Examples\05_NoGc\NoGc.cs" />
