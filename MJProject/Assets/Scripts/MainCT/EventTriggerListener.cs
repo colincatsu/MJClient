@@ -13,6 +13,7 @@ public class EventTriggerListener : MonoBehaviour
     public delegate void VoidDelegate(GameObject go);
     public VoidDelegate onClick;
 	public Button[] _buttons;
+    public Toggle[] _toggles;
 //    public VoidDelegate onDown;
 //    public VoidDelegate onEnter;
 //    public VoidDelegate onExit;
@@ -28,14 +29,27 @@ public class EventTriggerListener : MonoBehaviour
     }
 	void Awake(){
 		_buttons = GetComponentsInChildren<Button> ();
-		foreach (var item in _buttons) {
-			Button btn = item;
-			item.onClick.AddListener (delegate() {
-//				Debug.Log(item.gameObject.name);
-				this.onClick(item.gameObject);
-			});
-		}
-	}
+        _toggles = GetComponentsInChildren<Toggle>();
+        foreach (var item in _buttons)
+        {
+            Button btn = item;
+            btn.onClick.AddListener(delegate ()
+            {
+                //Debug.Log(item.gameObject.name);
+                this.onClick(btn.gameObject);
+            });
+        }
+
+        foreach (var item in _toggles)
+        {
+            Toggle btn = item;
+            btn.onValueChanged.AddListener(delegate (bool value)
+            {
+                //				Debug.Log(item.gameObject.name);
+                this.onClick(btn.gameObject);
+            });
+        }
+    }
 
 	//	public void onClick (GameObject sender){}
 //	protected abstract void OnClickButton(GameObject sender);

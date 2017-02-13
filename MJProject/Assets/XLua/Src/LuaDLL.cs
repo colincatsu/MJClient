@@ -523,5 +523,24 @@ namespace XLua.LuaDLL
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool xlua_is_eq_str(IntPtr L, int index, string str, int str_len);
 
+
+        //jason
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_rapidjson(System.IntPtr L);
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadRapidJson(System.IntPtr L)
+        {
+            return luaopen_rapidjson(L);
+        }
+        //pbc
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_protobuf_c(System.IntPtr L);
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadlProtobufC(System.IntPtr L)
+        {
+            return luaopen_protobuf_c(L);
+        }
     }
 }

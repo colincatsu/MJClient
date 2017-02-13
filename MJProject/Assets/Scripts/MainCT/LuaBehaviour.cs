@@ -10,6 +10,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using XLua;
+using XLua.LuaDLL;
 using System;
 using UnityEngine.UI;
 
@@ -54,6 +55,9 @@ public class LuaBehaviour : MonoBehaviour {
         {
             scriptEnv.Set(injection.name, injection.value);
         }
+
+        luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
+        //luaEnv.AddBuildin("rapidjason", XLua.LuaDLL.Lua.LoadRapidJson);
 
         luaEnv.DoString(luaScript.text, luaChunkName, scriptEnv);
 
