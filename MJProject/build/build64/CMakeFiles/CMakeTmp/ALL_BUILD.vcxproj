@@ -107,9 +107,9 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="F:\TimeGame_MJ\MJProject\build\build64\CMakeFiles\CMakeTmp\cmTC_b601c.vcxproj">
-      <Project>1928E695-DE8C-3489-9FF0-51853F5213AB</Project>
-      <Name>cmTC_b601c</Name>
+    <ProjectReference Include="F:\TimeGame_MJ\MJProject\build\build64\CMakeFiles\CMakeTmp\cmTC_b7746.vcxproj">
+      <Project>DA2A725F-7FDE-39AE-B1EF-0BD93EBB2C29</Project>
+      <Name>cmTC_b7746</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

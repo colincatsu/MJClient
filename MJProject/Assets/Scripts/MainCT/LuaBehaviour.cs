@@ -57,7 +57,7 @@ public class LuaBehaviour : MonoBehaviour {
         }
 
         //luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
-        //luaEnv.AddBuildin("rapidjason", XLua.LuaDLL.Lua.LoadRapidJson);
+        luaEnv.AddBuildin("rapidjason", XLua.LuaDLL.Lua.LoadRapidJson);
 
         luaEnv.DoString(luaScript.text, luaChunkName, scriptEnv);
 
