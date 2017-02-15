@@ -80,6 +80,7 @@ self.luaenv.AddBuildin("rapidjson", LuaDLL.Lua.LoadRapidJson)
 self.luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC)
 --]]
 --package.path = package.path .. 'F:/TimeGame_MJ/MJProject/Assets/Scripts/?/?.lua'
+--local Network = require "rapidjson"
 local Network = require "Network"
 --local AssetManager = require "AssetManager"
 
