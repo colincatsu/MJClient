@@ -25,6 +25,10 @@
 extern "C" {
 #endif
 
+#ifdef _MSC_VER
+typedef enum { false = 0,true = !false } bool;
+#endif
+
 typedef struct _pbc_array { char _data[PBC_ARRAY_CAP]; } pbc_array[1];
 
 struct pbc_slice {

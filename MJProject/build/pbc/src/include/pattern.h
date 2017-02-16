@@ -14,6 +14,7 @@ struct _pattern_field {
 	pbc_var defv;
 };
 
+
 struct pbc_pattern {
 	struct pbc_env * env;
 	int count;
