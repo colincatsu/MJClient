@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="F:\TimeGame_MJ\MJProject\build\lua-reader\source\boost-1.60.0\system\src\error_code.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="F:\TimeGame_MJ\MJProject\build\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{DF11A933-7152-3EDA-9D86-C814FE043029}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/libboost_system-vc140-mt-s-1_60.dir
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/xlua.dir
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/libboost_filesystem-vc140-mt-s-1_60.dir
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/protobuf.dir
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/ALL_BUILD.dir
+F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/ZERO_CHECK.dir
