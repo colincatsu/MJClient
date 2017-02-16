@@ -24,18 +24,18 @@ CMAKE_BUILD_TYPE:STRING=
 CMAKE_CONFIGURATION_TYPES:STRING=Debug;Release;MinSizeRel;RelWithDebInfo
 
 //Flags used by the compiler during all build types.
-CMAKE_CXX_FLAGS:STRING=
+CMAKE_CXX_FLAGS:STRING=/DWIN32 /D_WINDOWS /W3 /GR /EHsc
 
 CMAKE_CXX_FLAGS_DEBUG:STRING= /MTd
 
 //Flags used by the compiler during release builds for minimum
 // size.
-CMAKE_CXX_FLAGS_MINSIZEREL:STRING=
+CMAKE_CXX_FLAGS_MINSIZEREL:STRING=/MD /O1 /Ob1 /DNDEBUG
 
 CMAKE_CXX_FLAGS_RELEASE:STRING= /MT
 
 //Flags used by the compiler during release builds with debug info.
-CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=
+CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=/MD /Zi /O2 /Ob1 /DNDEBUG
 
 //Libraries linked by default with all C++ applications.
 CMAKE_CXX_STANDARD_LIBRARIES:STRING=kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
@@ -76,7 +76,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_INSTALL_PREFIX:PATH=C:/Program Files/XLua
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=CMAKE_LINKER-NOTFOUND
+CMAKE_LINKER:FILEPATH=F:/vs/VC/bin/x86_amd64/link.exe
 
 //Flags used by the linker during the creation of modules.
 CMAKE_MODULE_LINKER_FLAGS:STRING=
@@ -95,6 +95,9 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=XLua
+
+//RC compiler
+CMAKE_RC_COMPILER:FILEPATH=rc
 
 //Flags for Windows Resource Compiler.
 CMAKE_RC_FLAGS:STRING=/DWIN32
@@ -254,6 +257,9 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_RC_COMPILER
+CMAKE_RC_COMPILER-ADVANCED:INTERNAL=1
+CMAKE_RC_COMPILER_WORKS:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RC_FLAGS
 CMAKE_RC_FLAGS-ADVANCED:INTERNAL=1
 //Path to CMake installation.

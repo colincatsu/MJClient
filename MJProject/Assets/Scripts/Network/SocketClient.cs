@@ -237,7 +237,9 @@ namespace MX
         //发送连接请求
         public void SendConnect()
         {
-            ConnectServer("10.236.100.114", 40000);
+            //ConnectServer("10.236.100.114", 50000);
+            ConnectServer("182.92.87.147",50000);
+
         }
 
         //发送消息

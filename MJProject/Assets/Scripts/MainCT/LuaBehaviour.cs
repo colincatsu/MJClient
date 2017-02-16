@@ -43,6 +43,8 @@ public class LuaBehaviour : MonoBehaviour {
 
     void Awake()
     {
+        luaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
+        luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
         //Toggle mytoggle;
         scriptEnv = luaEnv.NewTable();
         LuaTable meta = luaEnv.NewTable();
@@ -56,8 +58,6 @@ public class LuaBehaviour : MonoBehaviour {
             scriptEnv.Set(injection.name, injection.value);
         }
 
-        //luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
-        luaEnv.AddBuildin("rapidjason", XLua.LuaDLL.Lua.LoadRapidJson);
 
         luaEnv.DoString(luaScript.text, luaChunkName, scriptEnv);
 

@@ -1,10 +1,13 @@
 require "protobuf"
 
-addr = io.open("P_Protocol.pb","rb")
-buffer = addr:read "*a"
-addr:close()
+--local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
+_addr = io.open("Assets/Scripts/LuaScripts/Resources/".."P_Protocol.pb","rb")
+_buffer = _addr:read "*a"
+--_buffer = string.gsub(_buffer,"\r\n", "\n")
+_addr:close()
+--print(_buffer)
 
-protobuf.register(buffer)
+protobuf.register(_buffer)
 
 local Network = {}
 local this = Network
