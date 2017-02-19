@@ -3,8 +3,11 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using System;
+using XLua;
+using MX;
 
 namespace MX {
+    [LuaCallCSharp]
     public class ByteBuffer {
         MemoryStream stream = null;
         BinaryWriter writer = null;

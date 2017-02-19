@@ -19,3 +19,6 @@ F:\TimeGame_MJ\MJProject\Temp\bin\Debug\UnityEngine.Networking.xml
 F:\TimeGame_MJ\MJProject\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 F:\TimeGame_MJ\MJProject\obj\Debug\Assembly-CSharp.dll
 F:\TimeGame_MJ\MJProject\obj\Debug\Assembly-CSharp.pdb
+H:\MJClient0218\MJProject\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+H:\MJClient0218\MJProject\obj\Debug\Assembly-CSharp.dll
+H:\MJClient0218\MJProject\obj\Debug\Assembly-CSharp.pdb

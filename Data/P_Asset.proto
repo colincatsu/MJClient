@@ -1,4 +1,4 @@
-import "google/protobuf/descriptor.proto";
+//import "google/protobuf/descriptor.proto";
 
 package Adoter.Asset;
 /////////////////////////////////////////////////////
@@ -13,19 +13,19 @@ package Adoter.Asset;
 // 通用数据定义区：即其他(.proto)文件也用的定义数据
 /////////////////////////////////////////////////////
 
-extend google.protobuf.EnumValueOptions {
-	optional int32 inventory_size = 60000; //包裹初始大小
-}
+//extend google.protobuf.EnumValueOptions {
+//	optional int32 inventory_size = 60000; //包裹初始大小
+//}
 
-extend google.protobuf.FieldOptions {
-	optional int32 repeated_size = 60001; //默认大小
-}
+//extend google.protobuf.FieldOptions {
+//	optional int32 repeated_size = 60001; //默认大小
+//}
 
 //包裹类型：必须按照顺序添加
 enum INVENTORY_TYPE {
-	INVENTORY_TYPE_BACKPACKAGE = 1 [ (inventory_size) = 64 ]; //普通包裹
-	INVENTORY_TYPE_EQUIPMENT = 2 [ (inventory_size) = 6 ]; //装备包裹
-	INVENTORY_TYPE_FASHION = 3 [ (inventory_size) = 16 ]; //时装包裹
+	INVENTORY_TYPE_BACKPACKAGE = 1 ; //普通包裹
+	INVENTORY_TYPE_EQUIPMENT = 2 ; //装备包裹
+	INVENTORY_TYPE_FASHION = 3 ; //时装包裹
 	INVENTORY_TYPE_COUNT = 4; //最大包裹数
 }
 

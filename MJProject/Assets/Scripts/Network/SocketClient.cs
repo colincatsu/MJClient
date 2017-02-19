@@ -20,7 +20,6 @@ namespace MX
         public static bool _logged = false;
 
         public SocketClient() { }
-
         public void OnRegister()
         {
             _memory_steam = new MemoryStream();
@@ -61,7 +60,7 @@ namespace MX
             _client.GetStream().BeginRead(_bytes, 0, MAX_READ, new AsyncCallback(OnRead), null);
 
             const string command = @"
-                Network = require 'Network'
+                --Network = require 'Network'
                 Network.OnConnet()
             ";
             LuaEnvSingleton.Instance.DoString(command);
@@ -122,6 +121,7 @@ namespace MX
                 OnReceive(_bytes, bytes_readed);
                 lock (_client.GetStream())
                 {
+                    //Debug.LogError(_bytes);
                     Array.Clear(_bytes, 0, _bytes.Length);
                     _client.GetStream().BeginRead(_bytes, 0, MAX_READ, new AsyncCallback(OnRead), null);
                 }
@@ -138,7 +138,7 @@ namespace MX
             this.Close();
             Debug.LogError("OnDisconnected--->>>" + msg);
             const string command = @"
-                Network = require 'Network'
+                --Network = require 'Network'
                 Network.OnDisconnect()
             ";
             LuaEnvSingleton.Instance.DoString(command);
@@ -160,6 +160,15 @@ namespace MX
         //接收到服务器数据
         void OnReceive(byte[] bytes, int length)
         {
+            FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            Debug.LogWarning("接收到数据--->>>");
+           // for(int i = 0; i < length; ++i)
+            //    Debug.LogWarning(bytes[i]);
+            //Debug.LogWarning(func);
+            func(bytes);
+            return;
+
+
             _memory_steam.Seek(0, SeekOrigin.End);
             _memory_steam.Write(bytes, 0, length);
             _memory_steam.Seek(0, SeekOrigin.Begin);
@@ -192,22 +201,24 @@ namespace MX
         }
 
         [CSharpCallLua]
-        public delegate int FDelegate(ByteBuffer buffer);
+        public delegate int FDelegate(byte[] buffer);
         //接收到消息
         void OnReceivedMessage(MemoryStream ms)
         {
-            Debug.LogError("接收到数据--->>>");
 
             BinaryReader r = new BinaryReader(ms);
             byte[] message = r.ReadBytes((int)(ms.Length - ms.Position));
             ByteBuffer buffer = new ByteBuffer(message);
 
             const string command = @"
-                Network = require 'Network'
+                --Network = require 'Network'
+                Network.OnReceived();
             ";
             LuaEnvSingleton.Instance.DoString(command);
-            FDelegate func = LuaEnvSingleton.Instance.Global.Get<FDelegate>("Network.OnReceived");
-            func(buffer);
+            FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            Debug.LogWarning("接收到数据--->>>");
+            //Debug.LogWarning(func);
+           // func(buffer);
         }
 
         //会话发送
@@ -228,7 +239,7 @@ namespace MX
             _logged = false;
 
             const string command = @"
-                Network = require 'Network'
+                --Network = require 'Network'
                 Network.OnClose()
             ";
             LuaEnvSingleton.Instance.DoString(command);
@@ -237,9 +248,9 @@ namespace MX
         //发送连接请求
         public void SendConnect()
         {
-            //ConnectServer("10.236.100.114", 50000);
+            //ConnectServer("192.168.1.167", 6000);
             ConnectServer("182.92.87.147",50000);
-
+            //ConnectServer()
         }
 
         //发送消息
@@ -251,8 +262,15 @@ namespace MX
 
         public void SendProtocol(string meta)
         {
+            //Debug.LogError(meta.ToString());
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(meta);
             SessionSend(bytes);
         }
+
+        //public void SendProtocol(byte[] meta)
+        //{
+        //    Debug.LogError("hhhhdhhf");
+        //    SessionSend(meta);
+        //}
     }
 }

@@ -25,7 +25,6 @@ public class Injection
 public class LuaBehaviour : MonoBehaviour {
     public TextAsset luaScript;
     public Injection[] injections;
-    internal static LuaEnv luaEnv = new LuaEnv(); //all lua behaviour shared one luaenv only!
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;//1 second 
 
@@ -37,18 +36,15 @@ public class LuaBehaviour : MonoBehaviour {
 
     private string luaChunkName = "LuaBehaviour";
 
-    //public static string _main_ui_sence = "MainUI";
-    //public static string _loading_sence = "LoadingSence";
-    //public static string _play_sence = "PlaySence";
 
     void Awake()
     {
-        luaEnv.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
-        luaEnv.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
+        LuaEnvSingleton.Instance.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
+        LuaEnvSingleton.Instance.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
         //Toggle mytoggle;
-        scriptEnv = luaEnv.NewTable();
-        LuaTable meta = luaEnv.NewTable();
-        meta.Set("__index", luaEnv.Global);
+        scriptEnv = LuaEnvSingleton.Instance.NewTable();
+        LuaTable meta = LuaEnvSingleton.Instance.NewTable();
+        meta.Set("__index", LuaEnvSingleton.Instance.Global);
         scriptEnv.SetMetaTable(meta);
         meta.Dispose();
 
@@ -59,7 +55,6 @@ public class LuaBehaviour : MonoBehaviour {
         }
 
 
-        luaEnv.DoString(luaScript.text, luaChunkName, scriptEnv);
 
         Action luaAwake = scriptEnv.Get<Action>("awake");
         scriptEnv.Get("start", out luaStart);
@@ -70,7 +65,9 @@ public class LuaBehaviour : MonoBehaviour {
         {
             luaAwake();
         }
-    }
+
+        LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
+}
 
 	// Use this for initialization
 	void Start ()
@@ -90,7 +87,7 @@ public class LuaBehaviour : MonoBehaviour {
         }
         if (Time.time - LuaBehaviour.lastGCTime > GCInterval)
         {
-            luaEnv.Tick();
+            LuaEnvSingleton.Instance.Tick();
             LuaBehaviour.lastGCTime = Time.time;
         }
 	}

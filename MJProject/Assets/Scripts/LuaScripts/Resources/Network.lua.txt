@@ -1,45 +1,101 @@
-require "protobuf"
+local protobuf = require "protobuf"
+FLibEvent = require "FLibEvent"
+--local Event = FLibEvent._ctor()
+Player = require "Player"
 
 --local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
+_addr = io.open("Assets/Scripts/LuaScripts/Resources/google/protobuf/".."descriptor.pb","rb")
+_buffer = _addr:read "*a"
+_addr:close()
+protobuf.register(_buffer)
+---[[
+_addr = io.open("Assets/Scripts/LuaScripts/Resources/".."P_Asset.pb","rb")
+_buffer = _addr:read "*a"
+_addr:close()
+protobuf.register(_buffer)
+---[[
 _addr = io.open("Assets/Scripts/LuaScripts/Resources/".."P_Protocol.pb","rb")
 _buffer = _addr:read "*a"
---_buffer = string.gsub(_buffer,"\r\n", "\n")
 _addr:close()
---print(_buffer)
+protobuf.register(_buffer)--]]
 
-protobuf.register(_buffer)
-
-local Network = {}
+Network = {}
 local this = Network
+local _socketClientClass = CS.MX.SocketClient
+local _socketClient = _socketClientClass()
 
-_socket = nil
 ---------------------------------------------------------------------------
 --初始化
 ---------------------------------------------------------------------------
-function Network.Start(t)
-	
+function Network.Start()
+    _socketClient:OnRegister()
+    print("-------------------")
+    --print(Player)
+   -- print(Player.LoadScene)
+    FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    --FLibEvent.Fire("META_TYPE_C2S_BEGIN")
+end
+
+function Network.SayHello(buffer)
+    print("SayHello")
+    
 end
 
 ---------------------------------------------------------------------------
 --连接服务器
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
-	local SocketClient = CS.MX.SocketClient
-    _socket = SocketClient()
-    _socket:SendConnect()
+    --_socket = SocketClient()
+    _socketClient:SendConnect()
+    print("Server Connect----->>>")
+end
+
+---------------------------------------------------------------------------
+--发送协议
+---------------------------------------------------------------------------
+function Network.SendProtocol(message)
+    --print(tostring(message))
+    local meta = {}
+
+    local message_stuff = protobuf.encode("Adoter.Asset.EnterGame", message)
+    meta.stuff = message_stuff
+
+    local type_key = protobuf.decode("Adoter.Asset.EnterGame", message_stuff)
+    meta.type_t = type_key.type_t
+
+    print(meta.type_t)
+    ---------------------------------------------
+    local msg = protobuf.encode("Adoter.Asset.Meta",meta)
+    _socketClient:SendProtocol(msg)
+    --]]
+end
+---------------------------------------------------------------------------
+
+function Network.CmdCreteRoom()
+    -- body
+    local CreatRoom ={
+        room = {
+            room_id = 1,
+            room_name = "123",
+            enter_password  = "123",
+        }
+    }
+    this.SendProtocol(CreatRoom)
 end
 
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
 	
-	local enter_game = P_Protocol.EnterGame()
-    enter_game.player_id = 20
-    -------------------------------------------
-    this.SendProtocol(enter_game)
+    local EnterGame ={
+            player_id = 100,
+        }
+
+    this.SendProtocol(EnterGame)
 end
 
 function Network.OnClose()
 	print("Server Close----->>>")
+    Event.RemoveListener("META_TYPE_C2S_ENTER_GAME",Player.LoadScene)
 end
 
 ---------------------------------------------------------------------------
@@ -56,32 +112,19 @@ end
 
 function Network.OnReceived(buffer)
 	print("OnReceived------>>>")
-	if not buffer then return end
-    local data = buffer:ReadBuffer()
+    if not buffer then return 1 end
+
+    local data = buffer--:ReadBuffer()
     ----------------------------------------------------
     local meta = protobuf.decode("Adoter.Asset.Meta" , data)
 
-   -- local meta = P_Protocol.Meta()
-   -- meta:ParseFromString(data)
-    log('OnSocket:type_t:>'..meta.type_t)
-    if not meta or meta.type_t <= 0 or meta.type_t >= P_Protocol.META_TYPE_S2C_COUNT then return end    --非法协议
+    print('OnSocket:type_t:>'..meta.type_t)
+    print(type(meta.stuff))
+    print("ddddddddddd"..meta.stuff)
     ----------------------------------------------------
-    Event.Brocast(meta.type_t, meta.stuff)
+    FLibEvent.Fire(meta.type_t, meta.stuff)
+    return 0
 end
 
----------------------------------------------------------------------------
---发送协议
----------------------------------------------------------------------------
-function Network.SendProtocol(message)
-    local message_stuff = protobuf.encode("Adoter.Asset." .. tostring(message), message)
-    local meta = {}
-    
-    meta.type_t = message.type_t
-    meta.stuff = message_stuff
-    
-    ---------------------------------------------
-    local msg = protobuf.decode("Adoter.Asset.Meta",meta)
-    _socket:SendProtocol(msg)
-end
----------------------------------------------------------------------------
+
 return Network
