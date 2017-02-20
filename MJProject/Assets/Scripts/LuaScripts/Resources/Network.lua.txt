@@ -29,16 +29,16 @@ local _socketClient = _socketClientClass()
 ---------------------------------------------------------------------------
 function Network.Start()
     _socketClient:OnRegister()
+    this.AddEventListener()
     print("-------------------")
     --print(Player)
    -- print(Player.LoadScene)
-    FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
     --FLibEvent.Fire("META_TYPE_C2S_BEGIN")
 end
 
-function Network.SayHello(buffer)
-    print("SayHello")
-    
+function Network.AddEventListener()
+    FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
 end
 
 ---------------------------------------------------------------------------
@@ -53,14 +53,14 @@ end
 ---------------------------------------------------------------------------
 --发送协议
 ---------------------------------------------------------------------------
-function Network.SendProtocol(message)
+function Network.SendProtocol(table_name, message)
     --print(tostring(message))
     local meta = {}
 
-    local message_stuff = protobuf.encode("Adoter.Asset.EnterGame", message)
+    local message_stuff = protobuf.encode("Adoter.Asset." .. table_name, message)
     meta.stuff = message_stuff
 
-    local type_key = protobuf.decode("Adoter.Asset.EnterGame", message_stuff)
+    local type_key = protobuf.decode("Adoter.Asset." .. table_name, message_stuff)
     meta.type_t = type_key.type_t
 
     print(meta.type_t)
@@ -80,7 +80,7 @@ function Network.CmdCreteRoom()
             enter_password  = "123",
         }
     }
-    this.SendProtocol(CreatRoom)
+    this.SendProtocol("CreatRoom",CreatRoom)
 end
 
 function Network.OnConnet()
@@ -90,12 +90,12 @@ function Network.OnConnet()
             player_id = 100,
         }
 
-    this.SendProtocol(EnterGame)
+    this.SendProtocol("EnterGame",EnterGame)
 end
 
 function Network.OnClose()
 	print("Server Close----->>>")
-    Event.RemoveListener("META_TYPE_C2S_ENTER_GAME",Player.LoadScene)
+    FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
 end
 
 ---------------------------------------------------------------------------
