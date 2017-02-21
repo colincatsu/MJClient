@@ -1,6 +1,5 @@
 local protobuf = require "protobuf"
 FLibEvent = require "FLibEvent"
---local Event = FLibEvent._ctor()
 Player = require "Player"
 
 --local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
@@ -30,14 +29,10 @@ local _socketClient = _socketClientClass()
 function Network.Start()
     _socketClient:OnRegister()
     this.AddEventListener()
-    print("-------------------")
-    --print(Player)
-   -- print(Player.LoadScene)
-    --FLibEvent.Fire("META_TYPE_C2S_BEGIN")
 end
 
 function Network.AddEventListener()
-    FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
     --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
 end
 
@@ -54,7 +49,6 @@ end
 --发送协议
 ---------------------------------------------------------------------------
 function Network.SendProtocol(table_name, message)
-    --print(tostring(message))
     local meta = {}
 
     local message_stuff = protobuf.encode("Adoter.Asset." .. table_name, message)
@@ -63,26 +57,61 @@ function Network.SendProtocol(table_name, message)
     local type_key = protobuf.decode("Adoter.Asset." .. table_name, message_stuff)
     meta.type_t = type_key.type_t
 
-    print(meta.type_t)
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
     _socketClient:SendProtocol(msg)
     --]]
 end
 ---------------------------------------------------------------------------
+--数据封装
+---------------------------------------------------------------------------
 
-function Network.CmdCreteRoom()
+function Network.CmdCreatePlayer()
+    -- body
+    local CreatePlayer = {}
+    this.SendProtocol("CreatePlayer",CreatePlayer)
+end
+
+function Network.CmdLogin(name,pass_word)
+    -- body
+    local Login = {
+        account = {
+            username = name,--""
+            password = pass_word,--""
+        }
+        this.SendProtocol("Login",Login)
+    }
+end
+
+function Network.CmdEnterGame(id)
+    -- body
+    local EnterGame = {
+        player_id = id,
+    }
+    this.SendProtocol("EnterGame",EnterGame)
+end
+
+function Network.CmdCreteRoom(id,name,pass_word)
     -- body
     local CreatRoom ={
         room = {
-            room_id = 1,
-            room_name = "123",
-            enter_password  = "123",
+            room_id = id,--1,
+            room_name = name,--"123",
+            enter_password  = pass_word,--"123",
         }
     }
     this.SendProtocol("CreatRoom",CreatRoom)
 end
 
+function Network.CmdEnterRoom(id,pass_word)
+    -- body
+    local EnterRoom = {
+        room_id = id,--2;
+        enter_password = pass_word,--"123";
+    }
+    this.SendProtocol("EnterRoom",EnterRoom)
+end
+---------------------------------------------------------------------------
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
 	
@@ -95,7 +124,11 @@ end
 
 function Network.OnClose()
 	print("Server Close----->>>")
-    FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    this.DelEventListener()
+end
+
+function Network.DelEventListener()
+    --FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
 end
 
 ---------------------------------------------------------------------------
@@ -118,9 +151,11 @@ function Network.OnReceived(buffer)
     ----------------------------------------------------
     local meta = protobuf.decode("Adoter.Asset.Meta" , data)
 
+   --[[
     print('OnSocket:type_t:>'..meta.type_t)
     print(type(meta.stuff))
     print("ddddddddddd"..meta.stuff)
+    --]]
     ----------------------------------------------------
     FLibEvent.Fire(meta.type_t, meta.stuff)
     return 0
