@@ -1,3 +1,6 @@
 [submodule "MX-Arts"]
 	path = MX-Arts
 	url = https://github.com/ArtistLLC/MX-Arts
+[submodule "MX-Data"]
+	path = MX-Data
+	url = https://github.com/dantetian/MX-Data

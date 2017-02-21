@@ -493,7 +493,8 @@ namespace XLua
             {
                 throw new Exception("initer must be static and has MonoPInvokeCallback Attribute!");
             }
-            buildin_initer.Add(name, initer);
+            if(!buildin_initer.ContainsKey(name))
+                buildin_initer.Add(name, initer);
         }
 
         //The garbage-collector pause controls how long the collector waits before starting a new cycle. 

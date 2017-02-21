@@ -1,6 +1,7 @@
 --local Network = require "Network"
 --local Event = require 'Event'
 local protobuf = require "protobuf"
+--local Network = require "Network"
 
 ---------------------------------------------------------------------------
 --成员变量
@@ -27,24 +28,78 @@ function Player.LoadScene(type_t, buffer)
 	--resMgr:LoadPrefab("Scene", { 'PromptItem' }, this.OnLoadSuccess);
 end
 
+---------------------------------------------------------------------------
+--数据封装
+---------------------------------------------------------------------------
+
+function Player.CmdCreatePlayer()
+    -- body
+    local CreatePlayer = {}
+    this.SendProtocol("CreatePlayer",CreatePlayer)
+end
+
+function Player.CmdLogin(name,passWord)
+    -- body
+    local Login = {
+        account = {
+            username = name,--""
+            password = passWord,--""
+        }
+    }
+    this.SendProtocol("Login",Login)
+end
+
+function Player.CmdEnterGame(id)
+    -- body
+    local EnterGame = {
+        player_id = id,
+    }
+    this.SendProtocol("EnterGame",EnterGame)
+end
+
+function Player.CmdCreteRoom(id,name,passWord)
+    -- body
+    local CreatRoom ={
+        room = {
+            room_id = id,--1,
+            room_name = name,--"123",
+            enter_password  = passWord,--"123",
+        }
+    }
+    this.SendProtocol("CreatRoom",CreatRoom)
+end
+
+function Player.CmdEnterRoom(id,passWord)
+    -- body
+    local EnterRoom = {
+        room_id = id,--2;
+        enter_password = passWord,--"123";
+    }
+    this.SendProtocol("EnterRoom",EnterRoom)
+end
+
+
 function Player.OnLoadSuccess()
 	this.CmdEnterScene()
 end
 ---------------------------------------------------------------------------
 --发送协议
 ---------------------------------------------------------------------------
-function Player.SendProtocol(message)
-	Network:SendProtocol(message)
+---[[
+function Player.SendProtocol(messageName,message)
+	Network.SendProtocol(messageName,message)
 end
 ---------------------------------------------------------------------------
 --进入游戏
 ---------------------------------------------------------------------------
+--[[
 function Player.CmdEnterGame(player_id)
     local enter_game = P_Protocol.EnterGame()
     enter_game.player_id = player_id
     -------------------------------------------
     this.SendProtocol(enter_game)
 end
+--]]
 ---------------------------------------------------------------------------
 --进入场景
 ---------------------------------------------------------------------------
@@ -54,6 +109,7 @@ function Player.CmdEnterScene(scene_id)
     ---------------------------------------------
     this.SendProtocol(enter_scene)
 end
+--]]
 
 --[[
 	协议处理：

@@ -40,7 +40,6 @@ end
 --连接服务器
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
-    --_socket = SocketClient()
     _socketClient:SendConnect()
     print("Server Connect----->>>")
 end
@@ -48,13 +47,13 @@ end
 ---------------------------------------------------------------------------
 --发送协议
 ---------------------------------------------------------------------------
-function Network.SendProtocol(table_name, message)
+function Network.SendProtocol(messageName, message)
     local meta = {}
 
-    local message_stuff = protobuf.encode("Adoter.Asset." .. table_name, message)
+    local message_stuff = protobuf.encode("Adoter.Asset." .. messageName, message)
     meta.stuff = message_stuff
 
-    local type_key = protobuf.decode("Adoter.Asset." .. table_name, message_stuff)
+    local type_key = protobuf.decode("Adoter.Asset." .. messageName, message_stuff)
     meta.type_t = type_key.type_t
 
     ---------------------------------------------
@@ -62,55 +61,7 @@ function Network.SendProtocol(table_name, message)
     _socketClient:SendProtocol(msg)
     --]]
 end
----------------------------------------------------------------------------
---数据封装
----------------------------------------------------------------------------
 
-function Network.CmdCreatePlayer()
-    -- body
-    local CreatePlayer = {}
-    this.SendProtocol("CreatePlayer",CreatePlayer)
-end
-
-function Network.CmdLogin(name,pass_word)
-    -- body
-    local Login = {
-        account = {
-            username = name,--""
-            password = pass_word,--""
-        }
-        this.SendProtocol("Login",Login)
-    }
-end
-
-function Network.CmdEnterGame(id)
-    -- body
-    local EnterGame = {
-        player_id = id,
-    }
-    this.SendProtocol("EnterGame",EnterGame)
-end
-
-function Network.CmdCreteRoom(id,name,pass_word)
-    -- body
-    local CreatRoom ={
-        room = {
-            room_id = id,--1,
-            room_name = name,--"123",
-            enter_password  = pass_word,--"123",
-        }
-    }
-    this.SendProtocol("CreatRoom",CreatRoom)
-end
-
-function Network.CmdEnterRoom(id,pass_word)
-    -- body
-    local EnterRoom = {
-        room_id = id,--2;
-        enter_password = pass_word,--"123";
-    }
-    this.SendProtocol("EnterRoom",EnterRoom)
-end
 ---------------------------------------------------------------------------
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")

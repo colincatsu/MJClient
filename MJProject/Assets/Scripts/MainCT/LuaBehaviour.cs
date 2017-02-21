@@ -55,6 +55,7 @@ public class LuaBehaviour : MonoBehaviour {
         }
 
 
+        LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
 
         Action luaAwake = scriptEnv.Get<Action>("awake");
         scriptEnv.Get("start", out luaStart);
@@ -66,8 +67,7 @@ public class LuaBehaviour : MonoBehaviour {
             luaAwake();
         }
 
-        LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
-}
+    }
 
 	// Use this for initialization
 	void Start ()

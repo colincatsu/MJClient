@@ -7,6 +7,6 @@ end
 local _rotate_speed = 2000
 function update( ... )
 	-- body
-	local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
-	_dice_obj.transform:Rotate(speed)
+	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
+	--_dice_obj.transform:Rotate(speed)
 end
