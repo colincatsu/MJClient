@@ -1,11 +1,25 @@
-local _dice_obj
-function start( ... )
+MahJong = {}
+local _diceObj
+local _gaiObj
+local _pointFather = {}
+function start()
 	-- body
-	_dice_obj = self.transform:Find("Dice").gameObject
-
+	MahJong.init()
 end
+
+function MahJong.init()
+	-- body
+	_diceObj = self.transform:Find("Dice").gameObject
+	_gaiObj = self.transform:Find("Gai").gameObject
+	_pointFather.D = _gaiObj.transform:Find("Point_D/Father").gameObject
+	_pointFather.N = _gaiObj.transform:Find("Point_N/Father").gameObject
+	_pointFather.X = _gaiObj.transform:Find("Point_X/Father").gameObject
+	_pointFather.B = _gaiObj.transform:Find("Point_B/Father").gameObject
+	
+end
+
 local _rotate_speed = 2000
-function update( ... )
+function update()
 	-- body
 	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
 	--_dice_obj.transform:Rotate(speed)
