@@ -47,7 +47,7 @@ public class LuaBehaviour : MonoBehaviour {
         meta.Set("__index", LuaEnvSingleton.Instance.Global);
         scriptEnv.SetMetaTable(meta);
         meta.Dispose();
-
+        
         scriptEnv.Set("self", this);
         foreach (var injection in injections)
         {
