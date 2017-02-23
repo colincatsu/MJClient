@@ -8,6 +8,13 @@ local _modelPool = {}
 local _modelPoolLineCount = 36
 local _startPosition = {}
 local _startRotation = {}
+local _myAnimation
+local _animationName = {
+	stepDown = "GaiDown",
+	stepMiddle = "GaiPushMiddle",
+	stepUp = "GaiUp",
+}
+local _animationState = ""
 function start()
 	-- body
 	MahJong.init()
@@ -29,6 +36,9 @@ function MahJong.init()
 	_pointFather.B = _gaiObj.transform:Find("Point_B/Father").gameObject
 	_startPosition.B = newVector3(0,_modelSize.length/2,-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4)
 	_startRotation.B = newVector3(0,180,0)
+	_myAnimation = self:GetComponent("Animation")
+	self:GetComponent("AnimationRegister").animationEvent = MahJong.animationPlay
+	MahJong.animationPlay()
 	MahJong.modelPoolInit()
 end
 
@@ -68,7 +78,46 @@ function MahJong.modelPoolInit()
 		end
 
 	end
+	MahJong.modelPoolSetActive(false)
 	--print(i)
+end
+
+function MahJong.modelPoolSetActive(bool)
+	-- body
+	for k, v in pairs(_pointFather) do  
+    	v:SetActive(bool)
+	end
+end
+
+function MahJong.animationPlay()
+	-- body
+	switch = {
+		[_animationName.stepDown] = function( ... )
+			-- body
+			MahJong.modelPoolSetActive(true)
+			_myAnimation:Play(_animationName.stepMiddle)
+			_animationState = _animationName.stepMiddle
+		end,
+		[_animationName.stepMiddle] = function( ... )
+			-- body
+			_myAnimation:Play(_animationName.stepUp)
+			_animationState = _animationName.stepUp
+		end,
+		[_animationName.stepUp] = function( ... )
+			-- body
+			_animationState = ""
+			print("startGame")
+		end,
+	}
+	local fSwitch = switch[_animationState]
+
+	if fSwitch then
+		local result = fSwitch()
+	else
+		_myAnimation:Play("GaiDown")
+		_animationState = _animationName.stepDown
+		--print("key no found")
+	end
 end
 
 local _rotate_speed = 2000
