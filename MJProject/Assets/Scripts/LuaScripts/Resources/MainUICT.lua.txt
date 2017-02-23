@@ -107,6 +107,7 @@ function start()
 	admitButton = _Main_UI.transform:Find("Admit").gameObject
 	isOn = admitButton:GetComponent("Toggle").isOn
 	_Choose_UI = self.transform:Find("ChooseUI").gameObject
+	_Choose_UI:SetActive(false)
 	_Player_Message_UI = self.transform:Find("PlayerMessage").gameObject
 	_Other_Message_UI = self.transform:Find("OtherMessage").gameObject
 	_Store_UI = self.transform:Find("StoreUI").gameObject
