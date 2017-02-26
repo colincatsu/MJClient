@@ -1,3 +1,6 @@
+local Network = require "Network"
+local Player = require "Player"
+
 local isOn = false
 local _main_ui_sence = "MainUI"
 local _loading_sence = "LoadingSence"
@@ -58,7 +61,8 @@ local function registerButtonClick(gameObject)
 		end,
 		["CreatRoom"] = function ( ... )
 			-- body
-			CS.UnityEngine.Application.LoadLevel("PlaySence")
+			Player.CmdCreateRoom()
+			--CS.UnityEngine.Application.LoadLevel("PlaySence")
 			print("CreatRoom")
 		end,
 		["Store"] = function ( ... )
@@ -102,7 +106,10 @@ local function registerButtonClick(gameObject)
 end
 function start()
 	-- body
+	Network.Start()		
+	Network.ConnetServer()
 	-- print(self._main_ui_sence)
+	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
 	admitButton = _Main_UI.transform:Find("Admit").gameObject
 	isOn = admitButton:GetComponent("Toggle").isOn
@@ -112,6 +119,11 @@ function start()
 	_Other_Message_UI = self.transform:Find("OtherMessage").gameObject
 	_Store_UI = self.transform:Find("StoreUI").gameObject
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
+	--]]
 	self:GetComponent("EventTriggerListener").onClick = registerButtonClick
-	
 end
+
+function update( ... )
+	-- body
+end
+

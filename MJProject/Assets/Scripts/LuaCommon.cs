@@ -34,10 +34,10 @@ public class LuaCommon
 	public static string xxxtdr2filepath = Application.streamingAssetsPath + "/testxxx2.tdr";
 	public static bool android_platform = true;
 #elif   UNITY_EDITOR
-    public static string resultPath = Application.dataPath + "/LuaScripts/Resources";
-	public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
-	public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
-	public static bool android_platform = false;
+ //   public static string resultPath = Application.dataPath + "/LuaScripts/Resources";
+	//public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
+	//public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
+	//public static bool android_platform = false;
 #else
 #endif
 	

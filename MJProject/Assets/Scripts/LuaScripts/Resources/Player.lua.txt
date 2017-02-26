@@ -10,15 +10,16 @@ Player = {}
 local this = Player
 
 local _player = nil --玩家数据
+local _id = 0
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
 function Player.GetID()
-	return _player.common_prop.entity_id
+	return _player.common_prop.player_id
 end
 
 ---------------------------------------------------------------------------
---加载场景
+--加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
 function Player.LoadScene(type_t, buffer)
     local enter_game = protobuf.decode("Adoter.Asset.EnterGame", buffer)
@@ -37,6 +38,7 @@ function Player.CmdCreatePlayer()
     local CreatePlayer = {}
     this.SendProtocol("CreatePlayer",CreatePlayer)
 end
+
 
 function Player.CmdLogin(name,passWord)
     -- body
@@ -57,16 +59,16 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",EnterGame)
 end
 
-function Player.CmdCreteRoom(id,name,passWord)
+function Player.CmdCreateRoom()
     -- body
-    local CreatRoom ={
-        room = {
-            room_id = id,--1,
-            room_name = name,--"123",
-            enter_password  = passWord,--"123",
-        }
+    local CreateRoom ={
+        --room = {
+            --room_id = id,--1,
+            --room_name = name,--"123",
+            --enter_password  = passWord,--"123",
+       -- }
     }
-    this.SendProtocol("CreatRoom",CreatRoom)
+    this.SendProtocol("CreateRoom",CreateRoom)
 end
 
 function Player.CmdEnterRoom(id,passWord)
@@ -79,15 +81,16 @@ function Player.CmdEnterRoom(id,passWord)
 end
 
 
+
 function Player.OnLoadSuccess()
-	this.CmdEnterScene()
+    this.CmdEnterScene()
 end
 ---------------------------------------------------------------------------
 --发送协议
 ---------------------------------------------------------------------------
 ---[[
 function Player.SendProtocol(messageName,message)
-	Network.SendProtocol(messageName,message)
+    Network.SendProtocol(messageName,message)
 end
 ---------------------------------------------------------------------------
 --进入游戏
@@ -108,32 +111,42 @@ function Player.CmdEnterScene(scene_id)
     enter_scene.scene_id = scene_id
     ---------------------------------------------
     this.SendProtocol(enter_scene)
+    CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 --]]
 
 --[[
-	协议处理：
-	
-	1.在Network中注册接收协议对应的响应函数；
-	
-	2.在本文件中实现响应函数；
+    协议处理：
+    
+    1.在Network中注册接收协议对应的响应函数；
+    
+    2.在本文件中实现响应函数；
 --]]
+---------------------------------------------
+--------------type_t!!!!!!!!!!!!
+---------------------------------------------
+function Player.OnCreatePlayer(type_t,stuff)
+    -- body
+    print(type_t)
+    local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
+    this._id = message.player_id
+    print(this._id)
+end
+
+function Player.OnCreateRoom(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
+    this._roomId = message.room.room_id
+    print(this._roomId)
+    --this._roomType = message.room.room_type
+end
 ---------------------------------------------------------------------------
---同步玩家数据
+--通用操作返回协议，模拟RPC处理流程
 ---------------------------------------------------------------------------
-function Player.OnPlayerInfo(stuff)
-	log("收到玩家数据...")
-    local player_info = P_Protocol.PlayerInfo()
-    player_info:ParseFromString(stuff)
-    print(stuff)
-    --更新玩家数据
-    print(player_info)
-    _player = player_info.player
-    print(_player)
- 	--设置玩家ID
-    print(_player.common_prop.entity_id)
-    print('Load data success, player_id:>'.._player.common_prop.entity_id)
+function Player.OnCommonOperation(type_t,stuff)
+	local message = protobuf.decode("Adoter.Asset.CommonOperationResponse", stuff)
+    FLibEvent.Fire(message.client_type_t, message.client_message)
 end
 ---------------------------------------------------------------------------
 --周围物体、玩家移动
