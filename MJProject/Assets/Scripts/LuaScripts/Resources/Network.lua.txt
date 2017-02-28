@@ -37,8 +37,8 @@ function Network.AddEventListener()
     --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
-    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_C2S_CREATE_ROOM")
-    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_S2C_CREATE_ROOM")
+    FLibEvent.AddEvent(Player.OnCreateRoomC2S,"META_TYPE_C2S_CREATE_ROOM")
+    FLibEvent.AddEvent(Player.OnCreateRoomS2C,"META_TYPE_S2C_CREATE_ROOM")
 end
 
 ---------------------------------------------------------------------------
@@ -82,8 +82,8 @@ function Network.DelEventListener()
     --FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
-    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_C2S_CREATE_ROOM")
-    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_S2C_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreateRoomC2S,"META_TYPE_C2S_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreateRoomS2C,"META_TYPE_S2C_CREATE_ROOM")
 end
 
 ---------------------------------------------------------------------------
@@ -98,11 +98,15 @@ function Network.OnDisconnect()
     print("OnDisconnect------->>>")
 end
 
-function Network.OnReceived(buffer,length)
+function Network.OnReceived(buffer)
 	print("OnReceived------>>>")
     if not buffer then return 1 end
+
+    local data = buffer:ReadBytes()
+    --local meta = P_Protocol.Meta()
+    --meta:ParseFromString(data)
     ----------------------------------------------------
-    local meta = protobuf.decode("Adoter.Asset.Meta" , buffer)
+    local meta = protobuf.decode("Adoter.Asset.Meta" , data)
     --print("------------"..meta)
    ---[[
     print(type(meta))
