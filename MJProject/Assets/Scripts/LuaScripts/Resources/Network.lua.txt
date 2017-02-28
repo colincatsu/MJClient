@@ -1,5 +1,5 @@
 local protobuf = require "protobuf"
-FLibEvent = require "FLibEvent"
+--local FLibEvent = require "FLibEvent"
 --Player = require "Player"
 
 --local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))

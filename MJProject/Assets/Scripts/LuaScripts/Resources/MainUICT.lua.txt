@@ -1,7 +1,7 @@
 local Network = require "Network"
 local Player = require "Player"
-MainUICT = {}
-MainUICT.self = self
+Player.self = self
+local FLibEvent = require "FLibEvent"
 
 local isOn = false
 local _main_ui_sence = "MainUI"
@@ -167,10 +167,4 @@ function update( ... )
 	-- body
 end
 
-function MainUICT.show( ... )
-	-- body
-	print("dsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-end
-
 return MainUICT
-

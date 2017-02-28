@@ -24,7 +24,7 @@ end
 --加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
 function Player.LoadScene(type_t, buffer)
-   CS.UnityEngine.Application.LoadLevelAsync(MainUICT._play_sence)
+   CS.UnityEngine.Application.LoadLevelAsync("PlaySence")
 end
 
 ---------------------------------------------------------------------------
@@ -151,7 +151,7 @@ function Player.OnCreateRoom(type_t,stuff)
     this._roomId = message.room.room_id
     print(this._roomId)
     --this._roomType = message.room.room_type
-    MainUICT.show()--.self:Attach(Player.LoadScene)
+    Player.self:Attach(Player.LoadScene)
 end
 
 function Player.OnLoadSuccess()
