@@ -160,45 +160,45 @@ namespace MX
         //接收到服务器数据
         void OnReceive(byte[] bytes, int length)
         {
-            //char[] cpara = new char[length];
-            //for (int i = 0; i < length; i++)
-            //{
-            //    cpara[i] = System.Convert.ToChar(bytes[i]);
-            //}
+            ////char[] cpara = new char[length];
+            ////for (int i = 0; i < length; i++)
+            ////{
+            ////    cpara[i] = System.Convert.ToChar(bytes[i]);
+            ////}
 
-            FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
-            //string tempMessage = bytes.ToString();
-            //byte[] finalBytes = System.Text.Encoding.UTF8.GetBytes(tempMessage);
-            Debug.LogWarning("接收到数据--->>>");
-            for (int i = 0; i < length; ++i)
-                Debug.LogWarning((int)bytes[i]);
-            Debug.LogWarning(func);
-            func(bytes, length);
-            return;
+            //FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            ////string tempMessage = bytes.ToString();
+            ////byte[] finalBytes = System.Text.Encoding.UTF8.GetBytes(tempMessage);
+            //Debug.LogWarning("接收到数据--->>>");
+            //for (int i = 0; i < length; ++i)
+            //    Debug.LogWarning((int)bytes[i]);
+            //Debug.LogWarning(func);
+            //func(bytes);
+            //return;
 
-            //_memory_steam.Seek(0, SeekOrigin.End);
-            //_memory_steam.Write(bytes, 0, length);
-            //_memory_steam.Seek(0, SeekOrigin.Begin);
-            //while (RemainingBytes() > 0)
-            //{
-            //    if (RemainingBytes() >= length)
-            //    {
-            //        MemoryStream ms = new MemoryStream();
-            //        BinaryWriter writer = new BinaryWriter(ms);
-            //        writer.Write(length);
-            //        writer.Write(_binary_reader.ReadBytes(length));
-            //        ms.Seek(0, SeekOrigin.Begin);
-            //        OnReceivedMessage(ms);
-            //    }
-            //    else
-            //    {
-            //        break;
-            //    }
-            //}
+            _memory_steam.Seek(0, SeekOrigin.End);
+            _memory_steam.Write(bytes, 0, length);
+            _memory_steam.Seek(0, SeekOrigin.Begin);
+            while (RemainingBytes() > 0)
+            {
+                if (RemainingBytes() >= length)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    BinaryWriter writer = new BinaryWriter(ms);
+                    writer.Write(length);
+                    writer.Write(_binary_reader.ReadBytes(length));
+                    ms.Seek(0, SeekOrigin.Begin);
+                    OnReceivedMessage(ms);
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-            //byte[] leftover = _binary_reader.ReadBytes((int)RemainingBytes());
-            //_memory_steam.SetLength(0);     //Clear
-            //_memory_steam.Write(leftover, 0, leftover.Length);
+            byte[] leftover = _binary_reader.ReadBytes((int)RemainingBytes());
+            _memory_steam.SetLength(0);     //Clear
+            _memory_steam.Write(leftover, 0, leftover.Length);
         }
 
         //剩余的字节
@@ -208,19 +208,22 @@ namespace MX
         }
 
         [CSharpCallLua]
-        public delegate int FDelegate(byte[] buffer,int length);
+        //public delegate int FDelegate(byte[] buffer);
+        public delegate int FDelegate(ByteBuffer buffer);
         //接收到消息
         void OnReceivedMessage(MemoryStream ms)
         {
 
             BinaryReader r = new BinaryReader(ms);
             byte[] message = r.ReadBytes((int)(ms.Length - ms.Position));
+            for (int i = 0; i < message.Length; i++)
+                Debug.LogWarning((int)message[i]);
             ByteBuffer buffer = new ByteBuffer(message);
 
             FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
             Debug.LogWarning("接收到数据--->>>");
             //Debug.LogWarning(func);
-           // func(buffer);
+            func(buffer);
         }
 
         //会话发送
