@@ -20,15 +20,15 @@ protobuf.register(_buffer)--]]
 
 Network = {}
 local this = Network
-local _socketClientClass = CS.MJ.AsynchronousClient
+local _socketClientClass = CS.MX.SocketClient
 local _socketClient = _socketClientClass()
 
 ---------------------------------------------------------------------------
 --初始化
 ---------------------------------------------------------------------------
 function Network.Start()
-    --_socketClient:OnRegister()
-    _socketClient:StartClient()
+    _socketClient:OnRegister()
+    --_socketClient:StartClient()
     this.AddEventListener()
 end
 
@@ -37,14 +37,15 @@ function Network.AddEventListener()
     --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
-    FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_C2S_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_C2S_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_S2C_CREATE_ROOM")
 end
 
 ---------------------------------------------------------------------------
 --连接服务器
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
-    --_socketClient:SendConnect()
+    _socketClient:SendConnect()
     print("Server Connect----->>>")
 end
 
@@ -69,7 +70,7 @@ end
 ---------------------------------------------------------------------------
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
-    --Player.CmdCreatePlayer()
+    Player.CmdCreatePlayer()
 end
 
 function Network.OnClose()
@@ -82,6 +83,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
     FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_C2S_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_S2C_CREATE_ROOM")
 end
 
 ---------------------------------------------------------------------------
@@ -96,7 +98,7 @@ function Network.OnDisconnect()
     print("OnDisconnect------->>>")
 end
 
-function Network.OnReceived(buffer)
+function Network.OnReceived(buffer,length)
 	print("OnReceived------>>>")
     if not buffer then return 1 end
     ----------------------------------------------------

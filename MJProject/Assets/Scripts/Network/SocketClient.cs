@@ -167,11 +167,13 @@ namespace MX
             //}
 
             FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            //string tempMessage = bytes.ToString();
+            //byte[] finalBytes = System.Text.Encoding.UTF8.GetBytes(tempMessage);
             Debug.LogWarning("接收到数据--->>>");
             for (int i = 0; i < length; ++i)
                 Debug.LogWarning((int)bytes[i]);
             Debug.LogWarning(func);
-            func(bytes.ToString());
+            func(bytes, length);
             return;
 
             //_memory_steam.Seek(0, SeekOrigin.End);
@@ -206,7 +208,7 @@ namespace MX
         }
 
         [CSharpCallLua]
-        public delegate int FDelegate(string buffer);
+        public delegate int FDelegate(byte[] buffer,int length);
         //接收到消息
         void OnReceivedMessage(MemoryStream ms)
         {

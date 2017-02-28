@@ -13,7 +13,9 @@ local _Store_UI
 local _Creat_Room_UI 
 
 local registerButtonEvent = {}
-
+---------------------------------------------------------------------------
+-------------点击功能函数
+---------------------------------------------------------------------------
 function registerButtonEvent.Register( gameObject )
 	-- body
 	if (isOn) then
@@ -23,20 +25,40 @@ function registerButtonEvent.Register( gameObject )
 	else
 	end
 end
+
 function registerButtonEvent.Admit( gameObject )
 	-- body
 	isOn = gameObject:GetComponent("Toggle").isOn
 end
+
 function registerButtonEvent.ReturnButton( ... )
 	-- body
 	_Choose_UI:SetActive(false)
-			_Main_UI:SetActive(true)
+	_Main_UI:SetActive(true)
 end
 
+function registerButtonEvent.PlayerLogo( ... )
+	-- body
+	print("playLogoShow")
+	--_Player_Message_UI:SetActive(true)
+end
+
+function registerButtonEvent.DiamondPlus( ... )
+	-- body
+	print("DiamondPlusShow")
+end
+
+function registerButtonEvent.CreatRoom( ... )
+	-- body
+	print("CreatRoom")
+	Player.CmdCreateRoom()
+	--CS.UnityEngine.Application.LoadLevel("PlaySence")
+end
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
 local function registerButtonClick(gameObject)
 	-- body
 	local key = gameObject.name
-	--print(gameObject.name)
 	--[[
 	switch = {
 		["Register"] = registerButtonEvent.Register(gameObject),
@@ -117,8 +139,6 @@ local function registerButtonClick(gameObject)
 end
 function start()
 	-- body
-	--Network.Start()		
-	--Network.ConnetServer()
 	-- print(self._main_ui_sence)
 	---[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
@@ -132,6 +152,10 @@ function start()
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
 	self:GetComponent("EventTriggerListener").onClick = registerButtonClick
+	---[[
+	Network.Start()		
+	Network.ConnetServer()
+	--]]
 end
 
 function update( ... )
