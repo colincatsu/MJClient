@@ -1,6 +1,6 @@
 local protobuf = require "protobuf"
 FLibEvent = require "FLibEvent"
-Player = require "Player"
+--Player = require "Player"
 
 --local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
 local _addr = io.open("Assets/Scripts/LuaScripts/Resources/google/protobuf/".."descriptor.pb","rb")
@@ -36,9 +36,9 @@ function Network.AddEventListener()
     --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
     --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
-    FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
-    FLibEvent.AddEvent(Player.OnCreateRoomC2S,"META_TYPE_C2S_CREATE_ROOM")
-    FLibEvent.AddEvent(Player.OnCreateRoomS2C,"META_TYPE_S2C_CREATE_ROOM")
+    FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
+    FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
+    FLibEvent.AddEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
 end
 
 ---------------------------------------------------------------------------
@@ -81,9 +81,9 @@ end
 function Network.DelEventListener()
     --FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
-    FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_C2S_CREATE_PLAYER")
-    FLibEvent.DelEvent(Player.OnCreateRoomC2S,"META_TYPE_C2S_CREATE_ROOM")
-    FLibEvent.DelEvent(Player.OnCreateRoomS2C,"META_TYPE_S2C_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
+    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
 end
 
 ---------------------------------------------------------------------------

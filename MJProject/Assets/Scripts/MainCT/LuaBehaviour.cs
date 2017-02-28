@@ -90,8 +90,23 @@ public class LuaBehaviour : MonoBehaviour {
             LuaEnvSingleton.Instance.Tick();
             LuaBehaviour.lastGCTime = Time.time;
         }
+        lock(mainThreadDelegate){
+            if(mainThreadDelegate != empty){
+                mainThreadDelegate();
+                mainThreadDelegate = empty;
+            }
+        }
 	}
 
+    private static void empty() { }
+    protected Action mainThreadDelegate = empty;
+    public void Attach(Action callback){
+        if (callback != null) {
+            lock(mainThreadDelegate){
+                mainThreadDelegate += callback;
+            }
+        }
+    }
     void OnDestroy()
     {
         if (luaOnDestroy != null)

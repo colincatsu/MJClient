@@ -2,7 +2,6 @@
 --local Event = require 'Event'
 local protobuf = require "protobuf"
 --local Network = require "Network"
-
 ---------------------------------------------------------------------------
 --成员变量
 ---------------------------------------------------------------------------
@@ -11,6 +10,9 @@ local this = Player
 
 local _player = nil --玩家数据
 local _id = 0
+local _rightId = 0
+local _crossId = 0
+local _leftId = 0
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
@@ -22,11 +24,7 @@ end
 --加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
 function Player.LoadScene(type_t, buffer)
-    local enter_game = protobuf.decode("Adoter.Asset.EnterGame", buffer)
-    print(type(buffer))
-    print(enter_game.type_t)
-    print(enter_game.player_id)
-	--resMgr:LoadPrefab("Scene", { 'PromptItem' }, this.OnLoadSuccess);
+   CS.UnityEngine.Application.LoadLevelAsync(MainUICT._play_sence)
 end
 
 ---------------------------------------------------------------------------
@@ -35,55 +33,69 @@ end
 
 function Player.CmdCreatePlayer()
     -- body
-    local CreatePlayer = {}
-    this.SendProtocol("CreatePlayer",CreatePlayer)
+    local createPlayer = {}
+    this.SendProtocol("CreatePlayer",createPlayer)
 end
 
 
 function Player.CmdLogin(name,passWord)
     -- body
-    local Login = {
+    local login = {
         account = {
             username = name,--""
             password = passWord,--""
         }
     }
-    this.SendProtocol("Login",Login)
+    this.SendProtocol("Login",login)
 end
 
 function Player.CmdEnterGame(id)
     -- body
-    local EnterGame = {
+    local enterGame = {
         player_id = id,
     }
-    this.SendProtocol("EnterGame",EnterGame)
+    this.SendProtocol("EnterGame",enterGame)
 end
 
 function Player.CmdCreateRoom()
     -- body
-    local CreateRoom ={
+    local createRoom ={
         --room = {
             --room_id = id,--1,
             --room_name = name,--"123",
             --enter_password  = passWord,--"123",
        -- }
     }
-    this.SendProtocol("CreateRoom",CreateRoom)
+    this.SendProtocol("CreateRoom",createRoom)
 end
 
 function Player.CmdEnterRoom(id,passWord)
     -- body
-    local EnterRoom = {
+    local enterRoom = {
         room_id = id,--2;
         enter_password = passWord,--"123";
     }
-    this.SendProtocol("EnterRoom",EnterRoom)
+    this.SendProtocol("EnterRoom",enterRoom)
+end
+
+function Player.CmdGameOperation()
+    -- body
+    local gameOperation = {
+       oper_type = "GAME_OPER_TYPE_START"
+    }
+    this.SendProtocol("GameOperation",gameOperation)
 end
 
 
-
-function Player.OnLoadSuccess()
-    this.CmdEnterScene()
+---------------------------------------------------------------------------
+--进入场景
+---------------------------------------------------------------------------
+function Player.CmdEnterScene(scene_id)
+    local enter_scene = P_Protocol.EnterScene()
+    enter_scene.scene_id = scene_id
+    ---------------------------------------------
+    this.SendProtocol(enter_scene)
+    CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 ---------------------------------------------------------------------------
 --发送协议
@@ -103,16 +115,6 @@ function Player.CmdEnterGame(player_id)
     this.SendProtocol(enter_game)
 end
 --]]
----------------------------------------------------------------------------
---进入场景
----------------------------------------------------------------------------
-function Player.CmdEnterScene(scene_id)
-    local enter_scene = P_Protocol.EnterScene()
-    enter_scene.scene_id = scene_id
-    ---------------------------------------------
-    this.SendProtocol(enter_scene)
-    CS.UnityEngine.Application.LoadLevel("PlaySence")
-end
 --]]
 
 --[[
@@ -125,29 +127,37 @@ end
 ---------------------------------------------
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
+function Player.OnGameOperation(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.GameOperation", stuff)
+
+    if not message.source_player_id then
+        --判断id是谁
+    end
+    print(this._id)
+end
+
 function Player.OnCreatePlayer(type_t,stuff)
     -- body
-    print(type_t)
     local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
     this._id = message.player_id
     print(this._id)
 end
-function Player.OnCreateRoomC2S(type_t,stuff)
+
+function Player.OnCreateRoom(type_t,stuff)
     -- body
-    print("OnCreateRoomC2S-------------------")
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
     print(this._roomId)
     --this._roomType = message.room.room_type
+    MainUICT.show()--.self:Attach(Player.LoadScene)
 end
-function Player.OnCreateRoomS2C(type_t,stuff)
-    -- body
-    local message = protobuf.decode("Adoter.Asset.S_CreateRoom", stuff)
-    this._roomId = message.room.room_id
-    print(this._roomId)
-    --this._roomType = message.room.room_type
+
+function Player.OnLoadSuccess()
+    this.CmdEnterScene()
 end
+
 ---------------------------------------------------------------------------
 --通用操作返回协议，模拟RPC处理流程
 ---------------------------------------------------------------------------

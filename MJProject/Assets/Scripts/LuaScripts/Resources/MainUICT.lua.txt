@@ -1,5 +1,7 @@
 local Network = require "Network"
 local Player = require "Player"
+MainUICT = {}
+MainUICT.self = self
 
 local isOn = false
 local _main_ui_sence = "MainUI"
@@ -48,6 +50,9 @@ function registerButtonEvent.DiamondPlus( ... )
 	print("DiamondPlusShow")
 end
 
+function registerButtonEvent.BeanPlus( ... )
+	-- body
+end
 function registerButtonEvent.CreatRoom( ... )
 	-- body
 	print("CreatRoom")
@@ -161,4 +166,11 @@ end
 function update( ... )
 	-- body
 end
+
+function MainUICT.show( ... )
+	-- body
+	print("dsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+end
+
+return MainUICT
 

@@ -28,7 +28,8 @@ public class EventTriggerListener : MonoBehaviour
         return listener;
     }
 	void Awake(){
-		_buttons = GetComponentsInChildren<Button> ();
+        
+        _buttons = GetComponentsInChildren<Button> ();
         _toggles = GetComponentsInChildren<Toggle>();
         foreach (var item in _buttons)
         {

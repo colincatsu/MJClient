@@ -4,3 +4,6 @@
 [submodule "MX-Data"]
 	path = MX-Data
 	url = https://github.com/dantetian/MX-Data
+[submodule "LuaGame"]
+	path = LuaGame
+	url = https://github.com/libyyu/LuaGame

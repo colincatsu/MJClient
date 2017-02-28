@@ -40,6 +40,7 @@ function MahJong.init()
 	self:GetComponent("AnimationRegister").animationEvent = MahJong.animationPlay
 	MahJong.animationPlay()
 	MahJong.modelPoolInit()
+	Player.CmdGameOperation()
 end
 
 function MahJong.modelPoolInit()
