@@ -1,0 +1,123 @@
+ClickEvent = {}
+local _currentPanel = {}
+function ClickEvent.CreateNewPanel(panelName)
+	-- body
+	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
+	_currentPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
+	_currentPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
+	_currentPanel.eventTriggerListener = _currentPanel.panel:GetComponent("EventTriggerListener")
+	_currentPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
+	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
+	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
+end
+---------------------------------------------------------------------------
+-------------点击功能函数
+---------------------------------------------------------------------------
+function ClickEvent.Register( gameObject )
+	-- body
+	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
+		CS.UnityEngine.Object.Destroy(_currentPanel.panel)
+	else
+		print("no find toggle")
+	end
+end
+
+function ClickEvent.Admit( gameObject )
+	-- body
+	--isOn = gameObject:GetComponent("Toggle").isOn
+end
+
+function ClickEvent.ReturnButton( ... )
+	-- body
+	_Choose_UI:SetActive(false)
+	_Main_UI:SetActive(true)
+end
+
+function ClickEvent.PlayerLogo( ... )
+	-- body
+	print("playLogoShow")
+	--_Player_Message_UI:SetActive(true)
+end
+
+function ClickEvent.DiamondPlus( ... )
+	-- body
+	print("DiamondPlusShow")
+end
+
+function ClickEvent.BeanPlus( ... )
+	-- body
+end
+
+function ClickEvent.CreatRoom( ... )
+	-- body
+	print("CreatRoom")
+	Player.CmdCreateRoom()
+	--CS.UnityEngine.Application.LoadLevel("PlaySence")
+end
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+function ClickEvent.registerButtonClick(gameObject)
+	-- body
+	local key = gameObject.name
+	--[[
+	switch = {
+		
+		["TicketPlus"] = function ( ... )
+			-- body
+			print("TicketPlusShow")
+		end,
+		["GoldZone"] = function ( ... )
+			-- body
+			print("GoldZone")
+		end,
+		["JoinRoom"] = function ( ... )
+			-- body
+			print("JoinRoom")
+		end,
+		["CreatRoom"] = function ( ... )
+			-- body
+			Player.CmdCreateRoom()
+			--CS.UnityEngine.Application.LoadLevel("PlaySence")
+			print("CreatRoom")
+		end,
+		["Store"] = function ( ... )
+			-- body
+		end,
+		["Option"] = function ( ... )
+			-- body
+		end,
+		["Mail"] = function ( ... )
+			-- body
+		end,
+		["Rank"] = function ( ... )
+			-- body
+		end,
+		["Activity"] = function ( ... )
+			-- body
+		end,
+		["Method"] = function ( ... )
+			-- body
+		end,
+		["Reward"] = function ( ... )
+			-- body
+		end,
+		["More"] = function ( ... )
+			-- body
+		end,
+		["ClosePlayerMessagePanel"] = function ( ... )
+			-- body
+			_Player_Message_UI:SetActive(false)
+		end,
+	}
+	--]]
+	local fSwitch = ClickEvent[key]
+
+	if fSwitch then
+		local result = fSwitch(gameObject)
+	else
+		print("key no found")
+	end
+
+end
+
+return ClickEvent

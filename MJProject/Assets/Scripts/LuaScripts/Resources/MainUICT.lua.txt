@@ -1,151 +1,28 @@
+local ClickEvent = require "ClickEvent"
 local Network = require "Network"
 local Player = require "Player"
 Player.self = self
+ClickEvent.self = self
 local FLibEvent = require "FLibEvent"
 
-local isOn = false
 local _main_ui_sence = "MainUI"
 local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
+--[[
+local isOn = false
 local _Main_UI 
 local _Choose_UI 
 local _Player_Message_UI 
 local _Other_Message_UI 
 local _Store_UI 
 local _Creat_Room_UI 
+--]]
 
-local registerButtonEvent = {}
----------------------------------------------------------------------------
--------------点击功能函数
----------------------------------------------------------------------------
-function registerButtonEvent.Register( gameObject )
-	-- body
-	if (isOn) then
-		_Main_UI.gameObject:SetActive(false)
-		_Choose_UI.gameObject:SetActive(true)
-
-	else
-	end
-end
-
-function registerButtonEvent.Admit( gameObject )
-	-- body
-	isOn = gameObject:GetComponent("Toggle").isOn
-end
-
-function registerButtonEvent.ReturnButton( ... )
-	-- body
-	_Choose_UI:SetActive(false)
-	_Main_UI:SetActive(true)
-end
-
-function registerButtonEvent.PlayerLogo( ... )
-	-- body
-	print("playLogoShow")
-	--_Player_Message_UI:SetActive(true)
-end
-
-function registerButtonEvent.DiamondPlus( ... )
-	-- body
-	print("DiamondPlusShow")
-end
-
-function registerButtonEvent.BeanPlus( ... )
-	-- body
-end
-function registerButtonEvent.CreatRoom( ... )
-	-- body
-	print("CreatRoom")
-	Player.CmdCreateRoom()
-	--CS.UnityEngine.Application.LoadLevel("PlaySence")
-end
----------------------------------------------------------------------------
----------------------------------------------------------------------------
-local function registerButtonClick(gameObject)
-	-- body
-	local key = gameObject.name
-	--[[
-	switch = {
-		["Register"] = registerButtonEvent.Register(gameObject),
-		["Admit"] = registerButtonEvent.Admit(gameObject),
-		["ReturnButton"] = function ( ... )
-			-- body
-			_Choose_UI:SetActive(false)
-			_Main_UI:SetActive(true)
-		end,
-		["PlayerLogo"] = function ( ... )
-			-- body
-			_Player_Message_UI:SetActive(true)
-		end,
-		["DiamondPlus"] = function ( ... )
-			-- body
-			print("DiamondPlusShow")
-		end,
-		["BeanPlus"] = function ( ... )
-			-- body
-			print("BeanPlusShow")
-		end,
-		["TicketPlus"] = function ( ... )
-			-- body
-			print("TicketPlusShow")
-		end,
-		["GoldZone"] = function ( ... )
-			-- body
-			print("GoldZone")
-		end,
-		["JoinRoom"] = function ( ... )
-			-- body
-			print("JoinRoom")
-		end,
-		["CreatRoom"] = function ( ... )
-			-- body
-			Player.CmdCreateRoom()
-			--CS.UnityEngine.Application.LoadLevel("PlaySence")
-			print("CreatRoom")
-		end,
-		["Store"] = function ( ... )
-			-- body
-		end,
-		["Option"] = function ( ... )
-			-- body
-		end,
-		["Mail"] = function ( ... )
-			-- body
-		end,
-		["Rank"] = function ( ... )
-			-- body
-		end,
-		["Activity"] = function ( ... )
-			-- body
-		end,
-		["Method"] = function ( ... )
-			-- body
-		end,
-		["Reward"] = function ( ... )
-			-- body
-		end,
-		["More"] = function ( ... )
-			-- body
-		end,
-		["ClosePlayerMessagePanel"] = function ( ... )
-			-- body
-			_Player_Message_UI:SetActive(false)
-		end,
-	}
-	--]]
-	local fSwitch = registerButtonEvent[key]
-
-	if fSwitch then
-		local result = fSwitch(gameObject)
-	else
-		print("key no found")
-	end
-
-end
 function start()
 	-- body
 	-- print(self._main_ui_sence)
-	---[[
+	ClickEvent.CreateNewPanel("MainUI")
+	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
 	local admitButton = _Main_UI.transform:Find("Admit").gameObject
 	isOn = admitButton:GetComponent("Toggle").isOn
@@ -156,8 +33,8 @@ function start()
 	_Store_UI = self.transform:Find("StoreUI").gameObject
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
-	self:GetComponent("EventTriggerListener").onClick = registerButtonClick
-	---[[
+	--self:GetComponent("EventTriggerListener").onClick = ClickEvent.registerButtonClick
+	--[[
 	Network.Start()		
 	Network.ConnetServer()
 	--]]

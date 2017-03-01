@@ -127,3 +127,4 @@ function update()
 	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
 	--_dice_obj.transform:Rotate(speed)
 end
+return MahJong

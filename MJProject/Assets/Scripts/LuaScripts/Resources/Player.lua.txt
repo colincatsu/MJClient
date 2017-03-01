@@ -133,6 +133,10 @@ function Player.OnGameOperation(type_t,stuff)
 
     if not message.source_player_id then
         --判断id是谁
+        if message == this._id then
+            --变化按钮
+        else
+        end
     end
     print(this._id)
 end
@@ -151,7 +155,7 @@ function Player.OnCreateRoom(type_t,stuff)
     this._roomId = message.room.room_id
     print(this._roomId)
     --this._roomType = message.room.room_type
-    Player.self:Attach(Player.LoadScene)
+    Player.ThreadFunction(Player.LoadScene)
 end
 
 function Player.OnLoadSuccess()
@@ -177,4 +181,14 @@ function Player.OnSurroundChanged(stuff)
     logWarn(entity_id)
 end
 ---------------------------------------------------------------------------
+-----线程调用
+---------------------------------------------------------------------------
+function Player.ThreadFunction(invokeFunction)
+    -- body
+    if not Player.self then
+        Player.self:Attach(invokeFunction)
+    else
+        print("no init Player.self")
+    end
+end
 return Player
