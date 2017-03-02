@@ -34,9 +34,9 @@ function start()
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
 	--self:GetComponent("EventTriggerListener").onClick = ClickEvent.registerButtonClick
-	--[[
-	Network.Start()		
-	Network.ConnetServer()
+	---[[
+	--Network.Start()		
+	--Network.ConnetServer()
 	--]]
 end
 

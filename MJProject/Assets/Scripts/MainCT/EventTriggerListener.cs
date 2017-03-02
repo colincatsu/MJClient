@@ -14,6 +14,7 @@ public class EventTriggerListener : MonoBehaviour
     public VoidDelegate onClick;
 	public Button[] _buttons;
     public Toggle[] _toggles;
+    public InputField[] _inputField;
 //    public VoidDelegate onDown;
 //    public VoidDelegate onEnter;
 //    public VoidDelegate onExit;
@@ -31,6 +32,7 @@ public class EventTriggerListener : MonoBehaviour
         
         _buttons = GetComponentsInChildren<Button> ();
         _toggles = GetComponentsInChildren<Toggle>();
+        _inputField = GetComponentsInChildren<InputField>();
         foreach (var item in _buttons)
         {
             Button btn = item;
@@ -45,6 +47,16 @@ public class EventTriggerListener : MonoBehaviour
         {
             Toggle btn = item;
             btn.onValueChanged.AddListener(delegate (bool value)
+            {
+                //				Debug.Log(item.gameObject.name);
+                this.onClick(btn.gameObject);
+            });
+        }
+
+        foreach (var item in _inputField)
+        {
+            InputField btn = item;
+            btn.onValueChanged.AddListener(delegate (string value)
             {
                 //				Debug.Log(item.gameObject.name);
                 this.onClick(btn.gameObject);

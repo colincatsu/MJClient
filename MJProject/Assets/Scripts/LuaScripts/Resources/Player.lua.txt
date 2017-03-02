@@ -10,6 +10,7 @@ local this = Player
 
 local _player = nil --玩家数据
 local _id = 0
+local _roomId = 1
 local _rightId = 0
 local _crossId = 0
 local _leftId = 0
@@ -57,7 +58,8 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",enterGame)
 end
 
-function Player.CmdCreateRoom()
+function Player.CmdCreateRoom(roomId)
+    print(roomId)
     -- body
     local createRoom ={
         --room = {
@@ -133,9 +135,10 @@ function Player.OnGameOperation(type_t,stuff)
 
     if not message.source_player_id then
         --判断id是谁
-        if message == this._id then
+        if message.source_player_id == this._id then
             --变化按钮
         else
+            print(message.source_player_id)
         end
     end
     print(this._id)
@@ -156,6 +159,16 @@ function Player.OnCreateRoom(type_t,stuff)
     print(this._roomId)
     --this._roomType = message.room.room_type
     Player.ThreadFunction(Player.LoadScene)
+end
+
+function Player.OnAlterError(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.AlterError", stuff)
+    this.error_type = message.error_type
+    this.error_show_type = message.error_show_type
+    this.error_code = message.error_code
+    print(this.error_type)
+    --Player.ThreadFunction(Player.LoadScene)
 end
 
 function Player.OnLoadSuccess()
@@ -185,7 +198,7 @@ end
 ---------------------------------------------------------------------------
 function Player.ThreadFunction(invokeFunction)
     -- body
-    if not Player.self then
+    if Player.self then
         Player.self:Attach(invokeFunction)
     else
         print("no init Player.self")

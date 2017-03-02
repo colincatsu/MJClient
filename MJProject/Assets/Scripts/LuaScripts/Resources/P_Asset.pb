@@ -1,5 +1,5 @@
 
-ó2
+Ü5
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -12,7 +12,7 @@
 common_prop (2.Adoter.Asset.AssetCommonProp*
 	room_type (2.Adoter.Asset.ROOM_TYPE
 	min_limit (
-	max_count (
+	max_limit (
 max_fan (
 
 cost_count (
@@ -157,7 +157,18 @@ voice_path ("ù
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_AVATAR2
 common_prop (2.Adoter.Asset.AssetCommonProp
 avatars_count (:20
-avatars ("û
+avatars ("Ω
+Activity=
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ACTIVITY2
+common_prop (2.Adoter.Asset.AssetCommonProp;
+activity_type (2$.Adoter.Asset.Activity.ACTIVITY_TYPE
+
+start_time (
+	stop_time (
+duration ("H
+ACTIVITY_TYPE
+ACTIVITY_TYPE_STOP_TIME
+ACTIVITY_TYPE_DURATION"û
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -198,7 +209,7 @@ voice_path ("ù
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*ñ
+VERSION_TYPE_TAIWAN*Ø
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -217,16 +228,18 @@ ASSET_TYPE
 ASSET_TYPE_ROOM_OPEN
 ASSET_TYPE_VOICE_ALTER
 ASSET_TYPE_FACE
-ASSET_TYPE_AVATAR
+ASSET_TYPE_AVATAR
+ASSET_TYPE_ACTIVITY
 ASSET_TYPE_COUNT»
 ITEM_TYPE_BEGIN…
 ITEM_TYPE_POTION 
 ITEM_TYPE_ROOM_CARDÀ
-ITEM_TYPE_GUNÃ*N
-	ROOM_TYPE
-ROOM_TYPE_XINSHOU
-ROOM_TYPE_GAOSHOU
-ROOM_TYPE_DASHI*t
+ITEM_TYPE_GUNÃ*d
+	ROOM_TYPE
+ROOM_TYPE_FRIEND
+ROOM_TYPE_XINSHOU
+ROOM_TYPE_GAOSHOU
+ROOM_TYPE_DASHI*t
 	CARD_TYPE
 CARD_TYPE_WANZI
 CARD_TYPE_BINGZI

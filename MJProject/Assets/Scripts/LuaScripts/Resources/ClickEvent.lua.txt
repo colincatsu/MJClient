@@ -6,6 +6,7 @@ ClickEvent.panelTable._create_room_ui = "CreateRoomUI"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
+ClickEvent.panelTable._play_game_ui = "PlayGameUI"
 local _currentPanel = {}
 local _popPanel = {}
 function ClickEvent.CreateNewPanel(panelName)
@@ -97,7 +98,7 @@ end
 function ClickEvent.CreateRoom( ... )
 	-- body
 	print("CreateRoom")
-	Player.CmdCreateRoom()
+	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 
@@ -133,11 +134,34 @@ function ClickEvent.More( ... )
 	-- body
 end
 
-function ClickEvent.ClosePlayerMessagePanel( ... )
+function ClickEvent.ClosePanel( ... )
 	-- body
-	print("ClosePlayerMessagePanel")
+	print("ClosePanel")
 	ClickEvent.DestroyPanel(_popPanel.panel)
 end
+
+function ClickEvent.CreateRoomId( gameObject )
+	-- body
+	Player._roomId = gameObject:GetComponent("InputField").text
+end
+
+function ClickEvent.CreatePersonalRoom( )
+	-- body
+	--roomid
+	Player.CmdCreateRoom(Player._roomId)
+	ClickEvent.ClosePanel()
+end
+
+-------------------------------------
+---游戏中
+---------------------------
+function ClickEvent.StartGameButton( gameObject )
+	-- body
+	--Player.CmdGameOperation()
+	--print(gameObject)
+	gameObject.gameObject:SetActive(false)
+end
+
 
 ---------------------------------------------------------------------------
 ---------------------------------------------------------------------------

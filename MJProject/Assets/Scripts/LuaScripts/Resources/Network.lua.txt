@@ -39,6 +39,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.AddEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
 end
 
 ---------------------------------------------------------------------------
@@ -84,6 +85,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.DelEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
 end
 
 ---------------------------------------------------------------------------
