@@ -1,5 +1,13 @@
 ClickEvent = {}
+ClickEvent.panelTable = {}
+ClickEvent.panelTable._main_ui = "MainUI"
+ClickEvent.panelTable._choose_ui = "ChooseUI"
+ClickEvent.panelTable._create_room_ui = "CreateRoomUI"
+ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
+ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
+ClickEvent.panelTable._store_ui = "StoreUI"
 local _currentPanel = {}
+local _popPanel = {}
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
@@ -10,13 +18,35 @@ function ClickEvent.CreateNewPanel(panelName)
 	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
 	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
 end
+
+function ClickEvent.PopPanel( panelName )
+	-- body
+	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
+	_popPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
+	_popPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
+	_popPanel.eventTriggerListener = _popPanel.panel:GetComponent("EventTriggerListener")
+	_popPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
+	_popPanel.buttonList = _popPanel.eventTriggerListener._buttons
+	_popPanel.toggleList = _popPanel.eventTriggerListener._toggles
+end
+
+function ClickEvent.DestroyPanel(gameObject)
+	-- body
+	CS.UnityEngine.Object.Destroy(gameObject)
+	if _popPanel then
+		_popPanel = {}
+	else
+		_currentPanel = {}
+	end
+end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
 function ClickEvent.Register( gameObject )
 	-- body
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
-		CS.UnityEngine.Object.Destroy(_currentPanel.panel)
+		ClickEvent.DestroyPanel(_currentPanel.panel)
+		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
 		print("no find toggle")
 	end
@@ -24,18 +54,18 @@ end
 
 function ClickEvent.Admit( gameObject )
 	-- body
-	--isOn = gameObject:GetComponent("Toggle").isOn
 end
 
 function ClickEvent.ReturnButton( ... )
 	-- body
-	_Choose_UI:SetActive(false)
-	_Main_UI:SetActive(true)
+	ClickEvent.DestroyPanel(_currentPanel.panel)
+	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 end
 
 function ClickEvent.PlayerLogo( ... )
 	-- body
 	print("playLogoShow")
+	ClickEvent.PopPanel(ClickEvent.panelTable._player_message_ui)
 	--_Player_Message_UI:SetActive(true)
 end
 
@@ -46,14 +76,69 @@ end
 
 function ClickEvent.BeanPlus( ... )
 	-- body
+	print("BeanPlusShow")
 end
 
-function ClickEvent.CreatRoom( ... )
+function ClickEvent.TicketPlus( ... )
 	-- body
-	print("CreatRoom")
+	print("TicketPlusShow")
+end
+
+function ClickEvent.GoldZone( ... )
+	-- body
+	print("GoldZone")
+end
+
+function ClickEvent.JoinRoom( ... )
+	-- body
+	print("JoinRoom")
+end
+
+function ClickEvent.CreateRoom( ... )
+	-- body
+	print("CreateRoom")
 	Player.CmdCreateRoom()
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
+
+function ClickEvent.Store( ... )
+	-- body
+end
+
+function ClickEvent.Option( ... )
+	-- body
+end
+
+function ClickEvent.Mail( ... )
+	-- body
+end
+
+function ClickEvent.Rank( ... )
+	-- body
+end
+
+function ClickEvent.Activity( ... )
+	-- body
+end
+
+function ClickEvent.Method( ... )
+	-- body
+end
+
+function ClickEvent.Reward( ... )
+	-- body
+end
+
+function ClickEvent.More( ... )
+	-- body
+end
+
+function ClickEvent.ClosePlayerMessagePanel( ... )
+	-- body
+	print("ClosePlayerMessagePanel")
+	ClickEvent.DestroyPanel(_popPanel.panel)
+end
+
 ---------------------------------------------------------------------------
 ---------------------------------------------------------------------------
 function ClickEvent.registerButtonClick(gameObject)
@@ -62,42 +147,6 @@ function ClickEvent.registerButtonClick(gameObject)
 	--[[
 	switch = {
 		
-		["TicketPlus"] = function ( ... )
-			-- body
-			print("TicketPlusShow")
-		end,
-		["GoldZone"] = function ( ... )
-			-- body
-			print("GoldZone")
-		end,
-		["JoinRoom"] = function ( ... )
-			-- body
-			print("JoinRoom")
-		end,
-		["CreatRoom"] = function ( ... )
-			-- body
-			Player.CmdCreateRoom()
-			--CS.UnityEngine.Application.LoadLevel("PlaySence")
-			print("CreatRoom")
-		end,
-		["Store"] = function ( ... )
-			-- body
-		end,
-		["Option"] = function ( ... )
-			-- body
-		end,
-		["Mail"] = function ( ... )
-			-- body
-		end,
-		["Rank"] = function ( ... )
-			-- body
-		end,
-		["Activity"] = function ( ... )
-			-- body
-		end,
-		["Method"] = function ( ... )
-			-- body
-		end,
 		["Reward"] = function ( ... )
 			-- body
 		end,

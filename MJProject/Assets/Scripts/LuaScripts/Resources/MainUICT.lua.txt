@@ -21,7 +21,7 @@ local _Creat_Room_UI
 function start()
 	-- body
 	-- print(self._main_ui_sence)
-	ClickEvent.CreateNewPanel("MainUI")
+	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
 	local admitButton = _Main_UI.transform:Find("Admit").gameObject

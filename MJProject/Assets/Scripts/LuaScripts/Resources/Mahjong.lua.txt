@@ -1,3 +1,4 @@
+local TouchCT = require "TouchCT"
 MahJong = {}
 local newVector3 = CS.UnityEngine.Vector3
 local _diceObj
@@ -18,6 +19,9 @@ local _animationState = ""
 function start()
 	-- body
 	MahJong.init()
+	MahJong.animationPlay()
+	MahJong.modelPoolInit()
+	Player.CmdGameOperation()
 end
 
 function MahJong.init()
@@ -38,9 +42,6 @@ function MahJong.init()
 	_startRotation.B = newVector3(0,180,0)
 	_myAnimation = self:GetComponent("Animation")
 	self:GetComponent("AnimationRegister").animationEvent = MahJong.animationPlay
-	MahJong.animationPlay()
-	MahJong.modelPoolInit()
-	Player.CmdGameOperation()
 end
 
 function MahJong.modelPoolInit()
