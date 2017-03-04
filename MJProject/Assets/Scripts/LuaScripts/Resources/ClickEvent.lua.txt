@@ -9,6 +9,7 @@ ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlayGameUI"
 local _currentPanel = {}
 local _popPanel = {}
+local DebugConsole = CS.MX.DebugConsole
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
@@ -155,11 +156,14 @@ end
 -------------------------------------
 ---游戏中
 ---------------------------
+tempCount = 0
 function ClickEvent.StartGameButton( gameObject )
 	-- body
 	--Player.CmdGameOperation()
 	--print(gameObject)
-	gameObject.gameObject:SetActive(false)
+	DebugConsole.instance:AddMessage(""..tempCount)
+	tempCount = tempCount + 1
+	--gameObject.gameObject:SetActive(false)
 end
 
 

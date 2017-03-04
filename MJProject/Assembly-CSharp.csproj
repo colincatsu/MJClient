@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\DebugConsole.cs" />
      <Compile Include="Assets\Scripts\LuaCommon.cs" />
      <Compile Include="Assets\Scripts\MainCT\AnimationRegister.cs" />
      <Compile Include="Assets\Scripts\MainCT\EventTriggerListener.cs" />

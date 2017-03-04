@@ -54,8 +54,8 @@ public class DebugConsole : MonoBehaviour
     public Color normal = Color.green;
     public Color warning = Color.yellow;
     public Color error = Color.red;
-    public int maxMessages = 25;                   // The max number of messages displayed
-    public float lineSpacing = 0.04F;              // The amount of space between lines
+    public int maxMessages = 30;                   // The max number of messages displayed
+    public float lineSpacing = 0.03F;              // The amount of space between lines
     public ArrayList messages = new ArrayList();
     public ArrayList guis = new ArrayList();
     public ArrayList colors = new ArrayList();
