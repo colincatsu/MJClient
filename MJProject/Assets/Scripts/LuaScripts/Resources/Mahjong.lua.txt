@@ -1,5 +1,14 @@
 local TouchCT = require "TouchCT"
+--[[
+local AssetManager = require "AssetManager"
+	local loader = AssetManager.Load()
+	print(loader)
+	hoster = AssetManager.Get(196610)
+	print(hoster)
+	AssetManager.PrintMessage(hoster)
+--]]
 MahJong = {}
+local _mj_asset = {}
 local newVector3 = CS.UnityEngine.Vector3
 local _diceObj
 local _gaiObj
@@ -22,7 +31,20 @@ function start()
 	---[[
 	MahJong.animationPlay()
 	MahJong.modelPoolInit()
+	MahJong.mjLoader()
 	--]]
+end
+
+function MahJong.mjLoader()
+	-- body
+	local AssetManager = require "AssetManager"
+	--local _mj_asset = AssetManager.GetMessagesByType(6)
+	local data = AssetManager.Get(393236)
+	print(data)
+	AssetManager.PrintMessage(data)
+	--for k,v in pairs(data) do
+	--	print(v)
+	--end
 end
 
 function MahJong.init()

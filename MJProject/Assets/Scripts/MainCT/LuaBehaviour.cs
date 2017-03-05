@@ -35,12 +35,15 @@ public class LuaBehaviour : MonoBehaviour {
     private LuaTable scriptEnv;
 
     private string luaChunkName = "LuaBehaviour";
+    private string[] tempActionData;
 
 
     void Awake()
     {
         LuaEnvSingleton.Instance.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnvSingleton.Instance.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
+        LuaEnvSingleton.Instance.AddBuildin("LuaReader", XLua.LuaDLL.Lua.LoadlLuaReader);
+        XLua.LuaDLL.Lua.InitXLuaAnyLog();
         //Toggle mytoggle;
         scriptEnv = LuaEnvSingleton.Instance.NewTable();
         LuaTable meta = LuaEnvSingleton.Instance.NewTable();
@@ -92,18 +95,21 @@ public class LuaBehaviour : MonoBehaviour {
         }
         lock(mainThreadDelegate){
             if(mainThreadDelegate != empty){
-                mainThreadDelegate();
+                mainThreadDelegate(tempActionData);
                 mainThreadDelegate = empty;
             }
         }
 	}
-
-    private static void empty() { }
-    protected Action mainThreadDelegate = empty;
-    public void Attach(Action callback){
+    [CSharpCallLua]
+    public delegate void Function(params string[] para);
+    private static void empty(params string[] para) { }
+    protected Function mainThreadDelegate = empty;
+    public void Attach(Function callback,params string[] para){
         if (callback != null) {
             lock(mainThreadDelegate){
+
                 mainThreadDelegate += callback;
+                tempActionData = para;
             }
         }
     }

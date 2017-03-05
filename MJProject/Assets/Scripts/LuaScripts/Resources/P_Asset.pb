@@ -1,5 +1,5 @@
 
-†5
+æ5
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -37,11 +37,13 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 COOL_DOWN_TYPE_NEVER"^
 COOL_DOWN_CLEAR_TYPE"
 COOL_DOWN_CLEAR_TYPE_ZERO_TIME"
-COOL_DOWN_CLEAR_TYPE_WHEN_OPER"Œ
+COOL_DOWN_CLEAR_TYPE_WHEN_OPER"Á
 CoolDown>
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COOL_DOWN2
-common_prop (2.Adoter.Asset.AssetCommonProp
-time ("¿
+common_prop (2.Adoter.Asset.AssetCommonProp
+duration ("/
+COOL_DOWN_REASON
+COOL_DOWN_REASON_NORMAL"¿
 MJCard<
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MJ_CARD2
 common_prop (2.Adoter.Asset.AssetCommonProp*
@@ -89,14 +91,16 @@ DialyBonus@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DIALY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
 common_reward_id (
-common_limit_id ("«
+common_limit_id ("Ö
 Mall9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MALL2
 common_prop (2.Adoter.Asset.AssetCommonProp
-item_id (
+item_id (
 
 item_count (
-diamond ("À
+diamond (
+diamond_show (
+activity_id ("À
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp

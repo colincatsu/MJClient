@@ -13,6 +13,7 @@ namespace XLua.LuaDLL
     using System.Runtime.InteropServices;
     using System.Text;
     using XLua;
+    using UnityEngine;
 
 #if !UNITY_IPHONE
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -541,6 +542,44 @@ namespace XLua.LuaDLL
         public static int LoadlProtobufC(System.IntPtr L)
         {
             return luaopen_protobuf_c(L);
+        }
+        //luareader
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_LuaReader(System.IntPtr L);
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadlLuaReader(System.IntPtr L)
+        {
+            return luaopen_LuaReader(L);
+        }
+        public delegate void XLua_Unity_Log_Delegate(LogType logType, string message);
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public extern static void Lua_EstablishAnyLog(XLua_Unity_Log_Delegate func);
+        [AOT.MonoPInvokeCallback(typeof(XLua_Unity_Log_Delegate))]
+        private static void On_XLuaLog_WarpUnity(LogType logType, string message)
+        {
+            switch (logType)
+            {
+                case LogType.Log:
+                    Debug.Log(message);
+                    break;
+                case LogType.Warning:
+                    Debug.LogWarning(message);
+                    break;
+                case LogType.Error:
+                    Debug.LogError(message);
+                    break;
+                case LogType.Exception:
+                    Debug.LogException(new Exception(message));
+                    break;
+                case LogType.Assert:
+                    Debug.LogError(message);
+                    break;
+            }
+        }
+        public static void InitXLuaAnyLog()
+        {
+            Lua_EstablishAnyLog(On_XLuaLog_WarpUnity);
         }
     }
 }

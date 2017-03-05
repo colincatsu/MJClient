@@ -7,6 +7,7 @@ local protobuf = require "protobuf"
 ---------------------------------------------------------------------------
 Player = {}
 local this = Player
+local DebugConsole = CS.MX.DebugConsole
 
 local _player = nil --玩家数据
 local _id = 0
@@ -58,15 +59,15 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",enterGame)
 end
 
-function Player.CmdCreateRoom(roomId)
+function Player.CmdCreateRoom()
     print(roomId)
     -- body
     local createRoom ={
         --room = {
-            --room_id = id,--1,
+            --room_id = roomId,--1,
             --room_name = name,--"123",
             --enter_password  = passWord,--"123",
-       -- }
+        --}
     }
     this.SendProtocol("CreateRoom",createRoom)
 end
@@ -129,10 +130,51 @@ end
 ---------------------------------------------
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
+
+function Player.OnPaiNotify(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
+    print(message.data_type)
+    --Player.ThreadFunction(DebugConsole.instance:AddMessage)
+    --Player.ThreadFunction(DebugConsole.instance:AddMessage,message.pais.card_type)
+    for k, v in pairs(message.pais) do
+        print(v.card_type)
+        for i, m in pairs(v.cards) do
+            print(m)
+        end
+    end
+end
+
+function Player.OnPaiOperation(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
+
+    print(message.oper_type)
+    switch = {
+        ["PAI_OPER_TYPE_DAPAI"] = function( ... )
+            -- body
+        end,
+        ["PAI_OPER_TYPE_HUPAI"] = function( ... )
+            -- body
+        end,
+        ["PAI_OPER_TYPE_GANGPAI"] = function( ... )
+            -- body
+        end,
+        ["PAI_OPER_TYPE_PENGPAI"] = function( ... )
+            -- body
+        end,
+        ["PAI_OPER_TYPE_CHIPAI"] = function( ... )
+            -- body
+        end,
+    }
+    local result = switch[message.oper_type]
+end
+
 function Player.OnGameOperation(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.GameOperation", stuff)
 
+    print(message.source_player_id)
     if not message.source_player_id then
         --判断id是谁
         if message.source_player_id == this._id then
@@ -141,7 +183,6 @@ function Player.OnGameOperation(type_t,stuff)
             print(message.source_player_id)
         end
     end
-    print(this._id)
 end
 
 function Player.OnCreatePlayer(type_t,stuff)
@@ -196,10 +237,10 @@ end
 ---------------------------------------------------------------------------
 -----线程调用
 ---------------------------------------------------------------------------
-function Player.ThreadFunction(invokeFunction)
+function Player.ThreadFunction(invokeFunction,...)
     -- body
     if Player.self then
-        Player.self:Attach(invokeFunction)
+        Player.self:Attach(invokeFunction,...)
     else
         print("no init Player.self")
     end

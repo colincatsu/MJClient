@@ -1,0 +1,64 @@
+local LuaReader = require "LuaReader"
+--local protobuf = require "protobuf"
+
+AssetManager = {}
+local this = AssetManager
+
+---------------------------------------------------------------------------
+--成员变量
+---------------------------------------------------------------------------
+local _loaded = false
+
+---------------------------------------------------------------------------
+--加载资源
+---------------------------------------------------------------------------
+function AssetManager.Load()
+	if _loaded then return true end
+	-----------------------------------------------
+	_loaded = LuaReader.Load()
+	return _loaded
+end
+---------------------------------------------------------------------------
+--获取资源
+---------------------------------------------------------------------------
+function AssetManager.Get(global_id)
+	return LuaReader.Get(global_id)
+end
+---------------------------------------------------------------------------
+--获取指定类型的所有资源
+---------------------------------------------------------------------------
+function AssetManager.GetMessagesByType(message_type)
+	--local pbId1 = protobuf.enum_id(message_type,"ASSET_TYPE")
+	--print(pbId1)
+	--print(message_type)
+	--local pbId2 = protobuf.enum_id("Adoter.Asset.ASSET_TYPE", "Adoter.Asset." .. message_type)
+	--print(pbId2)
+	--local pbId3 = protobuf.enum_id("Adoter.Asset." .. message_type, "Adoter.Asset.ASSET_TYPE")
+	--print(pbId3)
+
+	return LuaReader.GetMessagesByType(message_type)
+end
+
+---------------------------------------------------------------------------
+--获取message类型
+---------------------------------------------------------------------------
+function AssetManager.GetMessageTypeFrom(global_id)
+	-- body
+	return LuaReader.GetMessageTypeFrom(global_id)
+end
+
+---------------------------------------------------------------------------
+--打印数据
+---------------------------------------------------------------------------
+function AssetManager.PrintMessage(message)
+	for k, v in pairs(message) do
+		if type(v) ~= "table" then print (k, v)
+		else AssetManager.PrintMessage(v)
+		end
+	end
+end
+
+---------------------------------------------------------------------------
+return AssetManager
+
+

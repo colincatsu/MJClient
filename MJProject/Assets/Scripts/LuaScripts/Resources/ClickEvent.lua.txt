@@ -149,20 +149,18 @@ end
 function ClickEvent.CreatePersonalRoom( )
 	-- body
 	--roomid
-	Player.CmdCreateRoom(Player._roomId)
+	Player.CmdCreateRoom()
 	ClickEvent.ClosePanel()
 end
 
 -------------------------------------
 ---游戏中
 ---------------------------
-tempCount = 0
 function ClickEvent.StartGameButton( gameObject )
 	-- body
-	--Player.CmdGameOperation()
+	Player.CmdGameOperation()
 	--print(gameObject)
-	DebugConsole.instance:AddMessage(""..tempCount)
-	tempCount = tempCount + 1
+	--DebugConsole.instance:AddMessage(""..tempCount)
 	--gameObject.gameObject:SetActive(false)
 end
 
