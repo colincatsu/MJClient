@@ -38,15 +38,20 @@ end
 function MahJong.mjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
-	--local _mj_asset = AssetManager.GetMessagesByType(6)
-	local loader = AssetManager.Load()
-	print(loader)
 	local data = AssetManager.Get(393236)
+	AssetManager.PrintMessage(data)
+	--local _mj_asset = AssetManager.GetMessagesByType(6)
+	
+	--[[
+	for k,v in pairs(data) do
+		print(v)
+	end
+	local loader = AssetManager.Load()
+	print(_mj_asset)
+	print(_mj_asset)
 	print(data)
-	--AssetManager.PrintMessage(data)
-	--for k,v in pairs(data) do
-	--	print(v)
-	--end
+	print(_mj_asset)
+	--]]
 end
 
 function MahJong.init()
