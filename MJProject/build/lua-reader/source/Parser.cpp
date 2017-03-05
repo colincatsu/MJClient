@@ -10,9 +10,9 @@ bool Parser::GenerateDescriptorPool()
 {
 	if (_loader) return true;
 
-	const int descriptor_cout = 2;
+	const int descriptor_cout = 1;
 
-	const string descriptor[descriptor_cout] = { "google/protobuf/descriptor.proto", "P_Asset.proto"};
+	const string descriptor[descriptor_cout] = {"P_Asset.proto"};
 
 	for (int i = 0; i < descriptor_cout; ++i)
 	{
