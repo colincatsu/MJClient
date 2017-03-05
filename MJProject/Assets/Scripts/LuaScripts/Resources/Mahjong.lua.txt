@@ -39,9 +39,11 @@ function MahJong.mjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
 	--local _mj_asset = AssetManager.GetMessagesByType(6)
+	local loader = AssetManager.Load()
+	print(loader)
 	local data = AssetManager.Get(393236)
 	print(data)
-	AssetManager.PrintMessage(data)
+	--AssetManager.PrintMessage(data)
 	--for k,v in pairs(data) do
 	--	print(v)
 	--end
