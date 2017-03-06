@@ -1,4 +1,6 @@
 local TouchCT = require "TouchCT"
+local ClickEvent = require "ClickEvent"
+local protobuf = require "protobuf"
 --[[
 local AssetManager = require "AssetManager"
 	local loader = AssetManager.Load()
@@ -8,11 +10,16 @@ local AssetManager = require "AssetManager"
 	AssetManager.PrintMessage(hoster)
 --]]
 MahJong = {}
-local _mj_asset = {}
+ClickEvent.MahJong = MahJong
 local newVector3 = CS.UnityEngine.Vector3
+local Camera = CS.UnityEngine.Camera
+local _mj_asset = {}
+local _player_middle_pos
+local _player_father = nil--player面前牌
+local _pai_bigger = 1.4--player牌放大倍数
 local _diceObj
 local _gaiObj
-local _pointFather = {}
+local _pointFather = {}--牌池父节点
 local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}
 local _modelPoolLineCount = 36
@@ -27,26 +34,32 @@ local _animationName = {
 local _animationState = ""
 function start()
 	-- body
-	MahJong.init()
+	MahJong.Init()
+	MahJong.AnimationPlay()
+	MahJong.ModelPoolInit()
+	MahJong.PlayerModelCameraPos()
 	---[[
-	MahJong.animationPlay()
-	MahJong.modelPoolInit()
-	MahJong.mjLoader()
+	MahJong.MjLoader()
 	--]]
 end
 
-function MahJong.mjLoader()
+function MahJong.MjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
-	local data = AssetManager.Get(393236)
-	AssetManager.PrintMessage(data)
-	--local _mj_asset = AssetManager.GetMessagesByType(6)
+	local loader = AssetManager.Load()
+	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
+
+	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
+	AssetManager.PrintMessage(_mj_asset)
 	
 	--[[
+	local data = AssetManager.Get(196610)
+	AssetManager.PrintMessage(data)
+	local message = protobuf.decode("Adoter.Asset.CommonLimit", data)
+	print(message.type_t)
 	for k,v in pairs(data) do
 		print(v)
 	end
-	local loader = AssetManager.Load()
 	print(_mj_asset)
 	print(_mj_asset)
 	print(data)
@@ -54,7 +67,12 @@ function MahJong.mjLoader()
 	--]]
 end
 
-function MahJong.init()
+function MahJong.PlayerModelCameraPos()
+	-- body
+	_player_middle_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth/2,Camera.main.pixelHeight/100,0.35))
+end
+
+function MahJong.Init()
 	-- body
 	_diceObj = self.transform:Find("Dice").gameObject
 	_gaiObj = self.transform:Find("Gai").gameObject
@@ -71,10 +89,10 @@ function MahJong.init()
 	_startPosition.B = newVector3(0,_modelSize.length/2,-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4)
 	_startRotation.B = newVector3(0,180,0)
 	_myAnimation = self:GetComponent("Animation")
-	self:GetComponent("AnimationRegister").animationEvent = MahJong.animationPlay
+	self:GetComponent("AnimationRegister").animationEvent = MahJong.AnimationPlay
 end
 
-function MahJong.modelPoolInit()
+function MahJong.ModelPoolInit()
 	-- body
 	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/baiban_Model")
 	local countTemp = 0
@@ -110,23 +128,48 @@ function MahJong.modelPoolInit()
 		end
 
 	end
-	MahJong.modelPoolSetActive(false)
+	MahJong.ModelPoolSetActive(false)
 	--print(i)
 end
 
-function MahJong.modelPoolSetActive(bool)
+function MahJong.ModelPoolSetActive(bool)
 	-- body
 	for k, v in pairs(_pointFather) do  
     	v:SetActive(bool)
 	end
 end
 
-function MahJong.animationPlay()
+function MahJong.CreatePlayerModel(modelName)
+	-- body
+	if not _player_father then
+		_player_father = {}
+		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
+		_player_father.father.transform:SetParent(self.transform)
+	end
+	if modelName then
+		local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
+		local paiNumber = 0
+		
+		_player_father[paiNumber] = {}
+		_player_father[paiNumber].parent = CS.UnityEngine.GameObject(modelName)
+		_player_father[paiNumber].parent.transform:SetParent(_player_father.father.transform)
+		_player_father[paiNumber].child = CS.UnityEngine.Object.Instantiate(modelTemp,_player_father[0].parent.transform)
+		_player_father[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
+		_player_father[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		_player_father[paiNumber].parent.transform.localScale = _pai_bigger * newVector3.one
+		_player_father[paiNumber].parent.transform.localPosition = _player_middle_pos
+		_player_father[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
+
+	end
+
+end
+
+function MahJong.AnimationPlay()
 	-- body
 	switch = {
 		[_animationName.stepDown] = function( ... )
 			-- body
-			MahJong.modelPoolSetActive(true)
+			MahJong.ModelPoolSetActive(true)
 			_myAnimation:Play(_animationName.stepMiddle)
 			_animationState = _animationName.stepMiddle
 		end,
@@ -152,7 +195,7 @@ function MahJong.animationPlay()
 	end
 end
 
-local _rotate_speed = 2000
+--local _rotate_speed = 2000
 function update()
 	-- body
 	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed

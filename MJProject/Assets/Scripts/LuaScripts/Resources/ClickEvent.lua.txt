@@ -158,12 +158,14 @@ end
 ---------------------------
 function ClickEvent.StartGameButton( gameObject )
 	-- body
-	Player.CmdGameOperation()
+	--Player.CmdGameOperation()
+	ClickEvent.MahJong.CreatePlayerModel("tiao_1_Model")
+	--Player.ThreadFunction(CS.MX.DebugConsole.instance:AddMessage("11111","warning"))
+
 	--print(gameObject)
 	--DebugConsole.instance:AddMessage(""..tempCount)
 	--gameObject.gameObject:SetActive(false)
 end
-
 
 ---------------------------------------------------------------------------
 ---------------------------------------------------------------------------

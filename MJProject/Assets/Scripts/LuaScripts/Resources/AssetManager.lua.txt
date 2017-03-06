@@ -1,5 +1,5 @@
 local LuaReader = require "LuaReader"
---local protobuf = require "protobuf"
+local protobuf = require "protobuf"
 
 AssetManager = {}
 local this = AssetManager
@@ -51,13 +51,26 @@ end
 --打印数据
 ---------------------------------------------------------------------------
 function AssetManager.PrintMessage(message)
-	for k, v in pairs(message) do
-		if type(v) ~= "table" then print (k, v)
-		else AssetManager.PrintMessage(v)
+	if type(message) == "table" then
+		for k, v in pairs(message) do
+			if type(v) ~= "table" then print (k, v)
+			else AssetManager.PrintMessage(v)
+			end
 		end
+	else
+		print (message)
 	end
 end
 
+function AssetManager.PrintDecodeMessage(message,message_type)
+	-- body
+	local messageTable = {}
+	for k, value in pairs(message) do
+		local tempMessage = protobuf.decode(message_type, value)
+		messageTable[k]  = tempMessage
+	end
+	return messageTable
+end
 ---------------------------------------------------------------------------
 return AssetManager
 

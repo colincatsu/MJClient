@@ -135,8 +135,7 @@ function Player.OnPaiNotify(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     print(message.data_type)
-    --Player.ThreadFunction(DebugConsole.instance:AddMessage)
-    --Player.ThreadFunction(DebugConsole.instance:AddMessage,message.pais.card_type)
+    --Player.ThreadFunction(DebugConsole.instance:AddMessage("111111"))
     for k, v in pairs(message.pais) do
         print(v.card_type)
         for i, m in pairs(v.cards) do
@@ -185,8 +184,14 @@ function Player.OnGameOperation(type_t,stuff)
     end
 end
 
+function Player.OnDebugConsole(loginfo)
+    -- body
+    DebugConsole.instance:AddMessage(loginfo)
+end
+
 function Player.OnCreatePlayer(type_t,stuff)
     -- body
+    Player.ThreadFunction(Player.OnDebugConsole,"sssssssssss")
     local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
     this._id = message.player_id
@@ -240,7 +245,7 @@ end
 function Player.ThreadFunction(invokeFunction,...)
     -- body
     if Player.self then
-        Player.self:Attach(invokeFunction,...)
+        Player.self:Attach(invokeFunction)
     else
         print("no init Player.self")
     end
