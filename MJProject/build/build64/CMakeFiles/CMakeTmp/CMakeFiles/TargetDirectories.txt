@@ -1,2 +1,0 @@
-F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_af267.dir
-F:/TimeGame_MJ/MJProject/build/build64/CMakeFiles/CMakeTmp/CMakeFiles/ALL_BUILD.dir

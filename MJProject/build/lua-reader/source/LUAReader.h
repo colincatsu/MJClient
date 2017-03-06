@@ -39,7 +39,7 @@ public:
 
 	void Get(const int64_t global_id, lua_State* L);
 	void GetMessage(const int32_t message_type, lua_State* L);
-	void GetMessagesByType(const int32_t message_type, lua_State* L);
+	void GetMessagesByType(const std::string message_type, lua_State* L);
 	int32_t GetMessageTypeFrom(const int64_t global_id, lua_State* L);
 };
 }

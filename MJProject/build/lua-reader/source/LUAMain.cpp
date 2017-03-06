@@ -53,8 +53,12 @@ static int GetMessage(lua_State* L) {
 }
 
 static int GetMessagesByType(lua_State* L) {
-	const int32_t message_type = luaL_checkinteger(L, 1);
+	log_info("%s: line:%d.", __func__, __LINE__);
+	const std::string message_type = luaL_checkstring(L, 1);
+	log_info("%s: line:%d message_type£º%s.", __func__, __LINE__, message_type);
+	log_info("%s: line:%d.", __func__, __LINE__);
 	Asset::LuaReader::Instance().GetMessagesByType(message_type, L);
+	log_info("%s: line:%d.", __func__, __LINE__);
 	return 1;
 }
 

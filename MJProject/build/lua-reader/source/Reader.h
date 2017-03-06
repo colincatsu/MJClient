@@ -40,7 +40,7 @@ private:
 	//各个ASSET_TYPE对应的MESSAGE结构
 	std::unordered_map<int32_t /*type_t*/, pb::Message*>  _messages;
 	//各个ASSET_TYPE对应的所有数据
-	std::unordered_map<int32_t /*type_t*/, std::unordered_set<pb::Message*>>  _assets_bytypes;
+	std::unordered_map<std::string /*type_t*/, std::unordered_set<pb::Message*>>  _assets_bytypes;
 	//各个全局ID对应的数据
 	std::unordered_map<int64_t /*global_id*/, pb::Message*>  _assets;
 
@@ -59,7 +59,7 @@ public:
 	//获取MESSAGE
 	pb::Message* Get(int64_t global_id); //根据ID获取数据：常用
 	pb::Message* GetMessage(int32_t message_type); //获取MESSAGE对象实体
-	std::unordered_set<pb::Message*>& GetMessagesByType(int32_t message_type); //所有类型的资源数据
+	std::unordered_set<pb::Message*>& GetMessagesByType(std::string message_type); //所有类型的资源数据
 																				//通过全局ID获取类型ID
 	int32_t GetMessageTypeFrom(int64_t global_id)
 	{

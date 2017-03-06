@@ -11,7 +11,9 @@ void LuaReader::Get(const int64_t global_id, lua_State* L)
 {
 	pb::Message* message = AssetInstance.Get(global_id);
 	if (!message) return;
-	Message2Lua(message, L);
+	//Message2Lua(message, L);
+	lua_newtable(L);
+	lua_pushstring(L, message->SerializeAsString().c_str());
 }
 
 void LuaReader::GetMessage(const int32_t message_type, lua_State* L)
@@ -21,15 +23,23 @@ void LuaReader::GetMessage(const int32_t message_type, lua_State* L)
 	Message2Lua(message, L);
 }
 
-void LuaReader::GetMessagesByType(const int32_t message_type, lua_State* L)
+void LuaReader::GetMessagesByType(const std::string message_type, lua_State* L)
 {
+	log_info("%s: line:%d message_type:\n%s", __func__, __LINE__, message_type.c_str());
+
 	std::unordered_set<pb::Message*>& messages = AssetInstance.GetMessagesByType(message_type);
 
+	int32_t i = 0;
 	lua_newtable(L);
-	for (auto it = messages.begin(); it != messages.end(); ++it) 
+	for (auto it = messages.begin(); it != messages.end(); ++it, ++i) 
 	{
-		Message2Lua(*it, L);
-		lua_settable(L, -2);
+		//Message2Lua(*it, L);
+		//lua_settable(L, -2);
+		std::string content = (*it)->DebugString();
+		log_info("%s: line:%d contet:\n%s", __func__, __LINE__, content.c_str());
+
+		lua_pushstring(L, (*it)->SerializeAsString().c_str());
+		lua_rawseti(L, -2, i + 1);
 	}
 }
 

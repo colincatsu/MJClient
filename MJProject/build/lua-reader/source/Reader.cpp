@@ -216,7 +216,9 @@ bool AssetManager::LoadAssets(fs::path& full_path)
 
 				////////////////////////////////////////////加载到类型表
 				int32_t type_t = type_field->default_value_enum()->number();
-				_assets_bytypes[type_t].emplace(message);
+				std::string type_name = type_field->default_value_enum()->name();
+				log_info("%s: line:%d type_name:%s loaded success.", __func__, __LINE__, type_name.c_str());
+				_assets_bytypes[type_name].emplace(message);
 			}
 		}
 	}
@@ -231,7 +233,7 @@ pb::Message* AssetManager::GetMessage(int32_t message_type)
 	return it->second;
 }
 
-std::unordered_set<pb::Message*>& AssetManager::GetMessagesByType(int32_t message_type)
+std::unordered_set<pb::Message*>& AssetManager::GetMessagesByType(std::string message_type)
 {
 	return _assets_bytypes[message_type];
 }
