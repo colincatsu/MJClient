@@ -1,6 +1,7 @@
 local LuaReader = require "LuaReader"
 local protobuf = require "protobuf"
 
+
 AssetManager = {}
 local this = AssetManager
 
@@ -53,8 +54,10 @@ end
 function AssetManager.PrintMessage(message)
 	if type(message) == "table" then
 		for k, v in pairs(message) do
-			if type(v) ~= "table" then print (k, v)
-			else AssetManager.PrintMessage(v)
+			if type(v) ~= "table" then
+				print (k, v)
+			else 
+				AssetManager.PrintMessage(v)
 			end
 		end
 	else
@@ -66,8 +69,10 @@ function AssetManager.PrintDecodeMessage(message,message_type)
 	-- body
 	local messageTable = {}
 	for k, value in pairs(message) do
+		print(value)
 		local tempMessage = protobuf.decode(message_type, value)
-		messageTable[k]  = tempMessage
+		--messageTable[k]  = tempMessage
+		AssetManager.PrintMessage(tempMessage)
 	end
 	return messageTable
 end

@@ -44,6 +44,16 @@ end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+function ClickEvent.PlayerID( gameObject )
+	-- body
+	Player._id = gameObject:GetComponent("InputField").text
+end
+
+function ClickEvent.PlayerPassword( gameObject )
+	-- body
+	Player._password = gameObject:GetComponent("InputField").text
+end
+
 function ClickEvent.Register( gameObject )
 	-- body
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
@@ -144,6 +154,7 @@ end
 function ClickEvent.CreateRoomId( gameObject )
 	-- body
 	Player._roomId = gameObject:GetComponent("InputField").text
+	print(gameObject.name)
 end
 
 function ClickEvent.CreatePersonalRoom( )
@@ -158,8 +169,8 @@ end
 ---------------------------
 function ClickEvent.StartGameButton( gameObject )
 	-- body
-	--Player.CmdGameOperation()
-	ClickEvent.MahJong.CreatePlayerModel("tiao_1_Model")
+	Player.CmdGameOperation()
+	--ClickEvent.MahJong.CreatePlayerModel("tiao_1_Model")
 	--Player.ThreadFunction(CS.MX.DebugConsole.instance:AddMessage("11111","warning"))
 
 	--print(gameObject)

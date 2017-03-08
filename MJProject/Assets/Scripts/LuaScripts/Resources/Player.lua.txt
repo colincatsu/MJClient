@@ -1,7 +1,4 @@
---local Network = require "Network"
---local Event = require 'Event'
 local protobuf = require "protobuf"
---local Network = require "Network"
 ---------------------------------------------------------------------------
 --成员变量
 ---------------------------------------------------------------------------
@@ -11,10 +8,13 @@ local DebugConsole = CS.MX.DebugConsole
 
 local _player = nil --玩家数据
 local _id = 0
+local _password = ""
 local _roomId = 1
 local _rightId = 0
 local _crossId = 0
 local _leftId = 0
+local _invoke_data = ""
+local _invoke_table = {}
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
@@ -130,20 +130,23 @@ end
 ---------------------------------------------
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
-
+--
 function Player.OnPaiNotify(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     print(message.data_type)
-    --Player.ThreadFunction(DebugConsole.instance:AddMessage("111111"))
+    Player._invoke_table = message
+    Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
+    --[[
     for k, v in pairs(message.pais) do
         print(v.card_type)
         for i, m in pairs(v.cards) do
             print(m)
         end
     end
+    ]]
 end
-
+--操作
 function Player.OnPaiOperation(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
@@ -184,14 +187,14 @@ function Player.OnGameOperation(type_t,stuff)
     end
 end
 
-function Player.OnDebugConsole(loginfo)
+function Player.OnDebugConsole()
     -- body
-    DebugConsole.instance:AddMessage(loginfo)
+    DebugConsole.instance:AddMessage(Player._invoke_data)
+    Player._invoke_data = ""
 end
 
 function Player.OnCreatePlayer(type_t,stuff)
     -- body
-    Player.ThreadFunction(Player.OnDebugConsole,"sssssssssss")
     local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
     this._id = message.player_id
@@ -242,9 +245,10 @@ end
 ---------------------------------------------------------------------------
 -----线程调用
 ---------------------------------------------------------------------------
-function Player.ThreadFunction(invokeFunction,...)
+function Player.ThreadFunction(invokeFunction,functionPara)
     -- body
     if Player.self then
+        Player._invoke_data = functionPara
         Player.self:Attach(invokeFunction)
     else
         print("no init Player.self")

@@ -216,8 +216,8 @@ namespace MX
 
             BinaryReader r = new BinaryReader(ms);
             byte[] message = r.ReadBytes((int)(ms.Length - ms.Position));
-            for (int i = 0; i < message.Length; i++)
-                Debug.LogWarning((int)message[i]);
+            //for (int i = 0; i < message.Length; i++)
+            //    Debug.LogWarning((int)message[i]);
             ByteBuffer buffer = new ByteBuffer(message);
 
             FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
