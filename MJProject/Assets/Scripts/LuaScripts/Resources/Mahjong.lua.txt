@@ -18,7 +18,7 @@ local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
 local _player_middle_pos
 local _player_father = nil--player面前牌
-local _pai_bigger = 1.4--player牌放大倍数
+local _pai_bigger = 1.2--player牌放大倍数
 local _diceObj
 local _gaiObj
 local _pointFather = {}--牌池父节点
@@ -52,10 +52,10 @@ function MahJong.MjLoader()
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
 	--[[
+	AssetManager.PrintMessage(_mj_asset)
 	for k, v in pairs(message) do  
     	print(v)
 	end
-	AssetManager.PrintMessage(message)
 	local data = AssetManager.Get(393238)
 	local message = protobuf.decode("Adoter.Asset.CommonLimit", data)
 	print(message.type_t)
@@ -139,38 +139,55 @@ end
 
 function MahJong.CreatePlayerPai()
 	-- body
+	local paiCount = 0
 	for k, v in pairs(Player._invoke_table.pais)do
-        print(v.card_type)
-        AssetManager.PrintMessage(_mj_asset["CARD_TYPE_WANZI"])
+        local tempPaiPool = {}
+        for j,n in pairs(_mj_asset) do
+        	if n.card_type == v.card_type then
+        		tempPaiPool = n
+        	end
+        end
         for i, m in pairs(v.cards) do
-            --print(m)
+        	paiCount = paiCount + 1
+			MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,""..paiCount)
         end
     end
-	MahJong.CreatePlayerModel()
+	MahJong.SortPlayerPai()
 end
 
 function MahJong.CreatePlayerModel(modelName,paiNumber)
 	-- body
 	if not _player_father then
 		_player_father = {}
+		_player_father.cards = {}
 		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
 		_player_father.father.transform:SetParent(self.transform)
 	end
-	if modelName then
+	if type(modelName) == "string" then
 		local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
 		
-		_player_father[paiNumber] = {}
-		_player_father[paiNumber].parent = CS.UnityEngine.GameObject(modelName)
-		_player_father[paiNumber].parent.transform:SetParent(_player_father.father.transform)
-		_player_father[paiNumber].child = CS.UnityEngine.Object.Instantiate(modelTemp,_player_father[0].parent.transform)
-		_player_father[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
-		_player_father[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
-		_player_father[paiNumber].parent.transform.localScale = _pai_bigger * newVector3.one
-		_player_father[paiNumber].parent.transform.localPosition = _player_middle_pos
-		_player_father[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
-
+		_player_father.currentPaiNumber = paiNumber
+		_player_father.cards[paiNumber] = {}
+		_player_father.cards[paiNumber].parent = CS.UnityEngine.GameObject(modelName)
+		_player_father.cards[paiNumber].parent.transform:SetParent(_player_father.father.transform)
+		_player_father.cards[paiNumber].child = CS.UnityEngine.Object.Instantiate(modelTemp,_player_father.cards[paiNumber].parent.transform)
+		_player_father.cards[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
+		_player_father.cards[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		_player_father.cards[paiNumber].parent.transform.localScale = _pai_bigger * newVector3.one
+		--_player_father.cards[paiNumber].parent.transform.localPosition = _player_middle_pos
+		_player_father.cards[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
+	else
+		print("wrongType")
 	end
+end
 
+function MahJong.SortPlayerPai()
+	-- body
+	for k,v in pairs(_player_father.cards) do
+		--print(v)
+		v.parent.transform.localPosition = _player_middle_pos +
+		_pai_bigger*newVector3((_player_father.currentPaiNumber-1)*_modelSize.width/2 - _modelSize.width*(k-1),0,0)
+	end
 end
 
 function MahJong.AnimationPlay()

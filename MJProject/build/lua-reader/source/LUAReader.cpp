@@ -13,7 +13,7 @@ void LuaReader::Get(const int64_t global_id, lua_State* L)
 	if (!message) return;
 	//Message2Lua(message, L);
 	lua_newtable(L);
-	lua_pushstring(L, message->SerializeAsString().c_str());
+	lua_pushlstring(L, message->SerializeAsString().c_str(),message->SerializeAsString().size());
 }
 
 void LuaReader::GetMessage(const int32_t message_type, lua_State* L)
@@ -38,7 +38,7 @@ void LuaReader::GetMessagesByType(const std::string message_type, lua_State* L)
 		std::string content = (*it)->DebugString();
 		log_info("%s: line:%d contet:\n%s", __func__, __LINE__, content.c_str());
 
-		lua_pushstring(L, (*it)->SerializeAsString().c_str());
+		lua_pushlstring(L, (*it)->SerializeAsString().c_str(),(*it)->SerializeAsString().size());
 		lua_rawseti(L, -2, i + 1);
 	}
 }

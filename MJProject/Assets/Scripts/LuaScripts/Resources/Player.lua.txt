@@ -4,8 +4,6 @@ local protobuf = require "protobuf"
 ---------------------------------------------------------------------------
 Player = {}
 local this = Player
-local DebugConsole = CS.MX.DebugConsole
-
 local _player = nil --玩家数据
 local _id = 0
 local _password = ""
@@ -185,12 +183,6 @@ function Player.OnGameOperation(type_t,stuff)
             print(message.source_player_id)
         end
     end
-end
-
-function Player.OnDebugConsole()
-    -- body
-    DebugConsole.instance:AddMessage(Player._invoke_data)
-    Player._invoke_data = ""
 end
 
 function Player.OnCreatePlayer(type_t,stuff)

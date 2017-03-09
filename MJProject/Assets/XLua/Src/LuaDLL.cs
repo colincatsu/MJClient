@@ -543,6 +543,15 @@ namespace XLua.LuaDLL
         {
             return luaopen_protobuf_c(L);
         }
+        //gbk
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_gbk(System.IntPtr L);
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadlGbk(System.IntPtr L)
+        {
+            return luaopen_gbk(L);
+        }
         //luareader
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int luaopen_LuaReader(System.IntPtr L);

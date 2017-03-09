@@ -69,10 +69,8 @@ function AssetManager.PrintDecodeMessage(message,message_type)
 	-- body
 	local messageTable = {}
 	for k, value in pairs(message) do
-		print(value)
 		local tempMessage = protobuf.decode(message_type, value)
-		--messageTable[k]  = tempMessage
-		AssetManager.PrintMessage(tempMessage)
+		messageTable[k]  = tempMessage
 	end
 	return messageTable
 end

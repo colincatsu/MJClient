@@ -183,7 +183,20 @@ set (THIRDPART_SRC ${THIRDPART_SRC} ${READER_SRC})
   set (THIRDPART_SRC ${THIRDPART_SRC} ${PBC_SRC})
 #Pbc
 
-#
+#Gbk
+  set (GBK_SRC 
+    lua-gbk/source/lgbk.c
+    lua-gbk/source/lpinyin.c
+    )
+  set_property(
+      SOURCE ${GBK_SRC}
+      APPEND
+      PROPERTY COMPILE_DEFINITIONS
+      LUA_LIB 
+    )
+    list(APPEND THIRDPART_INC lua-gbk/include)
+    set (THIRDPART_SRC ${THIRDPART_SRC} ${GBK_SRC})
+#Gbk
 
 #JSON
 set (RAPIDJSON_SRC lua-rapidjson/source/rapidjson.cpp)
