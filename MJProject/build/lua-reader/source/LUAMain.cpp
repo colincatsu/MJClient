@@ -22,13 +22,14 @@ static void setfuncs(lua_State* L, const luaL_Reg *funcs)
 }
 
 static int Load(lua_State* L) {
-	if (!Parser::Instance().GenerateDescriptorPool())
+	const std::string assetFilePath = luaL_checkstring(L, 1);
+	if (!Parser::Instance().GenerateDescriptorPool(assetFilePath))
 	{
 		lua_pushboolean(L, false);
 		log_info("%s: line:%d GenerateDescriptorPool initial error.", __func__, __LINE__);
 		return 1;
 	}
-	if (!Asset::AssetManager::Instance().Load())
+	if (!Asset::AssetManager::Instance().Load(assetFilePath))
 	{
 		lua_pushboolean(L, false);
 		log_info("%s: line:%d Asset load initial error.", __func__, __LINE__);

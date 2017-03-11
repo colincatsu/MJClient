@@ -11,6 +11,7 @@ local _currentPanel = {}
 local _popPanel = {}
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
+
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
 	_currentPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
 	_currentPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one

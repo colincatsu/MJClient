@@ -18,7 +18,7 @@ local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
 local _player_middle_pos
 local _player_father = nil--player面前牌
-local _pai_bigger = 1.2--player牌放大倍数
+local _pai_bigger = 1--player牌放大倍数
 local _diceObj
 local _gaiObj
 local _pointFather = {}--牌池父节点
@@ -48,7 +48,8 @@ end
 function MahJong.MjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
-	local loader = AssetManager.Load()
+	local resultPath = CS.LuaCommon.resultPath
+	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
 	--[[
@@ -82,17 +83,17 @@ function MahJong.Init()
 	_startRotation.N = newVector3(0,-90,0)
 	_pointFather.X = _gaiObj.transform:Find("Point_X/Father").gameObject
 	_startPosition.X = newVector3(-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4,_modelSize.length/2,0)
-	_startRotation.X = newVector3(0,90,0)
+	_startRotation.X = newVector3(0,-180,0)
 	_pointFather.B = _gaiObj.transform:Find("Point_B/Father").gameObject
 	_startPosition.B = newVector3(0,_modelSize.length/2,-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4)
-	_startRotation.B = newVector3(0,180,0)
+	_startRotation.B = newVector3(0,-270,0)
 	_myAnimation = self:GetComponent("Animation")
 	self:GetComponent("AnimationRegister").animationEvent = MahJong.AnimationPlay
 end
 
 function MahJong.ModelPoolInit()
 	-- body
-	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/baiban_Model")
+	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
 	local countTemp = 0
 	for i=1,_modelPoolLineCount*4 do
 		if i <= _modelPoolLineCount then

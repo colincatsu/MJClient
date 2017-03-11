@@ -3,17 +3,19 @@ local protobuf = require "protobuf"
 --Player = require "Player"
 
 --local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
-local _addr = io.open("F:/MJClient/MJProject/Assets/Scripts/LuaScripts/Resources/google/protobuf/".."descriptor.pb","rb")
+--local _addr = io.open("Assets/Scripts/LuaScripts/Resources/google/protobuf/".."descriptor.pb","rb")
+local resultPath = CS.LuaCommon.resultPath
+local _addr = io.open(resultPath.."google/protobuf/".."descriptor.pb","rb")
 local _buffer = _addr:read "*a"
 _addr:close()
 protobuf.register(_buffer)
 ---[[
-_addr = io.open("F:/MJClient/MJProject/Assets/Scripts/LuaScripts/Resources/".."P_Asset.pb","rb")
+_addr = io.open(resultPath.."P_Asset.pb","rb")
 _buffer = _addr:read "*a"
 _addr:close()
 protobuf.register(_buffer)
 ---[[
-_addr = io.open("F:/MJClient/MJProject/Assets/Scripts/LuaScripts/Resources/".."P_Protocol.pb","rb")
+_addr = io.open(resultPath.."P_Protocol.pb","rb")
 _buffer = _addr:read "*a"
 _addr:close()
 protobuf.register(_buffer)--]]

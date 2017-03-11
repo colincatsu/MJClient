@@ -28,6 +28,7 @@ public class LuaBehaviour : MonoBehaviour {
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;//1 second 
 
+    private Action luaAwake;
     private Action luaStart;
     private Action luaUpdate;
     private Action luaOnDestroy;
@@ -59,8 +60,8 @@ public class LuaBehaviour : MonoBehaviour {
 
 
         LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
-
-        Action luaAwake = scriptEnv.Get<Action>("awake");
+        
+        luaAwake = scriptEnv.Get<Action>("awake");
         scriptEnv.Get("start", out luaStart);
         scriptEnv.Get("update", out luaUpdate);
         scriptEnv.Get("ondestroy", out luaOnDestroy);

@@ -22,7 +22,7 @@ public:
 	}
 
 public:
-	bool GenerateDescriptorPool();
+	bool GenerateDescriptorPool(const std::string filePath);
 
 	FileDescriptor* GetFileDescriptor() { return _file_descriptor; }
 	DescriptorPool& GetDescriptorPool() { return _descriptor_pool; }

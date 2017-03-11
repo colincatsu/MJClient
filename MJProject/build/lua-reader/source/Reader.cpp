@@ -11,14 +11,14 @@ AssetManager::AssetManager() : _parse_sucess(false)
 
 }
 
-bool AssetManager::Load()
+bool AssetManager::Load(const std::string assetFilePath)
 {
 	std::cout << __func__ << ": start load..." << std::endl;
 	log_info("%s: Start load...", __func__);
 
 	if (_parse_sucess) return true;
 
-	this->_asset_path = "./Asset/Asset/";
+	this->_asset_path = assetFilePath;
 
 	this->_file_descriptor = Parser::Instance().GetFileDescriptor();
 	if (!this->_file_descriptor)

@@ -67,7 +67,7 @@ public:
 		return message_type;
 	}
 	//¼ÓÔØÊı¾İ	
-	bool Load();
+	bool Load(const std::string assetFilePath);
 };
 
 #define AssetInstance AssetManager::Instance()

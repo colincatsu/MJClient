@@ -6,13 +6,13 @@
 #include <sstream>
 #include <fstream>
 
-bool Parser::GenerateDescriptorPool()
+bool Parser::GenerateDescriptorPool(const std::string filePath)
 {
 	if (_loader) return true;
 
 	const int descriptor_cout = 1;
-
-	const string descriptor[descriptor_cout] = {"P_Asset.proto"};
+	const string tempPath = filePath + "P_Asset.proto";
+	const string descriptor[descriptor_cout] = {tempPath};
 
 	for (int i = 0; i < descriptor_cout; ++i)
 	{
