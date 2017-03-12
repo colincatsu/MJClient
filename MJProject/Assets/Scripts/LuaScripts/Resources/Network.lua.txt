@@ -23,6 +23,7 @@ protobuf.register(_buffer)--]]
 Network = {}
 local this = Network
 local _socketClientClass = CS.MX.SocketClient
+local _byteBufferClass = CS.MX.ByteBuffer
 local _socketClient = _socketClientClass()
 
 ---------------------------------------------------------------------------
@@ -69,14 +70,17 @@ function Network.SendProtocol(messageName, message)
 
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
-    _socketClient:SendProtocol(msg)
+
+    buffer = _byteBufferClass(msg)
+    
+    _socketClient:SendProtocol(buffer)
     --]]
 end
 
 ---------------------------------------------------------------------------
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
-    Player.CmdCreatePlayer()
+    --Player.CmdCreatePlayer()
 end
 
 function Network.OnClose()
@@ -112,6 +116,8 @@ function Network.OnReceived(buffer)
     if not buffer then return 1 end
 
     local data = buffer:ReadBytes()
+
+    --buffer:Close()
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
     ----------------------------------------------------

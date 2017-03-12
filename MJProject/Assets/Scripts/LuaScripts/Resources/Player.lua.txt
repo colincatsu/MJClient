@@ -5,7 +5,7 @@ local protobuf = require "protobuf"
 Player = {}
 local this = Player
 local _player = nil --玩家数据
-local _id = 0
+local _id = ""
 local _password = ""
 local _roomId = 1
 local _rightId = 0
@@ -40,11 +40,13 @@ end
 
 function Player.CmdLogin(name,passWord)
     -- body
+    print(type(name))
+    print(name)
     local login = {
         account = {
             username = name,--""
-            password = passWord,--""
-        }
+            --password = passWord,--""
+        },
     }
     this.SendProtocol("Login",login)
 end

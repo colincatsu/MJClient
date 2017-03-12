@@ -1,5 +1,5 @@
 
-á8
+‡<
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -17,14 +17,15 @@
 
 cost_count (
 
-base_count ("æ
+base_count ("—
 CommonLimitA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_LIMIT2
 common_prop (2.Adoter.Asset.AssetCommonProp?
 
 limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 cool_down_type (2(.Adoter.Asset.CommonLimit.COOL_DOWN_TYPEL
-cool_down_clear_type (2..Adoter.Asset.CommonLimit.COOL_DOWN_CLEAR_TYPE"v
+cool_down_clear_type (2..Adoter.Asset.CommonLimit.COOL_DOWN_CLEAR_TYPE
+	max_count ("v
 COMMON_LIMIT_TYPE
 COMMON_LIMIT_TYPE_PLANT!
 COMMON_LIMIT_TYPE_LUCKY_PLATE!
@@ -78,7 +79,20 @@ voice_path ("÷
 REWARD_TYPE
 REWARD_TYPE_DIAMOND
 REWARD_TYPE_HUANLEDOU
-REWARD_TYPE_ITEM"ˇ
+REWARD_TYPE_ITEM"™
+CommonConsumeC
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONSUME2
+common_prop (2.Adoter.Asset.AssetCommonProp
+elements_count (:35
+elements (2#.Adoter.Asset.CommonConsume.Elementq
+Element>
+consume_type (2(.Adoter.Asset.CommonConsume.CONSUME_TYPE
+item_id (
+consume_count ("[
+CONSUME_TYPE
+CONSUME_TYPE_DIAMOND
+CONSUME_TYPE_HUANLEDOU
+CONSUME_TYPE_ITEM"ˇ
 
 LuckyPlate@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_LUCKY_PLATE2
@@ -93,16 +107,24 @@ DailyBonus@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
 common_reward_id (
-common_limit_id ("÷
+common_limit_id ("Ï
 Mall9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MALL2
-common_prop (2.Adoter.Asset.AssetCommonProp
-item_id (
+common_prop (2.Adoter.Asset.AssetCommonProp1
 
-item_count (
-diamond (
-diamond_show (
-activity_id ("¿
+goods_type (2.Adoter.Asset.Mall.GOODS_TYPE
+item_id (
+count (
+diamond (
+diamond_show (
+	huanledou (
+huanledou_show	 (
+activity_id
+ (";
+
+GOODS_TYPE
+GOODS_TYPE_HUANLEDOU
+GOODS_TYPE_ITEM"¿
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -163,17 +185,16 @@ voice_path ("ù
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_AVATAR2
 common_prop (2.Adoter.Asset.AssetCommonProp
 avatars_count (:20
-avatars ("´
+avatars ("è
 Activity=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ACTIVITY2
 common_prop (2.Adoter.Asset.AssetCommonProp;
 activity_type (2$.Adoter.Asset.Activity.ACTIVITY_TYPE
 
 start_time (
-	stop_time ("H
+	stop_time (",
 ACTIVITY_TYPE
-ACTIVITY_TYPE_STOP_TIME
-ACTIVITY_TYPE_DURATION"‹
+ACTIVITY_TYPE_STOP_TIME"‹
 DailyAllowanceD
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_ALLOWANCE2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -220,7 +241,7 @@ start_time (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*œ
+VERSION_TYPE_TAIWAN*Ó
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -241,7 +262,8 @@ ASSET_TYPE
 ASSET_TYPE_FACE
 ASSET_TYPE_AVATAR
 ASSET_TYPE_ACTIVITY
-ASSET_TYPE_DAILY_ALLOWANCE
+ASSET_TYPE_DAILY_ALLOWANCE
+ASSET_TYPE_COMMON_CONSUME
 ASSET_TYPE_COUNT»
 ITEM_TYPE_BEGIN…
 ITEM_TYPE_POTION 

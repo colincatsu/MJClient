@@ -259,18 +259,19 @@ namespace MX
         }
 
         //发送消息
-        public void SendMessage(ByteBuffer buffer)
+        public void SendProtocol(ByteBuffer buffer)
         {
-            SessionSend(buffer.ToBytes());
-            buffer.Close();
+            byte[] bytes = buffer.ReadBytes();
+            SessionSend(bytes);
+            //buffer.Close();
         }
 
-        public void SendProtocol(string meta)
-        {
-            //Debug.LogError(meta.ToString());
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(meta);
-            SessionSend(bytes);
-        }
+        //public void SendProtocol(string meta)
+        //{
+        //    //Debug.LogError(meta.ToString());
+        //    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(meta);
+        //    SessionSend(bytes);
+        //}
 
         //public void SendProtocol(byte[] meta)
         //{

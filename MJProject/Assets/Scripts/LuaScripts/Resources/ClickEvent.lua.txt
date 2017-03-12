@@ -57,7 +57,7 @@ end
 function ClickEvent.Register( gameObject )
 	-- body
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
-		--Player.CmdLogin(Player._id)
+		Player.CmdLogin(Player._id)
 		ClickEvent.DestroyPanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
