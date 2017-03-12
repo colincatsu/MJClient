@@ -87,6 +87,15 @@ function Player.CmdGameOperation()
     this.SendProtocol("GameOperation",gameOperation)
 end
 
+function Player.CmdPaiOperation(paiOperType,paiChiTable,paiDaTable)
+    -- body
+    local paiOperation = {
+        oper_type = paiOperType,
+        pais = paiChiTable,
+        pai = paiDaTable,
+    }
+    this.SendProtocol("PaiOperation",paiOperation)
+end
 
 ---------------------------------------------------------------------------
 --进入场景
@@ -129,6 +138,29 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+function Player.OnPaiOperationAlert(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
+    print(message.check_return)
+    switch = {
+        ["PAI_CHECK_RETURN_HU"] = function ( ... )
+            -- body
+        end,
+        ["PAI_CHECK_RETURN_GANG"] = function ( ... )
+            -- body
+        end,
+        ["PAI_CHECK_RETURN_PENG"] = function (paiTable)
+            -- body
+            Player.MahJong.PengPai(paiTable)
+        end,
+        ["PAI_CHECK_RETURN_CHI"] = function ( ... )
+            -- body
+        end,
+    }
+    local result = switch[message.check_return]
+    result(message.pai)
+end
+
 function Player.OnPaiNotify(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)

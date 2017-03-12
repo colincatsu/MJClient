@@ -1,5 +1,5 @@
 
-Ê5
+á8
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -56,11 +56,13 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("¢
+voice_path ("÷
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
-max_cards_count (:136"‘
+max_cards_count (:136
+daily_bonus_id (
+daily_allowance_id ("‘
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -70,9 +72,9 @@ voice_path ("¢
 reward_type (2&.Adoter.Asset.CommonReward.REWARD_TYPE
 comments (
 	icon_name (
-item_id (
+item_id (
 count (
-common_limit_id ("W
+common_limit_id ("W
 REWARD_TYPE
 REWARD_TYPE_DIAMOND
 REWARD_TYPE_HUANLEDOU
@@ -87,8 +89,8 @@ LuckyPlate@
 weight (
 common_reward_id ("µ
 
-DialyBonus@
-type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DIALY_BONUS2
+DailyBonus@
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
 common_reward_id (
 common_limit_id ("÷
@@ -161,18 +163,23 @@ voice_path ("ù
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_AVATAR2
 common_prop (2.Adoter.Asset.AssetCommonProp
 avatars_count (:20
-avatars ("Ω
+avatars ("´
 Activity=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ACTIVITY2
 common_prop (2.Adoter.Asset.AssetCommonProp;
 activity_type (2$.Adoter.Asset.Activity.ACTIVITY_TYPE
 
-start_time (
-	stop_time (
-duration ("H
+start_time (
+	stop_time ("H
 ACTIVITY_TYPE
 ACTIVITY_TYPE_STOP_TIME
-ACTIVITY_TYPE_DURATION"û
+ACTIVITY_TYPE_DURATION"‹
+DailyAllowanceD
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_ALLOWANCE2
+common_prop (2.Adoter.Asset.AssetCommonProp
+huanledou_below (:2000
+common_reward_id (
+common_limit_id ("û
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -213,7 +220,7 @@ start_time (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*Ø
+VERSION_TYPE_TAIWAN*œ
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -224,7 +231,7 @@ ASSET_TYPE
 ASSET_TYPE_MJ_CARD
 ASSET_TYPE_COMMON_CONST
 ASSET_TYPE_LUCKY_PLATE
-ASSET_TYPE_DIALY_BONUS	
+ASSET_TYPE_DAILY_BONUS	
 ASSET_TYPE_MALL
 
 ASSET_TYPE_ROOM_FAN
@@ -233,7 +240,8 @@ ASSET_TYPE
 ASSET_TYPE_VOICE_ALTER
 ASSET_TYPE_FACE
 ASSET_TYPE_AVATAR
-ASSET_TYPE_ACTIVITY
+ASSET_TYPE_ACTIVITY
+ASSET_TYPE_DAILY_ALLOWANCE
 ASSET_TYPE_COUNT»
 ITEM_TYPE_BEGIN…
 ITEM_TYPE_POTION 

@@ -1,5 +1,7 @@
-local TouchCT = require "TouchCT"
 local ClickEvent = require "ClickEvent"
+local PlayUICT = require "PlayUICT"
+local FLibEvent = require "FLibEvent"
+local Network = require "Network"
 local Player = require "Player"
 local protobuf = require "protobuf"
 --[[
@@ -13,12 +15,14 @@ local AssetManager = require "AssetManager"
 MahJong = {}
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
+Player.self = self
 local newVector3 = CS.UnityEngine.Vector3
 local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
 local _player_middle_pos
 local _player_father = nil--player面前牌
 local _pai_bigger = 1--player牌放大倍数
+local _current_click_pai
 local _diceObj
 local _gaiObj
 local _pointFather = {}--牌池父节点
@@ -36,6 +40,7 @@ local _animationName = {
 local _animationState = ""
 function start()
 	-- body
+	PlayUICT.Init()
 	MahJong.Init()
 	MahJong.AnimationPlay()
 	MahJong.ModelPoolInit()
@@ -150,13 +155,13 @@ function MahJong.CreatePlayerPai()
         end
         for i, m in pairs(v.cards) do
         	paiCount = paiCount + 1
-			MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,""..paiCount)
+			MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
         end
     end
 	MahJong.SortPlayerPai()
 end
 
-function MahJong.CreatePlayerModel(modelName,paiNumber)
+function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 	-- body
 	if not _player_father then
 		_player_father = {}
@@ -169,23 +174,72 @@ function MahJong.CreatePlayerModel(modelName,paiNumber)
 		
 		_player_father.currentPaiNumber = paiNumber
 		_player_father.cards[paiNumber] = {}
-		_player_father.cards[paiNumber].parent = CS.UnityEngine.GameObject(modelName)
+		_player_father.cards[paiNumber].parent = CS.UnityEngine.GameObject(""..paiNumber)
 		_player_father.cards[paiNumber].parent.transform:SetParent(_player_father.father.transform)
 		_player_father.cards[paiNumber].child = CS.UnityEngine.Object.Instantiate(modelTemp,_player_father.cards[paiNumber].parent.transform)
+		_player_father.cards[paiNumber].child.name = modelName
+		_player_father.cards[paiNumber].child:AddComponent(typeof(CS.TouchCT))
+		_player_father.cards[paiNumber].child:GetComponent("TouchCT").onClick = MahJong.ClickPaiEvent
 		_player_father.cards[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
 		_player_father.cards[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		_player_father.cards[paiNumber].parent.transform.localScale = _pai_bigger * newVector3.one
-		--_player_father.cards[paiNumber].parent.transform.localPosition = _player_middle_pos
 		_player_father.cards[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
+		_player_father.cards[paiNumber].paiType = paiType
+		_player_father.cards[paiNumber].paiValue = paiValue
 	else
 		print("wrongType")
 	end
 end
 
-function MahJong.SortPlayerPai()
+function MahJong.ClickPaiEvent(gameObject)
 	-- body
+	if MahJong._current_click_pai then
+		if MahJong._current_click_pai == gameObject then
+			print("dapai")
+			local paiNumber = tonumber(gameObject.transform.parent.name)
+			local paiElement = {
+				card_type = _player_father.cards[paiNumber].paiType,
+				card_value = _player_father.cards[paiNumber].paiValue,
+			}
+			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
+			MahJong._current_click_pai = nil
+			MahJong.DaPai(paiNumber)
+		else
+			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+			MahJong._current_click_pai = gameObject
+			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+		end
+	else	
+		MahJong._current_click_pai = gameObject
+		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+	end
+end
+
+function MahJong.DaPai(paiNumber)
+	-- body
+	if paiNumber then
+		_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+		CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+		_player_father.cards[paiNumber] = {}
+		MahJong.SortPlayerPai(paiNumber)
+	end
+end
+
+function MahJong.PengPai(paiTable)
+	-- body
+	
+end
+
+function MahJong.SortPlayerPai(deleteNumber)
+	-- body
+	if deleteNumber then
+		for i=deleteNumber,_player_father.currentPaiNumber do
+			_player_father.cards[i] = _player_father.cards[i+1]
+			_player_father.cards[i].parent.name = tostring(i)
+		end
+		_player_father.cards[_player_father.currentPaiNumber+1] = nil
+	end
 	for k,v in pairs(_player_father.cards) do
-		--print(v)
 		v.parent.transform.localPosition = _player_middle_pos +
 		_pai_bigger*newVector3((_player_father.currentPaiNumber-1)*_modelSize.width/2 - _modelSize.width*(k-1),0,0)
 	end

@@ -1,18 +1,12 @@
-local ClickEvent = require "ClickEvent"
-local Network = require "Network"
-local Player = require "Player"
-Player.self = self
-ClickEvent.self = self
-local FLibEvent = require "FLibEvent"
+
 PlayUICT = {}
-function start()
+function PlayUICT.Init()
 	-- body
+	self = CS.UnityEngine.GameObject.Find("Canvas/UICamera")
+	ClickEvent.self = self
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._play_game_ui)
 end
 
-function update( ... )
-	-- body
-end
 
 
 return PlayUICT

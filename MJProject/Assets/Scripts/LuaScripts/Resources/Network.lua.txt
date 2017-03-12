@@ -44,6 +44,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
+    FLibEvent.AddEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
 end
 
 ---------------------------------------------------------------------------
@@ -85,12 +86,13 @@ end
 
 function Network.DelEventListener()
     --FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
-    FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.DelEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
-    FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.DelEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
+    FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
+    FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
+    FLibEvent.DelEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
 end
 
 ---------------------------------------------------------------------------
