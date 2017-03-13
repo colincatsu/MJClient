@@ -227,7 +227,39 @@ end
 
 function MahJong.PengPai(paiTable)
 	-- body
-	
+	local deleteCardsCount = 0
+	for k,v in pairs(_player_father.cards) do
+		if paiTable.card_type == v.card_type and paiTable.card_value == v.card_value and deleteCardsCount < 2 then
+			deleteCardsCount = deleteCardsCount + 1
+			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+			CS.UnityEngine.Object.Destroy(v.parent)
+			v = {}
+			MahJong.SortPlayerPai(k)
+		end
+	end
+end
+
+function MahJong.ChiPai(paiTable)
+	-- body
+	--paiTable.card_value --+-1
+	print("ChiPai")
+end
+
+function MahJong.GangPai(paiTable)
+	-- body
+	for k,v in pairs(_player_father.cards) do
+		if paiTable.card_type == v.card_type and paiTable.card_value == v.card_value then
+			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+			CS.UnityEngine.Object.Destroy(v.parent)
+			v = {}
+			MahJong.SortPlayerPai(k)
+		end
+	end
+end
+
+function MahJong.HuPai(paiTable)
+	-- body
+	print("HuPai")
 end
 
 function MahJong.SortPlayerPai(deleteNumber)

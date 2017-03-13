@@ -19,6 +19,19 @@ function ClickEvent.CreateNewPanel(panelName)
 	_currentPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
 	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
 	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
+
+	if panelName == ClickEvent.panelTable._play_game_ui then
+		_currentPanel.starGameButton = 0
+		_currentPanel.operationButton = {}
+		_currentPanel.operationButton.gangButton = 1
+		_currentPanel.operationButton.chiButton = 2
+		_currentPanel.operationButton.pengButton = 3
+		_currentPanel.operationButton.huButton = 4
+		_currentPanel.operationButton.guoButton = 5
+		for k,v in pairs(_currentPanel.operationButton) do
+			_currentPanel.buttonList[v].gameObject:SetActive(false)
+		end
+	end
 end
 
 function ClickEvent.PopPanel( panelName )
@@ -171,12 +184,44 @@ end
 function ClickEvent.StartGameButton( gameObject )
 	-- body
 	Player.CmdGameOperation()
-	--ClickEvent.MahJong.CreatePlayerModel("tiao_1_Model")
-	--Player.ThreadFunction(CS.MX.DebugConsole.instance:AddMessage("11111","warning"))
+	
+	gameObject:SetActive(false)
+end
 
-	--print(gameObject)
-	--DebugConsole.instance:AddMessage(""..tempCount)
-	--gameObject.gameObject:SetActive(false)
+function ClickEvent.GangClickButton(gameObject)
+	-- body
+	_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(false)
+	_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(false)
+    _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
+	Player.MahJong.GangPai(Player._pai_operation_alert_cache)
+end
+
+function ClickEvent.ChiClickButton(gameObject)
+	-- body
+	_currentPanel.buttonList[_currentPanel.operationButton.chiButton].gameObject:SetActive(false)
+    _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
+	Player.MahJong.ChiPai(Player._pai_operation_alert_cache)
+end
+
+function ClickEvent.PengClickButton(gameObject)
+	-- body
+	_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(false)
+    _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
+	Player.MahJong.PengPai(Player._pai_operation_alert_cache)
+end
+
+function ClickEvent.HuClickButton(gameObject)
+	-- body
+	_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(false)
+    _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
+    Player.MahJong.HuPai(Player._pai_operation_alert_cache)
+end
+
+function ClickEvent.GuoClickButton(gameObject)
+	-- body
+	for k,v in pairs(_currentPanel.operationButton) do
+		_currentPanel.buttonList[v].gameObject:SetActive(false)
+	end
 end
 
 ---------------------------------------------------------------------------

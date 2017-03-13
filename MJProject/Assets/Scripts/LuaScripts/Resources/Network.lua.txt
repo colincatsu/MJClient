@@ -71,9 +71,7 @@ function Network.SendProtocol(messageName, message)
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
 
-    buffer = _byteBufferClass(msg)
-    
-    _socketClient:SendProtocol(buffer)
+    _socketClient:SendProtocol(msg)
     --]]
 end
 

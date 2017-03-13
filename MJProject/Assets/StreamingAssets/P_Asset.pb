@@ -1,5 +1,5 @@
 
-à<
+û?
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -107,7 +107,7 @@ DailyBonus@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
 common_reward_id (
-common_limit_id ("ì
+common_limit_id ("ó
 Mall9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MALL2
 common_prop (2.Adoter.Asset.AssetCommonProp1
@@ -120,11 +120,11 @@ goods_type (2.Adoter.Asset.Mall.GOODS_TYPE
 	huanledou (
 huanledou_show	 (
 activity_id
- (";
+ ("B
 
 GOODS_TYPE
-GOODS_TYPE_HUANLEDOU
-GOODS_TYPE_ITEM"À
+GOODS_TYPE_HUANLEDOU
+GOODS_TYPE_NORMAL_ITEM"À
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -200,7 +200,18 @@ start_time (
 common_prop (2.Adoter.Asset.AssetCommonProp
 huanledou_below (:2000
 common_reward_id (
-common_limit_id ("ž
+common_limit_id ("ð
+Recharge=
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_RECHARGE2
+common_prop (2.Adoter.Asset.AssetCommonProp
+	plat_name (
+
+product_id (
+	icon_name (
+price (
+
+price_show (
+gain_diamond ("ž
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -216,7 +227,10 @@ start_time (
 	Item_Item9
 type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_BEGIN
 stuff (
-stuff_extra ("¸
+stuff_extra ("…
+Item_Normal=
+type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_ROOM_CARD7
+item_common_prop (2.Adoter.Asset.Item_CommonProp"¸
 Item_Potion:
 type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_POTION7
 item_common_prop (2.Adoter.Asset.Item_CommonProp:
@@ -241,7 +255,7 @@ start_time (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*î
+VERSION_TYPE_TAIWAN*‡
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -263,7 +277,8 @@ ASSET_TYPE
 ASSET_TYPE_AVATAR
 ASSET_TYPE_ACTIVITY
 ASSET_TYPE_DAILY_ALLOWANCE
-ASSET_TYPE_COMMON_CONSUME
+ASSET_TYPE_COMMON_CONSUME
+ASSET_TYPE_RECHARGE
 ASSET_TYPE_COUNTÈ
 ITEM_TYPE_BEGINÉ
 ITEM_TYPE_POTIONÊ

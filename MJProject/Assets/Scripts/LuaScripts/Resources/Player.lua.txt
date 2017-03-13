@@ -13,6 +13,7 @@ local _crossId = 0
 local _leftId = 0
 local _invoke_data = ""
 local _invoke_table = {}
+local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
@@ -147,20 +148,29 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     switch = {
         ["PAI_CHECK_RETURN_HU"] = function ( ... )
             -- body
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.huButton].gameObject:SetActive(true)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
         end,
         ["PAI_CHECK_RETURN_GANG"] = function ( ... )
             -- body
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.gangButton].gameObject:SetActive(true)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
         end,
-        ["PAI_CHECK_RETURN_PENG"] = function (paiTable)
+        ["PAI_CHECK_RETURN_PENG"] = function (...)
             -- body
-            Player.MahJong.PengPai(paiTable)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
         end,
         ["PAI_CHECK_RETURN_CHI"] = function ( ... )
             -- body
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
         end,
     }
     local result = switch[message.check_return]
-    result(message.pai)
+    result()
+    Player._pai_operation_alert_cache = message.pai
 end
 
 function Player.OnPaiNotify(type_t,stuff)
