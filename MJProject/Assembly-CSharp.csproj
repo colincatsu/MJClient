@@ -117,6 +117,7 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\MainUICT.lua.txt" />
      <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\test_libevent.lua.txt" />
+     <None Include="Assets\Scripts\LuaScripts\Resources\Enum.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaRegister.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaInterfaceBridge.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaClassWrap.tpl.txt" />

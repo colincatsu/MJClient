@@ -200,7 +200,7 @@ function ClickEvent.ChiClickButton(gameObject)
 	-- body
 	_currentPanel.buttonList[_currentPanel.operationButton.chiButton].gameObject:SetActive(false)
     _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
-	Player.MahJong.ChiPai(Player._pai_operation_alert_cache)
+	Player.MahJong.ChiPai()
 end
 
 function ClickEvent.PengClickButton(gameObject)
