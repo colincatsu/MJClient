@@ -23,7 +23,7 @@ protobuf.register(_buffer)--]]
 Network = {}
 local this = Network
 local _socketClientClass = CS.MX.SocketClient
-local _byteBufferClass = CS.MX.ByteBuffer
+--local _byteBufferClass = CS.MX.ByteBuffer
 local _socketClient = _socketClientClass()
 
 ---------------------------------------------------------------------------
@@ -46,6 +46,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.AddEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
+    FLibEvent.AddEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
 end
 
 ---------------------------------------------------------------------------
@@ -67,7 +68,7 @@ function Network.SendProtocol(messageName, message)
 
     local type_key = protobuf.decode("Adoter.Asset." .. messageName, message_stuff)
     meta.type_t = type_key.type_t
-
+    
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
 
@@ -79,6 +80,7 @@ end
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
     --Player.CmdCreatePlayer()
+    Player.CmdEnterGame(347)
 end
 
 function Network.OnClose()
@@ -95,6 +97,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.DelEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
+    FLibEvent.DelEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
 end
 
 ---------------------------------------------------------------------------

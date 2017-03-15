@@ -202,6 +202,7 @@ function MahJong.ClickPaiEvent(gameObject)
 	if MahJong._current_click_pai then
 		if currentOperationState ~= operationState.DAPAI then
 			return
+		end
 		if MahJong._current_click_pai == gameObject then
 			print("dapai")
 			local paiNumber = tonumber(gameObject.transform.parent.name)
@@ -331,8 +332,6 @@ function MahJong.ChiPai(paiTable)
 	--paiTable.card_value --+-1
 	print("ChiPai")
 	local paiNumber
-	local paiElement = {}
-	Player._pai_operation_alert_cache
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
 		paiElement[k].card_type = v.card_type
 		paiElement[k].card_value = v.paiValue

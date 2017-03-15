@@ -1,5 +1,5 @@
 
-˚?
+ê@
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -57,13 +57,14 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("÷
+voice_path ("Î
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
 max_cards_count (:136
 daily_bonus_id (
-daily_allowance_id ("‘
+daily_allowance_id (
+time_out (:8"‘
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -227,9 +228,9 @@ price_show (
 	Item_Item9
 type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_BEGIN
 stuff (
-stuff_extra ("Ö
-Item_Normal=
-type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_ROOM_CARD7
+stuff_extra ("Ç
+Item_Normal:
+type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_NORMAL7
 item_common_prop (2.Adoter.Asset.Item_CommonProp"∏
 Item_Potion:
 type_t (2.Adoter.Asset.ASSET_TYPE:ITEM_TYPE_POTION7
@@ -255,7 +256,7 @@ price_show (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*á
+VERSION_TYPE_TAIWAN*ä
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -282,8 +283,8 @@ ASSET_TYPE
 ASSET_TYPE_COUNT»
 ITEM_TYPE_BEGIN…
 ITEM_TYPE_POTION 
-ITEM_TYPE_ROOM_CARDÀ
-ITEM_TYPE_GUNÃ*d
+ITEM_TYPE_ROOM_CARDÀ
+ITEM_TYPE_NORMALÃ*d
 	ROOM_TYPE
 ROOM_TYPE_FRIEND
 ROOM_TYPE_XINSHOU

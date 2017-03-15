@@ -1,4 +1,5 @@
 local protobuf = require "protobuf"
+local AssetManager = require "AssetManager"
 ---------------------------------------------------------------------------
 --成员变量
 ---------------------------------------------------------------------------
@@ -141,6 +142,15 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnPlayerList(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
+    Player._id = message.player_list[1]
+    --Player.CmdEnterGame(Player._id)
+    --Player.CmdEnterGame(12)
+end
+
 function Player.OnPaiOperationAlert(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
@@ -185,6 +195,7 @@ function Player.OnPaiNotify(type_t,stuff)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
         Player._invoke_table = message
+        ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
         Player._pai_operation_alert_cache = message.pai
