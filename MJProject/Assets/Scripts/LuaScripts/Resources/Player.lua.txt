@@ -150,27 +150,27 @@ function Player.OnPaiOperationAlert(type_t,stuff)
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.huButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = operationState.HU
+            Player.MahJong.currentOperationState = Player.MahJong.operationState.HU
         end,
         ["PAI_CHECK_RETURN_GANG"] = function ( ... )
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.gangButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = operationState.GANG
+            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.GANG
         end,
         ["PAI_CHECK_RETURN_PENG"] = function (...)
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = operationState.PENG
+            Player.MahJong.currentOperationState = Player.MahJong.operationState.PENG
         end,
         ["PAI_CHECK_RETURN_CHI"] = function ( ... )
             -- body
             --ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = operationState.CHI
-            Player.MahJong.CheckChiPai(Player._pai_operation_alert_cache)
+            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.CHI
+            Player.ThreadFunction(Player.MahJong.CheckChiPai)
         end,
     }
     Player._pai_operation_alert_cache = message.pai
@@ -183,10 +183,12 @@ function Player.OnPaiNotify(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     print(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
-    elseif message.data_type == "" then
+        Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
+        Player._invoke_table = message
+    elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
+        ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
+        Player._pai_operation_alert_cache = message.pai
     end
-    Player._invoke_table = message
-    Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
     --[[
     for k, v in pairs(message.pais) do
         print(v.card_type)
