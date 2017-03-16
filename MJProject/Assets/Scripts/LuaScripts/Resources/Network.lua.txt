@@ -41,12 +41,14 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.AddEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.AddEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
     
     FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.AddEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
     FLibEvent.AddEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+
 end
 
 ---------------------------------------------------------------------------
@@ -80,7 +82,7 @@ end
 function Network.OnConnet()
 	print("ConnetServer Success----->>>")
     --Player.CmdCreatePlayer()
-    Player.CmdEnterGame(347)
+    --Player.CmdEnterGame(347)
 end
 
 function Network.OnClose()
@@ -98,6 +100,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.DelEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
     FLibEvent.DelEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+    FLibEvent.DelEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
 end
 
 ---------------------------------------------------------------------------

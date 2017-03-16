@@ -149,6 +149,19 @@ function MahJong.ModelPoolSetActive(bool)
 	end
 end
 
+function MahJong.ZhuaPai()
+	-- body
+	local tempPaiPool = {}
+	for k,v in pairs(_mj_asset) do
+		if Player._pai_operation_alert_cache.card_type == v.card_type then
+			tempPaiPool = v
+		end
+	end
+	MahJong.CreatePlayerModel(""..tempPaiPool.cards[Player._pai_operation_alert_cache.card_value].model_path,
+		_player_father.currentPaiNumber+1, tempPaiPool.card_type,Player._pai_operation_alert_cache.card_value)
+	MahJong.SortPlayerPai()
+end
+
 function MahJong.CreatePlayerPai()
 	-- body
 	local paiCount = 0

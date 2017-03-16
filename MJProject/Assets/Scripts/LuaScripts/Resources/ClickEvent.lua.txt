@@ -3,6 +3,7 @@ ClickEvent.panelTable = {}
 ClickEvent.panelTable._main_ui = "MainUI"
 ClickEvent.panelTable._choose_ui = "ChooseUI"
 ClickEvent.panelTable._create_room_ui = "CreateRoomUI"
+ClickEvent.panelTable._join_room_ui = "JoinRoomUI"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
@@ -21,6 +22,10 @@ function ClickEvent.CreateNewPanel(panelName)
 	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
 
 	if panelName == ClickEvent.panelTable._play_game_ui then
+
+		_currentPanel.roomIdText = _currentPanel.panel.transform:Find("RoomId").gameObject:GetComponent("Text")
+		_currentPanel.roomIdText.text = CS.LuaBehaviour._room_id
+
 		_currentPanel.starGameButton = 0
 		_currentPanel.operationButton = {}
 		_currentPanel.operationButton.gangButton = 1
@@ -118,6 +123,7 @@ end
 function ClickEvent.JoinRoom( ... )
 	-- body
 	print("JoinRoom")
+	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 end
 
 function ClickEvent.CreateRoom( ... )
@@ -167,7 +173,7 @@ end
 
 function ClickEvent.CreateRoomId( gameObject )
 	-- body
-	Player._roomId = gameObject:GetComponent("InputField").text
+	Player._roomId = tostring(gameObject:GetComponent("InputField").text)
 	print(gameObject.name)
 end
 
@@ -175,6 +181,18 @@ function ClickEvent.CreatePersonalRoom( )
 	-- body
 	--roomid
 	Player.CmdCreateRoom()
+	ClickEvent.ClosePanel()
+end
+
+function ClickEvent.JoinRoomId( gameObject )
+	-- body
+	Player._roomId = gameObject:GetComponent("InputField").text
+end
+
+function ClickEvent.JoinFriendRoom( ... )
+	-- body
+	print(tonumber(Player._roomId))
+	Player.CmdEnterRoom(tonumber(Player._roomId))
 	ClickEvent.ClosePanel()
 end
 

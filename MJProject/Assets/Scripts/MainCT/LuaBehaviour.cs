@@ -25,6 +25,7 @@ public class Injection
 public class LuaBehaviour : MonoBehaviour {
     public TextAsset luaScript;
     public Injection[] injections;
+    public static string _room_id = "0";
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;//1 second 
 
@@ -41,6 +42,7 @@ public class LuaBehaviour : MonoBehaviour {
 
     void Awake()
     {
+        
         LuaEnvSingleton.Instance.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnvSingleton.Instance.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
         LuaEnvSingleton.Instance.AddBuildin("LuaReader", XLua.LuaDLL.Lua.LoadlLuaReader);

@@ -265,20 +265,23 @@ namespace MX
             buffer.Close();
         }
 
-        public void SendProtocol(string meta)
-        {
-            Debug.LogWarning("发送数据");
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(meta);
-            for (int i = 0; i < bytes.Length; i++) {
-                Debug.LogWarning(bytes[i]);
-            }
-            SessionSend(bytes);
-        }
-
-        //public void SendProtocol(byte[] meta)
+        //public void SendProtocol(string meta)
         //{
-        //    Debug.LogError("hhhhdhhf");
-        //    SessionSend(meta);
+        //    Debug.LogWarning("发送数据");
+        //    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(meta);
+        //    for (int i = 0; i < bytes.Length; i++) {
+        //        Debug.LogWarning(bytes[i]);
+        //    }
+        //    SessionSend(bytes);
         //}
+
+        public void SendProtocol(byte[] meta)
+        {
+            for (int i = 0; i < meta.Length; i++)
+            {
+                Debug.LogWarning(meta[i]);
+            }
+            SessionSend(meta);
+        }
     }
 }

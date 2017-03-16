@@ -8,7 +8,7 @@ local this = Player
 local _player = nil --玩家数据
 local _id = ""
 local _password = ""
-local _roomId = 1
+local _roomId = nil
 local _rightId = 0
 local _crossId = 0
 local _leftId = 0
@@ -77,8 +77,11 @@ end
 function Player.CmdEnterRoom(id,passWord)
     -- body
     local enterRoom = {
-        room_id = id,--2;
-        enter_password = passWord,--"123";
+        room = {
+            room_id = id,--2;
+            --enter_password = passWord,--"123";
+        },
+        
     }
     this.SendProtocol("EnterRoom",enterRoom)
 end
@@ -143,11 +146,21 @@ end
 ---------------------------------------------
 --
 
+function Player.OnEnterRoom(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
+    if message.room then
+        CS.LuaBehaviour._room_id = tostring(this._roomId)
+        Player.ThreadFunction(Player.LoadScene)
+    end
+end
+
 function Player.OnPlayerList(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
+    print("---------")
     Player._id = message.player_list[1]
-    --Player.CmdEnterGame(Player._id)
+    Player.CmdEnterGame(Player._id)
     --Player.CmdEnterGame(12)
 end
 
@@ -195,10 +208,17 @@ function Player.OnPaiNotify(type_t,stuff)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
         Player._invoke_table = message
-        ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
+        local countPai = 0
+        for k,v in pairs(Player._invoke_table.pais) do
+            countPai = countPai + 1
+        end
+        if countPai == 14 then
+            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
+        end
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
         Player._pai_operation_alert_cache = message.pai
+        Player.ThreadFunction(Player.MahJong.ZhuaPai)
     end
     --[[
     for k, v in pairs(message.pais) do
@@ -263,8 +283,9 @@ function Player.OnCreateRoom(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
     print(this._roomId)
-    --this._roomType = message.room.room_type
+    CS.LuaBehaviour._room_id = tostring(this._roomId)
     Player.ThreadFunction(Player.LoadScene)
+    --this._roomType = message.room.room_type
 end
 
 function Player.OnAlterError(type_t,stuff)
