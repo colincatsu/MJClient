@@ -1,8 +1,9 @@
+local Enum = require "Enum"
 local ClickEvent = require "ClickEvent"
+local Player = require "Player"
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
-local Player = require "Player"
 local protobuf = require "protobuf"
 --[[
 local AssetManager = require "AssetManager"
@@ -13,9 +14,6 @@ local AssetManager = require "AssetManager"
 	AssetManager.PrintMessage(hoster)
 --]]
 MahJong = {}
-ClickEvent.MahJong = MahJong
-Player.MahJong = MahJong
-Player.self = self
 local newVector3 = CS.UnityEngine.Vector3
 local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
@@ -41,9 +39,12 @@ local _animationName = {
 	stepUp = "GaiUp",
 }
 local _animationState = ""
-local Enum = require "Enum"
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
-local currentOperationState = operationState.WAIT
+local currentOperationState = operationState.DAPAI
+Player.self = self
+ClickEvent.MahJong = MahJong
+Player.MahJong = MahJong
+	
 function start()
 	-- body
 	PlayUICT.Init()
@@ -54,6 +55,12 @@ function start()
 	---[[
 	MahJong.MjLoader()
 	--]]
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
+end
+
+function MahJong.SetCurrentState(paraState)
+	-- body
+	currentOperationState = paraState
 end
 
 function MahJong.MjLoader()

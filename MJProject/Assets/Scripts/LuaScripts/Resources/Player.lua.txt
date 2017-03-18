@@ -1,5 +1,6 @@
 local protobuf = require "protobuf"
 local AssetManager = require "AssetManager"
+local Enum = require "Enum"
 ---------------------------------------------------------------------------
 --成员变量
 ---------------------------------------------------------------------------
@@ -15,9 +16,11 @@ local _leftId = 0
 local _invoke_data = ""
 local _invoke_table = {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
+
 function Player.GetID()
 	return _player.common_prop.player_id
 end
@@ -107,12 +110,12 @@ end
 ---------------------------------------------------------------------------
 --进入场景
 ---------------------------------------------------------------------------
-function Player.CmdEnterScene(scene_id)
-    local enter_scene = P_Protocol.EnterScene()
-    enter_scene.scene_id = scene_id
-    ---------------------------------------------
-    this.SendProtocol(enter_scene)
-    CS.UnityEngine.Application.LoadLevel("PlaySence")
+function Player.CmdLoadScene(loadType,sceneId)
+    local loadScene = {
+        load_type = loadType,
+        scene_id = sceneId,
+    }
+    this.SendProtocol("LoadScene",loadScene)
 end
 ---------------------------------------------------------------------------
 --发送协议
@@ -146,10 +149,16 @@ end
 ---------------------------------------------
 --
 
+function Player.OnPlayerInformation(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
+    
+end
+
 function Player.OnEnterRoom(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
-    if message.room then
+    if message.position then
         CS.LuaBehaviour._room_id = tostring(this._roomId)
         Player.ThreadFunction(Player.LoadScene)
     end
@@ -173,26 +182,26 @@ function Player.OnPaiOperationAlert(type_t,stuff)
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.huButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            Player.MahJong.currentOperationState = Player.MahJong.operationState.HU
+            Player.MahJong.SetCurrentState(operationState.HU)
         end,
         ["PAI_CHECK_RETURN_GANG"] = function ( ... )
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.gangButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.GANG
+            Player.MahJong.SetCurrentState(operationState.GANG)
         end,
         ["PAI_CHECK_RETURN_PENG"] = function (...)
             -- body
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            Player.MahJong.currentOperationState = Player.MahJong.operationState.PENG
+            Player.MahJong.SetCurrentState(operationState.PENG)
         end,
         ["PAI_CHECK_RETURN_CHI"] = function ( ... )
             -- body
             --ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
             ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.CHI
+            Player.MahJong.SetCurrentState(operationState.CHI)
             Player.ThreadFunction(Player.MahJong.CheckChiPai)
         end,
     }
@@ -210,13 +219,18 @@ function Player.OnPaiNotify(type_t,stuff)
         Player._invoke_table = message
         local countPai = 0
         for k,v in pairs(Player._invoke_table.pais) do
-            countPai = countPai + 1
+            for j,m in pairs(v.cards) do
+                countPai = countPai + 1
+            end
         end
+        
+        print("countPai----------------")
+        print(countPai)
         if countPai == 14 then
-            ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
+            Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
-        ClickEvent.MahJong.currentOperationState = Player.MahJong.operationState.DAPAI
+        Player.MahJong.SetCurrentState(operationState.DAPAI)
         Player._pai_operation_alert_cache = message.pai
         Player.ThreadFunction(Player.MahJong.ZhuaPai)
     end

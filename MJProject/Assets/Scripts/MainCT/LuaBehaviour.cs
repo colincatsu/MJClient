@@ -37,7 +37,6 @@ public class LuaBehaviour : MonoBehaviour {
     private LuaTable scriptEnv;
 
     private string luaChunkName = "LuaBehaviour";
-    private string[] tempActionData;
 
 
     void Awake()
@@ -98,21 +97,20 @@ public class LuaBehaviour : MonoBehaviour {
         }
         lock(mainThreadDelegate){
             if(mainThreadDelegate != empty){
-                mainThreadDelegate(tempActionData);
+                mainThreadDelegate();
                 mainThreadDelegate = empty;
             }
         }
 	}
     [CSharpCallLua]
     public delegate void Function(params string[] para);
-    private static void empty(params string[] para) { }
-    protected Function mainThreadDelegate = empty;
-    public void Attach(Function callback,params string[] para){
+    private static void empty() { }
+    protected Action mainThreadDelegate = empty;
+    public void Attach(Action callback){
         if (callback != null) {
             lock(mainThreadDelegate){
 
                 mainThreadDelegate += callback;
-                tempActionData = para;
             }
         }
     }
