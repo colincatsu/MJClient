@@ -1,5 +1,5 @@
 
-ê@
+à@
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -125,37 +125,18 @@ goods_type (2.Adoter.Asset.Mall.GOODS_TYPE
 
 GOODS_TYPE
 GOODS_TYPE_HUANLEDOU
-GOODS_TYPE_NORMAL_ITEM"¿
+GOODS_TYPE_NORMAL_ITEM"ú
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
 
 fans_count (:20.
-fans (2 .Adoter.Asset.RoomFan.FanElement^
+fans (2 .Adoter.Asset.RoomFan.FanElementV
 
-FanElement0
-fan_type (2.Adoter.Asset.RoomFan.FAN_TYPE
+FanElement(
+fan_type (2.Adoter.Asset.FAN_TYPE
 name (
-multiple ("ô
-FAN_TYPE
-FAN_TYPE_ZHUANG
-FAN_TYPE_DIAN_PAO
-FAN_TYPE_ZI_MO
-FAN_TYPE_SHANG_TING
-FAN_TYPE_BIMEN
-FAN_TYPE_HAI_DI_LAO
-FAN_TYPE_GANG_SHANG_KAI
-FAN_TYPE_LIU_LEI
-FAN_TYPE_LOU_BAO	
-FAN_TYPE_PIAO_HU
-
-FAN_TYPE_SI_GUI_YI
-FAN_TYPE_MING_PIAO
-FAN_TYPE_SAN_JIA_BI_MEN
-FAN_TYPE_QING_YI_SE
-FAN_TYPE_MING_GANG
-FAN_TYPE_AN_GANG
-FAN_TYPE_JIN_BAO"Ä
+multiple ("Ä
 	RoomModel?
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_MODEL2
 common_prop (2.Adoter.Asset.AssetCommonProp"˝
@@ -295,4 +276,23 @@ ASSET_TYPE
 CARD_TYPE_BINGZI
 CARD_TYPE_TIAOZI
 CARD_TYPE_FENG
-CARD_TYPE_JIAN
+CARD_TYPE_JIAN*ô
+FAN_TYPE
+FAN_TYPE_ZHUANG
+FAN_TYPE_DIAN_PAO
+FAN_TYPE_ZI_MO
+FAN_TYPE_SHANG_TING
+FAN_TYPE_BIMEN
+FAN_TYPE_HAI_DI_LAO
+FAN_TYPE_GANG_SHANG_KAI
+FAN_TYPE_LIU_LEI
+FAN_TYPE_LOU_BAO	
+FAN_TYPE_PIAO_HU
+
+FAN_TYPE_SI_GUI_YI
+FAN_TYPE_MING_PIAO
+FAN_TYPE_SAN_JIA_BI_MEN
+FAN_TYPE_QING_YI_SE
+FAN_TYPE_MING_GANG
+FAN_TYPE_AN_GANG
+FAN_TYPE_JIN_BAO

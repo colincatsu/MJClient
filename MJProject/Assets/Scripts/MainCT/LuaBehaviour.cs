@@ -25,7 +25,6 @@ public class Injection
 public class LuaBehaviour : MonoBehaviour {
     public TextAsset luaScript;
     public Injection[] injections;
-    public static string _room_id = "0";
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;//1 second 
 
@@ -95,23 +94,19 @@ public class LuaBehaviour : MonoBehaviour {
             LuaEnvSingleton.Instance.Tick();
             LuaBehaviour.lastGCTime = Time.time;
         }
-        lock(mainThreadDelegate){
-            if(mainThreadDelegate != empty){
-                mainThreadDelegate();
-                mainThreadDelegate = empty;
-            }
+        if (mainThreadDelegate != empty)
+        {
+            mainThreadDelegate();
+            mainThreadDelegate = empty;
         }
-	}
+    }
     [CSharpCallLua]
     public delegate void Function(params string[] para);
     private static void empty() { }
     protected Action mainThreadDelegate = empty;
     public void Attach(Action callback){
         if (callback != null) {
-            lock(mainThreadDelegate){
-
-                mainThreadDelegate += callback;
-            }
+            mainThreadDelegate += callback;
         }
     }
     void OnDestroy()

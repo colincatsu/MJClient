@@ -12,7 +12,9 @@ local _currentPanel = {}
 local _popPanel = {}
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
-
+	if not panelName and Player._invoke_data then
+		panelName = Player._invoke_data
+	end
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
 	_currentPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
 	_currentPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
@@ -24,7 +26,7 @@ function ClickEvent.CreateNewPanel(panelName)
 	if panelName == ClickEvent.panelTable._play_game_ui then
 
 		_currentPanel.roomIdText = _currentPanel.panel.transform:Find("RoomId").gameObject:GetComponent("Text")
-		_currentPanel.roomIdText.text = CS.LuaBehaviour._room_id
+		_currentPanel.roomIdText.text = tostring(Player._roomId)
 
 		_currentPanel.starGameButton = 0
 		_currentPanel.operationButton = {}
@@ -35,6 +37,11 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.operationButton.guoButton = 5
 		for k,v in pairs(_currentPanel.operationButton) do
 			_currentPanel.buttonList[v].gameObject:SetActive(false)
+		end
+	elseif panelName == ClickEvent.panelTable._choose_ui then
+		_currentPanel.playerIdText = _currentPanel.panel.transform:Find("Player/PlayerIdShow"):GetComponent("Text")
+		if Player._id then
+			_currentPanel.playerIdText.text = tostring(Player._id)
 		end
 	end
 end
@@ -64,7 +71,7 @@ end
 ---------------------------------------------------------------------------
 function ClickEvent.PlayerID( gameObject )
 	-- body
-	Player._id = gameObject:GetComponent("InputField").text
+	Player._string_id = gameObject:GetComponent("InputField").text
 end
 
 function ClickEvent.PlayerPassword( gameObject )
@@ -75,9 +82,9 @@ end
 function ClickEvent.Register( gameObject )
 	-- body
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
-		Player.CmdLogin(Player._id)
+		Player.CmdLogin(Player._string_id)
 		ClickEvent.DestroyPanel(_currentPanel.panel)
-		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
+		--ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
 		print("no find toggle")
 	end
@@ -173,7 +180,7 @@ end
 
 function ClickEvent.CreateRoomId( gameObject )
 	-- body
-	Player._roomId = tostring(gameObject:GetComponent("InputField").text)
+	Player._roomId = tonumber(gameObject:GetComponent("InputField").text)
 	print(gameObject.name)
 end
 
@@ -186,13 +193,13 @@ end
 
 function ClickEvent.JoinRoomId( gameObject )
 	-- body
-	Player._roomId = gameObject:GetComponent("InputField").text
+	Player._roomId = tonumber(gameObject:GetComponent("InputField").text)
 end
 
 function ClickEvent.JoinFriendRoom( ... )
 	-- body
 	print(tonumber(Player._roomId))
-	Player.CmdEnterRoom(tonumber(Player._roomId))
+	Player.CmdEnterRoom(Player._roomId)
 	ClickEvent.ClosePanel()
 end
 

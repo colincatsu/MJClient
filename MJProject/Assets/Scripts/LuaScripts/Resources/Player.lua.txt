@@ -7,7 +7,7 @@ local Enum = require "Enum"
 Player = {}
 local this = Player
 local _player = nil --玩家数据
-local _id = ""
+local _id = nil
 local _password = ""
 local _roomId = nil
 local _rightId = 0
@@ -29,7 +29,8 @@ end
 --加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
 function Player.LoadScene(type_t, buffer)
-   CS.UnityEngine.Application.LoadLevelAsync("PlaySence")
+    Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
+    CS.UnityEngine.Application.LoadLevelAsync("PlaySence")
 end
 
 ---------------------------------------------------------------------------
@@ -149,6 +150,11 @@ end
 ---------------------------------------------
 --
 
+function Player.OnRoomInformation(type_t,stuff)
+    -- body
+    
+end
+
 function Player.OnPlayerInformation(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
@@ -158,9 +164,13 @@ end
 function Player.OnEnterRoom(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
-    if message.position then
-        CS.LuaBehaviour._room_id = tostring(this._roomId)
+    if message.error_code == "ERROR_SUCCESS" then
+        --CS.LuaBehaviour._room_id = tostring(this._roomId)
         Player.ThreadFunction(Player.LoadScene)
+    elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
+        print("no found")
+    elseif message.error_code == "ERROR_ROOM_IS_FULL" then
+        print("is full")
     end
 end
 
@@ -169,7 +179,13 @@ function Player.OnPlayerList(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
     print("---------")
     Player._id = message.player_list[1]
+    if ClickEvent._currentPanel and ClickEvent._currentPanel.playerIdText then
+        ClickEvent._currentPanel.playerIdText.text = tostring(Player._id)
+    else
+        print("playidtext_is_null")
+    end
     Player.CmdEnterGame(Player._id)
+    Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
 
@@ -274,7 +290,8 @@ function Player.OnGameOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.GameOperation", stuff)
 
     print(message.source_player_id)
-    if not message.source_player_id then
+    print(this._id)
+    if message.source_player_id then
         --判断id是谁
         if message.source_player_id == this._id then
             --变化按钮
@@ -296,8 +313,6 @@ function Player.OnCreateRoom(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
-    print(this._roomId)
-    CS.LuaBehaviour._room_id = tostring(this._roomId)
     Player.ThreadFunction(Player.LoadScene)
     --this._roomType = message.room.room_type
 end

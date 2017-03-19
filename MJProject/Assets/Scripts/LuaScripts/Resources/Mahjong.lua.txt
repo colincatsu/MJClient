@@ -40,7 +40,7 @@ local _animationName = {
 }
 local _animationState = ""
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
-local currentOperationState = operationState.DAPAI
+local currentOperationState = operationState.WAIT
 Player.self = self
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
@@ -220,10 +220,10 @@ end
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
 	if MahJong._current_click_pai then
-		if currentOperationState ~= operationState.DAPAI then
-			return
-		end
 		if MahJong._current_click_pai == gameObject then
+			if currentOperationState ~= operationState.DAPAI then
+				return
+			end
 			print("dapai")
 			local paiNumber = tonumber(gameObject.transform.parent.name)
 			local paiElement = {
