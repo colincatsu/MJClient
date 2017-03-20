@@ -8,6 +8,9 @@ ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlayGameUI"
+
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
+
 local _currentPanel = {}
 local _popPanel = {}
 function ClickEvent.CreateNewPanel(panelName)
@@ -43,6 +46,25 @@ function ClickEvent.CreateNewPanel(panelName)
 		if Player._id then
 			_currentPanel.playerIdText.text = tostring(Player._id)
 		end
+	end
+end
+
+function ClickEvent.PaiOperationState()
+	-- body
+	if ClickEvent.MahJong.GetCurrentState() == operationState.HU then
+		_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
+        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	elseif ClickEvent.MahJong.GetCurrentState() == operationState.GANG then
+		_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(true)
+        _currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	elseif ClickEvent.MahJong.GetCurrentState() == operationState.PENG then
+		_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	elseif ClickEvent.MahJong.GetCurrentState() == operationState.CHI then
+		_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	else
+
 	end
 end
 
@@ -209,7 +231,6 @@ end
 function ClickEvent.StartGameButton( gameObject )
 	-- body
 	Player.CmdGameOperation()
-	
 	gameObject:SetActive(false)
 end
 

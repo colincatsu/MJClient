@@ -1,5 +1,5 @@
 
-ˆ@
+”C
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -57,14 +57,15 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("ë
+voice_path ("‚
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
 max_cards_count (:136
 daily_bonus_id (
 daily_allowance_id (
-time_out (:8"Ô
+time_out (:8
+daily_sign_id ("Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -193,7 +194,18 @@ product_id (
 price (
 
 price_show (
-gain_diamond ("ž
+gain_diamond ("×
+	DailySign?
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_SIGN2
+common_prop (2.Adoter.Asset.AssetCommonProp
+common_reward_id (
+common_limit_id (
+signs_count (:105
+signs (2&.Adoter.Asset.DailySign.ContinuousSignR
+ContinuousSign
+count (
+common_reward_id (
+common_limit_id ("ž
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -237,7 +249,7 @@ price_show (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*Š
+VERSION_TYPE_TAIWAN*¥
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -260,7 +272,8 @@ ASSET_TYPE
 ASSET_TYPE_ACTIVITY
 ASSET_TYPE_DAILY_ALLOWANCE
 ASSET_TYPE_COMMON_CONSUME
-ASSET_TYPE_RECHARGE
+ASSET_TYPE_RECHARGE
+ASSET_TYPE_DAILY_SIGN
 ASSET_TYPE_COUNTÈ
 ITEM_TYPE_BEGINÉ
 ITEM_TYPE_POTIONÊ

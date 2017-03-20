@@ -1,6 +1,6 @@
 local protobuf = require "protobuf"
 local AssetManager = require "AssetManager"
-local Enum = require "Enum"
+
 ---------------------------------------------------------------------------
 --成员变量
 ---------------------------------------------------------------------------
@@ -194,29 +194,27 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
     print(message.check_return)
     switch = {
+        ["PAI_CHECK_RETURN_NULL"] = function ( ... )
+            -- body
+            print("Do Nothing")
+        end,
         ["PAI_CHECK_RETURN_HU"] = function ( ... )
             -- body
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.huButton].gameObject:SetActive(true)
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
             Player.MahJong.SetCurrentState(operationState.HU)
+            Player.ThreadFunction(ClickEvent.PaiOperationState)
         end,
         ["PAI_CHECK_RETURN_GANG"] = function ( ... )
             -- body
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.gangButton].gameObject:SetActive(true)
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
             Player.MahJong.SetCurrentState(operationState.GANG)
+            Player.ThreadFunction(ClickEvent.PaiOperationState)
         end,
         ["PAI_CHECK_RETURN_PENG"] = function (...)
             -- body
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
             Player.MahJong.SetCurrentState(operationState.PENG)
+            Player.ThreadFunction(ClickEvent.PaiOperationState)
         end,
         ["PAI_CHECK_RETURN_CHI"] = function ( ... )
             -- body
-            --ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
-            ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.guoButton].gameObject:SetActive(true)
             Player.MahJong.SetCurrentState(operationState.CHI)
             Player.ThreadFunction(Player.MahJong.CheckChiPai)
         end,

@@ -1,6 +1,6 @@
 local Enum = require "Enum"
-local ClickEvent = require "ClickEvent"
 local Player = require "Player"
+local ClickEvent = require "ClickEvent"
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
@@ -61,6 +61,11 @@ end
 function MahJong.SetCurrentState(paraState)
 	-- body
 	currentOperationState = paraState
+end
+
+function MahJong.GetCurrentState( ... )
+	-- body
+	return currentOperationState
 end
 
 function MahJong.MjLoader()
@@ -350,6 +355,7 @@ end
 function MahJong.ChiPai(paiTable)
 	-- body
 	--paiTable.card_value --+-1
+
 	print("ChiPai")
 	local paiNumber
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
@@ -374,6 +380,7 @@ end
 
 function MahJong.CheckChiPai(paiTable)
 	-- body
+	ClickEvent.PaiOperationState()
 	local sameTypeCardsTable = {}
 	local countSameTypeCards = 0
 	for k,v in pairs(_player_father.cards) do

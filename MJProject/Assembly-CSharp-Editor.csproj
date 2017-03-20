@@ -70,7 +70,6 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\Main.lua.txt" />
      <None Include="Assets\XLua\Resources\xlua\util.lua.txt" />
      <None Include="Assets\XLua\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
-     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\XLua\Src\Editor\Template\TemplateCommon.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaEnumWrap.tpl.txt" />
      <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
