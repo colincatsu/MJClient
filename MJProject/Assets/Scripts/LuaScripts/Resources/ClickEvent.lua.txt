@@ -64,8 +64,14 @@ function ClickEvent.PaiOperationState()
 	elseif ClickEvent.MahJong.GetCurrentState() == operationState.CHI then
 		_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
 	else
-
+		print("bug state")
+		print(ClickEvent.MahJong.GetCurrentState())
 	end
+end
+
+function ClickEvent.ShowChiButton()
+	-- body
+	_currentPanel.buttonList[_currentPanel.operationButton.chiButton].gameObject:SetActive(true)
 end
 
 function ClickEvent.PopPanel( panelName )
@@ -268,6 +274,7 @@ function ClickEvent.GuoClickButton(gameObject)
 	for k,v in pairs(_currentPanel.operationButton) do
 		_currentPanel.buttonList[v].gameObject:SetActive(false)
 	end
+	MahJong.GuoPai()
 end
 
 ---------------------------------------------------------------------------

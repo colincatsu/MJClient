@@ -264,7 +264,7 @@ function MahJong.PengPai(paiTable)
 	-- body
 	local deleteCardsCount = 0
 	for k,v in pairs(_player_father.cards) do
-		if paiTable.card_type == v.card_type and paiTable.card_value == v.card_value and deleteCardsCount < 2 then
+		if Player._pai_operation_alert_cache.card_type == v.card_type and Player._pai_operation_alert_cache.card_value == v.card_value and deleteCardsCount < 2 then
 			deleteCardsCount = deleteCardsCount + 1
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 			CS.UnityEngine.Object.Destroy(v.parent)
@@ -272,7 +272,8 @@ function MahJong.PengPai(paiTable)
 			MahJong.SortPlayerPai(k)
 		end
 	end
-	currentOperationState = operationState.WAIT
+	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI")
+	currentOperationState = operationState.DAPAI
 end
 
 function MahJong.ClickChiPaiEvent( gameObject )
@@ -358,7 +359,9 @@ function MahJong.ChiPai(paiTable)
 
 	print("ChiPai")
 	local paiNumber
+	local paiElement = {}
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
+		paiElement[k] = {}
 		paiElement[k].card_type = v.card_type
 		paiElement[k].card_value = v.paiValue
 		if v.paiValue ~= Player._pai_operation_alert_cache.card_value then
@@ -375,7 +378,7 @@ function MahJong.ChiPai(paiTable)
 	end
 	_chi_pai_father = {}
 	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,{})
-	currentOperationState = operationState.WAIT
+	currentOperationState = operationState.DAPAI
 end
 
 function MahJong.CheckChiPai(paiTable)
@@ -391,12 +394,15 @@ function MahJong.CheckChiPai(paiTable)
 	end
 	
 	if Player._pai_operation_alert_cache.card_value == 1 then
-		ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+		ClickEvent.ShowChiButton()
 		_chi_pai_father.cards.deleteCards = {}
+		_chi_pai_father.cards.deleteCards[1] = {}
 		_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+		_chi_pai_father.cards.deleteCards[2] = {}
 		_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value + 1
+		_chi_pai_father.cards.deleteCards[3] = {}
 		_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 2
 	elseif Player._pai_operation_alert_cache.card_value == 2 then--1/3,3/4
@@ -407,21 +413,27 @@ function MahJong.CheckChiPai(paiTable)
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,2,2,3,4)
 			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,1) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value + 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 2
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,4) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 1
 		end
@@ -433,60 +445,78 @@ function MahJong.CheckChiPai(paiTable)
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,2,7,8,9)
 			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,9) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value - 2
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,6) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 1
 		end
 	elseif Player._pai_operation_alert_cache.card_value == 9 then
-		ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+		ClickEvent.ShowChiButton()
 		_chi_pai_father.cards.deleteCards = {}
+		_chi_pai_father.cards.deleteCards[1] = {}
 		_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+		_chi_pai_father.cards.deleteCards[2] = {}
 		_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+		_chi_pai_father.cards.deleteCards[3] = {}
 		_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 		_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value - 2
 	else --/-2-1,-1+1,+1+2
 		if not MahJong.CheckPaiValue(sameTypeCardsTable,Player._pai_operation_alert_cache.card_value+1) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value - 2
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,Player._pai_operation_alert_cache.card_value-2) and 
 			not MahJong.CheckPaiValue(sameTypeCardsTable,Player._pai_operation_alert_cache.card_value+2) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value - 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 1
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,Player._pai_operation_alert_cache.card_value-1) then
-			ClickEvent._currentPanel.buttonList[ClickEvent._currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
+			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[1].paiValue = Player._pai_operation_alert_cache.card_value
+			_chi_pai_father.cards.deleteCards[2] = {}
 			_chi_pai_father.cards.deleteCards[2].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[2].paiValue = Player._pai_operation_alert_cache.card_value + 1
+			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = Player._pai_operation_alert_cache.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = Player._pai_operation_alert_cache.card_value + 2
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,Player._pai_operation_alert_cache.card_value-2) then
@@ -516,16 +546,23 @@ function MahJong.CheckPaiValue(paiChiPool,sortValue)
 	return false
 end
 
+function MahJong.GuoPai()
+	-- body
+	Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
+	currentOperationState = operationState.DAPAI
+end
+
 function MahJong.GangPai(paiTable)
 	-- body
 	for k,v in pairs(_player_father.cards) do
-		if paiTable.card_type == v.card_type and paiTable.card_value == v.card_value then
+		if Player._pai_operation_alert_cache.card_type == v.card_type and Player._pai_operation_alert_cache.card_value == v.card_value then
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 			CS.UnityEngine.Object.Destroy(v.parent)
 			v = {}
 			MahJong.SortPlayerPai(k)
 		end
 	end
+	Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI")
 	currentOperationState = operationState.WAIT
 end
 
