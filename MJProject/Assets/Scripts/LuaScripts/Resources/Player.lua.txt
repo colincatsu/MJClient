@@ -184,8 +184,7 @@ function Player.OnPlayerList(type_t,stuff)
     else
         print("playidtext_is_null")
     end
-    Player.CmdEnterGame(Player._id)
-    Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
+    --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
 

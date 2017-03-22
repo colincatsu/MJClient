@@ -94,19 +94,27 @@ public class LuaBehaviour : MonoBehaviour {
             LuaEnvSingleton.Instance.Tick();
             LuaBehaviour.lastGCTime = Time.time;
         }
-        if (mainThreadDelegate != empty)
+        lock (mainThreadDelegate)
         {
-            mainThreadDelegate();
-            mainThreadDelegate = empty;
+            if (mainThreadDelegate != empty)
+            {
+                mainThreadDelegate();
+                mainThreadDelegate = empty;
+            }
+
         }
     }
     [CSharpCallLua]
     public delegate void Function(params string[] para);
     private static void empty() { }
-    protected Action mainThreadDelegate = empty;
+    protected static Action mainThreadDelegate = empty;
     public void Attach(Action callback){
         if (callback != null) {
-            mainThreadDelegate += callback;
+            lock (mainThreadDelegate)
+            {
+
+                mainThreadDelegate += callback;
+            }
         }
     }
     void OnDestroy()

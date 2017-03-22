@@ -107,15 +107,20 @@ function ClickEvent.PlayerPassword( gameObject )
 	Player._password = gameObject:GetComponent("InputField").text
 end
 
+function ClickEvent.PlayerLoginButton(gameObject)
+	-- body
+	Player.CmdLogin(Player._string_id)
+end
+
 function ClickEvent.Register( gameObject )
 	-- body
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
-		Player.CmdLogin(Player._string_id)
 		ClickEvent.DestroyPanel(_currentPanel.panel)
-		--ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
+		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
 		print("no find toggle")
 	end
+	Player.CmdEnterGame(Player._id)
 end
 
 function ClickEvent.Admit( gameObject )
