@@ -250,7 +250,7 @@ function ClickEvent.GangClickButton(gameObject)
 	_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(false)
 	_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(false)
     _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
-	Player.MahJong.GangPai(Player._pai_operation_alert_cache)
+	Player.MahJong.GangPai()
 end
 
 function ClickEvent.ChiClickButton(gameObject)
@@ -264,14 +264,14 @@ function ClickEvent.PengClickButton(gameObject)
 	-- body
 	_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(false)
     _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
-	Player.MahJong.PengPai(Player._pai_operation_alert_cache)
+	Player.MahJong.PengPai()
 end
 
 function ClickEvent.HuClickButton(gameObject)
 	-- body
 	_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(false)
     _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(false)
-    Player.MahJong.HuPai(Player._pai_operation_alert_cache)
+    Player.MahJong.HuPai()
 end
 
 function ClickEvent.GuoClickButton(gameObject)

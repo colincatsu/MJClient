@@ -264,7 +264,8 @@ function MahJong.PengPai(paiTable)
 	-- body
 	local deleteCardsCount = 0
 	for k,v in pairs(_player_father.cards) do
-		if Player._pai_operation_alert_cache.card_type == v.card_type and Player._pai_operation_alert_cache.card_value == v.card_value and deleteCardsCount < 2 then
+		if Player._pai_operation_alert_cache.card_type == v.paiType and 
+			Player._pai_operation_alert_cache.card_value == v.paiValue and deleteCardsCount < 2 then
 			deleteCardsCount = deleteCardsCount + 1
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 			CS.UnityEngine.Object.Destroy(v.parent)
@@ -284,7 +285,7 @@ function MahJong.ClickChiPaiEvent( gameObject )
 
 	for k,v in pairs(_chi_pai_father.cards[paiGroup].child) do
 		_chi_pai_father.cards.deleteCards[deleteCount].card_type = _chi_pai_father.cards[paiGroup].paiType
-		_chi_pai_father.cards.deleteCards[deleteCount].paiValue = v.paiValue
+		_chi_pai_father.cards.deleteCards[deleteCount].paiValue = tonumber(v.name)
 		deleteCount = deleteCount + 1
 	end
 
@@ -322,7 +323,7 @@ end
 
 function MahJong.CreateChiPaiModel(paiGroup,modelName,paiValue,sortValue)
 	-- body
-	if not _chi_pai_father then
+	if not _chi_pai_father.father then
 		
 		_chi_pai_father.father = CS.UnityEngine.GameObject("ChiPaiFather")
 		_chi_pai_father.father.transform:SetParent(self.transform)
@@ -347,7 +348,7 @@ function MahJong.CreateChiPaiModel(paiGroup,modelName,paiValue,sortValue)
 		_chi_pai_father.cards[paiGroup].child[paiValue].transform.localScale = _chi_pai_smaller * newVector3.one
 		_chi_pai_father.cards[paiGroup].child[paiValue].transform.localEulerAngles = newVector3(-45,0,0)
 		_chi_pai_father.cards[paiGroup].paiType = paiType
-		_chi_pai_father.cards[paiGroup].child[paiValue].paiValue = paiValue
+		--_chi_pai_father.cards[paiGroup].child[paiValue].paiValue = paiValue
 	else
 		print("wrongType")
 	end
@@ -371,8 +372,8 @@ function MahJong.ChiPai(paiTable)
 				end
 			end
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
-			_player_father.cards[paiNumber] = {}
 			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+			_player_father.cards[paiNumber] = {}
 			MahJong.SortPlayerPai(paiNumber)
 		end
 	end
@@ -387,8 +388,9 @@ function MahJong.CheckChiPai(paiTable)
 	local sameTypeCardsTable = {}
 	local countSameTypeCards = 0
 	for k,v in pairs(_player_father.cards) do
-		if Player._pai_operation_alert_cache.card_type == v.card_type then
+		if Player._pai_operation_alert_cache.card_type == v.paiType then
 			countSameTypeCards = countSameTypeCards + 1
+			sameTypeCardsTable[countSameTypeCards] = {}
 			sameTypeCardsTable[countSameTypeCards] = v
 		end
 	end
