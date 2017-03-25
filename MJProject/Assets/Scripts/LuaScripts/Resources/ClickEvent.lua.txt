@@ -51,22 +51,26 @@ end
 
 function ClickEvent.PaiOperationState()
 	-- body
-	if ClickEvent.MahJong.GetCurrentState() == operationState.HU then
-		_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
-        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-	elseif ClickEvent.MahJong.GetCurrentState() == operationState.GANG then
-		_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(true)
-        _currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-	elseif ClickEvent.MahJong.GetCurrentState() == operationState.PENG then
-		_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-	elseif ClickEvent.MahJong.GetCurrentState() == operationState.CHI then
-		_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
-	else
-		print("bug state")
-		print(ClickEvent.MahJong.GetCurrentState())
-	end
+    for k,v in pairs(Player.MahJong.GetStateTable()) do
+		if v == "PAI_CHECK_RETURN_HU" then
+			_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
+	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+		elseif v == "PAI_CHECK_RETURN_GANG" then
+			_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(true)
+	        _currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+		elseif v == "PAI_CHECK_RETURN_PENG" then
+			_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
+	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+		elseif v == "PAI_CHECK_RETURN_CHI" then
+			_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+			Player.MahJong.CheckChiPai()
+		else
+			print("PAI_CHECK_RETURN_NULL ")
+			print(ClickEvent.MahJong.GetCurrentState())
+		end
+    end
+    Player.MahJong.SetStateTable({})
 end
 
 function ClickEvent.ShowChiButton()
@@ -279,7 +283,7 @@ function ClickEvent.GuoClickButton(gameObject)
 	for k,v in pairs(_currentPanel.operationButton) do
 		_currentPanel.buttonList[v].gameObject:SetActive(false)
 	end
-	MahJong.GuoPai()
+	Player.MahJong.GuoPai()
 end
 
 ---------------------------------------------------------------------------

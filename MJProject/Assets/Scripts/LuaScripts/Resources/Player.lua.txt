@@ -191,36 +191,11 @@ end
 function Player.OnPaiOperationAlert(type_t,stuff)
     -- body
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
-    print(message.check_return)
-    switch = {
-        ["PAI_CHECK_RETURN_NULL"] = function ( ... )
-            -- body
-            print("Do Nothing")
-        end,
-        ["PAI_CHECK_RETURN_HU"] = function ( ... )
-            -- body
-            Player.MahJong.SetCurrentState(operationState.HU)
-            Player.ThreadFunction(ClickEvent.PaiOperationState)
-        end,
-        ["PAI_CHECK_RETURN_GANG"] = function ( ... )
-            -- body
-            Player.MahJong.SetCurrentState(operationState.GANG)
-            Player.ThreadFunction(ClickEvent.PaiOperationState)
-        end,
-        ["PAI_CHECK_RETURN_PENG"] = function (...)
-            -- body
-            Player.MahJong.SetCurrentState(operationState.PENG)
-            Player.ThreadFunction(ClickEvent.PaiOperationState)
-        end,
-        ["PAI_CHECK_RETURN_CHI"] = function ( ... )
-            -- body
-            Player.MahJong.SetCurrentState(operationState.CHI)
-            Player.ThreadFunction(Player.MahJong.CheckChiPai)
-        end,
-    }
+    
     Player._pai_operation_alert_cache = message.pai
-    local result = switch[message.check_return]
-    result()
+    Player.MahJong.SetStateTable(message.check_return)
+    Player.MahJong.SetCurrentState(operationState.CHI)
+    Player.ThreadFunction(ClickEvent.PaiOperationState)
 end
 
 function Player.OnPaiNotify(type_t,stuff)

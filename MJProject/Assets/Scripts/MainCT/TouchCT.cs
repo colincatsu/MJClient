@@ -36,13 +36,13 @@ public class TouchCT : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0))
         {
-
+            movePos = Input.mousePosition;
+            movePos.z = CameraPosZ;
             if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos)
             {
                 if (onClick != null)
                     onClick(gameObject);
             }
-
         }
     }
 
