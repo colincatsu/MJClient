@@ -16,6 +16,7 @@ local _leftId = 0
 local _invoke_data = ""
 local _invoke_table = {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
+local _da_pai_cache = {}
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 ---------------------------------------------------------------------------
 --获取玩家ID
@@ -237,10 +238,12 @@ function Player.OnPaiOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
     print(message.oper_type)
+    Player._da_pai_cache = message
     switch = {
         ["PAI_OPER_TYPE_DAPAI"] = function( ... )
             -- body
             --message.position
+            Player.ThreadFunction(Player.MahJong.DaPaiPoolShow)
         end,
         ["PAI_OPER_TYPE_HUPAI"] = function( ... )
             -- body
@@ -254,8 +257,12 @@ function Player.OnPaiOperation(type_t,stuff)
         ["PAI_OPER_TYPE_CHIPAI"] = function( ... )
             -- body
         end,
+        ["PAI_OPER_TYPE_GIVEUP"] = function ( ... )
+            -- body
+        end,
     }
     local result = switch[message.oper_type]
+    result()
 end
 
 function Player.OnGameOperation(type_t,stuff)
