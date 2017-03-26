@@ -25,11 +25,13 @@ local _pai_bigger = 1--player牌放大倍数
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.3--吃牌高度
 local _current_click_pai
-local _diceObj
-local _gaiObj
+local _diceObj--骰子
+local _gaiObj--盖子
 local _pointFather = {}--牌池父节点
 local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
-local _modelPool = {}
+local _modelPool = {}--没抓的牌池
+local _pai_pool_show = {}--打牌的牌池
+local _pai_pool_show_line = 6--打牌每行的牌数
 local _modelPoolLineCount = 36
 local _startPosition = {}
 local _startRotation = {}
@@ -126,6 +128,28 @@ function MahJong.Init()
 	_startRotation.B = newVector3(0,-270,0)
 	_myAnimation = self:GetComponent("Animation")
 	self:GetComponent("AnimationRegister").animationEvent = MahJong.AnimationPlay
+	--------------------------------------------------
+	--打牌牌池初始化
+	_pai_pool_show.point_d = {}
+	_pai_pool_show.point_d.paiNumber = 0
+	_pai_pool_show.point_d.father = self.transform:Find("PaiPoolShow/Point_D/Father").gameObject
+	_pai_pool_show.point_d.startPosition = newVector3(_pai_pool_show_line*_modelSize.width/2 - _modelSize.width/2 ,_modelSize.length/2,0)
+	_pai_pool_show.point_d.startRotation = newVector3(180,0,0)
+	_pai_pool_show.point_n = {}
+	_pai_pool_show.point_n.paiNumber = 0
+	_pai_pool_show.point_n.father = self.transform:Find("PaiPoolShow/Point_N/Father").gameObject
+	_pai_pool_show.point_n.startPosition = newVector3(0,_modelSize.length/2,_pai_pool_show_line*_modelSize.width/2 - _modelSize.width/2)
+	_pai_pool_show.point_n.startRotation = newVector3(180,-90,0)
+	_pai_pool_show.point_x = {}
+	_pai_pool_show.point_x.paiNumber = 0
+	_pai_pool_show.point_x.father = self.transform:Find("PaiPoolShow/Point_X/Father").gameObject
+	_pai_pool_show.point_x.startPosition = newVector3(_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/4,_modelSize.length/2,0)
+	_pai_pool_show.point_x.startRotation = newVector3(180,-180,0)
+	_pai_pool_show.point_b = {}
+	_pai_pool_show.point_b.paiNumber = 0
+	_pai_pool_show.point_b.father = self.transform:Find("PaiPoolShow/Point_B/Father").gameObject
+	_pai_pool_show.point_b.startPosition = newVector3(0,_modelSize.length/2,_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/4)
+	_pai_pool_show.point_b.startRotation = newVector3(180,-270,0)
 end
 
 function MahJong.ModelPoolInit()
@@ -185,13 +209,45 @@ function MahJong.ZhuaPai()
 	end
 	MahJong.CreatePlayerModel(""..tempPaiPool.cards[Player._pai_operation_alert_cache.card_value].model_path,
 		_player_father.currentPaiNumber+1, tempPaiPool.card_type,Player._pai_operation_alert_cache.card_value)
-	--[[
-	local temp = _player_father.cards[x]
-	_player_father.cards[x] = _player_father.cards[y]
-	_player_father.cards[y] = temp
-	_player_father.cards[x].parent.name = "".. x
-	]]
+	MahJong.SortZhuaPai()
 	MahJong.SortPlayerPai()
+end
+
+function MahJong.SortZhuaPai( ... )
+	-- body
+	local hasType = false
+	local index = 0
+	local tempCard = _player_father.cards[_player_father.currentPaiNumber]
+	for k,v in pairs(_player_father.cards) do
+		if v.paiType == tempCard.paiType then
+			hasType = true
+			if v.paiValue >= tempCard.paiValue then
+				index = k
+				break
+			end
+		elseif hasType then 
+			index = k
+			break
+		end
+	end
+
+	for i = _player_father.currentPaiNumber, index+1, -1 do
+		_player_father.cards[i] =  _player_father.cards[i-1]
+		_player_father.cards[i].parent.name = ""..i
+	end
+	_player_father.cards[index] = tempCard
+	_player_father.cards[index].parent.name = ""..index
+	---[[
+	if MahJong._current_click_pai then
+		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		MahJong._current_click_pai = _player_father.cards[index].child
+		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+	else
+		MahJong._current_click_pai = _player_father.cards[index].child
+		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+	end
+	--]]
+	
 end
 
 function MahJong.CreatePlayerPai()
@@ -280,17 +336,44 @@ function MahJong.DaPai(paiNumber)
 	currentOperationState = operationState.WAIT
 end
 
+function MahJong.DaPaiPoolShow(whichPlayer,paiType,paiValue)
+	-- body
+    local tempPaiPool = {}
+    for k, v in pairs(_mj_asset) do
+    	if paiType == v.card_type then
+    		tempPaiPool = v
+    	end
+    end
+    local modelName = tostring(tempPaiPool.cards[paiValue].model_path)
+    local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
+	if whichPlayer == "POSITION_TYPE_EAST" then
+		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+		_pai_pool_show.point_d.cards = {}
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localPosition = _pai_pool_show.point_d.startPosition + newVector3()
+
+	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
+	elseif whichPlayer == "POSITION_TYPE_WEST" then
+	elseif whichPlayer == "POSITION_TYPE_NORTH" then
+	end
+
+end
+
 function MahJong.PengPai(paiTable)
 	-- body
-	local deleteCardsCount = 0
-	for k,v in pairs(_player_father.cards) do
-		if Player._pai_operation_alert_cache.card_type == v.paiType and 
-			Player._pai_operation_alert_cache.card_value == v.paiValue and deleteCardsCount < 2 then
-			deleteCardsCount = deleteCardsCount + 1
-			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
-			CS.UnityEngine.Object.Destroy(v.parent)
-			v = {}
-			MahJong.SortPlayerPai(k)
+	for i = 1,2 do
+		for k,v in pairs(_player_father.cards) do
+			if Player._pai_operation_alert_cache.card_type == v.paiType and 
+				Player._pai_operation_alert_cache.card_value == v.paiValue then
+				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+				CS.UnityEngine.Object.Destroy(v.parent)
+				v = {}
+				MahJong.SortPlayerPai(k)
+				break
+			end
 		end
 	end
 	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI")
@@ -302,8 +385,8 @@ function MahJong.ClickChiPaiEvent( gameObject )
 	local paiGroup = tonumber(gameObject.transform.parent.name)
 	_chi_pai_father.cards.deleteCards = {}
 	local deleteCount = 1
-
 	for k,v in pairs(_chi_pai_father.cards[paiGroup].child) do
+		_chi_pai_father.cards.deleteCards[deleteCount] = {}
 		_chi_pai_father.cards.deleteCards[deleteCount].card_type = _chi_pai_father.cards[paiGroup].paiType
 		_chi_pai_father.cards.deleteCards[deleteCount].paiValue = tonumber(v.name)
 		deleteCount = deleteCount + 1
@@ -417,7 +500,7 @@ function MahJong.CheckChiPai(paiTable)
 			sameTypeCardsTable[countSameTypeCards] = v
 		end
 	end
-	
+	_chi_pai_father.cards = {}
 	if Player._pai_operation_alert_cache.card_value == 1 then
 		ClickEvent.ShowChiButton()
 		_chi_pai_father.cards.deleteCards = {}
@@ -436,7 +519,6 @@ function MahJong.CheckChiPai(paiTable)
 			and MahJong.CheckPaiValue(sameTypeCardsTable,4) then
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,1,1,2,3)
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,2,2,3,4)
-			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,1) then
 			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
@@ -468,7 +550,6 @@ function MahJong.CheckChiPai(paiTable)
 			and MahJong.CheckPaiValue(sameTypeCardsTable,9) then
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,1,6,7,8)
 			MahJong.CreateChiPai(Player._pai_operation_alert_cache.card_type,2,7,8,9)
-			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,9) then
 			ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
@@ -579,12 +660,16 @@ end
 
 function MahJong.GangPai(paiTable)
 	-- body
-	for k,v in pairs(_player_father.cards) do
-		if Player._pai_operation_alert_cache.card_type == v.card_type and Player._pai_operation_alert_cache.card_value == v.card_value then
-			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
-			CS.UnityEngine.Object.Destroy(v.parent)
-			v = {}
-			MahJong.SortPlayerPai(k)
+	for i=1,3 do
+		for k,v in pairs(_player_father.cards) do
+			if Player._pai_operation_alert_cache.card_type == v.card_type and 
+				Player._pai_operation_alert_cache.card_value == v.card_value then
+				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+				CS.UnityEngine.Object.Destroy(v.parent)
+				v = {}
+				MahJong.SortPlayerPai(k)
+				break
+			end
 		end
 	end
 	Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI")

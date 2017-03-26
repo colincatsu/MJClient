@@ -240,6 +240,7 @@ function Player.OnPaiOperation(type_t,stuff)
     switch = {
         ["PAI_OPER_TYPE_DAPAI"] = function( ... )
             -- body
+            --message.position
         end,
         ["PAI_OPER_TYPE_HUPAI"] = function( ... )
             -- body
