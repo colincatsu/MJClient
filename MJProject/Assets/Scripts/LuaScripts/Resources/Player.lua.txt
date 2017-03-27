@@ -17,7 +17,25 @@ local _invoke_data = ""
 local _invoke_table = {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
 local _da_pai_cache = {}
+local _da_pai_cache.front = 1
+local _da_pai_cache.rear = 0
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
+
+function Player.GetDaPaiCache()
+    -- body
+    if _da_pai_cache.front > _da_pai_cache.rear then
+        return nil
+    else then
+        local tempData = _da_pai_cache[_da_pai_cache.front]
+        _da_pai_cache.front = _da_pai_cache.front + 1
+        return tempData
+    end
+end
+function Player.SetDaPaiCache(cacheData)
+    -- body
+    _da_pai_cache.rear = _da_pai_cache.rear + 1
+    _da_pai_cache[_da_pai_cache.rear] = cacheData
+end
 ---------------------------------------------------------------------------
 --获取玩家ID
 ---------------------------------------------------------------------------
@@ -238,7 +256,7 @@ function Player.OnPaiOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
     print(message.oper_type)
-    Player._da_pai_cache = message
+    Player.SetDaPaiCache(message)
     switch = {
         ["PAI_OPER_TYPE_DAPAI"] = function( ... )
             -- body

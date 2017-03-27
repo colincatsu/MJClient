@@ -349,9 +349,9 @@ end
 
 function MahJong.DaPaiPoolShow()
 	-- body
-	local whichPlayer = Player._da_pai_cache.position
-	local paiType = Player._da_pai_cache.pai.card_type
-	local paiValue = tonumber(Player._da_pai_cache.pai.card_value)
+	local whichPlayer = Player.GetDaPaiCache().position
+	local paiType = Player.GetDaPaiCache().pai.card_type
+	local paiValue = tonumber(Player.GetDaPaiCache().pai.card_value)
     local tempPaiPool = {}
     local modelName
     for k, v in pairs(_mj_asset) do
