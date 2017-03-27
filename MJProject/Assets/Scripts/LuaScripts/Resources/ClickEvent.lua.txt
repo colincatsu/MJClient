@@ -251,42 +251,39 @@ end
 
 function ClickEvent.GangClickButton(gameObject)
 	-- body
-	for k,v in pairs(_currentPanel.operationButton) do
-		_currentPanel.buttonList[v].gameObject:SetActive(false)
-	end
+	ClickEvent.CloseOperationPanel()
 	Player.MahJong.GangPai()
 end
 
 function ClickEvent.ChiClickButton(gameObject)
 	-- body
-	for k,v in pairs(_currentPanel.operationButton) do
-		_currentPanel.buttonList[v].gameObject:SetActive(false)
-	end
+	ClickEvent.CloseOperationPanel()
 	Player.MahJong.ChiPai()
 end
 
 function ClickEvent.PengClickButton(gameObject)
 	-- body
-	for k,v in pairs(_currentPanel.operationButton) do
-		_currentPanel.buttonList[v].gameObject:SetActive(false)
-	end
+	ClickEvent.CloseOperationPanel()
 	Player.MahJong.PengPai()
 end
 
 function ClickEvent.HuClickButton(gameObject)
 	-- body
-	for k,v in pairs(_currentPanel.operationButton) do
-		_currentPanel.buttonList[v].gameObject:SetActive(false)
-	end
+	ClickEvent.CloseOperationPanel()
     Player.MahJong.HuPai()
 end
 
 function ClickEvent.GuoClickButton(gameObject)
 	-- body
+	ClickEvent.CloseOperationPanel()
+	Player.MahJong.GuoPai()
+end
+
+function ClickEvent.CloseOperationPanel()
+	-- body
 	for k,v in pairs(_currentPanel.operationButton) do
 		_currentPanel.buttonList[v].gameObject:SetActive(false)
 	end
-	Player.MahJong.GuoPai()
 end
 
 ---------------------------------------------------------------------------

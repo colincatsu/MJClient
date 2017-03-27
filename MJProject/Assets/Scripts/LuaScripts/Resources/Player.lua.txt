@@ -17,15 +17,15 @@ local _invoke_data = ""
 local _invoke_table = {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
 local _da_pai_cache = {}
-local _da_pai_cache.front = 1
-local _da_pai_cache.rear = 0
+_da_pai_cache.front = 1
+_da_pai_cache.rear = 0
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 
 function Player.GetDaPaiCache()
     -- body
     if _da_pai_cache.front > _da_pai_cache.rear then
         return nil
-    else then
+    else
         local tempData = _da_pai_cache[_da_pai_cache.front]
         _da_pai_cache.front = _da_pai_cache.front + 1
         return tempData
@@ -222,7 +222,6 @@ function Player.OnPaiNotify(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     print(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
-        Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
         Player._invoke_table = message
         local countPai = 0
         for k,v in pairs(Player._invoke_table.pais) do
@@ -236,6 +235,7 @@ function Player.OnPaiNotify(type_t,stuff)
         if countPai == 14 then
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
+        Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.SetCurrentState(operationState.DAPAI)
         Player._pai_operation_alert_cache = message.pai
@@ -256,11 +256,12 @@ function Player.OnPaiOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
     print(message.oper_type)
-    Player.SetDaPaiCache(message)
+    --Player._pai_operation_alert_cache = message.pai
     switch = {
         ["PAI_OPER_TYPE_DAPAI"] = function( ... )
             -- body
             --message.position
+            Player.SetDaPaiCache(message)
             Player.ThreadFunction(Player.MahJong.DaPaiPoolShow)
         end,
         ["PAI_OPER_TYPE_HUPAI"] = function( ... )
