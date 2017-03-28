@@ -131,7 +131,10 @@ function Network.OnReceived(buffer)
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
     ----------------------------------------------------
-    local meta = protobuf.decode("Adoter.Asset.Meta" , data)
+    local meta = nil
+    if data then
+        meta = protobuf.decode("Adoter.Asset.Meta" , data)
+    end
     --print("------------"..meta)
     ---[[
     print(type(meta))
@@ -139,7 +142,9 @@ function Network.OnReceived(buffer)
     print("ddddddddddd"..meta.stuff)
     --]]
     ----------------------------------------------------
-    FLibEvent.Fire(meta.type_t, meta.stuff)
+    if meta then
+        FLibEvent.Fire(meta.type_t, meta.stuff)
+    end
     return 0
 end
 
