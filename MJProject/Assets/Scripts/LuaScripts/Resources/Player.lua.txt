@@ -331,6 +331,16 @@ function Player.OnLoadSuccess()
 end
 
 ---------------------------------------------------------------------------
+--错误码提示
+---------------------------------------------------------------------------
+function Player.OnAlertMessage(type_t,stuff)
+    -- body
+    local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
+    print(message.error_type)
+    print(message.error_show_type)
+    print(message.error_code)
+end
+---------------------------------------------------------------------------
 --通用操作返回协议，模拟RPC处理流程
 ---------------------------------------------------------------------------
 function Player.OnCommonOperation(type_t,stuff)

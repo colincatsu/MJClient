@@ -426,6 +426,9 @@ function MahJong.PengPai(paiTable)
 			if Player._pai_operation_alert_cache.card_type == v.paiType and 
 				Player._pai_operation_alert_cache.card_value == v.paiValue then
 				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+				if v.child == MahJong._current_click_pai then
+					MahJong._current_click_pai = nil
+				end
 				CS.UnityEngine.Object.Destroy(v.parent)
 				v = {}
 				MahJong.SortPlayerPai(k)
@@ -451,7 +454,7 @@ function MahJong.ClickChiPaiEvent( gameObject )
 	MahJong.ChiPai()
 	CS.UnityEngine.Object.Destroy(_chi_pai_father.father)
 	ClickEvent.CloseOperationPanel()
-	_chi_pai_father.father = {}
+	_chi_pai_father = {}
 end
 
 function MahJong.SortChiPai(deleteNumber)
@@ -524,7 +527,7 @@ function MahJong.ChiPai(paiTable)
 	--paiTable.card_value --+-1
 
 	print("ChiPai")
-	local paiNumber
+	local paiNumber = nil
 	local paiElement = {}
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
 		paiElement[k] = {}
@@ -540,8 +543,15 @@ function MahJong.ChiPai(paiTable)
 					break
 				end
 			end
+			if not paiNumber or paiNumber <= 0 or paiNumber >9 then
+				print("no value")
+				break
+			end
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 			--if _player_father.cards[paiNumber] then
+			if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
+				MahJong._current_click_pai = nil
+			end
 			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
 			_player_father.cards[paiNumber] = {}
 			MahJong.SortPlayerPai(paiNumber)
@@ -716,6 +726,10 @@ end
 
 function MahJong.GuoPai()
 	-- body
+	if _chi_pai_father.father then
+		CS.UnityEngine.Object.Destroy(_chi_pai_father.father)
+		_chi_pai_father = {}
+	end
 	Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
 	currentOperationState = operationState.DAPAI
 end
