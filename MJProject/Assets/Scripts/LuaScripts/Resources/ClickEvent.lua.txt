@@ -55,15 +55,19 @@ function ClickEvent.PaiOperationState()
 		if v == "PAI_CHECK_RETURN_HU" then
 			_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
 	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	        Player.MahJong.SetCurrentState(operationState.HU)
 		elseif v == "PAI_CHECK_RETURN_GANG" then
 			_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(true)
 	        _currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
 	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	        Player.MahJong.SetCurrentState(operationState.GANG)
 		elseif v == "PAI_CHECK_RETURN_PENG" then
 			_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
 	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+	        Player.MahJong.SetCurrentState(operationState.PENG)
 		elseif v == "PAI_CHECK_RETURN_CHI" then
 			_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+			Player.MahJong.SetCurrentState(operationState.CHI)
 			Player.MahJong.CheckChiPai()
 		else
 			print("PAI_CHECK_RETURN_NULL ")
