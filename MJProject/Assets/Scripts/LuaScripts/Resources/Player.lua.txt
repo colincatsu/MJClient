@@ -15,6 +15,7 @@ local _crossId = 0
 local _leftId = 0
 local _invoke_data = ""
 local _invoke_table = {}
+local _invoke_table_test= {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
 local _da_pai_cache = {}
 _da_pai_cache.front = 1
@@ -244,7 +245,12 @@ function Player.OnPaiNotify(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     print(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
+        --[[
+        Player._invoke_table_test = message
+        Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)
+        --]]
         Player._invoke_table = message
+
         local countPai = 0
         for k,v in pairs(Player._invoke_table.pais) do
             for j,m in pairs(v.cards) do
@@ -262,6 +268,9 @@ function Player.OnPaiNotify(type_t,stuff)
         Player.MahJong.SetCurrentState(operationState.DAPAI)
         Player._pai_operation_alert_cache = message.pai
         Player.ThreadFunction(Player.MahJong.ZhuaPai)
+    elseif message.data_type == "CARDS_DATA_TYPE_SYNC" then
+        Player._invoke_table_test = message
+        Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)
     end
     --[[
     for k, v in pairs(message.pais) do
