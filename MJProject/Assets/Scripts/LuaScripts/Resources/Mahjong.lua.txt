@@ -486,7 +486,7 @@ function MahJong.PengPai(paiTable)
 			end
 		end
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI")
+	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},Player._pai_operation_alert_cache)
 	currentOperationState = operationState.DAPAI
 end
 
@@ -579,11 +579,15 @@ function MahJong.ChiPai(paiTable)
 	print("ChiPai")
 	local paiNumber = nil
 	local paiElement = {}
+	local paiCount = 1
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
-		paiElement[k] = {}
-		paiElement[k].card_type = v.card_type
-		paiElement[k].card_value = v.paiValue
 		if v.paiValue ~= Player._pai_operation_alert_cache.card_value then
+
+			paiElement[paiCount] = {}
+			paiElement[paiCount].card_type = v.card_type
+			paiElement[paiCount].card_value = v.paiValue
+			paiCount = paiCount + 1
+			
 			print(v.card_type)
 			print(v.paiValue)
 			for m,n in pairs(_player_father.cards) do
@@ -607,7 +611,7 @@ function MahJong.ChiPai(paiTable)
 			MahJong.SortPlayerPai(paiNumber)
 		end
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,{})
+	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,Player._pai_operation_alert_cache)
 	currentOperationState = operationState.DAPAI
 end
 
@@ -799,7 +803,7 @@ function MahJong.GangPai(paiTable)
 			end
 		end
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI")
+	Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},Player._pai_operation_alert_cache)
 	currentOperationState = operationState.WAIT
 end
 
