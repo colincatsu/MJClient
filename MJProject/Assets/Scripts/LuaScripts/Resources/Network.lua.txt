@@ -146,6 +146,7 @@ function Network.OnReceived(buffer)
     ----------------------------------------------------
     if meta then
         FLibEvent.Fire(meta.type_t, meta.stuff)
+        --print("Fire Success")
     end
     return 0
 end

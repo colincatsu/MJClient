@@ -85,15 +85,6 @@ public class LuaBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (luaUpdate != null)
-        {
-            luaUpdate();
-        }
-        if (Time.time - LuaBehaviour.lastGCTime > GCInterval)
-        {
-            LuaEnvSingleton.Instance.Tick();
-            LuaBehaviour.lastGCTime = Time.time;
-        }
         lock (mainThreadDelegate)
         {
             if (mainThreadDelegate != empty)
@@ -103,9 +94,20 @@ public class LuaBehaviour : MonoBehaviour {
             }
 
         }
+        if (luaUpdate != null)
+        {
+            luaUpdate();
+        }
+        if (Time.time - LuaBehaviour.lastGCTime > GCInterval)
+        {
+            LuaEnvSingleton.Instance.Tick();
+            LuaBehaviour.lastGCTime = Time.time;
+        }
     }
-    [CSharpCallLua]
-    public delegate void Function(params string[] para);
+    void LateUpdate()
+    {
+
+    }
     private static void empty() { }
     protected static Action mainThreadDelegate = empty;
     public void Attach(Action callback){

@@ -265,8 +265,8 @@ function MahJong.CreatePlayerPaiTest()
 	-- body
 	if _player_father_test and _player_father_test.father then
 		CS.UnityEngine.Object.Destroy(_player_father_test.father)
-		_player_father_test.father = {}
 	end
+	_player_father_test = nil
 	if not _player_father_test then
 		_player_father_test = {}
 		_player_father_test.cards = {}
@@ -372,9 +372,9 @@ function MahJong.ClickPaiEvent(gameObject)
 				card_type = _player_father.cards[paiNumber].paiType,
 				card_value = _player_father.cards[paiNumber].paiValue,
 			}
-			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 			MahJong._current_click_pai = nil
 			MahJong.DaPai(paiNumber)
+			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 		else
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 			MahJong._current_click_pai = gameObject
@@ -400,6 +400,10 @@ end
 function MahJong.DaPaiPoolShow()
 	-- body
 	local daPaiCacheData = Player.GetDaPaiCache()
+	if not daPaiCacheData then
+		print("no dapai cache")
+		return
+	end
 	local whichPlayer = daPaiCacheData.position
 	local paiType = daPaiCacheData.pai.card_type
 	local paiValue = tonumber(daPaiCacheData.pai.card_value)
@@ -597,7 +601,7 @@ function MahJong.ChiPai(paiTable)
 					break
 				end
 			end
-			if not paiNumber or paiNumber <= 0 or paiNumber >9 then
+			if not paiNumber or paiNumber <= 0 then
 				print("no value")
 				break
 			end
@@ -793,9 +797,12 @@ function MahJong.GangPai(paiTable)
 	-- body
 	for i=1,3 do
 		for k,v in pairs(_player_father.cards) do
-			if Player._pai_operation_alert_cache.card_type == v.card_type and 
-				Player._pai_operation_alert_cache.card_value == v.card_value then
+			if Player._pai_operation_alert_cache.card_type == v.paiType and 
+				Player._pai_operation_alert_cache.card_value == v.paiValue then
 				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+				if v.child == MahJong._current_click_pai then
+					MahJong._current_click_pai = nil
+				end
 				CS.UnityEngine.Object.Destroy(v.parent)
 				v = {}
 				MahJong.SortPlayerPai(k)
