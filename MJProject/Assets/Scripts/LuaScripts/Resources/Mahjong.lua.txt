@@ -32,6 +32,8 @@ local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}--没抓的牌池
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
+local _operation_pai_show = {}--碰牌的牌池
+
 local _modelPoolLineCount = 36
 local _startPosition = {}
 local _startRotation = {}
@@ -161,6 +163,27 @@ function MahJong.Init()
 	_pai_pool_show.point_b.father = self.transform:Find("PaiPoolShow/Point_B/Father").gameObject
 	_pai_pool_show.point_b.startPosition = newVector3(0,_modelSize.length/2,_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/2)
 	_pai_pool_show.point_b.startRotation = newVector3(180,-270,0)
+	--碰牌池初始化
+	_operation_pai_show.point_d = {}
+	_operation_pai_show.point_d.paiNumber = 0
+	_operation_pai_show.point_d.father = self.transform:Find("OperationPoolShow/Point_D/Father").gameObject
+	_operation_pai_show.point_d.startPosition = newVector3(_operation_pai_show.point_d.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_d.father.transform.position.z)
+	_operation_pai_show.point_d.startRotation = newVector3(180,0,0)
+	_operation_pai_show.point_n = {}
+	_operation_pai_show.point_n.paiNumber = 0
+	_operation_pai_show.point_n.father = self.transform:Find("OperationPoolShow/Point_N/Father").gameObject
+	_operation_pai_show.point_n.startPosition = newVector3(_operation_pai_show.point_n.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_n.father.transform.position.z)
+	_operation_pai_show.point_n.startRotation = newVector3(180,-90,0)
+	_operation_pai_show.point_x = {}
+	_operation_pai_show.point_x.paiNumber = 0
+	_operation_pai_show.point_x.father = self.transform:Find("OperationPoolShow/Point_X/Father").gameObject
+	_operation_pai_show.point_x.startPosition = newVector3(_operation_pai_show.point_x.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_x.father.transform.position.z)
+	_operation_pai_show.point_x.startRotation = newVector3(180,-180,0)
+	_operation_pai_show.point_b = {}
+	_operation_pai_show.point_b.paiNumber = 0
+	_operation_pai_show.point_b.father = self.transform:Find("OperationPoolShow/Point_B/Father").gameObject
+	_operation_pai_show.point_b.startPosition = newVector3(_operation_pai_show.point_b.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_b.father.transform.position.z)
+	_operation_pai_show.point_b.startRotation = newVector3(180,-270,0)
 end
 
 function MahJong.ModelPoolInit()
@@ -845,8 +868,12 @@ end
 
 function MahJong.OperationPaiShow()
 	-- body
-	--[[
+	---[[
 	local operationPaiShowData = Player.GetPaiOperationShowCache()
+	if not operationPaiShowData then
+		print("no operationPai cache")
+		return
+	end
 	local whichPlayer = operationPaiShowData.position
 	local paiType = operationPaiShowData.pai.card_type
 	local paiValue = tonumber(daPaiCacheData.pai.card_value)
