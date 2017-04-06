@@ -53,6 +53,7 @@ function ClickEvent.PaiOperationState()
 	-- body
 	local tempStateTable = Player.MahJong.GetStateTable()
     for k,v in pairs(tempStateTable) do
+    	print(v)
 		if v == "PAI_CHECK_RETURN_HU" then
 			_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
 	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)

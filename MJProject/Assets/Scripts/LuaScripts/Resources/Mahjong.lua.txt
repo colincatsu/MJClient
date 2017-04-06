@@ -35,6 +35,7 @@ local _pai_pool_show_line = 6--打牌每行的牌数
 local _operation_pai_show = {}--碰牌的牌池
 
 local _modelPoolLineCount = 36
+local _play_pai_count = 14--玩家手牌数目
 local _startPosition = {}
 local _startRotation = {}
 local _myAnimation
@@ -164,6 +165,8 @@ function MahJong.Init()
 	_pai_pool_show.point_b.startPosition = newVector3(0,_modelSize.length/2,_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/2)
 	_pai_pool_show.point_b.startRotation = newVector3(180,-270,0)
 	--碰牌池初始化
+	--[[
+	--]]
 	_operation_pai_show.point_d = {}
 	_operation_pai_show.point_d.paiNumber = 0
 	_operation_pai_show.point_d.father = self.transform:Find("OperationPoolShow/Point_D/Father").gameObject
@@ -853,7 +856,7 @@ function MahJong.SortPlayerPai(deleteNumber)
 	end
 	for k,v in pairs(_player_father.cards) do
 		v.parent.transform.localPosition = _player_middle_pos +
-		_pai_bigger*newVector3((_player_father.currentPaiNumber-1)*_modelSize.width/2 - _modelSize.width*(k-1),0,0)
+		_pai_bigger*newVector3((_play_pai_count-1)*_modelSize.width/2 - _modelSize.width*(k-1),0,0)
 	end
 end
 
@@ -861,14 +864,14 @@ function MahJong.SortPlayerPaiTest()
 	-- body
 	for k,v in pairs(_player_father_test.cards) do
 		v.parent.transform.localPosition = _player_middle_pos +
-		_pai_bigger*newVector3((_player_father_test.currentPaiNumber-1)*_modelSize.width/2 - _modelSize.width*(k-1),
+		_pai_bigger*newVector3((_play_pai_count-1)*_modelSize.width/2 - _modelSize.width*(k-1),
 			_modelSize.height * 3,0)
 	end
 end
 
 function MahJong.OperationPaiShow()
 	-- body
-	---[[
+	--[[
 	local operationPaiShowData = Player.GetPaiOperationShowCache()
 	if not operationPaiShowData then
 		print("no operationPai cache")

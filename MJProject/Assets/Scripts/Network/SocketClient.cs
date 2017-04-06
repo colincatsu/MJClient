@@ -277,10 +277,10 @@ namespace MX
 
         public void SendProtocol(byte[] meta)
         {
-            for (int i = 0; i < meta.Length; i++)
-            {
-                Debug.LogWarning(meta[i]);
-            }
+            //for (int i = 0; i < meta.Length; i++)
+            //{
+            //    Debug.LogWarning(meta[i]);
+            //}
             SessionSend(meta);
         }
     }
