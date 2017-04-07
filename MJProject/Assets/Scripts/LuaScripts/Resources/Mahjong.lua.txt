@@ -170,22 +170,30 @@ function MahJong.Init()
 	_operation_pai_show.point_d = {}
 	_operation_pai_show.point_d.paiNumber = 0
 	_operation_pai_show.point_d.father = self.transform:Find("OperationPoolShow/Point_D/Father").gameObject
-	_operation_pai_show.point_d.startPosition = newVector3(_operation_pai_show.point_d.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_d.father.transform.position.z)
+	_operation_pai_show.point_d.startPosition = newVector3(_operation_pai_show.point_d.father.transform.parent.position.x ,
+		_modelSize.length/2,
+		_operation_pai_show.point_d.father.transform.parent.position.z)
 	_operation_pai_show.point_d.startRotation = newVector3(180,0,0)
 	_operation_pai_show.point_n = {}
 	_operation_pai_show.point_n.paiNumber = 0
 	_operation_pai_show.point_n.father = self.transform:Find("OperationPoolShow/Point_N/Father").gameObject
-	_operation_pai_show.point_n.startPosition = newVector3(_operation_pai_show.point_n.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_n.father.transform.position.z)
+	_operation_pai_show.point_n.startPosition = newVector3(_operation_pai_show.point_n.father.transform.parent.position.x ,
+		_modelSize.length/2,
+		_operation_pai_show.point_n.father.transform.parent.position.z)
 	_operation_pai_show.point_n.startRotation = newVector3(180,-90,0)
 	_operation_pai_show.point_x = {}
 	_operation_pai_show.point_x.paiNumber = 0
 	_operation_pai_show.point_x.father = self.transform:Find("OperationPoolShow/Point_X/Father").gameObject
-	_operation_pai_show.point_x.startPosition = newVector3(_operation_pai_show.point_x.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_x.father.transform.position.z)
+	_operation_pai_show.point_x.startPosition = newVector3(_operation_pai_show.point_x.father.transform.parent.position.x ,
+		_modelSize.length/2,
+		_operation_pai_show.point_x.father.transform.parent.position.z)
 	_operation_pai_show.point_x.startRotation = newVector3(180,-180,0)
 	_operation_pai_show.point_b = {}
 	_operation_pai_show.point_b.paiNumber = 0
 	_operation_pai_show.point_b.father = self.transform:Find("OperationPoolShow/Point_B/Father").gameObject
-	_operation_pai_show.point_b.startPosition = newVector3(_operation_pai_show.point_b.father.transform.position.x ,_modelSize.length/2,_operation_pai_show.point_b.father.transform.position.z)
+	_operation_pai_show.point_b.startPosition = newVector3(_operation_pai_show.point_b.father.transform.parent.position.x ,
+		_modelSize.length/2,
+		_operation_pai_show.point_b.father.transform.parent.position.z)
 	_operation_pai_show.point_b.startRotation = newVector3(180,-270,0)
 end
 
@@ -453,7 +461,9 @@ function MahJong.DaPaiPoolShow()
     local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
 	if whichPlayer == "POSITION_TYPE_EAST" then
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
-		_pai_pool_show.point_d.cards = {}
+		if not _pai_pool_show.point_d.cards then
+			_pai_pool_show.point_d.cards = {}
+		end
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
@@ -464,7 +474,9 @@ function MahJong.DaPaiPoolShow()
 			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
-		_pai_pool_show.point_n.cards = {}
+		if not _pai_pool_show.point_n.cards then
+			_pai_pool_show.point_n.cards = {}
+		end
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_n.father.transform)
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].layer = 0
@@ -475,7 +487,9 @@ function MahJong.DaPaiPoolShow()
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
-		_pai_pool_show.point_x.cards = {}
+		if not _pai_pool_show.point_x.cards then
+			_pai_pool_show.point_x.cards = {}
+		end
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_x.father.transform)
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].layer = 0
@@ -486,7 +500,9 @@ function MahJong.DaPaiPoolShow()
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
-		_pai_pool_show.point_b.cards = {}
+		if not _pai_pool_show.point_b.cards then
+			_pai_pool_show.point_b.cards = {}
+		end
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_b.father.transform)
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].layer = 0
@@ -871,7 +887,7 @@ end
 
 function MahJong.OperationPaiShow()
 	-- body
-	--[[
+	---[[
 	local operationPaiShowData = Player.GetPaiOperationShowCache()
 	if not operationPaiShowData then
 		print("no operationPai cache")
@@ -879,39 +895,66 @@ function MahJong.OperationPaiShow()
 	end
 	local whichPlayer = operationPaiShowData.position
 	local paiType = operationPaiShowData.pai.card_type
-	local paiValue = tonumber(daPaiCacheData.pai.card_value)
+	local paiValue = {}
+	if message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
+		for i=1,4 do
+    		paiValue[i] = operationPaiShowData.pai.card_value
+    	end
+    elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
+    	for i=1,3 do
+    		paiValue[i] = operationPaiShowData.pai.card_value
+    	end
+    elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
+		paiValue[2] = tonumber(daPaiCacheData.pai.card_value)
+		if operationPaiShowData.pais then
+			for k,v in pairs(operationPaiShowData.pais) do
+				if k > 1 then
+					paiValue[k+1] = v.card_value
+				end
+			end
+		end
+    end
+
     local tempPaiPool = {}
-    local modelName
+    local modelName = {}
     for k, v in pairs(_mj_asset) do
     	if paiType == v.card_type then
     		tempPaiPool = v
     	end
     end
-    if tempPaiPool and tempPaiPool.cards and tempPaiPool.cards[paiValue] then
-	    modelName = tostring(tempPaiPool.cards[paiValue].model_path)
+    if tempPaiPool and tempPaiPool.cards then
+    	for k,v in pairs(paiValue) do
+		    modelName[k] = tostring(tempPaiPool.cards[v].model_path)
+    	end
 	else
     	print("no modelName")
 		print(paiType)
-    	print(paiValue)
     end
     if not modelName then
     	return
     end
-    local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
 	if whichPlayer == "POSITION_TYPE_EAST" then
+		if not _pai_pool_show.point_d.cards then
+			_pai_pool_show.point_d.cards = {}
+		end
+	    local modelTemp
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
-		_pai_pool_show.point_d.cards = {}
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
-		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localPosition = _pai_pool_show.point_d.startPosition 
-		+ newVector3(-math.fmod(_pai_pool_show.point_d.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
-			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
+		for k,v in pairs(modelName) do
+			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+			_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localPosition = _pai_pool_show.point_d.startPosition 
+			+ newVector3(-math.fmod(_pai_pool_show.point_d.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
+				0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
+		end
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
-		_pai_pool_show.point_n.cards = {}
+		if not _pai_pool_show.point_n.cards then
+			_pai_pool_show.point_n.cards = {}
+		end
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_n.father.transform)
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].layer = 0
@@ -922,7 +965,9 @@ function MahJong.OperationPaiShow()
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
-		_pai_pool_show.point_x.cards = {}
+		if not _pai_pool_show.point_x.cards then
+			_pai_pool_show.point_x.cards = {}
+		end
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_x.father.transform)
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].layer = 0
@@ -933,7 +978,9 @@ function MahJong.OperationPaiShow()
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
-		_pai_pool_show.point_b.cards = {}
+		if not _pai_pool_show.point_b.cards then
+			_pai_pool_show.point_b.cards = {}
+		end
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_b.father.transform)
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].layer = 0
