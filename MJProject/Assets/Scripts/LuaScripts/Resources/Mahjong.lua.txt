@@ -896,22 +896,24 @@ function MahJong.OperationPaiShow()
 	local whichPlayer = operationPaiShowData.position
 	local paiType = operationPaiShowData.pai.card_type
 	local paiValue = {}
-	if message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
+	if operationPaiShowData.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
-    elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
+    elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_PENGPAI" then
     	for i=1,3 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
-    elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
-		paiValue[2] = tonumber(daPaiCacheData.pai.card_value)
+    elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 		if operationPaiShowData.pais then
 			for k,v in pairs(operationPaiShowData.pais) do
 				if k > 1 then
 					paiValue[k+1] = v.card_value
+				else
+					paiValue[k] = v.card_value
 				end
 			end
+			paiValue[2] = tonumber(operationPaiShowData.pai.card_value)
 		end
     end
 
@@ -933,102 +935,115 @@ function MahJong.OperationPaiShow()
     if not modelName then
     	return
     end
+
 	if whichPlayer == "POSITION_TYPE_EAST" then
-		if not _pai_pool_show.point_d.group then
-			_pai_pool_show.point_d.group = {}
+		if not _operation_pai_show.point_d.group then
+			_operation_pai_show.point_d.group = {}
 		end
 	    local modelTemp
-		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+		_operation_pai_show.point_d.paiNumber = _operation_pai_show.point_d.paiNumber + 1
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber] = {}
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_d.paiNumber))
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber] = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_pai_pool_show.point_d.paiNumber))
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].layer = 0
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].name = modelName
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 			if k == 2 then
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
 			else
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
 			end
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			if k == 4 then
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k-1].transform.localPosition + 
+				newVector3(_modelSize.width,0,0)
+			end
 		end
-		_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform.localPosition = _pai_pool_show.point_d.startPosition + 
-		newVector3((_pai_pool_show.point_d.paiNumber-1)*(_modelSize.height+_modelSize.width+_modelSize.length),0,0)
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform.localPosition = newVector3((_operation_pai_show.point_d.paiNumber-1)*(_modelSize.height+_modelSize.width*2+_modelSize.length),0,0)
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
-		if not _pai_pool_show.point_d.group then
-			_pai_pool_show.point_d.group = {}
+		if not _operation_pai_show.point_n.group then
+			_operation_pai_show.point_n.group = {}
 		end
 	    local modelTemp
-		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+		_operation_pai_show.point_n.paiNumber = _operation_pai_show.point_n.paiNumber + 1
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber] = {}
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_n.paiNumber))
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform:SetParent(_operation_pai_show.point_n.father.transform)
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber] = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_pai_pool_show.point_d.paiNumber))
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].layer = 0
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].name = modelName
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 			if k == 2 then
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
 			else
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
 			end
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
+			if k == 4 then
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k-1].transform.localPosition + 
+				newVector3(0,0,_modelSize.width)
+			end
 		end
-		_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform.localPosition = _pai_pool_show.point_d.startPosition + 
-		newVector3((_pai_pool_show.point_d.paiNumber-1)*(_modelSize.height+_modelSize.width+_modelSize.length),0,0)
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform.localPosition = newVector3(0,0,(_operation_pai_show.point_n.paiNumber-1)*(_modelSize.height+_modelSize.width*2+_modelSize.length))
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
-		if not _pai_pool_show.point_d.group then
-			_pai_pool_show.point_d.group = {}
+		if not _operation_pai_show.point_x.group then
+			_operation_pai_show.point_x.group = {}
 		end
 	    local modelTemp
-		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+		_operation_pai_show.point_x.paiNumber = _operation_pai_show.point_x.paiNumber + 1
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber] = {}
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_x.paiNumber))
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform:SetParent(_operation_pai_show.point_x.father.transform)
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber] = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_pai_pool_show.point_d.paiNumber))
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].layer = 0
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].name = modelName
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 			if k == 2 then
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
 			else
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
 			end
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			if k == 4 then
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k-1].transform.localPosition + 
+				newVector3(-_modelSize.width,0,0)
+			end
 		end
-		_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform.localPosition = _pai_pool_show.point_d.startPosition + 
-		newVector3((_pai_pool_show.point_d.paiNumber-1)*(_modelSize.height+_modelSize.width+_modelSize.length),0,0)
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform.localPosition = newVector3(-(_operation_pai_show.point_x.paiNumber-1)*(_modelSize.height+_modelSize.width*2+_modelSize.length),0,0)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
-		if not _pai_pool_show.point_d.group then
-			_pai_pool_show.point_d.group = {}
+		if not _operation_pai_show.point_b.group then
+			_operation_pai_show.point_b.group = {}
 		end
 	    local modelTemp
-		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+		_operation_pai_show.point_b.paiNumber = _operation_pai_show.point_b.paiNumber + 1
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber] = {}
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_b.paiNumber))
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform:SetParent(_operation_pai_show.point_b.father.transform)
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber] = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_pai_pool_show.point_d.paiNumber))
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards = {}
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform)
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].layer = 0
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].name = modelName
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = CS.UnityEngine.Object.Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 			if k == 2 then
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
 			else
-				_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
 			end
-			_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
+			if k == 4 then
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k-1].transform.localPosition + 
+				newVector3(0,0,-_modelSize.width)
+			end
 		end
-		_pai_pool_show.point_d.group[_pai_pool_show.point_d.paiNumber].father.transform.localPosition = _pai_pool_show.point_d.startPosition + 
-		newVector3((_pai_pool_show.point_d.paiNumber-1)*(_modelSize.height+_modelSize.width+_modelSize.length),0,0)
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform.localPosition = newVector3(0,0,-(_operation_pai_show.point_b.paiNumber-1)*(_modelSize.height+_modelSize.width*2+_modelSize.length))
 	end
 	--]]
 
