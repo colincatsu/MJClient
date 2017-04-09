@@ -259,14 +259,15 @@ end
 
 function MahJong.ZhuaPai()
 	-- body
+	local paiCache = Player._fa_pai_cache
 	local tempPaiPool = {}
 	for k,v in pairs(_mj_asset) do
-		if Player._pai_operation_alert_cache.card_type == v.card_type then
+		if paiCache.card_type == v.card_type then
 			tempPaiPool = v
 		end
 	end
-	MahJong.CreatePlayerModel(""..tempPaiPool.cards[Player._pai_operation_alert_cache.card_value].model_path,
-		_player_father.currentPaiNumber+1, tempPaiPool.card_type,Player._pai_operation_alert_cache.card_value)
+	MahJong.CreatePlayerModel(""..tempPaiPool.cards[paiCache.card_value].model_path,
+		_player_father.currentPaiNumber+1, tempPaiPool.card_type,paiCache.card_value)
 	MahJong.SortZhuaPai()
 	MahJong.SortPlayerPai()
 end

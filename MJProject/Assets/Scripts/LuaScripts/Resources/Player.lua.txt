@@ -18,6 +18,7 @@ local _invoke_data = ""
 local _invoke_table = {}
 local _invoke_table_test= {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
+local _fa_pai_cache = {}
 local _da_pai_cache = {}
 _da_pai_cache.front = 1
 _da_pai_cache.rear = 0
@@ -190,6 +191,14 @@ end
 ---------------------------------------------
 --
 
+function Player.OnSyncCommonReward(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SyncCommonReward",stuff)
+end
+
 function Player.OnRoomInformation(type_t,stuff)
     -- body
     if not stuff then
@@ -303,7 +312,7 @@ function Player.OnPaiNotify(type_t,stuff)
         Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.SetCurrentState(operationState.DAPAI)
-        Player._pai_operation_alert_cache = message.pai
+        Player._fa_pai_cache = message.pai
         Player.ThreadFunction(Player.MahJong.ZhuaPai)
     elseif message.data_type == "CARDS_DATA_TYPE_SYNC" then
         Player._invoke_table_test = message
