@@ -1,3 +1,4 @@
+MahJong = {}
 local Enum = require "Enum"
 local Player = require "Player"
 local ClickEvent = require "ClickEvent"
@@ -13,7 +14,6 @@ local AssetManager = require "AssetManager"
 	print(hoster)
 	AssetManager.PrintMessage(hoster)
 --]]
-MahJong = {}
 local newVector3 = CS.UnityEngine.Vector3
 local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
@@ -48,12 +48,13 @@ local _animationState = ""
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 local currentOperationState = operationState.WAIT
 local operationStateTable = {}
+-- body
 Player.self = self
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
 	
 function start()
-	-- body
+
 	PlayUICT.Init()
 	MahJong.Init()
 	MahJong.AnimationPlay()
@@ -241,6 +242,18 @@ function MahJong.ModelPoolSetActive(bool)
 	-- body
 	for k, v in pairs(_pointFather) do  
     	v:SetActive(bool)
+	end
+end
+
+function MahJong.UpdateMyDataState()
+	-- body
+	local myPosition = Player._my_player_data.position
+	if myPosition == "POSITION_TYPE_SOUTH" then
+		self.transform.eulerAngles = newVector3(0,90,0)
+	elseif myPosition == "POSITION_TYPE_WEST" then
+		self.transform.eulerAngles = newVector3(0,180,0)
+	elseif myPosition == "POSITION_TYPE_NORTH" then
+		self.transform.eulerAngles = newVector3(0,270,0)
 	end
 end
 
@@ -945,6 +958,7 @@ function MahJong.OperationPaiShow()
 		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber] = {}
 		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_d.paiNumber))
 		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
+		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform.localEulerAngles = newVector3.zero
 		_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
@@ -972,6 +986,7 @@ function MahJong.OperationPaiShow()
 		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber] = {}
 		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_n.paiNumber))
 		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform:SetParent(_operation_pai_show.point_n.father.transform)
+		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform.localEulerAngles = newVector3.zero
 		_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
@@ -999,6 +1014,7 @@ function MahJong.OperationPaiShow()
 		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber] = {}
 		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_x.paiNumber))
 		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform:SetParent(_operation_pai_show.point_x.father.transform)
+		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform.localEulerAngles = newVector3.zero
 		_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)
@@ -1026,6 +1042,7 @@ function MahJong.OperationPaiShow()
 		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber] = {}
 		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_b.paiNumber))
 		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform:SetParent(_operation_pai_show.point_b.father.transform)
+		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform.localEulerAngles = newVector3.zero
 		_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards = {}
 		for k,v in pairs(modelName) do
 			modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..v)

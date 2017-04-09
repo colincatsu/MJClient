@@ -6,7 +6,8 @@ local AssetManager = require "AssetManager"
 ---------------------------------------------------------------------------
 Player = {}
 local this = Player
-local _player = nil --玩家数据
+local _my_player_data = nil --玩家数据
+local _all_players_data = nil
 local _id = nil
 local _password = ""
 local _roomId = nil
@@ -61,7 +62,7 @@ end
 ---------------------------------------------------------------------------
 
 function Player.GetID()
-	return _player.common_prop.player_id
+	return _my_player_data.common_prop.player_id
 end
 
 ---------------------------------------------------------------------------
@@ -194,7 +195,20 @@ function Player.OnRoomInformation(type_t,stuff)
     if not stuff then
         return
     end
-    
+    local message = protobuf.decode("Adoter.Asset.RoomInformation",stuff)
+    if message.player_list then
+        Player._all_players_data = message.player_list
+        if not Player._my_player_data then
+            for k,v in pairs(Player._all_players_data) do
+                if v.common_prop.player_id == this._id then
+                    Player._my_player_data = v
+                    Player.ThreadFunction(Player.MahJong.UpdateMyDataState)
+                end
+            end
+        end
+    else
+        print("list null")
+    end
 end
 
 function Player.OnPlayerInformation(type_t,stuff)
@@ -202,7 +216,8 @@ function Player.OnPlayerInformation(type_t,stuff)
     if not stuff then
         return
     end
-    local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
+    local message = protobuf.decode("Adoter.Asset.PlayerInformation",stuff)
+
     
 end
 
