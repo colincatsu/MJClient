@@ -34,7 +34,7 @@ local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _operation_pai_show = {}--碰牌的牌池
 
-local _modelPoolLineCount = 36
+local _modelPoolLineCount = 34
 local _play_pai_count = 14--玩家手牌数目
 local _startPosition = {}
 local _startRotation = {}
