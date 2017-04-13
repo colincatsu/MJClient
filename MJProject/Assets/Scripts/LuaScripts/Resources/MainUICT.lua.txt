@@ -18,6 +18,10 @@ local _Other_Message_UI
 local _Store_UI 
 local _Creat_Room_UI 
 --]]
+function awake()
+	-- body
+end
+
 function start()
 	-- body
 	-- print(self._main_ui_sence)
