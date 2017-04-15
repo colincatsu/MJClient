@@ -36,7 +36,7 @@ public class BasicsMain : MonoBehaviour
 	{
 		Application.targetFrameRate = 60;
 		Stage.inst.onKeyDown.Add(OnKeyDown);
-
+        
 		_mainView = this.GetComponent<UIPanel>().ui;
 
 		_backBtn = _mainView.GetChild("btn_Back");
@@ -66,7 +66,7 @@ public class BasicsMain : MonoBehaviour
 			obj = UIPackage.CreateObject("Basics", "Demo_" + type).asCom;
 			_demoObjects[type] = obj;
 		}
-
+        
 		_demoContainer.RemoveChildren();
 		_demoContainer.AddChild(obj);
 		_viewController.selectedIndex = 1;

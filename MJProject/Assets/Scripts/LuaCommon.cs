@@ -128,7 +128,11 @@ public class TestCaseGenConfig : XLua.GenConfig
     {
         get
         {
-            return null;
+            return new List<Type>()
+            {
+                typeof(EventCallback1),
+                typeof(EventCallback0),
+            };
         }
     }
 

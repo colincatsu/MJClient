@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Sence/FairyMainUI.unity
+- path: Assets/FairyGUI/Examples/Scenes/Example 01 - Basics.unity
   isLoaded: 1
   isActive: 1

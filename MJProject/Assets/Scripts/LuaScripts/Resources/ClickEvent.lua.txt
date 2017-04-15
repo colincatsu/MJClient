@@ -1,23 +1,43 @@
 ClickEvent = {}
 ClickEvent.panelTable = {}
-ClickEvent.panelTable._main_ui = "MainUI"
-ClickEvent.panelTable._choose_ui = "ChooseUI"
-ClickEvent.panelTable._create_room_ui = "CreateRoomUI"
-ClickEvent.panelTable._join_room_ui = "JoinRoomUI"
+ClickEvent.panelTable._main_ui = "Login"
+ClickEvent.panelTable._choose_ui = "MainMenu"
+ClickEvent.panelTable._create_room_ui = "CreateRoom"
+ClickEvent.panelTable._join_room_ui = "GetintoRoom"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlayGameUI"
+ClickEvent.uiPanel = nil
 
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 
 local _currentPanel = {}
 local _popPanel = {}
+
+function ClickEvent.Awake( ... )
+	-- body
+	UIPackage.AddPackage("FairyUI/MXUI")
+	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
+end
+function ClickEvent.Start(loadUI)
+	-- body
+	CS.UnityEngine.Application.targetFrameRate = 60
+	ClickEvent.uiPanel.ui:RemoveChildren()
+	ClickEvent.CreateNewPanel(loadUI)
+end
+
+function ClickEvent.DeletePanel(deletePanel)
+	-- body
+	GRoot.inst:RemoveChild(deletePanel)
+end
+
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
 	if not panelName and Player._invoke_data then
 		panelName = Player._invoke_data
 	end
+	--[[
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
 	_currentPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
 	_currentPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
@@ -25,7 +45,15 @@ function ClickEvent.CreateNewPanel(panelName)
 	_currentPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
 	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
 	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
-
+	--]]
+	_currentPanel.panel = UIPackage.CreateObject("MXUI", panelName).asCom
+	GRoot.inst:AddChild(_currentPanel.panel)
+	local childNumber = _currentPanel.panel.numChildren
+	for i=0,childNumber-1 do
+		local obj = _currentPanel.panel:GetChildAt(i)
+		obj.onClick:Add(ClickEvent.registerButtonClick)
+	end
+	--[[
 	if panelName == ClickEvent.panelTable._play_game_ui then
 
 		_currentPanel.roomIdText = _currentPanel.panel.transform:Find("RoomId").gameObject:GetComponent("Text")
@@ -47,6 +75,7 @@ function ClickEvent.CreateNewPanel(panelName)
 			_currentPanel.playerIdText.text = tostring(Player._id)
 		end
 	end
+	--]]
 end
 
 function ClickEvent.PaiOperationState()
@@ -117,13 +146,20 @@ function ClickEvent.PlayerPassword( gameObject )
 	Player._password = gameObject:GetComponent("InputField").text
 end
 
-function ClickEvent.PlayerLoginButton(gameObject)
+function ClickEvent.LoginButton(gameObject)
 	-- body
+	local textShow = _currentPanel.panel:GetChild("Account"):GetChild("n1")
+	Player._string_id = textShow.text
 	Player.CmdLogin(Player._string_id)
 end
-
-function ClickEvent.Register( gameObject )
+function ClickEvent.Account( gameObject )
 	-- body
+	print(gameObject.name)
+end
+
+function ClickEvent.GuestLogin( gameObject )
+	-- body
+	--[[
 	if _currentPanel.toggleList and _currentPanel.toggleList[0].isOn then
 		ClickEvent.DestroyPanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
@@ -131,15 +167,19 @@ function ClickEvent.Register( gameObject )
 		print("no find toggle")
 	end
 	Player.CmdEnterGame(Player._id)
+	--]]
+	ClickEvent.DeletePanel(_currentPanel.panel)
+	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
+	print("ClickEvent.GuestLogin")
 end
 
 function ClickEvent.Admit( gameObject )
 	-- body
 end
 
-function ClickEvent.ReturnButton( ... )
+function ClickEvent.Back( ... )
 	-- body
-	ClickEvent.DestroyPanel(_currentPanel.panel)
+	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 end
 
@@ -296,7 +336,7 @@ end
 ---------------------------------------------------------------------------
 function ClickEvent.registerButtonClick(gameObject)
 	-- body
-	local key = gameObject.name
+	local key = gameObject.sender.name
 	--[[
 	switch = {
 		
@@ -315,8 +355,9 @@ function ClickEvent.registerButtonClick(gameObject)
 	local fSwitch = ClickEvent[key]
 
 	if fSwitch then
-		local result = fSwitch(gameObject)
+		local result = fSwitch(gameObject.sender)
 	else
+		print(key)
 		print("key no found")
 	end
 

@@ -14,94 +14,94 @@ g7a060.xml|304|<component size="260,60">
     </text>
   </displayList>
   <Button/>
-</component>k35j6b.xml|291|<component size="111,89" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+</component>k35j6b.xml|358|<component size="111,89" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5b" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5b" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6c.xml|290|<component size="55,81" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6c.xml|357|<component size="55,81" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5c" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5c" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6d.xml|290|<component size="69,72" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6d.xml|357|<component size="69,72" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5d" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5d" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6e.xml|290|<component size="78,83" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6e.xml|357|<component size="78,83" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5e" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5e" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6f.xml|290|<component size="65,81" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6f.xml|357|<component size="65,81" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5f" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5f" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6g.xml|290|<component size="62,82" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6g.xml|357|<component size="62,82" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5g" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5g" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6h.xml|290|<component size="52,81" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6h.xml|357|<component size="52,81" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5h" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5h" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6i.xml|290|<component size="54,78" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6i.xml|357|<component size="54,78" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth5i" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth5i" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6j.xml|292|<component size="351,390" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6j.xml|359|<component size="351,390" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth4w" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth4w" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6k.xml|292|<component size="351,389" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6k.xml|359|<component size="351,389" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth4x" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth4x" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>k35j6m.xml|292|<component size="351,389" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>k35j6m.xml|359|<component size="351,389" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth4y" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth4y" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
 </component>k35j6n.xml|1526|<component size="559,640">
   <displayList>
     <image id="n1_k35j" name="Bg" src="oyth4s" xy="-3,0" size="553,642"/>
@@ -271,7 +271,10 @@ g7a060.xml|304|<component size="260,60">
       <relation target="" sidePair="width,height"/>
     </image>
   </displayList>
-</component>k35j7e.xml|673|<component size="950,656">
+</component>k35j7e.xml|4974|<component size="950,656">
+  <controller name="ChooseMode" pages="0,,1," selected="0"/>
+  <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
+  <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n1_k35j" name="Bg" src="oyth3v" xy="0,0"/>
     <component id="n2_k35j" name="CreateButton" src="k35j7g" xy="326,520">
@@ -283,6 +286,58 @@ g7a060.xml|304|<component size="260,60">
     <component id="n4_k35j" name="Close" src="k35j7d" xy="880,64">
       <relation target="n1_k35j" sidePair="left-right,top-top"/>
     </component>
+    <image id="n6_nw08" name="n6" src="oyth3t" xy="273,137" size="574,62"/>
+    <image id="n7_nw08" name="n7" src="oyth3t" xy="273,218" size="574,124"/>
+    <image id="n8_nw08" name="n8" src="oyth3t" xy="273,362" size="574,62"/>
+    <image id="n9_nw08" name="n9" src="oyth3t" xy="273,436" size="574,62"/>
+    <text id="n10_nw08" name="n10" xy="87,142" size="184,52" fontSize="37" color="#663300" autoSize="none" text="模式选择:"/>
+    <text id="n11_nw08" name="n11" xy="87,222" size="184,52" fontSize="37" color="#663300" autoSize="none" text="额外番型:"/>
+    <text id="n12_nw08" name="n12" xy="87,372" size="184,52" fontSize="37" color="#663300" autoSize="none" text="封顶倍数:"/>
+    <text id="n13_nw08" name="n13" xy="87,446" size="184,52" fontSize="37" color="#663300" autoSize="none" text="开设局数:"/>
+    <component id="n14_nw08" name="ClassicMode" src="nw087l" xy="293,152">
+      <Button controller="ChooseMode" page="0"/>
+    </component>
+    <component id="n15_nw08" name="HighRiskMode" src="nw087l" xy="477,152">
+      <Button controller="ChooseMode" page="1"/>
+    </component>
+    <component id="n16_nw08" name="Multiple8" src="nw087l" xy="294,376">
+      <Button controller="ChooseMultiple" page="0"/>
+    </component>
+    <component id="n17_nw08" name="Multiple32" src="nw087l" xy="430,376">
+      <Button controller="ChooseMultiple" page="1"/>
+    </component>
+    <component id="n18_nw08" name="MultipleNolimit" src="nw087l" xy="576,376">
+      <Button controller="ChooseMultiple" page="2"/>
+    </component>
+    <component id="n19_nw08" name="Round4" src="nw087l" xy="294,453">
+      <Button controller="ChooseRound" page="0"/>
+    </component>
+    <component id="n20_nw08" name="Round8" src="nw087l" xy="575,453">
+      <Button controller="ChooseRound" page="1"/>
+    </component>
+    <component id="n21_nw08" name="ChooseFan01" src="nw087m" xy="292,229"/>
+    <component id="n22_nw08" name="ChooseFan02" src="nw087m" xy="479,229"/>
+    <component id="n23_nw08" name="ChooseFan03" src="nw087m" xy="663,229"/>
+    <component id="n24_nw08" name="ChooseFan04" src="nw087m" xy="294,296"/>
+    <component id="n25_nw08" name="ChooseFan05" src="nw087m" xy="480,296"/>
+    <component id="n26_nw08" name="ChooseFan06" src="nw087m" xy="665,296"/>
+    <text id="n27_nw08" name="n27" xy="335,152" size="105,30" fontSize="25" color="#ffffff" text="经典模式"/>
+    <text id="n28_nw08" name="n28" xy="518,152" size="105,30" fontSize="25" color="#ffffff" text="高番模式"/>
+    <text id="n29_nw08" name="n29" xy="334,230" size="119,30" fontSize="25" color="#ffffff" text="站立胡 *1"/>
+    <text id="n30_nw08" name="n30" xy="518,230" size="80,30" fontSize="25" color="#ffffff" text="带夹胡"/>
+    <text id="n31_nw08" name="n31" xy="701,230" size="119,30" fontSize="25" color="#ffffff" text="旋风杠 *1"/>
+    <text id="n32_nw08" name="n32" xy="332,297" size="94,30" fontSize="25" color="#ffffff" text="宝牌 *1"/>
+    <text id="n33_nw08" name="n33" xy="519,297" size="119,30" fontSize="25" color="#ffffff" text="可断门 *1"/>
+    <text id="n34_nw08" name="n34" xy="333,377" size="43,30" fontSize="25" color="#ffffff" text="8倍"/>
+    <text id="n35_nw08" name="n35" xy="473,377" size="56,30" fontSize="25" color="#ffffff" text="32倍"/>
+    <text id="n36_nw08" name="n36" xy="616,377" size="80,30" fontSize="25" color="#ffffff" text="不封顶"/>
+    <text id="n37_nw08" name="n37" xy="336,457" size="43,30" fontSize="25" color="#ffffff" text="4局"/>
+    <text id="n38_nw08" name="n38" xy="616,456" size="43,30" fontSize="25" color="#ffffff" text="8局"/>
+    <text id="n39_nw08" name="n39" xy="701,297" size="119,30" fontSize="25" color="#ffffff" text="清一色 *1"/>
+    <text id="n40_nw08" name="n40" xy="380,471" size="67,15" fontSize="10" color="#999999" text="(消耗房卡*2)"/>
+    <text id="n41_nw08" name="n41" xy="658,470" size="67,15" fontSize="10" color="#999999" text="(消耗房卡*4)"/>
+    <text id="n42_nw08" name="n42" xy="625,553" size="104,30" fontSize="25" color="#ffffff" autoSize="height" text="已有房卡"/>
+    <text id="n43_nw08" name="n43" xy="731,553" size="85,29" input="true" maxLength="999999" fontSize="25" color="#ffffff" autoSize="height" text="*999"/>
   </displayList>
 </component>k35j7g.xml|556|<component size="262,90" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -295,10 +350,10 @@ g7a060.xml|304|<component size="260,60">
     </text>
   </displayList>
   <Button/>
-</component>npla62.xml|3240|<component size="1334,750">
+</component>npla62.xml|5359|<component size="1334,750">
   <displayList>
     <image id="n0_npla" name="Bg" src="oyth5m" xy="0,0">
-      <relation target="" sidePair="center-center%,middle-middle%"/>
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
     <component id="n3_npla" name="Back" src="npla63" xy="-1,7">
       <relation target="" sidePair="left-left,top-top"/>
@@ -330,7 +385,7 @@ g7a060.xml|304|<component size="260,60">
     <component id="n12_k35j" name="Shop" src="k35j6b" xy="147,638">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <component id="n13_k35j" name="Mail" src="k35j6d" xy="429,655">
+    <component id="n13_k35j" name="Mail" src="k35j6d" xy="429,659">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <component id="n14_k35j" name="More" src="k35j6i" xy="1088,649">
@@ -351,24 +406,49 @@ g7a060.xml|304|<component size="260,60">
     <component id="n19_k35j" name="Welfare" src="k35j6h" xy="839,646">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <component id="n21_k35j" name="GetintoRoomButton" src="k35j6k" xy="559,204">
-      <relation target="" sidePair="center-center,middle-middle"/>
+    <component id="n21_k35j" name="GetintoRoomButton" src="k35j6k" xy="559,204" size="351,389">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <component id="n22_k35j" name="CreateRoomButton" src="k35j6m" xy="862,204">
-      <relation target="" sidePair="center-center,middle-middle"/>
+    <component id="n22_k35j" name="CreateRoomButton" src="k35j6m" xy="862,204" size="351,389">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <component id="n23_k35j" name="DouRoomButton" src="k35j6j" xy="253,204">
-      <relation target="" sidePair="center-center,middle-middle"/>
+    <component id="n23_k35j" name="DouRoomButton" src="k35j6j" xy="253,204" size="351,390">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </component>
+    <component id="n24_nw08" name="FreshHandButton" src="nw087h" xy="1460,204" size="351,390">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </component>
+    <component id="n25_nw08" name="GreatNasterHandButton" src="nw087j" xy="2070,205" size="351,390">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </component>
+    <component id="n26_nw08" name="MasterHandButton" src="nw087i" xy="1764,205" size="351,390">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
   </displayList>
-</component>npla63.xml|291|<component size="113,76" extention="Button">
-  <Button/>
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <transition name="HideFriendMode">
+    <item time="0" type="XY" target="n22_k35j" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
+    <item time="3" type="XY" target="n21_k35j" tween="true" startValue="559,204" endValue="1766,204" duration="15"/>
+    <item time="6" type="XY" target="n23_k35j" tween="true" startValue="253,204" endValue="1463,204" duration="12"/>
+    <item time="15" type="XY" target="n24_nw08" tween="true" startValue="1460.83,204" endValue="253,204" duration="18"/>
+    <item time="18" type="XY" target="n26_nw08" tween="true" startValue="1764.83,205" endValue="559,205" duration="15"/>
+    <item time="21" type="XY" target="n25_nw08" tween="true" startValue="2070.83,205" endValue="862,205" duration="12"/>
+  </transition>
+  <transition name="ShowFriendMode">
+    <item time="0" type="XY" target="n25_nw08" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
+    <item time="3" type="XY" target="n24_nw08" tween="true" startValue="559,204" endValue="1766,204" duration="15"/>
+    <item time="6" type="XY" target="n26_nw08" tween="true" startValue="253,204" endValue="1463,204" duration="12"/>
+    <item time="15" type="XY" target="n23_k35j" tween="true" startValue="1460.83,204" endValue="253,204" duration="18"/>
+    <item time="18" type="XY" target="n21_k35j" tween="true" startValue="1764.83,205" endValue="559,205" duration="15"/>
+    <item time="21" type="XY" target="n22_k35j" tween="true" startValue="2070.83,205" endValue="862,205" duration="12"/>
+  </transition>
+</component>npla63.xml|358|<component size="113,76" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" src="oyth53" name="n1" xy="0,0">
-      <relation target="" sidePair="width,height"/>
+    <image id="n1" name="n1" src="oyth53" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
 </component>npla64.xml|290|<component size="72,73" extention="Button">
   <Button/>
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
@@ -408,20 +488,93 @@ g7a060.xml|304|<component size="260,60">
     <text id="n8_k35j" name="n8" xy="61,16" size="106,31" fontSize="20" color="#ffffff" vAlign="middle" autoSize="none" text="88万888"/>
   </displayList>
   <Button/>
-</component>oyth0.xml|809|<component size="1334,750">
+</component>nw087h.xml|579|<component size="351,390" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="oyth5j" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2" name="title" xy="0,0" size="351,390" fontSize="12" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>nw087i.xml|579|<component size="351,390" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="oyth5k" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2" name="title" xy="0,0" size="351,390" fontSize="12" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>nw087j.xml|579|<component size="351,390" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="oyth5l" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2" name="title" xy="0,0" size="351,390" fontSize="12" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>nw087l.xml|755|<component size="32,32" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="nw087k" xy="0,0">
+      <gearDisplay controller="button" pages="0,2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3_nw08" name="n3" src="nw087k" xy="0,0">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="oyth3u" xy="-7,-7">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+  </displayList>
+  <Button mode="Radio"/>
+</component>nw087m.xml|755|<component size="32,32" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="nw087k" xy="0,0">
+      <gearDisplay controller="button" pages="0,2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3_nw08" name="n3" src="nw087k" xy="0,0">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="oyth3u" xy="-7,-7">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+  </displayList>
+  <Button mode="Check"/>
+</component>oyth0.xml|993|<component size="1334,750">
   <displayList>
     <image id="n0_oyth" name="Bg" src="oyth5p" xy="0,0">
-      <relation target="" sidePair="center-center,middle-middle"/>
+      <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <component id="n4_oyth" name="GuestLogin" src="oyth5y" xy="313,513">
-      <relation target="n0_oyth" sidePair="center-center,bottom-middle"/>
+    <component id="n4_oyth" name="GuestLogin" src="oyth5y" xy="225,513">
+      <relation target="" sidePair="center-center%,middle-middle%"/>
     </component>
-    <component id="n5_oyth" name="WechatLogin" src="oyth5z" xy="696,513">
-      <relation target="n0_oyth" sidePair="center-center,bottom-middle"/>
+    <component id="n5_oyth" name="WechatLogin" src="oyth5z" xy="765,513">
+      <relation target="" sidePair="center-center%,middle-middle%"/>
     </component>
-    <component id="n6_g7a0" name="Account" src="g7a060" xy="1010,40"/>
-    <text id="n7_g7a0" name="Title" xy="896,49" size="106,64" fontSize="34" color="#cccccc" autoSize="shrink" text="账号："/>
-    <component id="n8_g7a0" name="LoginButton" src="g7a061" xy="1173,118"/>
+    <component id="n6_g7a0" name="Account" src="g7a060" xy="1010,40">
+      <relation target="" sidePair="right-right"/>
+    </component>
+    <text id="n7_g7a0" name="Title" xy="896,49" size="106,64" fontSize="34" color="#cccccc" autoSize="shrink" text="账号：">
+      <relation target="" sidePair="right-right"/>
+    </text>
+    <component id="n8_g7a0" name="LoginButton" src="g7a061" xy="1173,118">
+      <relation target="" sidePair="right-right"/>
+    </component>
   </displayList>
 </component>oyth5y.xml|360|<component size="314,102" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -439,7 +592,7 @@ g7a060.xml|304|<component size="260,60">
     </image>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>package.xml|6208|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|7185|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="g7a060" name="Account" path="/UIPIC/主界面/" size="260,60"/>
     <component id="g7a061" name="LoginButton" path="/UIPIC/主界面/" size="89,43"/>
@@ -475,11 +628,19 @@ g7a060.xml|304|<component size="260,60">
     <component id="npla66" name="RoomCardNum" path="/UIPIC/功能界面/" size="219,62"/>
     <component id="npla69" name="DouNum" path="/UIPIC/功能界面/" size="219,62"/>
     <component id="npla6a" name="GemsNum" path="/UIPIC/功能界面/" size="219,62"/>
+    <component id="nw087h" name="FreshHandButton" path="/UIPIC/功能界面/" size="351,390"/>
+    <component id="nw087i" name="MasterHandButton" path="/UIPIC/功能界面/" size="351,390"/>
+    <component id="nw087j" name="GreatMasterHandButton" path="/UIPIC/功能界面/" size="351,390"/>
+    <component id="nw087l" name="CreateRoomOptionSingle" path="/UIPIC/开设房间/" size="32,32"/>
+    <component id="nw087m" name="CreateRoomoOptionMulti" path="/UIPIC/开设房间/" size="32,32"/>
     <component id="oyth5y" name="GuestLogin" path="/UIPIC/主界面/" size="314,102"/>
     <component id="oyth5z" name="WechatLogin" path="/UIPIC/主界面/" size="314,102"/>
+    <image id="nw087k" name="ui_Kaifangjiemian_06" path="/UIPIC/开设房间/" size="32,32"/>
     <image id="oyth2d" name="ui_Youxijiemian_01" path="/UIPIC/游戏页面/" size="262,91"/>
     <image id="oyth32" name="ui_Shezhi_03" path="/UIPIC/游戏设置/" size="157,56" scale="9grid" scale9grid="40,14,80,28"/>
     <image id="oyth34" name="ui_Shezhi_05" path="/UIPIC/游戏设置/" size="89,43"/>
+    <image id="oyth3t" name="ui_Kaifangjiemian_01" path="/UIPIC/开设房间/" size="64,62" scale="9grid" scale9grid="16,16,32,32"/>
+    <image id="oyth3u" name="ui_Kaifangjiemian_02" path="/UIPIC/开设房间/" size="47,46"/>
     <image id="oyth3v" name="ui_Kaifangjiemian_03" path="/UIPIC/开设房间/" size="944,661"/>
     <image id="oyth3x" name="ui_Kaifangjiemian_05" path="/UIPIC/开设房间/" size="262,90"/>
     <image id="oyth4s" name="ui_Jiaru_01" path="/UIPIC/加入房间/" size="553,363" scale="9grid" scale9grid="122,195,295,31"/>
@@ -505,8 +666,11 @@ g7a060.xml|304|<component size="260,60">
     <image id="oyth5g" name="ui_GongNeng_21" path="/UIPIC/功能界面/" size="62,82"/>
     <image id="oyth5h" name="ui_GongNeng_22" path="/UIPIC/功能界面/" size="52,81"/>
     <image id="oyth5i" name="ui_GongNeng_23" path="/UIPIC/功能界面/" size="54,78"/>
-    <image id="oyth5m" name="ui_Zhujiemian_02" path="/UIPIC/功能界面/" size="1334,750" scale=""/>
-    <image id="oyth5p" name="ui_Zhujiemian_01" path="/UIPIC/主界面/" size="1334,750" scale=""/>
+    <image id="oyth5j" name="ui_GongNeng_24" path="/UIPIC/功能界面/" size="351,390"/>
+    <image id="oyth5k" name="ui_GongNeng_25" path="/UIPIC/功能界面/" size="351,390"/>
+    <image id="oyth5l" name="ui_GongNeng_26" path="/UIPIC/功能界面/" size="351,390"/>
+    <image id="oyth5m" name="ui_Zhujiemian_02" path="/UIPIC/功能界面/" size="1334,750"/>
+    <image id="oyth5p" name="ui_Zhujiemian_01" path="/UIPIC/主界面/" size="1334,750"/>
     <image id="oyth5q" name="ui_Zhujiemian_03" path="/UIPIC/主界面/" size="314,102"/>
     <image id="oyth5r" name="ui_Zhujiemian_04" path="/UIPIC/主界面/" size="314,102"/>
     <image id="oyth9" name="ui_Youjianjiemian_13" path="/UIPIC/邮件/" size="67,67"/>
@@ -515,6 +679,6 @@ g7a060.xml|304|<component size="260,60">
     <component id="npla62" name="MainMenu" path="/" size="1334,750" exported="true"/>
     <component id="oyth0" name="Login" path="/" size="1334,750" exported="true"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>
-    <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
+    <atlas id="atlas0" size="2048,2048" file="atlas0.png"/>
   </resources>
 </packageDescription>

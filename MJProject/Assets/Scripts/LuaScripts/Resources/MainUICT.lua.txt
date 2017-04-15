@@ -5,6 +5,7 @@ local Network = require "Network"
 Player.self = self
 ClickEvent.self = self
 local FLibEvent = require "FLibEvent"
+local FairyGUI = require "FairyGUI"
 
 local _main_ui_sence = "MainUI"
 local _loading_sence = "LoadingSence"
@@ -20,13 +21,14 @@ local _Creat_Room_UI
 --]]
 function awake()
 	-- body
+	ClickEvent.Awake()
 end
 
 function start()
 	-- body
 	-- print(self._main_ui_sence)
 
-	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+	ClickEvent.Start(ClickEvent.panelTable._main_ui)
 	
 	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject

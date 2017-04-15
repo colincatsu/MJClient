@@ -64,7 +64,6 @@
      <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\Mahjong.lua.txt" />
      <None Include="Assets\XLua\Tutorial\LoadLuaScript\ByFile\Resources\byfile.lua.txt" />
-     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\Scripts\LuaScripts\Resources\Player.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\TouchCT.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\AssetManager.lua.txt" />
