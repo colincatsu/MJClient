@@ -7,8 +7,12 @@ ClickEvent.panelTable._join_room_ui = "GetintoRoom"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
-ClickEvent.panelTable._play_game_ui = "PlayGameUI"
+ClickEvent.panelTable._play_game_ui = "PlaySence"
 ClickEvent.uiPanel = nil
+ClickEvent.isInDouRoom = false
+
+ClickEvent._createObject = {}
+ClickEvent._play_ui = {}
 
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 
@@ -23,7 +27,7 @@ end
 function ClickEvent.Start(loadUI)
 	-- body
 	CS.UnityEngine.Application.targetFrameRate = 60
-	ClickEvent.uiPanel.ui:RemoveChildren()
+	--ClickEvent.uiPanel.ui:RemoveChildren()
 	ClickEvent.CreateNewPanel(loadUI)
 end
 
@@ -46,12 +50,36 @@ function ClickEvent.CreateNewPanel(panelName)
 	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
 	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
 	--]]
-	_currentPanel.panel = UIPackage.CreateObject("MXUI", panelName).asCom
+	if not ClickEvent._createObject[panelName] then
+		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
+	end
+	_currentPanel.panel = ClickEvent._createObject[panelName]
 	GRoot.inst:AddChild(_currentPanel.panel)
 	local childNumber = _currentPanel.panel.numChildren
 	for i=0,childNumber-1 do
 		local obj = _currentPanel.panel:GetChildAt(i)
-		obj.onClick:Add(ClickEvent.registerButtonClick)
+		if obj.group and obj.group.name == "Btns" then
+			obj.onClick:Add(ClickEvent.registerButtonClick)
+		end
+	end
+	if Player._id and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
+		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = tostring(Player._id)
+	end
+	if not ClickEvent._play_ui then
+		ClickEvent._play_ui = {}
+	end
+	ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
+	ClickEvent._play_ui.passButton = _currentPanel.panel:GetChild("GamePassButton")
+	if ClickEvent._play_ui.passButton then
+		ClickEvent._play_ui.passButton.visible = false
+	end
+	ClickEvent._play_ui.hintBar = _currentPanel.panel:GetChild("GameHintBar")
+	if ClickEvent._play_ui.hintBar then
+		ClickEvent._play_ui.hintBar.visible = false
+	end
+	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
+	if ClickEvent._play_ui.roomId then
+		ClickEvent._play_ui.roomId.text = tostring(Player._roomId)
 	end
 	--[[
 	if panelName == ClickEvent.panelTable._play_game_ui then
@@ -78,29 +106,43 @@ function ClickEvent.CreateNewPanel(panelName)
 	--]]
 end
 
+function ClickEvent.CreateOperationButton( ... )
+	-- body
+	_currentPanel.buttonList = {}
+	_currentPanel.buttonList["GameChiButton"] = UIPackage.GetItemURL("MXUI","GameChiButton")
+	_currentPanel.buttonList["GamePengButton"] = UIPackage.GetItemURL("MXUI","GamePengButton")
+	_currentPanel.buttonList["GameGangButton"] = UIPackage.GetItemURL("MXUI","GameGangButton")
+	_currentPanel.buttonList["GameHuButton"] = UIPackage.GetItemURL("MXUI","GameHuButton")
+end
+
+function ClickEvent.AddOperationButton( buttonName )
+	-- body
+	local operationButtonTemp = ClickEvent._play_ui.operationBar:AddItemFromPool(_currentPanel.buttonList[buttonName])
+	operationButtonTemp.name = buttonName
+	operationButtonTemp.onClick:Add(ClickEvent.registerButtonClick)
+end
+
 function ClickEvent.PaiOperationState()
 	-- body
 	local tempStateTable = Player.MahJong.GetStateTable()
     for k,v in pairs(tempStateTable) do
     	print(v)
+    	ClickEvent._play_ui.passButton.visible = true
 		if v == "PAI_CHECK_RETURN_HU" then
-			_currentPanel.buttonList[_currentPanel.operationButton.huButton].gameObject:SetActive(true)
-	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+			ClickEvent.AddOperationButton("GameHuButton")
 	        Player.MahJong.SetCurrentState(operationState.HU)
 		elseif v == "PAI_CHECK_RETURN_GANG" then
-			_currentPanel.buttonList[_currentPanel.operationButton.gangButton].gameObject:SetActive(true)
-	        _currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+			ClickEvent.AddOperationButton("GameGangButton")
+	        ClickEvent.AddOperationButton("GamePengButton")
 	        Player.MahJong.SetCurrentState(operationState.GANG)
 		elseif v == "PAI_CHECK_RETURN_PENG" then
-			_currentPanel.buttonList[_currentPanel.operationButton.pengButton].gameObject:SetActive(true)
-	        _currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
+			ClickEvent.AddOperationButton("GamePengButton")
 	        Player.MahJong.SetCurrentState(operationState.PENG)
 		elseif v == "PAI_CHECK_RETURN_CHI" then
-			_currentPanel.buttonList[_currentPanel.operationButton.guoButton].gameObject:SetActive(true)
 			Player.MahJong.SetCurrentState(operationState.CHI)
 			Player.MahJong.CheckChiPai()
 		else
+	    	ClickEvent._play_ui.passButton.visible = false
 			print("PAI_CHECK_RETURN_NULL ")
 			print(ClickEvent.MahJong.GetCurrentState())
 		end
@@ -110,11 +152,25 @@ end
 
 function ClickEvent.ShowChiButton()
 	-- body
-	_currentPanel.buttonList[_currentPanel.operationButton.chiButton].gameObject:SetActive(true)
+	ClickEvent.AddOperationButton("GameChiButton")
 end
 
 function ClickEvent.PopPanel( panelName )
 	-- body
+	if not ClickEvent._createObject[panelName] then
+		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
+	end
+	_popPanel.panel = ClickEvent._createObject[panelName]
+	_popPanel.panel:Center()
+	GRoot.inst:AddChild(_popPanel.panel)
+	local childNumber = _popPanel.panel.numChildren
+	for i=0,childNumber-1 do
+		local obj = _popPanel.panel:GetChildAt(i)
+		if obj.group and obj.group.name == "Btns" then
+			obj.onClick:Add(ClickEvent.registerButtonClick)
+		end
+	end
+	--[[
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
 	_popPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
 	_popPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
@@ -122,6 +178,7 @@ function ClickEvent.PopPanel( panelName )
 	_popPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
 	_popPanel.buttonList = _popPanel.eventTriggerListener._buttons
 	_popPanel.toggleList = _popPanel.eventTriggerListener._toggles
+	--]]
 end
 
 function ClickEvent.DestroyPanel(gameObject)
@@ -148,7 +205,7 @@ end
 
 function ClickEvent.LoginButton(gameObject)
 	-- body
-	local textShow = _currentPanel.panel:GetChild("Account"):GetChild("n1")
+	local textShow = _currentPanel.panel:GetChild("Account"):GetChild("InputText")
 	Player._string_id = textShow.text
 	Player.CmdLogin(Player._string_id)
 end
@@ -166,10 +223,10 @@ function ClickEvent.GuestLogin( gameObject )
 	else
 		print("no find toggle")
 	end
-	Player.CmdEnterGame(Player._id)
 	--]]
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
+	Player.CmdEnterGame(Player._id)
 	print("ClickEvent.GuestLogin")
 end
 
@@ -179,8 +236,13 @@ end
 
 function ClickEvent.Back( ... )
 	-- body
-	ClickEvent.DeletePanel(_currentPanel.panel)
-	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+	if not ClickEvent.isInDouRoom then
+		ClickEvent.DeletePanel(_currentPanel.panel)
+		ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+	else
+		ClickEvent.isInDouRoom = false
+		_currentPanel.panel:GetTransition("ShowFriendMode"):Play()
+	end
 end
 
 function ClickEvent.PlayerLogo( ... )
@@ -205,18 +267,19 @@ function ClickEvent.TicketPlus( ... )
 	print("TicketPlusShow")
 end
 
-function ClickEvent.GoldZone( ... )
+function ClickEvent.DouRoomButton( ... )
 	-- body
-	print("GoldZone")
+	_currentPanel.panel:GetTransition("HideFriendMode"):Play()
+	ClickEvent.isInDouRoom = true
 end
 
-function ClickEvent.JoinRoom( ... )
+function ClickEvent.GetintoRoomButton( ... )
 	-- body
 	print("JoinRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 end
 
-function ClickEvent.CreateRoom( ... )
+function ClickEvent.CreateRoomButton( ... )
 	-- body
 	print("CreateRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
@@ -255,10 +318,10 @@ function ClickEvent.More( ... )
 	-- body
 end
 
-function ClickEvent.ClosePanel( ... )
+function ClickEvent.Close( ... )
 	-- body
 	print("ClosePanel")
-	ClickEvent.DestroyPanel(_popPanel.panel)
+	GRoot.inst:RemoveChild(_popPanel.panel)
 end
 
 function ClickEvent.CreateRoomId( gameObject )
@@ -267,11 +330,12 @@ function ClickEvent.CreateRoomId( gameObject )
 	print(gameObject.name)
 end
 
-function ClickEvent.CreatePersonalRoom( )
+function ClickEvent.CreateButton( )
 	-- body
 	--roomid
+	print("CreateRoom")
 	Player.CmdCreateRoom()
-	ClickEvent.ClosePanel()
+	ClickEvent.Close()
 end
 
 function ClickEvent.JoinRoomId( gameObject )
@@ -279,41 +343,43 @@ function ClickEvent.JoinRoomId( gameObject )
 	Player._roomId = tonumber(gameObject:GetComponent("InputField").text)
 end
 
-function ClickEvent.JoinFriendRoom( ... )
+function ClickEvent.GetinButton( ... )
 	-- body
+	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
 	print(tonumber(Player._roomId))
 	Player.CmdEnterRoom(Player._roomId)
-	ClickEvent.ClosePanel()
+	ClickEvent.Close()
 end
 
 -------------------------------------
 ---游戏中
 ---------------------------
-function ClickEvent.StartGameButton( gameObject )
+function ClickEvent.GamePlayButton( gameObject )
 	-- body
 	Player.CmdGameOperation()
-	gameObject:SetActive(false)
+	gameObject.visible = false
 end
 
-function ClickEvent.GangClickButton(gameObject)
+function ClickEvent.GameGangButton(gameObject)
 	-- body
+
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.GangPai()
 end
 
-function ClickEvent.ChiClickButton(gameObject)
+function ClickEvent.GameChiButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.ChiPai()
 end
 
-function ClickEvent.PengClickButton(gameObject)
+function ClickEvent.GamePengButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.PengPai()
 end
 
-function ClickEvent.HuClickButton(gameObject)
+function ClickEvent.GameHuButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
     Player.MahJong.HuPai()
@@ -327,9 +393,8 @@ end
 
 function ClickEvent.CloseOperationPanel()
 	-- body
-	for k,v in pairs(_currentPanel.operationButton) do
-		_currentPanel.buttonList[v].gameObject:SetActive(false)
-	end
+	ClickEvent._play_ui.operationBar:RemoveChildrenToPool()
+	ClickEvent._play_ui.passButton.visible = false
 end
 
 ---------------------------------------------------------------------------

@@ -70,6 +70,9 @@ end
 --加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
 function Player.LoadScene(type_t, buffer)
+    for k,v in pairs(ClickEvent._createObject) do
+        v:Dispose()
+    end
     Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     CS.UnityEngine.Application.LoadLevelAsync("PlaySence")
 end
@@ -107,7 +110,6 @@ function Player.CmdEnterGame(id)
 end
 
 function Player.CmdCreateRoom()
-    print(roomId)
     -- body
     local createRoom ={
         --room = {
@@ -254,11 +256,6 @@ function Player.OnPlayerList(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
     print("---------")
     Player._id = message.player_list[1]
-    if ClickEvent._currentPanel and ClickEvent._currentPanel.playerIdText then
-        ClickEvent._currentPanel.playerIdText.text = tostring(Player._id)
-    else
-        print("playidtext_is_null")
-    end
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end

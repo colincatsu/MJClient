@@ -6,6 +6,7 @@ local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
 local protobuf = require "protobuf"
+local FairyGUI = require "FairyGUI"
 --[[
 local AssetManager = require "AssetManager"
 	local loader = AssetManager.Load()
@@ -52,10 +53,16 @@ local operationStateTable = {}
 Player.self = self
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
-	
+
+function awake( ... )
+	-- body
+	ClickEvent.Awake()
+end
+
 function start()
 
-	PlayUICT.Init()
+	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
+	ClickEvent.CreateOperationButton()
 	MahJong.Init()
 	MahJong.AnimationPlay()
 	MahJong.ModelPoolInit()
