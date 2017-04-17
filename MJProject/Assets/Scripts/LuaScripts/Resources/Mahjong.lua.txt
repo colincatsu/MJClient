@@ -255,6 +255,8 @@ end
 function MahJong.UpdateMyDataState()
 	-- body
 	local myPosition = Player._my_player_data.position
+	print(myPosition)
+	print(tonumber(myPosition))
 	if myPosition == "POSITION_TYPE_SOUTH" then
 		self.transform.eulerAngles = newVector3(0,90,0)
 	elseif myPosition == "POSITION_TYPE_WEST" then

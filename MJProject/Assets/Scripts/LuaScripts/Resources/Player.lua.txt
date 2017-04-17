@@ -217,6 +217,9 @@ function Player.OnRoomInformation(type_t,stuff)
                 end
             end
         end
+        if Player._my_player_data then
+            Player.ThreadFunction(ClickEvent.RoomInformationUpdate)
+        end
     else
         print("list null")
     end

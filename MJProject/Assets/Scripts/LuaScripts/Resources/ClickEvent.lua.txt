@@ -14,6 +14,13 @@ ClickEvent.isInDouRoom = false
 ClickEvent._createObject = {}
 ClickEvent._play_ui = {}
 
+local _position_index = {
+	POSITION_TYPE_EAST = 1,
+	POSITION_TYPE_SOUTH = 2,
+	POSITION_TYPE_WEST = 3,
+	POSITION_TYPE_NORTH = 4,
+}
+
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 
 local _currentPanel = {}
@@ -122,6 +129,31 @@ function ClickEvent.AddOperationButton( buttonName )
 	operationButtonTemp.onClick:Add(ClickEvent.registerButtonClick)
 end
 
+function ClickEvent.RoomInformationUpdate( ... )
+	-- body
+	local x = _position_index[Player._my_player_data.position]
+	for k,v in pairs(_position_index) do
+		if v >= x then
+			v = v - x + 1
+		else
+			v = 5 + v - x
+		end
+	end
+
+	for k,v in pairs(Player._all_players_data) do
+		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
+		if tempX == 1 then
+			_currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+		elseif tempX == 2 then
+			_currentPanel.panel:GetChild("OppositePlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+		elseif tempX == 3 then
+			_currentPanel.panel:GetChild("FrontPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+		else
+			_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+		end
+	end
+end
+
 function ClickEvent.PaiOperationState()
 	-- body
 	local tempStateTable = Player.MahJong.GetStateTable()
@@ -133,7 +165,6 @@ function ClickEvent.PaiOperationState()
 	        Player.MahJong.SetCurrentState(operationState.HU)
 		elseif v == "PAI_CHECK_RETURN_GANG" then
 			ClickEvent.AddOperationButton("GameGangButton")
-	        ClickEvent.AddOperationButton("GamePengButton")
 	        Player.MahJong.SetCurrentState(operationState.GANG)
 		elseif v == "PAI_CHECK_RETURN_PENG" then
 			ClickEvent.AddOperationButton("GamePengButton")
@@ -385,7 +416,7 @@ function ClickEvent.GameHuButton(gameObject)
     Player.MahJong.HuPai()
 end
 
-function ClickEvent.GuoClickButton(gameObject)
+function ClickEvent.GamePassButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.GuoPai()
