@@ -8,6 +8,8 @@ ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
 ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlaySence"
+ClickEvent.panelTable._player_info = "PlayerInfo"
+ClickEvent.panelTable._other_player_info = "OtherPlayerInfo"
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
 
@@ -224,6 +226,80 @@ end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+
+function ClickEvent.PlayerAvatarInfo( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
+	_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("BoundAccount"))
+	for k,v in pairs(Player._all_players_data) do
+		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
+		if tempX == 0 then
+			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel.panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
+			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			--[[
+			_popPanel.panel:GetChild("").text = 
+			_popPanel.panel:GetChild("").text = 
+			_popPanel.panel:GetChild("") = 
+			--]]
+		end
+	end
+end
+
+function ClickEvent.BehindPlayerAvatarInfo( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
+		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+	end
+	for k,v in pairs(Player._all_players_data) do
+		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
+		if tempX == 1 then
+			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+
+		end
+	end
+end
+
+function ClickEvent.OppositePlayerAvatarInfo( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
+		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+	end
+	for k,v in pairs(Player._all_players_data) do
+		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
+		if tempX == 2 then
+			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+		end
+	end
+end
+
+function ClickEvent.FrontPlayerAvatarInfo( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
+		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+	end
+	for k,v in pairs(Player._all_players_data) do
+		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
+		if tempX == 3 then
+			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+		end
+	end
+end
+
 function ClickEvent.PlayerID( gameObject )
 	-- body
 	Player._string_id = gameObject:GetComponent("InputField").text
