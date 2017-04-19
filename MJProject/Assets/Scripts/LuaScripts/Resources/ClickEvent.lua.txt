@@ -136,12 +136,14 @@ function ClickEvent.RoomInformationUpdate( ... )
 	local x = _position_index[Player._my_player_data.position]
 	for k,v in pairs(_position_index) do
 		if v >= x then
-			v = v - x + 1
+			_position_index[k] = v - x + 1
 		else
-			v = 5 + v - x
+			_position_index[k] = 5 + v - x
 		end
 	end
-
+	for k,v in pairs(_position_index) do
+		print(k,v)
+	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
@@ -193,6 +195,7 @@ function ClickEvent.PopPanel( panelName )
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
 	end
+	ClickEvent.Close()
 	_popPanel.panel = ClickEvent._createObject[panelName]
 	_popPanel.panel:Center()
 	GRoot.inst:AddChild(_popPanel.panel)
@@ -229,6 +232,9 @@ end
 
 function ClickEvent.PlayerAvatarInfo( ... )
 	-- body
+	if not Player._my_player_data then
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
 	_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("BoundAccount"))
 	for k,v in pairs(Player._all_players_data) do
@@ -244,12 +250,17 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("").text = 
 			_popPanel.panel:GetChild("") = 
 			--]]
+			return
 		end
 	end
+	ClickEvent.Close()
 end
 
 function ClickEvent.BehindPlayerAvatarInfo( ... )
 	-- body
+	if not Player._my_player_data then
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
 		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
@@ -261,13 +272,17 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-
+			return
 		end
 	end
+	ClickEvent.Close()
 end
 
 function ClickEvent.OppositePlayerAvatarInfo( ... )
 	-- body
+	if not Player._my_player_data then
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
 		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
@@ -279,12 +294,17 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			return
 		end
 	end
+	ClickEvent.Close()
 end
 
 function ClickEvent.FrontPlayerAvatarInfo( ... )
 	-- body
+	if not Player._my_player_data then
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
 		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
@@ -296,8 +316,10 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			return
 		end
 	end
+	ClickEvent.Close()
 end
 
 function ClickEvent.PlayerID( gameObject )
@@ -441,7 +463,57 @@ function ClickEvent.CreateButton( )
 	-- body
 	--roomid
 	print("CreateRoom")
-	Player.CmdCreateRoom()
+	local model = nil
+	local extend_type = {}
+	local top_mutiple = nil
+	local open_rands = nil
+
+	if _popPanel.panel:GetChild("ClassicMode").selected then
+		model = "ROOM_MODEL_TYPE_CLASSICAL"
+	elseif _popPanel.panel:GetChild("HighRiskMode").selected then
+		model = "ROOM_MODEL_TYPE_MULTIPLE"
+	end
+
+	if _popPanel.panel:GetChild("Multiple8").selected then
+		top_mutiple = 8
+	elseif _popPanel.panel:GetChild("Multiple32").selected then
+		top_mutiple = 32
+	elseif _popPanel.panel:GetChild("MultipleNolimit").selected then
+		top_mutiple = 0
+	end
+
+	if _popPanel.panel:GetChild("Round4").selected then
+		open_rands = 4
+	elseif _popPanel.panel:GetChild("Round8").selected then
+		open_rands = 8
+	end
+
+	local extend_type_count = 1
+	if _popPanel.panel:GetChild("ChooseFan01").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_ZHANLIHU"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan02").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_JIAHU"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan03").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_XUANFENGGANG"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan04").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_BAOPAI"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan05").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_DUANMEN"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan06").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_HUIPAI"
+		extend_type_count = extend_type_count + 1
+	end
+	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
 	ClickEvent.Close()
 end
 

@@ -139,12 +139,15 @@ function Network.OnReceived(buffer)
     if data then
         meta = protobuf.decode("Adoter.Asset.Meta" , data)
     end
-    --print("------------"..meta)
     ---[[
+    if type(meta) ~= "table" then
+        print(type(meta))
+        return 0
+    end
+    --]]
     print(type(meta))
     print('OnSocket:type_t:>'..(meta.type_t))
     print("ddddddddddd"..meta.stuff)
-    --]]
     ----------------------------------------------------
     if meta then
         FLibEvent.Fire(meta.type_t, meta.stuff)

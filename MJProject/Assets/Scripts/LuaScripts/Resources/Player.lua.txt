@@ -109,14 +109,20 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",enterGame)
 end
 
-function Player.CmdCreateRoom()
+function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_open_rands)
     -- body
     local createRoom ={
-        --room = {
+        room = {
+            options = {
+                model = room_model,
+                extend_type = room_extend_type,
+                top_mutiple = room_top_mutiple,
+                open_rands = room_open_rands,
+            },
             --room_id = roomId,--1,
             --room_name = name,--"123",
             --enter_password  = passWord,--"123",
-        --}
+        },
     }
     this.SendProtocol("CreateRoom",createRoom)
 end
