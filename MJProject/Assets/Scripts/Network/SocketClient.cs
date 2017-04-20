@@ -52,18 +52,22 @@ namespace MX
                 Debug.LogError(e.Message);
             }
         }
-
+        Action connectFun = null;
         //连接上服务器
         void OnConnect(IAsyncResult asr)
         {
             _network_stream = _client.GetStream();
             _client.GetStream().BeginRead(_bytes, 0, MAX_READ, new AsyncCallback(OnRead), null);
 
-            const string command = @"
-                --Network = require 'Network'
-                Network.OnConnet()
-            ";
-            LuaEnvSingleton.Instance.DoString(command);
+            //const string command = @"
+            //    --Network = require 'Network'
+            //    Network.OnConnet()
+            //";
+            if(connectFun == null)
+            {
+                connectFun = LuaEnvSingleton.Instance.Global.GetInPath<Action>("Network.OnConnet");
+            }
+            connectFun();
         }
 
         //写数据
@@ -131,17 +135,22 @@ namespace MX
                 OnDisconnected(ex.Message);
             }
         }
-
+        Action disconnectedFun = null;
         //丢失服务器连接
         void OnDisconnected(string msg)
         {
             this.Close();
             Debug.LogError("OnDisconnected--->>>" + msg);
-            const string command = @"
-                --Network = require 'Network'
-                Network.OnDisconnect()
-            ";
-            LuaEnvSingleton.Instance.DoString(command);
+            //const string command = @"
+            //    --Network = require 'Network'
+            //    Network.OnDisconnect()
+            //";
+            //LuaEnvSingleton.Instance.DoString(command);
+            if (disconnectedFun == null)
+            {
+                disconnectedFun = LuaEnvSingleton.Instance.Global.GetInPath<Action>("Network.OnDisconnect");
+            }
+            disconnectedFun();
         }
 
         //发送数据回调
@@ -210,6 +219,7 @@ namespace MX
         [CSharpCallLua]
         //public delegate int FDelegate(byte[] buffer);
         public delegate int FDelegate(ByteBuffer buffer);
+        FDelegate func = null;
         //接收到消息
         void OnReceivedMessage(MemoryStream ms)
         {
@@ -219,8 +229,10 @@ namespace MX
             //for (int i = 0; i < message.Length; i++)
             //    Debug.LogWarning((int)message[i]);
             ByteBuffer buffer = new ByteBuffer(message);
-
-            FDelegate func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            if(func == null)
+            {
+                func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceived");
+            }
             Debug.LogWarning("接收到数据--->>>");
             //Debug.LogWarning(func);
             func(buffer);
@@ -231,7 +243,7 @@ namespace MX
         {
             WriteMessage(bytes);
         }
-
+        Action closeFun = null;
         //关闭链接
         public void Close()
         {
@@ -243,11 +255,16 @@ namespace MX
             }
             _logged = false;
 
-            const string command = @"
-                --Network = require 'Network'
-                Network.OnClose()
-            ";
-            LuaEnvSingleton.Instance.DoString(command);
+            //const string command = @"
+            //    --Network = require 'Network'
+            //    Network.OnClose()
+            //";
+            //LuaEnvSingleton.Instance.DoString(command);
+            if (closeFun == null)
+            {
+                closeFun = LuaEnvSingleton.Instance.Global.GetInPath<Action>("Network.OnClose");
+            }
+            closeFun();
         }
 
         //发送连接请求

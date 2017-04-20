@@ -113,7 +113,6 @@ public class LuaBehaviour : MonoBehaviour {
         if (callback != null) {
             lock (mainThreadDelegate)
             {
-
                 mainThreadDelegate += callback;
             }
         }

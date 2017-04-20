@@ -4,7 +4,7 @@ local Player = require "Player"
 local ClickEvent = require "ClickEvent"
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
-local Network = require "Network"
+--local Network = require "Network"
 local protobuf = require "protobuf"
 local FairyGUI = require "FairyGUI"
 --[[

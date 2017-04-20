@@ -366,6 +366,7 @@ end
 function ClickEvent.Back( ... )
 	-- body
 	if not ClickEvent.isInDouRoom then
+		_currentPanel.panel:GetTransition("ShowFriendMode"):Stop(true,false)
 		ClickEvent.DeletePanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 	else
@@ -398,6 +399,9 @@ end
 
 function ClickEvent.DouRoomButton( ... )
 	-- body
+	if _currentPanel.panel:GetTransition("HideFriendMode").playing then
+		return
+	end
 	_currentPanel.panel:GetTransition("HideFriendMode"):Play()
 	ClickEvent.isInDouRoom = true
 end
