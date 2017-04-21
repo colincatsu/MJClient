@@ -144,6 +144,9 @@ function Network.OnReceived(buffer)
         print(type(meta))
         return 0
     end
+    if not meta.type_t then
+        return 0
+    end
     --]]
     print(type(meta))
     print('OnSocket:type_t:>'..(meta.type_t))

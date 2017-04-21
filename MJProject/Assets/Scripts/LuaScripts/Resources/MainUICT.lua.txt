@@ -51,6 +51,12 @@ end
 
 function update( ... )
 	-- body
+	if Player.self == self then
+		local x = Player.GetinvokeFunctionCache()
+		if x then
+			x()
+		end
+	end
 end
 
 return MainUICT

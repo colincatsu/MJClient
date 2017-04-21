@@ -27,6 +27,26 @@ _pai_operation_show_cache.front = 1
 _pai_operation_show_cache.rear = 0
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
 
+local _invokeFunctionTable = {}
+_invokeFunctionTable.front = 1
+_invokeFunctionTable.rear = 0
+
+function Player.GetinvokeFunctionCache()
+    -- body
+    if _invokeFunctionTable.front > _invokeFunctionTable.rear then
+        return nil
+    else
+        local tempData = _invokeFunctionTable[_invokeFunctionTable.front]
+        _invokeFunctionTable.front = _invokeFunctionTable.front + 1
+        return tempData
+    end
+end
+function Player.SetinvokeFunctionCache(cacheData)
+    -- body
+    _invokeFunctionTable.rear = _invokeFunctionTable.rear + 1
+    _invokeFunctionTable[_invokeFunctionTable.rear] = cacheData
+end
+
 function Player.GetDaPaiCache()
     -- body
     if _da_pai_cache.front > _da_pai_cache.rear then
@@ -495,8 +515,15 @@ end
 ---------------------------------------------------------------------------
 function Player.ThreadFunction(invokeFunction)
     -- body
+    --[[
     if Player.self then
         Player.self:Attach(invokeFunction)
+    else
+        print("no init Player.self")
+    end
+    --]]
+    if Player.self then
+        Player.SetinvokeFunctionCache(invokeFunction)
     else
         print("no init Player.self")
     end
