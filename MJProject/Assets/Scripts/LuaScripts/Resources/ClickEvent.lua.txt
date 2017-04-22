@@ -63,6 +63,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
 	end
 	_currentPanel.panel = ClickEvent._createObject[panelName]
+	_currentPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	GRoot.inst:AddChild(_currentPanel.panel)
 	local childNumber = _currentPanel.panel.numChildren
 	for i=0,childNumber-1 do
@@ -197,6 +198,7 @@ function ClickEvent.PopPanel( panelName )
 	end
 	ClickEvent.Close()
 	_popPanel.panel = ClickEvent._createObject[panelName]
+	_popPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel.panel:Center()
 	GRoot.inst:AddChild(_popPanel.panel)
 	local childNumber = _popPanel.panel.numChildren

@@ -34,6 +34,12 @@ local _modelPool = {}--没抓的牌池
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _operation_pai_show = {}--碰牌的牌池
+local _operation_pai_show_position = {
+	east = newVector3(-0.31,0,0.31),
+	south = newVector3(-0.36,0,-0.28),
+	west = newVector3(0.36,0,-0.31),
+	north = newVector3(0.36,0,0.25),
+}
 
 local _modelPoolLineCount = 34
 local _play_pai_count = 14--玩家手牌数目
@@ -69,19 +75,7 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 	--[[
-	Player._da_pai_cache = {}
-	Player._da_pai_cache.pai = {}
-	Player._da_pai_cache.position = "POSITION_TYPE_WEST"
-	Player._da_pai_cache.pai.card_type = "CARD_TYPE_WANZI"
-	Player._da_pai_cache.pai.card_value = 1
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
-	MahJong.DaPaiPoolShow()
+	
 	--]]
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 end
@@ -255,14 +249,33 @@ end
 function MahJong.UpdateMyDataState()
 	-- body
 	local myPosition = Player._my_player_data.position
-	print(myPosition)
-	print(tonumber(myPosition))
+	local _east = self.transform:Find("OperationPoolShow/Point_D").gameObject
+	local _south = self.transform:Find("OperationPoolShow/Point_N").gameObject
+	local _west = self.transform:Find("OperationPoolShow/Point_X").gameObject
+	local _north = self.transform:Find("OperationPoolShow/Point_B").gameObject
 	if myPosition == "POSITION_TYPE_SOUTH" then
 		self.transform.eulerAngles = newVector3(0,90,0)
+		_south.transform.localPosition = _operation_pai_show_position.east
+		_west.transform.localPosition = _operation_pai_show_position.south
+		_north.transform.localPosition = _operation_pai_show_position.west
+		_east.transform.localPosition = _operation_pai_show_position.north
 	elseif myPosition == "POSITION_TYPE_WEST" then
 		self.transform.eulerAngles = newVector3(0,180,0)
+		_west.transform.localPosition = _operation_pai_show_position.east
+		_north.transform.localPosition = _operation_pai_show_position.south
+		_east.transform.localPosition = _operation_pai_show_position.west
+		_south.transform.localPosition = _operation_pai_show_position.north
 	elseif myPosition == "POSITION_TYPE_NORTH" then
 		self.transform.eulerAngles = newVector3(0,270,0)
+		_north.transform.localPosition = _operation_pai_show_position.east
+		_east.transform.localPosition = _operation_pai_show_position.south
+		_south.transform.localPosition = _operation_pai_show_position.west
+		_west.transform.localPosition = _operation_pai_show_position.north
+	else
+		_east.transform.localPosition = _operation_pai_show_position.east
+		_south.transform.localPosition = _operation_pai_show_position.south
+		_west.transform.localPosition = _operation_pai_show_position.west
+		_north.transform.localPosition = _operation_pai_show_position.north
 	end
 end
 

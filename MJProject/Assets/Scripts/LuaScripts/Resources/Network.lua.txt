@@ -145,6 +145,7 @@ function Network.OnReceived(buffer)
         return 0
     end
     if not meta.type_t then
+        print("148,type is nil")
         return 0
     end
     --]]
