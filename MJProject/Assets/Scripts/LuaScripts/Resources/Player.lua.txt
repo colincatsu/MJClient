@@ -31,6 +31,8 @@ local _invokeFunctionTable = {}
 _invokeFunctionTable.front = 1
 _invokeFunctionTable.rear = 0
 
+local _calculate_data = {}--结算数据
+
 function Player.GetinvokeFunctionCache()
     -- body
     if _invokeFunctionTable.front > _invokeFunctionTable.rear then
@@ -219,6 +221,16 @@ end
 ---------------------------------------------
 --
 
+function Player.OnGameCaculate(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.GameCaculate",stuff)
+    Player._calculate_data = message
+    Player.ThreadFunction(ClickEvent.showCalculate)
+end
+
 function Player.OnSyncCommonReward(type_t,stuff)
     -- body
     if not stuff then
@@ -284,7 +296,9 @@ function Player.OnPlayerList(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
     print("---------")
-    Player._id = message.player_list[1]
+    if message.player_list then
+        Player._id = message.player_list[1]
+    end
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
@@ -368,8 +382,8 @@ function Player.OnPaiOperation(type_t,stuff)
         Player.SetDaPaiCache(message)
         Player.ThreadFunction(Player.MahJong.DaPaiPoolShow)
     elseif message.oper_type == "PAI_OPER_TYPE_HUPAI" then
-        print(message.position)
-        print("HU")
+        Player.SetPaiOperationShowCache(message)
+        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
         Player.SetPaiOperationShowCache(message)
         Player.ThreadFunction(Player.MahJong.OperationPaiShow)

@@ -70,7 +70,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>ac8t8q.xml|862|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>ac8t8q.xml|847|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n0_q2o3" name="n0" src="oyth5" xy="57,56"/>
     <component id="n1_q2o3" name="n1" src="k35j7d" xy="1193,127"/>
@@ -84,7 +84,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8r.xml|1014|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>ac8t8r.xml|999|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n0_q2o3" name="n0" src="oythf" xy="321,170" size="730,431"/>
     <component id="n1_q2o3" name="n1" src="q2o39n" xy="697,475"/>
@@ -99,7 +99,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8s.xml|1013|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>ac8t8s.xml|998|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n1_jsre" name="n1" src="oythf" xy="334,225" size="711,273"/>
     <component id="n2_q2o3" name="n2" src="q2o39n" xy="710,389"/>
@@ -114,7 +114,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8t.xml|4080|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>ac8t8t.xml|4065|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n0_ac8t" name="InfoBg" src="oyth3v" xy="201,57"/>
     <image id="n2_ac8t" name="AvatarBg" src="oyth2g" xy="328,253" size="169,217"/>
@@ -371,7 +371,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>algd86.xml|6512|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>algd86.xml|6497|<component size="1334,750" pivot="0.5,0.5">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <image id="n1_algd" name="Bg" src="oyth5" xy="65,57"/>
@@ -595,7 +595,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
   <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>algd8i.xml|2676|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>algd8i.xml|2661|<component size="1334,750" pivot="0.5,0.5">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <image id="n1_algd" name="MailBg" src="oyth5" xy="66,57"/>
@@ -645,7 +645,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>ioy79l.xml|72|<component size="1334,750" opaque="false">
+</component>ioy79l.xml|57|<component size="1334,750">
   <displayList/>
 </component>k35j6b.xml|358|<component size="111,89" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -735,7 +735,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>k35j6n.xml|2551|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>k35j6n.xml|2536|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n1_k35j" name="Bg" src="oyth4s" xy="389,63" size="553,642" group="n22_q2o3"/>
     <text id="n17_k35j" name="InputText" xy="544,194" size="315,53" group="n22_q2o3" input="true" prompt="请输入6位房间号" maxLength="6" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" text=""/>
@@ -914,7 +914,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>k35j7e.xml|6409|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>k35j7e.xml|6358|<component size="1334,750" pivot="0.5,0.5">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
@@ -989,7 +989,6 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="n26_nw08" name="ChooseFan06" src="nw087m" xy="857,344" group="n45_fb5y"/>
     <group id="n45_fb5y" name="Btns" xy="488,116" size="657,544" advanced="true"/>
   </displayList>
-  <relation target="" sidePair=""/>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
     <item time="5" type="Scale" tween="true" startValue="1.1,1.1" endValue="1,1" duration="2"/>
@@ -1009,7 +1008,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>l3ub9b.xml|2148|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>l3ub9b.xml|2133|<component size="1334,750" pivot="0.5,0.5">
   <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <image id="n0_l3ub" name="Bg" src="oyth5" xy="69,52"/>
@@ -1701,7 +1700,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button/>
-</component>w3hs92.xml|3326|<component size="1334,750" pivot="0.5,0.5" opaque="false">
+</component>w3hs92.xml|3311|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n43_w3hs" name="n43" src="oyth5v" xy="202,103"/>
     <image id="n2_ac8t" name="AvatarBg" src="oyth2g" xy="329,210" size="169,217"/>
@@ -1745,7 +1744,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button/>
-</component>w3hs96.xml|2240|<component size="1334,750" opaque="false">
+</component>w3hs96.xml|2225|<component size="1334,750">
   <displayList>
     <component id="n10_w3hs" name="OppositePlayerClearInfo" src="w3hs97" xy="467,43" pivot="0.5,0.5">
       <relation target="" sidePair="center-center,top-top"/>
@@ -1768,11 +1767,11 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <group id="n22_fb5y" name="Btns" xy="12,0" size="793,724" advanced="true"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n21_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n10_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n11_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
-    <item time="0" type="Scale" target="n21_w3hs" value="0,0"/>
+    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n20_w3hs" value="0,0"/>
     <item time="1" type="Scale" target="n10_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="2" type="Scale" target="n12_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>

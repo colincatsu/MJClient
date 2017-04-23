@@ -10,6 +10,7 @@ ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlaySence"
 ClickEvent.panelTable._player_info = "PlayerInfo"
 ClickEvent.panelTable._other_player_info = "OtherPlayerInfo"
+ClickEvent.panelTable._calculate_ui = "ClearRoundScene"
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
 
@@ -226,6 +227,38 @@ function ClickEvent.DestroyPanel(gameObject)
 		_popPanel = {}
 	else
 		_currentPanel = {}
+	end
+end
+
+function ClickEvent.showCalculate( ... )
+	-- body
+	if not Player._calculate_data or not Player._all_players_data or not Player._my_player_data.position then
+		return
+	end
+	local myPosition = Player._my_player_data.position
+	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
+	for k,v in pairs(Player._calculate_data.record.list) do
+		local currentPosition
+		for j,m in pairs(Player._all_players_data) do
+			if v.player_id == m.common_prop.player_id then
+				currentPosition = m.position
+				break
+			end
+		end
+		local tempX = _position_index[currentPosition] - _position_index[myPosition]
+		if tempX == 1 then
+			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("DouNum").text = v.score
+		elseif tempX == 2 then
+			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = v.score
+		elseif tempX == 3 then
+			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = v.score
+		else
+			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("MyClearInfo"):GetChild("DouNum").text = v.score
+		end
 	end
 end
 ---------------------------------------------------------------------------
