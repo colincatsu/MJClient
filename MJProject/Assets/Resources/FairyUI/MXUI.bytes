@@ -70,11 +70,12 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>ac8t8q.xml|847|<component size="1334,750" pivot="0.5,0.5">
+</component>ac8t8q.xml|940|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
-    <image id="n0_q2o3" name="n0" src="oyth5" xy="57,56"/>
-    <component id="n1_q2o3" name="n1" src="k35j7d" xy="1193,127"/>
-    <text id="n2_q2o3" name="n2" xy="171,84" size="233,61" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="游戏公告"/>
+    <image id="n3_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
+    <image id="n0_q2o3" name="Bg" src="oyth5" xy="57,56"/>
+    <component id="n1_q2o3" name="Close" src="k35j7d" xy="1193,127"/>
+    <text id="n2_q2o3" name="Title" xy="171,84" size="233,61" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="游戏公告"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -84,12 +85,14 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8r.xml|999|<component size="1334,750" pivot="0.5,0.5">
+</component>ac8t8r.xml|1231|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
-    <image id="n0_q2o3" name="n0" src="oythf" xy="321,170" size="730,431"/>
-    <component id="n1_q2o3" name="n1" src="q2o39n" xy="697,475"/>
-    <component id="n2_q2o3" name="n2" src="q2o39m" xy="478,476"/>
-    <text id="n3_q2o3" name="n3" xy="395,219" size="581,250" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="9999999999999999999999999999999"/>
+    <image id="n5_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
+    <image id="n0_q2o3" name="Bg" src="oythf" xy="321,170" size="730,431"/>
+    <text id="n3_q2o3" name="PopWindowsMidShowText" xy="395,219" size="581,250" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="9999999999999999999999999999999"/>
+    <component id="n1_q2o3" name="NoButton" src="q2o39n" xy="697,475" group="n4_qb9a"/>
+    <component id="n2_q2o3" name="YesButton" src="q2o39m" xy="478,476" group="n4_qb9a"/>
+    <group id="n4_qb9a" name="Btns" xy="478,475" size="396,74" advanced="true"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -99,12 +102,14 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8s.xml|998|<component size="1334,750" pivot="0.5,0.5">
+</component>ac8t8s.xml|1232|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
-    <image id="n1_jsre" name="n1" src="oythf" xy="334,225" size="711,273"/>
-    <component id="n2_q2o3" name="n2" src="q2o39n" xy="710,389"/>
-    <component id="n3_q2o3" name="n3" src="q2o39m" xy="491,390"/>
-    <text id="n4_q2o3" name="n4" xy="408,274" size="552,93" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="9999999999999999999999999999999"/>
+    <image id="n6_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
+    <image id="n1_jsre" name="Bg" src="oythf" xy="334,225" size="711,273"/>
+    <text id="n4_q2o3" name="PopWindowsSmallShowText" xy="408,274" size="552,93" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="9999999999999999999999999999999"/>
+    <component id="n2_q2o3" name="NoButton" src="q2o39n" xy="710,389" group="n5_qb9a"/>
+    <component id="n3_q2o3" name="YesButton" src="q2o39m" xy="491,390" group="n5_qb9a"/>
+    <group id="n5_qb9a" name="Btns" xy="491,389" size="396,74" advanced="true"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -114,8 +119,9 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>ac8t8t.xml|4065|<component size="1334,750" pivot="0.5,0.5">
+</component>ac8t8t.xml|4153|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
+    <image id="n44_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n0_ac8t" name="InfoBg" src="oyth3v" xy="201,57"/>
     <image id="n2_ac8t" name="AvatarBg" src="oyth2g" xy="328,253" size="169,217"/>
     <text id="n3_ac8t" name="PlayerName" xy="344,424" size="137,38" fontSize="18" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="对方根本"/>
@@ -371,9 +377,10 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>algd86.xml|6497|<component size="1334,750" pivot="0.5,0.5">
+</component>algd86.xml|6585|<component size="1334,750" pivot="0.5,0.5">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
+    <image id="n50_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n1_algd" name="Bg" src="oyth5" xy="65,57"/>
     <image id="n5_algd" name="ItemBigBg" src="oyth3t" xy="378,199" size="837,466"/>
     <component id="n6_algd" name="MallItemBg1" src="algd8a" xy="401,219"/>
@@ -595,9 +602,10 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
   <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>algd8i.xml|2661|<component size="1334,750" pivot="0.5,0.5">
+</component>algd8i.xml|2749|<component size="1334,750" pivot="0.5,0.5">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
+    <image id="n69_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n1_algd" name="MailBg" src="oyth5" xy="66,57"/>
     <text id="n48_algd" name="Title" xy="241,88" size="105,54" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="邮件"/>
     <image id="n49_ac8t" name="MailGeneralBg" src="oyth3t" xy="120,194" size="641,384"/>
@@ -735,8 +743,9 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>k35j6n.xml|2536|<component size="1334,750" pivot="0.5,0.5">
+</component>k35j6n.xml|2624|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
+    <image id="n23_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n1_k35j" name="Bg" src="oyth4s" xy="389,63" size="553,642" group="n22_q2o3"/>
     <text id="n17_k35j" name="InputText" xy="544,194" size="315,53" group="n22_q2o3" input="true" prompt="请输入6位房间号" maxLength="6" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" text=""/>
     <text id="n19_k35j" name="Title" xy="566,100" size="198,53" group="n22_q2o3" fontSize="48" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" strokeColor="#663333" shadowColor="#663333" shadowOffset="1,1" singleLine="true" text="加入房间"/>
@@ -914,11 +923,12 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>k35j7e.xml|6358|<component size="1334,750" pivot="0.5,0.5">
+</component>k35j7e.xml|6446|<component size="1334,750" pivot="0.5,0.5">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <displayList>
+    <image id="n46_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n1_k35j" name="Bg" src="oyth3v" xy="198,46">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
@@ -1008,9 +1018,10 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>l3ub9b.xml|2133|<component size="1334,750" pivot="0.5,0.5">
+</component>l3ub9b.xml|2221|<component size="1334,750" pivot="0.5,0.5">
   <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
+    <image id="n15_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n0_l3ub" name="Bg" src="oyth5" xy="69,52"/>
     <image id="n6_l3ub" name="n6" src="oyth3l" xy="387,180"/>
     <list id="n8_l3ub" name="HistoryList" xy="403,194" size="804,444" overflow="scroll" defaultItem="ui://krtoytc1l3ub9f">
@@ -1443,7 +1454,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>package.xml|17637|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|18772|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="ac8t8j" name="GetAllAccessoryButton" path="/UIPIC/邮件/" size="177,73"/>
     <component id="ac8t8k" name="DeleteAllButton" path="/UIPIC/邮件/" size="177,73"/>
@@ -1528,6 +1539,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="w3hs8z" name="ServiceTerm3" path="/UIPIC/个人信息/" size="200,50"/>
     <component id="w3hs91" name="BoundAccount" path="/UIPIC/个人信息/" size="262,91"/>
     <component id="w3hs93" name="KickOutRoom" path="/UIPIC/个人信息/" size="262,91"/>
+    <component id="w3hs95" name="PlayAgainButton" path="/UIPIC/房卡房结算/" size="262,91"/>
     <component id="w3hs97" name="PlayerClearInfo" path="/UIPIC/匹配房结算/" size="424,187"/>
     <component id="w3hs98" name="MyClearInfo" path="/UIPIC/匹配房结算/" size="784,187"/>
     <component id="w3hs9a" name="NextRoundButton" path="/UIPIC/匹配房结算/" size="262,91"/>
@@ -1556,6 +1568,8 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="oyth3" name="ui_Youjianjiemian_05" path="/UIPIC/邮件/" size="177,73"/>
     <image id="oyth32" name="ui_Shezhi_03" path="/UIPIC/游戏设置/" size="157,56" scale="9grid" scale9grid="40,14,80,28"/>
     <image id="oyth34" name="ui_Shezhi_05" path="/UIPIC/游戏设置/" size="89,43"/>
+    <image id="oyth3f" name="ui_Fangkajiesuan_01" path="/UIPIC/房卡房结算/" size="636,81" scale="9grid" scale9grid="159,21,318,42"/>
+    <image id="oyth3k" name="房卡场结算参考" path="/UIPIC/房卡房结算/" size="1334,750"/>
     <image id="oyth3l" name="ui_Zhanji_01" path="/UIPIC/战绩记录/" size="836,471"/>
     <image id="oyth3n" name="ui_Zhanji_03" path="/UIPIC/战绩记录/" size="670,248"/>
     <image id="oyth3o" name="ui_Zhanji_04" path="/UIPIC/战绩记录/" size="121,156"/>
@@ -1594,7 +1608,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="oyth4w" name="ui_GongNeng_01" path="/UIPIC/功能界面/" size="351,390"/>
     <image id="oyth4x" name="ui_GongNeng_02" path="/UIPIC/功能界面/" size="351,389"/>
     <image id="oyth4y" name="ui_GongNeng_03" path="/UIPIC/功能界面/" size="351,389"/>
-    <image id="oyth5" name="ui_Youjianjiemian_07" path="/UIPIC/邮件/" size="1207,660"/>
+    <image id="oyth5" name="ui_Youjianjiemian_07" path="/UIPIC/邮件/" size="1207,660" scale="9grid" scale9grid="588,165,13,330"/>
     <image id="oyth50" name="ui_GongNeng_05" path="/UIPIC/功能界面/" size="1068,69"/>
     <image id="oyth51" name="ui_GongNeng_06" path="/UIPIC/功能界面/" size="72,73"/>
     <image id="oyth52" name="ui_GongNeng_07" path="/UIPIC/功能界面/" size="241,66" scale="9grid" scale9grid="61,17,122,34"/>
@@ -1624,7 +1638,11 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="oyth7" name="ui_Youjianjiemian_09" path="/UIPIC/邮件/" size="424,471"/>
     <image id="oyth8" name="ui_Youjianjiemian_10" path="/UIPIC/邮件/" size="390,2"/>
     <image id="oyth9" name="ui_Youjianjiemian_13" path="/UIPIC/邮件/" size="67,67"/>
-    <image id="oythf" name="ui_Tiren_01" path="/UIPIC/踢人/" size="215,175" scale="9grid" scale9grid="54,44,108,88"/>
+    <image id="oythb" name="ui_Touxiangjiemian_01" path="/UIPIC/选择头像/" size="103,103" scale="9grid" scale9grid="26,26,52,52"/>
+    <image id="oythc" name="ui_Touxiangjiemian_02" path="/UIPIC/选择头像/" size="114,114"/>
+    <image id="oythd" name="ui_Touxiangjiemian_03" path="/UIPIC/选择头像/" size="646,224" scale="9grid" scale9grid="438,135,48,33"/>
+    <image id="oythf" name="ui_Tiren_01" path="/UIPIC/踢人/" size="215,175" scale="9grid" scale9grid="97,79,18,16"/>
+    <image id="qb9a9r" name="Di" path="/UIPIC/匹配房结算/" size="256,256" scale="9grid" scale9grid="64,64,128,128"/>
     <component id="ac8t8p" name="MailGeneralButton" path="/UIPIC/邮件/" size="616,99" exported="true"/>
     <component id="ac8t8q" name="PopWindowsBig" path="/" size="1334,750" exported="true"/>
     <component id="ac8t8r" name="PopWindowsMid" path="/" size="1334,750" exported="true"/>
@@ -1644,11 +1662,15 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="l3ub9f" name="History" path="/UIPIC/战绩记录/" size="793,105" exported="true"/>
     <component id="npla62" name="MainMenu" path="/" size="1334,750" exported="true"/>
     <component id="oyth0" name="Login" path="/" size="1334,750" exported="true"/>
+    <component id="qb9a9o" name="ChooseAvatar" path="/" size="1334,750" exported="true"/>
+    <component id="qb9a9p" name="ChooseAvatarButton" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <component id="w3hs92" name="OtherPlayerInfo" path="/" size="1334,750" exported="true"/>
+    <component id="w3hs94" name="ClearRound" path="/" size="929,665" exported="true"/>
     <component id="w3hs96" name="ClearRoundScene" path="/" size="1334,750" exported="true"/>
     <component id="w3hs99" name="ClearShowFan" path="/UIPIC/匹配房结算/" size="555,25" exported="true"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>
-    <atlas id="atlas0" size="2048,2048" file="atlas0.png"/>
+    <atlas id="atlas0" size="2048,256" file="atlas0.png"/>
+    <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas4" size="2048,2048" file="atlas4.png"/>
   </resources>
 </packageDescription>q2o39m.xml|635|<component size="177,73" extention="Button">
@@ -1673,6 +1695,43 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
+</component>qb9a9o.xml|755|<component size="1334,750">
+  <displayList>
+    <image id="n6_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
+    <image id="n1_qb9a" name="Bg" src="oythd" xy="280,177" size="767,368"/>
+    <component id="n2_qb9a" name="Close" src="k35j7d" xy="992,240"/>
+    <list id="n4_qb9a" name="AvatarList" xy="317,296" size="692,213" layout="flow_hz" lineGap="6" colGap="14" defaultItem="ui://krtoytc1qb9a9p">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <text id="n5_qb9a" name="Title" xy="403,212" size="206,56" fontSize="50" color="#ffffff" autoSize="height" text="选择头像"/>
+  </displayList>
+</component>qb9a9p.xml|669|<component size="103,103" extention="Button">
+  <Button/>
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver"/>
+  <displayList>
+    <image id="n1" src="oythb" name="n1" xy="0,0">
+      <gearDisplay controller="button" pages="0,2"/>
+      <relation target="" sidePair="width,height"/>
+    </image>
+    <image id="n2" src="oythc" name="n2" xy="-5,-5">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width,height"/>
+    </image>
+    <loader id="n3" name="icon" xy="0,0" size="103,103" align="center" vAlign="middle">
+      <relation target="" sidePair="width,height"/>
+    </loader>
+  </displayList>
 </component>w3hs8y.xml|427|<component size="144,50" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -1700,8 +1759,9 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button/>
-</component>w3hs92.xml|3311|<component size="1334,750" pivot="0.5,0.5">
+</component>w3hs92.xml|3399|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
+    <image id="n46_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n43_w3hs" name="n43" src="oyth5v" xy="202,103"/>
     <image id="n2_ac8t" name="AvatarBg" src="oyth2g" xy="329,210" size="169,217"/>
     <text id="n3_ac8t" name="PlayerName" xy="345,381" size="137,38" fontSize="18" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="对方根本"/>
@@ -1744,8 +1804,28 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button/>
-</component>w3hs96.xml|2225|<component size="1334,750">
+</component>w3hs94.xml|410|<component size="929,665">
   <displayList>
+    <image id="n0_w3hs" name="n0" src="oyth5v" xy="-1,6"/>
+    <image id="n1_w3hs" name="n1" src="oyth3f" xy="146,-24"/>
+    <image id="n2_w3hs" name="n2" src="oyth3t" xy="58,241" size="819,272"/>
+    <image id="n3_w3hs" name="n3" src="oyth3k" xy="-203,-71" alpha="0.5"/>
+    <component id="n4_w3hs" name="n4" src="w3hs95" xy="337,572"/>
+  </displayList>
+</component>w3hs95.xml|598|<component size="262,91" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="oyth2d" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2" name="title" xy="0,0" size="262,91" fontSize="32" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="0,1" singleLine="true" text="再来一局">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>w3hs96.xml|2311|<component size="1334,750">
+  <displayList>
+    <image id="n23_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <component id="n10_w3hs" name="OppositePlayerClearInfo" src="w3hs97" xy="467,43" pivot="0.5,0.5">
       <relation target="" sidePair="center-center,top-top"/>
     </component>
@@ -1758,27 +1838,27 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="n20_w3hs" name="MyClearInfo" src="w3hs98" xy="289,432" pivot="0.5,0.5">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <component id="n3_w3hs" name="GameBackButton" src="algd7s" xy="12,0" pivot="0.5,0.5" group="n22_fb5y">
+    <component id="n3_w3hs" name="GameBackButton" src="algd7s" xy="0,0" pivot="0.5,0.5" group="n22_fb5y">
       <relation target="" sidePair="right-left,top-top"/>
     </component>
     <component id="n21_w3hs" name="NextTRoundButton" src="w3hs9a" xy="543,633" pivot="0.5,0.5" group="n22_fb5y">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <group id="n22_fb5y" name="Btns" xy="12,0" size="793,724" advanced="true"/>
+    <group id="n22_fb5y" name="Btns" xy="0,0" size="805,724" advanced="true"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Scale" target="n21_w3hs" value="0,0"/>
+    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n10_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n11_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
-    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n21_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n20_w3hs" value="0,0"/>
     <item time="1" type="Scale" target="n10_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="2" type="Scale" target="n12_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="3" type="Scale" target="n20_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="4" type="Scale" target="n21_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="5"/>
   </transition>
-</component>w3hs97.xml|711|<component size="424,187">
+</component>w3hs97.xml|722|<component size="424,187">
   <displayList>
     <image id="n0_w3hs" name="PlayerClearInfoBg" src="oyth4m" xy="0,-1" size="425,189"/>
     <image id="n1_w3hs" name="AvatarBg" src="oyth4o" xy="13,7"/>
@@ -1786,9 +1866,9 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="n3_w3hs" name="n3" src="oyth57" xy="192,58"/>
     <image id="n4_w3hs" name="n4" src="oyth4p" xy="245,57"/>
     <loader id="n5_w3hs" name="AvatarLoader" xy="25,15" size="145,150"/>
-    <text id="n6_w3hs" name="DouNum" xy="251,60" size="147,38" fontSize="29" color="#ffffff" vAlign="middle" autoSize="none" text="+9999999"/>
+    <text id="n6_w3hs" name="DouNum" xy="251,60" size="147,38" fontSize="29" color="#ffffff" vAlign="middle" ubb="true" autoSize="none" text="+9999999"/>
   </displayList>
-</component>w3hs98.xml|868|<component size="784,187">
+</component>w3hs98.xml|879|<component size="784,187">
   <displayList>
     <image id="n0_w3hs" name="MyClearInfoBg" src="oyth4n" xy="0,0" size="785,188"/>
     <image id="n1_w3hs" name="AvatarBg" src="oyth4o" xy="10,7"/>
@@ -1796,7 +1876,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="n3_w3hs" name="n3" src="oyth57" xy="499,12"/>
     <loader id="n4_w3hs" name="AvatarLoader" xy="21,14" size="145,150"/>
     <image id="n6_w3hs" name="n6" src="oyth4p" xy="547,13"/>
-    <text id="n5_w3hs" name="DouNum" xy="548,16" size="147,38" fontSize="29" color="#ffffff" vAlign="middle" autoSize="none" text="+9999999"/>
+    <text id="n5_w3hs" name="DouNum" xy="548,16" size="147,38" fontSize="29" color="#ffffff" vAlign="middle" ubb="true" autoSize="none" text="+9999999"/>
     <list id="n7_w3hs" name="FanList" xy="193,67" size="554,105" overflow="scroll" lineItemCount="4" defaultItem="ui://krtoytc1w3hs99">
       <item/>
     </list>

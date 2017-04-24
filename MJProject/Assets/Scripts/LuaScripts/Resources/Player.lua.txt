@@ -221,12 +221,12 @@ end
 ---------------------------------------------
 --
 
-function Player.OnGameCaculate(type_t,stuff)
+function Player.OnGameCalculate(type_t,stuff)
     -- body
     if not stuff then
         return
     end
-    local message = protobuf.decode("Adoter.Asset.GameCaculate",stuff)
+    local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
     Player.ThreadFunction(ClickEvent.showCalculate)
 end
@@ -309,12 +309,18 @@ function Player.OnPaiOperationAlert(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
-    
+
+    if not message.check_return then
+        print("check_return is nil")
+        return
+    end
+
     for k,v in pairs(message.check_return) do
         print(v)
     end
 
     if not message.pai then
+        print("pai is nil")
         return
     else
         Player._pai_operation_alert_cache = message.pai
@@ -329,6 +335,10 @@ function Player.OnPaiNotify(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
+    if not message.data_type then
+        print("type is nil")
+        return
+    end
     print(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         --[[
@@ -375,6 +385,10 @@ function Player.OnPaiOperation(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
+    if not message.oper_type then
+        print("type is nil")
+        return
+    end
     print(message.oper_type)
     --Player._pai_operation_alert_cache = message.pai
 
@@ -394,6 +408,8 @@ function Player.OnPaiOperation(type_t,stuff)
         Player.SetPaiOperationShowCache(message)
         Player.ThreadFunction(Player.MahJong.OperationPaiShow)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
+    else
+        return
     end
 
 

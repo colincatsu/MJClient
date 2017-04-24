@@ -53,7 +53,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
     FLibEvent.AddEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
     FLibEvent.AddEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
-    FLibEvent.AddEvent(Player.OnGameCaculate,"META_TYPE_S2C_GAME_CACULATE")
+    FLibEvent.AddEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
 end
 
 ---------------------------------------------------------------------------
@@ -112,7 +112,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
     FLibEvent.DelEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
     FLibEvent.DelEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
-    FLibEvent.DelEvent(Player.OnGameCaculate,"META_TYPE_S2C_GAME_CACULATE")
+    FLibEvent.DelEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
 end
 
 ---------------------------------------------------------------------------
@@ -125,6 +125,7 @@ end
 ---------------------------------------------------------------------------
 function Network.OnDisconnect() 
     print("OnDisconnect------->>>")
+    Player.ThreadFunction(ClickEvent.showDisconnect)
 end
 
 function Network.OnReceived(buffer)

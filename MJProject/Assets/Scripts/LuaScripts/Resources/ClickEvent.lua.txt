@@ -11,6 +11,7 @@ ClickEvent.panelTable._play_game_ui = "PlaySence"
 ClickEvent.panelTable._player_info = "PlayerInfo"
 ClickEvent.panelTable._other_player_info = "OtherPlayerInfo"
 ClickEvent.panelTable._calculate_ui = "ClearRoundScene"
+ClickEvent.panelTable._window_small = "PopWindowsSmall"
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
 
@@ -236,34 +237,49 @@ function ClickEvent.showCalculate( ... )
 		return
 	end
 	local myPosition = Player._my_player_data.position
+	local currentPositionData
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	for k,v in pairs(Player._calculate_data.record.list) do
-		local currentPosition
 		for j,m in pairs(Player._all_players_data) do
 			if v.player_id == m.common_prop.player_id then
-				currentPosition = m.position
+				currentPositionData = m
 				break
 			end
 		end
-		local tempX = _position_index[currentPosition] - _position_index[myPosition]
+		local tempX = _position_index[currentPositionData.position] - _position_index[myPosition]
 		if tempX == 1 then
-			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
 			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 2 then
-			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
 			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 3 then
-			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
 			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = v.score
 		else
-			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
 			_popPanel.panel:GetChild("MyClearInfo"):GetChild("DouNum").text = v.score
 		end
 	end
 end
+
+function ClickEvent.showDisconnect( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel.panel:GetChild("PopWindowsSmallShowText").text = "Network disconnected."
+end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+function ClickEvent.NoButton( ... )
+	-- body
+	ClickEvent.Close()
+end
+
+function ClickEvent.YesButton( ... )
+	-- body
+	ClickEvent.Close()
+end
 
 function ClickEvent.PlayerAvatarInfo( ... )
 	-- body
@@ -549,7 +565,7 @@ function ClickEvent.CreateButton( )
 		extend_type_count = extend_type_count + 1
 	end
 	if _popPanel.panel:GetChild("ChooseFan06").selected then
-		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_HUIPAI"
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_QIYISE"
 		extend_type_count = extend_type_count + 1
 	end
 	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
