@@ -1,27 +1,37 @@
-
-local string_list = {}
+string_list = {}
+--[[
 local text = setmetatable({}, {__index=string_list, __newindex=function (t, k, v)
 	if string_list[k] then error("replicated string id: " .. tostring(k)) end
 	string_list[k] = v
 end})
-
-do
-	text[0] = "无"	
-
-end
-
-def.static("number", "=>", "string").GetStringFromTable = function(id)
-	if string_list[id] == nil then
-		return ""
-	end
-	return string_list[id]
-end
-
 def.static("number", "=>", "string").Get = function(id)
 	if string_list[id] == nil then
 		return ""
 	end
 	return string_list[id]
+end
+--]]
+local textTable = {}
+
+do
+	textTable[0] = "无"	
+
+end
+function string_list.SetTable(id,stringPara)
+	-- body
+	if type(id) ~= "number" or type(stringPara) ~= "string" then
+		return
+	end
+
+	textTable[id] = stringPara
+end
+
+function string_list.GetStringFromTable(id)
+	-- body
+	if not textTable[id]then
+		return ""
+	end
+	return textTable[id]
 end
 
 return string_list
