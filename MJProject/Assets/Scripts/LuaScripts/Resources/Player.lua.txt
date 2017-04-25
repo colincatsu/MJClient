@@ -6,7 +6,8 @@ local AssetManager = require "AssetManager"
 ---------------------------------------------------------------------------
 Player = {}
 local this = Player
-local _my_player_data = nil --玩家数据
+local _player_data = nil --玩家登录数据
+local _my_player_data = nil --房间内玩家数据
 local _all_players_data = nil
 local _id = nil
 local _password = ""
@@ -408,6 +409,10 @@ function Player.OnPaiOperation(type_t,stuff)
         Player.SetPaiOperationShowCache(message)
         Player.ThreadFunction(Player.MahJong.OperationPaiShow)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
+    elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
+
+    elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+    elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
     else
         return
     end

@@ -474,8 +474,20 @@ function MahJong.DaPaiPoolShow()
 		print("no dapai cache")
 		return
 	end
-	if not daPaiCacheData.position or not daPaiCacheData.pai or not daPaiCacheData.pai.card_type or daPaiCacheData.pai.card_value then
-		print("data is nil")
+	if not daPaiCacheData.position then
+		print("position is nil")
+		return
+	end
+	if not daPaiCacheData.pai then
+		print("pai is nil")
+		return
+	end
+	if not daPaiCacheData.pai.card_type then
+		print("card_type is nil")
+		return
+	end
+	if not daPaiCacheData.pai.card_value then
+		print("card_value is nil")
 		return
 	end
 
