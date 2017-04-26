@@ -52,7 +52,7 @@ local _animationName = {
 	stepUp = "GaiUp",
 }
 local _animationState = ""
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANG", "ANGANG"},-1)
 local currentOperationState = operationState.WAIT
 local operationStateTable = {}
 -- body
@@ -1011,6 +1011,7 @@ function MahJong.OperationPaiShow()
 	local whichPlayer = operationPaiShowData.position
 	local paiType = operationPaiShowData.pai.card_type
 	local paiValue = {}
+	local anGangAngle = newVector3.zero
 	if operationPaiShowData.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
@@ -1029,6 +1030,19 @@ function MahJong.OperationPaiShow()
 				end
 			end
 			paiValue[2] = tonumber(operationPaiShowData.pai.card_value)
+		end
+	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
+		for i=1,4 do
+    		paiValue[i] = operationPaiShowData.pai.card_value
+    	end
+    	anGangAngle = newVector3(-180,0,0)
+	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
+		for i=1,4 do
+			paiValue[i] = i
+		end
+	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+		for i=1,3 do
+			paiValue[i] = i
 		end
     end
 
@@ -1063,6 +1077,7 @@ function MahJong.OperationPaiShow()
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(_modelSize.width,0,0)
+	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
 	    				return
 	    			end
 	    		end
@@ -1078,6 +1093,7 @@ function MahJong.OperationPaiShow()
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,_modelSize.width)
+	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
 	    				return
 	    			end
 	    		end
@@ -1093,6 +1109,7 @@ function MahJong.OperationPaiShow()
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(-_modelSize.width,0,0)
+	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
 	    				return
 	    			end
 	    		end
@@ -1108,6 +1125,7 @@ function MahJong.OperationPaiShow()
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,-_modelSize.width)
+	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
 	    				return
 	    			end
 	    		end
@@ -1133,9 +1151,9 @@ function MahJong.OperationPaiShow()
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
 			else
-				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
 			end
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
 			if k == 4 then
@@ -1163,9 +1181,9 @@ function MahJong.OperationPaiShow()
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
 			else
-				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
 			end
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
 			if k == 4 then
@@ -1193,9 +1211,9 @@ function MahJong.OperationPaiShow()
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
 			else
-				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
 			end
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
 			if k == 4 then
@@ -1223,9 +1241,9 @@ function MahJong.OperationPaiShow()
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
 			else
-				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
 			end
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
 			if k == 4 then

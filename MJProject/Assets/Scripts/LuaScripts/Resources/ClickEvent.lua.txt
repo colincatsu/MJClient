@@ -25,7 +25,7 @@ local _position_index = {
 	POSITION_TYPE_NORTH = 4,
 }
 
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANG", "ANGANG"},-1)
 
 local _currentPanel = {}
 local _popPanel = {}
@@ -74,8 +74,8 @@ function ClickEvent.CreateNewPanel(panelName)
 			obj.onClick:Add(ClickEvent.registerButtonClick)
 		end
 	end
-	if Player._id and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
-		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = tostring(Player._id)
+	if Player._player_data and Player._player_data.common_prop and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
+		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	if not ClickEvent._play_ui then
 		ClickEvent._play_ui = {}
@@ -179,6 +179,23 @@ function ClickEvent.PaiOperationState()
 		elseif v == "PAI_CHECK_RETURN_CHI" then
 			Player.MahJong.SetCurrentState(operationState.CHI)
 			Player.MahJong.CheckChiPai()
+		elseif v == "PAI_OPER_TYPE_ANGANGPAI" then
+			ClickEvent.AddOperationButton("GameGangButton")
+			Player.MahJong.SetCurrentState(operationState.ANGANG)
+		elseif v == "PAI_OPER_TYPE_XUANFENG_FENG" then
+			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
+				Player.MahJong
+			else
+				ClickEvent.AddOperationButton("GameGangButton")
+				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
+			end
+		elseif v == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
+
+			else
+				ClickEvent.AddOperationButton("GameGangButton")
+				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
+			end
 		else
 	    	ClickEvent._play_ui.passButton.visible = false
 			print("PAI_CHECK_RETURN_NULL ")
@@ -404,10 +421,14 @@ function ClickEvent.GuestLogin( gameObject )
 		print("no find toggle")
 	end
 	--]]
-	ClickEvent.DeletePanel(_currentPanel.panel)
-	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	Player.CmdEnterGame(Player._id)
 	print("ClickEvent.GuestLogin")
+end
+
+function ClickEvent.ThreadToMainMenu( ... )
+	-- body
+	ClickEvent.DeletePanel(_currentPanel.panel)
+	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 end
 
 function ClickEvent.Admit( gameObject )
