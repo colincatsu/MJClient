@@ -19,6 +19,7 @@ local _invoke_data = ""
 local _invoke_table = {}
 local _invoke_table_test= {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
+local _pais_operation_alert_cache = {} --玩家可进行操作的多张牌缓存
 local _fa_pai_cache = {}
 local _da_pai_cache = {}
 _da_pai_cache.front = 1
@@ -324,8 +325,11 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     end
 
     if not message.pai then
-        print("pai is nil")
-        return
+        if not message.pais then
+            print("pais is nil")
+            return
+        end
+        Player._pais_operation_alert_cache = message.pais
     else
         Player._pai_operation_alert_cache = message.pai
     end

@@ -184,7 +184,7 @@ function ClickEvent.PaiOperationState()
 			Player.MahJong.SetCurrentState(operationState.ANGANG)
 		elseif v == "PAI_OPER_TYPE_XUANFENG_FENG" then
 			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
-				Player.MahJong
+				Player.MahJong.
 			else
 				ClickEvent.AddOperationButton("GameGangButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
