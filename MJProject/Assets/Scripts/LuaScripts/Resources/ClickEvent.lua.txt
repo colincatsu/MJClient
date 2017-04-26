@@ -75,6 +75,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		end
 	end
 	if Player._player_data and Player._player_data.common_prop and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
+		print(Player._player_data.common_prop.name)
 		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	if not ClickEvent._play_ui then
@@ -184,14 +185,14 @@ function ClickEvent.PaiOperationState()
 			Player.MahJong.SetCurrentState(operationState.ANGANG)
 		elseif v == "PAI_OPER_TYPE_XUANFENG_FENG" then
 			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
-				Player.MahJong.
+				--Player.MahJong.
 			else
 				ClickEvent.AddOperationButton("GameGangButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
 			end
 		elseif v == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
-
+				
 			else
 				ClickEvent.AddOperationButton("GameGangButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)

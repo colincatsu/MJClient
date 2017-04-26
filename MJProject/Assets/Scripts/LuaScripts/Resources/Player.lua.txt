@@ -274,8 +274,12 @@ function Player.OnPlayerInformation(type_t,stuff)
     if not message.player then
         return
     end
-    Player._player_data = message.player
-    Player.ThreadFunction(ClickEvent.ThreadToMainMenu)
+    if not Player._player_data then
+        Player._player_data = message.player
+        Player.ThreadFunction(ClickEvent.ThreadToMainMenu)
+    else
+        Player._player_data = message.player
+    end
 end
 
 function Player.OnEnterRoom(type_t,stuff)

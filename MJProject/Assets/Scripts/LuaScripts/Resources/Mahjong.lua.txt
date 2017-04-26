@@ -1031,16 +1031,16 @@ function MahJong.OperationPaiShow()
 			end
 			paiValue[2] = tonumber(operationPaiShowData.pai.card_value)
 		end
-	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
+	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
     	anGangAngle = newVector3(-180,0,0)
-	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
+	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
 		for i=1,4 do
 			paiValue[i] = i
 		end
-	else if operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 		for i=1,3 do
 			paiValue[i] = i
 		end
