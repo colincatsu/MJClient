@@ -25,7 +25,7 @@ local _position_index = {
 	POSITION_TYPE_NORTH = 4,
 }
 
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANG", "ANGANG"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG"},-1)
 
 local _currentPanel = {}
 local _popPanel = {}
@@ -164,8 +164,21 @@ end
 
 function ClickEvent.PaiOperationState()
 	-- body
-	local tempStateTable = Player.MahJong.GetStateTable()
-    for k,v in pairs(tempStateTable) do
+	local xuanfengCount = 0
+	if not Player._operation_alert_cache.pais then
+		for k,v in pairs(Player._operation_alert_cache.check_return) do
+			if v == "PAI_CHECK_RETURN_ANGANG" then
+				Player._operation_alert_cache.check_return[k] = nil
+			elseif v == "PAI_CHECK_GANG_XUANFENG_FENG" or v == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+				xuanfengCount = xuanfengCount + 1
+			end
+		end
+		Player.MahJong.SetCurrentState(operationState.ANGANG)
+		for k,v in pairs(Player._operation_alert_cache.pais) do
+			MahJong.CreateGangPai(v)
+		end
+	end
+    for k,v in pairs(Player._operation_alert_cache.check_return) do
     	print(v)
     	ClickEvent._play_ui.passButton.visible = true
 		if v == "PAI_CHECK_RETURN_HU" then
@@ -180,22 +193,22 @@ function ClickEvent.PaiOperationState()
 		elseif v == "PAI_CHECK_RETURN_CHI" then
 			Player.MahJong.SetCurrentState(operationState.CHI)
 			Player.MahJong.CheckChiPai()
-		elseif v == "PAI_OPER_TYPE_ANGANGPAI" then
+		elseif v == "PAI_CHECK_RETURN_ANGANG" then
 			ClickEvent.AddOperationButton("GameGangButton")
 			Player.MahJong.SetCurrentState(operationState.ANGANG)
-		elseif v == "PAI_OPER_TYPE_XUANFENG_FENG" then
-			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
+		elseif v == "PAI_CHECK_GANG_XUANFENG_FENG" then
+			if xuanfengCount > 1 then
 				--Player.MahJong.
 			else
-				ClickEvent.AddOperationButton("GameGangButton")
-				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
+				ClickEvent.AddOperationButton("XuanFengButton")
+				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 			end
-		elseif v == "PAI_OPER_TYPE_XUANFENG_JIAN" then
-			if Player.MahJong.GetCurrentState() == operationState.XUANFENGGANG then
+		elseif v == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+			if xuanfengCount > 1 then
 				
 			else
-				ClickEvent.AddOperationButton("GameGangButton")
-				Player.MahJong.SetCurrentState(operationState.XUANFENGGANG)
+				ClickEvent.AddOperationButton("XuanFengButton")
+				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 			end
 		else
 	    	ClickEvent._play_ui.passButton.visible = false

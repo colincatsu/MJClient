@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Sence/FairyMainUI.unity
+- path: Assets/Sence/PlaySence.unity
   isLoaded: 1
   isActive: 1

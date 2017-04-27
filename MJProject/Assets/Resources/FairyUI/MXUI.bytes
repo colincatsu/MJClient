@@ -1515,7 +1515,7 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>package.xml|21296|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|21108|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="ac8t8j" name="GetAllAccessoryButton" path="/UIPIC/邮件/" size="177,73"/>
     <component id="ac8t8k" name="DeleteAllButton" path="/UIPIC/邮件/" size="177,73"/>
@@ -1608,7 +1608,6 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="w3hs8z" name="ServiceTerm3" path="/UIPIC/个人信息/" size="200,50"/>
     <component id="w3hs91" name="BoundAccount" path="/UIPIC/个人信息/" size="262,91"/>
     <component id="w3hs93" name="KickOutRoom" path="/UIPIC/个人信息/" size="262,91"/>
-    <component id="w3hs95" name="PlayAgainButton" path="/UIPIC/房卡房结算/" size="262,91"/>
     <component id="w3hs97" name="PlayerClearInfo" path="/UIPIC/匹配房结算/" size="424,187"/>
     <component id="w3hs98" name="MyClearInfo" path="/UIPIC/匹配房结算/" size="784,187"/>
     <component id="w3hs9a" name="NextRoundButton" path="/UIPIC/匹配房结算/" size="262,91"/>
@@ -1639,8 +1638,6 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="oyth32" name="ui_Shezhi_03" path="/UIPIC/游戏设置/" size="157,56" scale="9grid" scale9grid="40,14,80,28"/>
     <image id="oyth33" name="ui_Shezhi_04" path="/UIPIC/游戏设置/" size="79,79"/>
     <image id="oyth34" name="ui_Shezhi_05" path="/UIPIC/游戏设置/" size="89,43"/>
-    <image id="oyth3f" name="ui_Fangkajiesuan_01" path="/UIPIC/房卡房结算/" size="636,81" scale="9grid" scale9grid="159,21,318,42"/>
-    <image id="oyth3k" name="房卡场结算参考" path="/UIPIC/房卡房结算/" size="1334,750"/>
     <image id="oyth3l" name="ui_Zhanji_01" path="/UIPIC/战绩记录/" size="836,471"/>
     <image id="oyth3n" name="ui_Zhanji_03" path="/UIPIC/战绩记录/" size="670,248"/>
     <image id="oyth3o" name="ui_Zhanji_04" path="/UIPIC/战绩记录/" size="121,156"/>
@@ -1722,7 +1719,9 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <image id="uroma9" name="ui_Xinzeng_08" path="/UIPIC/xinzeng/" size="39,43"/>
     <image id="uromaa" name="ui_Xinzeng_09" path="/UIPIC/xinzeng/" size="42,43"/>
     <image id="uromab" name="ui_Xinzeng_10" path="/UIPIC/xinzeng/" size="66,85"/>
+    <image id="uromac" name="ui_Xinzeng_11" path="/UIPIC/xinzeng/" size="248,81"/>
     <image id="uromad" name="ui_Xinzeng_12" path="/UIPIC/xinzeng/" size="191,157"/>
+    <image id="uromae" name="ui_Xinzeng_13" path="/UIPIC/xinzeng/" size="854,854"/>
     <component id="ac8t8p" name="MailGeneralButton" path="/UIPIC/邮件/" size="616,99" exported="true"/>
     <component id="ac8t8q" name="PopWindowsBig" path="/" size="1334,750" exported="true"/>
     <component id="ac8t8r" name="PopWindowsMid" path="/" size="1334,750" exported="true"/>
@@ -1750,16 +1749,15 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     <component id="uromam" name="GameTingBaopaiButton" path="/UIPIC/xinzeng/" size="155,155" exported="true"/>
     <component id="uromao" name="HuPaiBg" path="/UIPIC/xinzeng/" size="400,122" exported="true"/>
     <component id="uromaq" name="ChiPaiBg" path="/UIPIC/xinzeng/" size="400,122" exported="true"/>
+    <component id="uromar" name="GetReward" path="/" size="1334,750" exported="true"/>
     <component id="uromas" name="HuPai" path="/UIPIC/xinzeng/" size="120,110" exported="true"/>
     <component id="uromat" name="ChiPai" path="/UIPIC/xinzeng/" size="132,69" exported="true"/>
     <component id="uromau" name="GetRewardItem" path="/UIPIC/xinzeng/" size="191,157" exported="true"/>
     <component id="w3hs92" name="OtherPlayerInfo" path="/" size="1334,750" exported="true"/>
-    <component id="w3hs94" name="ClearRound" path="/" size="929,665" exported="true"/>
     <component id="w3hs96" name="ClearRoundScene" path="/" size="1334,750" exported="true"/>
     <component id="w3hs99" name="ClearShowFan" path="/UIPIC/匹配房结算/" size="555,25" exported="true"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>
-    <atlas id="atlas0" size="2048,256" file="atlas0.png"/>
-    <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
+    <atlas id="atlas0" size="2048,2048" file="atlas0.png"/>
     <atlas id="atlas4" size="2048,2048" file="atlas4.png"/>
   </resources>
 </packageDescription>q2o39m.xml|635|<component size="177,73" extention="Button">
@@ -1927,6 +1925,23 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
       <item/>
     </list>
   </displayList>
+</component>uromar.xml|938|<component size="1334,750">
+  <displayList>
+    <image id="n0_urom" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
+    <image id="n4_urom" name="n4" src="uromae" xy="233,-70"/>
+    <image id="n1_urom" name="n1" src="uromac" xy="543,116"/>
+    <list id="n2_urom" name="n2" xy="205,228" size="923,336" layout="flow_vt" overflow="scroll" defaultItem="ui://krtoytc1uromau" align="center" vAlign="middle">
+      <item/>
+    </list>
+  </displayList>
+  <transition name="Popup">
+    <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
+    <item time="5" type="Scale" tween="true" startValue="1.1,1.1" endValue="1,1" duration="2"/>
+  </transition>
+  <transition name="Popdown">
+    <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
+    <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
+  </transition>
 </component>uromas.xml|606|<component size="120,110">
   <displayList>
     <loader id="n0_urom" name="n0" xy="5,7" size="68,95"/>
@@ -2016,25 +2031,6 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w3hs94.xml|410|<component size="929,665">
-  <displayList>
-    <image id="n0_w3hs" name="n0" src="oyth5v" xy="-1,6"/>
-    <image id="n1_w3hs" name="n1" src="oyth3f" xy="146,-24"/>
-    <image id="n2_w3hs" name="n2" src="oyth3t" xy="58,241" size="819,272"/>
-    <image id="n3_w3hs" name="n3" src="oyth3k" xy="-203,-71" alpha="0.5"/>
-    <component id="n4_w3hs" name="n4" src="w3hs95" xy="337,572"/>
-  </displayList>
-</component>w3hs95.xml|598|<component size="262,91" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-  <displayList>
-    <image id="n1" name="n1" src="oyth2d" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <text id="n2" name="title" xy="0,0" size="262,91" fontSize="32" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="0,1" singleLine="true" text="再来一局">
-      <relation target="" sidePair="width-width,height-height"/>
-    </text>
-  </displayList>
-  <Button/>
 </component>w3hs96.xml|2311|<component size="1334,750">
   <displayList>
     <image id="n23_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>

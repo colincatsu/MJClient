@@ -20,6 +20,7 @@ local _invoke_table = {}
 local _invoke_table_test= {}
 local _pai_operation_alert_cache = {} --玩家可进行操作的牌缓存
 local _pais_operation_alert_cache = {} --玩家可进行操作的多张牌缓存
+local _operation_alert_cache = {} --玩家可操作缓存
 local _fa_pai_cache = {}
 local _da_pai_cache = {}
 _da_pai_cache.front = 1
@@ -27,7 +28,7 @@ _da_pai_cache.rear = 0
 local _pai_operation_show_cache = {}
 _pai_operation_show_cache.front = 1
 _pai_operation_show_cache.rear = 0
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANG", "ANGANG"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG"},-1)
 
 local _invokeFunctionTable = {}
 _invokeFunctionTable.front = 1
@@ -327,7 +328,7 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     for k,v in pairs(message.check_return) do
         print(v)
     end
-
+    --[[
     if not message.pai then
         if not message.pais then
             print("pais is nil")
@@ -337,7 +338,8 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     else
         Player._pai_operation_alert_cache = message.pai
     end
-    Player.MahJong.SetStateTable(message.check_return)
+    --]]
+    Player._operation_alert_cache = message
     Player.ThreadFunction(ClickEvent.PaiOperationState)
 end
 
