@@ -320,14 +320,11 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
 
-    if not message.check_return then
-        print("check_return is nil")
+    if not message.pais then
+        print("pais data is nil")
         return
     end
 
-    for k,v in pairs(message.check_return) do
-        print(v)
-    end
     --[[
     if not message.pai then
         if not message.pais then
