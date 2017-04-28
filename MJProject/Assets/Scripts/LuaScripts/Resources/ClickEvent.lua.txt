@@ -165,56 +165,62 @@ end
 function ClickEvent.PaiOperationState()
 	-- body
 	local xuanfengCount = 0
+	local angangCount = 0
 	if not Player._operation_alert_cache.pais then
-		for k,v in pairs(Player._operation_alert_cache.check_return) do
-			if v == "PAI_CHECK_RETURN_ANGANG" then
-				Player._operation_alert_cache.check_return[k] = nil
-			elseif v == "PAI_CHECK_GANG_XUANFENG_FENG" or v == "PAI_CHECK_GANG_XUANFENG_JIAN" then
-				xuanfengCount = xuanfengCount + 1
-			end
-		end
-		Player.MahJong.SetCurrentState(operationState.ANGANG)
 		for k,v in pairs(Player._operation_alert_cache.pais) do
-			MahJong.CreateGangPai(v)
+			for j,m in pairs(v.check_return) do
+				if m == "PAI_CHECK_RETURN_ANGANG" then
+					angangCount = angangCount + 1
+				elseif m == "PAI_CHECK_GANG_XUANFENG_FENG" or m == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+					xuanfengCount = xuanfengCount + 1
+				end
+			end
 		end
+		
 	end
-    for k,v in pairs(Player._operation_alert_cache.check_return) do
-    	print(v)
-    	ClickEvent._play_ui.passButton.visible = true
-		if v == "PAI_CHECK_RETURN_HU" then
-			ClickEvent.AddOperationButton("GameHuButton")
-	        Player.MahJong.SetCurrentState(operationState.HU)
-		elseif v == "PAI_CHECK_RETURN_GANG" then
-			ClickEvent.AddOperationButton("GameGangButton")
-	        Player.MahJong.SetCurrentState(operationState.GANG)
-		elseif v == "PAI_CHECK_RETURN_PENG" then
-			ClickEvent.AddOperationButton("GamePengButton")
-	        Player.MahJong.SetCurrentState(operationState.PENG)
-		elseif v == "PAI_CHECK_RETURN_CHI" then
-			Player.MahJong.SetCurrentState(operationState.CHI)
-			Player.MahJong.CheckChiPai()
-		elseif v == "PAI_CHECK_RETURN_ANGANG" then
-			ClickEvent.AddOperationButton("GameGangButton")
-			Player.MahJong.SetCurrentState(operationState.ANGANG)
-		elseif v == "PAI_CHECK_GANG_XUANFENG_FENG" then
-			if xuanfengCount > 1 then
-				--Player.MahJong.
-			else
-				ClickEvent.AddOperationButton("XuanFengButton")
+    for k,v in pairs(Player._operation_alert_cache.pais) do
+    	for j,m in pairs(v.check_return) do
+	    	print(m)
+	    	ClickEvent._play_ui.passButton.visible = true
+			if m == "PAI_CHECK_RETURN_HU" then
+				ClickEvent.AddOperationButton("GameHuButton")
+		        Player.MahJong.SetCurrentState(operationState.HU)
+			elseif m == "PAI_CHECK_RETURN_GANG" then
+				ClickEvent.AddOperationButton("GameGangButton")
+		        Player.MahJong.SetCurrentState(operationState.GANG)
+			elseif m == "PAI_CHECK_RETURN_PENG" then
+				ClickEvent.AddOperationButton("GamePengButton")
+		        Player.MahJong.SetCurrentState(operationState.PENG)
+			elseif m == "PAI_CHECK_RETURN_CHI" then
+				Player.MahJong.SetCurrentState(operationState.CHI)
+				Player.MahJong.CheckChiPai()
+			elseif m == "PAI_CHECK_RETURN_ANGANG" then
+				Player.MahJong.SetCurrentState(operationState.ANGANG)
+				if angangCount > 1 then
+					Player.MahJong.CreateGangPai(v.pai)
+				else
+					ClickEvent.AddOperationButton("GameGangButton")
+				end
+			elseif m == "PAI_CHECK_GANG_XUANFENG_FENG" then
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
-			end
-		elseif v == "PAI_CHECK_GANG_XUANFENG_JIAN" then
-			if xuanfengCount > 1 then
-				
-			else
-				ClickEvent.AddOperationButton("XuanFengButton")
+				if xuanfengCount > 1 then
+					Player.MahJong.CreateGangPai(v.pai)
+				else
+					ClickEvent.AddOperationButton("XuanFengButton")
+				end
+			elseif m == "PAI_CHECK_GANG_XUANFENG_JIAN" then
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
+				if xuanfengCount > 1 then
+					Player.MahJong.CreateGangPai(v.pai)
+				else
+					ClickEvent.AddOperationButton("XuanFengButton")
+				end
+			else
+		    	ClickEvent._play_ui.passButton.visible = false
+				print("PAI_CHECK_RETURN_NULL ")
+				print(ClickEvent.MahJong.GetCurrentState())
 			end
-		else
-	    	ClickEvent._play_ui.passButton.visible = false
-			print("PAI_CHECK_RETURN_NULL ")
-			print(ClickEvent.MahJong.GetCurrentState())
-		end
+    	end
     end
     Player.MahJong.SetStateTable({})
 end

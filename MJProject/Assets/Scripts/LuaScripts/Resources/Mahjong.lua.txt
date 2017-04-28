@@ -576,10 +576,22 @@ end
 
 function MahJong.PengPai(paiTable)
 	-- body
+	local tempPai = nil
+	for k,v in pairs(Player._operation_alert_cache.pais) do
+		for j,m in pairs(v.check_return) do
+			if m == "PAI_CHECK_RETURN_PENG" then
+				tempPai = v.pai
+				break
+			end
+		end
+		if tempPai then
+			break
+		end
+	end
 	for i = 1,2 do
 		for k,v in pairs(_player_father.cards) do
-			if Player._operation_alert_cache.pai.card_type == v.paiType and 
-				Player._operation_alert_cache.pai.card_value == v.paiValue then
+			if tempPai.card_type == v.paiType and 
+				tempPaipai.card_value == v.paiValue then
 				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 				if v.child == MahJong._current_click_pai then
 					MahJong._current_click_pai = nil
@@ -591,7 +603,7 @@ function MahJong.PengPai(paiTable)
 			end
 		end
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},Player._operation_alert_cache.pai)
+	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},tempPai)
 	currentOperationState = operationState.DAPAI
 end
 
@@ -680,13 +692,24 @@ end
 function MahJong.ChiPai(paiTable)
 	-- body
 	--paiTable.card_value --+-1
-
+	local operationPai = nil
+	for k,v in pairs(Player._operation_alert_cache.pais) do
+		for j,m in pairs(v.check_return) do
+			if m == "PAI_CHECK_RETURN_CHI" then
+				operationPai = v.pai
+				break
+			end
+		end
+		if operationPai then
+			break
+		end
+	end
 	print("ChiPai")
 	local paiNumber = nil
 	local paiElement = {}
 	local paiCount = 1
 	for k,v in pairs(_chi_pai_father.cards.deleteCards) do
-		if v.paiValue ~= Player._operation_alert_cache.pai.card_value then
+		if v.paiValue ~= operationPai.card_value then
 
 			paiElement[paiCount] = {}
 			paiElement[paiCount].card_type = v.card_type
@@ -716,15 +739,26 @@ function MahJong.ChiPai(paiTable)
 			MahJong.SortPlayerPai(paiNumber)
 		end
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,Player._operation_alert_cache.pai)
+	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,operationPai)
 	currentOperationState = operationState.DAPAI
 end
 
 function MahJong.CheckChiPai(paiTable)
 	-- body
+	local operationPai = nil
+	for k,v in pairs(Player._operation_alert_cache.pais) do
+		for j,m in pairs(v.check_return) do
+			if m == "PAI_CHECK_RETURN_CHI" then
+				operationPai = v.pai
+				break
+			end
+		end
+		if operationPai then
+			break
+		end
+	end
 	local sameTypeCardsTable = {}
 	local countSameTypeCards = 0
-	local operationPai = Player._operation_alert_cache.pai
 	for k,v in pairs(_player_father.cards) do
 		if operationPai.card_type == v.paiType then
 			countSameTypeCards = countSameTypeCards + 1
@@ -896,10 +930,24 @@ end
 
 function MahJong.GangPai(paiTable)
 	-- body
+	local tempPai = nil
+	local tempOperation = nil
+	for k,v in pairs(Player._operation_alert_cache.pais) do
+		for j,m in pairs(v.check_return) do
+			if m == "PAI_CHECK_RETURN_GANG" or m == "PAI_CHECK_RETURN_ANGANG" then
+				tempOperation = m
+				tempPai = v.pai
+				break
+			end
+		end
+		if tempPai then
+			break
+		end
+	end
 	for i=1,3 do
 		for k,v in pairs(_player_father.cards) do
-			if Player._operation_alert_cache.pai.card_type == v.paiType and 
-				Player._operation_alert_cache.pai.card_value == v.paiValue then
+			if tempPai.card_type == v.paiType and 
+				tempPai.card_value == v.paiValue then
 				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 				if v.child == MahJong._current_click_pai then
 					MahJong._current_click_pai = nil
@@ -911,14 +959,14 @@ function MahJong.GangPai(paiTable)
 			end
 		end
 	end
-	if MahJong.GetCurrentState() == operationState.GANG then
-		Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},Player._operation_alert_cache.pai)
-	elseif MahJong.GetCurrentState() == operationState.ANGANG then
-		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},Player._operation_alert_cache.pai)
+	if tempOperation == "PAI_CHECK_RETURN_GANG" then
+		Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},tempPai)
+	elseif tempOperation == "PAI_CHECK_RETURN_ANGANG" then
+		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},tempPai)
 	end
 	currentOperationState = operationState.WAIT
 end
-
+--gangpai未完成
 function MahJong.ClickGangPai( ... )
 	-- body
 	print("ChiPai")
@@ -1050,7 +1098,19 @@ end
 function MahJong.HuPai(paiTable)
 	-- body
 	print("HuPai")
-	Player.CmdPaiOperation("PAI_OPER_TYPE_HUPAI",{},Player._operation_alert_cache.pai)
+	local tempPai = nil
+	for k,v in pairs(Player._operation_alert_cache.pais) do
+		for j,m in pairs(v.check_return) do
+			if m == "PAI_CHECK_RETURN_HU" then
+				tempPai = v.pai
+				break
+			end
+		end
+		if tempPai then
+			break
+		end
+	end
+	Player.CmdPaiOperation("PAI_OPER_TYPE_HUPAI",{},tempPai)
 end
 
 function MahJong.SortPlayerPai(deleteNumber)
