@@ -591,7 +591,7 @@ function MahJong.PengPai(paiTable)
 	for i = 1,2 do
 		for k,v in pairs(_player_father.cards) do
 			if tempPai.card_type == v.paiType and 
-				tempPaipai.card_value == v.paiValue then
+				tempPai.card_value == v.paiValue then
 				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
 				if v.child == MahJong._current_click_pai then
 					MahJong._current_click_pai = nil
@@ -966,46 +966,40 @@ function MahJong.GangPai(paiTable)
 	end
 	currentOperationState = operationState.WAIT
 end
---gangpai未完成
+
 function MahJong.ClickGangPai( ... )
 	-- body
-	print("ChiPai")
+	print("GangPai")
 	local paiNumber = nil
-	local paiElement = {}
-	local paiCount = 1
+	local tempPaiType = _gang_pai_father.cards.deleteCards[1].card_type
 	for k,v in pairs(_gang_pai_father.cards.deleteCards) do
-		if v.paiValue ~= Player._operation_alert_cache.pai.card_value then
-
-			paiElement[paiCount] = {}
-			paiElement[paiCount].card_type = v.card_type
-			paiElement[paiCount].card_value = v.paiValue
-			paiCount = paiCount + 1
-			
-			print(v.card_type)
-			print(v.paiValue)
-			for m,n in pairs(_player_father.cards) do
-				if n.paiType == v.card_type and n.paiValue == v.paiValue then
-					paiNumber = m
-					print(paiNumber)
-					break
-				end
-			end
-			if not paiNumber or paiNumber <= 0 then
-				print("no value")
+		for m,n in pairs(_player_father.cards) do
+			if n.paiType == v.card_type and n.paiValue == v.paiValue then
+				paiNumber = m
+				print(paiNumber)
 				break
 			end
-			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
-			--if _player_father.cards[paiNumber] then
-			if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
-				MahJong._current_click_pai = nil
-			end
-			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
-			_player_father.cards[paiNumber] = {}
-			MahJong.SortPlayerPai(paiNumber)
 		end
+		if not paiNumber or paiNumber <= 0 then
+			print("no value")
+			break
+		end
+		_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+		if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
+			MahJong._current_click_pai = nil
+		end
+		CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+		_player_father.cards[paiNumber] = {}
+		MahJong.SortPlayerPai(paiNumber)
 	end
-	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,Player._operation_alert_cache.pai)
-	currentOperationState = operationState.DAPAI
+	if tempPaiType == "CARD_TYPE_FENG" then
+		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
+	elseif tempPaiType == "CARD_TYPE_JIAN" then
+		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
+	else
+		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},_gang_pai_father.cards.deleteCards[1].paiValue)
+	end
+	currentOperationState = operationState.WAIT
 end
 
 function MahJong.SortGangPai( ... )
