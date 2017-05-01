@@ -75,7 +75,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		end
 	end
 	if Player._player_data and Player._player_data.common_prop and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
-		print(Player._player_data.common_prop.name)
+		CS.UnityEngine.Debug.LogWarning(Player._player_data.common_prop.name)
 		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	if not ClickEvent._play_ui then
@@ -126,6 +126,7 @@ function ClickEvent.CreateOperationButton( ... )
 	_currentPanel.buttonList["GamePengButton"] = UIPackage.GetItemURL("MXUI","GamePengButton")
 	_currentPanel.buttonList["GameGangButton"] = UIPackage.GetItemURL("MXUI","GameGangButton")
 	_currentPanel.buttonList["GameHuButton"] = UIPackage.GetItemURL("MXUI","GameHuButton")
+	_currentPanel.buttonList["XuanFengButton"] = UIPackage.GetItemURL("MXUI","XuanFengButton")
 end
 
 function ClickEvent.AddOperationButton( buttonName )
@@ -146,7 +147,8 @@ function ClickEvent.RoomInformationUpdate( ... )
 		end
 	end
 	for k,v in pairs(_position_index) do
-		print(k,v)
+		CS.UnityEngine.Debug.LogWarning(k)
+		CS.UnityEngine.Debug.LogWarning(v)
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
@@ -180,7 +182,7 @@ function ClickEvent.PaiOperationState()
 	end
     for k,v in pairs(Player._operation_alert_cache.pais) do
     	for j,m in pairs(v.check_return) do
-	    	print(m)
+	    	CS.UnityEngine.Debug.LogWarning(m)
 	    	ClickEvent._play_ui.passButton.visible = true
 			if m == "PAI_CHECK_RETURN_HU" then
 				ClickEvent.AddOperationButton("GameHuButton")
@@ -195,6 +197,7 @@ function ClickEvent.PaiOperationState()
 				Player.MahJong.SetCurrentState(operationState.CHI)
 				Player.MahJong.CheckChiPai()
 			elseif m == "PAI_CHECK_RETURN_ANGANG" then
+				CS.UnityEngine.Debug.LogWarning("ANGANG")
 				Player.MahJong.SetCurrentState(operationState.ANGANG)
 				if angangCount > 1 then
 					Player.MahJong.CreateGangPai(v.pai)
@@ -202,6 +205,7 @@ function ClickEvent.PaiOperationState()
 					ClickEvent.AddOperationButton("GameGangButton")
 				end
 			elseif m == "PAI_CHECK_GANG_XUANFENG_FENG" then
+				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 				if xuanfengCount > 1 then
 					Player.MahJong.CreateGangPai(v.pai)
@@ -209,6 +213,7 @@ function ClickEvent.PaiOperationState()
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
 			elseif m == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 				if xuanfengCount > 1 then
 					Player.MahJong.CreateGangPai(v.pai)
@@ -217,8 +222,8 @@ function ClickEvent.PaiOperationState()
 				end
 			else
 		    	ClickEvent._play_ui.passButton.visible = false
-				print("PAI_CHECK_RETURN_NULL ")
-				print(ClickEvent.MahJong.GetCurrentState())
+				CS.UnityEngine.Debug.LogWarning("PAI_CHECK_RETURN_NULL ")
+				CS.UnityEngine.Debug.LogWarning(ClickEvent.MahJong.GetCurrentState())
 			end
     	end
     end
@@ -268,7 +273,7 @@ function ClickEvent.DestroyPanel(gameObject)
 	end
 end
 
-function ClickEvent.showCalculate( ... )
+function ClickEvent.ShowCalculate( ... )
 	-- body
 	if not Player._calculate_data or not Player._all_players_data or not Player._my_player_data.position then
 		return
@@ -328,7 +333,8 @@ function ClickEvent.PlayerAvatarInfo( ... )
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 0 then
-			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
@@ -356,7 +362,8 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
-			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -378,7 +385,8 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 2 then
-			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -400,7 +408,8 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 3 then
-			_popPanel.panel:GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -428,7 +437,7 @@ function ClickEvent.LoginButton(gameObject)
 end
 function ClickEvent.Account( gameObject )
 	-- body
-	print(gameObject.name)
+	CS.UnityEngine.Debug.LogWarning(gameObject.name)
 end
 
 function ClickEvent.GuestLogin( gameObject )
@@ -438,11 +447,11 @@ function ClickEvent.GuestLogin( gameObject )
 		ClickEvent.DestroyPanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
-		print("no find toggle")
+		CS.UnityEngine.Debug.LogWarning("no find toggle")
 	end
 	--]]
 	Player.CmdEnterGame(Player._id)
-	print("ClickEvent.GuestLogin")
+	CS.UnityEngine.Debug.LogWarning("ClickEvent.GuestLogin")
 end
 
 function ClickEvent.ThreadToMainMenu( ... )
@@ -469,24 +478,24 @@ end
 
 function ClickEvent.PlayerLogo( ... )
 	-- body
-	print("playLogoShow")
+	CS.UnityEngine.Debug.LogWarning("playLogoShow")
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_message_ui)
 	--_Player_Message_UI:SetActive(true)
 end
 
 function ClickEvent.DiamondPlus( ... )
 	-- body
-	print("DiamondPlusShow")
+	CS.UnityEngine.Debug.LogWarning("DiamondPlusShow")
 end
 
 function ClickEvent.BeanPlus( ... )
 	-- body
-	print("BeanPlusShow")
+	CS.UnityEngine.Debug.LogWarning("BeanPlusShow")
 end
 
 function ClickEvent.TicketPlus( ... )
 	-- body
-	print("TicketPlusShow")
+	CS.UnityEngine.Debug.LogWarning("TicketPlusShow")
 end
 
 function ClickEvent.DouRoomButton( ... )
@@ -500,13 +509,13 @@ end
 
 function ClickEvent.GetintoRoomButton( ... )
 	-- body
-	print("JoinRoom")
+	CS.UnityEngine.Debug.LogWarning("JoinRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 end
 
 function ClickEvent.CreateRoomButton( ... )
 	-- body
-	print("CreateRoom")
+	CS.UnityEngine.Debug.LogWarning("CreateRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
@@ -545,20 +554,20 @@ end
 
 function ClickEvent.Close( ... )
 	-- body
-	print("ClosePanel")
+	CS.UnityEngine.Debug.LogWarning("ClosePanel")
 	GRoot.inst:RemoveChild(_popPanel.panel)
 end
 
 function ClickEvent.CreateRoomId( gameObject )
 	-- body
 	Player._roomId = tonumber(gameObject:GetComponent("InputField").text)
-	print(gameObject.name)
+	CS.UnityEngine.Debug.LogWarning(gameObject.name)
 end
 
 function ClickEvent.CreateButton( )
 	-- body
 	--roomid
-	print("CreateRoom")
+	CS.UnityEngine.Debug.LogWarning("CreateRoom")
 	local model = nil
 	local extend_type = {}
 	local top_mutiple = nil
@@ -621,7 +630,7 @@ end
 function ClickEvent.GetinButton( ... )
 	-- body
 	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
-	print(tonumber(Player._roomId))
+	CS.UnityEngine.Debug.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom(Player._roomId)
 	ClickEvent.Close()
 end
@@ -697,8 +706,8 @@ function ClickEvent.registerButtonClick(gameObject)
 	if fSwitch then
 		local result = fSwitch(gameObject.sender)
 	else
-		print(key)
-		print("key no found")
+		CS.UnityEngine.Debug.LogWarning(key)
+		CS.UnityEngine.Debug.LogWarning("key no found")
 	end
 
 end

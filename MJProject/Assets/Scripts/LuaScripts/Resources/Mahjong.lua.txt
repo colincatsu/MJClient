@@ -10,10 +10,10 @@ local FairyGUI = require "FairyGUI"
 --[[
 local AssetManager = require "AssetManager"
 	local loader = AssetManager.Load()
-	print(loader)
+	CS.UnityEngine.Debug.LogWarning(loader)
 	hoster = AssetManager.Get(196610)
-	print(hoster)
-	AssetManager.PrintMessage(hoster)
+	CS.UnityEngine.Debug.LogWarning(hoster)
+	AssetManager.CS.UnityEngine.Debug.LogWarningMessage(hoster)
 --]]
 local newVector3 = CS.UnityEngine.Vector3
 local Camera = CS.UnityEngine.Camera
@@ -42,6 +42,14 @@ local _operation_pai_show_position = {
 	west = newVector3(0.36,0,-0.31),
 	north = newVector3(0.36,0,0.2),
 }
+local _player_pai_position = {
+---[[
+	nextPlayer = newVector3(-0.35,0,0),
+	oppositePlayer = newVector3(0,0,-0.32),
+	forwardPlayer = newVector3(0.35,0,0),
+--]]
+}
+local _player_pai_pool = {}--其他玩家手牌
 
 local _modelPoolLineCount = 34
 local _play_pai_count = 14--玩家手牌数目
@@ -114,15 +122,15 @@ function MahJong.MjLoader()
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
 	--[[
-	AssetManager.PrintMessage(_mj_asset)
+	AssetManager.CS.UnityEngine.Debug.LogWarningMessage(_mj_asset)
 	for k, v in pairs(message) do  
-    	print(v)
+    	CS.UnityEngine.Debug.LogWarning(v)
 	end
 	local data = AssetManager.Get(393238)
 	local message = protobuf.decode("Adoter.Asset.CommonLimit", data)
-	print(message.type_t)
+	CS.UnityEngine.Debug.LogWarning(message.type_t)
 	for k,v in pairs(data) do
-		print(v)
+		CS.UnityEngine.Debug.LogWarning(v)
 	end
 	--]]
 end
@@ -203,6 +211,22 @@ function MahJong.Init()
 		_modelSize.length/2,
 		_operation_pai_show.point_b.father.transform.parent.position.z)
 	_operation_pai_show.point_b.startRotation = newVector3(180,-270,0)
+	--玩家手牌
+	--[[
+	--]]
+	_player_pai_pool.father = self.transform:Find("PlayerPaiPool").gameObject
+	_player_pai_pool._next_player = self.transform:Find("PlayerPaiPool/next").gameObject
+	_player_pai_pool._next_player_father = self.transform:Find("PlayerPaiPool/next/Father").gameObject
+	_player_pai_pool._next_pai_number = 0
+	_player_pai_pool._next_card = {}
+	_player_pai_pool._opposite_player = self.transform:Find("PlayerPaiPool/opposite").gameObject
+	_player_pai_pool._opposite_player_father = self.transform:Find("PlayerPaiPool/opposite/Father").gameObject
+	_player_pai_pool._opposite_pai_number = 0
+	_player_pai_pool._opposite_card = {}
+	_player_pai_pool._forward_player = self.transform:Find("PlayerPaiPool/forward").gameObject
+	_player_pai_pool._forward_player_father = self.transform:Find("PlayerPaiPool/forward/Father").gameObject
+	_player_pai_pool._forward_pai_number = 0
+	_player_pai_pool._forward_card = {}
 end
 
 function MahJong.ModelPoolInit()
@@ -242,7 +266,7 @@ function MahJong.ModelPoolInit()
 
 	end
 	MahJong.ModelPoolSetActive(false)
-	--print(i)
+	--CS.UnityEngine.Debug.LogWarning(i)
 end
 
 function MahJong.ModelPoolSetActive(bool)
@@ -283,7 +307,73 @@ function MahJong.UpdateMyDataState()
 		_west.transform.position = _operation_pai_show_position.west
 		_north.transform.position = _operation_pai_show_position.north
 	end
+	_player_pai_pool.father.transform.eulerAngles = newVector3.zero
 end
+
+function MahJong.OtherPlayerPaiInit()
+	-- body
+	local myPosition = Player._my_player_data.position
+	if myPosition == "POSITION_TYPE_SOUTH" then
+		MahJong.CreateOtherPai("next",13)
+		MahJong.CreateOtherPai("forward",14)
+		MahJong.CreateOtherPai("opposite",13)
+	elseif myPosition == "POSITION_TYPE_WEST" then
+		MahJong.CreateOtherPai("next",13)
+		MahJong.CreateOtherPai("forward",13)
+		MahJong.CreateOtherPai("opposite",14)
+	elseif myPosition == "POSITION_TYPE_NORTH" then
+		MahJong.CreateOtherPai("next",14)
+		MahJong.CreateOtherPai("forward",13)
+		MahJong.CreateOtherPai("opposite",13)
+	else
+		MahJong.CreateOtherPai("next",13)
+		MahJong.CreateOtherPai("forward",13)
+		MahJong.CreateOtherPai("opposite",13)
+	end
+end
+
+function MahJong.CreateOtherPai(whichPlayer,paiCount)
+	-- body
+	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
+	local countTemp = 0
+	if whichPlayer == "next" then
+		for i=1,paiCount do
+			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
+			_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localEulerAngles = newVector3(90,90,0)
+			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+	elseif whichPlayer == "forward" then
+		for i=1,paiCount do
+			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localEulerAngles = newVector3(90,-90,0)
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+	elseif whichPlayer == "opposite" then
+		for i=1,paiCount do
+			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
+			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localEulerAngles = newVector3(90,0,0)
+			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+	end
+	MahJong.SortOtherPai()
+end
+
+function MahJong.SortOtherPai( ... )
+	-- body
+	for k,v in pairs(_player_pai_pool._next_card) do
+		v.transform.localPosition = newVector3(0,0,(_player_pai_pool._next_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width)
+	end
+	for k,v in pairs(_player_pai_pool._forward_card) do
+		v.transform.localPosition = newVector3(0,0,-(_player_pai_pool._forward_pai_number-1)*_modelSize.width/2 + (k-1)*_modelSize.width)
+	end
+	for k,v in pairs(_player_pai_pool._opposite_card) do
+		v.transform.localPosition = newVector3((_player_pai_pool._opposite_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width,0,0)
+	end
+end
+
 
 function MahJong.ZhuaPai()
 	-- body
@@ -383,7 +473,7 @@ function MahJong.CreatePlayerModelTest( modelName,paiNumber,paiType,paiValue )
 		_player_father_test.cards[paiNumber].paiType = paiType
 		_player_father_test.cards[paiNumber].paiValue = paiValue
 	else
-		print("wrongType")
+		CS.UnityEngine.Debug.LogWarning("wrongType")
 	end
 end
 
@@ -409,6 +499,7 @@ function MahJong.CreatePlayerPai()
         end
     end
 	MahJong.SortPlayerPai()
+	MahJong.OtherPlayerPaiInit()
 end
 
 function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
@@ -431,7 +522,7 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].paiType = paiType
 		_player_father.cards[paiNumber].paiValue = paiValue
 	else
-		print("wrongType")
+		CS.UnityEngine.Debug.LogWarning("wrongType")
 	end
 end
 
@@ -442,7 +533,7 @@ function MahJong.ClickPaiEvent(gameObject)
 			if currentOperationState ~= operationState.DAPAI then
 				return
 			end
-			print("dapai")
+			CS.UnityEngine.Debug.LogWarning("dapai")
 			local paiNumber = tonumber(gameObject.transform.parent.name)
 			local paiElement = {
 				card_type = _player_father.cards[paiNumber].paiType,
@@ -477,23 +568,23 @@ function MahJong.DaPaiPoolShow()
 	-- body
 	local daPaiCacheData = Player.GetDaPaiCache()
 	if not daPaiCacheData then
-		print("no dapai cache")
+		CS.UnityEngine.Debug.LogWarning("no dapai cache")
 		return
 	end
 	if not daPaiCacheData.position then
-		print("position is nil")
+		CS.UnityEngine.Debug.LogWarning("position is nil")
 		return
 	end
 	if not daPaiCacheData.pai then
-		print("pai is nil")
+		CS.UnityEngine.Debug.LogWarning("pai is nil")
 		return
 	end
 	if not daPaiCacheData.pai.card_type then
-		print("card_type is nil")
+		CS.UnityEngine.Debug.LogWarning("card_type is nil")
 		return
 	end
 	if not daPaiCacheData.pai.card_value then
-		print("card_value is nil")
+		CS.UnityEngine.Debug.LogWarning("card_value is nil")
 		return
 	end
 
@@ -510,9 +601,9 @@ function MahJong.DaPaiPoolShow()
     if tempPaiPool and tempPaiPool.cards and tempPaiPool.cards[paiValue] then
 	    modelName = tostring(tempPaiPool.cards[paiValue].model_path)
 	else
-    	print("no modelName")
-		print(paiType)
-    	print(paiValue)
+    	CS.UnityEngine.Debug.LogWarning("no modelName")
+		CS.UnityEngine.Debug.LogWarning(paiType)
+    	CS.UnityEngine.Debug.LogWarning(paiValue)
     end
     if not modelName then
     	return
@@ -685,7 +776,7 @@ function MahJong.CreateChiPaiModel(paiGroup,modelName,paiType,paiValue,sortValue
 		_chi_pai_father.cards[paiGroup].paiType = paiType
 		--_chi_pai_father.cards[paiGroup].child[paiValue].paiValue = paiValue
 	else
-		print("wrongType")
+		CS.UnityEngine.Debug.LogWarning("wrongType")
 	end
 end
 
@@ -704,7 +795,7 @@ function MahJong.ChiPai(paiTable)
 			break
 		end
 	end
-	print("ChiPai")
+	CS.UnityEngine.Debug.LogWarning("ChiPai")
 	local paiNumber = nil
 	local paiElement = {}
 	local paiCount = 1
@@ -716,17 +807,17 @@ function MahJong.ChiPai(paiTable)
 			paiElement[paiCount].card_value = v.paiValue
 			paiCount = paiCount + 1
 			
-			print(v.card_type)
-			print(v.paiValue)
+			CS.UnityEngine.Debug.LogWarning(v.card_type)
+			CS.UnityEngine.Debug.LogWarning(v.paiValue)
 			for m,n in pairs(_player_father.cards) do
 				if n.paiType == v.card_type and n.paiValue == v.paiValue then
 					paiNumber = m
-					print(paiNumber)
+					CS.UnityEngine.Debug.LogWarning(paiNumber)
 					break
 				end
 			end
 			if not paiNumber or paiNumber <= 0 then
-				print("no value")
+				CS.UnityEngine.Debug.LogWarning("no value")
 				break
 			end
 			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
@@ -969,19 +1060,19 @@ end
 
 function MahJong.ClickGangPai( ... )
 	-- body
-	print("GangPai")
+	CS.UnityEngine.Debug.LogWarning("GangPai")
 	local paiNumber = nil
 	local tempPaiType = _gang_pai_father.cards.deleteCards[1].card_type
 	for k,v in pairs(_gang_pai_father.cards.deleteCards) do
 		for m,n in pairs(_player_father.cards) do
 			if n.paiType == v.card_type and n.paiValue == v.paiValue then
 				paiNumber = m
-				print(paiNumber)
+				CS.UnityEngine.Debug.LogWarning(paiNumber)
 				break
 			end
 		end
 		if not paiNumber or paiNumber <= 0 then
-			print("no value")
+			CS.UnityEngine.Debug.LogWarning("no value")
 			break
 		end
 		_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
@@ -1068,7 +1159,7 @@ function MahJong.CreateGangPaiModel(modelName,paiType,paiValue,paiGroup,sortValu
 		_gang_pai_father.cards[paiGroup].paiType = paiType
 		--_gang_pai_father.cards[paiGroup].child[paiValue].paiValue = paiValue
 	else
-		print("wrongType")
+		CS.UnityEngine.Debug.LogWarning("wrongType")
 	end
 end
 
@@ -1091,7 +1182,7 @@ end
 
 function MahJong.HuPai(paiTable)
 	-- body
-	print("HuPai")
+	CS.UnityEngine.Debug.LogWarning("HuPai")
 	local tempPai = nil
 	for k,v in pairs(Player._operation_alert_cache.pais) do
 		for j,m in pairs(v.check_return) do
@@ -1197,7 +1288,7 @@ function MahJong.OperationPaiShow()
 	---[[
 	local operationPaiShowData = Player.GetPaiOperationShowCache()
 	if not operationPaiShowData then
-		print("no operationPai cache")
+		CS.UnityEngine.Debug.LogWarning("no operationPai cache")
 		return
 	end
 	local whichPlayer = operationPaiShowData.position
@@ -1250,8 +1341,8 @@ function MahJong.OperationPaiShow()
 		    modelName[k] = tostring(tempPaiPool.cards[v].model_path)
     	end
 	else
-    	print("no modelName")
-		print(paiType)
+    	CS.UnityEngine.Debug.LogWarning("no modelName")
+		CS.UnityEngine.Debug.LogWarning(paiType)
     end
     if not modelName then
     	return
@@ -1467,7 +1558,7 @@ function MahJong.AnimationPlay()
 		[_animationName.stepUp] = function( ... )
 			-- body
 			_animationState = ""
-			print("startGame")
+			CS.UnityEngine.Debug.LogWarning("startGame")
 		end,
 	}
 	local fSwitch = switch[_animationState]
@@ -1477,7 +1568,7 @@ function MahJong.AnimationPlay()
 	else
 		_myAnimation:Play("GaiDown")
 		_animationState = _animationName.stepDown
-		--print("key no found")
+		--CS.UnityEngine.Debug.LogWarning("key no found")
 	end
 end
 

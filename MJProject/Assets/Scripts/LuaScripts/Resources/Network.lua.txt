@@ -61,7 +61,7 @@ end
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
     _socketClient:SendConnect()
-    print("Server Connect----->>>")
+    CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
 
 ---------------------------------------------------------------------------
@@ -85,13 +85,13 @@ end
 
 ---------------------------------------------------------------------------
 function Network.OnConnet()
-	print("ConnetServer Success----->>>")
+	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     --Player.CmdCreatePlayer()
     --Player.CmdEnterGame(347)
 end
 
 function Network.OnClose()
-	print("Server Close----->>>")
+	CS.UnityEngine.Debug.LogWarning("Server Close----->>>")
     this.DelEventListener()
 end
 
@@ -124,12 +124,12 @@ end
 --连接中断，或者被踢掉
 ---------------------------------------------------------------------------
 function Network.OnDisconnect() 
-    print("OnDisconnect------->>>")
+    CS.UnityEngine.Debug.LogWarning("OnDisconnect------->>>")
     Player.ThreadFunction(ClickEvent.showDisconnect)
 end
 
 function Network.OnReceived(buffer)
-	print("OnReceived------>>>")
+	CS.UnityEngine.Debug.LogWarning("OnReceived------>>>")
     if not buffer then return 1 end
 
     local data = buffer:ReadBytes()
@@ -144,21 +144,21 @@ function Network.OnReceived(buffer)
     end
     ---[[
     if type(meta) ~= "table" then
-        print(type(meta))
+        CS.UnityEngine.Debug.LogWarning(type(meta))
         return 0
     end
     if not meta.type_t then
-        print("148,type is nil")
+        CS.UnityEngine.Debug.LogWarning("148,type is nil")
         return 0
     end
     --]]
-    print(type(meta))
-    print('OnSocket:type_t:>'..(meta.type_t))
-    print("ddddddddddd"..meta.stuff)
+    CS.UnityEngine.Debug.LogWarning(type(meta))
+    CS.UnityEngine.Debug.LogWarning('OnSocket:type_t:>'..(meta.type_t))
+    CS.UnityEngine.Debug.LogWarning("ddddddddddd"..meta.stuff)
     ----------------------------------------------------
     if meta then
         FLibEvent.Fire(meta.type_t, meta.stuff)
-        --print("Fire Success")
+        --CS.UnityEngine.Debug.LogWarning("Fire Success")
     end
     return 0
 end

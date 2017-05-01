@@ -231,7 +231,7 @@ function Player.OnGameCalculate(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
-    Player.ThreadFunction(ClickEvent.showCalculate)
+    Player.ThreadFunction(ClickEvent.ShowCalculate)
 end
 
 function Player.OnSyncCommonReward(type_t,stuff)
@@ -475,7 +475,9 @@ function Player.OnGameOperation(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.GameOperation", stuff)
-
+    if not message.source_player_id then
+        return
+    end
     print(message.source_player_id)
     print(this._id)
     if message.source_player_id then
