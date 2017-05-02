@@ -803,22 +803,22 @@ ac8t8j.xml|596|<component size="177,73" extention="Button">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>k35j6n.xml|2624|<component size="1334,750" pivot="0.5,0.5">
+</component>k35j6n.xml|2734|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n23_qb9a" name="Di" src="qb9a9r" xy="0,0" size="1334,750" alpha="0.75"/>
     <image id="n1_k35j" name="Bg" src="oyth4s" xy="389,63" size="553,642" group="n22_q2o3"/>
     <text id="n17_k35j" name="InputText" xy="544,194" size="315,53" group="n22_q2o3" input="true" prompt="请输入6位房间号" maxLength="6" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" text=""/>
     <text id="n19_k35j" name="Title" xy="566,100" size="198,53" group="n22_q2o3" fontSize="48" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" strokeColor="#663333" shadowColor="#663333" shadowOffset="1,1" singleLine="true" text="加入房间"/>
-    <component id="n2_k35j" name="1" src="k35j6o" xy="415,260" group="n21_fb5y"/>
-    <component id="n6_k35j" name="0" src="k35j77" xy="580,494" group="n21_fb5y"/>
-    <component id="n7_k35j" name="2" src="k35j71" xy="580,260" group="n21_fb5y"/>
-    <component id="n8_k35j" name="3" src="k35j7a" xy="745,260" group="n21_fb5y"/>
-    <component id="n9_k35j" name="4" src="k35j7b" xy="415,338" group="n21_fb5y"/>
-    <component id="n10_k35j" name="5" src="k35j72" xy="580,338" group="n21_fb5y"/>
-    <component id="n11_k35j" name="6" src="k35j73" xy="745,338" group="n21_fb5y"/>
-    <component id="n12_k35j" name="7" src="k35j74" xy="415,416" group="n21_fb5y"/>
-    <component id="n13_k35j" name="8" src="k35j75" xy="580,416" group="n21_fb5y"/>
-    <component id="n14_k35j" name="9" src="k35j76" xy="745,416" group="n21_fb5y"/>
+    <component id="n2_k35j" name="KeyBoardOne" src="k35j6o" xy="415,260" group="n21_fb5y"/>
+    <component id="n6_k35j" name="KeyBoardZero" src="k35j77" xy="580,494" group="n21_fb5y"/>
+    <component id="n7_k35j" name="KeyBoardTwo" src="k35j71" xy="580,260" group="n21_fb5y"/>
+    <component id="n8_k35j" name="KeyBoardThree" src="k35j7a" xy="745,260" group="n21_fb5y"/>
+    <component id="n9_k35j" name="KeyBoardFour" src="k35j7b" xy="415,338" group="n21_fb5y"/>
+    <component id="n10_k35j" name="KeyBoardFive" src="k35j72" xy="580,338" group="n21_fb5y"/>
+    <component id="n11_k35j" name="KeyBoardSix" src="k35j73" xy="745,338" group="n21_fb5y"/>
+    <component id="n12_k35j" name="KeyBoardSeven" src="k35j74" xy="415,416" group="n21_fb5y"/>
+    <component id="n13_k35j" name="KeyBoardEight" src="k35j75" xy="580,416" group="n21_fb5y"/>
+    <component id="n14_k35j" name="KeyBoardNine" src="k35j76" xy="745,416" group="n21_fb5y"/>
     <component id="n15_k35j" name="BackSpaceButton" src="k35j79" xy="745,494" group="n21_fb5y"/>
     <component id="n16_k35j" name="Clear" src="k35j78" xy="415,494" group="n21_fb5y"/>
     <component id="n18_k35j" name="GetinButton" src="k35j7c" xy="527,581" group="n21_fb5y"/>

@@ -236,6 +236,7 @@ namespace MX
             Debug.LogWarning("接收到数据--->>>");
             //Debug.LogWarning(func);
             func(buffer);
+            buffer.Close();
         }
 
         //会话发送

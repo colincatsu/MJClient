@@ -84,6 +84,7 @@ function start()
 	MahJong.ModelPoolInit()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
+
 	--[[
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
@@ -341,21 +342,21 @@ function MahJong.CreateOtherPai(whichPlayer,paiCount)
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localEulerAngles = newVector3(90,90,0)
-			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+			--_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		end
 	elseif whichPlayer == "forward" then
 		for i=1,paiCount do
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localEulerAngles = newVector3(90,-90,0)
-			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+			--_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		end
 	elseif whichPlayer == "opposite" then
 		for i=1,paiCount do
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localEulerAngles = newVector3(90,0,0)
-			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+			--_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		end
 	end
 	MahJong.SortOtherPai()
@@ -364,13 +365,13 @@ end
 function MahJong.SortOtherPai( ... )
 	-- body
 	for k,v in pairs(_player_pai_pool._next_card) do
-		v.transform.localPosition = newVector3(0,0,(_player_pai_pool._next_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width)
+		v.transform.localPosition = newVector3(0,_modelSize.height/2,(_player_pai_pool._next_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width)
 	end
 	for k,v in pairs(_player_pai_pool._forward_card) do
-		v.transform.localPosition = newVector3(0,0,-(_player_pai_pool._forward_pai_number-1)*_modelSize.width/2 + (k-1)*_modelSize.width)
+		v.transform.localPosition = newVector3(0,_modelSize.height/2,-(_player_pai_pool._forward_pai_number-1)*_modelSize.width/2 + (k-1)*_modelSize.width)
 	end
 	for k,v in pairs(_player_pai_pool._opposite_card) do
-		v.transform.localPosition = newVector3((_player_pai_pool._opposite_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width,0,0)
+		v.transform.localPosition = newVector3((_player_pai_pool._opposite_pai_number-1)*_modelSize.width/2 - (k-1)*_modelSize.width,_modelSize.height/2,0)
 	end
 end
 

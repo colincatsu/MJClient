@@ -634,6 +634,60 @@ function ClickEvent.GetinButton( ... )
 	Player.CmdEnterRoom(Player._roomId)
 	ClickEvent.Close()
 end
+--数字
+function ClickEvent.KeyBoardNumber(number)
+	-- body
+	if Player._roomId then
+		_popPanel.panel:GetChild("InputText").text = tostring(Player._roomId)
+		_popPanel.panel:GetChild("InputText").text = _popPanel.panel:GetChild("InputText").text..tostring(number)
+	else
+		_popPanel.panel:GetChild("InputText").text = tostring(number)
+	end
+	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
+end
+
+function ClickEvent.KeyBoardZero( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(0)
+end
+function ClickEvent.KeyBoardOne( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(1)
+end
+function ClickEvent.KeyBoardTwo( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(2)
+end
+function ClickEvent.KeyBoardThree( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(3)
+end
+function ClickEvent.KeyBoardFour( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(4)
+end
+function ClickEvent.KeyBoardFive( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(5)
+end
+function ClickEvent.KeyBoardSix( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(6)
+end
+function ClickEvent.KeyBoardSeven( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(7)
+end
+function ClickEvent.KeyBoardEight( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(8)
+end
+function ClickEvent.KeyBoardNine( ... )
+	-- body
+	ClickEvent.KeyBoardNumber(9)
+end
+--[[
+--]]
 
 -------------------------------------
 ---游戏中
