@@ -170,10 +170,10 @@ function ClickEvent.PaiOperationState()
 	local angangCount = 0
 	if not Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
-			for j,m in pairs(v.check_return) do
-				if m == "PAI_CHECK_RETURN_ANGANG" then
+			for j,m in pairs(v.oper_list) do
+				if m == "PAI_OPER_TYPE_ANGANGPAI" then
 					angangCount = angangCount + 1
-				elseif m == "PAI_CHECK_GANG_XUANFENG_FENG" or m == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+				elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" or m == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 					xuanfengCount = xuanfengCount + 1
 				end
 			end
@@ -181,22 +181,22 @@ function ClickEvent.PaiOperationState()
 		
 	end
     for k,v in pairs(Player._operation_alert_cache.pais) do
-    	for j,m in pairs(v.check_return) do
+    	for j,m in pairs(v.oper_list) do
 	    	CS.UnityEngine.Debug.LogWarning(m)
 	    	ClickEvent._play_ui.passButton.visible = true
-			if m == "PAI_CHECK_RETURN_HU" then
+			if m == "PAI_OPER_TYPE_HUPAI" then
 				ClickEvent.AddOperationButton("GameHuButton")
 		        Player.MahJong.SetCurrentState(operationState.HU)
-			elseif m == "PAI_CHECK_RETURN_GANG" then
+			elseif m == "PAI_OPER_TYPE_GANGPAI" then
 				ClickEvent.AddOperationButton("GameGangButton")
 		        Player.MahJong.SetCurrentState(operationState.GANG)
-			elseif m == "PAI_CHECK_RETURN_PENG" then
+			elseif m == "PAI_OPER_TYPE_PENGPAI" then
 				ClickEvent.AddOperationButton("GamePengButton")
 		        Player.MahJong.SetCurrentState(operationState.PENG)
-			elseif m == "PAI_CHECK_RETURN_CHI" then
+			elseif m == "PAI_OPER_TYPE_CHIPAI" then
 				Player.MahJong.SetCurrentState(operationState.CHI)
 				Player.MahJong.CheckChiPai()
-			elseif m == "PAI_CHECK_RETURN_ANGANG" then
+			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
 				CS.UnityEngine.Debug.LogWarning("ANGANG")
 				Player.MahJong.SetCurrentState(operationState.ANGANG)
 				if angangCount > 1 then
@@ -204,7 +204,7 @@ function ClickEvent.PaiOperationState()
 				else
 					ClickEvent.AddOperationButton("GameGangButton")
 				end
-			elseif m == "PAI_CHECK_GANG_XUANFENG_FENG" then
+			elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" then
 				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 				if xuanfengCount > 1 then
@@ -212,7 +212,7 @@ function ClickEvent.PaiOperationState()
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
-			elseif m == "PAI_CHECK_GANG_XUANFENG_JIAN" then
+			elseif m == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
 				Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 				if xuanfengCount > 1 then
@@ -222,7 +222,7 @@ function ClickEvent.PaiOperationState()
 				end
 			else
 		    	ClickEvent._play_ui.passButton.visible = false
-				CS.UnityEngine.Debug.LogWarning("PAI_CHECK_RETURN_NULL ")
+				CS.UnityEngine.Debug.LogWarning("PAI_OPER_TYPE_BEGIN ")
 				CS.UnityEngine.Debug.LogWarning(ClickEvent.MahJong.GetCurrentState())
 			end
     	end
@@ -686,6 +686,20 @@ function ClickEvent.KeyBoardNine( ... )
 	-- body
 	ClickEvent.KeyBoardNumber(9)
 end
+
+function ClickEvent.Clear( ... )
+ 	-- body
+ 	_popPanel.panel:GetChild("InputText").text = ""
+ 	Player._roomId = nil
+end
+function ClickEvent.BackSpaceButton( ... )
+	-- body
+	local tempStr = _popPanel.panel:GetChild("InputText").text
+	if tempStr then
+		_popPanel.panel:GetChild("InputText").text = string.sub(tempStr,1,-2)
+		Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
+	end
+end
 --[[
 --]]
 
@@ -703,6 +717,12 @@ function ClickEvent.GameGangButton(gameObject)
 
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.GangPai()
+end
+
+function ClickEvent.XuanFengButton(gameObject)
+	-- body
+	ClickEvent.CloseOperationPanel()
+	Player.MahJong.XuanFengGang()
 end
 
 function ClickEvent.GameChiButton(gameObject)

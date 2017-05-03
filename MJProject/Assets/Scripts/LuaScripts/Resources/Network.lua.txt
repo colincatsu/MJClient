@@ -54,6 +54,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
     FLibEvent.AddEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
     FLibEvent.AddEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.AddEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
 end
 
 ---------------------------------------------------------------------------
@@ -113,6 +114,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
     FLibEvent.DelEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
     FLibEvent.DelEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.DelEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
 end
 
 ---------------------------------------------------------------------------
