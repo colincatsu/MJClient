@@ -22,16 +22,19 @@ protobuf.register(_buffer)--]]
 
 Network = {}
 local this = Network
-local _socketClientClass = CS.MX.SocketClient
+local _network_manager = nil
+local _socketClientClass = CS.MX.NetworkManager-- CS.MX.SocketClient
+local _network_protocal = CS.MX.Protocal
 --local _byteBufferClass = CS.MX.ByteBuffer
-local _socketClient = _socketClientClass()
+--local _socketClient = _socketClientClass()
 
 ---------------------------------------------------------------------------
 --初始化
 ---------------------------------------------------------------------------
 function Network.Start()
-    _socketClient:OnRegister()
+    --_socketClient:OnRegister()
     --_socketClient:StartClient()
+    _network_manager = _socketClientClass.Instance
     this.AddEventListener()
 end
 
@@ -61,7 +64,8 @@ end
 --连接服务器
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
-    _socketClient:SendConnect()
+    --_socketClient:SendConnect()
+    _network_manager:ConnectTo("182.92.87.147",50000)
     CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
 
@@ -80,12 +84,12 @@ function Network.SendProtocol(messageName, message)
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
 
-    _socketClient:SendProtocol(msg)
-    --]]
+    --_socketClient:SendProtocol(msg)
+    _network_manager:SendMessage(msg)
 end
 
 ---------------------------------------------------------------------------
-function Network.OnConnet()
+function Network.OnConnect()
 	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     --Player.CmdCreatePlayer()
     --Player.CmdEnterGame(347)
@@ -135,7 +139,7 @@ function Network.OnReceived(buffer)
     if not buffer then return 1 end
 
     local data = buffer:ReadBytes()
-
+    Debug.LogWarning(data)
     --buffer:Close()
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
@@ -165,5 +169,18 @@ function Network.OnReceived(buffer)
     return 0
 end
 
+function Network.OnReceiveMessageQueue(protocal,buffer)
+    -- body
+    if protocal == _network_protocal.Connect then
+        Network.OnConnect()
+    elseif protocal == _network_protocal.Exception then
+        Network.OnException()
+    elseif protocal == _network_protocal.Disconnect then
+        Network.OnClose()
+        Network.OnDisconnect()
+    elseif protocal == _network_protocal.Receive then
+        Network.OnReceived(buffer)
+    end
+end
 
 return Network

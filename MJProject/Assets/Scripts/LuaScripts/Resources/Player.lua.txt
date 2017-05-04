@@ -581,11 +581,13 @@ function Player.ThreadFunction(invokeFunction)
     else
         CS.UnityEngine.Debug.LogWarning("no init Player.self")
     end
-    --]]
+
     if Player.self then
         Player.SetinvokeFunctionCache(invokeFunction)
     else
         CS.UnityEngine.Debug.LogWarning("no init Player.self")
     end
+    --]]
+    invokeFunction()
 end
 return Player

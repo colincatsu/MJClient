@@ -94,6 +94,7 @@ function ClickEvent.CreateNewPanel(panelName)
 	if ClickEvent._play_ui.roomId then
 		ClickEvent._play_ui.roomId.text = tostring(Player._roomId)
 	end
+	
 	--[[
 	if panelName == ClickEvent.panelTable._play_game_ui then
 
