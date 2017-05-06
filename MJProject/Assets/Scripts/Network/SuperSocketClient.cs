@@ -79,9 +79,10 @@ namespace SuperSocket.ClientEngine
         {
             if (null != NetMgr)
             {
-                for (int i = 0; i < data.Length; i++)
-                    Debug.LogWarning("data----" + data[i]);
-                NetMgr.AddEvent(Protocal.Receive, new ByteBuffer(data));
+                //for (int i = 0; i < data.Length; i++)
+                //    Debug.LogWarning("data----" + data[i]);
+                ByteBuffer buffer = new ByteBuffer(data);
+                NetMgr.AddEvent(Protocal.Receive, buffer);
             }
             else
                 Debug.Log("onReceive:{0}");
@@ -129,7 +130,7 @@ namespace SuperSocket.ClientEngine
                 bufferStream.Read(lenbuffer, 0, length);
                 int nLen = (int)lenbuffer[0] * 256 + (int)lenbuffer[1];
                 //BitConverter.ToInt16(lenbuffer, 0);
-                Debug.LogWarning("length---------" + nLen);
+                //Debug.LogWarning("length---------" + nLen);
                 return nLen;
             }
         }

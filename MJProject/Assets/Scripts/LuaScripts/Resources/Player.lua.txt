@@ -315,6 +315,7 @@ function Player.OnPlayerList(type_t,stuff)
     CS.UnityEngine.Debug.LogWarning("---------")
     if message.player_list then
         Player._id = message.player_list[1]
+        CS.UnityEngine.Debug.LogWarning(Player._id)
     end
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)

@@ -92,6 +92,7 @@
      <None Include="Assets\FairyGUI\Examples\Resources\RenderTexture\FullScreen.shader" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaInterfaceBridge.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaClassWrap.tpl.txt" />
+     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\XLua\CHANGELOG.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\PlayUICT.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-BMFont.shader" />

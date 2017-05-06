@@ -76,15 +76,6 @@ namespace MX
             {
                 func = LuaEnvSingleton.Instance.Global.GetInPath<FDelegate>("Network.OnReceiveMessageQueue");
             }
-            string temp = buffer.ReadString();
-            if(temp != null)
-            {
-                Debug.LogWarning(temp);
-            //for(int i =0; i < temp.Length; i++)
-            //{
-            //}
-
-            }
             func(protocal,buffer);
         }
 

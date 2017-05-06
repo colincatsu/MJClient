@@ -12,6 +12,7 @@ namespace MX {
         MemoryStream stream = null;
         BinaryWriter writer = null;
         BinaryReader reader = null;
+        int bufferLength = 0;
 
         public ByteBuffer() {
             stream = new MemoryStream();
@@ -20,6 +21,7 @@ namespace MX {
 
         public ByteBuffer(byte[] data) {
             if (data != null) {
+                bufferLength = data.Length;
                 stream = new MemoryStream(data);
                 reader = new BinaryReader(stream);
             } else {
@@ -114,13 +116,14 @@ namespace MX {
         }
 
         public byte[] ReadBytes() {
-            int len = ReadInt();
-            if (len == 0) return null;
-            byte[] temp = reader.ReadBytes(len);
-            for(int i = 0; i<temp.Length; i++)
-            {
-                Debug.LogWarning("readBytes----"+ temp[i]);
-            }
+            //int len = ReadShort();
+            //Debug.LogWarning(len);
+            //if (len == 0) return null;
+            byte[] temp = reader.ReadBytes(bufferLength);
+            //for(int i = 0; i<temp.Length; i++)
+            //{
+            //    Debug.LogWarning("readBytes----"+ temp[i]);
+            //}
             return temp;
         }
 
