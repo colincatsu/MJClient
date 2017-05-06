@@ -1,5 +1,5 @@
 
-²D
+òD
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -57,15 +57,19 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("‚
+voice_path ("Â
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
-common_prop (2.Adoter.Asset.AssetCommonProp
-max_cards_count (:136
-daily_bonus_id (
-daily_allowance_id (
-time_out (:8
-daily_sign_id ("Ô
+common_prop (2.Adoter.Asset.AssetCommonProp
+model_release (
+max_cards_count (:136
+player_count (:4
+daily_bonus_id (
+daily_allowance_id (
+time_out (:8
+daily_sign_id	 (
+fan_id
+ ("Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -131,7 +135,7 @@ GOODS_TYPE
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
 
-fans_count (:20.
+fans_count (:25.
 fans (2 .Adoter.Asset.RoomFan.FanElementV
 
 FanElement(

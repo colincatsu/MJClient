@@ -198,11 +198,11 @@
  <Reference Include="FairyGUI">
  <HintPath>F:/MJClient/MJProject/Assets/Plugins/FairyGUI.dll</HintPath>
  </Reference>
- <Reference Include="SuperSocket.ProtoBase">
- <HintPath>F:/MJClient/MJProject/Assets/Plugins/SuperSocket.ClientEngine/SuperSocket.ProtoBase.dll</HintPath>
- </Reference>
  <Reference Include="SuperSocket.ClientEngine">
  <HintPath>F:/MJClient/MJProject/Assets/Plugins/SuperSocket.ClientEngine/SuperSocket.ClientEngine.dll</HintPath>
+ </Reference>
+ <Reference Include="SuperSocket.ProtoBase">
+ <HintPath>F:/MJClient/MJProject/Assets/Plugins/SuperSocket.ClientEngine/SuperSocket.ProtoBase.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

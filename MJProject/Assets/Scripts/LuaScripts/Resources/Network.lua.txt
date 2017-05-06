@@ -66,6 +66,7 @@ end
 function Network.ConnetServer()
     --_socketClient:SendConnect()
     _network_manager:ConnectTo("182.92.87.147",50000)
+    --_network_manager:ConnectTo("192.168.136.100",50000)
     CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
 
@@ -137,12 +138,11 @@ end
 function Network.OnReceived(buffer)
 	CS.UnityEngine.Debug.LogWarning("OnReceived------>>>")
     if not buffer then return 1 end
-
     local data = buffer:ReadBytes()
-    Debug.LogWarning(data)
     --buffer:Close()
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
+    print(data)
     ----------------------------------------------------
     local meta = nil
     if data then
@@ -171,6 +171,7 @@ end
 
 function Network.OnReceiveMessageQueue(protocal,buffer)
     -- body
+    print(protocal)
     if protocal == _network_protocal.Connect then
         Network.OnConnect()
     elseif protocal == _network_protocal.Exception then

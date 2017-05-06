@@ -79,6 +79,8 @@ namespace SuperSocket.ClientEngine
         {
             if (null != NetMgr)
             {
+                for (int i = 0; i < data.Length; i++)
+                    Debug.LogWarning("data----" + data[i]);
                 NetMgr.AddEvent(Protocal.Receive, new ByteBuffer(data));
             }
             else
@@ -107,8 +109,8 @@ namespace SuperSocket.ClientEngine
         /// </summary>
         class FReceiveFilter : FixedHeaderReceiveFilter<FPackageInfo>
         {
-            //const int H_SIZE = sizeof(ushort);
-            const int H_SIZE = 0;
+            //const int H_SIZE = sizeof(int);
+            const int H_SIZE = 2;
             public FReceiveFilter() : base(H_SIZE) { }
             public override FPackageInfo ResolvePackage(IBufferStream bufferStream)
             {
@@ -117,7 +119,7 @@ namespace SuperSocket.ClientEngine
 
                 byte[] data = new byte[PackageTogalSize - H_SIZE];
                 bufferStream.Read(data, 0, PackageTogalSize - H_SIZE);
-
+                
                 return new FPackageInfo(data);
             }
 
@@ -125,7 +127,9 @@ namespace SuperSocket.ClientEngine
             {
                 byte[] lenbuffer = new byte[length];
                 bufferStream.Read(lenbuffer, 0, length);
-                int nLen = BitConverter.ToInt16(lenbuffer, 0);
+                int nLen = (int)lenbuffer[0] * 256 + (int)lenbuffer[1];
+                //BitConverter.ToInt16(lenbuffer, 0);
+                Debug.LogWarning("length---------" + nLen);
                 return nLen;
             }
         }

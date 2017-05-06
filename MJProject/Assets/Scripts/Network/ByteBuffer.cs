@@ -116,7 +116,12 @@ namespace MX {
         public byte[] ReadBytes() {
             int len = ReadInt();
             if (len == 0) return null;
-            return reader.ReadBytes(len);
+            byte[] temp = reader.ReadBytes(len);
+            for(int i = 0; i<temp.Length; i++)
+            {
+                Debug.LogWarning("readBytes----"+ temp[i]);
+            }
+            return temp;
         }
 
         public byte[] ToBytes() {
