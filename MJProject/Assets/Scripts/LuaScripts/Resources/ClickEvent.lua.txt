@@ -221,6 +221,8 @@ function ClickEvent.PaiOperationState()
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
+			elseif m == "PAI_OPER_TYPE_TINGPAI" then
+				CS.UnityEngine.Debug.LogWarning("tingpai")
 			else
 		    	ClickEvent._play_ui.passButton.visible = false
 				CS.UnityEngine.Debug.LogWarning("PAI_OPER_TYPE_BEGIN ")

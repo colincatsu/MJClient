@@ -238,7 +238,8 @@ function Player.OnGameCalculate(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
-    Player.ThreadFunction(ClickEvent.ShowCalculate)
+    --Player.ThreadFunction()
+    ClickEvent.ShowCalculate()
 end
 
 function Player.OnSyncCommonReward(type_t,stuff)
@@ -261,12 +262,14 @@ function Player.OnRoomInformation(type_t,stuff)
             for k,v in pairs(Player._all_players_data) do
                 if v.common_prop.player_id == this._id then
                     Player._my_player_data = v
-                    Player.ThreadFunction(Player.MahJong.UpdateMyDataState)
+                    --Player.ThreadFunction(
+                    Player.MahJong.UpdateMyDataState()
                 end
             end
         end
         if Player._my_player_data then
-            Player.ThreadFunction(ClickEvent.RoomInformationUpdate)
+            --Player.ThreadFunction(
+            ClickEvent.RoomInformationUpdate()
         end
     else
         CS.UnityEngine.Debug.LogWarning("list null")
@@ -284,7 +287,8 @@ function Player.OnPlayerInformation(type_t,stuff)
     end
     if not Player._player_data then
         Player._player_data = message.player
-        Player.ThreadFunction(ClickEvent.ThreadToMainMenu)
+        --Player.ThreadFunction(
+        ClickEvent.ThreadToMainMenu()
     else
         Player._player_data = message.player
     end
@@ -298,7 +302,8 @@ function Player.OnEnterRoom(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
     if message.error_code == "ERROR_SUCCESS" then
         --CS.LuaBehaviour._room_id = tostring(this._roomId)
-        Player.ThreadFunction(Player.LoadScene)
+        --Player.ThreadFunction(
+        Player.LoadScene()
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         CS.UnityEngine.Debug.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
@@ -345,7 +350,8 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     end
     --]]
     Player._operation_alert_cache = message
-    Player.ThreadFunction(ClickEvent.PaiOperationState)
+    --Player.ThreadFunction(
+    ClickEvent.PaiOperationState()
 end
 
 function Player.OnPaiNotify(type_t,stuff)
@@ -378,14 +384,17 @@ function Player.OnPaiNotify(type_t,stuff)
         if countPai == 14 then
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
-        Player.ThreadFunction(Player.MahJong.CreatePlayerPai)
+        --Player.ThreadFunction(
+        Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.SetCurrentState(operationState.DAPAI)
         Player._fa_pai_cache = message.pai
-        Player.ThreadFunction(Player.MahJong.ZhuaPai)
+        --Player.ThreadFunction(
+        Player.MahJong.ZhuaPai()
     elseif message.data_type == "CARDS_DATA_TYPE_SYNC" then
         Player._invoke_table_test = message
-        Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)
+        --Player.ThreadFunction(
+        Player.MahJong.CreatePlayerPaiTest()
     end
     --[[
     for k, v in pairs(message.pais) do
@@ -413,30 +422,38 @@ function Player.OnPaiOperation(type_t,stuff)
 
     if message.oper_type == "PAI_OPER_TYPE_DAPAI" then
         Player.SetDaPaiCache(message)
-        Player.ThreadFunction(Player.MahJong.DaPaiPoolShow)
+        --Player.ThreadFunction(
+        Player.MahJong.DaPaiPoolShow()
     elseif message.oper_type == "PAI_OPER_TYPE_HUPAI" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
         CS.UnityEngine.Debug.LogWarning("give up operation")
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
         Player.SetPaiOperationShowCache(message)
-        Player.ThreadFunction(Player.MahJong.OperationPaiShow)
+        --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow()
     else
         return
     end
@@ -516,7 +533,8 @@ function Player.OnCreateRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
-    Player.ThreadFunction(Player.LoadScene)
+    --Player.ThreadFunction(
+    Player.LoadScene()
     --this._roomType = message.room.room_type
 end
 
