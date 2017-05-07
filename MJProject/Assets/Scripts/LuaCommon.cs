@@ -26,15 +26,9 @@ public class LuaEnvSingleton
 public class LuaCommon
 {
 #if     UNITY_IOS || UNITY_IPHONE
-    public static string resultPath = Application.persistentDataPath + "/";
-	public static string xxxtdrfilepath = Application.dataPath + "/Raw" + "/testxxx.tdr";
-	public static string xxxtdr2filepath = Application.dataPath + "/Raw" + "/testxxx2.tdr";
-	public static bool android_platform = false;
+    public static string resultPath = Application.dataPath + "/Raw/";
 #elif   UNITY_ANDROID
-    public static string resultPath = "/sdcard/luatest/";
-	public static string xxxtdrfilepath = Application.streamingAssetsPath + "/testxxx.tdr";
-	public static string xxxtdr2filepath = Application.streamingAssetsPath + "/testxxx2.tdr";
-	public static bool android_platform = true;
+    public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
 #elif   UNITY_EDITOR
     public static string resultPath = Application.dataPath + "/StreamingAssets/";
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
@@ -63,7 +57,7 @@ public class LuaCommon
 
     public static bool IsIOSPlatform()
     {
-#if UNITY_IOS || UNITY_IPHONE
+#if UNITY_IOS || UNITY_IPHONE 
 		return true;
 #else
         return false;
