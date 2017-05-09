@@ -179,8 +179,8 @@ function ClickEvent.PaiOperationState()
 				end
 			end
 		end
-		
 	end
+		
     for k,v in pairs(Player._operation_alert_cache.pais) do
     	for j,m in pairs(v.oper_list) do
 	    	CS.UnityEngine.Debug.LogWarning(m)
@@ -223,6 +223,9 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
+				ClickEvent.AddOperationButton("TingPaiButton")
+			elseif m == "PAI_OPER_TYPE_BAOPAI" then
+				
 			else
 		    	ClickEvent._play_ui.passButton.visible = false
 				CS.UnityEngine.Debug.LogWarning("PAI_OPER_TYPE_BEGIN ")
@@ -232,6 +235,13 @@ function ClickEvent.PaiOperationState()
     end
     Player.MahJong.SetStateTable({})
 end
+
+function ClickEvent.ShowTingPaiState( ... )
+	-- body
+	--ShowTingPaiState
+	Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
+end
+
 
 function ClickEvent.ShowChiButton()
 	-- body

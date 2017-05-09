@@ -106,6 +106,7 @@ end
 --数据封装
 ---------------------------------------------------------------------------
 
+
 function Player.CmdCreatePlayer()
     -- body
     local createPlayer = {}

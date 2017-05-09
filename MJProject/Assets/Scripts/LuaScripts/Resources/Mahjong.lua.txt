@@ -1621,11 +1621,13 @@ function update()
 	-- body
 	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
 	--_dice_obj.transform:Rotate(speed)
+	--[[
 	if Player.self == self then
 		local x = Player.GetinvokeFunctionCache()
 		if x then
 			x()
 		end
 	end
+	--]]
 end
 return MahJong

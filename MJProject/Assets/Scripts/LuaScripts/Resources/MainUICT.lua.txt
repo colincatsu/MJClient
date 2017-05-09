@@ -1,7 +1,7 @@
 local Enum = require "Enum"
 local Player = require "Player"
 local ClickEvent = require "ClickEvent"
-local Network = require "Network"
+--local Network = require "Network"
 Player.self = self
 ClickEvent.self = self
 local FLibEvent = require "FLibEvent"
@@ -26,8 +26,6 @@ end
 
 function start()
 	-- body
-	-- print(self._main_ui_sence)
-
 	ClickEvent.Start(ClickEvent.panelTable._main_ui)
 	
 	--[[
@@ -41,8 +39,8 @@ function start()
 	_Store_UI = self.transform:Find("StoreUI").gameObject
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
-	--self:GetComponent("EventTriggerListener").onClick = ClickEvent.registerButtonClick
-	---[[
+
+	--[[
 	Network.Start()
 	Network.ConnetServer()
 	--]]
@@ -51,12 +49,14 @@ end
 
 function update( ... )
 	-- body
+	--[[
 	if Player.self == self then
 		local x = Player.GetinvokeFunctionCache()
 		if x then
 			x()
 		end
 	end
+	--]]
 end
 
 return MainUICT
