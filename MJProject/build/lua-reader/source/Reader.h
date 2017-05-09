@@ -40,7 +40,7 @@ private:
 	//各个ASSET_TYPE对应的MESSAGE结构
 	std::unordered_map<int32_t /*type_t*/, pb::Message*>  _messages;
 	//各个ASSET_TYPE对应的所有数据
-	std::unordered_map<std::string /*type_t*/, std::unordered_set<pb::Message*>>  _assets_bytypes;
+	std::unordered_map<std::string /*type_t*/, std::unordered_set<pb::Message*> >  _assets_bytypes;
 	//各个全局ID对应的数据
 	std::unordered_map<int64_t /*global_id*/, pb::Message*>  _assets;
 

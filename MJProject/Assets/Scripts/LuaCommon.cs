@@ -26,16 +26,18 @@ public class LuaEnvSingleton
 public class LuaCommon
 {
 #if     UNITY_IOS || UNITY_IPHONE
-    public static string resultPath = Application.dataPath + "/Raw/";
+    public static string resultPath = Application.streamingAssetsPath + "/";
 #elif   UNITY_ANDROID
     public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
 #elif   UNITY_EDITOR
-    public static string resultPath = Application.dataPath + "/StreamingAssets/";
+    public static string resultPath = Application.streamingAssetsPath + "/";
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
     //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
     //public static bool android_platform = false;
+#elif   UNITY_STANDALONE_OSX
+    public static string resultPath = Application.streamingAssetsPath + "/";
 #else
-    public static string resultPath = Application.dataPath + "/StreamingAssets/";
+    public static string resultPath = Application.streamingAssetsPath + "/";
 #endif
 
     public static bool IsMacPlatform()

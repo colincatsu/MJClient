@@ -1,7 +1,7 @@
 local Enum = require "Enum"
 local Player = require "Player"
 local ClickEvent = require "ClickEvent"
---local Network = require "Network"
+local Network = require "Network"
 Player.self = self
 ClickEvent.self = self
 local FLibEvent = require "FLibEvent"
@@ -40,7 +40,7 @@ function start()
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
 
-	--[[
+	---[[
 	Network.Start()
 	Network.ConnetServer()
 	--]]

@@ -63,7 +63,7 @@ bool AssetManager::Load(const std::string assetFilePath)
 
 		if (_messages.find(field->default_value_enum()->number()) == _messages.end())
 		{
-			_messages.emplace(field->default_value_enum()->number(), message);	//合法协议，如果已经存在则忽略，即只加载第一个协议
+			_messages.insert(std::make_pair(field->default_value_enum()->number(), message));	//合法协议，如果已经存在则忽略，即只加载第一个协议
 		}
 		else
 		{
@@ -212,13 +212,13 @@ bool AssetManager::LoadAssets(fs::path& full_path)
 					//log_info("%s: line:%d global_id:%d found.", __func__, __LINE__, global_id);
 				}
 				////////////////////////////////////////////加载到全局唯一表
-				_assets.emplace(global_id, message);
+				_assets.insert(std::make_pair(global_id, message));
 
 				////////////////////////////////////////////加载到类型表
 				int32_t type_t = type_field->default_value_enum()->number();
 				std::string type_name = type_field->default_value_enum()->name();
 				log_info("%s: line:%d type_name:%s loaded success.", __func__, __LINE__, type_name.c_str());
-				_assets_bytypes[type_name].emplace(message);
+				_assets_bytypes[type_name].insert(message);
 			}
 		}
 	}
