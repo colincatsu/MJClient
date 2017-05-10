@@ -169,6 +169,7 @@ function ClickEvent.PaiOperationState()
 	-- body
 	local xuanfengCount = 0
 	local angangCount = 0
+	local tingpaiCount = 0
 	if not Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
@@ -176,6 +177,13 @@ function ClickEvent.PaiOperationState()
 					angangCount = angangCount + 1
 				elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" or m == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 					xuanfengCount = xuanfengCount + 1
+				elseif m == "PAI_OPER_TYPE_TINGPAI" then
+					if v.pai and v.pai.card_value then
+						tingpaiCount = tingpaiCount + 1
+						Player._ting_pai_cache[tingpaiCount] = {}
+						Player._ting_pai_cache[tingpaiCount].card_type = v.pai.card_type
+						Player._ting_pai_cache[tingpaiCount].card_value = v.pai.card_value
+					end
 				end
 			end
 		end
@@ -223,6 +231,7 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
+
 				ClickEvent.AddOperationButton("TingPaiButton")
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
