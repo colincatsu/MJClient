@@ -52,15 +52,6 @@ function ClickEvent.CreateNewPanel(panelName)
 	if not panelName and Player._invoke_data then
 		panelName = Player._invoke_data
 	end
-	--[[
-	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
-	_currentPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
-	_currentPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
-	_currentPanel.eventTriggerListener = _currentPanel.panel:GetComponent("EventTriggerListener")
-	_currentPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
-	_currentPanel.buttonList = _currentPanel.eventTriggerListener._buttons
-	_currentPanel.toggleList = _currentPanel.eventTriggerListener._toggles
-	--]]
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
 	end
@@ -83,6 +74,19 @@ function ClickEvent.CreateNewPanel(panelName)
 	end
 	ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
 	ClickEvent._play_ui.passButton = _currentPanel.panel:GetChild("GamePassButton")
+
+	if panelName == ClickEvent.panelTable._play_game_ui then
+		ClickEvent._play_ui.oppositePlayerTing = _currentPanel.panel:GetChild("OppositePlayerTing")
+		ClickEvent._play_ui.frontPlayerTing = _currentPanel.panel:GetChild("FrontPlayerTing")
+		ClickEvent._play_ui.behindPlayerTing = _currentPanel.panel:GetChild("BehiindPlayerTing")
+		ClickEvent._play_ui.playerTing = _currentPanel.panel:GetChild("PlayerTing")
+		ClickEvent._play_ui.oppositePlayerTing.visible = false
+		ClickEvent._play_ui.frontPlayerTing.visible = false
+		ClickEvent._play_ui.behindPlayerTing.visible = false
+		ClickEvent._play_ui.playerTing.visible = false
+		ClickEvent._play_ui.gamePlayButton = _currentPanel.panel:GetChild("GamePlayButton")
+	end
+
 	if ClickEvent._play_ui.passButton then
 		ClickEvent._play_ui.passButton.visible = false
 	end
@@ -135,6 +139,16 @@ function ClickEvent.AddOperationButton( buttonName )
 	local operationButtonTemp = ClickEvent._play_ui.operationBar:AddItemFromPool(_currentPanel.buttonList[buttonName])
 	operationButtonTemp.name = buttonName
 	operationButtonTemp.onClick:Add(ClickEvent.registerButtonClick)
+end
+
+function ClickEvent.PlayerPosition(position)
+	-- body
+	if Player._my_player_data.position then
+		local tempX = _position_index[position] - _position_index[Player._my_player_data.position]
+		return tempX
+	end
+	return nil
+	
 end
 
 function ClickEvent.RoomInformationUpdate( ... )
