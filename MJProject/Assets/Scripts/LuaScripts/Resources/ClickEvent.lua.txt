@@ -78,7 +78,7 @@ function ClickEvent.CreateNewPanel(panelName)
 	if panelName == ClickEvent.panelTable._play_game_ui then
 		ClickEvent._play_ui.oppositePlayerTing = _currentPanel.panel:GetChild("OppositePlayerTing")
 		ClickEvent._play_ui.frontPlayerTing = _currentPanel.panel:GetChild("FrontPlayerTing")
-		ClickEvent._play_ui.behindPlayerTing = _currentPanel.panel:GetChild("BehiindPlayerTing")
+		ClickEvent._play_ui.behindPlayerTing = _currentPanel.panel:GetChild("BehindPlayerTing")
 		ClickEvent._play_ui.playerTing = _currentPanel.panel:GetChild("PlayerTing")
 		ClickEvent._play_ui.oppositePlayerTing.visible = false
 		ClickEvent._play_ui.frontPlayerTing.visible = false
@@ -238,6 +238,7 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
 				ClickEvent.AddOperationButton("TingPaiButton")
+				
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
@@ -340,6 +341,13 @@ end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+
+function ClickEvent.NextTRoundButton( ... )
+	-- body
+	ClickEvent.Close()
+	Player.ResetGameState()
+end
+
 function ClickEvent.NoButton( ... )
 	-- body
 	ClickEvent.Close()
