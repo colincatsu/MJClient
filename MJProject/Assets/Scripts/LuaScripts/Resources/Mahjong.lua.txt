@@ -62,7 +62,7 @@ local _animationName = {
 	stepUp = "GaiUp",
 }
 local _animationState = ""
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG", "TINGPAI", "BAOPAI"},-1)
 local currentOperationState = operationState.WAIT
 local operationStateTable = {}
 -- body
@@ -522,6 +522,7 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
 		_player_father.cards[paiNumber].paiType = paiType
 		_player_father.cards[paiNumber].paiValue = paiValue
+		_player_father.cards[paiNumber].canTouch = true
 	else
 		CS.UnityEngine.Debug.LogWarning("wrongType")
 	end
@@ -551,6 +552,13 @@ function MahJong.ClickPaiEvent(gameObject)
 	else	
 		MahJong._current_click_pai = gameObject
 		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+	end
+end
+
+function MahJong.TingPaiUpdateState( ... )
+	-- body
+	for k,v in pairs(_player_father.cards) do
+		
 	end
 end
 

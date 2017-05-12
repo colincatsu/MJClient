@@ -31,7 +31,7 @@ _pai_operation_show_cache.rear = 0
 
 local _ting_pai_cache = {}--听
 
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG", "TINGPAI", "BAOPAI"},-1)
 
 local _invokeFunctionTable = {}
 _invokeFunctionTable.front = 1
@@ -174,6 +174,10 @@ function Player.ResetGameState()
     _player_pai_pool._forward_player_father.transform:SetParent(_player_pai_pool._forward_player.transform)
     _player_pai_pool._forward_pai_number = 0
     _player_pai_pool._forward_card = {}
+
+    --玩家面前牌
+    CS.UnityEngine.Object.Destroy(_player_father.father)
+    _player_father = {}
 end
 
 

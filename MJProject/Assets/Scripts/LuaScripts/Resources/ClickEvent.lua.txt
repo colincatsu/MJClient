@@ -25,7 +25,7 @@ local _position_index = {
 	POSITION_TYPE_NORTH = 4,
 }
 
-local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG"},-1)
+local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG", "TINGPAI", "BAOPAI"},-1)
 
 local _currentPanel = {}
 local _popPanel = {}
@@ -245,7 +245,7 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
-
+				Player.MahJong.SetCurrentState(operationState.TINGPAI)
 				ClickEvent.AddOperationButton("TingPaiButton")
 				
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
@@ -259,13 +259,6 @@ function ClickEvent.PaiOperationState()
     end
     Player.MahJong.SetStateTable({})
 end
-
-function ClickEvent.ShowTingPaiState( ... )
-	-- body
-	--ShowTingPaiState
-	Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
-end
-
 
 function ClickEvent.ShowChiButton()
 	-- body
@@ -750,6 +743,12 @@ end
 -------------------------------------
 ---游戏中
 ---------------------------
+
+function ClickEvent.TingPaiButton(gameObject)
+	-- body
+	Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
+end
+
 function ClickEvent.GamePlayButton( gameObject )
 	-- body
 	Player.CmdGameOperation()
