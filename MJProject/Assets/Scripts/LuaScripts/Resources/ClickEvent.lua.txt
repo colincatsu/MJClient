@@ -32,6 +32,7 @@ local _popPanel = {}
 
 function ClickEvent.Awake( ... )
 	-- body
+	UIConfig.defaultFont = "MJFont"
 	UIPackage.AddPackage("FairyUI/MXUI")
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
 end
@@ -247,7 +248,7 @@ function ClickEvent.PaiOperationState()
 				CS.UnityEngine.Debug.LogWarning("tingpai")
 				Player.MahJong.SetCurrentState(operationState.TINGPAI)
 				ClickEvent.AddOperationButton("TingPaiButton")
-				
+				MahJong.TingPaiUpdateState()
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else

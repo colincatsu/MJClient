@@ -35,6 +35,7 @@ local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}--没抓的牌池
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
+local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
 	east = newVector3(-0.31,0,0.31),
@@ -541,6 +542,9 @@ function MahJong.ClickPaiEvent(gameObject)
 				card_type = _player_father.cards[paiNumber].paiType,
 				card_value = _player_father.cards[paiNumber].paiValue,
 			}
+			if not _player_father.cards[paiNumber].canTouch then
+				return
+			end
 			MahJong._current_click_pai = nil
 			MahJong.DaPai(paiNumber)
 			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
@@ -557,8 +561,56 @@ end
 
 function MahJong.TingPaiUpdateState( ... )
 	-- body
+	if not Player._ting_pai_cache then
+		return
+	end
+	v.canTouch = false
 	for k,v in pairs(_player_father.cards) do
-		
+		--v.child
+		for j,m in pairs(Player._ting_pai_cache) do
+			if v.paiType == m.card_type and v.paiValue == m.card_value then
+				v.canTouch = true
+				break
+			else
+			end
+		end
+	end
+end
+
+function MahJong.DelUsedDaPai()
+	-- body
+	if not _current_dapai then
+		CS.UnityEngine.Debug.LogWarning("no dapai cache")
+		return
+	end
+	if _current_dapai.whichPlayer == "POSITION_TYPE_EAST" then
+		if not _pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] then
+			return
+		end
+		CS.UnityEngine.Destroy(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
+		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
+		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber - 1
+	elseif _current_dapai.whichPlayer == "POSITION_TYPE_SOUTH" then
+		if not _pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] then
+			return
+		end
+		CS.UnityEngine.Destroy(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
+		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
+		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber - 1
+	elseif _current_dapai.whichPlayer == "POSITION_TYPE_WEST" then
+		if not _pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] then
+			return
+		end
+		CS.UnityEngine.Destroy(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
+		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
+		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber - 1
+	elseif _current_dapai.whichPlayer == "POSITION_TYPE_NORTH" then
+		if not _pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] then
+			return
+		end
+		CS.UnityEngine.Destroy(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
+		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
+		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber - 1
 	end
 end
 
@@ -620,6 +672,9 @@ function MahJong.DaPaiPoolShow(message)
     local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
 	if whichPlayer == "POSITION_TYPE_EAST" then
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+
+		_current_dapai.paiNumber = _pai_pool_show.point_d.paiNumber
+
 		if not _pai_pool_show.point_d.cards then
 			_pai_pool_show.point_d.cards = {}
 		end
@@ -633,6 +688,9 @@ function MahJong.DaPaiPoolShow(message)
 			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
+
+		_current_dapai.paiNumber = _pai_pool_show.point_n.paiNumber
+		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_n.cards then
 			_pai_pool_show.point_n.cards = {}
 		end
@@ -646,6 +704,9 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
+
+		_current_dapai.paiNumber = _pai_pool_show.point_x.paiNumber
+		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_x.cards then
 			_pai_pool_show.point_x.cards = {}
 		end
@@ -659,6 +720,9 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
+
+		_current_dapai.paiNumber = _pai_pool_show.point_b.paiNumber
+		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_b.cards then
 			_pai_pool_show.point_b.cards = {}
 		end
@@ -703,6 +767,7 @@ function MahJong.PengPai(paiTable)
 			end
 		end
 	end
+	MahJong.DelUsedDaPai()
 	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},tempPai)
 	MahJong.DeleteShowModel()
 	currentOperationState = operationState.DAPAI
@@ -840,6 +905,7 @@ function MahJong.ChiPai(paiTable)
 			MahJong.SortPlayerPai(paiNumber)
 		end
 	end
+	MahJong.DelUsedDaPai()
 	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,operationPai)
 	currentOperationState = operationState.DAPAI
 end
@@ -1082,6 +1148,7 @@ function MahJong.GangPai(paiTable)
 	end
 	if tempOperation == "PAI_OPER_TYPE_GANGPAI" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},tempPai)
+		MahJong.DelUsedDaPai()
 	elseif tempOperation == "PAI_OPER_TYPE_ANGANGPAI" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},tempPai)
 	end
@@ -1119,7 +1186,7 @@ function MahJong.ClickGangPai( ... )
 	elseif tempPaiType == "CARD_TYPE_JIAN" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
 	else
-		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},_gang_pai_father.cards.deleteCards[1].paiValue)
+		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},_gang_pai_father.cards.deleteCards[1].paiValue)
 	end
 
 	if _gang_pai_father.father then
