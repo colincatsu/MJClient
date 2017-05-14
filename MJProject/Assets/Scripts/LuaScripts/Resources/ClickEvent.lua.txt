@@ -58,6 +58,7 @@ function ClickEvent.CreateNewPanel(panelName)
 	end
 	_currentPanel.panel = ClickEvent._createObject[panelName]
 	_currentPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
+	_currentPanel.panel:SetPosition(0,0,0)
 	GRoot.inst:AddChild(_currentPanel.panel)
 	local childNumber = _currentPanel.panel.numChildren
 	for i=0,childNumber-1 do
@@ -275,6 +276,7 @@ function ClickEvent.PopPanel( panelName )
 	_popPanel.panel = ClickEvent._createObject[panelName]
 	_popPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel.panel:Center()
+	_popPanel.panel:SetPosition(0,0,0)
 	GRoot.inst:AddChild(_popPanel.panel)
 	local childNumber = _popPanel.panel.numChildren
 	for i=0,childNumber-1 do

@@ -92,6 +92,9 @@ function start()
 	MahJong.CreateChiPai("CARD_TYPE_FENG",3,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",4,1,2,3)
 	
+	local tempResource = CS.UnityEngine.Resources.Load("Effect/Effect_long_01")
+	local tempObj = CS.UnityEngine.Object.Instantiate(tempResource)
+	tempObj.transform.eulerAngles = newVector3(0,180,0)
 	--]]
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 end

@@ -101,6 +101,7 @@
      <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Network\SocketClient.cs" />
      <Compile Include="Assets\Scripts\Network\SuperSocketClient.cs" />
+     <Compile Include="Assets\Scripts\ParticleAndAnimation.cs" />
      <Compile Include="Assets\Scripts\test\rotateAngle.cs" />
      <Compile Include="Assets\XLua\Examples\01_Helloworld\Helloworld.cs" />
      <Compile Include="Assets\XLua\Examples\04_LuaObjectOrented\InvokeLua.cs" />
