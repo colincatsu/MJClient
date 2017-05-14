@@ -248,8 +248,6 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
 				Player.MahJong.SetCurrentState(operationState.TINGPAI)
-				ClickEvent.AddOperationButton("TingPaiButton")
-				MahJong.TingPaiUpdateState()
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
@@ -258,6 +256,10 @@ function ClickEvent.PaiOperationState()
 				CS.UnityEngine.Debug.LogWarning(ClickEvent.MahJong.GetCurrentState())
 			end
     	end
+    end
+    if tingpaiCount > 0 then
+		ClickEvent.AddOperationButton("GameTingButton")
+		MahJong.TingPaiUpdateState()
     end
     Player.MahJong.SetStateTable({})
 end
@@ -747,7 +749,7 @@ end
 ---游戏中
 ---------------------------
 
-function ClickEvent.TingPaiButton(gameObject)
+function ClickEvent.GameTingButton(gameObject)
 	-- body
 	Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
 end

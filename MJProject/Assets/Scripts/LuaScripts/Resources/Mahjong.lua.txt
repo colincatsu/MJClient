@@ -24,7 +24,8 @@ local _chi_pai_father = {}--吃牌父节点
 _chi_pai_father.cards = {}
 local _gang_pai_father = {}--杠牌父节点
 _gang_pai_father.cards = {}
-local _pai_bigger = 1--player牌放大倍数
+local _pai_bigger = 0.8--player牌放大倍数
+local _pai_gap = 1.05--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
@@ -590,28 +591,28 @@ function MahJong.DelUsedDaPai()
 		if not _pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] then
 			return
 		end
-		CS.UnityEngine.Destroy(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
+		CS.UnityEngine.Object.Destroy(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber - 1
 	elseif _current_dapai.whichPlayer == "POSITION_TYPE_SOUTH" then
 		if not _pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] then
 			return
 		end
-		CS.UnityEngine.Destroy(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
+		CS.UnityEngine.Object.Destroy(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber - 1
 	elseif _current_dapai.whichPlayer == "POSITION_TYPE_WEST" then
 		if not _pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] then
 			return
 		end
-		CS.UnityEngine.Destroy(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
+		CS.UnityEngine.Object.Destroy(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber - 1
 	elseif _current_dapai.whichPlayer == "POSITION_TYPE_NORTH" then
 		if not _pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] then
 			return
 		end
-		CS.UnityEngine.Destroy(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
+		CS.UnityEngine.Object.Destroy(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber - 1
 	end
@@ -672,12 +673,10 @@ function MahJong.DaPaiPoolShow(message)
     if not modelName then
     	return
     end
+	_current_dapai.whichPlayer = whichPlayer
     local modelTemp = CS.UnityEngine.Resources.Load("MJModel/"..modelName)
 	if whichPlayer == "POSITION_TYPE_EAST" then
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
-
-		_current_dapai.paiNumber = _pai_pool_show.point_d.paiNumber
-
 		if not _pai_pool_show.point_d.cards then
 			_pai_pool_show.point_d.cards = {}
 		end
@@ -691,9 +690,6 @@ function MahJong.DaPaiPoolShow(message)
 			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
-
-		_current_dapai.paiNumber = _pai_pool_show.point_n.paiNumber
-		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_n.cards then
 			_pai_pool_show.point_n.cards = {}
 		end
@@ -707,9 +703,6 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
-
-		_current_dapai.paiNumber = _pai_pool_show.point_x.paiNumber
-		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_x.cards then
 			_pai_pool_show.point_x.cards = {}
 		end
@@ -723,9 +716,6 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
-
-		_current_dapai.paiNumber = _pai_pool_show.point_b.paiNumber
-		_current_dapai.whichPlayer = whichPlayer
 		if not _pai_pool_show.point_b.cards then
 			_pai_pool_show.point_b.cards = {}
 		end
@@ -770,7 +760,6 @@ function MahJong.PengPai(paiTable)
 			end
 		end
 	end
-	MahJong.DelUsedDaPai()
 	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},tempPai)
 	MahJong.DeleteShowModel()
 	currentOperationState = operationState.DAPAI
@@ -908,7 +897,6 @@ function MahJong.ChiPai(paiTable)
 			MahJong.SortPlayerPai(paiNumber)
 		end
 	end
-	MahJong.DelUsedDaPai()
 	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,operationPai)
 	currentOperationState = operationState.DAPAI
 end
@@ -1151,7 +1139,6 @@ function MahJong.GangPai(paiTable)
 	end
 	if tempOperation == "PAI_OPER_TYPE_GANGPAI" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},tempPai)
-		MahJong.DelUsedDaPai()
 	elseif tempOperation == "PAI_OPER_TYPE_ANGANGPAI" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},tempPai)
 	end
@@ -1339,7 +1326,7 @@ function MahJong.SortPlayerPai(deleteNumber)
 	end
 	for k,v in pairs(_player_father.cards) do
 		v.parent.transform.localPosition = _player_middle_pos +
-		_pai_bigger*newVector3((_play_pai_count-1)*_modelSize.width/2 - _modelSize.width*(k-1),0,0)
+		_pai_bigger*newVector3((_play_pai_count-1)*_modelSize.width*_pai_gap/2 - _modelSize.width*_pai_gap*(k-1),0,0)
 	end
 end
 
@@ -1429,10 +1416,12 @@ function MahJong.OperationPaiShow(message)
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
+    	MahJong.DelUsedDaPai()
     elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_PENGPAI" then
     	for i=1,3 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
+    	MahJong.DelUsedDaPai()
     elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 		if operationPaiShowData.pais then
 			for k,v in pairs(operationPaiShowData.pais) do
@@ -1444,6 +1433,7 @@ function MahJong.OperationPaiShow(message)
 			end
 			paiValue[2] = tonumber(operationPaiShowData.pai.card_value)
 		end
+		MahJong.DelUsedDaPai()
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
