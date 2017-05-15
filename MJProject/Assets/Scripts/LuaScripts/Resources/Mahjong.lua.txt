@@ -552,7 +552,7 @@ function MahJong.ClickPaiEvent(gameObject)
 			if currentOperationState ~= operationState.DAPAI then
 				return
 			end
-			CS.UnityEngine.Debug.LogWarning("dapai")
+			CS.UnityEngine.Debug.LogWarning("jxy_check_dapai count number")
 			local paiNumber = tonumber(gameObject.transform.parent.name)
 			local paiElement = {
 				card_type = _player_father.cards[paiNumber].paiType,
