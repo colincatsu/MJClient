@@ -74,10 +74,13 @@ function ClickEvent.CreateNewPanel(panelName)
 	if not ClickEvent._play_ui then
 		ClickEvent._play_ui = {}
 	end
-	ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
-	ClickEvent._play_ui.passButton = _currentPanel.panel:GetChild("GamePassButton")
 
 	if panelName == ClickEvent.panelTable._play_game_ui then
+		ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
+		ClickEvent._play_ui.passButton = _currentPanel.panel:GetChild("GamePassButton")
+		ClickEvent._play_ui.passButton.visible = false
+		ClickEvent._play_ui.cancelButton = _currentPanel.panel:GetChild("GameCancelButton")
+		ClickEvent._play_ui.cancelButton.visible = false
 		ClickEvent._play_ui.oppositePlayerTing = _currentPanel.panel:GetChild("OppositePlayerTing")
 		ClickEvent._play_ui.frontPlayerTing = _currentPanel.panel:GetChild("FrontPlayerTing")
 		ClickEvent._play_ui.behindPlayerTing = _currentPanel.panel:GetChild("BehindPlayerTing")
@@ -87,13 +90,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPlayerTing.visible = false
 		ClickEvent._play_ui.playerTing.visible = false
 		ClickEvent._play_ui.gamePlayButton = _currentPanel.panel:GetChild("GamePlayButton")
-	end
-
-	if ClickEvent._play_ui.passButton then
-		ClickEvent._play_ui.passButton.visible = false
-	end
-	ClickEvent._play_ui.hintBar = _currentPanel.panel:GetChild("GameHintBar")
-	if ClickEvent._play_ui.hintBar then
+		ClickEvent._play_ui.hintBar = _currentPanel.panel:GetChild("GameHintBar")
 		ClickEvent._play_ui.hintBar.visible = false
 	end
 	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
@@ -102,27 +99,6 @@ function ClickEvent.CreateNewPanel(panelName)
 	end
 	
 	--[[
-	if panelName == ClickEvent.panelTable._play_game_ui then
-
-		_currentPanel.roomIdText = _currentPanel.panel.transform:Find("RoomId").gameObject:GetComponent("Text")
-		_currentPanel.roomIdText.text = tostring(Player._roomId)
-
-		_currentPanel.starGameButton = 0
-		_currentPanel.operationButton = {}
-		_currentPanel.operationButton.gangButton = 1
-		_currentPanel.operationButton.chiButton = 2
-		_currentPanel.operationButton.pengButton = 3
-		_currentPanel.operationButton.huButton = 4
-		_currentPanel.operationButton.guoButton = 5
-		for k,v in pairs(_currentPanel.operationButton) do
-			_currentPanel.buttonList[v].gameObject:SetActive(false)
-		end
-	elseif panelName == ClickEvent.panelTable._choose_ui then
-		_currentPanel.playerIdText = _currentPanel.panel.transform:Find("Player/PlayerIdShow"):GetComponent("Text")
-		if Player._id then
-			_currentPanel.playerIdText.text = tostring(Player._id)
-		end
-	end
 	--]]
 end
 
@@ -258,6 +234,8 @@ function ClickEvent.PaiOperationState()
     	end
     end
     if tingpaiCount > 0 then
+    	ClickEvent._play_ui.cancelButton.visible = true
+    	ClickEvent._play_ui.passButton.visible = false
 		ClickEvent.AddOperationButton("GameTingButton")
 		MahJong.TingPaiUpdateState()
     end
@@ -349,7 +327,7 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
-function ClickEvent.NextTRoundButton( ... )
+function ClickEvent.NextRoundButton( ... )
 	-- body
 	ClickEvent.Close()
 	Player.ResetGameState()
@@ -797,10 +775,17 @@ function ClickEvent.GamePassButton(gameObject)
 	Player.MahJong.GuoPai()
 end
 
+function ClickEvent.GameCancelButton(gameObject)
+	-- body
+	ClickEvent.CloseOperationPanel()
+	Player.MahJong.SetCurrentState(operationState.DAPAI)
+end
+
 function ClickEvent.CloseOperationPanel()
 	-- body
 	ClickEvent._play_ui.operationBar:RemoveChildrenToPool()
 	ClickEvent._play_ui.passButton.visible = false
+	ClickEvent._play_ui.cancelButton.visible = false
 end
 
 ---------------------------------------------------------------------------

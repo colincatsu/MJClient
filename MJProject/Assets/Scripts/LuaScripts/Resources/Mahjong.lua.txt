@@ -24,8 +24,8 @@ local _chi_pai_father = {}--吃牌父节点
 _chi_pai_father.cards = {}
 local _gang_pai_father = {}--杠牌父节点
 _gang_pai_father.cards = {}
-local _pai_bigger = 0.8--player牌放大倍数
-local _pai_gap = 1.05--player牌间隔
+local _pai_bigger = 0.915--player牌放大倍数
+local _pai_gap = 1.015--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
@@ -96,6 +96,18 @@ function start()
 	local tempResource = CS.UnityEngine.Resources.Load("Effect/Effect_long_01")
 	local tempObj = CS.UnityEngine.Object.Instantiate(tempResource)
 	tempObj.transform.eulerAngles = newVector3(0,180,0)
+	if not _player_father then
+		_player_father = {}
+		_player_father.cards = {}
+		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
+		_player_father.father.transform:SetParent(self.transform)
+	end
+	local paiCount = 0
+    for i=1, 14 do
+    	paiCount = paiCount + 1
+		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
+    end
+	MahJong.SortPlayerPai()
 	--]]
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 end
@@ -616,6 +628,7 @@ function MahJong.DelUsedDaPai()
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber - 1
 	end
+	_current_dapai = {}
 end
 
 function MahJong.DaPai(paiNumber)
