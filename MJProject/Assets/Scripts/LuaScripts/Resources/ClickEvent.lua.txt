@@ -133,6 +133,7 @@ function ClickEvent.CreateOperationButton( ... )
 	_currentPanel.buttonList["GamePengButton"] = UIPackage.GetItemURL("MXUI","GamePengButton")
 	_currentPanel.buttonList["GameGangButton"] = UIPackage.GetItemURL("MXUI","GameGangButton")
 	_currentPanel.buttonList["GameHuButton"] = UIPackage.GetItemURL("MXUI","GameHuButton")
+	_currentPanel.buttonList["GameHuButton"] = UIPackage.GetItemURL("MXUI","GameTingButton")
 	_currentPanel.buttonList["XuanFengButton"] = UIPackage.GetItemURL("MXUI","XuanFengButton")
 end
 
