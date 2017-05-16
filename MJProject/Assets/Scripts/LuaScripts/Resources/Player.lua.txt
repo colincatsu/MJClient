@@ -647,6 +647,30 @@ end
 function Player.OnLoadSuccess()
     this.CmdEnterScene()
 end
+---------------------------------------------------------------------------
+--
+---------------------------------------------------------------------------
+function Player.OnSayHi( type_t,stuff )
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SayHi", stuff)
+    if not message.heart_count then
+        CS.UnityEngine.Debug.LogWarning("heart_count is nil")
+        return
+    end
+    local tempHertCount = message.heart_count + 1
+    Player.CmdSayHi(tempHertCount)
+end
+
+function Player.CmdSayHi( heart_count_client )
+    -- body
+    local sayHi = {
+        heart_count = heart_count_client,
+    }
+    this.SendProtocol("EnterRoom",sayHi)
+end
 
 ---------------------------------------------------------------------------
 --错误码提示

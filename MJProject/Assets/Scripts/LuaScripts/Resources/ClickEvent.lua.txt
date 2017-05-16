@@ -234,6 +234,7 @@ function ClickEvent.PaiOperationState()
 			end
     	end
     end
+    CS.UnityEngine.Debug.LogWarning("tingpaiCount"..tingpaiCount)
     if tingpaiCount > 0 then
     	ClickEvent._play_ui.cancelButton.visible = true
     	ClickEvent._play_ui.passButton.visible = false

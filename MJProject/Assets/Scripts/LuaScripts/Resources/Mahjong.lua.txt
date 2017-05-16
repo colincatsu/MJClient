@@ -580,14 +580,13 @@ function MahJong.TingPaiUpdateState( ... )
 	if not Player._ting_pai_cache then
 		return
 	end
-	v.canTouch = false
 	for k,v in pairs(_player_father.cards) do
 		--v.child
+		v.canTouch = false
 		for j,m in pairs(Player._ting_pai_cache) do
 			if v.paiType == m.card_type and v.paiValue == m.card_value then
 				v.canTouch = true
 				break
-			else
 			end
 		end
 	end
@@ -1107,9 +1106,54 @@ function MahJong.XuanFengGang( ... )
 			end
 		end
 	end
+	local paiNumber = nil
+	local tempPaiType = nil
 	if tempOperation == "PAI_OPER_TYPE_XUANFENG_FENG" then
-		Player.CmdPaiOperation()
+		tempPaiType = "CARD_TYPE_FENG"
+		for i=1,4 do
+			for m,n in pairs(_player_father.cards) do
+				if n.paiType == tempPaiType and n.paiValue == i then
+					paiNumber = m
+					CS.UnityEngine.Debug.LogWarning(paiNumber)
+					break
+				end
+			end
+			if not paiNumber or paiNumber <= 0 then
+				CS.UnityEngine.Debug.LogWarning("no value")
+				break
+			end
+			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+			if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
+				MahJong._current_click_pai = nil
+			end
+			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+			_player_father.cards[paiNumber] = {}
+			MahJong.SortPlayerPai(paiNumber)
+		end
+		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
 	elseif tempOperation == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+		tempPaiType = "CARD_TYPE_JIAN"
+		for i=1,3 do
+			for m,n in pairs(_player_father.cards) do
+				if n.paiType == tempPaiType and n.paiValue == i then
+					paiNumber = m
+					CS.UnityEngine.Debug.LogWarning(paiNumber)
+					break
+				end
+			end
+			if not paiNumber or paiNumber <= 0 then
+				CS.UnityEngine.Debug.LogWarning("no value")
+				break
+			end
+			_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+			if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
+				MahJong._current_click_pai = nil
+			end
+			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+			_player_father.cards[paiNumber] = {}
+			MahJong.SortPlayerPai(paiNumber)
+		end
+		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
 	end
 	currentOperationState = operationState.WAIT
 end
