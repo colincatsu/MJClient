@@ -29,6 +29,7 @@ local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU"
 
 local _currentPanel = {}
 local _popPanel = {}
+local Camera = CS.UnityEngine.Camera
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -54,7 +55,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		panelName = Player._invoke_data
 	end
 	if not ClickEvent._createObject[panelName] then
-		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
+		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
 	end
 	_currentPanel.panel = ClickEvent._createObject[panelName]
 	_currentPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
@@ -92,6 +93,17 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.gamePlayButton = _currentPanel.panel:GetChild("GamePlayButton")
 		ClickEvent._play_ui.hintBar = _currentPanel.panel:GetChild("GameHintBar")
 		ClickEvent._play_ui.hintBar.visible = false
+		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
+		local effectPrefab = CS.UnityEngine.Resources.Load("Effect/Effect_UI_Head portrait_01")
+		local effectPlayer = CS.UnityEngine.Object.Instantiate(effectPrefab)
+		effectPlayer.transform.position = ClickEvent._play_ui.playerAvatarInfo.displayObject.gameObject.transform.position
+		--[[
+		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
+			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
+		local x = GGraph()
+		ClickEvent._play_ui.playerAvatarInfo:AddChild(x)
+		x:SetNativeObject(GoWrapper(effectPlayer))
+		--]]
 	end
 	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
 	if ClickEvent._play_ui.roomId then
@@ -163,7 +175,7 @@ function ClickEvent.PaiOperationState()
 	local xuanfengCount = 0
 	local angangCount = 0
 	local tingpaiCount = 0
-	if not Player._operation_alert_cache.pais then
+	if Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
 				if m == "PAI_OPER_TYPE_ANGANGPAI" then
