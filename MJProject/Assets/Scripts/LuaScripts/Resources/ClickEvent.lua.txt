@@ -758,8 +758,9 @@ end
 
 function ClickEvent.GamePlayButton( gameObject )
 	-- body
-	Player.CmdGameOperation()
+	--Player.CmdGameOperation()
 	gameObject.visible = false
+	Player.MahJong.PlayDoubleDices()
 end
 
 function ClickEvent.GameGangButton(gameObject)

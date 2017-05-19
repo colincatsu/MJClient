@@ -30,8 +30,7 @@ local _pai_gap = 1.015--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
-local _diceObj--骰子
-local _gaiObj--盖子
+local _gai_obj--盖子
 local _pointFather = {}--牌池父节点
 local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}--没抓的牌池
@@ -65,6 +64,16 @@ local _animationName = {
 	stepUp = "GaiUp",
 }
 local _animationState = ""
+
+local _dice_obj--骰子
+local _red_dice_animation = nil
+local _white_dice_animation = nil
+local _rotate_speed = 2000
+local _play_dice_animation_time = 2--dice旋转时间
+local diceCountDown = _play_dice_animation_time
+local redDicePoints = 1
+local whiteDicePoints = 1
+
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG", "TINGPAI", "BAOPAI"},-1)
 local currentOperationState = operationState.WAIT
 local operationStateTable = {}
@@ -88,8 +97,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 	--[[
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",3,1,2,3)
@@ -161,18 +170,20 @@ end
 
 function MahJong.Init()
 	-- body
-	_diceObj = self.transform:Find("Dice").gameObject
-	_gaiObj = self.transform:Find("Gai").gameObject
-	_pointFather.D = _gaiObj.transform:Find("Point_D/Father").gameObject
+	_dice_obj = self.transform:Find("Dice").gameObject
+	_red_dice_animation = self.transform:Find("Dice/Red/Dice").gameObject:GetComponent("Animation")
+	_white_dice_animation = self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
+	_gai_obj = self.transform:Find("Gai").gameObject
+	_pointFather.D = _gai_obj.transform:Find("Point_D/Father").gameObject
 	_startPosition.D = newVector3(_modelSize.width/2 - _modelPoolLineCount*_modelSize.width/4,_modelSize.length/2,0)
 	_startRotation.D = newVector3.zero
-	_pointFather.N = _gaiObj.transform:Find("Point_N/Father").gameObject
+	_pointFather.N = _gai_obj.transform:Find("Point_N/Father").gameObject
 	_startPosition.N = newVector3(0,_modelSize.length/2,_modelSize.width/2 - _modelPoolLineCount*_modelSize.width/4)
 	_startRotation.N = newVector3(0,-90,0)
-	_pointFather.X = _gaiObj.transform:Find("Point_X/Father").gameObject
+	_pointFather.X = _gai_obj.transform:Find("Point_X/Father").gameObject
 	_startPosition.X = newVector3(-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4,_modelSize.length/2,0)
 	_startRotation.X = newVector3(0,-180,0)
-	_pointFather.B = _gaiObj.transform:Find("Point_B/Father").gameObject
+	_pointFather.B = _gai_obj.transform:Find("Point_B/Father").gameObject
 	_startPosition.B = newVector3(0,_modelSize.length/2,-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4)
 	_startRotation.B = newVector3(0,-270,0)
 	_myAnimation = self:GetComponent("Animation")
@@ -1778,13 +1789,24 @@ end
 
 function MahJong.PlayDoubleDices( ... )
 	-- body
+	diceCountDown = 0
+	math.randomseed(os.time())
+	redDicePoints = math.random(6)
+	whiteDicePoints = math.random(6)
+	print("redDicePoints"..redDicePoints)
+	print("whiteDicePoints"..whiteDicePoints)
 end
 
---local _rotate_speed = 2000
 function update()
 	-- body
-	--local speed = CS.UnityEngine.Vector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed
-	--_dice_obj.transform:Rotate(speed)
+	if diceCountDown < _play_dice_animation_time then
+		diceCountDown = diceCountDown + CS.UnityEngine.Time.deltaTime
+		_dice_obj.transform:Rotate(newVector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed)
+		if diceCountDown + CS.UnityEngine.Time.deltaTime >= _play_dice_animation_time then
+			_red_dice_animation:Play(tostring(redDicePoints))
+			_white_dice_animation:Play(tostring(whiteDicePoints))
+		end
+	end
 	--[[
 	if Player.self == self then
 		local x = Player.GetinvokeFunctionCache()
