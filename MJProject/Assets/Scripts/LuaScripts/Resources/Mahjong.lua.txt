@@ -1776,6 +1776,10 @@ function MahJong.AnimationPlay()
 	end
 end
 
+function MahJong.PlayDoubleDices( ... )
+	-- body
+end
+
 --local _rotate_speed = 2000
 function update()
 	-- body
