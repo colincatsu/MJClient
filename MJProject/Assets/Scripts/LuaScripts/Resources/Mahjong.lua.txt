@@ -18,7 +18,9 @@ local AssetManager = require "AssetManager"
 local newVector3 = CS.UnityEngine.Vector3
 local Camera = CS.UnityEngine.Camera
 local _mj_asset = {}
-local _player_middle_pos
+local _player_middle_pos--门前牌中心点
+local _player_third_pos
+local _player_base_pos
 local _player_direction = {}--玩家方向
 local _player_father = nil--player面前牌
 local _chi_pai_father = {}--吃牌父节点
@@ -97,8 +99,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	--[[
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
+	--[[
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",3,1,2,3)
@@ -114,7 +116,7 @@ function start()
 		_player_father.father.transform:SetParent(self.transform)
 	end
 	local paiCount = 0
-    for i=1, 14 do
+    for i=1, 7 do
     	paiCount = paiCount + 1
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
@@ -166,6 +168,8 @@ end
 function MahJong.PlayerModelCameraPos()
 	-- body
 	_player_middle_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth/2,Camera.main.pixelHeight/100,0.35))
+	_player_third_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth/3,Camera.main.pixelHeight/100,0.35))
+	_player_base_pos = _player_middle_pos
 end
 
 function MahJong.Init()
@@ -826,7 +830,7 @@ function MahJong.SortChiPai(deleteNumber)
 	for k,v in pairs(_chi_pai_father.cards) do
 		v.parent.transform.localPosition = _player_middle_pos 
 		+ _chi_pai_smaller*newVector3((_chi_pai_father.currentGroupNumber-1)*_modelSize.width*2 - _modelSize.width*(k-1)*4,
-			_modelSize.height/math.sqrt(2) * _chi_pai_pos_height, -_modelSize.height/math.sqrt(2) * _chi_pai_pos_height)
+			_modelSize.height*math.cos(math.rad(66)) * _chi_pai_pos_height, -_modelSize.height*math.sin(math.rad(66)) * _chi_pai_pos_height)
 	end
 end
 
@@ -1268,7 +1272,7 @@ function MahJong.SortGangPai( ... )
 	for k,v in pairs(_gang_pai_father.cards) do
 		v.parent.transform.localPosition = _player_middle_pos 
 		+ _chi_pai_smaller*newVector3((_gang_pai_father.currentGroupNumber-1)*_modelSize.width*2 - _modelSize.width*(k-1)*5,
-			_modelSize.height/math.sqrt(2) * _chi_pai_pos_height, -_modelSize.height/math.sqrt(2) * _chi_pai_pos_height)
+			_modelSize.height*math.cos(math.rad(66)) * _chi_pai_pos_height, -_modelSize.height*math.sin(math.rad(66)) * _chi_pai_pos_height)
 	end
 end
 
@@ -1401,9 +1405,28 @@ function MahJong.SortPlayerPai(deleteNumber)
 		end
 		_player_father.cards[_player_father.currentPaiNumber+1] = nil
 	end
+
+	local myPosition
+	if Player._my_player_data and Player._my_player_data.position then
+		myPosition = Player._my_player_data.position
+	else
+		myPosition = "POSITION_TYPE_EAST"
+	end
+	if myPosition == "POSITION_TYPE_EAST" and _operation_pai_show.point_d.paiNumber >= 2 then
+		_player_base_pos = _player_third_pos
+	elseif myPosition == "POSITION_TYPE_SOUTH" and _operation_pai_show.point_n.paiNumber >= 2 then
+		_player_base_pos = _player_third_pos
+	elseif myPosition == "POSITION_TYPE_WEST" and _operation_pai_show.point_x.paiNumber >= 2 then
+		_player_base_pos = _player_third_pos
+	elseif myPosition == "POSITION_TYPE_NORTH" and _operation_pai_show.point_b.paiNumber >= 2 then
+		_player_base_pos = _player_third_pos
+	else
+		_player_base_pos = _player_middle_pos
+	end
+
 	for k,v in pairs(_player_father.cards) do
-		v.parent.transform.localPosition = _player_middle_pos +
-		_pai_bigger*newVector3((_play_pai_count-1)*_modelSize.width*_pai_gap/2 - _modelSize.width*_pai_gap*(k-1),0,0)
+		v.parent.transform.localPosition = _player_base_pos +
+		_pai_bigger*newVector3((_player_father.currentPaiNumber-1)*_modelSize.width*_pai_gap/2 - _modelSize.width*_pai_gap*(k-1),0,0)
 	end
 end
 

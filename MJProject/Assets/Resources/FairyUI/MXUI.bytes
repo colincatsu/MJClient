@@ -1,5 +1,38 @@
-package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
+j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
+  <displayList>
+    <image id="n0_j3uo" name="n0" src="nnbzkj" xy="0,0"/>
+  </displayList>
+</component>j3uokl.xml|967|<component size="1334,750">
+  <displayList>
+    <image id="n0_j3uo" name="Bg" src="w61cbq" xy="0,0"/>
+    <image id="n3_j3uo" name="Di" src="w61cd4" xy="0,0" size="1334,750" alpha="0.6">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <component id="n1_j3uo" name="Inform" src="j3uokm" xy="133,531"/>
+    <text id="n2_j3uo" name="n2" xy="132,642" size="1069,39" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活"/>
+    <text id="n4_j3uo" name="n4" xy="97,680" size="1138,39" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="本网络游戏适合年满10岁以上的用户使用。为了您的健康，请合理控制游戏时间。抵制不良游戏，拒绝盗版游戏。 注意自我保护，谨防受骗上当。 适度游戏益脑，沉迷游戏伤身。 合理安排时间，享受健康生活。"/>
+    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" fontSize="35" color="#ffff99" align="center" vAlign="middle" autoSize="shrink" text="正在加载中..."/>
+  </displayList>
+</component>j3uokm.xml|259|<component size="1068,69">
+  <displayList>
+    <image id="n5_j3uo" name="bg" src="w61cb4" xy="0,0"/>
+    <image id="n1_j3uo" name="n1" src="w61cb3" xy="0,0"/>
+    <component id="n6_j3uo" name="InformText" src="j3uokn" xy="64,0"/>
+  </displayList>
+</component>j3uokn.xml|661|<component size="1000,69" overflow="hidden">
+  <displayList>
+    <text id="n0_j3uo" name="txtMove" xy="1007,0" size="1758,69" fontSize="38" vAlign="middle" autoSize="shrink" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>
+    <text id="n1_j3uo" name="txtFixed" xy="0,0" size="993,69" fontSize="38" align="center" vAlign="middle" autoSize="shrink" text="游戏严打外挂，一旦发现立即封号"/>
+  </displayList>
+  <transition name="Txt">
+    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007.24,0.49" endValue="-1754,0" duration="120"/>
+    <item time="120" type="XY" target="n0_j3uo" tween="true" startValue="-1754,0" ease="Linear"/>
+  </transition>
+</component>package.xml|22176|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
+    <component id="j3uokk" name="Draw" path="/UIPIC/游戏页面/" size="250,95"/>
+    <component id="j3uokm" name="Inform" path="/UIPIC/功能界面/" size="1068,69"/>
+    <component id="j3uokn" name="InformText" path="/UIPIC/功能界面/" size="1000,69"/>
     <component id="qpkkjt" name="GameCancelButton" path="/UIPIC/游戏页面/" size="112,112"/>
     <component id="w61ca9" name="VIPRecordButton" path="/UIPIC/xinzeng/" size="66,85"/>
     <component id="w61cai" name="ServiceTerm1" path="/UIPIC/个人信息/" size="119,50"/>
@@ -76,13 +109,13 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <component id="w61cg5" name="Getin" path="/UIPIC/游戏页面/" size="262,91"/>
     <component id="w61cg6" name="PlayButton" path="/UIPIC/游戏页面/" size="262,91"/>
     <component id="w61cg7" name="GamePlayerAvatarInfo" path="/UIPIC/游戏页面/" size="81,105"/>
-    <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="81,105"/>
-    <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="130,54"/>
-    <component id="w61cga" name="GameInstructionButton" path="/UIPIC/游戏页面/" size="71,67"/>
-    <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="71,68"/>
-    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="99,83"/>
-    <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="99,84"/>
-    <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="99,86"/>
+    <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="117,44"/>
+    <component id="w61cga" name="GameInstructionButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgf" name="GameHintBar" path="/UIPIC/游戏页面/" size="367,63"/>
     <component id="w61cgk" name="GamePassButton" path="/UIPIC/游戏页面/" size="111,111"/>
     <component id="w61cgl" name="PlayerInformation" path="/UIPIC/游戏页面/" size="169,259"/>
@@ -95,6 +128,7 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <component id="w61cj4" name="MailReward" path="/UIPIC/邮件/" size="133,50"/>
     <component id="w61cj5" name="MailInfo" path="/UIPIC/邮件/" size="300,25"/>
     <component id="w61cj6" name="MailBody" path="/UIPIC/邮件/" size="400,210"/>
+    <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
     <image id="qpkkju" name="ui_Youxijiemian_23" path="/UIPIC/游戏页面/" size="112,112"/>
     <image id="w61c9q" name="ui_Xinzeng_03" path="/UIPIC/xinzeng/" size="42,42"/>
     <image id="w61c9r" name="ui_Xinzeng_04" path="/UIPIC/xinzeng/" size="155,155"/>
@@ -117,6 +151,7 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <image id="w61cb0" name="ui_GongNeng_01" path="/UIPIC/功能界面/" size="351,390"/>
     <image id="w61cb1" name="ui_GongNeng_02" path="/UIPIC/功能界面/" size="351,389"/>
     <image id="w61cb2" name="ui_GongNeng_03" path="/UIPIC/功能界面/" size="351,389"/>
+    <image id="w61cb3" name="ui_GongNeng_04" path="/UIPIC/功能界面/" size="63,66"/>
     <image id="w61cb4" name="ui_GongNeng_05" path="/UIPIC/功能界面/" size="1068,69"/>
     <image id="w61cb5" name="ui_GongNeng_06" path="/UIPIC/功能界面/" size="72,73"/>
     <image id="w61cb6" name="ui_GongNeng_07" path="/UIPIC/功能界面/" size="241,66" scale="9grid" scale9grid="61,17,122,34"/>
@@ -184,16 +219,16 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <image id="w61cfl" name="ui_Youxijiemian_04" path="/UIPIC/游戏页面/" size="81,105" scale9grid="21,27,42,54"/>
     <image id="w61cfm" name="ui_Youxijiemian_05" path="/UIPIC/游戏页面/" size="98,34"/>
     <image id="w61cfn" name="ui_Youxijiemian_06" path="/UIPIC/游戏页面/" size="104,44" scale="9grid" scale9grid="73,11,15,22"/>
-    <image id="w61cfo" name="ui_Youxijiemian_07" path="/UIPIC/游戏页面/" size="44,39"/>
-    <image id="w61cfp" name="ui_Youxijiemian_08" path="/UIPIC/游戏页面/" size="44,39"/>
-    <image id="w61cfq" name="ui_Youxijiemian_09" path="/UIPIC/游戏页面/" size="44,39"/>
-    <image id="w61cfr" name="ui_Youxijiemian_10" path="/UIPIC/游戏页面/" size="87,81"/>
+    <image id="w61cfo" name="ui_Youxijiemian_07" path="/UIPIC/游戏页面/" size="50,42"/>
+    <image id="w61cfp" name="ui_Youxijiemian_08" path="/UIPIC/游戏页面/" size="50,42"/>
+    <image id="w61cfq" name="ui_Youxijiemian_09" path="/UIPIC/游戏页面/" size="50,42"/>
+    <image id="w61cfr" name="ui_Youxijiemian_10" path="/UIPIC/游戏页面/" size="76,74"/>
     <image id="w61cfs" name="ui_Youxijiemian_11" path="/UIPIC/游戏页面/" size="47,51"/>
-    <image id="w61cft" name="ui_Youxijiemian_12" path="/UIPIC/游戏页面/" size="71,67"/>
-    <image id="w61cfu" name="ui_Youxijiemian_13" path="/UIPIC/游戏页面/" size="71,68"/>
-    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="99,83"/>
-    <image id="w61cfw" name="ui_Youxijiemian_15" path="/UIPIC/游戏页面/" size="99,86"/>
-    <image id="w61cfx" name="ui_Youxijiemian_16" path="/UIPIC/游戏页面/" size="99,84"/>
+    <image id="w61cft" name="ui_Youxijiemian_12" path="/UIPIC/游戏页面/" size="76,74"/>
+    <image id="w61cfu" name="ui_Youxijiemian_13" path="/UIPIC/游戏页面/" size="76,74"/>
+    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="76,74"/>
+    <image id="w61cfw" name="ui_Youxijiemian_15" path="/UIPIC/游戏页面/" size="76,74"/>
+    <image id="w61cfx" name="ui_Youxijiemian_16" path="/UIPIC/游戏页面/" size="76,74"/>
     <image id="w61cfz" name="ui_Youxijiemian_18" path="/UIPIC/游戏页面/" size="367,63"/>
     <image id="w61cg0" name="ui_Youxijiemian_19" path="/UIPIC/游戏页面/" size="112,112"/>
     <image id="w61cg1" name="ui_Youxijiemian_20" path="/UIPIC/游戏页面/" size="151,151"/>
@@ -209,6 +244,7 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <image id="w61civ" name="ui_Youjianjiemian_07" path="/UIPIC/邮件/" size="1207,660" scale="9grid" scale9grid="588,165,13,330"/>
     <image id="w61cix" name="ui_Youjianjiemian_09" path="/UIPIC/邮件/" size="424,471"/>
     <image id="w61ciy" name="ui_Youjianjiemian_13" path="/UIPIC/邮件/" size="67,67"/>
+    <component id="j3uokl" name="Loading" path="/" size="1334,750" exported="true"/>
     <component id="qpkkjs" name="TingArrow" path="/UIPIC/游戏页面/" size="47,51" exported="true"/>
     <component id="s5h9jr" name="Bg" path="/" size="1334,750" exported="true"/>
     <component id="w61ca6" name="XuanFengButton" path="/UIPIC/xinzeng/" size="155,155" exported="true"/>
@@ -1138,64 +1174,64 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <image id="n9_s5h9" name="RoomLord" src="w61cdy" xy="-4,-7" rotation="-8"/>
   </displayList>
   <Button/>
-</component>w61cg8.xml|360|<component size="81,105" extention="Button">
+</component>w61cg8.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfr" xy="-3,12">
+    <image id="n1" name="n1" src="w61cfr" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cg9.xml|607|<component size="130,54">
+</component>w61cg9.xml|606|<component size="117,44">
   <controller name="WLan" pages="0,,1,,2," selected="0"/>
   <displayList>
-    <image id="n0_algd" name="n0" src="w61cfo" xy="14,8">
+    <image id="n0_algd" name="n0" src="w61cfo" xy="0,0">
       <gearDisplay controller="WLan" pages="0"/>
     </image>
-    <image id="n1_algd" name="n1" src="w61cfp" xy="15,7">
+    <image id="n1_algd" name="n1" src="w61cfp" xy="0,0">
       <gearDisplay controller="WLan" pages="1"/>
     </image>
-    <image id="n2_algd" name="n2" src="w61cfq" xy="15,7">
+    <image id="n2_algd" name="n2" src="w61cfq" xy="0,0">
       <gearDisplay controller="WLan" pages="2"/>
     </image>
-    <text id="n3_algd" name="n3" xy="59,19" size="73,29" fontSize="24" color="#ffffff" autoSize="none" text="24:00"/>
+    <text id="n3_algd" name="Time" xy="43,13" size="73,29" fontSize="20" color="#ffffff" autoSize="none" text="24:00"/>
   </displayList>
-</component>w61cga.xml|357|<component size="71,67" extention="Button">
+</component>w61cga.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cft" xy="0,0">
+    <image id="n1" name="n1" src="w61cft" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgb.xml|357|<component size="71,68" extention="Button">
+</component>w61cgb.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfu" xy="0,0">
+    <image id="n1" name="n1" src="w61cfu" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgc.xml|357|<component size="99,83" extention="Button">
+</component>w61cgc.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfv" xy="0,0">
+    <image id="n1" name="n1" src="w61cfv" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgd.xml|357|<component size="99,84" extention="Button">
+</component>w61cgd.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfx" xy="0,0">
+    <image id="n1" name="n1" src="w61cfx" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cge.xml|357|<component size="99,86" extention="Button">
+</component>w61cge.xml|370|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfw" xy="0,0">
+    <image id="n1" name="n1" src="w61cfw" xy="0,0" size="76,74">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -1404,7 +1440,7 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <item time="0" type="Alpha" tween="true" startValue="0" endValue="1" duration="24"/>
     <item time="24" type="Alpha" tween="true" startValue="1"/>
   </transition>
-</component>w61cj9.xml|9421|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cj9.xml|9492|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_npla" name="Bg" src="w61cbq" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
@@ -1482,6 +1518,7 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <group id="n27_fb5y" name="Btns" xy="-1,7" size="2422,720" advanced="true"/>
+    <component id="n29_cton" name="Inform" src="j3uokm" xy="133,105"/>
   </displayList>
   <transition name="HideFriendMode">
     <item time="0" type="XY" target="n22_k35j" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
@@ -1492,11 +1529,11 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <item time="21" type="XY" target="n25_nw08" tween="true" startValue="2070.83,205" endValue="862,205" duration="12"/>
   </transition>
   <transition name="ShowFriendMode">
-    <item time="0" type="XY" target="n25_nw08" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
+    <item time="0" type="XY" target="n22_k35j" value="2070,204"/>
     <item time="0" type="XY" target="n21_k35j" value="1764,204"/>
     <item time="0" type="XY" target="n23_k35j" value="1460,204"/>
     <item time="0" type="XY" target="n24_nw08" value="253,204"/>
-    <item time="0" type="XY" target="n22_k35j" value="2070,204"/>
+    <item time="0" type="XY" target="n25_nw08" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
     <item time="0" type="XY" target="n26_nw08" value="559,204"/>
     <item time="3" type="XY" target="n26_nw08" tween="true" startValue="559,204" endValue="1766,204" duration="15"/>
     <item time="6" type="XY" target="n24_nw08" tween="true" startValue="559,204" endValue="1766,204" duration="12"/>
@@ -1514,10 +1551,10 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <item time="0" type="Scale" target="n18_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n19_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n17_k35j" value="0,0"/>
-    <item time="0" type="XY" target="n7_npla" tween="true" startValue="200,-150" endValue="200,15" duration="7"/>
+    <item time="0" type="XY" target="n9_npla" value="883,-150"/>
     <item time="0" type="XY" target="n23_k35j" tween="true" startValue="1460.83,204" endValue="253,204" duration="14"/>
     <item time="0" type="XY" target="n4_npla" tween="true" startValue="142,-150" endValue="142,10" duration="7"/>
-    <item time="0" type="XY" target="n9_npla" value="883,-150"/>
+    <item time="0" type="XY" target="n7_npla" tween="true" startValue="200,-150" endValue="200,15" duration="7"/>
     <item time="0" type="XY" target="n3_npla" tween="true" startValue="-1,-78" endValue="-1,7" duration="7"/>
     <item time="0" type="XY" target="n21_k35j" value="1764,204"/>
     <item time="0" type="XY" target="n10_k35j" tween="true" startValue="1104,-150" endValue="1104,14" duration="7"/>
@@ -1704,9 +1741,9 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|4282|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|4725|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
-    <image id="n30_glwt" name="n30" src="w61cb4" xy="0,93" size="194,43">
+    <image id="n30_glwt" name="n30" src="w61cb4" xy="135,98" size="194,43">
       <relation target="" sidePair="left-left,top-top"/>
     </image>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1016,66">
@@ -1721,16 +1758,16 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <image id="n10_algd" name="PlayerTing" src="w61cfm" xy="85,584">
       <relation target="n5_algd" sidePair="right-left,bottom-bottom"/>
     </image>
-    <image id="n11_algd" name="Remain" src="w61cfn" xy="111,25" size="123,44">
+    <image id="n11_algd" name="Remain" src="w61cfn" xy="7,99" size="123,44">
       <relation target="" sidePair="left-left,top-top"/>
     </image>
-    <text id="n12_algd" name="RemainNum" xy="184,34" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="134">
+    <text id="n12_algd" name="RemainNum" xy="80,108" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="134">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
     <list id="n22_algd" name="GameOperationBar" xy="126,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
       <relation target="" sidePair="center-center%"/>
     </list>
-    <component id="n14_algd" name="Wlan" src="w61cg9" xy="1116,15">
+    <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
     <component id="n21_algd" name="GameHintBar" src="w61cgf" xy="486,558" touchable="false">
@@ -1749,34 +1786,40 @@ package.xml|21694|<packageDescription id="krtoytc1" name="MXUI">
     <component id="n6_algd" name="BehindPlayerAvatarInfo" src="w61cg7" xy="1240,214" group="n25_fb5y">
       <relation target="" sidePair="right-right"/>
     </component>
-    <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="4,0" group="n25_fb5y">
+    <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="10,10" group="n25_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
     </component>
     <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1251,12" group="n25_fb5y">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1244,467" group="n25_fb5y">
+    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1251,467" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1244,560" group="n25_fb5y">
+    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1251,560" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1244,650" group="n25_fb5y">
+    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1251,650" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
     <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="945,413" group="n25_fb5y">
       <relation target="" sidePair="center-center%"/>
     </component>
-    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1253,88" group="n25_fb5y"/>
+    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1251,88" group="n25_fb5y"/>
     <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="946,412" group="n25_fb5y"/>
-    <group id="n25_fb5y" name="Btns" xy="2,0" size="1341,736" advanced="true"/>
-    <text id="n28_glwt" name="RoomID" xy="78,93" size="111,38" fontSize="31" color="#ffffff" vAlign="middle" autoSize="none" text="999999">
+    <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,714" advanced="true"/>
+    <text id="n28_glwt" name="RoomID" xy="213,98" size="111,38" fontSize="31" color="#ffffff" vAlign="middle" autoSize="none" text="999999">
       <relation target="" sidePair="left-left,top-top"/>
     </text>
-    <text id="n29_glwt" name="n29" xy="11,95" size="71,38" fontSize="18" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="房间号:">
+    <text id="n29_glwt" name="n29" xy="146,100" size="71,38" fontSize="18" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="房间号:">
       <relation target="" sidePair="left-left,top-top"/>
     </text>
+    <component id="n32_j3uo" name="Draw" src="j3uokk" xy="542,327" pivot="0.5,0.5"/>
   </displayList>
+  <transition name="Draw">
+    <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
+    <item time="4" type="Scale" target="n32_j3uo" tween="true" startValue="1.1,1.1" endValue="1,1" duration="3"/>
+    <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
+  </transition>
 </component>w61cjd.xml|7093|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
