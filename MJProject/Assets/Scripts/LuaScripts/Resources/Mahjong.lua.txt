@@ -99,8 +99,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 	--[[
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",3,1,2,3)
@@ -109,6 +109,7 @@ function start()
 	local tempResource = CS.UnityEngine.Resources.Load("Effect/Effect_long_01")
 	local tempObj = CS.UnityEngine.Object.Instantiate(tempResource)
 	tempObj.transform.eulerAngles = newVector3(0,180,0)
+	--]]
 	if not _player_father then
 		_player_father = {}
 		_player_father.cards = {}
@@ -121,7 +122,6 @@ function start()
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
 	MahJong.SortPlayerPai()
-	--]]
 end
 
 function MahJong.SetStateTable( paraTable )
@@ -559,6 +559,7 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].child:GetComponent("TouchCT").onClick = MahJong.ClickPaiEvent
 		_player_father.cards[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
 		_player_father.cards[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		--_player_father.cards[paiNumber].child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color.black)-- = CS.UnityEngine.Color(0,0,0,1)
 		_player_father.cards[paiNumber].parent.transform.localScale = _pai_bigger * newVector3.one
 		_player_father.cards[paiNumber].parent.transform.localEulerAngles = newVector3(-45,0,0)
 		_player_father.cards[paiNumber].paiType = paiType
