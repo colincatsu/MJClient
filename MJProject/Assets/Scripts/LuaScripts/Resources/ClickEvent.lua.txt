@@ -39,6 +39,7 @@ function ClickEvent.Awake( ... )
 end
 function ClickEvent.Start(loadUI)
 	-- body
+	ClickEvent._createObject = {}
 	CS.UnityEngine.Application.targetFrameRate = 60
 	--ClickEvent.uiPanel.ui:RemoveChildren()
 	ClickEvent.CreateNewPanel(loadUI)
@@ -177,6 +178,9 @@ function ClickEvent.PaiOperationState()
 	local xuanfengCount = 0
 	local angangCount = 0
 	local tingpaiCount = 0
+	if not Player._ting_pai_cache then
+		Player._ting_pai_cache = {}
+	end
 	if Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
@@ -238,7 +242,7 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
-				Player.MahJong.SetCurrentState(operationState.TINGPAI)
+				Player.MahJong.SetCurrentState(operationState.DAPAI)
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
@@ -253,7 +257,6 @@ function ClickEvent.PaiOperationState()
     	ClickEvent._play_ui.cancelButton.visible = true
     	ClickEvent._play_ui.passButton.visible = false
 		ClickEvent.AddOperationButton("GameTingButton")
-		MahJong.TingPaiUpdateState()
     end
     Player.MahJong.SetStateTable({})
 end
@@ -355,7 +358,7 @@ end
 function ClickEvent.NextRoundButton( ... )
 	-- body
 	ClickEvent.Close()
-	Player.ResetGameState()
+	Player.MahJong.ResetGameState()
 end
 
 function ClickEvent.NoButton( ... )
@@ -476,6 +479,8 @@ end
 
 function ClickEvent.LoginButton(gameObject)
 	-- body
+	--[[
+	--]]
 	local textShow = _currentPanel.panel:GetChild("Account"):GetChild("InputText")
 	Player._string_id = textShow.text
 	Player.CmdLogin(Player._string_id)
@@ -755,14 +760,16 @@ end
 
 function ClickEvent.GameTingButton(gameObject)
 	-- body
-	Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
+	ClickEvent.CloseOperationPanel()
+	Player.MahJong.TingPaiUpdateState()
+	--Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
 end
 
 function ClickEvent.GamePlayButton( gameObject )
 	-- body
-	--Player.CmdGameOperation()
 	gameObject.visible = false
 	Player.MahJong.PlayDoubleDices()
+	Player.CmdGameOperation()
 end
 
 function ClickEvent.GameGangButton(gameObject)

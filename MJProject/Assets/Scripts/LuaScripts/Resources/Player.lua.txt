@@ -178,6 +178,7 @@ function Player.ResetGameState()
     --玩家面前牌
     CS.UnityEngine.Object.Destroy(_player_father.father)
     _player_father = {}
+    ClickEvent._play_ui.gamePlayButton.visible = true
 end
 
 
@@ -265,6 +266,8 @@ end
 
 function Player.CmdPaiOperation(paiOperType,paiChiTable,paiDaTable)
     -- body
+    CS.UnityEngine.Debug.LogWarning("---------------ClientOperation")
+    CS.UnityEngine.Debug.LogWarning(paiOperType)
     local paiOperation = {
         oper_type = paiOperType,
         pais = paiChiTable,
