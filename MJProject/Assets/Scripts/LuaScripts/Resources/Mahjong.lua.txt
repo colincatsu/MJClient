@@ -36,6 +36,7 @@ local _gai_obj--盖子
 local _pointFather = {}--牌池父节点
 local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}--没抓的牌池
+local zhuaPaiBeginPos = 0
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
@@ -279,80 +280,97 @@ function MahJong.ResetGameState()
     ClickEvent._play_ui.frontPlayerTing.visible = false
     ClickEvent._play_ui.behindPlayerTing.visible = false
     ClickEvent._play_ui.playerTing.visible = false
-    ClickEvent._play_ui.gamePlayButton.visible = false
+    ClickEvent._play_ui.gamePlayButton.visible = true
     --玩家打牌池
     local dapaiFatherTemp = _pai_pool_show.point_d.father.transform.parent
     CS.UnityEngine.Object.Destroy(_pai_pool_show.point_d.father)
     _pai_pool_show.point_d.paiNumber = 0
     _pai_pool_show.point_d.father = CS.UnityEngine.GameObject("Father")
     _pai_pool_show.point_d.father.transform:SetParent(dapaiFatherTemp)
+    _pai_pool_show.point_d.father.transform.localPosition = newVector3.zero
     _pai_pool_show.point_d.cards = {}
 
     dapaiFatherTemp = _pai_pool_show.point_n.father.transform.parent
     CS.UnityEngine.Object.Destroy(_pai_pool_show.point_n.father)
     _pai_pool_show.point_n.paiNumber = 0
+    _pai_pool_show.point_n.father = CS.UnityEngine.GameObject("Father")
     _pai_pool_show.point_n.father.transform:SetParent(dapaiFatherTemp)
+    _pai_pool_show.point_n.father.transform.localPosition = newVector3.zero
     _pai_pool_show.point_n.cards = {}
 
     dapaiFatherTemp = _pai_pool_show.point_x.father.transform.parent
     CS.UnityEngine.Object.Destroy(_pai_pool_show.point_x.father)
     _pai_pool_show.point_x.paiNumber = 0
+    _pai_pool_show.point_x.father = CS.UnityEngine.GameObject("Father")
     _pai_pool_show.point_x.father.transform:SetParent(dapaiFatherTemp)
+    _pai_pool_show.point_x.father.transform.localPosition = newVector3.zero
     _pai_pool_show.point_x.cards = {}
 
     dapaiFatherTemp = _pai_pool_show.point_b.father.transform.parent
     CS.UnityEngine.Object.Destroy(_pai_pool_show.point_b.father)
     _pai_pool_show.point_b.paiNumber = 0
+    _pai_pool_show.point_b.father = CS.UnityEngine.GameObject("Father")
     _pai_pool_show.point_b.father.transform:SetParent(dapaiFatherTemp)
+    _pai_pool_show.point_b.father.transform.localPosition = newVector3.zero
     _pai_pool_show.point_b.cards = {}
     --碰牌池
     dapaiFatherTemp = _operation_pai_show.point_d.father.transform.parent
     CS.UnityEngine.Object.Destroy(_operation_pai_show.point_d.father)
     _operation_pai_show.point_d.paiNumber = 0
+    _operation_pai_show.point_d.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_d.father.transform:SetParent(dapaiFatherTemp)
+    _operation_pai_show.point_d.father.transform.localPosition = newVector3.zero
     _operation_pai_show.point_d.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_n.father.transform.parent
     CS.UnityEngine.Object.Destroy(_operation_pai_show.point_n.father)
     _operation_pai_show.point_n.paiNumber = 0
+    _operation_pai_show.point_n.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_n.father.transform:SetParent(dapaiFatherTemp)
+    _operation_pai_show.point_n.father.transform.localPosition = newVector3.zero
     _operation_pai_show.point_n.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_x.father.transform.parent
     CS.UnityEngine.Object.Destroy(_operation_pai_show.point_x.father)
     _operation_pai_show.point_x.paiNumber = 0
+    _operation_pai_show.point_x.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_x.father.transform:SetParent(dapaiFatherTemp)
+    _operation_pai_show.point_x.father.transform.localPosition = newVector3.zero
     _operation_pai_show.point_x.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_b.father.transform.parent
     CS.UnityEngine.Object.Destroy(_operation_pai_show.point_b.father)
     _operation_pai_show.point_b.paiNumber = 0
+    _operation_pai_show.point_b.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_b.father.transform:SetParent(dapaiFatherTemp)
+    _operation_pai_show.point_b.father.transform.localPosition = newVector3.zero
     _operation_pai_show.point_b.group = {}
     
     --玩家手牌
     CS.UnityEngine.Object.Destroy(_player_pai_pool._next_player_father)
     _player_pai_pool._next_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._next_player_father.transform:SetParent(_player_pai_pool._next_player.transform)
+    _player_pai_pool._next_player_father.transform.localPosition = newVector3.zero
     _player_pai_pool._next_pai_number = 0
     _player_pai_pool._next_card = {}
 
     CS.UnityEngine.Object.Destroy(_player_pai_pool._opposite_player_father)
     _player_pai_pool._opposite_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._opposite_player_father.transform:SetParent(_player_pai_pool._opposite_player.transform)
+    _player_pai_pool._opposite_player_father.transform.localPosition = newVector3.zero
     _player_pai_pool._opposite_pai_number = 0
     _player_pai_pool._opposite_card = {}
 
     CS.UnityEngine.Object.Destroy(_player_pai_pool._forward_player_father)
     _player_pai_pool._forward_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._forward_player_father.transform:SetParent(_player_pai_pool._forward_player.transform)
+    _player_pai_pool._forward_player_father.transform.localPosition = newVector3.zero
     _player_pai_pool._forward_pai_number = 0
     _player_pai_pool._forward_card = {}
 
     --玩家面前牌
     CS.UnityEngine.Object.Destroy(_player_father.father)
     _player_father = nil
-    ClickEvent._play_ui.gamePlayButton.visible = true
 end
 
 function MahJong.ModelPoolInit()
@@ -446,7 +464,7 @@ end
 
 function MahJong.OtherPlayerPaiInit()
 	-- body
-	local myPosition = Player._my_player_data.position
+	local myPosition = "POSITION_TYPE_SOUTH"--Player._my_player_data.position
 	if myPosition == "POSITION_TYPE_SOUTH" then
 		MahJong.CreateOtherPai("next",13)
 		MahJong.CreateOtherPai("forward",14)
@@ -1923,8 +1941,7 @@ function MahJong.PlayDoubleDices( ... )
 	math.randomseed(os.time())
 	redDicePoints = math.random(6)
 	whiteDicePoints = math.random(6)
-	print("redDicePoints"..redDicePoints)
-	print("whiteDicePoints"..whiteDicePoints)
+	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
 end
 
 function update()

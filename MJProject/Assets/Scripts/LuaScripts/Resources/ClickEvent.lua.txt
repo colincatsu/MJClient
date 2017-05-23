@@ -96,6 +96,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.hintBar.visible = false
 		ClickEvent._play_ui.uselessRound = _currentPanel.panel:GetChild("Draw")
 		ClickEvent._play_ui.uselessRound.visible = false
+		ClickEvent._play_ui.frontPaiShow = _currentPanel.panel:GetChild("FrontPaiShow")
+		ClickEvent._play_ui.frontPaiShow.visible = false
+		ClickEvent._play_ui.behindPaiShow = _currentPanel.panel:GetChild("BehindPaiShow")
+		ClickEvent._play_ui.behindPaiShow.visible = false
+		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
+		ClickEvent._play_ui.oppositePaiShow.visible = false
+
 		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
 		--[[
 		local effectPrefab = CS.UnityEngine.Resources.Load("Effect/Effect_UI_Head portrait_01")

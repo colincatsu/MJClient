@@ -1,4 +1,13 @@
-j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
+i5kclq.xml|467|<component size="129,163" pivot="0.5,0.5">
+  <displayList>
+    <image id="n3_oc2l" name="n3" src="oc2lls" xy="0,0"/>
+    <image id="n4_oc2l" name="n4" src="oc2llr" xy="0,0"/>
+    <loader id="n5_oc2l" name="n5" xy="0,-2" size="129,163" url="ui://krtoytc1i5kcll" align="center" vAlign="middle"/>
+  </displayList>
+  <transition name="PaiShowEffect">
+    <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1,1" duration="9"/>
+  </transition>
+</component>j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
   <displayList>
     <image id="n0_j3uo" name="n0" src="nnbzkj" xy="0,0"/>
   </displayList>
@@ -44,8 +53,9 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>package.xml|24460|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|27629|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
+    <component id="i5kclq" name="PaiShow" path="/UIPIC/xinzeng/" size="129,163"/>
     <component id="j3uokk" name="Draw" path="/UIPIC/游戏页面/" size="250,95"/>
     <component id="j3uokm" name="Inform" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="j3uokn" name="InformText" path="/UIPIC/功能界面/" size="1000,69"/>
@@ -158,6 +168,8 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <image id="nnbzkg" name="Touxiang11_s" path="/UIPIC/选择头像/" size="103,103"/>
     <image id="nnbzki" name="Touxiang12_s" path="/UIPIC/选择头像/" size="103,103"/>
     <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
+    <image id="oc2llr" name="pai" path="/UIPIC/麻将牌/" size="129,163"/>
+    <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="qpkkju" name="ui_Youxijiemian_23" path="/UIPIC/游戏页面/" size="112,112"/>
     <image id="w61c9q" name="ui_Xinzeng_03" path="/UIPIC/xinzeng/" size="42,42"/>
     <image id="w61c9r" name="ui_Xinzeng_04" path="/UIPIC/xinzeng/" size="155,155"/>
@@ -311,6 +323,40 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <component id="w61cjo" name="ChooseAvatar" path="/" size="1334,750" exported="true"/>
     <component id="w61cjp" name="Setting" path="/" size="1334,750" exported="true"/>
     <component id="w61cjq" name="GetReward" path="/" size="1334,750" exported="true"/>
+    <image id="i5kckq" name="bai" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckr" name="bei" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcks" name="dong" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckt" name="fa" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckv" name="nan" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckw" name="tiao_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckx" name="tiao_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcky" name="tiao_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kckz" name="tiao_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl0" name="tiao_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl1" name="tiao_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl2" name="tiao_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl3" name="tiao_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl4" name="tiao_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl5" name="tong_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl6" name="tong_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl7" name="tong_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl8" name="tong_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcl9" name="tong_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcla" name="tong_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclb" name="tong_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclc" name="tong_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcld" name="tong_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcle" name="w_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclf" name="w_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclg" name="w_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclh" name="w_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcli" name="w_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclj" name="w_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclk" name="w_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kcll" name="w_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclm" name="w_9" path="/UIPIC/麻将牌/" size="80,106" exported="true"/>
+    <image id="i5kcln" name="xi" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="i5kclo" name="zhong" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
     <image id="nnbzjv" name="Touxiang01" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzjx" name="Touxiang02" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzjz" name="Touxiang03" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
@@ -323,7 +369,7 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <image id="nnbzkd" name="Touxiang10" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzkf" name="Touxiang11" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzkh" name="Touxiang12" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
-    <atlas id="atlas0" size="1024,1024" file="atlas0.png"/>
+    <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
     <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>
     <atlas id="atlas4" size="2048,2048" file="atlas4.png"/>
@@ -1806,7 +1852,7 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|4725|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|5333|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n30_glwt" name="n30" src="w61cb4" xy="135,98" size="194,43">
       <relation target="" sidePair="left-left,top-top"/>
@@ -1829,7 +1875,7 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <text id="n12_algd" name="RemainNum" xy="80,108" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="134">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
-    <list id="n22_algd" name="GameOperationBar" xy="126,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
+    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
       <relation target="" sidePair="center-center%"/>
     </list>
     <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
@@ -1866,11 +1912,13 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
     <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1251,650" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="945,413" group="n25_fb5y">
+    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1013,413" group="n25_fb5y">
       <relation target="" sidePair="center-center%"/>
     </component>
-    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1251,88" group="n25_fb5y"/>
-    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="946,412" group="n25_fb5y"/>
+    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1251,88" group="n25_fb5y">
+      <relation target="" sidePair="top-top,right-right"/>
+    </component>
+    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,412" group="n25_fb5y"/>
     <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,714" advanced="true"/>
     <text id="n28_glwt" name="RoomID" xy="213,98" size="111,38" fontSize="31" color="#ffffff" vAlign="middle" autoSize="none" text="999999">
       <relation target="" sidePair="left-left,top-top"/>
@@ -1879,6 +1927,15 @@ j3uokk.xml|145|<component size="250,95" pivot="0.5,0.5">
       <relation target="" sidePair="left-left,top-top"/>
     </text>
     <component id="n32_j3uo" name="Draw" src="j3uokk" xy="542,327" pivot="0.5,0.5"/>
+    <component id="n33_oc2l" name="FrontPaiShow" src="i5kclq" xy="236,231" pivot="0.5,0.5">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n35_oc2l" name="BehindPaiShow" src="i5kclq" xy="974,232" pivot="0.5,0.5">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n36_oc2l" name="OppositePaiShow" src="i5kclq" xy="602,45" pivot="0.5,0.5">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
