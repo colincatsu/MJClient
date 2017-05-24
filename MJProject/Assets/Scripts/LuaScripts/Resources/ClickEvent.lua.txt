@@ -102,6 +102,14 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPaiShow.visible = false
 		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
 		ClickEvent._play_ui.oppositePaiShow.visible = false
+		ClickEvent._play_ui.selfBanker = _currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("Zhuang")
+		ClickEvent._play_ui.nextBanker = _currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("Zhuang")
+		ClickEvent._play_ui.oppositeBanker = _currentPanel.panel:GetChild("OppositePlayerAvatarInfo"):GetChild("Zhuang")
+		ClickEvent._play_ui.forwardBanker = _currentPanel.panel:GetChild("FrontPlayerAvatarInfo"):GetChild("Zhuang")
+		ClickEvent._play_ui.selfBanker.visible = false
+		ClickEvent._play_ui.nextBanker.visible = false
+		ClickEvent._play_ui.oppositeBanker.visible = false
+		ClickEvent._play_ui.forwardBanker.visible = false
 
 		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
 		--[[
@@ -149,7 +157,6 @@ function ClickEvent.PlayerPosition(position)
 		return tempX
 	end
 	return nil
-	
 end
 
 function ClickEvent.RoomInformationUpdate( ... )
@@ -177,6 +184,34 @@ function ClickEvent.RoomInformationUpdate( ... )
 		else
 			_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		end
+	end
+end
+
+function ClickEvent.BankerStateUpdate(bankerPos)
+	-- body
+	Player._banker_position = ClickEvent.PlayerPosition(bankerPosi)
+	if Player._banker_position == 0 then
+		ClickEvent._play_ui.selfBanker.visible = true
+		ClickEvent._play_ui.nextBanker.visible = false
+		ClickEvent._play_ui.oppositeBanker.visible = false
+		ClickEvent._play_ui.forwardBanker.visible = false
+	elseif Player._banker_position == 1 then
+		ClickEvent._play_ui.selfBanker.visible = false
+		ClickEvent._play_ui.nextBanker.visible = true
+		ClickEvent._play_ui.oppositeBanker.visible = false
+		ClickEvent._play_ui.forwardBanker.visible = false
+	elseif Player._banker_position == 2 then
+		ClickEvent._play_ui.selfBanker.visible = false
+		ClickEvent._play_ui.nextBanker.visible = false
+		ClickEvent._play_ui.oppositeBanker.visible = true
+		ClickEvent._play_ui.forwardBanker.visible = false
+	elseif Player._banker_position == 3 then
+		ClickEvent._play_ui.selfBanker.visible = false
+		ClickEvent._play_ui.nextBanker.visible = false
+		ClickEvent._play_ui.oppositeBanker.visible = false
+		ClickEvent._play_ui.forwardBanker.visible = true
+	else
+		CS.UnityEngine.Debug.LogWarning("bankerPos nil")
 	end
 end
 

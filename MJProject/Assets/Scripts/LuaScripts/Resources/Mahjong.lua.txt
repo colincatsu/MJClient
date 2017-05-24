@@ -37,15 +37,16 @@ local _pointFather = {}--牌池父节点
 local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036}
 local _modelPool = {}--没抓的牌池
 local zhuaPaiBeginPos = 0
+local modelPoolFrontPointer = 0--抓牌指针
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
 	east = newVector3(-0.31,0,0.31),
-	south = newVector3(-0.36,0,-0.28),
+	south = newVector3(-0.38,0,-0.22),
 	west = newVector3(0.36,0,-0.31),
-	north = newVector3(0.36,0,0.2),
+	north = newVector3(0.38,0,0.2),
 }
 local _player_pai_position = {
 ---[[
@@ -56,6 +57,7 @@ local _player_pai_position = {
 }
 local _player_pai_pool = {}--其他玩家手牌
 
+local _model_all_pai_number = 136
 local _modelPoolLineCount = 34
 local _play_pai_count = 14--玩家手牌数目
 local _startPosition = {}
@@ -131,6 +133,9 @@ function start()
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
 	MahJong.SortPlayerPai()
+	_modelPool[1]:SetActive(false)
+	_modelPool[2]:SetActive(false)
+	MahJong.ModelPoolDelete(53)
 	--]]
 end
 
@@ -273,7 +278,7 @@ function MahJong.Init()
 	_player_pai_pool._forward_card = {}
 end
 
---重置游戏ing
+--重置游戏
 function MahJong.ResetGameState()
     -- 按钮
     ClickEvent._play_ui.oppositePlayerTing.visible = false
@@ -373,6 +378,7 @@ function MahJong.ResetGameState()
     _player_father = nil
 end
 
+--牌池
 function MahJong.ModelPoolInit()
 	-- body
 	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
@@ -411,6 +417,18 @@ function MahJong.ModelPoolInit()
 	end
 	MahJong.ModelPoolSetActive(false)
 	--CS.UnityEngine.Debug.LogWarning(i)
+end
+
+function MahJong.ModelPoolDelete(cardNumber)
+	-- body
+	--_model_all_pai_number--总牌数
+	for i=1,cardNumber do
+		modelPoolFrontPointer = math.fmod((modelPoolFrontPointer + 1),_model_all_pai_number)
+		if modelPoolFrontPointer == 0 then
+			modelPoolFrontPointer = _model_all_pai_number
+		end
+		_modelPool[modelPoolFrontPointer]:SetActive(false)
+	end
 end
 
 function MahJong.ModelPoolSetActive(bool)
@@ -464,16 +482,16 @@ end
 
 function MahJong.OtherPlayerPaiInit()
 	-- body
-	local myPosition = "POSITION_TYPE_SOUTH"--Player._my_player_data.position
-	if myPosition == "POSITION_TYPE_SOUTH" then
+	--local myPosition = "POSITION_TYPE_SOUTH"--Player._my_player_data.position
+	if Player._banker_position == 3 then
 		MahJong.CreateOtherPai("next",13)
 		MahJong.CreateOtherPai("forward",14)
 		MahJong.CreateOtherPai("opposite",13)
-	elseif myPosition == "POSITION_TYPE_WEST" then
+	elseif Player._banker_position == 2 then
 		MahJong.CreateOtherPai("next",13)
 		MahJong.CreateOtherPai("forward",13)
 		MahJong.CreateOtherPai("opposite",14)
-	elseif myPosition == "POSITION_TYPE_NORTH" then
+	elseif Player._banker_position == 1 then
 		MahJong.CreateOtherPai("next",14)
 		MahJong.CreateOtherPai("forward",13)
 		MahJong.CreateOtherPai("opposite",13)
@@ -482,6 +500,7 @@ function MahJong.OtherPlayerPaiInit()
 		MahJong.CreateOtherPai("forward",13)
 		MahJong.CreateOtherPai("opposite",13)
 	end
+	MahJong.ModelPoolDelete(53)
 end
 
 function MahJong.CreateOtherPai(whichPlayer,paiCount)
@@ -540,6 +559,7 @@ function MahJong.ZhuaPai()
 		_player_father.currentPaiNumber+1, tempPaiPool.card_type,paiCache.card_value)
 	MahJong.SortZhuaPai()
 	MahJong.SortPlayerPai()
+	MahJong.ModelPoolDelete(1)
 end
 
 function MahJong.SortZhuaPai( ... )
@@ -1943,6 +1963,7 @@ function MahJong.PlayDoubleDices( ... )
 	redDicePoints = math.random(6)
 	whiteDicePoints = math.random(6)
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
+	modelPoolFrontPointer = zhuaPaiBeginPos*2
 end
 
 function update()

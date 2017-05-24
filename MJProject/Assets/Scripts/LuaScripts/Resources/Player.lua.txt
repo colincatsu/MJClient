@@ -5,6 +5,7 @@ local AssetManager = require "AssetManager"
 --成员变量
 ---------------------------------------------------------------------------
 Player = {}
+local LogWarning = CS.UnityEngine.Debug.LogWarning
 local this = Player
 local _player_data = nil --玩家登录数据
 local _my_player_data = nil --房间内玩家数据
@@ -38,7 +39,7 @@ _invokeFunctionTable.front = 1
 _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
-local _banker_position = nil
+local _banker_position = 0
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -208,8 +209,8 @@ end
 
 function Player.CmdLogin(name,passWord)
     -- body
-    CS.UnityEngine.Debug.LogWarning(type(name))
-    CS.UnityEngine.Debug.LogWarning(name)
+    LogWarning(type(name))
+    LogWarning(name)
     local login = {
         account = {
             username = name,--""
@@ -267,8 +268,8 @@ end
 
 function Player.CmdPaiOperation(paiOperType,paiChiTable,paiDaTable)
     -- body
-    CS.UnityEngine.Debug.LogWarning("---------------ClientOperation")
-    CS.UnityEngine.Debug.LogWarning(paiOperType)
+    LogWarning("---------------ClientOperation")
+    LogWarning(paiOperType)
     local paiOperation = {
         oper_type = paiOperType,
         pais = paiChiTable,
@@ -324,14 +325,18 @@ function Player.OnGameInformation(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.GameInformation",stuff)
-    _banker_position = message.--庄
+    if not message.banker_player_id then
+        LogWarning("banker_player_id is nil")
+        return
+    end
     if not Player._all_players_data then
+        LogWarning("_all_players_data is nil")
         return
     end
 
-    for j,m in pairs(Player._all_players_data) do
-        if v.player_id == m.common_prop.player_id then
-            currentPositionData = m
+    for k,v in pairs(Player._all_players_data) do
+        if message.banker_player_id == v.common_prop.player_id then
+            ClickEvent.BankerStateUpdate(v.position)
             break
         end
     end
@@ -378,7 +383,7 @@ function Player.OnRoomInformation(type_t,stuff)
             ClickEvent.RoomInformationUpdate()
         end
     else
-        CS.UnityEngine.Debug.LogWarning("list null")
+        LogWarning("list null")
     end
 end
 
@@ -411,9 +416,9 @@ function Player.OnEnterRoom(type_t,stuff)
         --Player.ThreadFunction(
         Player.LoadScene()
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
-        CS.UnityEngine.Debug.LogWarning("no found")
+        LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
-        CS.UnityEngine.Debug.LogWarning("is full")
+        LogWarning("is full")
     end
 end
 
@@ -423,10 +428,10 @@ function Player.OnPlayerList(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
-    CS.UnityEngine.Debug.LogWarning("---------")
+    LogWarning("---------")
     if message.player_list then
         Player._id = message.player_list[1]
-        CS.UnityEngine.Debug.LogWarning(Player._id)
+        LogWarning(Player._id)
     end
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
@@ -440,14 +445,14 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
 
     if not message.pais then
-        CS.UnityEngine.Debug.LogWarning("pais data is nil")
+        LogWarning("pais data is nil")
         return
     end
 
     --[[
     if not message.pai then
         if not message.pais then
-            CS.UnityEngine.Debug.LogWarning("pais is nil")
+            LogWarning("pais is nil")
             return
         end
         Player._pais_operation_alert_cache = message.pais
@@ -467,10 +472,10 @@ function Player.OnPaiNotify(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     if not message.data_type then
-        CS.UnityEngine.Debug.LogWarning("type is nil")
+        LogWarning("type is nil")
         return
     end
-    CS.UnityEngine.Debug.LogWarning(message.data_type)
+    LogWarning(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         --[[
         Player._invoke_table_test = message
@@ -485,8 +490,8 @@ function Player.OnPaiNotify(type_t,stuff)
             end
         end
         
-        CS.UnityEngine.Debug.LogWarning("countPai----------------")
-        CS.UnityEngine.Debug.LogWarning(countPai)
+        LogWarning("countPai----------------")
+        LogWarning(countPai)
         if countPai == 14 then
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
@@ -504,9 +509,9 @@ function Player.OnPaiNotify(type_t,stuff)
     end
     --[[
     for k, v in pairs(message.pais) do
-        CS.UnityEngine.Debug.LogWarning(v.card_type)
+        LogWarning(v.card_type)
         for i, m in pairs(v.cards) do
-            CS.UnityEngine.Debug.LogWarning(m)
+            LogWarning(m)
         end
     end
     ]]
@@ -520,10 +525,10 @@ function Player.OnPaiOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
     if not message.oper_type then
-        CS.UnityEngine.Debug.LogWarning("type is nil")
+        LogWarning("type is nil")
         return
     end
-    CS.UnityEngine.Debug.LogWarning(message.oper_type)
+    LogWarning(message.oper_type)
     --Player._pai_operation_alert_cache = message.pai
 
     if message.oper_type == "PAI_OPER_TYPE_DAPAI" then
@@ -547,7 +552,7 @@ function Player.OnPaiOperation(type_t,stuff)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
-        CS.UnityEngine.Debug.LogWarning("give up operation")
+        LogWarning("give up operation")
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
@@ -611,14 +616,14 @@ function Player.OnGameOperation(type_t,stuff)
     if not message.source_player_id then
         return
     end
-    CS.UnityEngine.Debug.LogWarning(message.source_player_id)
-    CS.UnityEngine.Debug.LogWarning(this._id)
+    LogWarning(message.source_player_id)
+    LogWarning(this._id)
     if message.source_player_id then
         --判断id是谁
         if message.source_player_id == this._id then
             --变化按钮
         else
-            CS.UnityEngine.Debug.LogWarning(message.source_player_id)
+            LogWarning(message.source_player_id)
         end
     end
 end
@@ -631,7 +636,7 @@ function Player.OnCreatePlayer(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
     this._id = message.player_id
-    CS.UnityEngine.Debug.LogWarning(this._id)
+    LogWarning(this._id)
 end
 
 function Player.OnCreateRoom(type_t,stuff)
@@ -655,7 +660,7 @@ function Player.OnAlterError(type_t,stuff)
     this.error_type = message.error_type
     this.error_show_type = message.error_show_type
     this.error_code = message.error_code
-    CS.UnityEngine.Debug.LogWarning(this.error_type)
+    LogWarning(this.error_type)
     --Player.ThreadFunction(Player.LoadScene)
 end
 
@@ -672,7 +677,7 @@ function Player.OnSayHi( type_t,stuff )
     end
     local message = protobuf.decode("Adoter.Asset.SayHi", stuff)
     if not message.heart_count then
-        CS.UnityEngine.Debug.LogWarning("heart_count is nil")
+        LogWarning("heart_count is nil")
         return
     end
     local tempHertCount = message.heart_count + 1
@@ -696,9 +701,9 @@ function Player.OnAlertMessage(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
-    CS.UnityEngine.Debug.LogWarning(message.error_type)
-    CS.UnityEngine.Debug.LogWarning(message.error_show_type)
-    CS.UnityEngine.Debug.LogWarning(message.error_code)
+    LogWarning(message.error_type)
+    LogWarning(message.error_show_type)
+    LogWarning(message.error_code)
 end
 ---------------------------------------------------------------------------
 --通用操作返回协议，模拟RPC处理流程
@@ -730,13 +735,13 @@ function Player.ThreadFunction(invokeFunction)
     if Player.self then
         Player.self:Attach(invokeFunction)
     else
-        CS.UnityEngine.Debug.LogWarning("no init Player.self")
+        LogWarning("no init Player.self")
     end
 
     if Player.self then
         Player.SetinvokeFunctionCache(invokeFunction)
     else
-        CS.UnityEngine.Debug.LogWarning("no init Player.self")
+        LogWarning("no init Player.self")
     end
     --]]
     invokeFunction()
