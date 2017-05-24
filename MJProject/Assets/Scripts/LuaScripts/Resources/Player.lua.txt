@@ -38,6 +38,7 @@ _invokeFunctionTable.front = 1
 _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
+local _banker_position = nil
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -323,6 +324,17 @@ function Player.OnGameInformation(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.GameInformation",stuff)
+    _banker_position = message.--庄
+    if not Player._all_players_data then
+        return
+    end
+
+    for j,m in pairs(Player._all_players_data) do
+        if v.player_id == m.common_prop.player_id then
+            currentPositionData = m
+            break
+        end
+    end
 end
 
 function Player.OnGameCalculate(type_t,stuff)

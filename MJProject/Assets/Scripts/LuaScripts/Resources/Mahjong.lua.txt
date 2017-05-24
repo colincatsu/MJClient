@@ -705,6 +705,7 @@ function MahJong.ClickPaiEvent(gameObject)
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
+				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 				for k,v in pairs(_player_father.cards) do
 					v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
 				end
