@@ -30,6 +30,7 @@ local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU"
 local _currentPanel = {}
 local _popPanel = {}
 local Camera = CS.UnityEngine.Camera
+local LogWarning = CS.UnityEngine.Debug.LogWarning
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -189,27 +190,31 @@ end
 
 function ClickEvent.BankerStateUpdate(bankerPos)
 	-- body
-	Player._banker_position = ClickEvent.PlayerPosition(bankerPosi)
+	Player._banker_position = ClickEvent.PlayerPosition(bankerPos)
 	if Player._banker_position == 0 then
 		ClickEvent._play_ui.selfBanker.visible = true
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34*2)
 	elseif Player._banker_position == 1 then
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = true
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34)
 	elseif Player._banker_position == 2 then
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = true
 		ClickEvent._play_ui.forwardBanker.visible = false
+		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer())
 	elseif Player._banker_position == 3 then
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = true
+		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34*3)
 	else
 		CS.UnityEngine.Debug.LogWarning("bankerPos nil")
 	end
@@ -248,7 +253,7 @@ function ClickEvent.PaiOperationState()
 	    	ClickEvent._play_ui.passButton.visible = true
 			if m == "PAI_OPER_TYPE_HUPAI" then
 				ClickEvent.AddOperationButton("GameHuButton")
-		        Player.MahJong.SetCurrentState(operationState.HU)
+		        --Player.MahJong.SetCurrentState(operationState.HU)
 			elseif m == "PAI_OPER_TYPE_GANGPAI" then
 				ClickEvent.AddOperationButton("GameGangButton")
 		        Player.MahJong.SetCurrentState(operationState.GANG)
@@ -284,7 +289,7 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				CS.UnityEngine.Debug.LogWarning("tingpai")
-				Player.MahJong.SetCurrentState(operationState.DAPAI)
+				Player.MahJong.SetCurrentState(operationState.TINGPAI)
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
@@ -804,6 +809,7 @@ function ClickEvent.GameTingButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.TingPaiUpdateState()
+	Player.MahJong.SetCurrentState(operationState.DAPAI)
 	--Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
 end
 

@@ -106,8 +106,8 @@ function start()
 	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 	ClickEvent.CreateOperationButton()
 	MahJong.Init()
-	MahJong.AnimationPlay()
 	MahJong.ModelPoolInit()
+	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
@@ -121,6 +121,8 @@ function start()
 	local tempResource = CS.UnityEngine.Resources.Load("Effect/Effect_long_01")
 	local tempObj = CS.UnityEngine.Object.Instantiate(tempResource)
 	tempObj.transform.eulerAngles = newVector3(0,180,0)
+	_modelPool[1]:SetActive(false)
+	_modelPool[2]:SetActive(false)
 	if not _player_father then
 		_player_father = {}
 		_player_father.cards = {}
@@ -128,15 +130,23 @@ function start()
 		_player_father.father.transform:SetParent(self.transform)
 	end
 	local paiCount = 0
-    for i=1, 7 do
+    for i=1, 14 do
     	paiCount = paiCount + 1
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
 	MahJong.SortPlayerPai()
-	_modelPool[1]:SetActive(false)
-	_modelPool[2]:SetActive(false)
-	MahJong.ModelPoolDelete(53)
+	MahJong.ModelPoolDelete()
 	--]]
+end
+
+function MahJong.SetModelPoolFrontPointer( pointer )
+	-- body
+	modelPoolFrontPointer = pointer
+end
+
+function MahJong.GetModelPoolFrontPointer()
+	-- body
+	return modelPoolFrontPointer
 end
 
 function MahJong.SetStateTable( paraTable )
@@ -376,6 +386,11 @@ function MahJong.ResetGameState()
     --玩家面前牌
     CS.UnityEngine.Object.Destroy(_player_father.father)
     _player_father = nil
+    --抓牌池
+    MahJong.ModelPoolSetActive(false)
+    MahJong.AnimationPlay()
+
+    MahJong._current_click_pai = nil
 end
 
 --牌池
@@ -389,15 +404,15 @@ function MahJong.ModelPoolInit()
 			_modelPool[i].transform.localEulerAngles = _startRotation.D
 			_modelPool[i].transform.localPosition = 
 			_startPosition.D + 
-			((i-1)%2)*newVector3(0,_modelSize.length,0) + 
+			(i%2)*newVector3(0,_modelSize.length,0) + 
 			math.modf((i-1)/2)*newVector3(_modelSize.width,0,0)
 		elseif i > _modelPoolLineCount and i <= _modelPoolLineCount*2 then
-			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.N.transform)
-			_modelPool[i].transform.localEulerAngles = _startRotation.N
+			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.B.transform)
+			_modelPool[i].transform.localEulerAngles = _startRotation.B
 			_modelPool[i].transform.localPosition = 
-			_startPosition.N + 
+			_startPosition.B + 
 			((i-_modelPoolLineCount)%2)*newVector3(0,_modelSize.length,0) + 
-			math.modf((i-_modelPoolLineCount-1)/2)*newVector3(0,0,_modelSize.width)
+			math.modf((i-_modelPoolLineCount-1)/2)*newVector3(0,0,-_modelSize.width)
 		elseif i > _modelPoolLineCount*2 and i <= _modelPoolLineCount*3 then
 			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.X.transform)
 			_modelPool[i].transform.localEulerAngles = _startRotation.X
@@ -406,12 +421,12 @@ function MahJong.ModelPoolInit()
 			((i-_modelPoolLineCount*2)%2)*newVector3(0,_modelSize.length,0) + 
 			math.modf((i-_modelPoolLineCount*2-1)/2)*newVector3(-_modelSize.width,0,0)
 		elseif i > _modelPoolLineCount*3 and i <= _modelPoolLineCount*4 then
-			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.B.transform)
-			_modelPool[i].transform.localEulerAngles = _startRotation.B
+			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.N.transform)
+			_modelPool[i].transform.localEulerAngles = _startRotation.N
 			_modelPool[i].transform.localPosition = 
-			_startPosition.B + 
+			_startPosition.N + 
 			((i-_modelPoolLineCount*3)%2)*newVector3(0,_modelSize.length,0) + 
-			math.modf((i-_modelPoolLineCount*3-1)/2)*newVector3(0,0,-_modelSize.width)
+			math.modf((i-_modelPoolLineCount*3-1)/2)*newVector3(0,0,_modelSize.width)
 		end
 
 	end
@@ -707,7 +722,7 @@ function MahJong.ClickPaiEvent(gameObject)
 	-- body
 	if MahJong._current_click_pai then
 		if MahJong._current_click_pai == gameObject then
-			if currentOperationState ~= operationState.DAPAI then
+			if currentOperationState ~= operationState.DAPAI and currentOperationState ~= operationState.TINGPAI then
 				return
 			end
 			CS.UnityEngine.Debug.LogWarning("jxy_check_dapai count number")
@@ -720,12 +735,14 @@ function MahJong.ClickPaiEvent(gameObject)
 				return
 			end
 			MahJong._current_click_pai = nil
+			if currentOperationState ~= operationState.TINGPAI then
+				ClickEvent.CloseOperationPanel()
+			end
 			MahJong.DaPai(paiNumber)
 			if not isTingPaied then
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
-				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 				for k,v in pairs(_player_father.cards) do
 					v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
 				end
