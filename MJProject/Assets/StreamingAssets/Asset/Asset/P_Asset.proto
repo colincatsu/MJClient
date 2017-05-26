@@ -62,6 +62,7 @@ enum ASSET_TYPE {
 	ASSET_TYPE_DAILY_ALLOWANCE = 18; //每日补助,玩家欢乐豆少于多少即可领取数量欢乐豆
 	ASSET_TYPE_COMMON_CONSUME = 19; //通用消耗
 	ASSET_TYPE_RECHARGE = 20; //充值：各个渠道对游戏内钻石的购买，人民币
+	ASSET_TYPE_DAILY_SIGN = 21; //每日签到
 	ASSET_TYPE_COUNT = 200; //最大资源数
 	///////////物品类型///////////
 	ITEM_TYPE_BEGIN = 201; //物品开始
@@ -184,10 +185,14 @@ message MJCard {
 message CommonConst {
 	optional ASSET_TYPE type_t = 1 [ default = ASSET_TYPE_COMMON_CONST ];
 	optional AssetCommonProp common_prop = 2;
-	optional int32 max_cards_count = 3 [ default = 136 ]; //牌总数
-	optional int64 daily_bonus_id = 4; //每日登陆奖励ID[DailyBonus]数据
-	optional int64 daily_allowance_id = 5; //每日补助福利ID[DailyAllowance]数据
-	optional int32 time_out = 6 [ default = 8 ]; //玩家操作等待时间(单位：秒)
+	optional int32 model_release = 3; //数据模式：默认调试模式
+	optional int32 max_cards_count = 4 [ default = 136 ]; //牌总数
+	optional int32 player_count = 5 [ default = 4 ]; //玩家总数
+	optional int64 daily_bonus_id = 6; //每日登陆奖励ID[DailyBonus]数据
+	optional int64 daily_allowance_id = 7; //每日补助福利ID[DailyAllowance]数据
+	optional int32 time_out = 8 [ default = 8 ]; //玩家操作等待时间(单位：秒)
+	optional int64 daily_sign_id = 9; //每日签到奖励ID[DailySign]数据
+	optional int64 fan_id = 10; //番数定义ID[RoomFan]数据
 }
 
 //通用奖励
@@ -268,37 +273,43 @@ message Mall {
 	optional int64 activity_id = 10; //关联活动控制ID[Activity]数据
 }
 
+//番数类型
+enum FAN_TYPE {
+	FAN_TYPE_ZHUANG = 1; //庄家
+	FAN_TYPE_DIAN_PAO = 2; //点炮
+	FAN_TYPE_ZI_MO = 3; //自摸
+	FAN_TYPE_SHANG_TING = 4; //上听
+	FAN_TYPE_BIMEN = 5; //闭门
+	FAN_TYPE_HAI_DI_LAO = 6; //海底捞
+	FAN_TYPE_GANG_SHANG_KAI = 7; //杠上开(杠次)
+	FAN_TYPE_LIU_LEI = 8; //流泪
+	FAN_TYPE_LOU_BAO = 9; //搂宝
+	FAN_TYPE_PIAO_HU = 10; //飘胡
+	FAN_TYPE_SI_GUI_YI = 11; //四归一
+	FAN_TYPE_MING_PIAO = 12; //明飘
+	FAN_TYPE_SAN_JIA_BI_MEN = 13; //三家闭门
+	FAN_TYPE_QING_YI_SE = 14; //清一色
+	FAN_TYPE_MING_GANG = 15; //明杠
+	FAN_TYPE_AN_GANG = 16; //暗杠
+	FAN_TYPE_JIN_BAO = 17; //进宝
+	FAN_TYPE_ZHAN_LI = 18; //站立
+	FAN_TYPE_DUAN_MEN = 19; //断门
+	FAN_TYPE_XUAN_FENG_GANG = 20; //旋风杠
+	FAN_TYPE_JIA_HU_NORMAL = 21; //普通夹胡
+	FAN_TYPE_JIA_HU_MIDDLE = 22; //中等夹胡(3/7)
+	FAN_TYPE_JIA_HU_HIGHER = 23; //高番夹胡(5)
+}
 //番数
 message RoomFan {
-	//番数类型
-	enum FAN_TYPE {
-		FAN_TYPE_ZHUANG = 1; //庄家
-		FAN_TYPE_DIAN_PAO = 2; //点炮
-		FAN_TYPE_ZI_MO = 3; //自摸
-		FAN_TYPE_SHANG_TING = 4; //上听
-		FAN_TYPE_BIMEN = 5; //闭门
-		FAN_TYPE_HAI_DI_LAO = 6; //海底捞
-		FAN_TYPE_GANG_SHANG_KAI = 7; //杠上开(杠次)
-		FAN_TYPE_LIU_LEI = 8; //流泪
-		FAN_TYPE_LOU_BAO = 9; //搂宝
-		FAN_TYPE_PIAO_HU = 10; //飘胡
-		FAN_TYPE_SI_GUI_YI = 11; //四归一
-		FAN_TYPE_MING_PIAO = 12; //明飘
-		FAN_TYPE_SAN_JIA_BI_MEN = 13; //三家闭门
-		FAN_TYPE_QING_YI_SE = 14; //清一色
-		FAN_TYPE_MING_GANG = 15; //明杠
-		FAN_TYPE_AN_GANG = 16; //暗杠
-		FAN_TYPE_JIN_BAO = 17; //进宝
-	}
+	optional ASSET_TYPE type_t = 1 [ default = ASSET_TYPE_ROOM_FAN ];
+	optional AssetCommonProp common_prop = 2;
 	//番数表
 	message FanElement {
 		optional FAN_TYPE fan_type = 3; //番类型
 		optional bytes name = 4; //名称
 		optional int32 multiple = 5; //番数
 	}
-	optional ASSET_TYPE type_t = 1 [ default = ASSET_TYPE_ROOM_FAN ];
-	optional AssetCommonProp common_prop = 2;
-	optional int32 fans_count = 3 [ default = 20 ]; //番数量
+	optional int32 fans_count = 3 [ default = 25 ]; //番数量
 	repeated FanElement fans = 4; //番数据
 
 }
@@ -382,6 +393,24 @@ message Recharge {
 	optional int32 price_show = 7; //商品显示价格
 	optional int32 gain_diamond = 8; //购买钻石数量
 }
+
+//每日签到
+message DailySign {
+	optional ASSET_TYPE type_t = 1 [ default = ASSET_TYPE_DAILY_SIGN ];
+	optional AssetCommonProp common_prop = 2;
+	optional int64 common_reward_id = 3; //每日签到奖励
+	optional int64 common_limit_id = 4; //每日签到限制次数
+	//连续签到奖励
+	message ContinuousSign {
+		optional int32 count = 1; //连续签到次数
+		optional int64 common_reward_id = 2; //奖励
+		optional int64 common_limit_id = 3; //限制次数(是否已经领奖)
+	}
+
+	optional int32 signs_count = 5 [ default = 10 ]; //连续签到数量
+	repeated ContinuousSign signs = 6; //连续签到
+}
+
 /////////////////////////////////////////////////////
 // 物品(作为特殊资源)数据类别定义区
 //

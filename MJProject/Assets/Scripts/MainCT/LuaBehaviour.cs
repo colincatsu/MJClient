@@ -15,16 +15,16 @@ using System;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Injection
-{
-    public string name;
-    public GameObject value;
-}
+//public class Injection
+//{
+//    public string name;
+//    public GameObject value;
+//}
 
 [LuaCallCSharp]
 public class LuaBehaviour : MonoBehaviour {
     public TextAsset luaScript;
-    public Injection[] injections;
+    //public Injection[] injections;
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;//1 second 
 
@@ -36,7 +36,6 @@ public class LuaBehaviour : MonoBehaviour {
     private LuaTable scriptEnv;
 
     private string luaChunkName = "LuaBehaviour";
-    private string[] tempActionData;
 
 
     void Awake()
@@ -53,10 +52,10 @@ public class LuaBehaviour : MonoBehaviour {
         meta.Dispose();
         
         scriptEnv.Set("self", this);
-        foreach (var injection in injections)
-        {
-            scriptEnv.Set(injection.name, injection.value);
-        }
+        //foreach (var injection in injections)
+        //{
+        //    scriptEnv.Set(injection.name, injection.value);
+        //}
 
 
         LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
@@ -85,6 +84,15 @@ public class LuaBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //lock (mainThreadDelegate)
+        //{
+        //    if (mainThreadDelegate != empty)
+        //    {
+        //        mainThreadDelegate();
+        //        mainThreadDelegate = empty;
+        //    }
+
+        //}
         if (luaUpdate != null)
         {
             luaUpdate();
@@ -94,26 +102,21 @@ public class LuaBehaviour : MonoBehaviour {
             LuaEnvSingleton.Instance.Tick();
             LuaBehaviour.lastGCTime = Time.time;
         }
-        lock(mainThreadDelegate){
-            if(mainThreadDelegate != empty){
-                mainThreadDelegate(tempActionData);
-                mainThreadDelegate = empty;
-            }
-        }
-	}
-    [CSharpCallLua]
-    public delegate void Function(params string[] para);
-    private static void empty(params string[] para) { }
-    protected Function mainThreadDelegate = empty;
-    public void Attach(Function callback,params string[] para){
-        if (callback != null) {
-            lock(mainThreadDelegate){
-
-                mainThreadDelegate += callback;
-                tempActionData = para;
-            }
-        }
     }
+    void LateUpdate()
+    {
+
+    }
+    //private static void empty() { }
+    //protected static Action mainThreadDelegate = empty;
+    //public void Attach(Action callback){
+    //    if (callback != null) {
+    //        lock (mainThreadDelegate)
+    //        {
+    //            mainThreadDelegate += callback;
+    //        }
+    //    }
+    //}
     void OnDestroy()
     {
         if (luaOnDestroy != null)
@@ -124,6 +127,6 @@ public class LuaBehaviour : MonoBehaviour {
         luaUpdate = null;
         luaStart = null;
         scriptEnv.Dispose();
-        injections = null;
+        //injections = null;
     }
 }

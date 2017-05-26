@@ -22,16 +22,19 @@ protobuf.register(_buffer)--]]
 
 Network = {}
 local this = Network
-local _socketClientClass = CS.MX.SocketClient
+local _network_manager = nil
+local _socketClientClass = CS.MX.NetworkManager-- CS.MX.SocketClient
+local _network_protocal = CS.MX.Protocal
 --local _byteBufferClass = CS.MX.ByteBuffer
-local _socketClient = _socketClientClass()
+--local _socketClient = _socketClientClass()
 
 ---------------------------------------------------------------------------
 --初始化
 ---------------------------------------------------------------------------
 function Network.Start()
-    _socketClient:OnRegister()
+    --_socketClient:OnRegister()
     --_socketClient:StartClient()
+    _network_manager = _socketClientClass.Instance
     this.AddEventListener()
 end
 
@@ -41,20 +44,31 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.AddEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.AddEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
+    FLibEvent.AddEvent(Player.OnPaiOperation,"META_TYPE_SHARE_PAI_OPERATION")
+    FLibEvent.AddEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
     
     FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.AddEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
     FLibEvent.AddEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+    FLibEvent.AddEvent(Player.OnPlayerInformation,"META_TYPE_S2C_PLAYER_INFO")
+    FLibEvent.AddEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
+    FLibEvent.AddEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
+    FLibEvent.AddEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
+    FLibEvent.AddEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.AddEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
 end
 
 ---------------------------------------------------------------------------
 --连接服务器
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
-    _socketClient:SendConnect()
-    print("Server Connect----->>>")
+    --_socketClient:SendConnect()
+    _network_manager:ConnectTo("182.92.87.147",50000)
+    --_network_manager:ConnectTo("192.168.136.100",50000)
+    CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
 
 ---------------------------------------------------------------------------
@@ -72,19 +86,19 @@ function Network.SendProtocol(messageName, message)
     ---------------------------------------------
     local msg = protobuf.encode("Adoter.Asset.Meta",meta)
 
-    _socketClient:SendProtocol(msg)
-    --]]
+    --_socketClient:SendProtocol(msg)
+    _network_manager:SendMessage(msg)
 end
 
 ---------------------------------------------------------------------------
-function Network.OnConnet()
-	print("ConnetServer Success----->>>")
+function Network.OnConnect()
+	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     --Player.CmdCreatePlayer()
-    Player.CmdEnterGame(347)
+    --Player.CmdEnterGame(347)
 end
 
 function Network.OnClose()
-	print("Server Close----->>>")
+	CS.UnityEngine.Debug.LogWarning("Server Close----->>>")
     this.DelEventListener()
 end
 
@@ -93,46 +107,86 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
     FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
     FLibEvent.DelEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.DelEvent(Player.OnPaiOperation,"META_TYPE_SHARE_PAI_OPERATION")
+    FLibEvent.DelEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
+
     FLibEvent.DelEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
     FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
     FLibEvent.DelEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
     FLibEvent.DelEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+    FLibEvent.DelEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
+    FLibEvent.DelEvent(Player.OnPlayerInformation,"META_TYPE_S2C_PLAYER_INFO")
+    FLibEvent.DelEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
+    FLibEvent.DelEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
+    FLibEvent.DelEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
+    FLibEvent.DelEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.DelEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
 end
 
 ---------------------------------------------------------------------------
 --异常断线
 ---------------------------------------------------------------------------
 function Network.OnException() 
+    CS.UnityEngine.Debug.LogWarning("OnException------->>>")
+    ClickEvent.showDisconnect()
 end
 ---------------------------------------------------------------------------
 --连接中断，或者被踢掉
 ---------------------------------------------------------------------------
 function Network.OnDisconnect() 
-    print("OnDisconnect------->>>")
+    CS.UnityEngine.Debug.LogWarning("OnDisconnect------->>>")
+    ClickEvent.showDisconnect()
 end
 
 function Network.OnReceived(buffer)
-	print("OnReceived------>>>")
+	CS.UnityEngine.Debug.LogWarning("OnReceived------>>>")
     if not buffer then return 1 end
-
     local data = buffer:ReadBytes()
-
     --buffer:Close()
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
+    print(data)
     ----------------------------------------------------
-    local meta = protobuf.decode("Adoter.Asset.Meta" , data)
-    --print("------------"..meta)
+    local meta = nil
+    if data then
+        meta = protobuf.decode("Adoter.Asset.Meta" , data)
+    end
     ---[[
-    print(type(meta))
-    print('OnSocket:type_t:>'..(meta.type_t))
-    print("ddddddddddd"..meta.stuff)
+    if type(meta) ~= "table" then
+        CS.UnityEngine.Debug.LogWarning(type(meta))
+        return 0
+    end
+    if not meta.type_t then
+        CS.UnityEngine.Debug.LogWarning("148,type is nil")
+        return 0
+    end
     --]]
+    CS.UnityEngine.Debug.LogWarning(type(meta))
+    CS.UnityEngine.Debug.LogWarning('OnSocket:type_t:>'..(meta.type_t))
+    CS.UnityEngine.Debug.LogWarning("ddddddddddd"..meta.stuff)
     ----------------------------------------------------
-    FLibEvent.Fire(meta.type_t, meta.stuff)
+    if meta then
+        FLibEvent.Fire(meta.type_t, meta.stuff)
+        --CS.UnityEngine.Debug.LogWarning("Fire Success")
+    end
     return 0
 end
 
+function Network.OnReceiveMessageQueue(protocal,buffer)
+    -- body
+    print(protocal)
+    if protocal == _network_protocal.Connect then
+        Network.OnConnect()
+    elseif protocal == _network_protocal.Exception then
+        Network.OnException()
+        Network.OnClose()
+    elseif protocal == _network_protocal.Disconnect then
+        Network.OnDisconnect()
+        Network.OnClose()
+    elseif protocal == _network_protocal.Receive then
+        Network.OnReceived(buffer)
+    end
+end
 
 return Network

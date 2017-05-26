@@ -1,5 +1,5 @@
 
-ê@
+ÚD
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -57,14 +57,19 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("Î
+voice_path ("¬
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
-common_prop (2.Adoter.Asset.AssetCommonProp
-max_cards_count (:136
-daily_bonus_id (
-daily_allowance_id (
-time_out (:8"‘
+common_prop (2.Adoter.Asset.AssetCommonProp
+model_release (
+max_cards_count (:136
+player_count (:4
+daily_bonus_id (
+daily_allowance_id (
+time_out (:8
+daily_sign_id	 (
+fan_id
+ ("‘
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -125,37 +130,18 @@ goods_type (2.Adoter.Asset.Mall.GOODS_TYPE
 
 GOODS_TYPE
 GOODS_TYPE_HUANLEDOU
-GOODS_TYPE_NORMAL_ITEM"¿
+GOODS_TYPE_NORMAL_ITEM"ú
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
 
-fans_count (:20.
-fans (2 .Adoter.Asset.RoomFan.FanElement^
+fans_count (:25.
+fans (2 .Adoter.Asset.RoomFan.FanElementV
 
-FanElement0
-fan_type (2.Adoter.Asset.RoomFan.FAN_TYPE
+FanElement(
+fan_type (2.Adoter.Asset.FAN_TYPE
 name (
-multiple ("ô
-FAN_TYPE
-FAN_TYPE_ZHUANG
-FAN_TYPE_DIAN_PAO
-FAN_TYPE_ZI_MO
-FAN_TYPE_SHANG_TING
-FAN_TYPE_BIMEN
-FAN_TYPE_HAI_DI_LAO
-FAN_TYPE_GANG_SHANG_KAI
-FAN_TYPE_LIU_LEI
-FAN_TYPE_LOU_BAO	
-FAN_TYPE_PIAO_HU
-
-FAN_TYPE_SI_GUI_YI
-FAN_TYPE_MING_PIAO
-FAN_TYPE_SAN_JIA_BI_MEN
-FAN_TYPE_QING_YI_SE
-FAN_TYPE_MING_GANG
-FAN_TYPE_AN_GANG
-FAN_TYPE_JIN_BAO"Ä
+multiple ("Ä
 	RoomModel?
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_MODEL2
 common_prop (2.Adoter.Asset.AssetCommonProp"˝
@@ -212,7 +198,18 @@ product_id (
 price (
 
 price_show (
-gain_diamond ("û
+gain_diamond ("◊
+	DailySign?
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_SIGN2
+common_prop (2.Adoter.Asset.AssetCommonProp
+common_reward_id (
+common_limit_id (
+signs_count (:105
+signs (2&.Adoter.Asset.DailySign.ContinuousSignR
+ContinuousSign
+count (
+common_reward_id (
+common_limit_id ("û
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -256,7 +253,7 @@ price_show (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*ä
+VERSION_TYPE_TAIWAN*•
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -279,7 +276,8 @@ ASSET_TYPE
 ASSET_TYPE_ACTIVITY
 ASSET_TYPE_DAILY_ALLOWANCE
 ASSET_TYPE_COMMON_CONSUME
-ASSET_TYPE_RECHARGE
+ASSET_TYPE_RECHARGE
+ASSET_TYPE_DAILY_SIGN
 ASSET_TYPE_COUNT»
 ITEM_TYPE_BEGIN…
 ITEM_TYPE_POTION 
@@ -295,4 +293,29 @@ ASSET_TYPE
 CARD_TYPE_BINGZI
 CARD_TYPE_TIAOZI
 CARD_TYPE_FENG
-CARD_TYPE_JIAN
+CARD_TYPE_JIAN*∑
+FAN_TYPE
+FAN_TYPE_ZHUANG
+FAN_TYPE_DIAN_PAO
+FAN_TYPE_ZI_MO
+FAN_TYPE_SHANG_TING
+FAN_TYPE_BIMEN
+FAN_TYPE_HAI_DI_LAO
+FAN_TYPE_GANG_SHANG_KAI
+FAN_TYPE_LIU_LEI
+FAN_TYPE_LOU_BAO	
+FAN_TYPE_PIAO_HU
+
+FAN_TYPE_SI_GUI_YI
+FAN_TYPE_MING_PIAO
+FAN_TYPE_SAN_JIA_BI_MEN
+FAN_TYPE_QING_YI_SE
+FAN_TYPE_MING_GANG
+FAN_TYPE_AN_GANG
+FAN_TYPE_JIN_BAO
+FAN_TYPE_ZHAN_LI
+FAN_TYPE_DUAN_MEN
+FAN_TYPE_XUAN_FENG_GANG
+FAN_TYPE_JIA_HU_NORMAL
+FAN_TYPE_JIA_HU_MIDDLE
+FAN_TYPE_JIA_HU_HIGHER

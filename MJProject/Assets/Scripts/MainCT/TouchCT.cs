@@ -22,7 +22,6 @@ public class TouchCT : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         if (Input.GetMouseButtonDown(0))
         {
             movePos = Input.mousePosition;
@@ -36,18 +35,19 @@ public class TouchCT : MonoBehaviour {
         }
         else if (Input.GetMouseButtonUp(0))
         {
-
+            movePos = Input.mousePosition;
+            movePos.z = CameraPosZ;
             if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos)
             {
                 if (onClick != null)
                     onClick(gameObject);
             }
-
         }
     }
 
-    bool inArea(Vector2 position) {
+    bool inArea(Vector3 position) {
         return (Mathf.Abs(transform.position.x - position.x) < myRenderer.bounds.size.x/2
-                && Mathf.Abs(transform.position.y - position.y) < myRenderer.bounds.size.y/2);
+                && Mathf.Abs(transform.position.y - position.y) < myRenderer.bounds.size.y/ 2
+                && Mathf.Abs(transform.position.z - position.z) < myRenderer.bounds.size.z / 2);
     }
 }

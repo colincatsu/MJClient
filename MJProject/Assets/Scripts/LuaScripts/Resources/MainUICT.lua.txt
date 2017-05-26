@@ -1,9 +1,11 @@
+local Enum = require "Enum"
+local Player = require "Player"
 local ClickEvent = require "ClickEvent"
 local Network = require "Network"
-local Player = require "Player"
 Player.self = self
 ClickEvent.self = self
 local FLibEvent = require "FLibEvent"
+local FairyGUI = require "FairyGUI"
 
 local _main_ui_sence = "MainUI"
 local _loading_sence = "LoadingSence"
@@ -17,11 +19,14 @@ local _Other_Message_UI
 local _Store_UI 
 local _Creat_Room_UI 
 --]]
+function awake()
+	-- body
+	ClickEvent.Awake()
+end
+
 function start()
 	-- body
-	-- print(self._main_ui_sence)
-
-	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+	ClickEvent.Start(ClickEvent.panelTable._main_ui)
 	
 	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
@@ -34,7 +39,7 @@ function start()
 	_Store_UI = self.transform:Find("StoreUI").gameObject
 	_Creat_Room_UI = self.transform:Find("CreatRoom").gameObject
 	--]]
-	--self:GetComponent("EventTriggerListener").onClick = ClickEvent.registerButtonClick
+
 	---[[
 	Network.Start()
 	Network.ConnetServer()
@@ -44,6 +49,14 @@ end
 
 function update( ... )
 	-- body
+	--[[
+	if Player.self == self then
+		local x = Player.GetinvokeFunctionCache()
+		if x then
+			x()
+		end
+	end
+	--]]
 end
 
 return MainUICT
