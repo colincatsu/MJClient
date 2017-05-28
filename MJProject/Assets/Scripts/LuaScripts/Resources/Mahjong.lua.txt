@@ -44,9 +44,9 @@ local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
 	east = newVector3(-0.31,0,0.31),
-	south = newVector3(-0.38,0,-0.22),
+	south = newVector3(-0.4,0,-0.22),
 	west = newVector3(0.36,0,-0.31),
-	north = newVector3(0.38,0,0.2),
+	north = newVector3(0.4,0,0.18),
 }
 local _player_pai_position = {
 ---[[
@@ -176,8 +176,11 @@ function MahJong.MjLoader()
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
+	loader = AssetManager.Load(resultPath.."Asset/Asset/")
+	message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
+	Player._calculate_table_loader = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.RoomFan")
 	--[[
-	AssetManager.CS.UnityEngine.Debug.LogWarningMessage(_mj_asset)
+	AssetManager.PrintMessage(_mj_asset)
 	for k, v in pairs(message) do  
     	CS.UnityEngine.Debug.LogWarning(v)
 	end
@@ -339,6 +342,7 @@ function MahJong.ResetGameState()
     _operation_pai_show.point_d.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_d.father.transform:SetParent(dapaiFatherTemp)
     _operation_pai_show.point_d.father.transform.localPosition = newVector3.zero
+    _operation_pai_show.point_d.father.transform.localEulerAngles = newVector3.zero
     _operation_pai_show.point_d.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_n.father.transform.parent
@@ -347,6 +351,7 @@ function MahJong.ResetGameState()
     _operation_pai_show.point_n.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_n.father.transform:SetParent(dapaiFatherTemp)
     _operation_pai_show.point_n.father.transform.localPosition = newVector3.zero
+    _operation_pai_show.point_n.father.transform.localEulerAngles = newVector3.zero
     _operation_pai_show.point_n.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_x.father.transform.parent
@@ -355,6 +360,7 @@ function MahJong.ResetGameState()
     _operation_pai_show.point_x.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_x.father.transform:SetParent(dapaiFatherTemp)
     _operation_pai_show.point_x.father.transform.localPosition = newVector3.zero
+    _operation_pai_show.point_x.father.transform.localEulerAngles = newVector3.zero
     _operation_pai_show.point_x.group = {}
     
     dapaiFatherTemp = _operation_pai_show.point_b.father.transform.parent
@@ -363,6 +369,7 @@ function MahJong.ResetGameState()
     _operation_pai_show.point_b.father = CS.UnityEngine.GameObject("Father")
     _operation_pai_show.point_b.father.transform:SetParent(dapaiFatherTemp)
     _operation_pai_show.point_b.father.transform.localPosition = newVector3.zero
+    _operation_pai_show.point_b.father.transform.localEulerAngles = newVector3.zero
     _operation_pai_show.point_b.group = {}
     
     --玩家手牌
@@ -370,6 +377,7 @@ function MahJong.ResetGameState()
     _player_pai_pool._next_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._next_player_father.transform:SetParent(_player_pai_pool._next_player.transform)
     _player_pai_pool._next_player_father.transform.localPosition = newVector3.zero
+    _player_pai_pool._next_player_father.transform.localEulerAngles = newVector3.zero
     _player_pai_pool._next_pai_number = 0
     _player_pai_pool._next_card = {}
 
@@ -377,6 +385,7 @@ function MahJong.ResetGameState()
     _player_pai_pool._opposite_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._opposite_player_father.transform:SetParent(_player_pai_pool._opposite_player.transform)
     _player_pai_pool._opposite_player_father.transform.localPosition = newVector3.zero
+    _player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3.zero
     _player_pai_pool._opposite_pai_number = 0
     _player_pai_pool._opposite_card = {}
 
@@ -384,6 +393,7 @@ function MahJong.ResetGameState()
     _player_pai_pool._forward_player_father = CS.UnityEngine.GameObject("Father")
     _player_pai_pool._forward_player_father.transform:SetParent(_player_pai_pool._forward_player.transform)
     _player_pai_pool._forward_player_father.transform.localPosition = newVector3.zero
+    _player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3.zero
     _player_pai_pool._forward_pai_number = 0
     _player_pai_pool._forward_card = {}
 
@@ -398,6 +408,7 @@ function MahJong.ResetGameState()
     MahJong.AnimationPlay()
 
     MahJong._current_click_pai = nil
+    Player._ting_pai_cache = nil
 end
 
 --牌池
@@ -614,7 +625,7 @@ function MahJong.SortZhuaPai( ... )
 	end
 	_player_father.cards[index] = tempCard
 	_player_father.cards[index].parent.name = ""..index
-	---[[
+	--[[
 	if MahJong._current_click_pai then
 		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		MahJong._current_click_pai = _player_father.cards[index].child
@@ -749,7 +760,7 @@ function MahJong.ClickPaiEvent(gameObject)
 				ClickEvent.CloseOperationPanel()
 			end
 			MahJong.DaPai(paiNumber)
-			
+			ClickEvent.notPushPassMsg = false
 			if not isTingPaied then
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 			else
@@ -1291,8 +1302,12 @@ end
 function MahJong.GuoPai()
 	-- body
 	MahJong.DeleteShowModel()
-	Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
-	currentOperationState = operationState.DAPAI
+	if ClickEvent.notPushPassMsg then
+		ClickEvent.notPushPassMsg = false
+		currentOperationState = operationState.DAPAI
+	else
+		Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
+	end
 end
 
 function MahJong.XuanFengGang( ... )

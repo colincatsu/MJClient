@@ -27,6 +27,8 @@ local _position_index = {
 
 local operationState = Enum.CreateEnumTable({"WAIT", "PENG", "GANG", "CHI", "HU", "DAPAI", "XUANFENGGANGFENG", "XUANFENGGANGJIAN", "ANGANG", "TINGPAI", "BAOPAI"},-1)
 
+local notPushPassMsg = false
+
 local _currentPanel = {}
 local _popPanel = {}
 local Camera = CS.UnityEngine.Camera
@@ -142,6 +144,7 @@ function ClickEvent.CreateOperationButton( ... )
 	_currentPanel.buttonList["GameHuButton"] = UIPackage.GetItemURL("MXUI","GameHuButton")
 	_currentPanel.buttonList["GameTingButton"] = UIPackage.GetItemURL("MXUI","GameTingButton")
 	_currentPanel.buttonList["XuanFengButton"] = UIPackage.GetItemURL("MXUI","XuanFengButton")
+	_currentPanel.buttonList["ClearShowFan"] = UIPackage.GetItemURL("MXUI","ClearShowFan")
 end
 
 function ClickEvent.AddOperationButton( buttonName )
@@ -246,7 +249,7 @@ function ClickEvent.PaiOperationState()
 			end
 		end
 	end
-		
+	
     for k,v in pairs(Player._operation_alert_cache.pais) do
     	for j,m in pairs(v.oper_list) do
 	    	CS.UnityEngine.Debug.LogWarning(m)
@@ -378,17 +381,35 @@ function ClickEvent.ShowCalculate( ... )
 		end
 		local tempX = _position_index[currentPositionData.position] - _position_index[myPosition]
 		if tempX == 1 then
-			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
+			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
 			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 2 then
-			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
+			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = v.player_id
 			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 3 then
-			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
+			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
 			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = v.score
 		else
-			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = currentPositionData.common_prop.player_id
+			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = v.player_id
 			_popPanel.panel:GetChild("MyClearInfo"):GetChild("DouNum").text = v.score
+			local detailList = _popPanel.panel:GetChild("MyClearInfo"):GetChild("FanList")
+			detailList:RemoveChildrenToPool()
+			for i,c in pairs(v.details) do
+				local fanName = nil
+				local fanNum = nil
+				for a,b in pairs(Player._calculate_table_loader.fans) do
+					if c.fan_type == b.fan_type then
+						fanName = b.name
+						fanNum = b.multiple
+					end
+				end
+				local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
+				listChild.name = ""..i
+				listChild:GetChild("FanName").text = tostring(fanName)
+				listChild:GetChild("FanNum").text = "+"..tostring(fanNum).."番"
+				listChild:GetChild("FanDou").text = "+"..c.score
+				--listChild:GetChild("FanPlayer").text = "+"..c.score
+			end
 		end
 	end
 end
@@ -859,6 +880,7 @@ end
 
 function ClickEvent.GameCancelButton(gameObject)
 	-- body
+	Player._ting_pai_cache = nil
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.SetCurrentState(operationState.DAPAI)
 end

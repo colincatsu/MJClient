@@ -40,6 +40,7 @@ _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
 local _banker_position = 0
+local _calculate_table_loader = {}--计算读表
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -493,6 +494,7 @@ function Player.OnPaiNotify(type_t,stuff)
         LogWarning("countPai----------------")
         LogWarning(countPai)
         if countPai == 14 then
+            ClickEvent.notPushPassMsg = true
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
         --Player.ThreadFunction(
@@ -501,6 +503,7 @@ function Player.OnPaiNotify(type_t,stuff)
         Player.MahJong.SetCurrentState(operationState.DAPAI)
         Player._fa_pai_cache = message.pai
         --Player.ThreadFunction(
+        ClickEvent.notPushPassMsg = true
         Player.MahJong.ZhuaPai()
     elseif message.data_type == "CARDS_DATA_TYPE_SYNC" then
         Player._invoke_table_test = message
