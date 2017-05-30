@@ -7,6 +7,8 @@ local FLibEvent = require "FLibEvent"
 --local Network = require "Network"
 local protobuf = require "protobuf"
 local FairyGUI = require "FairyGUI"
+local Effect = require "Effect"
+
 --[[
 local AssetManager = require "AssetManager"
 	local loader = AssetManager.Load()
@@ -105,14 +107,16 @@ function start()
 
 	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 	ClickEvent.CreateOperationButton()
+	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	MahJong.Init()
 	MahJong.ModelPoolInit()
 	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
+
 	--[[
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS",tonumber(CS.LuaBehaviour._room_id))
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",3,1,2,3)
@@ -176,7 +180,6 @@ function MahJong.MjLoader()
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
-	loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
 	Player._calculate_table_loader = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.RoomFan")
 	--[[
@@ -578,6 +581,28 @@ function MahJong.SortOtherPai( ... )
 	end
 end
 
+function MahJong.DeleteOtherPai(whichPlayer,paiCount)
+	-- body
+	local countTemp = 0
+	if whichPlayer == "next" then
+		for i=1,paiCount do
+			CS.UnityEngine.Object.Destroy(_player_pai_pool._next_card[_player_pai_pool._next_pai_number])
+			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number - 1
+		end
+	elseif whichPlayer == "forward" then
+		for i=1,paiCount do
+			CS.UnityEngine.Object.Destroy(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number])
+			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number - 1
+		end
+	elseif whichPlayer == "opposite" then
+		for i=1,paiCount do
+			CS.UnityEngine.Object.Destroy(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number])
+			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number - 1
+		end
+	end
+	MahJong.SortOtherPai()
+end
+
 
 function MahJong.ZhuaPai()
 	-- body
@@ -756,9 +781,8 @@ function MahJong.ClickPaiEvent(gameObject)
 				return
 			end
 			MahJong._current_click_pai = nil
-			if currentOperationState ~= operationState.TINGPAI then
-				ClickEvent.CloseOperationPanel()
-			end
+			
+			ClickEvent.CloseOperationPanel()
 			MahJong.DaPai(paiNumber)
 			ClickEvent.notPushPassMsg = false
 			if not isTingPaied then
@@ -798,6 +822,16 @@ function MahJong.TingPaiUpdateState( ... )
 				break
 			end
 		end
+	end
+end
+
+function MahJong.TingPaiCancelState( ... )
+	-- body
+	isTingPaied = false
+	for k,v in pairs(_player_father.cards) do
+		--v.child
+		v.canTouch = true
+		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))-- = CS.UnityEngine.Color(0,0,0,1)
 	end
 end
 

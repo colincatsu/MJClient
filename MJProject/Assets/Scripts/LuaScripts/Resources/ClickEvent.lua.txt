@@ -1,3 +1,4 @@
+local gbk = require "gbk"
 ClickEvent = {}
 ClickEvent.panelTable = {}
 ClickEvent.panelTable._main_ui = "Login"
@@ -62,6 +63,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
 	end
 	_currentPanel.panel = ClickEvent._createObject[panelName]
+	_currentPanel.panel.name = panelName
 	_currentPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_currentPanel.panel:SetPosition(0,0,0)
 	GRoot.inst:AddChild(_currentPanel.panel)
@@ -105,25 +107,24 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPaiShow.visible = false
 		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
 		ClickEvent._play_ui.oppositePaiShow.visible = false
-		ClickEvent._play_ui.selfBanker = _currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("Zhuang")
-		ClickEvent._play_ui.nextBanker = _currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("Zhuang")
-		ClickEvent._play_ui.oppositeBanker = _currentPanel.panel:GetChild("OppositePlayerAvatarInfo"):GetChild("Zhuang")
-		ClickEvent._play_ui.forwardBanker = _currentPanel.panel:GetChild("FrontPlayerAvatarInfo"):GetChild("Zhuang")
+		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
+		ClickEvent._play_ui.behindPlayerAvatarInfo = _currentPanel.panel:GetChild("BehindPlayerAvatarInfo")
+		ClickEvent._play_ui.oppositePlayerAvatarInfo = _currentPanel.panel:GetChild("OppositePlayerAvatarInfo")
+		ClickEvent._play_ui.frontPlayerAvatarInfo = _currentPanel.panel:GetChild("FrontPlayerAvatarInfo")
+		ClickEvent._play_ui.selfBanker = ClickEvent._play_ui.playerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.nextBanker = ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.oppositeBanker = ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.forwardBanker = ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("Zhuang")
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
 
-		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
+		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		--[[
-		local effectPrefab = CS.UnityEngine.Resources.Load("Effect/Effect_UI_Head portrait_01")
-		local effectPlayer = CS.UnityEngine.Object.Instantiate(effectPrefab)
-		effectPlayer.transform.position = ClickEvent._play_ui.playerAvatarInfo.displayObject.gameObject.transform.position
 		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
 			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
-		local x = GGraph()
 		ClickEvent._play_ui.playerAvatarInfo:AddChild(x)
-		x:SetNativeObject(GoWrapper(effectPlayer))
 		--]]
 	end
 	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
@@ -329,8 +330,11 @@ function ClickEvent.PopPanel( panelName )
 	_popPanel.background:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel.background:Center()
 	_popPanel.background:SetPosition(0,0,0)
+	_popPanel.background.onTouchBegin:Add(ClickEvent.registerButtonDown)
+	_popPanel.background.onTouchEnd:Add(ClickEvent.registerButtonUp)
 
 	_popPanel.panel = ClickEvent._createObject[panelName]
+	_popPanel.panel.name = panelName
 	_popPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel.panel:Center()
 	_popPanel.panel:SetPosition(0,0,0)
@@ -397,17 +401,23 @@ function ClickEvent.ShowCalculate( ... )
 			for i,c in pairs(v.details) do
 				local fanName = nil
 				local fanNum = nil
-				for a,b in pairs(Player._calculate_table_loader.fans) do
-					if c.fan_type == b.fan_type then
-						fanName = b.name
-						fanNum = b.multiple
+				for a,b in pairs(Player._calculate_table_loader) do
+					for a1,b1 in pairs(b.fans) do
+						if c.fan_type == b1.fan_type then
+							fanName = b1.name
+							fanNum = b1.multiple
+						end
 					end
 				end
 				local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 				listChild.name = ""..i
-				listChild:GetChild("FanName").text = tostring(fanName)
+				listChild:GetChild("FanName").text = gbk.toutf8(fanName)
 				listChild:GetChild("FanNum").text = "+"..tostring(fanNum).."番"
-				listChild:GetChild("FanDou").text = "+"..c.score
+				if c.score < 0 then
+					listChild:GetChild("FanDou").text = "+"..c.score
+				else
+					listChild:GetChild("FanDou").text = ""..c.score
+				end
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 		end
@@ -828,7 +838,8 @@ end
 
 function ClickEvent.GameTingButton(gameObject)
 	-- body
-	ClickEvent.CloseOperationPanel()
+	--ClickEvent.CloseOperationPanel()
+	ClickEvent._play_ui.operationBar:RemoveChildrenToPool()
 	Player.MahJong.TingPaiUpdateState()
 	Player.MahJong.SetCurrentState(operationState.DAPAI)
 	--Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},{})
@@ -883,6 +894,7 @@ function ClickEvent.GameCancelButton(gameObject)
 	Player._ting_pai_cache = nil
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.SetCurrentState(operationState.DAPAI)
+	Player.MahJong.TingPaiCancelState()
 end
 
 function ClickEvent.CloseOperationPanel()
@@ -921,6 +933,24 @@ function ClickEvent.registerButtonClick(gameObject)
 		CS.UnityEngine.Debug.LogWarning("key no found")
 	end
 
+end
+
+function ClickEvent.registerButtonDown(gameObject)
+	-- body
+	_popPanel.background:GetChild("Di").visible  = false
+	print(_popPanel.panel.name)
+	if _popPanel.panel.name == ClickEvent.panelTable._calculate_ui then
+		_popPanel.panel.visible = false
+	end
+	
+end
+
+function ClickEvent.registerButtonUp(gameObject)
+	-- body
+	_popPanel.background:GetChild("Di").visible  = true
+	if _popPanel.panel.name == ClickEvent.panelTable._calculate_ui then
+		_popPanel.panel.visible = true
+	end
 end
 
 return ClickEvent

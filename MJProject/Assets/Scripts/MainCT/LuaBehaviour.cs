@@ -43,6 +43,7 @@ public class LuaBehaviour : MonoBehaviour {
         LuaEnvSingleton.Instance.AddBuildin("rapidjson", XLua.LuaDLL.Lua.LoadRapidJson);
         LuaEnvSingleton.Instance.AddBuildin("protobuf_c", XLua.LuaDLL.Lua.LoadlProtobufC);
         LuaEnvSingleton.Instance.AddBuildin("LuaReader", XLua.LuaDLL.Lua.LoadlLuaReader);
+        LuaEnvSingleton.Instance.AddBuildin("gbk", XLua.LuaDLL.Lua.LoadlGbk);
         XLua.LuaDLL.Lua.InitXLuaAnyLog();
         //Toggle mytoggle;
         scriptEnv = LuaEnvSingleton.Instance.NewTable();

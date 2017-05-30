@@ -62,6 +62,7 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\LoadingCT.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Text.shader" />
      <None Include="Assets\FairyGUI\Examples\Resources\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Scripts\LuaScripts\Resources\Effect.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\ClickEvent.lua.txt" />
      <None Include="Assets\Shader\CubeReflect.shader" />
      <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
