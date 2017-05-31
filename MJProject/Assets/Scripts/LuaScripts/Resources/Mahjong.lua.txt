@@ -418,7 +418,7 @@ end
 function MahJong.ModelPoolInit()
 	-- body
 	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
-	local countTemp = 0
+	--local countTemp = 0
 	for i=1,_modelPoolLineCount*4 do
 		if i <= _modelPoolLineCount then
 			_modelPool[i] = CS.UnityEngine.Object.Instantiate(modelTemp,_pointFather.D.transform)
@@ -542,7 +542,7 @@ end
 function MahJong.CreateOtherPai(whichPlayer,paiCount)
 	-- body
 	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
-	local countTemp = 0
+	--local countTemp = 0
 	if whichPlayer == "next" then
 		for i=1,paiCount do
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
@@ -583,7 +583,7 @@ end
 
 function MahJong.DeleteOtherPai(whichPlayer,paiCount)
 	-- body
-	local countTemp = 0
+	--local countTemp = 0
 	if whichPlayer == "next" then
 		for i=1,paiCount do
 			CS.UnityEngine.Object.Destroy(_player_pai_pool._next_card[_player_pai_pool._next_pai_number])
@@ -598,6 +598,51 @@ function MahJong.DeleteOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			CS.UnityEngine.Object.Destroy(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number])
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number - 1
+		end
+	end
+	MahJong.SortOtherPai()
+end
+
+function MahJong.AddOtherPai(whichPlayer,paiCount)
+	-- body
+	local modelTemp = CS.UnityEngine.Resources.Load("MJModel/null_Model")
+	--local countTemp = 0
+	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
+	if playerPos == 0 then
+		ClickEvent._play_ui.playerTing.visible = true
+	elseif playerPos == 1 then
+		ClickEvent._play_ui.behindPlayerTing.visible = true
+		_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
+	elseif playerPos == 2 then
+		ClickEvent._play_ui.oppositePlayerTing.visible = true
+		_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
+	elseif playerPos == 3 then
+		ClickEvent._play_ui.frontPlayerTing.visible = true
+		_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
+	else
+		CS.UnityEngine.Debug.LogWarning("position nil")
+	end
+
+	if whichPlayer == "next" then
+		for i=1,paiCount do
+			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
+			_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localEulerAngles = newVector3(90,90,0)
+			--_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+	elseif whichPlayer == "forward" then
+		for i=1,paiCount do
+			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localEulerAngles = newVector3(90,-90,0)
+			--_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+	elseif whichPlayer == "opposite" then
+		for i=1,paiCount do
+			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
+			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = CS.UnityEngine.Object.Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localEulerAngles = newVector3(90,0,0)
+			--_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		end
 	end
 	MahJong.SortOtherPai()
