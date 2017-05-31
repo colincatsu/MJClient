@@ -501,10 +501,19 @@ function Player.OnPaiNotify(type_t,stuff)
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.SetCurrentState(operationState.DAPAI)
-        Player._fa_pai_cache = message.pai
-        --Player.ThreadFunction(
-        ClickEvent.notPushPassMsg = true
-        Player.MahJong.ZhuaPai()
+        if message.pai then
+            Player._fa_pai_cache = message.pai
+            ClickEvent.notPushPassMsg = true
+            Player.MahJong.ZhuaPai()
+        else
+            if Player._all_players_data then
+                for k,v in pairs(Player._all_players_data) do
+                    if v.common_prop.player_id == message.player_id then
+                        Player.MahJong.AddOtherPai(v.position,1)
+                    end
+                end
+            end
+        end
     elseif message.data_type == "CARDS_DATA_TYPE_SYNC" then
         Player._invoke_table_test = message
         --Player.ThreadFunction(

@@ -1,5 +1,5 @@
 
-—V
+¶V
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -152,11 +152,11 @@ ENTER_TYPE
 PlayerLuckyPlateD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_LUCKY_PLATE
 plate_id (
-result ("ü
+result ("†
 RandomSaiziE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_RANDOM_SAIZI:
-reason_type (2%.Adoter.Asset.RandomSaizi.REASON_TYPE
-plate_id (
+reason_type (2%.Adoter.Asset.RandomSaizi.REASON_TYPE
+	player_id (
 random_result (%
 pai (2.Adoter.Asset.PaiElement"=
 REASON_TYPE
@@ -220,12 +220,13 @@ error_code (2.Adoter.Asset.ERROR_CODE"≥
 CommonOperationResponseP
 type_t (2.Adoter.Asset.META_TYPE:'META_TYPE_S2C_COMMON_OPERATION_RESPONSE.
 client_type_t (2.Adoter.Asset.META_TYPE
-client_message ("ﬂ
+client_message ("Ú
 	PaiNotifyA
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PAI_NOTIFY:
-	data_type (2'.Adoter.Asset.PaiNotify.CARDS_DATA_TYPE-
-pais (2.Adoter.Asset.PaiNotify.MutiPai.
-pai (2!.Adoter.Asset.PaiNotify.SinglePaiD
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PAI_NOTIFY
+	player_id (:
+	data_type (2'.Adoter.Asset.PaiNotify.CARDS_DATA_TYPE-
+pais (2.Adoter.Asset.PaiNotify.MutiPai.
+pai (2!.Adoter.Asset.PaiNotify.SinglePaiD
 MutiPai*
 	card_type (2.Adoter.Asset.CARD_TYPE
 cards (K
@@ -236,15 +237,15 @@ card_value ("a
 CARDS_DATA_TYPE
 CARDS_DATA_TYPE_START
 CARDS_DATA_TYPE_FAPAI
-CARDS_DATA_TYPE_SYNC"∞
+CARDS_DATA_TYPE_SYNC"©
 CommonPropertyH
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_COMMON_PROPERTYB
 reason_type (2-.Adoter.Asset.CommonProperty.SYNC_REASON_TYPE
 	player_id (-
-common_prop (2.Adoter.Asset.CommonProp"N
+common_prop (2.Adoter.Asset.CommonProp"G
 SYNC_REASON_TYPE
-SYNC_REASON_TYPE_SELF
-SYNC_REASON_TYPE_ENTER_ROOM"Ç
+SYNC_REASON_TYPE_SELF
+SYNC_REASON_TYPE_GET"Ç
 PaiOperationAlertJ
 type_t (2.Adoter.Asset.META_TYPE:!META_TYPE_S2C_PAI_OPERATION_ALERT:
 pais (2,.Adoter.Asset.PaiOperationAlert.AlertElemente
@@ -314,7 +315,7 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN
 ERROR_GAME_NO_PERMISSION(
-ERROR_GAME_PAI_UNSATISFIED)*¡	
+ERROR_GAME_PAI_UNSATISFIED)*
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -352,10 +353,7 @@ ERROR_CODE
 META_TYPE_S2C_ROOM_INFOÅ!
 META_TYPE_S2C_GAME_CALCULATEÇ
 META_TYPE_S2C_GAME_INFOÉ
-META_TYPE_S2C_COUNTË
-META_TYPE_S2S_BEGINÈ
-META_TYPE_S2S_REGISTERÍ
-META_TYPE_S2S_COUNT‹*N
+META_TYPE_S2C_COUNTË*N
 ROOM_MODEL_TYPE
 ROOM_MODEL_TYPE_CLASSICAL
 ROOM_MODEL_TYPE_MULTIPLE*»
@@ -365,7 +363,7 @@ ERROR_CODE
 ROOM_EXTEND_TYPE_XUANFENGGANG
 ROOM_EXTEND_TYPE_BAOPAI
 ROOM_EXTEND_TYPE_DUANMEN
-ROOM_EXTEND_TYPE_QIYISE*ä
+ROOM_EXTEND_TYPE_QIYISE*£
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -380,8 +378,9 @@ ERROR_CODE
 PAI_OPER_TYPE_TINGPAI
 
 PAI_OPER_TYPE_BAOPAI
-PAI_OPER_TYPE_LIUJU
-PAI_OPER_TYPE_COUNT*y
+PAI_OPER_TYPE_COUNT
+PAI_OPER_TYPE_LIUJU
+PAI_OPER_TYPE_FAPAI*y
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
