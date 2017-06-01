@@ -134,7 +134,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
+				print(c.stuff)
 				if c.type_t == "ITEM_TYPE_ROOM_CARD" then
+					print(protobuf.decode(AssetManager.GetMessagesByType(c.type_t),c.stuff))
 					_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(c.stuff)
 				end
 			end
@@ -207,6 +209,7 @@ end
 
 function ClickEvent.BankerStateUpdate(bankerPos)
 	-- body
+	Player.MahJong.UpdateWhoseTurn(bankerPos)
 	Player._banker_position = ClickEvent.PlayerPosition(bankerPos)
 	if Player._banker_position == 0 then
 		ClickEvent._play_ui.selfBanker.visible = true

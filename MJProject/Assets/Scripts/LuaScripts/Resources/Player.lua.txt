@@ -510,6 +510,7 @@ function Player.OnPaiNotify(type_t,stuff)
                 for k,v in pairs(Player._all_players_data) do
                     if v.common_prop.player_id == message.player_id then
                         Player.MahJong.AddOtherPai(v.position,1)
+                        MahJong.UpdateWhoseTurn(v.position)
                     end
                 end
             end
@@ -546,6 +547,7 @@ function Player.OnPaiOperation(type_t,stuff)
     if message.oper_type == "PAI_OPER_TYPE_DAPAI" then
         --Player.SetDaPaiCache(message)
         --Player.ThreadFunction(
+        Player.MahJong.DeleteOtherPai(message.position,1)
         Player.MahJong.DaPaiPoolShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_HUPAI" then
         --Player.SetPaiOperationShowCache(message)
@@ -554,14 +556,17 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
+        MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
+        MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
+        MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
         LogWarning("give up operation")
@@ -576,6 +581,7 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
+        MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_TINGPAI" then
         Player.MahJong.TingPai(message)
