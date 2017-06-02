@@ -1,5 +1,5 @@
 
-¶V
+ÙV
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -10,7 +10,11 @@ PaiElement*
 
 card_value (
 
-card_index ("C
+card_index ("e
+ItemElement4
+inventory_type (2.Adoter.Asset.INVENTORY_TYPE
+index (
+	global_id ("C
 User&
 account (2.Adoter.Asset.Account
 player_list ("ø
@@ -363,7 +367,7 @@ ERROR_CODE
 ROOM_EXTEND_TYPE_XUANFENGGANG
 ROOM_EXTEND_TYPE_BAOPAI
 ROOM_EXTEND_TYPE_DUANMEN
-ROOM_EXTEND_TYPE_QIYISE*£
+ROOM_EXTEND_TYPE_QIYISE*ä
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -379,8 +383,7 @@ ERROR_CODE
 
 PAI_OPER_TYPE_BAOPAI
 PAI_OPER_TYPE_COUNT
-PAI_OPER_TYPE_LIUJU
-PAI_OPER_TYPE_FAPAI*y
+PAI_OPER_TYPE_LIUJU*y
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START

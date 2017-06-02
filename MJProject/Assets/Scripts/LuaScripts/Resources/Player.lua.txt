@@ -482,6 +482,10 @@ function Player.OnPaiNotify(type_t,stuff)
         Player._invoke_table_test = message
         Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)
         --]]
+        if not message.pais then
+            return
+        end
+
         Player._invoke_table = message
 
         local countPai = 0

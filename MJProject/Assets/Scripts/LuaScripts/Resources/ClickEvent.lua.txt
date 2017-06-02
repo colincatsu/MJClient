@@ -194,6 +194,8 @@ function ClickEvent.RoomInformationUpdate( ... )
 		CS.UnityEngine.Debug.LogWarning(v)
 	end
 	for k,v in pairs(Player._all_players_data) do
+		CS.UnityEngine.Debug.LogWarning("jjjjjjjjjjjjjjj")
+		CS.UnityEngine.Debug.LogWarning(v.position)
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
 			_currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
