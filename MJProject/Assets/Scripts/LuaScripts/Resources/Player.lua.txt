@@ -482,7 +482,7 @@ function Player.OnPaiNotify(type_t,stuff)
         Player._invoke_table_test = message
         Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)
         --]]
-        if not message.pais then
+        if Player._my_player_data.common_prop.player_id ~= message.player_id then
             return
         end
 
@@ -505,16 +505,17 @@ function Player.OnPaiNotify(type_t,stuff)
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.SetCurrentState(operationState.DAPAI)
-        if message.pai then
+        if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
             Player._fa_pai_cache = message.pai
             ClickEvent.notPushPassMsg = true
+            Player.MahJong.UpdateWhoseTurn(Player._my_player_data.position)
             Player.MahJong.ZhuaPai()
         else
             if Player._all_players_data then
                 for k,v in pairs(Player._all_players_data) do
                     if v.common_prop.player_id == message.player_id then
                         Player.MahJong.AddOtherPai(v.position,1)
-                        MahJong.UpdateWhoseTurn(v.position)
+                        Player.MahJong.UpdateWhoseTurn(v.position)
                     end
                 end
             end
@@ -560,17 +561,17 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
-        MahJong.UpdateWhoseTurn(message.position)
+        Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
-        MahJong.UpdateWhoseTurn(message.position)
+        Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
-        MahJong.UpdateWhoseTurn(message.position)
+        Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
         LogWarning("give up operation")
@@ -585,7 +586,7 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
-        MahJong.UpdateWhoseTurn(message.position)
+        Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
     elseif message.oper_type == "PAI_OPER_TYPE_TINGPAI" then
         Player.MahJong.TingPai(message)
