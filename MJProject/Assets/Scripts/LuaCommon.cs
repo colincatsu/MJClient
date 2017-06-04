@@ -117,6 +117,8 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(RelationType),
                 typeof(UIConfig),
                 typeof(GoWrapper),
+                typeof(WaitForSeconds),
+                typeof(WWW),
             };
         }
     }

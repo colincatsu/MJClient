@@ -40,12 +40,12 @@ function ClickEvent.Awake( ... )
 	UIConfig.defaultFont = "MJFont"
 	UIPackage.AddPackage("FairyUI/MXUI")
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
+	ClickEvent._createObject = {}
+	CS.UnityEngine.Application.targetFrameRate = 60
 end
 function ClickEvent.Start(loadUI)
 	-- body
-	ClickEvent._createObject = {}
-	CS.UnityEngine.Application.targetFrameRate = 60
-	--ClickEvent.uiPanel.ui:RemoveChildren()
+	ClickEvent.uiPanel.ui.visible = false
 	ClickEvent.CreateNewPanel(loadUI)
 end
 
@@ -121,6 +121,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
+		ClickEvent._play_ui.avatarLoader.url = "Touxiang01"
 
 		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		--[[
@@ -132,7 +134,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
-		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = "0"
+		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
+		--[[
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
 				print("ITEM_TYPE_ROOM_CARD")
@@ -143,6 +146,7 @@ function ClickEvent.CreateNewPanel(panelName)
 				end
 			end
 		end
+		--]]
 	end
 	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
 	if ClickEvent._play_ui.roomId then

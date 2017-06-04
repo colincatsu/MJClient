@@ -1,5 +1,6 @@
 local protobuf = require "protobuf"
 local AssetManager = require "AssetManager"
+local LoadingCT = require "LoadingCT"
 
 ---------------------------------------------------------------------------
 --成员变量
@@ -41,6 +42,7 @@ _invokeFunctionTable.rear = 0
 local _calculate_data = {}--结算数据
 local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
+local _tosence_name = nil
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -188,12 +190,15 @@ end
 ---------------------------------------------------------------------------
 --加载场景!!!!!!!type_t，记得添加
 ---------------------------------------------------------------------------
-function Player.LoadScene(type_t, buffer)
+function Player.LoadScene(senceName, buffer)
     for k,v in pairs(ClickEvent._createObject) do
         v:Dispose()
     end
-    Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
-    CS.UnityEngine.Application.LoadLevelAsync("PlaySence")
+    Player._tosence_name = senceName
+    if senceName == "PlaySence" then
+        Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
+    end
+    CS.UnityEngine.Application.LoadLevel("LoadingSence")
 end
 
 ---------------------------------------------------------------------------
@@ -415,7 +420,7 @@ function Player.OnEnterRoom(type_t,stuff)
     if message.error_code == "ERROR_SUCCESS" then
         --CS.LuaBehaviour._room_id = tostring(this._roomId)
         --Player.ThreadFunction(
-        Player.LoadScene()
+        Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
@@ -504,8 +509,9 @@ function Player.OnPaiNotify(type_t,stuff)
         --Player.ThreadFunction(
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
-        Player.MahJong.SetCurrentState(operationState.DAPAI)
+        Player.MahJong.ModelPoolDelete(1)
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
+            Player.MahJong.SetCurrentState(operationState.DAPAI)
             Player._fa_pai_cache = message.pai
             ClickEvent.notPushPassMsg = true
             Player.MahJong.UpdateWhoseTurn(Player._my_player_data.position)
@@ -671,7 +677,7 @@ function Player.OnCreateRoom(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
     --Player.ThreadFunction(
-    Player.LoadScene()
+    Player.LoadScene("PlaySence")
     --this._roomType = message.room.room_type
 end
 

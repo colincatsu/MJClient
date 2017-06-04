@@ -1,5 +1,5 @@
 
-ôV
+«X
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -44,7 +44,7 @@ GameRecord2
 fan_type (2.Adoter.Asset.FAN_TYPE"F
 RoomHistory
 room_id (&
-list (2.Adoter.Asset.GameRecord"²
+list (2.Adoter.Asset.GameRecord"Ë
 
 CommonProp
 	player_id (
@@ -54,13 +54,14 @@ CommonProp
 level (:1:
 gender (2.Adoter.Asset.GENDER_TYPE:GENDER_TYPE_MAN
 diamond (
-	huanledou (
-total_rounds	 (
-total_win_rounds
- (
-streak_wins (
-score (
-room_history ("•
+	huanledou (
+room_card_count	 (
+total_rounds
+ (
+total_win_rounds (
+streak_wins (
+score (
+room_history ("•
 PlayerCommonLimit9
 elements (2'.Adoter.Asset.PlayerCommonLimit.ElementE
 Element
@@ -220,11 +221,13 @@ PlayerList>
 error_type (2.Adoter.Asset.ERROR_TYPE6
 error_show_type (2.Adoter.Asset.ERROR_SHOW_TYPE,
 
-error_code (2.Adoter.Asset.ERROR_CODE"³
-CommonOperationResponseP
-type_t (2.Adoter.Asset.META_TYPE:'META_TYPE_S2C_COMMON_OPERATION_RESPONSE.
-client_type_t (2.Adoter.Asset.META_TYPE
-client_message ("ò
+error_code (2.Adoter.Asset.ERROR_CODE"½
+LiuJu<
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_LIUJU/
+elements (2.Adoter.Asset.LiuJu.LJElementE
+	LJElement
+	player_id (%
+pai (2.Adoter.Asset.PaiElement"ò
 	PaiNotifyA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PAI_NOTIFY
 	player_id (:
@@ -277,7 +280,13 @@ card_value ("a
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
-ERR_USE_ITEM_TYPE_LEVEL_UP*‰
+ERR_USE_ITEM_TYPE_LEVEL_UP*J
+ITEM_CHANGED_TYPE
+ITEM_CHANGED_TYPE_GMT
+ITEM_CHANGED_TYPE_MALL*S
+DIAMOND_CHANGED_TYPE
+DIAMOND_CHANGED_TYPE_GMT
+DIAMOND_CHANGED_TYPE_MALL*‰
 POSITION_TYPE
 POSITION_TYPE_NULL 
 POSITION_TYPE_EAST
@@ -319,7 +328,7 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN
 ERROR_GAME_NO_PERMISSION(
-ERROR_GAME_PAI_UNSATISFIED)*ð
+ERROR_GAME_PAI_UNSATISFIED)*Ü
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -348,8 +357,8 @@ ERROR_CODE
 META_TYPE_S2C_SERVER_LIST÷
 META_TYPE_S2C_PLAYERSø
 META_TYPE_S2C_PLAYER_INFOù
-META_TYPE_S2C_ALERT_ERRORû,
-'META_TYPE_S2C_COMMON_OPERATION_RESPONSEü
+META_TYPE_S2C_ALERT_ERRORû
+META_TYPE_S2C_LIUJUü
 META_TYPE_S2C_PAI_NOTIFYý&
 !META_TYPE_S2C_PAI_OPERATION_ALERTþ
 META_TYPE_S2C_COMMON_LIMITÿ 
@@ -360,14 +369,15 @@ ERROR_CODE
 META_TYPE_S2C_COUNTè*N
 ROOM_MODEL_TYPE
 ROOM_MODEL_TYPE_CLASSICAL
-ROOM_MODEL_TYPE_MULTIPLE*È
+ROOM_MODEL_TYPE_MULTIPLE*è
 ROOM_EXTEND_TYPE
 ROOM_EXTEND_TYPE_ZHANLIHU
 ROOM_EXTEND_TYPE_JIAHU!
 ROOM_EXTEND_TYPE_XUANFENGGANG
 ROOM_EXTEND_TYPE_BAOPAI
 ROOM_EXTEND_TYPE_DUANMEN
-ROOM_EXTEND_TYPE_QIYISE*Š
+ROOM_EXTEND_TYPE_QIYISE
+ROOM_EXTEND_TYPE_BAOSANJIA*ñ
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -382,8 +392,7 @@ ERROR_CODE
 PAI_OPER_TYPE_TINGPAI
 
 PAI_OPER_TYPE_BAOPAI
-PAI_OPER_TYPE_COUNT
-PAI_OPER_TYPE_LIUJU*y
+PAI_OPER_TYPE_COUNT*y
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
