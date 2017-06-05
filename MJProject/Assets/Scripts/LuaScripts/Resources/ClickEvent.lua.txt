@@ -7,6 +7,7 @@ ClickEvent.panelTable._create_room_ui = "CreateRoom"
 ClickEvent.panelTable._join_room_ui = "GetintoRoom"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
+--ClickEvent.panelTable._
 ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlaySence"
 ClickEvent.panelTable._player_info = "PlayerInfo"
@@ -121,8 +122,6 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
-		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
-		ClickEvent._play_ui.avatarLoader.url = "Touxiang01"
 
 		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		--[[
@@ -135,6 +134,10 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
 		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
+
+		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
+		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
+		--ClickEvent._play_ui.avatarLoader.url = "ui://fqzg601x114ssbl"--UIPackage.GetItemURL("MXUI","Touxiang01_s")
 		--[[
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
@@ -456,6 +459,23 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.Avatar( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
+	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = Player._player_data.common_prop.player_id
+	_popPanel.panel:GetChild("DouNum").text = Player._player_data.common_prop.huanledou
+	_popPanel.panel:GetChild("GemsNum").text = Player._player_data.common_prop.diamond
+	_popPanel.panel:GetChild("RoomCardNum").text = Player._player_data.common_prop.room_card_count
+	_popPanel.panel:GetChild("TotalWin").text = Player._player_data.common_prop.streak_wins
+	_popPanel.panel:GetChild("TotalPlay").text = Player._player_data.common_prop.total_rounds
+	if Player._player_data.common_prop.total_rounds == 0 then
+		_popPanel.panel:GetChild("WinRate").text = 0
+	else
+		_popPanel.panel:GetChild("WinRate").text = Player._player_data.common_prop.total_win_rounds/Player._player_data.common_prop.total_rounds
+	end
+end
+
 function ClickEvent.NextRoundButton( ... )
 	-- body
 	ClickEvent.Close()
@@ -716,6 +736,20 @@ function ClickEvent.CreateRoomId( gameObject )
 	CS.UnityEngine.Debug.LogWarning(gameObject.name)
 end
 
+function ClickEvent.ClassicMode( ... )
+	-- body
+	for i=1,7 do
+		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = false
+	end
+end
+
+function ClickEvent.HighRiskMode( ... )
+	-- body
+	for i=1,7 do
+		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = true
+	end
+end
+
 function ClickEvent.CreateButton( )
 	-- body
 	--roomid
@@ -768,6 +802,10 @@ function ClickEvent.CreateButton( )
 	end
 	if _popPanel.panel:GetChild("ChooseFan06").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_QIYISE"
+		extend_type_count = extend_type_count + 1
+	end
+	if _popPanel.panel:GetChild("ChooseFan07").selected then
+		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_BAOSANJIA"
 		extend_type_count = extend_type_count + 1
 	end
 	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
