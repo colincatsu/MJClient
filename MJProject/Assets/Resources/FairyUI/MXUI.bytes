@@ -5,11 +5,14 @@ g09nlu.xml|616|<component size="104,44">
     <text id="n2_g09n" name="TotalRoundNum" xy="72,9" size="28,28" fontSize="22" color="#ffffff" align="center" vAlign="middle" autoSize="shrink" bold="true" text="99"/>
     <text id="n3_g09n" name="n3" xy="49,9" size="28,28" fontSize="22" color="#ffffff" align="right" vAlign="middle" autoSize="shrink" text="/"/>
   </displayList>
-</component>g09nlv.xml|351|<component size="1034,52">
+</component>g09nlv.xml|586|<component size="1034,52">
   <displayList>
     <text id="n1_g09n" name="n1" xy="-2,-1" size="1037,54" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="shrink" strokeColor="#ff9966" strokeSize="0" shadowColor="#ff9966" shadowOffset="1,1" text="恭喜你成为2017年第一届将王大赛冠军，奖励请联系客服"/>
   </displayList>
-  <transition name="t0"/>
+  <transition name="ToastShow">
+    <item time="0" type="Alpha" target="n1_g09n" tween="true" startValue="0" endValue="1" duration="12"/>
+    <item time="60" type="Alpha" target="n1_g09n" tween="true" startValue="1" endValue="0" duration="12"/>
+  </transition>
 </component>i5kclq.xml|467|<component size="129,163" pivot="0.5,0.5">
   <displayList>
     <image id="n3_oc2l" name="n3" src="oc2lls" xy="0,0"/>
@@ -65,7 +68,7 @@ g09nlu.xml|616|<component size="104,44">
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>package.xml|27981|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|28173|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="g09nlu" name="RoundNumber" path="/UIPIC/开房界面/" size="104,44"/>
     <component id="i5kclq" name="PaiShow" path="/UIPIC/xinzeng/" size="129,163"/>
@@ -168,18 +171,6 @@ g09nlu.xml|616|<component size="104,44">
     <component id="w61cj5" name="MailInfo" path="/UIPIC/邮件/" size="300,25"/>
     <component id="w61cj6" name="MailBody" path="/UIPIC/邮件/" size="400,210"/>
     <image id="gepqlt" name="jiazailaba" path="/UIPIC/xinzeng/" size="1034,52"/>
-    <image id="nnbzjw" name="Touxiang01_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzjy" name="Touxiang02_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzk0" name="Touxiang03_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzk2" name="Touxiang04_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzk4" name="Touxiang05_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzk6" name="Touxiang06_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzk8" name="Touxiang07_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzka" name="Touxiang08_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzkc" name="Touxiang09_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzke" name="Touxiang10_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzkg" name="Touxiang11_s" path="/UIPIC/选择头像/" size="103,103"/>
-    <image id="nnbzki" name="Touxiang12_s" path="/UIPIC/选择头像/" size="103,103"/>
     <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
     <image id="oc2llr" name="pai" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
@@ -374,17 +365,29 @@ g09nlu.xml|616|<component size="104,44">
     <image id="i5kcln" name="xi" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
     <image id="i5kclo" name="zhong" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
     <image id="nnbzjv" name="Touxiang01" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzjw" name="Touxiang01_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzjx" name="Touxiang02" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzjy" name="Touxiang02_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzjz" name="Touxiang03" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzk0" name="Touxiang03_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzk1" name="Touxiang04" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzk2" name="Touxiang04_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzk3" name="Touxiang05" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzk4" name="Touxiang05_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzk5" name="Touxiang06" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzk6" name="Touxiang06_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzk7" name="Touxiang07" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzk8" name="Touxiang07_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzk9" name="Touxiang08" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzka" name="Touxiang08_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzkb" name="Touxiang09" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzkc" name="Touxiang09_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzkd" name="Touxiang10" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzke" name="Touxiang10_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzkf" name="Touxiang11" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzkg" name="Touxiang11_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzkh" name="Touxiang12" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
+    <image id="nnbzki" name="Touxiang12_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
     <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>
@@ -944,13 +947,13 @@ g09nlu.xml|616|<component size="104,44">
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>w61cdr.xml|355|<component size="256,212">
+</component>w61cdr.xml|401|<component size="256,212">
   <displayList>
     <image id="n0_algd" name="n0" src="w61cd9" xy="0,0"/>
     <image id="n1_algd" name="SaleHint" src="w61cd6" xy="-7,-10"/>
-    <text id="n3_algd" name="Tsale" xy="10,42" size="39,27" rotation="-44" fontSize="23" color="#ffffff" shadowColor="#000000" shadowOffset="1,1" text="促销"/>
+    <text id="n3_algd" name="Tsale" xy="0,48" size="67,32" rotation="-44" fontSize="23" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="促销"/>
   </displayList>
-</component>w61cds.xml|563|<component size="190,64" extention="Button">
+</component>w61cds.xml|550|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="Bg" src="w61cd5" xy="0,0">
@@ -958,8 +961,8 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 648"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>w61cdt.xml|561|<component size="190,64" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cdt.xml|548|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="Bg" src="w61cd5" xy="0,0">
@@ -967,8 +970,8 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>w61cdu.xml|561|<component size="190,64" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cdu.xml|548|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="Bg" src="w61cd5" xy="0,0">
@@ -976,8 +979,8 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>w61cdv.xml|561|<component size="190,64" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cdv.xml|548|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cd5" xy="0,0">
@@ -985,8 +988,8 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>w61cdw.xml|561|<component size="190,64" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cdw.xml|548|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cd5" xy="0,0">
@@ -994,8 +997,8 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
-</component>w61cdx.xml|561|<component size="190,64" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cdx.xml|548|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cd5" xy="0,0">
@@ -1003,7 +1006,7 @@ g09nlu.xml|616|<component size="104,44">
     </image>
     <text id="n2_algd" name="Text" xy="32,5" size="122,49" fontSize="36" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" text="￥ 6"/>
   </displayList>
-  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
+  <Button downEffect="dark" downEffectValue="0.80"/>
 </component>w61ce8.xml|598|<component size="262,90" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>

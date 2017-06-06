@@ -292,6 +292,7 @@ function Player.CmdLoadScene(loadType,sceneId)
         load_type = loadType,
         scene_id = sceneId,
     }
+    LogWarning("jxyDebugLoadSence"..loadType)
     this.SendProtocol("LoadScene",loadScene)
 end
 ---------------------------------------------------------------------------

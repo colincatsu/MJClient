@@ -7,7 +7,10 @@ ClickEvent.panelTable._create_room_ui = "CreateRoom"
 ClickEvent.panelTable._join_room_ui = "GetintoRoom"
 ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
 ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
---ClickEvent.panelTable._
+ClickEvent.panelTable._mall_ui = "Mall"
+ClickEvent.panelTable._mail_ui = "Mail"
+ClickEvent.panelTable._setting_ui = "Setting"
+ClickEvent.panelTable._history_score_ui = "HistoryScene"
 ClickEvent.panelTable._store_ui = "StoreUI"
 ClickEvent.panelTable._play_game_ui = "PlaySence"
 ClickEvent.panelTable._player_info = "PlayerInfo"
@@ -137,7 +140,7 @@ function ClickEvent.CreateNewPanel(panelName)
 
 		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
 		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
-		--ClickEvent._play_ui.avatarLoader.url = "ui://fqzg601x114ssbl"--UIPackage.GetItemURL("MXUI","Touxiang01_s")
+		ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang02")
 		--[[
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
@@ -459,6 +462,62 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.Shop( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	_popPanel.panel:GetChild("MallDouButton").selected = true
+end
+
+function ClickEvent.Instruction( ... )
+	-- body
+end
+
+function ClickEvent.Mail( ... )
+	-- body
+	print("mail")
+	ClickEvent.PopPanel(ClickEvent.panelTable._mail_ui)
+end
+
+function ClickEvent.VIPRecordButton( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+end
+
+function ClickEvent.Promotion( ... )
+	-- body
+end
+
+function ClickEvent.Welfare( ... )
+	-- body
+end
+
+function ClickEvent.Setting( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+end
+
+function ClickEvent.More( ... )
+	-- body
+end
+
+function ClickEvent.RoomCardNum( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	_popPanel.panel:GetChild("MallItemButton").selected = true
+end
+
+function ClickEvent.DouNum( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	_popPanel.panel:GetChild("MallDouButton").selected = true
+end
+
+function ClickEvent.GemsNum( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	_popPanel.panel:GetChild("MallGemsButton").selected = true
+end
+
 function ClickEvent.Avatar( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
@@ -472,7 +531,7 @@ function ClickEvent.Avatar( ... )
 	if Player._player_data.common_prop.total_rounds == 0 then
 		_popPanel.panel:GetChild("WinRate").text = 0
 	else
-		_popPanel.panel:GetChild("WinRate").text = Player._player_data.common_prop.total_win_rounds/Player._player_data.common_prop.total_rounds
+		_popPanel.panel:GetChild("WinRate").text = math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds).."%"
 	end
 end
 
@@ -689,38 +748,6 @@ function ClickEvent.CreateRoomButton( ... )
 	CS.UnityEngine.Debug.LogWarning("CreateRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
-end
-
-function ClickEvent.Store( ... )
-	-- body
-end
-
-function ClickEvent.Option( ... )
-	-- body
-end
-
-function ClickEvent.Mail( ... )
-	-- body
-end
-
-function ClickEvent.Rank( ... )
-	-- body
-end
-
-function ClickEvent.Activity( ... )
-	-- body
-end
-
-function ClickEvent.Method( ... )
-	-- body
-end
-
-function ClickEvent.Reward( ... )
-	-- body
-end
-
-function ClickEvent.More( ... )
-	-- body
 end
 
 function ClickEvent.Close( ... )
@@ -999,7 +1026,7 @@ end
 function ClickEvent.registerButtonDown(gameObject)
 	-- body
 	_popPanel.background:GetChild("Di").visible  = false
-	print(_popPanel.panel.name)
+	--print(_popPanel.panel.name)
 	if _popPanel.panel.name == ClickEvent.panelTable._calculate_ui then
 		_popPanel.panel.visible = false
 	end
