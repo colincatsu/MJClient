@@ -443,9 +443,9 @@ function ClickEvent.ShowCalculate( ... )
 				listChild:GetChild("FanName").text = gbk.toutf8(fanName)
 				listChild:GetChild("FanNum").text = "+"..tostring(fanNum).."番"
 				if c.score < 0 then
-					listChild:GetChild("FanDou").text = "+"..c.score
-				else
 					listChild:GetChild("FanDou").text = ""..c.score
+				else
+					listChild:GetChild("FanDou").text = "+"..c.score
 				end
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
@@ -460,7 +460,12 @@ function ClickEvent.showDisconnect( ... )
 end
 ---------------------------------------------------------------------------
 -------------点击功能函数
----------------------------------------------------------------------------
+---------------------------------------------------------------------------、
+
+function ClickEvent.GameSettingButton( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+end
 
 function ClickEvent.Shop( ... )
 	-- body
