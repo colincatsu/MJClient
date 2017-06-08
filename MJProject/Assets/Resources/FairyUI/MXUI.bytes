@@ -13,11 +13,11 @@ g09nlu.xml|616|<component size="104,44">
     <item time="0" type="Alpha" target="n1_g09n" tween="true" startValue="0" endValue="1" duration="12"/>
     <item time="60" type="Alpha" target="n1_g09n" tween="true" startValue="1" endValue="0" duration="12"/>
   </transition>
-</component>i5kclq.xml|467|<component size="129,163" pivot="0.5,0.5">
+</component>i5kclq.xml|474|<component size="129,163" pivot="0.5,0.5">
   <displayList>
     <image id="n3_oc2l" name="n3" src="oc2lls" xy="0,0"/>
     <image id="n4_oc2l" name="n4" src="oc2llr" xy="0,0"/>
-    <loader id="n5_oc2l" name="n5" xy="0,-2" size="129,163" url="ui://krtoytc1i5kcll" align="center" vAlign="middle"/>
+    <loader id="n5_oc2l" name="PaiLoader" xy="0,-2" size="129,163" url="ui://krtoytc1i5kcll" align="center" vAlign="middle"/>
   </displayList>
   <transition name="PaiShowEffect">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1,1" duration="9"/>
@@ -26,7 +26,7 @@ g09nlu.xml|616|<component size="104,44">
   <displayList>
     <image id="n0_j3uo" name="n0" src="nnbzkj" xy="0,0"/>
   </displayList>
-</component>j3uokl.xml|967|<component size="1334,750">
+</component>j3uokl.xml|2450|<component size="1334,750">
   <displayList>
     <image id="n0_j3uo" name="Bg" src="w61cbq" xy="0,0"/>
     <image id="n3_j3uo" name="Di" src="w61cd4" xy="0,0" size="1334,750" alpha="0.6">
@@ -35,8 +35,28 @@ g09nlu.xml|616|<component size="104,44">
     <component id="n1_j3uo" name="Inform" src="j3uokm" xy="133,531"/>
     <text id="n2_j3uo" name="n2" xy="132,642" size="1069,39" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活"/>
     <text id="n4_j3uo" name="n4" xy="97,680" size="1138,39" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="本网络游戏适合年满10岁以上的用户使用。为了您的健康，请合理控制游戏时间。抵制不良游戏，拒绝盗版游戏。 注意自我保护，谨防受骗上当。 适度游戏益脑，沉迷游戏伤身。 合理安排时间，享受健康生活。"/>
-    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" fontSize="35" color="#ffff99" align="center" vAlign="middle" autoSize="shrink" text="正在加载中..."/>
+    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" fontSize="35" color="#ffff99" align="center" vAlign="middle" autoSize="shrink" text="正在加载中"/>
+    <text id="n6_lt1c" name="n6" xy="754,477" size="18,32" fontSize="26" color="#ffcc00" vAlign="bottom" autoSize="none" bold="true" text="."/>
+    <text id="n7_lt1c" name="n7" xy="772,478" size="19,32" fontSize="26" color="#ffcc00" vAlign="bottom" autoSize="none" bold="true" text="."/>
+    <text id="n8_lt1c" name="n8" xy="791,478" size="88,32" fontSize="26" color="#ffcc00" vAlign="bottom" autoSize="none" bold="true" text="."/>
   </displayList>
+  <transition name="LoadingDDD">
+    <item time="0" type="Visible" target="n6_lt1c" value="false"/>
+    <item time="0" type="Visible" target="n7_lt1c" value="false"/>
+    <item time="0" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="6" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="6" type="Visible" target="n7_lt1c" value="false"/>
+    <item time="6" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="12" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="12" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="12" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="18" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="18" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="18" type="Visible" target="n8_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n8_lt1c" value="true"/>
+  </transition>
 </component>j3uokm.xml|278|<component size="1068,69" overflow="hidden">
   <displayList>
     <image id="n7_gepq" name="n7" src="gepqlt" xy="17,8"/>
@@ -68,13 +88,75 @@ g09nlu.xml|616|<component size="104,44">
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>package.xml|28173|<packageDescription id="krtoytc1" name="MXUI">
+</component>lt1cmu.xml|417|<component size="1334,750">
+  <displayList>
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="387,229" size="556,273"/>
+    <text id="n1_lt1c" name="n1" xy="509,302" size="315,34" fontSize="30" color="#993300" bold="true" text="您确定要退出游戏吗？"/>
+    <component id="n2_lt1c" name="YesButton" src="w61cik" xy="466,385"/>
+    <component id="n3_lt1c" name="NoButton" src="w61cim" xy="683,386"/>
+  </displayList>
+</component>lt1cmv.xml|727|<component size="1334,750">
+  <displayList>
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="271,138" size="790,456"/>
+    <text id="n1_lt1c" name="n1" xy="557,161" size="213,55" fontSize="51" color="#993300" bold="true" text="免责声明"/>
+    <text id="n4_lt1c" name="n4" xy="361,236" size="607,187" fontSize="28" color="#993300" autoSize="height" bold="true" text="亲爱的玩家，您选择了游客登陆游戏，由于该模式下的游戏数据（包含付费数据）在删除游戏或更换设备后会丢失，对此造成的损失《乐乐朝阳麻将》项目组将不承担任何责任。&#xA;为了您的虚拟财产安全，我们建议您选择微信登陆游戏。"/>
+    <component id="n5_lt1c" name="WechatLogin" src="w61cav" xy="424,468"/>
+    <component id="n7_lt1c" name="GuestLoginText" src="lt1cmw" xy="741,523"/>
+    <component id="n8_lt1c" name="Close" src="w61cj0" xy="990,135"/>
+  </displayList>
+</component>lt1cmw.xml|598|<component size="251,32" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <text id="n4" name="title" xy="0,0" size="251,32" fontSize="12" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+    <text id="n5_lt1c" name="n5" xy="1,0" size="248,31" fontSize="26" color="#993300" autoSize="height" underline="true" bold="true" text="继续使用游客登陆"/>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>lt1cmx.xml|342|<component size="1334,750">
+  <displayList>
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="467,243" size="400,254"/>
+    <text id="n1_lt1c" name="n1" xy="555,312" size="224,34" fontSize="30" color="#993300" bold="true" text="当前房间已解散"/>
+    <component id="n2_lt1c" name="YesButton" src="w61cik" xy="578,383"/>
+  </displayList>
+</component>lt1cn0.xml|843|<component size="1334,750">
+  <displayList>
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="396,192" size="557,371"/>
+    <text id="n1_lt1c" name="n1" xy="570,230" size="193,34" fontSize="30" color="#993300" bold="true" text="欢乐豆不够啦"/>
+    <text id="n3_lt1c" name="n3" xy="490,278" size="352,22" fontSize="18" color="#993300" autoSize="height" bold="true" text="您的游戏豆不足，无法进入本场进行游戏"/>
+    <image id="n4_lt1c" name="n4" src="w61cdd" xy="598,319"/>
+    <text id="n5_lt1c" name="PriceNum" xy="587,421" size="167,31" fontSize="27" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" shadowColor="#000000" shadowOffset="0,1" text="*1000000"/>
+    <component id="n6_lt1c" name="PriceButton" src="lt1cn1" xy="676,461"/>
+    <component id="n8_lt1c" name="GiveupButton" src="lt1cn2" xy="498,463"/>
+  </displayList>
+</component>lt1cn1.xml|584|<component size="190,64">
+  <displayList>
+    <image id="n0_lt1c" name="n0" src="w61cd5" xy="0,0"/>
+    <text id="n1_lt1c" name="DouNum" xy="62,18" size="70,27" fontSize="22" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="0,1" text="99999"/>
+    <text id="n2_lt1c" name="n2" xy="127,18" size="51,27" fontSize="22" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="0,1" text="充值"/>
+    <image id="n4_lt1c" name="n4" src="w61cbb" xy="24,13" size="37,35"/>
+  </displayList>
+</component>lt1cn2.xml|301|<component size="124,60">
+  <displayList>
+    <image id="n2_lt1c" name="n2" src="w61caz" xy="0,0" size="124,60"/>
+    <text id="n1_lt1c" name="n1" xy="18,12" size="86,35" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="放弃"/>
+  </displayList>
+</component>lt1cn3.xml|393|<component size="1334,750">
+  <displayList>
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="438,243" size="467,254"/>
+    <text id="n1_lt1c" name="n1" xy="487,304" size="358,54" fontSize="24" color="#993300" align="center" autoSize="height" bold="true" text="房卡不够了，添加微信客服MX88可通过代理购买房卡"/>
+    <component id="n2_lt1c" name="YesButton" src="w61cik" xy="578,383"/>
+  </displayList>
+</component>package.xml|29123|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="g09nlu" name="RoundNumber" path="/UIPIC/开房界面/" size="104,44"/>
     <component id="i5kclq" name="PaiShow" path="/UIPIC/xinzeng/" size="129,163"/>
     <component id="j3uokk" name="Draw" path="/UIPIC/游戏页面/" size="250,95"/>
     <component id="j3uokm" name="Inform" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="l2jdkp" name="Server" path="/UIPIC/邮件/" size="100,50"/>
+    <component id="lt1cmw" name="GuestLoginText" path="/UIPIC/xinzeng/" size="251,32"/>
+    <component id="lt1cn1" name="PriceButton" path="/UIPIC/商城/" size="190,64"/>
+    <component id="lt1cn2" name="GiveupButton" path="/UIPIC/邮件/" size="124,60"/>
     <component id="qpkkjt" name="GameCancelButton" path="/UIPIC/游戏页面/" size="112,112"/>
     <component id="w61ca9" name="VIPRecordButton" path="/UIPIC/xinzeng/" size="66,85"/>
     <component id="w61cai" name="ServiceTerm1" path="/UIPIC/个人信息/" size="119,50"/>
@@ -294,6 +376,11 @@ g09nlu.xml|616|<component size="104,44">
     <component id="g09nlv" name="Toast" path="/UIPIC/功能界面/" size="1034,52" exported="true"/>
     <component id="j3uokl" name="Loading" path="/" size="1334,750" exported="true"/>
     <component id="j3uokn" name="InformText" path="/UIPIC/功能界面/" size="1000,69" exported="true"/>
+    <component id="lt1cmu" name="ExitGamePop" path="/" size="1334,750" exported="true"/>
+    <component id="lt1cmv" name="BindingDeclarationPop" path="/" size="1334,750" exported="true"/>
+    <component id="lt1cmx" name="RoomClosedPop" path="/" size="1334,750" exported="true"/>
+    <component id="lt1cn0" name="NotEnoughDouPop" path="/" size="1334,750" exported="true"/>
+    <component id="lt1cn3" name="NotEnoughRoomCardPop" path="/" size="1334,750" exported="true"/>
     <component id="qpkkjs" name="TingArrow" path="/UIPIC/游戏页面/" size="47,51" exported="true"/>
     <component id="s5h9jr" name="Bg" path="/" size="1334,750" exported="true"/>
     <component id="w61ca6" name="XuanFengButton" path="/UIPIC/xinzeng/" size="155,155" exported="true"/>
@@ -330,40 +417,40 @@ g09nlu.xml|616|<component size="104,44">
     <component id="w61cjo" name="ChooseAvatar" path="/" size="1334,750" exported="true"/>
     <component id="w61cjp" name="Setting" path="/" size="1334,750" exported="true"/>
     <component id="w61cjq" name="GetReward" path="/" size="1334,750" exported="true"/>
-    <image id="i5kckq" name="bai" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckr" name="bei" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcks" name="dong" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckt" name="fa" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckv" name="nan" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckw" name="tiao_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckx" name="tiao_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcky" name="tiao_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kckz" name="tiao_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl0" name="tiao_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl1" name="tiao_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl2" name="tiao_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl3" name="tiao_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl4" name="tiao_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl5" name="tong_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl6" name="tong_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl7" name="tong_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl8" name="tong_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcl9" name="tong_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcla" name="tong_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclb" name="tong_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclc" name="tong_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcld" name="tong_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcle" name="w_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclf" name="w_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclg" name="w_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclh" name="w_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcli" name="w_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclj" name="w_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclk" name="w_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kcll" name="w_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclm" name="w_9" path="/UIPIC/麻将牌/" size="80,106" exported="true"/>
-    <image id="i5kcln" name="xi" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="i5kclo" name="zhong" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1clw" name="baiban_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1clx" name="bing_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cly" name="bing_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1clz" name="bing_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm0" name="bing_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm1" name="bing_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm2" name="bing_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm3" name="bing_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm4" name="bing_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm5" name="bing_9_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm6" name="east_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm7" name="fa_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm8" name="north_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cm9" name="south_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cma" name="tiao_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmb" name="tiao_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmc" name="tiao_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmd" name="tiao_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cme" name="tiao_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmf" name="tiao_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmg" name="tiao_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmh" name="tiao_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmi" name="tiao_9_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmj" name="wan_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmk" name="wan_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cml" name="wan_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmm" name="wan_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmn" name="wan_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmo" name="wan_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmp" name="wan_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmq" name="wan_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmr" name="wan_9_Model" path="/UIPIC/麻将牌/" size="80,106" exported="true"/>
+    <image id="lt1cms" name="west_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="lt1cmt" name="zhong_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
     <image id="nnbzjv" name="Touxiang01" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzjw" name="Touxiang01_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzjx" name="Touxiang02" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
@@ -1448,7 +1535,7 @@ g09nlu.xml|616|<component size="104,44">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cj1.xml|597|<component size="177,73" extention="Button">
+</component>w61cj1.xml|638|<component size="177,73" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cil" xy="0,0">
@@ -1458,8 +1545,8 @@ g09nlu.xml|616|<component size="104,44">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
   </displayList>
-  <Button/>
-</component>w61cj2.xml|597|<component size="177,73" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cj2.xml|638|<component size="177,73" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cin" xy="0,0">
@@ -1469,8 +1556,8 @@ g09nlu.xml|616|<component size="104,44">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
   </displayList>
-  <Button/>
-</component>w61cj3.xml|597|<component size="262,91" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cj3.xml|638|<component size="262,91" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="w61cam" xy="0,0">
@@ -1480,14 +1567,14 @@ g09nlu.xml|616|<component size="104,44">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
   </displayList>
-  <Button/>
-</component>w61cj4.xml|588|<component size="133,50" extention="Button">
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>w61cj4.xml|601|<component size="133,50" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <text id="n4" name="RewardNum" xy="50,0" size="83,50" fontSize="20" align="center" vAlign="middle" autoSize="none" singleLine="true" text="*999999">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
-    <loader id="n5" name="RewardIcon" xy="0,0" size="50,50" align="center" vAlign="middle">
+    <loader id="n5" name="RewardIcon" xy="0,0" size="50,50" align="center" vAlign="middle" fill="scale">
       <relation target="" sidePair="width-width,height-height"/>
     </loader>
   </displayList>
@@ -1874,7 +1961,7 @@ g09nlu.xml|616|<component size="104,44">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|5476|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|5484|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n30_glwt" name="n30" src="w61cb4" xy="135,98" size="194,43">
       <relation target="" sidePair="left-left,top-top"/>
@@ -1958,7 +2045,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="n36_oc2l" name="OppositePaiShow" src="i5kclq" xy="602,45" pivot="0.5,0.5">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n37_g09n" name="n37" src="g09nlu" xy="1119,26">
+    <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="1119,26">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
   </displayList>
@@ -2352,7 +2439,7 @@ g09nlu.xml|616|<component size="104,44">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>
-</component>w61cjp.xml|2626|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjp.xml|2642|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <image id="n2_qb9a" name="Bg" src="w61ce4" xy="196,32" group="n27_s5h9"/>
     <text id="n4_qb9a" name="Title" xy="325,71" size="205,54" group="n27_s5h9" fontSize="50" color="#ffffff" text="游戏设置"/>

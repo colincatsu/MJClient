@@ -1,5 +1,5 @@
 
-´X
+™Z
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -162,7 +162,7 @@ ENTER_TYPE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_RANDOM_SAIZI:
 reason_type (2%.Adoter.Asset.RandomSaizi.REASON_TYPE
 	player_id (
-random_result (%
+random_result (%
 pai (2.Adoter.Asset.PaiElement"=
 REASON_TYPE
 REASON_TYPE_START
@@ -276,7 +276,12 @@ card_value ("a
 record (2.Adoter.Asset.GameRecord"m
 GameInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_INFO
-banker_player_id (*u
+banker_player_id ("ê
+KillOut?
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_KILL_OUT
+	player_id (1
+
+out_reason (2.Adoter.Asset.KILL_OUT_REASON*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -328,7 +333,7 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN
 ERROR_GAME_NO_PERMISSION(
-ERROR_GAME_PAI_UNSATISFIED)*‹
+ERROR_GAME_PAI_UNSATISFIED)*˘
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -365,7 +370,8 @@ ERROR_CODE
 META_TYPE_S2C_COMMON_REWARDÄ
 META_TYPE_S2C_ROOM_INFOÅ!
 META_TYPE_S2C_GAME_CALCULATEÇ
-META_TYPE_S2C_GAME_INFOÉ
+META_TYPE_S2C_GAME_INFOÉ
+META_TYPE_S2C_KILL_OUTÑ
 META_TYPE_S2C_COUNTË*N
 ROOM_MODEL_TYPE
 ROOM_MODEL_TYPE_CLASSICAL
@@ -397,4 +403,7 @@ ERROR_CODE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
-GAME_OPER_TYPE_KICKOUT
+GAME_OPER_TYPE_KICKOUT*M
+KILL_OUT_REASON
+KILL_OUT_REASON_BEGIN 
+KILL_OUT_REASON_OTHER_LOGIN

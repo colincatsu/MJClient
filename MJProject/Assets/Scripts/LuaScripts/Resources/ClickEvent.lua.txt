@@ -453,6 +453,20 @@ function ClickEvent.ShowCalculate( ... )
 	end
 end
 
+function ClickEvent.DapaiUIShow(position,card_type,card_value)
+	-- body
+	local whichPlayer = ClickEvent.PlayerPosition(position)
+	if whichPlayer == 1 then
+		ClickEvent._play_ui.behindPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+	elseif whichPlayer == 2 then
+		ClickEvent._play_ui.oppositePaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+	elseif whichPlayer == 3 then
+		ClickEvent._play_ui.frontPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+	else
+		CS.UnityEngine.Debug.LogWarning("position nil")
+	end
+end
+
 function ClickEvent.showDisconnect( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)

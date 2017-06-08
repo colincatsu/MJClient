@@ -8,6 +8,11 @@ local Network = require "Network"
 local protobuf = require "protobuf"
 local FairyGUI = require "FairyGUI"
 local Effect = require "Effect"
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 --[[
 local AssetManager = require "AssetManager"
@@ -117,8 +122,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	--[[
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	--[[
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
@@ -1076,7 +1081,7 @@ function MahJong.DaPaiPoolShow(message)
 			0,math.fmod(_pai_pool_show.point_b.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 		MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	end
-
+	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
 end
 
 function MahJong.PengPai(paiTable)
@@ -2153,14 +2158,26 @@ function MahJong.AnimationPlay()
 	end
 end
 
-function MahJong.PlayDoubleDices( ... )
+function MahJong.PlayDoubleDices(number1,number2)
 	-- body
 	diceCountDown = 0
+	--[[
 	math.randomseed(os.time())
-	redDicePoints = math.random(6)
-	whiteDicePoints = math.random(6)
+	 math.random(6)
+	--]]
+	redDicePoints =	number1
+	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
 	modelPoolFrontPointer = zhuaPaiBeginPos*2
+	local co = coroutine.create(function()
+    yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time))
+    MahJong.CreatePlayerPai()
+	end)
+	coroutine.resume(co)
+end
+
+function MahJong.PlayerSingleDice(number,baopai)
+	-- body
 end
 
 function update()

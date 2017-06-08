@@ -403,13 +403,15 @@ function Player.OnPlayerInformation(type_t,stuff)
     if not message.player then
         return
     end
+    --[[
     if not Player._player_data then
         Player._player_data = message.player
         --Player.ThreadFunction(
-        ClickEvent.ThreadToMainMenu()
     else
-        Player._player_data = message.player
     end
+    --]]
+    Player._player_data = message.player
+    ClickEvent.ThreadToMainMenu()
 end
 
 function Player.OnEnterRoom(type_t,stuff)
@@ -472,6 +474,33 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     ClickEvent.PaiOperationState()
 end
 
+function Player.OnRandomSaizi(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.RandomSaizi",stuff)
+    if not message.data_type then
+        LogWarning("type is nil")
+        return
+    end
+    if message.reason_type == "REASON_TYPE_START" then
+        local count = 0
+        local number1 = 1
+        local number2 = 1
+        for k,v in pairs(random_result) do
+            count = count + 1
+            if count == 1 then
+                number1 = v
+            elseif count == 2 then
+                number2 = v
+            end
+        end
+        MahJong.PlayDoubleDices(number1,number2)
+    elseif message.reason_type == "REASON_TYPE_TINGPAI" then
+    end
+end
+
 function Player.OnPaiNotify(type_t,stuff)
     -- body
     if not stuff then
@@ -508,7 +537,7 @@ function Player.OnPaiNotify(type_t,stuff)
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
         --Player.ThreadFunction(
-        Player.MahJong.CreatePlayerPai()
+        --Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.ModelPoolDelete(1)
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
@@ -693,6 +722,14 @@ function Player.OnAlterError(type_t,stuff)
     this.error_code = message.error_code
     LogWarning(this.error_type)
     --Player.ThreadFunction(Player.LoadScene)
+end
+--踢玩家
+function Player.OnKillOut(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.KillOut", stuff)
 end
 
 function Player.OnLoadSuccess()
