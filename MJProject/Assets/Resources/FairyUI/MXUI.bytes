@@ -147,7 +147,7 @@ g09nlu.xml|616|<component size="104,44">
     <text id="n1_lt1c" name="n1" xy="487,304" size="358,54" fontSize="24" color="#993300" align="center" autoSize="height" bold="true" text="房卡不够了，添加微信客服MX88可通过代理购买房卡"/>
     <component id="n2_lt1c" name="YesButton" src="w61cik" xy="578,383"/>
   </displayList>
-</component>package.xml|29123|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|29324|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="g09nlu" name="RoundNumber" path="/UIPIC/开房界面/" size="104,44"/>
     <component id="i5kclq" name="PaiShow" path="/UIPIC/xinzeng/" size="129,163"/>
@@ -417,40 +417,6 @@ g09nlu.xml|616|<component size="104,44">
     <component id="w61cjo" name="ChooseAvatar" path="/" size="1334,750" exported="true"/>
     <component id="w61cjp" name="Setting" path="/" size="1334,750" exported="true"/>
     <component id="w61cjq" name="GetReward" path="/" size="1334,750" exported="true"/>
-    <image id="lt1clw" name="baiban_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1clx" name="bing_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cly" name="bing_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1clz" name="bing_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm0" name="bing_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm1" name="bing_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm2" name="bing_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm3" name="bing_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm4" name="bing_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm5" name="bing_9_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm6" name="east_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm7" name="fa_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm8" name="north_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cm9" name="south_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cma" name="tiao_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmb" name="tiao_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmc" name="tiao_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmd" name="tiao_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cme" name="tiao_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmf" name="tiao_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmg" name="tiao_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmh" name="tiao_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmi" name="tiao_9_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmj" name="wan_1_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmk" name="wan_2_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cml" name="wan_3_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmm" name="wan_4_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmn" name="wan_5_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmo" name="wan_6_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmp" name="wan_7_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmq" name="wan_8_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmr" name="wan_9_Model" path="/UIPIC/麻将牌/" size="80,106" exported="true"/>
-    <image id="lt1cms" name="west_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
-    <image id="lt1cmt" name="zhong_Model" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
     <image id="nnbzjv" name="Touxiang01" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzjw" name="Touxiang01_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzjx" name="Touxiang02" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
@@ -475,6 +441,40 @@ g09nlu.xml|616|<component size="104,44">
     <image id="nnbzkg" name="Touxiang11_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="nnbzkh" name="Touxiang12" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzki" name="Touxiang12_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
+    <image id="rr5dn4" name="CARD_TYPE_BINGZI_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dn5" name="CARD_TYPE_BINGZI_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dn6" name="CARD_TYPE_BINGZI_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dn7" name="CARD_TYPE_BINGZI_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dn8" name="CARD_TYPE_BINGZI_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dn9" name="CARD_TYPE_BINGZI_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dna" name="CARD_TYPE_BINGZI_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnb" name="CARD_TYPE_BINGZI_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnc" name="CARD_TYPE_BINGZI_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnd" name="CARD_TYPE_FENG_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dne" name="CARD_TYPE_FENG_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnf" name="CARD_TYPE_FENG_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dng" name="CARD_TYPE_FENG_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnh" name="CARD_TYPE_JIAN_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dni" name="CARD_TYPE_JIAN_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnj" name="CARD_TYPE_JIAN_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnk" name="CARD_TYPE_TIAOZI_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnl" name="CARD_TYPE_TIAOZI_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnm" name="CARD_TYPE_TIAOZI_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnn" name="CARD_TYPE_TIAOZI_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dno" name="CARD_TYPE_TIAOZI_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnp" name="CARD_TYPE_TIAOZI_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnq" name="CARD_TYPE_TIAOZI_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnr" name="CARD_TYPE_TIAOZI_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dns" name="CARD_TYPE_TIAOZI_9" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnt" name="CARD_TYPE_WANZI_1" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnu" name="CARD_TYPE_WANZI_2" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnv" name="CARD_TYPE_WANZI_3" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnw" name="CARD_TYPE_WANZI_4" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnx" name="CARD_TYPE_WANZI_5" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dny" name="CARD_TYPE_WANZI_6" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5dnz" name="CARD_TYPE_WANZI_7" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5do0" name="CARD_TYPE_WANZI_8" path="/UIPIC/麻将牌/" size="80,107" exported="true"/>
+    <image id="rr5do1" name="CARD_TYPE_WANZI_9" path="/UIPIC/麻将牌/" size="80,106" exported="true"/>
     <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
     <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas3" size="2048,2048" file="atlas3.png"/>

@@ -3,11 +3,12 @@ local NewVector3 = CS.UnityEngine.Vector3
 local Instantiate = CS.UnityEngine.Object.Instantiate
 local Load = CS.UnityEngine.Resources.Load
 local Destroy = CS.UnityEngine.Object.Destroy
+local LogWarning = CS.UnityEngine.Debug.LogWarning
 local prefabTable = {}
 local objectTable = {}
 
 
-function Effect.AddUIEffect(effectName,effectScale,effectFather)
+function Effect.AddUIEffect(effectName,effectScale,effectFather,targetSize)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
@@ -17,6 +18,9 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather)
 	effectFather:AddChild(x)
 	x:SetNativeObject(GoWrapper(objectTable[effectName]))
 	objectTable[effectName].transform.localScale = effectScale
+	if effectName == "Effect_UI_button_02" then
+		--LogWarning(objectTable[effectName].transform:Find("UI_plane002"):GetComponent("Renderer").bounds.size.x)
+	end
 end
 
 function Effect.AddNormalEffect(effectName,effectScale,effectFather)

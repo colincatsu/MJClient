@@ -1,5 +1,5 @@
 
-™Z
+◊U
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -17,21 +17,16 @@ card_index ("e
 	global_id ("C
 User&
 account (2.Adoter.Asset.Account
-player_list ("ø
+player_list ("·
 
-PlayerProp
-online (-
-position (2.Adoter.Asset.POSITION_TYPE
-room_id (0
-	load_type (2.Adoter.Asset.LOAD_SCENE_TYPE5
-game_oper_state (2.Adoter.Asset.GAME_OPER_TYPE
-check_feng_gang (
-check_jian_gang (
-pai_oper_count (
+PlayerProp-
+position (2.Adoter.Asset.POSITION_TYPE
+room_id (0
+	load_type (2.Adoter.Asset.LOAD_SCENE_TYPE5
+game_oper_state (2.Adoter.Asset.GAME_OPER_TYPE
+pai_oper_count (
 
-has_tinged	 (
-oper_count_tingpai
- ("Å
+has_tinged ("Å
 
 GameRecord2
 list (2$.Adoter.Asset.GameRecord.GameElementæ
@@ -89,7 +84,7 @@ attachment (2.Adoter.Asset.MailAttachment"I
 	client_ip (
 system (
 
-phone_type ("•
+phone_type ("ˆ
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -102,8 +97,7 @@ login_time (
 	sign_time (3
 client_info	 (2.Adoter.Asset.ClientInfomation%
 	mail_list
- (2.Adoter.Asset.Mail-
-player_prop (2.Adoter.Asset.PlayerProp"®
+ (2.Adoter.Asset.Mail"®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -129,13 +123,7 @@ login_time (
 room_id (*
 	room_type (2.Adoter.Asset.ROOM_TYPE
 enter_password (*
-options (2.Adoter.Asset.RoomOptions"ú
-RoomOptions,
-model (2.Adoter.Asset.ROOM_MODEL_TYPE3
-extend_type (2.Adoter.Asset.ROOM_EXTEND_TYPE
-top_mutiple (
-
-open_rands (:4"t
+options (2.Adoter.Asset.RoomOptions"t
 
 CreateRoomD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_CREATE_ROOM 
@@ -308,7 +296,7 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*‡
+ERROR_SHOW_TYPE_CHAT*Ù
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -322,7 +310,8 @@ ERROR_CODE
 ERROR_ACTIVITY_NOT_OPEN
 ERROR_CLIENT_DATA	
 ERROR_HAS_NO_PLAYER
-
+
+ERROR_DATABASE
 ERROR_ROOM_NOT_FOUNT
 ERROR_ROOM_PASSWORD
 ERROR_ROOM_IS_FULL
@@ -372,18 +361,7 @@ ERROR_CODE
 META_TYPE_S2C_GAME_CALCULATEÇ
 META_TYPE_S2C_GAME_INFOÉ
 META_TYPE_S2C_KILL_OUTÑ
-META_TYPE_S2C_COUNTË*N
-ROOM_MODEL_TYPE
-ROOM_MODEL_TYPE_CLASSICAL
-ROOM_MODEL_TYPE_MULTIPLE*Ë
-ROOM_EXTEND_TYPE
-ROOM_EXTEND_TYPE_ZHANLIHU
-ROOM_EXTEND_TYPE_JIAHU!
-ROOM_EXTEND_TYPE_XUANFENGGANG
-ROOM_EXTEND_TYPE_BAOPAI
-ROOM_EXTEND_TYPE_DUANMEN
-ROOM_EXTEND_TYPE_QIYISE
-ROOM_EXTEND_TYPE_BAOSANJIA*Ò
+META_TYPE_S2C_COUNTË*Ò
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI

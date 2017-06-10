@@ -48,6 +48,7 @@ local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036,zhuaGap = 0.0
 local _modelPool = {}--没抓的牌池
 local zhuaPaiBeginPos = 0
 local modelPoolFrontPointer = 0--抓牌指针
+local modelPoolBackPointer = 0--牌尾指针
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
@@ -81,6 +82,8 @@ local _animationName = {
 local _animationState = ""
 
 local _dice_obj--骰子
+local _dice_red = nil
+local _dice_white = nil
 local _red_dice_animation = nil
 local _white_dice_animation = nil
 local _rotate_speed = 2000
@@ -102,6 +105,7 @@ local _pai_type_table = {
 	CARD_TYPE_JIAN = 5,-- //箭牌
 }
 local _model_shadow_resource = nil
+local _baopai_model = nil
 -- body
 Player.self = self
 ClickEvent.MahJong = MahJong
@@ -155,6 +159,7 @@ end
 function MahJong.SetModelPoolFrontPointer( pointer )
 	-- body
 	modelPoolFrontPointer = pointer
+	modelPoolBackPointer = modelPoolFrontPointer
 end
 
 function MahJong.GetModelPoolFrontPointer()
@@ -217,6 +222,8 @@ function MahJong.Init()
 	_dice_obj = self.transform:Find("Dice").gameObject
 	_red_dice_animation = self.transform:Find("Dice/Red/Dice").gameObject:GetComponent("Animation")
 	_white_dice_animation = self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
+	_dice_red = self.transform:Find("Dice/Red").gameObject
+	_dice_white = self.transform:Find("Dice/White").gameObject
 	_gai_obj = self.transform:Find("Gai").gameObject
 	_pointFather.D = _gai_obj.transform:Find("Point_D/Father").gameObject
 	_startPosition.D = newVector3(_modelSize.width/2 - _modelPoolLineCount*_modelSize.width/4,_modelSize.length/2,0)
@@ -417,6 +424,10 @@ function MahJong.ResetGameState()
     --玩家面前牌
     CS.UnityEngine.Object.Destroy(_player_father.father)
     _player_father = nil
+    if _baopai_model then
+    	CS.UnityEngine.Object.Destroy(_baopai_model)
+    	_baopai_model = nil
+    end
     --抓牌池
     for k,v in pairs(_modelPool) do
     	v:SetActive(true)
@@ -965,6 +976,36 @@ function MahJong.DelUsedDaPai()
 	_current_dapai = {}
 end
 
+function MahJong.CreateBaoPai(pai,posNumber)
+	-- body
+	if _modelPool[posNumber] then
+		_modelPool[posNumber]:SetActive(false)
+	end
+    local tempPaiPool = {}
+    local modelName
+    for k, v in pairs(_mj_asset) do
+    	if pai.card_type == v.card_type then
+    		tempPaiPool = v
+    	end
+    end
+    if tempPaiPool and tempPaiPool.cards and tempPaiPool.cards[pai.card_value] then
+	    modelName = tostring(tempPaiPool.cards[pai.card_value].model_path)
+	else
+    	CS.UnityEngine.Debug.LogWarning("no modelName")
+		CS.UnityEngine.Debug.LogWarning(pai.card_type)
+    	CS.UnityEngine.Debug.LogWarning(pai.card_value)
+    end
+    if not modelName then
+    	return
+    end
+    local modelTemp = Load("MJModel/"..modelName)
+	_baopai_model = Instantiate(modelTemp)
+	_baopai_model.layer = 0
+	_baopai_model.name = modelName
+	_baopai_model.transform.eulerAngles = newVector3(180,_modelPool[posNumber].transform.eulerAngles.y,_modelPool[posNumber].transform.eulerAngles.z)
+	_baopai_model.transform.position = _modelPool[posNumber].transform.position
+end
+
 function MahJong.DaPai(paiNumber)
 	-- body
 	if paiNumber then
@@ -1082,6 +1123,15 @@ function MahJong.DaPaiPoolShow(message)
 		MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	end
 	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
+end
+
+function MahJong.DapaiUIHide(position)
+	-- body
+	local co = coroutine.create(function()
+    yield_return(CS.UnityEngine.WaitForSeconds(2))
+    ClickEvent.DapaiUIHide(position)
+	end)
+	coroutine.resume(co)
 end
 
 function MahJong.PengPai(paiTable)
@@ -2169,15 +2219,35 @@ function MahJong.PlayDoubleDices(number1,number2)
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
 	modelPoolFrontPointer = zhuaPaiBeginPos*2
+	modelPoolBackPointer = modelPoolFrontPointer
 	local co = coroutine.create(function()
-    yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time))
+    yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
     MahJong.CreatePlayerPai()
+    _dice_red:SetActive(false)
+    _dice_white:SetActive(false)
 	end)
 	coroutine.resume(co)
 end
 
 function MahJong.PlayerSingleDice(number,baopai)
 	-- body
+	diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
+	_dice_red:SetActive(true)
+	redDicePoints =	number
+	modelPoolBackPointer = modelPoolBackPointer -1 - (redDicePoints - 1)*2
+	if modelPoolBackPointer <= 0 then
+			modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
+	end
+	modelPoolBackPointer = math.fmod(modelPoolBackPointer,_model_all_pai_number)
+	if modelPoolBackPointer == 0 then
+			modelPoolBackPointer = _model_all_pai_number
+	end
+	local co = coroutine.create(function()
+    yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time))
+    MahJong.CreateBaoPai(baopai,modelPoolBackPointer)
+    _dice_red:SetActive(false)
+	end)
+	coroutine.resume(co)
 end
 
 function update()

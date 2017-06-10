@@ -1,4 +1,5 @@
 local gbk = require "gbk"
+local Effect = require "Effect"
 ClickEvent = {}
 ClickEvent.panelTable = {}
 ClickEvent.panelTable._main_ui = "Login"
@@ -19,6 +20,7 @@ ClickEvent.panelTable._calculate_ui = "ClearRoundScene"
 ClickEvent.panelTable._window_small = "PopWindowsSmall"
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
+ClickEvent.scale = nil
 
 ClickEvent._createObject = {}
 ClickEvent._play_ui = {}
@@ -44,6 +46,7 @@ function ClickEvent.Awake( ... )
 	UIConfig.defaultFont = "MJFont"
 	UIPackage.AddPackage("FairyUI/MXUI")
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
+	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
 	ClickEvent._createObject = {}
 	CS.UnityEngine.Application.targetFrameRate = 60
 end
@@ -142,6 +145,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
 		ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang02")
 		--[[
+		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
+		LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
+		LogWarning(image.displayObject.size.x * ClickEvent.scale)
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
 				print("ITEM_TYPE_ROOM_CARD")
@@ -347,8 +353,10 @@ end
 
 function ClickEvent.PopPanel( panelName )
 	-- body
+	local addEffect = false
 	if not ClickEvent._createObject["Bg"] then
 		ClickEvent._createObject["Bg"] = UIPackage.CreateObject("MXUI", "Bg").asCom
+		addEffect = true
 	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
@@ -368,6 +376,8 @@ function ClickEvent.PopPanel( panelName )
 	_popPanel.panel:SetPosition(0,0,0)
 	GRoot.inst:AddChild(_popPanel.background)
 	GRoot.inst:AddChild(_popPanel.panel)
+	--GRoot.inst:RemoveChild(_popPanel.panel)
+	--GRoot.inst:AddChild(_popPanel.panel)
 	local childNumber = _popPanel.panel.numChildren
 	for i=0,childNumber-1 do
 		local obj = _popPanel.panel:GetChildAt(i)
@@ -376,6 +386,13 @@ function ClickEvent.PopPanel( panelName )
 		end
 	end
 	--[[
+	local image = _popPanel.background:GetChild("Di")
+	LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
+	LogWarning(_currentPanel.panel:GetChild("Bg").displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
+	LogWarning(image.displayObject.size.x * ClickEvent.scale)
+	if panelName == ClickEvent.panelTable._create_room_ui and addEffect then
+		Effect.AddUIEffect("Effect_UI_button_02",CS.UnityEngine.Vector3(100,100,100),_popPanel.panel:GetChild("CreateButton"),image.displayObject.gameObject)
+	end
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
 	_popPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
 	_popPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
@@ -457,11 +474,29 @@ function ClickEvent.DapaiUIShow(position,card_type,card_value)
 	-- body
 	local whichPlayer = ClickEvent.PlayerPosition(position)
 	if whichPlayer == 1 then
-		ClickEvent._play_ui.behindPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+		ClickEvent._play_ui.behindPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
+		ClickEvent._play_ui.behindPaiShow.visible = true
 	elseif whichPlayer == 2 then
-		ClickEvent._play_ui.oppositePaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+		ClickEvent._play_ui.oppositePaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
+		ClickEvent._play_ui.oppositePaiShow.visible = true
 	elseif whichPlayer == 3 then
-		ClickEvent._play_ui.frontPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type..card_value)
+		ClickEvent._play_ui.frontPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
+		ClickEvent._play_ui.frontPaiShow.visible = true
+	else
+		CS.UnityEngine.Debug.LogWarning("position nil")
+	end
+	Player.MahJong.DapaiUIHide(whichPlayer)
+end
+
+function ClickEvent.DapaiUIHide(position)
+	-- body
+	
+	if position == 1 then
+		ClickEvent._play_ui.behindPaiShow.visible = false
+	elseif position == 2 then
+		ClickEvent._play_ui.oppositePaiShow.visible = false
+	elseif position == 3 then
+		ClickEvent._play_ui.frontPaiShow.visible = false
 	else
 		CS.UnityEngine.Debug.LogWarning("position nil")
 	end
@@ -955,7 +990,7 @@ end
 function ClickEvent.GamePlayButton( gameObject )
 	-- body
 	gameObject.visible = false
-	Player.MahJong.PlayDoubleDices()
+	--Player.MahJong.PlayDoubleDices()
 	Player.CmdGameOperation()
 end
 

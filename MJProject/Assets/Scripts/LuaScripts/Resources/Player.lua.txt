@@ -411,7 +411,9 @@ function Player.OnPlayerInformation(type_t,stuff)
     end
     --]]
     Player._player_data = message.player
-    ClickEvent.ThreadToMainMenu()
+    if Player._tosence_name ~= "PlaySence" then
+        ClickEvent.ThreadToMainMenu()
+    end
 end
 
 function Player.OnEnterRoom(type_t,stuff)
@@ -480,15 +482,15 @@ function Player.OnRandomSaizi(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RandomSaizi",stuff)
-    if not message.data_type then
-        LogWarning("type is nil")
+    if not message.reason_type then
+        LogWarning("reason_type is nil")
         return
     end
     if message.reason_type == "REASON_TYPE_START" then
         local count = 0
         local number1 = 1
         local number2 = 1
-        for k,v in pairs(random_result) do
+        for k,v in pairs(message.random_result) do
             count = count + 1
             if count == 1 then
                 number1 = v
@@ -496,8 +498,12 @@ function Player.OnRandomSaizi(type_t,stuff)
                 number2 = v
             end
         end
-        MahJong.PlayDoubleDices(number1,number2)
+        Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
+        for k,v in pairs(message.random_result) do
+            Player.MahJong.PlayerSingleDice(v,message.pai)
+            break
+        end
     end
 end
 
@@ -730,6 +736,9 @@ function Player.OnKillOut(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.KillOut", stuff)
+    if Player._my_player_data.common_prop.player_id and Player._my_player_data.common_prop.player_id == message.player_id then
+
+    end
 end
 
 function Player.OnLoadSuccess()
@@ -757,7 +766,7 @@ function Player.CmdSayHi( heart_count_client )
     local sayHi = {
         heart_count = heart_count_client,
     }
-    this.SendProtocol("EnterRoom",sayHi)
+    this.SendProtocol("SayHi",sayHi)
 end
 
 ---------------------------------------------------------------------------

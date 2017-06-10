@@ -1,23 +1,30 @@
 
-¶E
+ÏI
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
 version (2.Adoter.Asset.VERSION_TYPE
 name (
 	show_name (
-desc ("…
+desc ("»
+RoomOptions,
+model (2.Adoter.Asset.ROOM_MODEL_TYPE
+extend_type_count (:103
+extend_type (2.Adoter.Asset.ROOM_EXTEND_TYPE
+top_mutiple (
+
+open_rands (:4"¥
 	RoomLimit9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM2
 common_prop (2.Adoter.Asset.AssetCommonProp*
 	room_type (2.Adoter.Asset.ROOM_TYPE
 	min_limit (
-	max_limit (
-max_fan (
+	max_limit (
 
-cost_count (
+cost_count (
 
-base_count ("Ñ
+base_count (/
+room_options (2.Adoter.Asset.RoomOptions"Ñ
 CommonLimitA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_LIMIT2
 common_prop (2.Adoter.Asset.AssetCommonProp?
@@ -289,7 +296,18 @@ ASSET_TYPE
 ROOM_TYPE_FRIEND
 ROOM_TYPE_XINSHOU
 ROOM_TYPE_GAOSHOU
-ROOM_TYPE_DASHI*t
+ROOM_TYPE_DASHI*è
+ROOM_EXTEND_TYPE
+ROOM_EXTEND_TYPE_ZHANLIHU
+ROOM_EXTEND_TYPE_JIAHU!
+ROOM_EXTEND_TYPE_XUANFENGGANG
+ROOM_EXTEND_TYPE_BAOPAI
+ROOM_EXTEND_TYPE_DUANMEN
+ROOM_EXTEND_TYPE_QIYISE
+ROOM_EXTEND_TYPE_BAOSANJIA*N
+ROOM_MODEL_TYPE
+ROOM_MODEL_TYPE_CLASSICAL
+ROOM_MODEL_TYPE_MULTIPLE*t
 	CARD_TYPE
 CARD_TYPE_WANZI
 CARD_TYPE_BINGZI
