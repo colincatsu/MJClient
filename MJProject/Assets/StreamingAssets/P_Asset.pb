@@ -1,5 +1,5 @@
 
-ÏI
+—J
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -144,7 +144,7 @@ GOODS_TYPE
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp
 
-fans_count (:25.
+fans_count (:30.
 fans (2 .Adoter.Asset.RoomFan.FanElementV
 
 FanElement(
@@ -296,8 +296,9 @@ ASSET_TYPE
 ROOM_TYPE_FRIEND
 ROOM_TYPE_XINSHOU
 ROOM_TYPE_GAOSHOU
-ROOM_TYPE_DASHI*è
-ROOM_EXTEND_TYPE
+ROOM_TYPE_DASHI*ƒ
+ROOM_EXTEND_TYPE
+ROOM_EXTEND_TYPE_NULL 
 ROOM_EXTEND_TYPE_ZHANLIHU
 ROOM_EXTEND_TYPE_JIAHU!
 ROOM_EXTEND_TYPE_XUANFENGGANG
@@ -313,8 +314,9 @@ ASSET_TYPE
 CARD_TYPE_BINGZI
 CARD_TYPE_TIAOZI
 CARD_TYPE_FENG
-CARD_TYPE_JIAN*Ð
+CARD_TYPE_JIAN*ý
 FAN_TYPE
+FAN_TYPE_PINGHU 
 FAN_TYPE_ZHUANG
 FAN_TYPE_DIAN_PAO
 FAN_TYPE_ZI_MO
@@ -339,4 +341,5 @@ ASSET_TYPE
 FAN_TYPE_JIA_HU_NORMAL
 FAN_TYPE_JIA_HU_MIDDLE
 FAN_TYPE_JIA_HU_HIGHER
-FAN_TYPE_PIAO_WEIHU
+FAN_TYPE_PIAO_WEIHU
+FAN_TYPE_BAOSANJIA

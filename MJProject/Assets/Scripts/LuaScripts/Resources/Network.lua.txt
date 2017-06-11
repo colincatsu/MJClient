@@ -9,6 +9,8 @@ local _addr = io.open(resultPath.."google/protobuf/".."descriptor.pb","rb")
 local _buffer = _addr:read "*a"
 _addr:close()
 protobuf.register(_buffer)
+--[[
+--]]
 ---[[
 _addr = io.open(resultPath.."P_Asset.pb","rb")
 _buffer = _addr:read "*a"

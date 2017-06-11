@@ -1,5 +1,5 @@
 
-×U
+òW
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -157,7 +157,11 @@ ENTER_TYPE
 REASON_TYPE_TINGPAI"]
 SayHi?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_SAY_HI
-heart_count ("û
+heart_count ("c
+
+GuestLoginD
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GUEST_LOGIN
+account ("û
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON
@@ -195,7 +199,10 @@ ENTER_TYPE
 	LoadSceneA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOAD_SCENE0
 	load_type (2.Adoter.Asset.LOAD_SCENE_TYPE
-scene_id ("a
+scene_id ("`
+	ReConnect@
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_RECONNECT
+	player_id ("a
 
 PlayerList>
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PLAYERS
@@ -215,13 +222,14 @@ error_code (2.Adoter.Asset.ERROR_CODE"½
 elements (2.Adoter.Asset.LiuJu.LJElementE
 	LJElement
 	player_id (%
-pai (2.Adoter.Asset.PaiElement"ò
+pai (2.Adoter.Asset.PaiElement"ˆ
 	PaiNotifyA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PAI_NOTIFY
 	player_id (:
 	data_type (2'.Adoter.Asset.PaiNotify.CARDS_DATA_TYPE-
 pais (2.Adoter.Asset.PaiNotify.MutiPai.
-pai (2!.Adoter.Asset.PaiNotify.SinglePaiD
+pai (2!.Adoter.Asset.PaiNotify.SinglePai
+cards_remain (D
 MutiPai*
 	card_type (2.Adoter.Asset.CARD_TYPE
 cards (K
@@ -322,7 +330,7 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN
 ERROR_GAME_NO_PERMISSION(
-ERROR_GAME_PAI_UNSATISFIED)*ù
+ERROR_GAME_PAI_UNSATISFIED)*·	
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -336,7 +344,8 @@ ERROR_CODE
 META_TYPE_SHARE_LUCKY_PLATE
  
 META_TYPE_SHARE_RANDOM_SAIZI
-META_TYPE_SHARE_SAY_HI
+META_TYPE_SHARE_SAY_HI
+META_TYPE_SHARE_GUEST_LOGIN
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
@@ -344,7 +353,8 @@ ERROR_CODE
 META_TYPE_C2S_SELECT_SERVER6
 META_TYPE_C2S_ENTER_GAME7
 META_TYPE_C2S_GET_REWARD8
-META_TYPE_C2S_LOAD_SCENE9
+META_TYPE_C2S_LOAD_SCENE9
+META_TYPE_C2S_RECONNECT:
 META_TYPE_C2S_COUNTÿ
 META_TYPE_S2C_BEGINõ
 META_TYPE_S2C_TICKETö

@@ -28,7 +28,7 @@ public class LuaCommon
 #if     UNITY_IOS || UNITY_IPHONE
     public static string resultPath = Application.streamingAssetsPath + "/";
 #elif   UNITY_ANDROID
-    public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
+    public static string resultPath = Application.streamingAssetsPath + "/";
 #elif   UNITY_EDITOR
     public static string resultPath = Application.streamingAssetsPath + "/";
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
