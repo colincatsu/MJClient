@@ -1,26 +1,29 @@
 local protobuf = require "protobuf"
---local FLibEvent = require "FLibEvent"
---Player = require "Player"
-
---local DataCsv = io.readfile(cc.FileUtils:getInstance():fullPathForFilename("P_Protocol.pb"))
---local _addr = io.open("Assets/Scripts/LuaScripts/Resources/google/protobuf/".."descriptor.pb","rb")
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
 local resultPath = CS.LuaCommon.resultPath
-local _addr = io.open(resultPath.."google/protobuf/".."descriptor.pb","rb")
-local _buffer = _addr:read "*a"
-_addr:close()
-protobuf.register(_buffer)
---[[
---]]
----[[
-_addr = io.open(resultPath.."P_Asset.pb","rb")
-_buffer = _addr:read "*a"
-_addr:close()
-protobuf.register(_buffer)
----[[
-_addr = io.open(resultPath.."P_Protocol.pb","rb")
-_buffer = _addr:read "*a"
-_addr:close()
-protobuf.register(_buffer)--]]
+local isAndroid = CS.LuaCommon.isAndroid
+
+if isAndroid then
+    local www = CS.UnityEngine.WWW(resultPath.."P_Asset.pb")
+    yield_return(www)
+    if not www.error then
+        print(www.bytes)
+else
+    _addr = io.open(resultPath.."P_Asset.pb","rb")
+    _buffer = _addr:read "*a"
+    _addr:close()
+    protobuf.register(_buffer)
+    ---[[
+    _addr = io.open(resultPath.."P_Protocol.pb","rb")
+    _buffer = _addr:read "*a"
+    _addr:close()
+    protobuf.register(_buffer)--]]
+end
+
 
 Network = {}
 local this = Network

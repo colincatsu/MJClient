@@ -27,17 +27,22 @@ public class LuaCommon
 {
 #if     UNITY_IOS || UNITY_IPHONE
     public static string resultPath = Application.streamingAssetsPath + "/";
+    public static bool isAndroid = false;
 #elif   UNITY_ANDROID
-    public static string resultPath = Application.streamingAssetsPath + "/";
+    public static string resultPath = "file://" Application.streamingAssetsPath + "/";
+    public static bool isAndroid = true;
 #elif   UNITY_EDITOR
     public static string resultPath = Application.streamingAssetsPath + "/";
+    public static bool isAndroid = false;
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
     //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
     //public static bool android_platform = false;
 #elif   UNITY_STANDALONE_OSX
     public static string resultPath = Application.streamingAssetsPath + "/";
+    public static bool isAndroid = false;
 #else
     public static string resultPath = Application.streamingAssetsPath + "/";
+    public static bool isAndroid = false;
 #endif
 
     public static bool IsMacPlatform()
