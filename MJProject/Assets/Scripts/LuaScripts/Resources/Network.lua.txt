@@ -1,18 +1,33 @@
 local protobuf = require "protobuf"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
-    self:YieldAndCallback(to_yield, cb)
+    Player.self:YieldAndCallback(to_yield, cb)
 end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 local resultPath = CS.LuaCommon.resultPath
 local isAndroid = CS.LuaCommon.isAndroid
 
 if isAndroid then
-    local www = CS.UnityEngine.WWW(resultPath.."P_Asset.pb")
-    yield_return(www)
-    if not www.error then
-        print(www.bytes)
+    CS.UnityEngine.Debug.LogWarning("android")
+    local co = coroutine.create(function()
+        local www = CS.UnityEngine.WWW(resultPath.."P_Asset.pb")
+        yield_return(www)
+        if not www.error then
+            protobuf.register(www.bytes)
+        else
+            CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+        end
+        www = CS.UnityEngine.WWW(resultPath.."P_Protocol.pb")
+        yield_return(www)
+        if not www.error then
+            protobuf.register(www.bytes)
+        else
+            CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+        end
+    end)
+    coroutine.resume(co)
 else
+    CS.UnityEngine.Debug.LogWarning("editor")
     _addr = io.open(resultPath.."P_Asset.pb","rb")
     _buffer = _addr:read "*a"
     _addr:close()

@@ -215,8 +215,6 @@ end
 
 function Player.CmdLogin(name,passWord)
     -- body
-    LogWarning(type(name))
-    LogWarning(name)
     local login = {
         account = {
             username = name,--""

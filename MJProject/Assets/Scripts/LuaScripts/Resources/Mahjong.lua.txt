@@ -126,8 +126,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	--[[
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
