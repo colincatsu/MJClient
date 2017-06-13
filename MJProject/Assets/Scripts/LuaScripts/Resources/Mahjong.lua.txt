@@ -126,8 +126,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	--[[
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	--[[
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
@@ -191,6 +191,9 @@ function MahJong.MjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
 	local resultPath = CS.LuaCommon.resultPath
+	if CS.LuaCommon.isAndroid then
+		resultPath = CS.UnityEngine.Application.persistentDataPath.."/"
+	end
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")

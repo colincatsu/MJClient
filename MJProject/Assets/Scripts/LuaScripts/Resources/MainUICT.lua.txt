@@ -6,6 +6,7 @@ ClickEvent.self = self
 local Network = require "Network"
 local FLibEvent = require "FLibEvent"
 local FairyGUI = require "FairyGUI"
+local AssetManager = require "AssetManager"
 
 local _main_ui_sence = "MainUI"
 local _loading_sence = "LoadingSence"
@@ -27,7 +28,9 @@ end
 function start()
 	-- body
 	ClickEvent.Start(ClickEvent.panelTable._main_ui)
-	
+	if CS.LuaCommon.isAndroid then
+		AssetManager.CopyAndroidRes()
+	end
 	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
 	local admitButton = _Main_UI.transform:Find("Admit").gameObject
