@@ -2,12 +2,15 @@ LoadingCT = {}
 local Enum = require "Enum"
 local FairyGUI = require "FairyGUI"
 local ClickEvent = require "ClickEvent"
+local AssetManager = require "AssetManager"
 local util = require "xlua.util"
 
 local _main_ui_sence = "FairyMainUI"
 local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
 local _tosence_name = nil
+
+local _copyed = false
 
 local function AsyncYieldReturn(to_yield, cb)
     self:YieldAndCallback(to_yield, cb)
@@ -22,6 +25,9 @@ end
 function start()
 	-- body
 	--UIConfig.defaultFont = "MJFont"
+	if CS.LuaCommon.isAndroid then
+		LoadingCT.CopyAndroidRes()
+	end
 	if Player and Player._tosence_name then
 		LoadingCT.ToSence(Player._tosence_name)
 	else
@@ -34,6 +40,40 @@ function update( ... )
 	
 end
 
+function LoadingCT.CopyAndroidRes()
+	-- body
+	--android load
+	if _copyed then return true end
+	_copyed = true
+	local co = coroutine.create(function()
+		local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/Asset.upk")
+		if not folder.Exists then
+			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."Asset.upk")
+			yield_return(www)
+			if not www.error then
+				local path = CS.UnityEngine.Application.persistentDataPath
+				if not CS.System.IO.Directory:Exists(path)then
+					CS.System.IO.Directory.CreateDirectory(path)
+				end
+				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/Asset.upk")
+		        CS.AssetsHandle.UnPackAssetFolder(path.."/Asset.upk",path.."/")
+		        --[[
+				local fs = CS.System.IO.FileStream(path.."/Asset.upk", CS.System.IO.FileMode.Create)
+				fs:Write(www.bytes,0,1024)
+				fs:Flush()
+		        fs:Close()
+		        fs:Dispose()
+		        --]]
+			else
+				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+			end
+		else
+			CS.UnityEngine.Debug.LogWarning("path error")
+		end
+    end)
+    coroutine.resume(co)
+	return _copyed
+end
 
 function LoadingCT.WaitForSeconds(seconds)
 	-- body

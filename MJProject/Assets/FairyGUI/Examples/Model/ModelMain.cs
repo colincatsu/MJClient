@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using FairyGUI;
+using System.IO;
 
 public class ModelMain : MonoBehaviour
 {
