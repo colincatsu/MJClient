@@ -46,17 +46,17 @@ function LoadingCT.CopyAndroidRes()
 	if _copyed then return true end
 	_copyed = true
 	local co = coroutine.create(function()
-		local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/Asset.upk")
+		local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 		if not folder.Exists then
-			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."Asset.upk")
+			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."MyAssets.upk")
 			yield_return(www)
 			if not www.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
-				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/Asset.upk")
-		        CS.AssetsHandle.UnPackAssetFolder(path.."/Asset.upk",path.."/")
+				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
 		        --[[
 				local fs = CS.System.IO.FileStream(path.."/Asset.upk", CS.System.IO.FileMode.Create)
 				fs:Write(www.bytes,0,1024)

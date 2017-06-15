@@ -192,7 +192,7 @@ function MahJong.MjLoader()
 	local AssetManager = require "AssetManager"
 	local resultPath = CS.LuaCommon.resultPath
 	if CS.LuaCommon.isAndroid then
-		resultPath = CS.UnityEngine.Application.persistentDataPath.."/"
+		resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
 	end
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
