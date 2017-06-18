@@ -1,5 +1,5 @@
 
-ÚW
+Ñ_
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -69,22 +69,19 @@ time_stamp (
 Element
 cool_down_id (
 
-time_stamp ("*
-MailAttachment
-common_reward_id ("¬
+time_stamp ("I
+ClientInfomation
+	client_ip (
+system (
+
+phone_type ("√
 Mail
 title (E
 send_player (:0\347\263\273\347\273\237\351\202\256\344\273\266
 content (
 	send_time (
-readed (0
-
-attachment (2.Adoter.Asset.MailAttachment"I
-ClientInfomation
-	client_ip (
-system (
-
-phone_type ("ˆ
+readed (1
+attachments (2.Adoter.Asset.MailAttachment"õ
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -95,9 +92,10 @@ phone_type ("ˆ
 login_time (
 logout_time (
 	sign_time (3
-client_info	 (2.Adoter.Asset.ClientInfomation%
-	mail_list
- (2.Adoter.Asset.Mail"®
+client_info	 (2.Adoter.Asset.ClientInfomation
+mail_list_system
+ (0
+mail_list_customized (2.Adoter.Asset.Mail"®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -277,17 +275,38 @@ card_value ("a
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_KILL_OUT
 	player_id (1
 
-out_reason (2.Adoter.Asset.KILL_OUT_REASON*u
+out_reason (2.Adoter.Asset.KILL_OUT_REASON"»
+SyncActivity?
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ACTIVITYA
+activity_list (2*.Adoter.Asset.SyncActivity.ActivityElement4
+ActivityElement
+activity_id (
+open ("ö
+SystemBroadcastingG
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_SYSTEM_BROADCASTO
+broad_cast_type (26.Adoter.Asset.SystemBroadcasting.SYSTEM_BROADCAST_TYPE
+content ("Y
+SYSTEM_BROADCAST_TYPE 
+SYSTEM_BROADCAST_TYPE_SCROLL
+SYSTEM_BROADCAST_TYPE_CHAT*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
 ERR_USE_ITEM_TYPE_LEVEL_UP*J
 ITEM_CHANGED_TYPE
 ITEM_CHANGED_TYPE_GMT
-ITEM_CHANGED_TYPE_MALL*S
+ITEM_CHANGED_TYPE_MALL*|
 DIAMOND_CHANGED_TYPE
 DIAMOND_CHANGED_TYPE_GMT
-DIAMOND_CHANGED_TYPE_MALL*â
+DIAMOND_CHANGED_TYPE_MALL'
+#DIAMOND_CHANGED_TYPE_GENERAL_REWARD*Ñ
+HUANLEDOU_CHANGED_TYPE
+HUANLEDOU_CHANGED_TYPE_GMT
+HUANLEDOU_CHANGED_TYPE_MALL)
+%HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD*Y
+ROOM_CARD_CHANGED_TYPE
+ROOM_CARD_CHANGED_TYPE_GMT
+ROOM_CARD_CHANGED_TYPE_MALL*â
 POSITION_TYPE
 POSITION_TYPE_NULL 
 POSITION_TYPE_EAST
@@ -304,13 +323,13 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*Ù
+ERROR_SHOW_TYPE_CHAT*◊
 
 ERROR_CODE
 ERROR_SUCCESS 
 ERROR_INNER
-ERROR_DIAMOND_NOT_ENOUGH
-ERROR_BEANS_NOT_ENOUGH
+ERROR_DIAMOND_NOT_ENOUGH
+ERROR_HUANLEDOU_NOT_ENOUGH
 ERROR_INVENTORY_FULL
 ERROR_REWARD_HAS_GOT
 ERROR_HUANLEDOU_LIMIT
@@ -319,7 +338,8 @@ ERROR_CODE
 ERROR_CLIENT_DATA	
 ERROR_HAS_NO_PLAYER
 
-ERROR_DATABASE
+ERROR_DATABASE
+ERROR_ROOM_CARD_NOT_ENOUGH
 ERROR_ROOM_NOT_FOUNT
 ERROR_ROOM_PASSWORD
 ERROR_ROOM_IS_FULL
@@ -330,7 +350,9 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN
 ERROR_GAME_NO_PERMISSION(
-ERROR_GAME_PAI_UNSATISFIED)*∑	
+ERROR_GAME_PAI_UNSATISFIED)
+ERROR_COMMON_REWARD_DATA2
+ERROR_COMMON_REWARD_HAS_GOT3*˘	
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -370,7 +392,9 @@ ERROR_CODE
 META_TYPE_S2C_ROOM_INFOÅ!
 META_TYPE_S2C_GAME_CALCULATEÇ
 META_TYPE_S2C_GAME_INFOÉ
-META_TYPE_S2C_KILL_OUTÑ
+META_TYPE_S2C_KILL_OUTÑ
+META_TYPE_S2C_ACTIVITYÖ#
+META_TYPE_S2C_SYSTEM_BROADCASTÜ
 META_TYPE_S2C_COUNTË*Ò
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 

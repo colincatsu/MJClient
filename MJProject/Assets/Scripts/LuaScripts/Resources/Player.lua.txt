@@ -43,6 +43,7 @@ local _calculate_data = {}--结算数据
 local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
+local _connected = false
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -262,10 +263,10 @@ function Player.CmdEnterRoom(id,passWord)
     this.SendProtocol("EnterRoom",enterRoom)
 end
 
-function Player.CmdGameOperation()
+function Player.CmdGameOperation(operationType)
     -- body
     local gameOperation = {
-       oper_type = "GAME_OPER_TYPE_START"
+       oper_type = operationType
     }
     this.SendProtocol("GameOperation",gameOperation)
 end

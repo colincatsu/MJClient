@@ -978,6 +978,12 @@ end
 ---游戏中
 ---------------------------
 
+function ClickEvent.GameBackButton(gameObject)
+	-- body
+	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+	Player.LoadScene("FairyMainUI")
+end
+
 function ClickEvent.GameTingButton(gameObject)
 	-- body
 	--ClickEvent.CloseOperationPanel()
@@ -991,7 +997,7 @@ function ClickEvent.GamePlayButton( gameObject )
 	-- body
 	gameObject.visible = false
 	--Player.MahJong.PlayDoubleDices()
-	Player.CmdGameOperation()
+	Player.CmdGameOperation("GAME_OPER_TYPE_START")
 end
 
 function ClickEvent.GameGangButton(gameObject)

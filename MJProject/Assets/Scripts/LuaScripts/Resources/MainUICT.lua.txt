@@ -8,7 +8,7 @@ local FLibEvent = require "FLibEvent"
 local FairyGUI = require "FairyGUI"
 local AssetManager = require "AssetManager"
 
-local _main_ui_sence = "MainUI"
+local _main_ui_sence = "FairyMainUI"
 local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
 --[[
@@ -41,8 +41,10 @@ function start()
 	--]]
 
 	---[[
-	Network.Start()
-	Network.ConnetServer()
+	if not Player._connected then
+		Network.Start()
+		Network.ConnetServer()
+	end
 	--]]
 
 end

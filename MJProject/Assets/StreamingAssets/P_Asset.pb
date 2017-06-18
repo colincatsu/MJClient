@@ -1,5 +1,5 @@
 
-—J
+›S
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -64,7 +64,7 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("í
+voice_path ("¹
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -72,25 +72,27 @@ voice_path ("í
 max_cards_count (:136
 player_count (:4
 daily_bonus_id (
-daily_allowance_id (
-time_out (:8
+daily_allowance_id (
+operation_time_out (:8
 daily_sign_id	 (
 fan_id
  (
 room_card_id (
-liuju_count ("Ô
+liuju_count (
+room_last_time ((
+ room_card_limit_free_activity_id ("Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
 rewards_count (:102
-rewards (2!.Adoter.Asset.CommonReward.Reward£
+rewards (2!.Adoter.Asset.CommonReward.Reward
+common_limit_id (Š
 Reward;
 reward_type (2&.Adoter.Asset.CommonReward.REWARD_TYPE
 comments (
 	icon_name (
 item_id (
-count (
-common_limit_id ("W
+count ("W
 REWARD_TYPE
 REWARD_TYPE_DIAMOND
 REWARD_TYPE_HUANLEDOU
@@ -116,13 +118,12 @@ LuckyPlate@
 plates (2.Adoter.Asset.LuckyPlate.Plate1
 Plate
 weight (
-common_reward_id ("µ
+common_reward_id ("œ
 
 DailyBonus@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
-common_reward_id (
-common_limit_id ("ó
+common_reward_id ("ó
 Mall9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MALL2
 common_prop (2.Adoter.Asset.AssetCommonProp1
@@ -181,22 +182,20 @@ voice_path ("
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_AVATAR2
 common_prop (2.Adoter.Asset.AssetCommonProp
 avatars_count (:20
-avatars ("
+avatars ("˜
 Activity=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ACTIVITY2
-common_prop (2.Adoter.Asset.AssetCommonProp;
-activity_type (2$.Adoter.Asset.Activity.ACTIVITY_TYPE
+common_prop (2.Adoter.Asset.AssetCommonProp>
+activity_cycle_type (2!.Adoter.Asset.ACTIVITY_CYCLE_TYPE2
+activity_type (2.Adoter.Asset.ACTIVITY_TYPE
 
-start_time (
-	stop_time (",
-ACTIVITY_TYPE
-ACTIVITY_TYPE_STOP_TIME"Ü
+start_time (
+	stop_time ("Ã
 DailyAllowanceD
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_ALLOWANCE2
 common_prop (2.Adoter.Asset.AssetCommonProp
 huanledou_below (:2000
-common_reward_id (
-common_limit_id ("ð
+common_reward_id ("ð
 Recharge=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_RECHARGE2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -218,7 +217,28 @@ price_show (
 ContinuousSign
 count (
 common_reward_id (
-common_limit_id ("ž
+common_limit_id ("W
+MailAttachment6
+attachment_type (2.Adoter.Asset.ATTACHMENT_TYPE
+count ("õ
+
+SystemMail9
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MAIL2
+common_prop (2.Adoter.Asset.AssetCommonProp*
+	mail_type (2.Adoter.Asset.MAIL_TYPE?
+title (:0\347\263\273\347\273\237\351\202\256\344\273\266&
+from (:\347\263\273\347\273\237
+
+content_id (
+attachments_count (:31
+attachments (2.Adoter.Asset.MailAttachment"ô
+SystemSpeakA
+type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_SYSTEM_SPEAK2
+common_prop (2.Adoter.Asset.AssetCommonProp
+
+text_index ( 
+infomation_list_count (:28
+infomation_list (2.Adoter.Asset.SYSTEM_SPEAK_TYPE"ž
 Item_CommonProp2
 common_prop (2.Adoter.Asset.AssetCommonProp
 quality (:1
@@ -262,7 +282,7 @@ price_show (
 VERSION_TYPE
 VERSION_TYPE_GLOBAL
 VERSION_TYPE_MAINLAND
-VERSION_TYPE_TAIWAN*¥
+VERSION_TYPE_TAIWAN*×
 
 ASSET_TYPE
 ASSET_TYPE_BEGIN
@@ -286,7 +306,9 @@ ASSET_TYPE
 ASSET_TYPE_DAILY_ALLOWANCE
 ASSET_TYPE_COMMON_CONSUME
 ASSET_TYPE_RECHARGE
-ASSET_TYPE_DAILY_SIGN
+ASSET_TYPE_DAILY_SIGN
+ASSET_TYPE_MAIL
+ASSET_TYPE_SYSTEM_SPEAK
 ASSET_TYPE_COUNTÈ
 ITEM_TYPE_BEGINÉ
 ITEM_TYPE_POTIONÊ
@@ -342,4 +364,18 @@ ASSET_TYPE
 FAN_TYPE_JIA_HU_MIDDLE
 FAN_TYPE_JIA_HU_HIGHER
 FAN_TYPE_PIAO_WEIHU
-FAN_TYPE_BAOSANJIA
+FAN_TYPE_BAOSANJIA*4
+ACTIVITY_CYCLE_TYPE
+ACTIVITY_CYCLE_TYPE_DIALY*,
+ACTIVITY_TYPE
+ACTIVITY_TYPE_STOP_TIME*:
+	MAIL_TYPE
+MAIL_TYPE_HELP
+MAIL_TYPE_ANNOUCEMENT*l
+ATTACHMENT_TYPE
+ATTACHMENT_TYPE_DIAMOND
+ATTACHMENT_TYPE_HUANLEDOU
+ATTACHMENT_TYPE_ROOM_CARD*W
+SYSTEM_SPEAK_TYPE
+SYSTEM_SPEAK_TYPE_PLAYER_ID!
+SYSTEM_SPEAK_TYPE_PLAYER_NAME

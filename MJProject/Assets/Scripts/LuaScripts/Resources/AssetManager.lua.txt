@@ -13,7 +13,7 @@ local _loaded = false
 --加载资源
 ---------------------------------------------------------------------------
 function AssetManager.Load(assetFilePath)
-	if _loaded then return true end
+	--if _loaded then return true end
 	-----------------------------------------------
 	_loaded = LuaReader.Load(assetFilePath)
 	return _loaded

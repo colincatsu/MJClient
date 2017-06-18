@@ -828,9 +828,16 @@ function MahJong.CreatePlayerPai()
 		_player_father.father.transform:SetParent(self.transform)
 	end
 	local paiCount = 0
+	for k,v in pairs(Player._invoke_table.pais) do
+		CS.UnityEngine.Debug.LogWarning("card_type::"..v.card_type)
+		for j,c in pairs(v.cards) do
+			CS.UnityEngine.Debug.LogWarning("card_value::"..c)
+		end
+	end
 	for k, v in pairs(Player._invoke_table.pais)do
         local tempPaiPool = {}
         for j,n in pairs(_mj_asset) do
+       		CS.UnityEngine.Debug.LogWarning("_mj_asset::"..n.card_type) 	
         	if n.card_type == v.card_type then
         		tempPaiPool = n
         	end
@@ -2218,6 +2225,8 @@ function MahJong.PlayDoubleDices(number1,number2)
 	math.randomseed(os.time())
 	 math.random(6)
 	--]]
+	_dice_red:SetActive(true)
+    _dice_white:SetActive(true)
 	redDicePoints =	number1
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints

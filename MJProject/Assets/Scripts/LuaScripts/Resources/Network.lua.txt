@@ -7,36 +7,49 @@ local yield_return = util.async_to_sync(AsyncYieldReturn)
 local resultPath = CS.LuaCommon.resultPath
 local isAndroid = CS.LuaCommon.isAndroid
 
-if isAndroid then
-    CS.UnityEngine.Debug.LogWarning("android")
-    local co = coroutine.create(function()
-        local www = CS.UnityEngine.WWW(resultPath.."P_Asset.pb")
-        yield_return(www)
-        if not www.error then
-            protobuf.register(www.bytes)
-        else
-            CS.UnityEngine.Debug.LogWarning('error:'..www.error)
-        end
-        www = CS.UnityEngine.WWW(resultPath.."P_Protocol.pb")
-        yield_return(www)
-        if not www.error then
-            protobuf.register(www.bytes)
-        else
-            CS.UnityEngine.Debug.LogWarning('error:'..www.error)
-        end
-    end)
-    coroutine.resume(co)
-else
-    CS.UnityEngine.Debug.LogWarning("editor")
-    _addr = io.open(resultPath.."P_Asset.pb","rb")
-    _buffer = _addr:read "*a"
-    _addr:close()
-    protobuf.register(_buffer)
-    ---[[
-    _addr = io.open(resultPath.."P_Protocol.pb","rb")
-    _buffer = _addr:read "*a"
-    _addr:close()
-    protobuf.register(_buffer)--]]
+if not Player._connected then
+    if isAndroid then
+        CS.UnityEngine.Debug.LogWarning("android")
+        _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)
+        ---[[
+        _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Protocol.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)
+        --[[
+        local co = coroutine.create(function()
+            local www = CS.UnityEngine.WWW(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb")
+            yield_return(www)
+            if not www.error then
+                protobuf.register(www.bytes)
+            else
+                CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+            end
+            www = CS.UnityEngine.WWW(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Protocol.pb")
+            yield_return(www)
+            if not www.error then
+                protobuf.register(www.bytes)
+            else
+                CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+            end
+        end)
+        coroutine.resume(co)
+        --]]
+    else
+        CS.UnityEngine.Debug.LogWarning("editor")
+        _addr = io.open(resultPath.."P_Asset.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)
+        ---[[
+        _addr = io.open(resultPath.."P_Protocol.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)--]]
+    end
 end
 
 
@@ -116,6 +129,7 @@ end
 ---------------------------------------------------------------------------
 function Network.OnConnect()
 	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
+    Player._connected = true
     --Player.CmdCreatePlayer()
     --Player.CmdEnterGame(347)
 end
