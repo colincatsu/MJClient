@@ -60,16 +60,17 @@ g09nlu.xml|616|<component size="104,44">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>isedp5.xml|712|<component size="1334,750" pivot="0.5,0.5">
+</component>isedp5.xml|882|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
-    <component id="n0_ised" name="n0" src="i0jkoe" xy="207,28"/>
-    <image id="n1_ised" name="n1" src="isedp4" xy="231,134" size="893,525"/>
-    <text id="n11_ised" name="Title" xy="312,51" size="252,73" fontSize="40" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="VIP战绩"/>
-    <list id="n12_ised" name="NoteList" xy="251,150" size="855,497" overflow="scroll" defaultItem="ui://krtoytc1isedp7">
+    <component id="n0_ised" name="n0" src="i0jkoe" xy="207,28" group="n14_lq2g"/>
+    <image id="n1_ised" name="n1" src="isedp4" xy="231,134" size="893,525" group="n14_lq2g"/>
+    <text id="n11_ised" name="Title" xy="312,51" size="252,73" group="n14_lq2g" fontSize="40" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="VIP战绩"/>
+    <list id="n12_ised" name="NoteList" xy="251,150" size="855,497" group="n14_lq2g" overflow="scroll" defaultItem="ui://krtoytc1isedp7">
       <item/>
     </list>
     <component id="n2_ised" name="Close" src="w61cj0" xy="1081,95" group="n13_ised"/>
-    <group id="n13_ised" name="Btns" xy="1081,95" size="67,67" advanced="true"/>
+    <group id="n13_ised" name="Btns" xy="1081,95" size="67,67" group="n14_lq2g" advanced="true"/>
+    <group id="n14_lq2g" name="VIPNote" xy="207,28" size="944,661" advanced="true"/>
   </displayList>
 </component>isedp7.xml|1242|<component size="854,112">
   <displayList>
@@ -192,7 +193,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="n30_ised" name="ShareToWechatButton" src="isedpz" xy="381,617" group="n31_ised"/>
     <group id="n31_ised" name="Btns" xy="381,617" size="530,95" advanced="true"/>
   </displayList>
-</component>isedpo.xml|2462|<component size="277,327">
+</component>isedpo.xml|2488|<component size="277,327">
   <displayList>
     <image id="n2_ised" name="n2" src="w61cio" xy="0,0" size="78,78"/>
     <text id="n3_ised" name="Name" xy="97,2" size="172,37" fontSize="32" color="#ffffff" autoSize="none" bold="true" strokeColor="#000000" text="我是姓名八个字"/>
@@ -209,7 +210,7 @@ g09nlu.xml|616|<component size="104,44">
     <text id="n14_ised" name="n14" xy="24,289" size="75,37" fontSize="32" color="#8d6c43" vAlign="middle" autoSize="none" bold="true" text="累计"/>
     <text id="n15_ised" name="n15" xy="186,289" size="75,37" fontSize="32" color="#8d6c43" vAlign="middle" autoSize="none" bold="true" text="分"/>
     <text id="n16_ised" name="TotalNum" xy="105,290" size="75,37" font="ui://krtoytc1ysjnog" fontSize="32" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="220"/>
-    <loader id="n17_ised" name="AvatarLoader" xy="5,4" size="68,68" fill="scale"/>
+    <loader id="n17_ised" name="AvatarLoader" xy="5,4" size="68,68" url="ui://krtoytc1nnbzk0" fill="scale"/>
     <loader id="n18_ised" name="MedalLoader" xy="104,193" size="68,68" align="center" vAlign="middle"/>
   </displayList>
 </component>isedpw.xml|462|<component size="181,73" extention="Button">
@@ -312,6 +313,87 @@ g09nlu.xml|616|<component size="104,44">
     </text>
   </displayList>
   <Button mode="Radio"/>
+</component>lq2gq0.xml|1839|<component size="1334,750">
+  <displayList>
+    <image id="n1_lq2g" name="n1" src="w61cii" xy="286,118" size="720,451"/>
+    <image id="n3_lq2g" name="n3" src="w61cio" xy="356,239" size="114,114"/>
+    <loader id="n4_lq2g" name="PlayAvatarLoader1" xy="361,244" size="106,106"/>
+    <image id="n5_lq2g" name="n5" src="w61cio" xy="509,240" size="114,114"/>
+    <loader id="n6_lq2g" name="PlayAvatarLoader2" xy="513,244" size="106,106"/>
+    <image id="n7_lq2g" name="n7" src="w61cio" xy="664,239" size="114,114"/>
+    <loader id="n8_lq2g" name="PlayAvatarLoader3" xy="668,243" size="106,106"/>
+    <image id="n9_lq2g" name="n9" src="w61cio" xy="814,240" size="114,114"/>
+    <loader id="n10_lq2g" name="PlayAvatarLoader4" xy="818,244" size="106,106"/>
+    <component id="n12_lq2g" name="YesOrNo1" src="lq2gq4" xy="394,356"/>
+    <component id="n13_lq2g" name="YesOrNo2" src="lq2gq4" xy="547,356"/>
+    <component id="n14_lq2g" name="YesOrNo3" src="lq2gq4" xy="697,356"/>
+    <component id="n15_lq2g" name="YesOrNo4" src="lq2gq4" xy="850,356"/>
+    <text id="n16_lq2g" name="VoteText" xy="305,420" size="688,41" fontSize="22" color="#865210" align="center" vAlign="middle" autoSize="none" bold="true" text="四人同意才会解散，解散后会按照目前得分进行最终排名"/>
+    <text id="n18_lq2g" name="n18" xy="581,154" size="261,41" fontSize="30" color="#865210" vAlign="middle" autoSize="none" bold="true" text="发起投票解散牌局"/>
+    <text id="n19_lq2g" name="Name" xy="319,153" size="261,41" fontSize="30" color="#865210" align="right" vAlign="middle" autoSize="none" bold="true" text="林黛玉"/>
+    <component id="n20_lq2g" name="Agree" src="lq2gq5" xy="676,469" group="n22_lq2g"/>
+    <component id="n21_lq2g" name="Disagree" src="lq2gq6" xy="432,471" group="n22_lq2g"/>
+    <group id="n22_lq2g" name="Btns" xy="432,469" size="425,75" advanced="true"/>
+  </displayList>
+</component>lq2gq4.xml|608|<component size="42,43">
+  <controller name="YesOrNo" pages="0,,1,,2," selected="2"/>
+  <displayList>
+    <image id="n0_lq2g" name="No" src="isedp0" xy="0,0">
+      <gearDisplay controller="YesOrNo" pages="1"/>
+    </image>
+    <image id="n1_lq2g" name="Yes" src="isedp1" xy="0,0">
+      <gearDisplay controller="YesOrNo" pages="0"/>
+    </image>
+    <text id="n2_lq2g" name="Choosing" xy="-39,0" size="138,42" fontSize="22" color="#663300" align="center" vAlign="middle" autoSize="none" bold="true" text="选择中...">
+      <gearDisplay controller="YesOrNo" pages="2"/>
+    </text>
+  </displayList>
+</component>lq2gq5.xml|1459|<component size="181,73" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <controller name="Useable" pages="0,,1," selected="1"/>
+  <displayList>
+    <image id="n1" name="n1" src="isedpx" xy="0,0">
+      <gearDisplay controller="Useable" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2" name="title" xy="31,12" size="73,38" fontSize="26" align="center" vAlign="middle" autoSize="none" bold="true" singleLine="true" text="同意">
+      <gearDisplay controller="Useable" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+    <text id="n3_lq2g" name="count" xy="91,9" size="73,38" fontSize="23" align="center" vAlign="bottom" autoSize="none" bold="true" singleLine="true" text="99">
+      <gearDisplay controller="Useable" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+    <image id="n5_lq2g" name="n5" src="lq2gq7" xy="0,0">
+      <gearDisplay controller="Useable" pages="1"/>
+    </image>
+    <text id="n6_lq2g" name="title" xy="34,12" size="113,38" fontSize="26" align="center" vAlign="middle" autoSize="none" bold="true" singleLine="true" text="已同意">
+      <gearDisplay controller="Useable" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
+</component>lq2gq6.xml|1174|<component size="181,73" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <controller name="Useable" pages="0,,1," selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="isedpr" xy="0,0">
+      <gearDisplay controller="Useable" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n3_lq2g" name="title" xy="55,13" size="73,38" fontSize="26" align="center" vAlign="middle" autoSize="none" bold="true" singleLine="true" text="拒绝">
+      <gearDisplay controller="Useable" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+    <image id="n4_lq2g" name="n4" src="lq2gq7" xy="0,0">
+      <gearDisplay controller="Useable" pages="1"/>
+    </image>
+    <text id="n5_lq2g" name="title" xy="34,12" size="113,38" fontSize="26" align="center" vAlign="middle" autoSize="none" bold="true" singleLine="true" text="已同意">
+      <gearDisplay controller="Useable" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="dark" downEffectValue="0.80"/>
 </component>lt1cmu.xml|417|<component size="1334,750">
   <displayList>
     <image id="n0_lt1c" name="Bg" src="w61cii" xy="387,229" size="556,273"/>
@@ -319,14 +401,15 @@ g09nlu.xml|616|<component size="104,44">
     <component id="n2_lt1c" name="YesButton" src="w61cik" xy="466,385"/>
     <component id="n3_lt1c" name="NoButton" src="w61cim" xy="683,386"/>
   </displayList>
-</component>lt1cmv.xml|727|<component size="1334,750">
+</component>lt1cmv.xml|857|<component size="1334,750">
   <displayList>
     <image id="n0_lt1c" name="Bg" src="w61cii" xy="271,138" size="790,456"/>
     <text id="n1_lt1c" name="n1" xy="557,161" size="213,55" fontSize="51" color="#993300" bold="true" text="免责声明"/>
     <text id="n4_lt1c" name="n4" xy="361,236" size="607,187" fontSize="28" color="#993300" autoSize="height" bold="true" text="亲爱的玩家，您选择了游客登陆游戏，由于该模式下的游戏数据（包含付费数据）在删除游戏或更换设备后会丢失，对此造成的损失《乐乐朝阳麻将》项目组将不承担任何责任。&#xA;为了您的虚拟财产安全，我们建议您选择微信登陆游戏。"/>
-    <component id="n5_lt1c" name="WechatLogin" src="w61cav" xy="424,468"/>
-    <component id="n7_lt1c" name="GuestLoginText" src="lt1cmw" xy="741,523"/>
-    <component id="n8_lt1c" name="Close" src="w61cj0" xy="990,135"/>
+    <component id="n5_lt1c" name="WechatLogin" src="w61cav" xy="424,468" group="n9_lq2g"/>
+    <component id="n7_lt1c" name="GuestLoginText" src="lt1cmw" xy="741,523" group="n9_lq2g"/>
+    <component id="n8_lt1c" name="Close" src="w61cj0" xy="990,135" group="n9_lq2g"/>
+    <group id="n9_lq2g" name="Btns" xy="424,135" size="633,435" advanced="true"/>
   </displayList>
 </component>lt1cmw.xml|598|<component size="251,32" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -371,7 +454,7 @@ g09nlu.xml|616|<component size="104,44">
     <text id="n1_lt1c" name="n1" xy="487,304" size="358,54" fontSize="24" color="#993300" align="center" autoSize="height" bold="true" text="房卡不够了，添加微信客服MX88可通过代理购买房卡"/>
     <component id="n2_lt1c" name="YesButton" src="w61cik" xy="578,383"/>
   </displayList>
-</component>package.xml|33521|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|34044|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="g09nlu" name="RoundNumber" path="/UIPIC/开房界面/" size="104,44"/>
     <component id="i0jkod" name="BgTitleBig" path="/UIPIC/弹窗/" size="1207,660"/>
@@ -389,6 +472,9 @@ g09nlu.xml|616|<component size="104,44">
     <component id="j3uokk" name="Draw" path="/UIPIC/游戏页面/" size="250,95"/>
     <component id="j3uokm" name="Inform" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="l2jdkp" name="Server" path="/UIPIC/邮件/" size="100,50"/>
+    <component id="lq2gq4" name="VoteYesNo" path="/UIPIC/投票/" size="42,43"/>
+    <component id="lq2gq5" name="Agree" path="/UIPIC/投票/" size="181,73"/>
+    <component id="lq2gq6" name="Disagree" path="/UIPIC/投票/" size="181,73"/>
     <component id="lt1cmw" name="GuestLoginText" path="/UIPIC/xinzeng/" size="251,32"/>
     <component id="lt1cn1" name="PriceButton" path="/UIPIC/商城/" size="190,64"/>
     <component id="lt1cn2" name="GiveupButton" path="/UIPIC/邮件/" size="124,60"/>
@@ -460,7 +546,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="w61ceq" name="PlayerAvatarInfoBig" path="/UIPIC/战绩记录/" size="121,156"/>
     <component id="w61cer" name="RankBillOut" path="/UIPIC/战绩记录/" size="511,37"/>
     <component id="w61ces" name="InstructionText" path="/UIPIC/战绩记录/" size="820,460"/>
-    <component id="w61cfd" name="SlideButton" path="/UIPIC/游戏设置/" size="157,56"/>
+    <component id="w61cfd" name="SlideButton" path="/UIPIC/游戏设置/" size="219,86"/>
     <component id="w61cfe" name="ChangeAccount" path="/UIPIC/游戏设置/" size="262,91"/>
     <component id="w61cff" name="FeedBackButton" path="/UIPIC/游戏设置/" size="89,43"/>
     <component id="w61cfg" name="AboutUsButton" path="/UIPIC/游戏设置/" size="89,43"/>
@@ -478,7 +564,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgf" name="GameHintBar" path="/UIPIC/游戏页面/" size="367,63"/>
     <component id="w61cgk" name="GamePassButton" path="/UIPIC/游戏页面/" size="111,111"/>
-    <component id="w61cgl" name="PlayerInformation" path="/UIPIC/游戏页面/" size="174,259"/>
+    <component id="w61cgl" name="PlayerInformation" path="/UIPIC/游戏页面/" size="367,166"/>
     <component id="w61cik" name="YesButton" path="/UIPIC/踢人/" size="177,73"/>
     <component id="w61cim" name="NoButton" path="/UIPIC/踢人/" size="177,73"/>
     <component id="w61cj0" name="Close" path="/UIPIC/邮件/" size="67,67"/>
@@ -498,14 +584,18 @@ g09nlu.xml|616|<component size="104,44">
     <image id="isedox" name="fuli_button_1" path="/UIPIC/福利/" size="178,75"/>
     <image id="isedoy" name="fuli_button_2" path="/UIPIC/福利/" size="178,75"/>
     <image id="isedoz" name="hengtiao" path="/UIPIC/福利/" size="105,112" scale="9grid" scale9grid="27,28,54,56"/>
+    <image id="isedp0" name="toupiao_NO" path="/UIPIC/投票/" size="42,43"/>
+    <image id="isedp1" name="toupiao_YES" path="/UIPIC/投票/" size="41,43"/>
     <image id="isedp2" name="touxiang" path="/UIPIC/投票/" size="135,134" scale="9grid" scale9grid="34,34,68,68"/>
     <image id="isedp4" name="tanchuang_6" path="/UIPIC/弹窗/" size="102,108" scale="9grid" scale9grid="26,27,52,54"/>
     <image id="isedp8" name="fangzhu" path="/UIPIC/战绩记录/" size="40,21"/>
     <image id="isedpm" name="ui_Zhujiemian_03" path="/UIPIC/功能界面/" size="1121,593"/>
-    <image id="isedpr" name="button_2" path="/UIPIC/战绩记录/" size="181,73"/>
+    <image id="isedpr" name="button_2" path="/UIPIC/投票/" size="181,73"/>
     <image id="isedpu" name="fenxiang_weixin" path="/UIPIC/战绩记录/" size="57,54"/>
     <image id="isedpv" name="fenxiang_weixin2" path="/UIPIC/战绩记录/" size="195,41"/>
+    <image id="isedpx" name="button_3" path="/UIPIC/投票/" size="181,73"/>
     <image id="isedpy" name="fenxiang_button2" path="/UIPIC/战绩记录/" size="302,95"/>
+    <image id="lq2gq7" name="button_5" path="/UIPIC/投票/" size="181,73"/>
     <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
     <image id="oc2llr" name="pai" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
@@ -563,8 +653,8 @@ g09nlu.xml|616|<component size="104,44">
     <image id="w61cd4" name="Di" path="/UIPIC/匹配房结算/" size="256,256" scale="9grid" scale9grid="64,64,128,128"/>
     <image id="w61cd5" name="ui_Shangchengjiemian_01" path="/UIPIC/商城/" size="190,64"/>
     <image id="w61cd6" name="ui_Shangchengjiemian_02" path="/UIPIC/商城/" size="112,113"/>
-    <image id="w61cd7" name="ui_Shangchengjiemian_03" path="/UIPIC/商城/" size="348,133"/>
-    <image id="w61cd8" name="ui_Shangchengjiemian_04" path="/UIPIC/商城/" size="329,133"/>
+    <image id="w61cd7" name="ui_Shangchengjiemian_03" path="/UIPIC/商城/" size="280,107"/>
+    <image id="w61cd8" name="ui_Shangchengjiemian_04" path="/UIPIC/商城/" size="265,107"/>
     <image id="w61cd9" name="ui_Shangchengjiemian_05" path="/UIPIC/商城/" size="256,212"/>
     <image id="w61cda" name="ui_Shangchengjiemian_06" path="/UIPIC/商城/" size="100,63"/>
     <image id="w61cdb" name="ui_Shangchengjiemian_07" path="/UIPIC/商城/" size="134,66"/>
@@ -591,7 +681,6 @@ g09nlu.xml|616|<component size="104,44">
     <image id="w61cee" name="ui_Zhanji_03" path="/UIPIC/战绩记录/" size="670,248"/>
     <image id="w61cef" name="ui_Zhanji_04" path="/UIPIC/战绩记录/" size="121,156"/>
     <image id="w61ceg" name="ui_Zhanji_05" path="/UIPIC/战绩记录/" size="57,24"/>
-    <image id="w61cf9" name="ui_Shezhi_01" path="/UIPIC/游戏设置/" size="174,225"/>
     <image id="w61cfa" name="ui_Shezhi_02" path="/UIPIC/游戏设置/" size="188,71"/>
     <image id="w61cfb" name="ui_Shezhi_04" path="/UIPIC/游戏设置/" size="64,64"/>
     <image id="w61cfj" name="ui_Youxijiemian_02" path="/UIPIC/游戏页面/" size="151,151"/>
@@ -647,6 +736,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="j3uokl" name="Loading" path="/" size="1334,750" exported="true"/>
     <component id="j3uokn" name="InformText" path="/UIPIC/功能界面/" size="1000,69" exported="true"/>
     <component id="kew4o5" name="PopWindowsBigShowText" path="/UIPIC/xinzeng/" size="1004,456" exported="true"/>
+    <component id="lq2gq0" name="Vote" path="/" size="1334,750" exported="true"/>
     <component id="lt1cmu" name="ExitGamePop" path="/" size="1334,750" exported="true"/>
     <component id="lt1cmv" name="BindingDeclarationPop" path="/" size="1334,750" exported="true"/>
     <component id="lt1cmx" name="RoomClosedPop" path="/" size="1334,750" exported="true"/>
@@ -770,7 +860,7 @@ g09nlu.xml|616|<component size="104,44">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList/>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>s1q8o3.xml|3668|<component size="1334,750">
+</component>s1q8o3.xml|3700|<component size="1334,750">
   <controller name="ServerSelectMain" pages="0,,1,,2," selected="0"/>
   <controller name="ServerSelect" pages="0,,1,,2,,3,,4," selected="0"/>
   <displayList>
@@ -780,7 +870,7 @@ g09nlu.xml|616|<component size="104,44">
     <component id="n1_s1q8" name="Server1" src="l2jdkp" xy="332,250">
       <Button checked="true" title="测试服" controller="ServerSelectMain" page="0"/>
     </component>
-    <image id="n2_s1q8" name="n2" src="w61cic" xy="324,192" size="670,3"/>
+    <image id="n2_s1q8" name="n2" src="w61cic" xy="324,192" size="670,3" color="#333333"/>
     <text id="n3_s1q8" name="n3" xy="602,147" size="130,28" fontSize="24" color="#ff6600" align="center" vAlign="middle" bold="true" text="服务器选择"/>
     <component id="n4_s1q8" name="Server2" src="l2jdkp" xy="332,316">
       <Button title="朝阳大区" controller="ServerSelectMain" page="1"/>
@@ -789,7 +879,7 @@ g09nlu.xml|616|<component size="104,44">
       <Button title="待定" controller="ServerSelectMain" page="2"/>
     </component>
     <text id="n6_s1q8" name="n6" xy="342,212" size="81,23" fontSize="19" color="#ff6600" align="center" vAlign="middle" shadowColor="#000000" shadowOffset="1,1" text="选择大区"/>
-    <image id="n7_s1q8" name="n7" src="w61cic" xy="464,214" size="371,3" rotation="90"/>
+    <image id="n7_s1q8" name="n7" src="w61cic" xy="464,214" size="371,3" rotation="90" color="#333333"/>
     <component id="n8_s1q8" name="Server1_1" src="l2jdkp" xy="516,247" size="126,50">
       <gearDisplay controller="ServerSelectMain" pages="0"/>
       <Button checked="true" title="银月森林" controller="ServerSelect" page="0"/>
@@ -970,10 +1060,10 @@ g09nlu.xml|616|<component size="104,44">
     </image>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w61caw.xml|321|<component size="260,60">
+</component>w61caw.xml|322|<component size="260,60">
   <displayList>
-    <image id="n0_g7a0" name="Bg" src="w61cax" xy="0,-1" size="259,60"/>
-    <text id="n1_g7a0" name="InputText" xy="4,0" size="249,57" input="true" prompt="999" maxLength="999" fontSize="30" color="#cccccc" vAlign="middle" autoSize="none" text=""/>
+    <image id="n0_g7a0" name="Bg" src="w61cax" xy="0,-8" size="262,71"/>
+    <text id="n1_g7a0" name="InputText" xy="25,0" size="215,57" input="true" prompt="999" maxLength="999" fontSize="30" color="#cccccc" vAlign="middle" autoSize="none" text=""/>
   </displayList>
 </component>w61cay.xml|577|<component size="89,43" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -1592,26 +1682,26 @@ g09nlu.xml|616|<component size="104,44">
   <displayList>
     <text id="n0_l3ub" name="n0" xy="13,10" size="790,1044" fontSize="12" autoSize="none" text=""/>
   </displayList>
-</component>w61cfd.xml|1302|<component size="157,56" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+</component>w61cfd.xml|1302|<component size="219,86" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="3"/>
   <displayList>
     <image id="n1" name="n1" src="w61cax" xy="0,0">
       <gearDisplay controller="button" pages="0,2"/>
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <image id="n2" name="n2" src="w61cfa" xy="0,0">
+    <image id="n2" name="n2" src="w61cfa" xy="0,0" size="188,71">
       <gearDisplay controller="button" pages="1,3"/>
       <gearLook controller="button" default="1,0,0" tween="true" ease="Quad.InOut" duration="4.3"/>
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <image id="n3_qb9a" name="n3" src="w61cfb" xy="-22,-11">
-      <gearXY controller="button" pages="0,1,2,3" values="-22,-11|100,-11|-22,-11|100,-11" tween="true"/>
+    <image id="n3_qb9a" name="n3" src="w61cfb" xy="120,5">
+      <gearXY controller="button" pages="0,1,2,3" values="1,4|121,4|3,4|120,5" tween="true"/>
     </image>
-    <text id="n4_qb9a" name="Tkai" xy="25,12" size="32,30" fontSize="26" color="#ffffff" autoSize="none" text="开">
+    <text id="n4_qb9a" name="Tkai" xy="40,22" size="32,30" fontSize="26" color="#ffffff" autoSize="none" text="开">
       <gearDisplay controller="button" pages="1,3"/>
       <gearLook controller="button" default="1,0,0" tween="true" ease="Linear" duration="1"/>
     </text>
-    <text id="n5_qb9a" name="Tguan" xy="105,11" size="32,30" fontSize="26" color="#ffffff" autoSize="none" text="关">
+    <text id="n5_qb9a" name="Tguan" xy="107,20" size="32,30" fontSize="26" color="#ffffff" autoSize="none" text="关">
       <gearDisplay controller="button" pages="0,2"/>
     </text>
   </displayList>
@@ -1822,13 +1912,12 @@ g09nlu.xml|616|<component size="104,44">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgl.xml|667|<component size="174,259">
+</component>w61cgl.xml|618|<component size="367,166">
   <displayList>
-    <text id="n17_jujv" name="PlayerID" xy="63,224" size="108,34" fontSize="27" color="#663300" vAlign="middle" autoSize="none" text="9999999"/>
-    <text id="n18_jujv" name="Tid" xy="8,224" size="56,34" fontSize="27" color="#663300" vAlign="middle" autoSize="none" text="ID:"/>
-    <image id="n19_pvrd" name="n19" src="w61cf9" xy="0,0"/>
+    <text id="n17_jujv" name="PlayerID" xy="259,101" size="108,34" fontSize="27" color="#7c604c" vAlign="middle" autoSize="none" text="9999999"/>
+    <text id="n18_jujv" name="Tid" xy="204,101" size="56,34" fontSize="27" color="#7c604c" vAlign="middle" autoSize="none" text="ID:"/>
     <loader id="n16_jujv" name="AvatarLoader" xy="7,6" size="160,160" url="ui://krtoytc1nnbzjv"/>
-    <text id="n15_jujv" name="PlayerName" xy="9,176" size="156,42" fontSize="18" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="对方根本"/>
+    <text id="n15_jujv" name="PlayerName" xy="206,22" size="268,37" fontSize="32" color="#66ffff" vAlign="middle" bold="true" strokeColor="#000000" text="对方根本不想输入"/>
   </displayList>
 </component>w61cik.xml|636|<component size="177,73" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -2795,23 +2884,23 @@ g09nlu.xml|616|<component size="104,44">
   <displayList>
     <component id="n28_i0jk" name="Bg" src="i0jkoe" xy="192,37" group="n27_s5h9"/>
     <text id="n4_qb9a" name="Title" xy="325,71" size="205,54" group="n27_s5h9" fontSize="50" color="#ffffff" text="游戏设置"/>
-    <text id="n5_qb9a" name="Tmusic" xy="332,228" size="85,44" group="n27_s5h9" fontSize="40" color="#ffffff" text="音乐"/>
-    <text id="n6_qb9a" name="Teffect" xy="332,314" size="85,44" group="n27_s5h9" fontSize="40" color="#ffffff" text="音效"/>
-    <text id="n7_qb9a" name="Tgamevoice" xy="332,400" size="85,44" group="n27_s5h9" fontSize="40" color="#ffffff" text="语音"/>
-    <text id="n8_qb9a" name="Tclickout" xy="292,486" size="168,44" group="n27_s5h9" fontSize="40" color="#ffffff" autoSize="height" text="单击出牌"/>
-    <component id="n19_jujv" name="PlayerInformation" src="w61cgl" xy="836,234" group="n27_s5h9"/>
-    <component id="n3_qb9a" name="Close" src="w61cj0" xy="1084,99" group="n25_jujv"/>
-    <component id="n9_qb9a" name="MusicSlideButton" src="w61cfd" xy="490,223" group="n25_jujv"/>
-    <component id="n10_qb9a" name="EffectSlideButton" src="w61cfd" xy="490,309" group="n25_jujv"/>
-    <component id="n11_qb9a" name="GameVoiceSlideButton" src="w61cfd" xy="490,395" group="n25_jujv"/>
-    <component id="n12_qb9a" name="ClickOutSlideButton" src="w61cfd" xy="490,481" group="n25_jujv"/>
-    <component id="n20_jujv" name="ChangeAccount" src="w61cfe" xy="795,525" group="n25_jujv"/>
-    <component id="n21_jujv" name="FeedBackButton" src="w61cff" xy="282,591" group="n25_jujv"/>
-    <component id="n22_jujv" name="AboutUsButton" src="w61cfg" xy="385,591" group="n25_jujv"/>
-    <component id="n23_jujv" name="UpdateButton" src="w61cfh" xy="488,591" group="n25_jujv"/>
-    <component id="n24_jujv" name="CustomServiceButton" src="w61cfi" xy="591,592" group="n25_jujv"/>
-    <group id="n25_jujv" name="Btns" xy="282,99" size="869,536" group="n27_s5h9" advanced="true"/>
-    <group id="n27_s5h9" name="Setting" xy="192,37" size="959,661" advanced="true">
+    <text id="n5_qb9a" name="Tmusic" xy="319,398" size="85,45" group="n27_s5h9" fontSize="40" color="#7c604c" text="音乐"/>
+    <text id="n6_qb9a" name="Teffect" xy="319,484" size="87,45" group="n27_s5h9" fontSize="40" color="#7c604c" text="音效"/>
+    <text id="n7_qb9a" name="Tgamevoice" xy="705,397" size="87,45" group="n27_s5h9" fontSize="40" color="#7c604c" text="语音"/>
+    <text id="n8_qb9a" name="Tclickout" xy="665,483" size="168,45" group="n27_s5h9" fontSize="40" color="#7c604c" autoSize="height" text="单击出牌"/>
+    <component id="n19_jujv" name="PlayerInformation" src="w61cgl" xy="297,171" group="n27_s5h9"/>
+    <component id="n3_qb9a" name="Close" src="w61cj0" xy="1076,99" group="n25_jujv"/>
+    <component id="n9_qb9a" name="MusicSlideButton" src="w61cfd" xy="450,384" group="n25_jujv"/>
+    <component id="n10_qb9a" name="EffectSlideButton" src="w61cfd" xy="449,472" group="n25_jujv"/>
+    <component id="n11_qb9a" name="GameVoiceSlideButton" src="w61cfd" xy="836,384" group="n25_jujv"/>
+    <component id="n12_qb9a" name="ClickOutSlideButton" src="w61cfd" xy="836,472" group="n25_jujv"/>
+    <component id="n20_jujv" name="ChangeAccount" src="w61cfe" xy="799,211" group="n25_jujv"/>
+    <component id="n21_jujv" name="FeedBackButton" src="w61cff" xy="412,588" group="n25_jujv"/>
+    <component id="n22_jujv" name="AboutUsButton" src="w61cfg" xy="564,588" group="n25_jujv"/>
+    <component id="n23_jujv" name="UpdateButton" src="w61cfh" xy="715,588" group="n25_jujv"/>
+    <component id="n24_jujv" name="CustomServiceButton" src="w61cfi" xy="859,589" group="n25_jujv"/>
+    <group id="n25_jujv" name="Btns" xy="412,99" size="731,533" group="n27_s5h9" advanced="true"/>
+    <group id="n27_s5h9" name="Setting" xy="192,37" size="951,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>

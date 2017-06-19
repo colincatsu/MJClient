@@ -12,7 +12,10 @@ end
 --]]
 StringTable = {}
 local this = StringTable
-local text = {}
+local text = setmetatable({}, {__index=string_list, __newindex=function (t, k, v)
+	if string_list[k] then error("replicated string id: " .. tostring(k)) end
+	string_list[k] = v
+end})
 
 do
 	text[0] = "无"

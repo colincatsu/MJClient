@@ -1980,10 +1980,11 @@ function MahJong.OperationPaiShow(message)
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(_modelSize.width,0,0)
 	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+	    				MahJong.SortOperationPaiShow("east")
+						MahJong.DeleteOtherPai("POSITION_TYPE_EAST",1)
 	    				return
 	    			end
 	    		end
-				MahJong.DeleteOtherPai("POSITION_TYPE_EAST",deleteOtheCount)
     		end
     	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
     		local modelTemp
@@ -1998,10 +1999,11 @@ function MahJong.OperationPaiShow(message)
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,_modelSize.width)
 	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+	    				MahJong.SortOperationPaiShow("south")
+						MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",1)
 	    				return
 	    			end
 	    		end
-				MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",deleteOtheCount)
     		end
     	elseif whichPlayer == "POSITION_TYPE_WEST" then
     		local modelTemp
@@ -2016,10 +2018,11 @@ function MahJong.OperationPaiShow(message)
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(-_modelSize.width,0,0)
 	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+	    				MahJong.SortOperationPaiShow("west")
+						MahJong.DeleteOtherPai("POSITION_TYPE_WEST",1)
 	    				return
 	    			end
 	    		end
-				MahJong.DeleteOtherPai("POSITION_TYPE_WEST",deleteOtheCount)
     		end
     	elseif whichPlayer == "POSITION_TYPE_NORTH" then
     		local modelTemp
@@ -2034,10 +2037,11 @@ function MahJong.OperationPaiShow(message)
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,-_modelSize.width)
 	    				v.cards[v.showNumber].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+	    				MahJong.SortOperationPaiShow("north")
+						MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",1)
 	    				return
 	    			end
 	    		end
-				MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",deleteOtheCount)
     		end
     	end
     end
@@ -2071,8 +2075,8 @@ function MahJong.OperationPaiShow(message)
 			end
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber + 1
 			MahJong.AddModelShadow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
-			MahJong.DeleteOtherPai("POSITION_TYPE_EAST",1)
 		end
+		MahJong.DeleteOtherPai("POSITION_TYPE_EAST",deleteOtheCount)
 		MahJong.SortOperationPaiShow("east")
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		if not _operation_pai_show.point_n.group then
@@ -2103,8 +2107,8 @@ function MahJong.OperationPaiShow(message)
 			end
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber + 1
 			MahJong.AddModelShadow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
-			MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",1)
 		end
+		MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",deleteOtheCount)
 		MahJong.SortOperationPaiShow("south")
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		if not _operation_pai_show.point_x.group then
@@ -2135,8 +2139,8 @@ function MahJong.OperationPaiShow(message)
 			end
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber + 1
 			MahJong.AddModelShadow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
-			MahJong.DeleteOtherPai("POSITION_TYPE_WEST",1)
 		end
+		MahJong.DeleteOtherPai("POSITION_TYPE_WEST",deleteOtheCount)
 		MahJong.SortOperationPaiShow("west")
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		if not _operation_pai_show.point_b.group then
@@ -2167,8 +2171,8 @@ function MahJong.OperationPaiShow(message)
 			end
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber + 1
 			MahJong.AddModelShadow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
-			MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",1)
 		end
+		MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",deleteOtheCount)
 		MahJong.SortOperationPaiShow("north")
 	end
 	--]]
