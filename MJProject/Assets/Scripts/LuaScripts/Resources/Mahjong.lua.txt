@@ -440,6 +440,7 @@ function MahJong.ResetGameState()
 
     MahJong._current_click_pai = nil
     Player._ting_pai_cache = nil
+    ClickEvent._play_ui.uselessRound.visible = false
 end
 
 --牌池
@@ -693,6 +694,30 @@ function MahJong.AddOtherPai(whichPlayer,paiCount)
 	MahJong.SortOtherPai()
 end
 
+function MahJong.LiuJuPai(paisData)
+	-- body
+	ClickEvent._play_ui.uselessRound.visible = true
+	for k,v in pairs(paisData) do
+		
+	end
+end
+
+function MahJong.TuiDaoPai(paisData)
+	-- body
+	for k, v in pairs(paisData)do
+        local tempPaiPool = {}
+        for j,n in pairs(_mj_asset) do
+        	if n.card_type == v.card_type then
+        		tempPaiPool = n
+        	end
+        end
+        for i, m in pairs(v.cards) do
+        	paiCount = paiCount + 1
+			MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+        end
+    end
+end
+
 function MahJong.UpdateWhoseTurn(whichPlayer)
 	-- body
 	_player_direction.east:GetComponent("Renderer").material = Load("Material/DirDark")
@@ -828,16 +853,18 @@ function MahJong.CreatePlayerPai()
 		_player_father.father.transform:SetParent(self.transform)
 	end
 	local paiCount = 0
+	--[[
 	for k,v in pairs(Player._invoke_table.pais) do
 		CS.UnityEngine.Debug.LogWarning("card_type::"..v.card_type)
 		for j,c in pairs(v.cards) do
 			CS.UnityEngine.Debug.LogWarning("card_value::"..c)
 		end
 	end
+	--]]
 	for k, v in pairs(Player._invoke_table.pais)do
         local tempPaiPool = {}
         for j,n in pairs(_mj_asset) do
-       		CS.UnityEngine.Debug.LogWarning("_mj_asset::"..n.card_type) 	
+       		--CS.UnityEngine.Debug.LogWarning("_mj_asset::"..n.card_type) 	
         	if n.card_type == v.card_type then
         		tempPaiPool = n
         	end
