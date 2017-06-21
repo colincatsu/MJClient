@@ -335,6 +335,15 @@ function Player.OnLiuJu(type_t,stuff)
     Player.MahJong.LiuJuPai(message)
 end
 
+function Player.OnTuiPai(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.TuiDao",stuff)
+    MahJong.TuiDaoPai
+end
+
 function Player.OnGameInformation(type_t,stuff)
     -- body
     if not stuff then
