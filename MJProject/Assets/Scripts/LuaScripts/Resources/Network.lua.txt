@@ -95,6 +95,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
     FLibEvent.AddEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
     FLibEvent.AddEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
+    FLibEvent.AddEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
 end
 
 ---------------------------------------------------------------------------
@@ -163,6 +164,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
     FLibEvent.DelEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
     FLibEvent.DelEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
+    FLibEvent.DelEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
 end
 
 ---------------------------------------------------------------------------

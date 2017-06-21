@@ -1,5 +1,5 @@
 
-„_
+„b
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -288,7 +288,17 @@ out_reason (2.Adoter.Asset.KILL_OUT_REASON"È
 content ("Y
 SYSTEM_BROADCAST_TYPE 
 SYSTEM_BROADCAST_TYPE_SCROLL
-SYSTEM_BROADCAST_TYPE_CHAT*u
+SYSTEM_BROADCAST_TYPE_CHAT"H
+MultiplePai*
+	card_type (2.Adoter.Asset.CARD_TYPE
+cards ("‘
+PaiPushDownD
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PAI_PUSH_DOWN<
+player_list (2'.Adoter.Asset.PaiPushDown.PlayerElement~
+PlayerElement
+	player_id (-
+position (2.Adoter.Asset.POSITION_TYPE+
+pai_list (2.Adoter.Asset.MultiplePai*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -352,7 +362,8 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*ù	
+ERROR_COMMON_REWARD_HAS_GOT3*›
+
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -394,7 +405,8 @@ ERROR_CODE
 META_TYPE_S2C_GAME_INFOƒ
 META_TYPE_S2C_KILL_OUT„
 META_TYPE_S2C_ACTIVITY…#
-META_TYPE_S2C_SYSTEM_BROADCAST†
+META_TYPE_S2C_SYSTEM_BROADCAST† 
+META_TYPE_S2C_PAI_PUSH_DOWN‡
 META_TYPE_S2C_COUNTè*ñ
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 

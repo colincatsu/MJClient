@@ -332,16 +332,16 @@ function Player.OnLiuJu(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.LiuJu",stuff)
-    Player.MahJong.LiuJuPai(message)
+    Player.MahJong.LiuJuPai(message.elements)
 end
 
-function Player.OnTuiPai(type_t,stuff)
+function Player.OnPaiPushDown(type_t,stuff)
     -- body
     if not stuff then
         return
     end
-    local message = protobuf.decode("Adoter.Asset.TuiDao",stuff)
-    MahJong.TuiDaoPai
+    local message = protobuf.decode("Adoter.Asset.PaiPushDown",stuff)
+    Player.MahJong.PaiPushDown(message.player_list)
 end
 
 function Player.OnGameInformation(type_t,stuff)

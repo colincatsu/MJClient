@@ -1,5 +1,5 @@
 
-›S
+ðR
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -182,15 +182,17 @@ voice_path ("
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_AVATAR2
 common_prop (2.Adoter.Asset.AssetCommonProp
 avatars_count (:20
-avatars ("˜
+avatars ("ÿ
 Activity=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ACTIVITY2
-common_prop (2.Adoter.Asset.AssetCommonProp>
-activity_cycle_type (2!.Adoter.Asset.ACTIVITY_CYCLE_TYPE2
-activity_type (2.Adoter.Asset.ACTIVITY_TYPE
+common_prop (2.Adoter.Asset.AssetCommonProp2
+activity_type (2.Adoter.Asset.ACTIVITY_TYPE
+
+start_date (
 
 start_time (
-	stop_time ("Ã
+	stop_date (
+	stop_time ("Ã
 DailyAllowanceD
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_ALLOWANCE2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -364,11 +366,10 @@ ASSET_TYPE
 FAN_TYPE_JIA_HU_MIDDLE
 FAN_TYPE_JIA_HU_HIGHER
 FAN_TYPE_PIAO_WEIHU
-FAN_TYPE_BAOSANJIA*4
-ACTIVITY_CYCLE_TYPE
-ACTIVITY_CYCLE_TYPE_DIALY*,
-ACTIVITY_TYPE
-ACTIVITY_TYPE_STOP_TIME*:
+FAN_TYPE_BAOSANJIA*P
+ACTIVITY_TYPE
+ACTIVITY_CYCLE_TYPE_DIALY 
+ACTIVITY_CYCLE_TYPE_DURATION*:
 	MAIL_TYPE
 MAIL_TYPE_HELP
 MAIL_TYPE_ANNOUCEMENT*l
