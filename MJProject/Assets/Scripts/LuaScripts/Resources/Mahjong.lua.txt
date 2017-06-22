@@ -49,6 +49,7 @@ local _modelPool = {}--没抓的牌池
 local zhuaPaiBeginPos = 0
 local modelPoolFrontPointer = 0--抓牌指针
 local modelPoolBackPointer = 0--牌尾指针
+local diceNumber = nil --色子位置
 local _pai_pool_show = {}--打牌的牌池
 local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
@@ -111,6 +112,8 @@ Player.self = self
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
 
+local _hand_cards = {}--分张
+
 function awake( ... )
 	-- body
 	ClickEvent.Awake()
@@ -126,8 +129,8 @@ function start()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 
-	--[[
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	--[[
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",1,1,2,3)
 	MahJong.CreateChiPai("CARD_TYPE_FENG",2,1,2,3)
@@ -152,7 +155,20 @@ function start()
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
 	MahJong.SortPlayerPai()
-	MahJong.CreateOtherPai("forward",13)
+	MahJong.CreateOtherPai("next",9)
+	paisData = {
+		{
+			player_id = 1,
+			position = "POSITION_TYPE_SOUTH",
+			pai_list = {{card_type = "CARD_TYPE_WANZI",cards = {1,2,3,4,5,6}},{card_type = "CARD_TYPE_BINGZI",cards = {1,2,3}}}
+		}
+	}
+	MahJong.PaiPushDown(paisData)
+	Player._all_players_data = {{player_id = 1,position = "POSITION_TYPE_SOUTH"} }
+	paisData = {
+		{player_id = 1,pai = {card_type = "CARD_TYPE_WANZI",card_value = 1}},
+	}
+	MahJong.LiuJuPai(paisData)
 	--]]
 end
 
@@ -698,7 +714,68 @@ function MahJong.LiuJuPai(paisData)
 	-- body
 	ClickEvent._play_ui.uselessRound.visible = true
 	for k,v in pairs(paisData) do
-		
+		for dataNum,playerData in pairs(Player._all_players_data) do
+			if playerData.player_id == v.player_id then
+				local playerPos = ClickEvent.PlayerPosition(playerData.position)
+				if playerPos == 1 then
+			        local tempPaiPool = {}
+			        local modelTemp = nil
+			        for j,n in pairs(_mj_asset) do
+			        	if n.card_type == v.pai.card_type then
+			        		modelTemp = Load("MJModel/"..n.cards[v.pai.card_value].model_path)
+			        		break
+			        	end
+			        end
+			        _hand_cards._next_card = Instantiate(modelTemp)
+			        _hand_cards._next_card.layer = 0
+			        _hand_cards._next_card.transform.position = _player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.position - newVector3(0,0,2*_modelSize.width)
+			        _hand_cards._next_card.transform.eulerAngles = _player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.eulerAngles
+		        	MahJong.AddModelShadow(_hand_cards._next_card,-_modelSize.length/2+_modelSize.shadowShift,1)
+				elseif playerPos == 2 then
+					local tempPaiPool = {}
+			        local modelTemp = nil
+			        for j,n in pairs(_mj_asset) do
+			        	if n.card_type == v.pai.card_type then
+			        		modelTemp = Load("MJModel/"..n.cards[v.pai.card_value].model_path)
+			        		break
+			        	end
+			        end
+			        _hand_cards._opposite_card = Instantiate(modelTemp)
+			        _hand_cards._opposite_card.layer = 0
+			        _hand_cards._opposite_card.transform.position = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.position + newVector3(2*_modelSize.width,0,0)
+			        _hand_cards._opposite_card.transform.eulerAngles = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.eulerAngles
+		        	MahJong.AddModelShadow(_hand_cards._opposite_card,-_modelSize.length/2+_modelSize.shadowShift,1)
+				elseif playerPos == 3 then
+					local tempPaiPool = {}
+			        local modelTemp = nil
+			        for j,n in pairs(_mj_asset) do
+			        	if n.card_type == v.pai.card_type then
+			        		modelTemp = Load("MJModel/"..n.cards[v.pai.card_value].model_path)
+			        		break
+			        	end
+			        end
+			        _hand_cards._forward_card = Instantiate(modelTemp)
+			        _hand_cards._forward_card.layer = 0
+			        _hand_cards._forward_card.transform.position = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position + newVector3(0,0,2*_modelSize.width)
+			        _hand_cards._forward_card.transform.eulerAngles = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.eulerAngles
+		        	MahJong.AddModelShadow(_hand_cards._forward_card,-_modelSize.length/2+_modelSize.shadowShift,1)
+				elseif playerPos == 0 then
+					local tempPaiPool = {}
+			        local modelTemp = nil
+			        for j,n in pairs(_mj_asset) do
+			        	if n.card_type == v.pai.card_type then
+			        		modelTemp = Load("MJModel/"..n.cards[v.pai.card_value].model_path)
+			        		break
+			        	end
+			        end
+			        _hand_cards._forward_card = Instantiate(modelTemp)
+			        _hand_cards._forward_card.layer = 0
+			        _hand_cards._forward_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.27)
+			        _hand_cards._forward_card.transform.eulerAngles = newVector3(180,0,0)
+		        	MahJong.AddModelShadow(_hand_cards._forward_card,-_modelSize.length/2+_modelSize.shadowShift,1)
+				end
+			end
+		end
 	end
 end
 
@@ -730,15 +807,17 @@ function MahJong.PaiPushDown(paisData)
 		        end
 		        for i, m in pairs(card.cards) do
 		        	paiCount = paiCount + 1
-		        	local modelTemp = Load(tempPaiPool.cards[m].model_path)
+		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 		        	if _player_pai_pool._next_card[paiCount] then
 		        		Destroy(_player_pai_pool._next_card[paiCount])
 		        	end
 		        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
+		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
+		        	_player_pai_pool._next_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        end
 			end
+			_player_pai_pool._next_pai_number = paiCount
 		elseif playerPos == 2 then
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
@@ -750,15 +829,17 @@ function MahJong.PaiPushDown(paisData)
 		        end
 		        for i, m in pairs(card.cards) do
 		        	paiCount = paiCount + 1
-		        	local modelTemp = Load(tempPaiPool.cards[m].model_path)
+		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 		        	if _player_pai_pool._opposite_card[paiCount] then
 		        		Destroy(_player_pai_pool._opposite_card[paiCount])
 		        	end
-		        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,0,0)
+		        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
+		        	_player_pai_pool._opposite_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        end
 			end
+			_player_pai_pool._opposite_pai_number = paiCount
 		elseif playerPos == 3 then
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
@@ -770,15 +851,17 @@ function MahJong.PaiPushDown(paisData)
 		        end
 		        for i, m in pairs(card.cards) do
 		        	paiCount = paiCount + 1
-		        	local modelTemp = Load(tempPaiPool.cards[m].model_path)
+		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 		        	if _player_pai_pool._forward_card[paiCount] then
 		        		Destroy(_player_pai_pool._forward_card[paiCount])
 		        	end
-		        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
+		        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
+		        	_player_pai_pool._forward_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        end
 			end
+			_player_pai_pool._forward_pai_number = paiCount
 		end
     end
     MahJong.SortPushDownPai()
@@ -2338,22 +2421,57 @@ function MahJong.PlayDoubleDices(number1,number2)
 	coroutine.resume(co)
 end
 
-function MahJong.PlayerSingleDice(number,baopai)
+function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
-	diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
-	_dice_red:SetActive(true)
-	redDicePoints =	number
-	modelPoolBackPointer = modelPoolBackPointer -1 - (redDicePoints - 1)*2
-	if modelPoolBackPointer <= 0 then
+	if not isPlayDice then
+		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
+		_dice_red:SetActive(true)
+	end
+	if diceNumber and diceNumber%2 == 0 then
+		for i=1,redDicePoints-1 do
+			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
+			if _modelPool[forwardPoolNumber].active then
+				_modelPool[diceNumber-1].SetActive(true)
+			else
+				_modelPool[diceNumber-1].SetActive(false)
+			end
+			_modelPool[diceNumber].SetActive(true)
+			diceNumber = math.fmod((diceNumber + 2),_model_all_pai_number)
+			if diceNumber == 0 then
+				diceNumber = _model_all_pai_number
+			end
+		end
+		_modelPool[modelPoolBackPointer].SetActive(false)
+		_modelPool[modelPoolBackPointer-1].SetActive(false)
+		modelPoolBackPointer = modelPoolBackPointer - 2
+		if modelPoolBackPointer <= 0 then
 			modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
-	end
-	modelPoolBackPointer = math.fmod(modelPoolBackPointer,_model_all_pai_number)
-	if modelPoolBackPointer == 0 then
+		end
+		modelPoolBackPointer = math.fmod(modelPoolBackPointer,_model_all_pai_number)
+		if modelPoolBackPointer == 0 then
 			modelPoolBackPointer = _model_all_pai_number
+		end
 	end
+	redDicePoints =	number
+	diceNumber = modelPoolBackPointer -1 - (redDicePoints - 1)*2
+	if not _modelPool[diceNumber].active then
+		diceNumber = diceNumber + 1
+	end
+	if diceNumber <= 0 then
+		diceNumber = diceNumber + _model_all_pai_number
+	end
+	diceNumber = math.fmod(diceNumber,_model_all_pai_number)
+	if diceNumber == 0 then
+		diceNumber = _model_all_pai_number
+	end
+
+	if _baopai_model then
+    	CS.UnityEngine.Object.Destroy(_baopai_model)
+    	_baopai_model = nil
+    end
 	local co = coroutine.create(function()
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time))
-    MahJong.CreateBaoPai(baopai,modelPoolBackPointer)
+    MahJong.CreateBaoPai(baopai,diceNumber)
     _dice_red:SetActive(false)
 	end)
 	coroutine.resume(co)

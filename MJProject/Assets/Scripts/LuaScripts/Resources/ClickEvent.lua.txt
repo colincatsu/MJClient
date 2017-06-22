@@ -128,6 +128,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		ClickEvent._play_ui.remainNum = _currentPanel.panel:GetChild("RemainNum")
 
 		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		--[[
@@ -196,6 +197,11 @@ function ClickEvent.PlayerPosition(position)
 	end
 	return nil
 end
+
+function ClickEvent.SetRemainNum( paiRemainNum )
+ 	-- body
+ 	ClickEvent._play_ui.remainNum.text = tostring(paiRemainNum)
+ end 
 
 function ClickEvent.RoomInformationUpdate( ... )
 	-- body

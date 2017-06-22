@@ -519,7 +519,7 @@ function Player.OnRandomSaizi(type_t,stuff)
         Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
-            Player.MahJong.PlayerSingleDice(v,message.pai)
+            Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             break
         end
     end
@@ -534,6 +534,9 @@ function Player.OnPaiNotify(type_t,stuff)
     if not message.data_type then
         LogWarning("type is nil")
         return
+    end
+    if message.cards_remain then
+        ClickEvent.SetRemainNum(message.cards_remain)
     end
     LogWarning(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
