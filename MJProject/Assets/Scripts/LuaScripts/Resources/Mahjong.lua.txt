@@ -662,15 +662,15 @@ function MahJong.DeleteOtherPai(whichPlayer,paiCount)
 		end
 	elseif playerPos == 2 then
 		for i=1,paiCount do
-			CS.UnityEngine.Object.Destroy(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number])
-			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = nil
-			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number - 1
-		end
-	elseif playerPos == 3 then
-		for i=1,paiCount do
 			CS.UnityEngine.Object.Destroy(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number])
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = nil
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number - 1
+		end
+	elseif playerPos == 3 then
+		for i=1,paiCount do
+			CS.UnityEngine.Object.Destroy(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number])
+			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = nil
+			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number - 1
 		end
 	end
 	MahJong.SortOtherPai()
@@ -1164,6 +1164,9 @@ end
 
 function MahJong.CreateBaoPai(pai,posNumber)
 	-- body
+	if not pai or pai == {} then
+		return
+	end
 	if _modelPool[posNumber] then
 		_modelPool[posNumber]:SetActive(false)
 	end
@@ -2423,14 +2426,14 @@ end
 
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
-	if not isPlayDice then
+	if isPlayDice then
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
 	end
 	if diceNumber and diceNumber%2 == 0 then
 		for i=1,redDicePoints-1 do
 			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
-			if _modelPool[forwardPoolNumber].active then
+			if _modelPool[forwardPoolNumber].activeInHierarchy then
 				_modelPool[diceNumber-1].SetActive(true)
 			else
 				_modelPool[diceNumber-1].SetActive(false)
@@ -2454,9 +2457,6 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	end
 	redDicePoints =	number
 	diceNumber = modelPoolBackPointer -1 - (redDicePoints - 1)*2
-	if not _modelPool[diceNumber].active then
-		diceNumber = diceNumber + 1
-	end
 	if diceNumber <= 0 then
 		diceNumber = diceNumber + _model_all_pai_number
 	end
@@ -2464,7 +2464,11 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if diceNumber == 0 then
 		diceNumber = _model_all_pai_number
 	end
-
+	if not _modelPool[diceNumber].activeInHierarchy then
+		diceNumber = diceNumber + 1
+	end
+	print("dice:"..number)
+	print("diceNumber:"..diceNumber)
 	if _baopai_model then
     	CS.UnityEngine.Object.Destroy(_baopai_model)
     	_baopai_model = nil

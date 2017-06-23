@@ -1,5 +1,5 @@
 
-œb
+Îd
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -81,7 +81,7 @@ phone_type ("Ã
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"›
+attachments (2.Adoter.Asset.MailAttachment"Î
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -95,7 +95,8 @@ login_time (
 client_info	 (2.Adoter.Asset.ClientInfomation
 mail_list_system
  (0
-mail_list_customized (2.Adoter.Asset.Mail"¨
+mail_list_customized (2.Adoter.Asset.Mail1
+game_setting (2.Adoter.Asset.PlayerSetting"¨
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -160,7 +161,16 @@ ENTER_TYPE
 
 GuestLoginD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GUEST_LOGIN
-account ("û
+account ("P
+PlayerSetting
+music (
+voice (
+audio (
+
+click_push ("‡
+GameSettingE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GAME_SETTING1
+game_setting (2.Adoter.Asset.PlayerSetting"û
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON
@@ -363,7 +373,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*›
+ERROR_COMMON_REWARD_HAS_GOT3*¾
 
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
@@ -379,7 +389,8 @@ ERROR_CODE
  
 META_TYPE_SHARE_RANDOM_SAIZI
 META_TYPE_SHARE_SAY_HI
-META_TYPE_SHARE_GUEST_LOGIN
+META_TYPE_SHARE_GUEST_LOGIN!
+META_TYPE_SHARE_GAME_SETTINGˆ
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4

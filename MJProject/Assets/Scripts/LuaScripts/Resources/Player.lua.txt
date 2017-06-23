@@ -519,7 +519,11 @@ function Player.OnRandomSaizi(type_t,stuff)
         Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
-            Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
+            if Player._my_player_data.common_prop.player_id == message.player_id then
+                Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
+            else
+                Player.MahJong.PlayerSingleDice(v,{},message.has_rand_saizi)
+            end
             break
         end
     end
