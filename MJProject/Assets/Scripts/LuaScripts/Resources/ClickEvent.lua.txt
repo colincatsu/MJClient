@@ -810,6 +810,21 @@ function ClickEvent.CreateRoomButton( ... )
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 
+function ClickEvent.FreshHandButton( ... )
+	-- body
+	Player.CmdEnterRoom("ROOM_TYPE_XINSHOU")
+end
+
+function ClickEvent.MasterHandButton( ... )
+	-- body
+	Player.CmdEnterRoom("ROOM_TYPE_GAOSHOU")
+end
+
+function ClickEvent.GreatNasterHandButton( ... )
+	-- body
+	Player.CmdEnterRoom("ROOM_TYPE_DASHI")
+end
+
 function ClickEvent.Close( ... )
 	-- body
 	CS.UnityEngine.Debug.LogWarning("ClosePanel")
@@ -908,7 +923,7 @@ function ClickEvent.GetinButton( ... )
 	-- body
 	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
 	CS.UnityEngine.Debug.LogWarning(tonumber(Player._roomId))
-	Player.CmdEnterRoom(Player._roomId)
+	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	ClickEvent.Close()
 end
 --数字

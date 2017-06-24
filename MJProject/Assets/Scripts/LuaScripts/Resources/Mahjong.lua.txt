@@ -1097,6 +1097,7 @@ end
 function MahJong.TingPaiUpdateState( ... )
 	-- body
 	isTingPaied = true
+	Player.isTingPaied = true
 	if not Player._ting_pai_cache then
 		return
 	end
@@ -1165,8 +1166,11 @@ end
 function MahJong.CreateBaoPai(pai,posNumber)
 	-- body
 	if not pai or pai == {} then
+		print("not ting")
 		return
 	end
+	print("paipaipai:"..pai)
+	print("paipaipai:"..pai.card_type)
 	if _modelPool[posNumber] then
 		_modelPool[posNumber]:SetActive(false)
 	end
@@ -2469,6 +2473,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	end
 	print("dice:"..number)
 	print("diceNumber:"..diceNumber)
+	print("baopai:"..baopai)
 	if _baopai_model then
     	CS.UnityEngine.Object.Destroy(_baopai_model)
     	_baopai_model = nil

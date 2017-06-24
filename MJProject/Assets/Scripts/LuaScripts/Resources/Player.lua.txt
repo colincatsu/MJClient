@@ -44,6 +44,7 @@ local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
 local _connected = false
+local isTingPaied = false
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -251,11 +252,12 @@ function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_
     this.SendProtocol("CreateRoom",createRoom)
 end
 
-function Player.CmdEnterRoom(id,passWord)
+function Player.CmdEnterRoom(roomType,id,passWord)
     -- body
     local enterRoom = {
         room = {
             room_id = id,--2;
+            room_type = roomType,
             --enter_password = passWord,--"123";
         },
         
@@ -519,10 +521,10 @@ function Player.OnRandomSaizi(type_t,stuff)
         Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
-            if Player._my_player_data.common_prop.player_id == message.player_id then
+            if Player.isTingPaied then
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else
-                Player.MahJong.PlayerSingleDice(v,{},message.has_rand_saizi)
+                Player.MahJong.PlayerSingleDice(v,nil,message.has_rand_saizi)
             end
             break
         end
