@@ -107,6 +107,8 @@ local _pai_type_table = {
 }
 local _model_shadow_resource = nil
 local _baopai_model = nil
+local _room_father = nil
+local _room_number = nil
 -- body
 Player.self = self
 ClickEvent.MahJong = MahJong
@@ -121,9 +123,9 @@ end
 
 function start()
 
+	MahJong.Init()
 	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 	ClickEvent.CreateOperationButton()
-	MahJong.Init()
 	MahJong.ModelPoolInit()
 	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
@@ -238,6 +240,8 @@ end
 
 function MahJong.Init()
 	-- body
+	_room_father = self.transform:Find("RoomID").gameObject
+	_room_number = _room_father.transform:Find("Number").gameObject
 	_dice_obj = self.transform:Find("Dice").gameObject
 	_red_dice_animation = self.transform:Find("Dice/Red/Dice").gameObject:GetComponent("Animation")
 	_white_dice_animation = self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
@@ -521,6 +525,19 @@ function MahJong.ModelPoolSetActive(bool)
 	for k, v in pairs(_pointFather) do  
     	v:SetActive(bool)
 	end
+end
+
+function MahJong.UpdateRoomNumber(roomId)
+	-- body
+	for i=1,string.len(roomId) do
+		local tempPrefab = Load("RoomNumber/"..string.sub(roomId,i,i))
+		if not tempPrefab then
+			return 
+		end
+		local tempObj = Instantiate(tempPrefab,_room_number.transform)
+		tempObj.transform.localPosition = newVector3(-(i-1)*0.015,0,0)
+	end
+	_room_father.transform.localPosition = newVector3(_room_father.transform.localPosition.x + (string.len(roomId)-1)*0.009,_room_father.transform.localPosition.y,_room_father.transform.localPosition.z)
 end
 
 function MahJong.UpdateMyDataState()

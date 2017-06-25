@@ -45,6 +45,7 @@ local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
 local _connected = false
 local isTingPaied = false
+local returnMainUI = false
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -443,8 +444,7 @@ function Player.OnEnterRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
     if message.error_code == "ERROR_SUCCESS" then
-        --CS.LuaBehaviour._room_id = tostring(this._roomId)
-        --Player.ThreadFunction(
+        this._roomId = message.room.room_id
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         LogWarning("no found")

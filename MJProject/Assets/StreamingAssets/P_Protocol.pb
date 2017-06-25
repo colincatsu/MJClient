@@ -1,5 +1,5 @@
 
-Îd
+»d
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -144,14 +144,13 @@ ENTER_TYPE
 PlayerLuckyPlateD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_LUCKY_PLATE
 plate_id (
-result ("¸
+result ("¥
 RandomSaiziE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_RANDOM_SAIZI:
-reason_type (2%.Adoter.Asset.RandomSaizi.REASON_TYPE
-	player_id (
-random_result (%
-pai (2.Adoter.Asset.PaiElement
-has_rand_saizi ("=
+reason_type (2%.Adoter.Asset.RandomSaizi.REASON_TYPE
+random_result (%
+pai (2.Adoter.Asset.PaiElement
+has_rand_saizi ("=
 REASON_TYPE
 REASON_TYPE_START
 REASON_TYPE_TINGPAI"]

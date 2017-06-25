@@ -1,5 +1,6 @@
 local gbk = require "gbk"
 local Effect = require "Effect"
+local StringTable = require "StringTable"
 ClickEvent = {}
 ClickEvent.panelTable = {}
 ClickEvent.panelTable._main_ui = "Login"
@@ -18,6 +19,7 @@ ClickEvent.panelTable._player_info = "PlayerInfo"
 ClickEvent.panelTable._other_player_info = "OtherPlayerInfo"
 ClickEvent.panelTable._calculate_ui = "ClearRoundScene"
 ClickEvent.panelTable._window_small = "PopWindowsSmall"
+ClickEvent.panelTable._exit_game_ui = "ExitGamePop"
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
 ClickEvent.scale = nil
@@ -129,6 +131,20 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
 		ClickEvent._play_ui.remainNum = _currentPanel.panel:GetChild("RemainNum")
+		ClickEvent._play_ui.frontAlready = _currentPanel.panel:GetChild("FrontAlready")
+		ClickEvent._play_ui.oppositeAlready = _currentPanel.panel:GetChild("OppositeAlready")
+		ClickEvent._play_ui.behindAlready = _currentPanel.panel:GetChild("BehindAlready")
+		ClickEvent._play_ui.playerAlready = _currentPanel.panel:GetChild("PlayerAlready")
+		ClickEvent._play_ui.frontAlready.visible = false
+		ClickEvent._play_ui.oppositeAlready.visible = false
+		ClickEvent._play_ui.behindAlready.visible = false
+		ClickEvent._play_ui.playerAlready.visible = false
+		ClickEvent._play_ui.inviteWechatFriends = _currentPanel.panel:GetChild("InviteWechatFriends")
+		ClickEvent._play_ui.inviteWechatFriends.visible = false
+		ClickEvent._play_ui.copyRoomNum = _currentPanel.panel:GetChild("CopyRoomNum")
+		ClickEvent._play_ui.copyRoomNum.visible = false
+
+		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
 		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		--[[
@@ -144,6 +160,7 @@ function ClickEvent.CreateNewPanel(panelName)
 
 		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
 		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
+		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
 		ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang02")
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
@@ -161,12 +178,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		end
 		--]]
 	end
-	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
-	if ClickEvent._play_ui.roomId then
-		ClickEvent._play_ui.roomId.text = tostring(Player._roomId)
-	end
 	
 	--[[
+	ClickEvent._play_ui.roomId = _currentPanel.panel:GetChild("RoomID")
+	if ClickEvent._play_ui.roomId then
+		--ClickEvent._play_ui.roomId.text = tostring(Player._roomId)
+		ClickEvent._play_ui.roomId.visible = false
+	end
 	--]]
 end
 
@@ -608,6 +626,11 @@ end
 
 function ClickEvent.YesButton( ... )
 	-- body
+	if _popPanel.panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
+		Player.returnMainUI = true
+		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+		Player.LoadScene("FairyMainUI")
+	end
 	ClickEvent.Close()
 end
 
@@ -843,6 +866,7 @@ function ClickEvent.ClassicMode( ... )
 	for i=1,7 do
 		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = false
 	end
+	_popPanel.panel:GetChild("Multiple8").selected = true
 end
 
 function ClickEvent.HighRiskMode( ... )
@@ -850,6 +874,7 @@ function ClickEvent.HighRiskMode( ... )
 	for i=1,7 do
 		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = true
 	end
+	_popPanel.panel:GetChild("MultipleNolimit").selected = true
 end
 
 function ClickEvent.CreateButton( )
@@ -1001,8 +1026,8 @@ end
 
 function ClickEvent.GameBackButton(gameObject)
 	-- body
-	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
-	Player.LoadScene("FairyMainUI")
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel.panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
 end
 
 function ClickEvent.GameTingButton(gameObject)

@@ -6,6 +6,44 @@ local Destroy = CS.UnityEngine.Object.Destroy
 local LogWarning = CS.UnityEngine.Debug.LogWarning
 local prefabTable = {}
 local objectTable = {}
+local _disableObjPool = {}
+_disableObjPool.front = 1
+_disableObjPool.rear = 0
+
+function Effect.GetDisableObjPool(effectName)
+	-- body
+	if _disableObjPool.front > _disableObjPool.rear then
+        return nil
+    else
+    	local changeIndex = nil
+    	local tempData = nil
+    	for k,v in pairs(_disableObjPool) do
+    		if v.name == effectName.."(Clone)" then
+    			changeIndex = k
+    			break
+    		end
+    	end
+    	if changeIndex then
+    		local tempObj = _disableObjPool[changeIndex]
+    		_disableObjPool[changeIndex] = _disableObjPool[_disableObjPool.front]
+    		_disableObjPool[_disableObjPool.front] = tempObj
+    	else
+    		return nil
+    	end
+        tempData = _disableObjPool[_disableObjPool.front]
+        tempData:SetActive(true)
+        _disableObjPool[_disableObjPool.front] = nil
+        _disableObjPool.front = _disableObjPool.front + 1
+        return tempData
+    end
+end
+
+function Effect.SetDisableObjPool(cacheObj)
+    -- body
+    _disableObjPool.rear = _disableObjPool.rear + 1
+    cacheObj:SetActive(false)
+    _disableObjPool[_disableObjPool.rear] = cacheObj
+end
 
 
 function Effect.AddUIEffect(effectName,effectScale,effectFather,targetSize)
@@ -28,14 +66,28 @@ function Effect.AddNormalEffect(effectName,effectScale,effectFather)
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
 	end
-	objectTable[effectName] = Instantiate(prefabTable[effectName])
-	objectTable[effectName].transform.position = effectFather.transform.position
+	local tempObj = Effect.GetDisableObjPool(effectName)
+	if not objectTable[effectName] then
+		objectTable[effectName] = {}
+		objectTable[effectName].rear = 0
+		objectTable[effectName].front = 1
+	end
+	if tempObj then
+		objectTable[effectName].rear = objectTable[effectName].rear + 1
+		objectTable[effectName][objectTable[effectName].rear] = tempObj
+	else
+		objectTable[effectName].rear = objectTable[effectName].rear + 1
+		objectTable[effectName][objectTable[effectName].rear] = Instantiate(prefabTable[effectName])
+	end
+	objectTable[effectName][objectTable[effectName].rear].transform.position = effectFather.transform.position
 end
 
 function Effect.DeleteEffect(effectName)
 	-- body
-	if objectTable[effectName] then
-		Destroy(objectTable[effectName])
+	if objectTable[effectName] and objectTable[effectName].front <= objectTable[effectName].rear then
+		Effect.SetDisableObjPool(objectTable[effectName][objectTable[effectName].front])
+		objectTable[effectName].front = objectTable[effectName].front + 1
+		--Destroy(objectTable[effectName])
 	end
 end
 

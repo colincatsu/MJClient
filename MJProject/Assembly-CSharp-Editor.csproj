@@ -84,7 +84,6 @@
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Image.shader" />
      <None Include="Assets\XLua\Src\Editor\Template\TemplateCommon.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaEnumWrap.tpl.txt" />
-     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Text-Brighter.shader" />
      <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaDelegateWrap.tpl.txt" />

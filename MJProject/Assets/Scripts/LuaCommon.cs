@@ -137,6 +137,7 @@ public class TestCaseGenConfig : XLua.GenConfig
             {
                 typeof(EventCallback1),
                 typeof(EventCallback0),
+                typeof(TransitionHook),
             };
         }
     }
