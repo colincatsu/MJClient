@@ -665,6 +665,7 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_TINGPAI" then
         Player.MahJong.TingPai(message)
         Player.MahJong.DaPaiPoolShow(message)
+        Player.MahJong.DeleteOtherPai(message.position,1)
     else
         return
     end

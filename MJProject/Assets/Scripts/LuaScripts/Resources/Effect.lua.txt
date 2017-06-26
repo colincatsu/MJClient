@@ -9,6 +9,18 @@ local objectTable = {}
 local _disableObjPool = {}
 _disableObjPool.front = 1
 _disableObjPool.rear = 0
+Effect._effect_name = {
+	operationShowSmoke = "Effect_smoke_01_Position",--操作的烟
+	maybeOperationShowCircle = "Effect_chess_prompt_02_Position",--可能操作的
+	currentDapaiPoint = "Effect_chess_prompt_01_Position",--上一张打的牌
+	gangShangKaiHua = "Effect_bloom_01_4.0_Postion",
+	huPaiColumn = "Effect_brand_01 1_Position",--自己胡牌
+	fallMoney = "Effect_Enter_01_4.0_Position",--掉钱
+	rain = "Effect_rain_01_Position",
+	manyCannon = "Effect_special_display_01_Position",--一炮多响
+	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝
+}
+local operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 
 function Effect.GetDisableObjPool(effectName)
 	-- body
@@ -61,7 +73,7 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather,targetSize)
 	end
 end
 
-function Effect.AddNormalEffect(effectName,effectScale,effectFather)
+function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
@@ -79,7 +91,9 @@ function Effect.AddNormalEffect(effectName,effectScale,effectFather)
 		objectTable[effectName].rear = objectTable[effectName].rear + 1
 		objectTable[effectName][objectTable[effectName].rear] = Instantiate(prefabTable[effectName])
 	end
-	objectTable[effectName][objectTable[effectName].rear].transform.position = effectFather.transform.position
+	if effectFather then
+		objectTable[effectName][objectTable[effectName].rear].transform.position = effectFather.transform.position + offsetPos
+	end
 end
 
 function Effect.DeleteEffect(effectName)

@@ -924,12 +924,16 @@ function MahJong.ZhuaPai()
 	local co = coroutine.create(function()
 	    yield_return(CS.UnityEngine.WaitForSeconds(2))
 		if Player.isTingPaiTuoGuan and Player.isTingPaied then
+			local paiElement = {
+				card_type = _player_father.cards[_player_father.currentPaiNumber].paiType,
+				card_value = _player_father.cards[_player_father.currentPaiNumber].paiValue,
+			}
 			ClickEvent.CloseOperationPanel()
-			MahJong.DaPai(paiNumber)
+			MahJong.DaPai(_player_father.currentPaiNumber)
 			ClickEvent.notPushPassMsg = false
 			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
-			Player.isTingPaiTuoGuan = false
 		end
+		Player.isTingPaiTuoGuan = true
 	end)
 	coroutine.resume(co)
 	--MahJong.SortZhuaPai()
@@ -1111,7 +1115,7 @@ function MahJong.ClickPaiEvent(gameObject)
 			if not isTingPaied then
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 				if Player.isTingPaied then
-					Player.isTingPaiTuoGuan = true
+					Player.isTingPaiTuoGuan = false
 				end
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
@@ -1207,8 +1211,8 @@ function MahJong.CreateBaoPai(pai,posNumber)
 		print("not ting")
 		return
 	end
-	print("paipaipai:"..pai)
-	print("paipaipai:"..pai.card_type)
+	--print("paipaipai:"..pai)
+	--print("paipaipai:"..pai.card_type)
 	if _modelPool[posNumber] then
 		_modelPool[posNumber]:SetActive(false)
 	end
@@ -2511,9 +2515,6 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	end
 	print("dice:"..number)
 	print("diceNumber:"..diceNumber)
-	if baopai then
-		print("baopai:"..baopai)
-	end
 	if _baopai_model then
     	CS.UnityEngine.Object.Destroy(_baopai_model)
     	_baopai_model = nil

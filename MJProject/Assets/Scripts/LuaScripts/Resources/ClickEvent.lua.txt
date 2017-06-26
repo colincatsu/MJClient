@@ -483,11 +483,13 @@ function ClickEvent.ShowCalculate( ... )
 				listChild.name = ""..i
 				listChild:GetChild("FanName").text = gbk.toutf8(fanName)
 				listChild:GetChild("FanNum").text = "+"..tostring(fanNum).."番"
+				--[[
 				if c.score < 0 then
 					listChild:GetChild("FanDou").text = ""..c.score
 				else
 					listChild:GetChild("FanDou").text = "+"..c.score
 				end
+				--]]
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 		end
