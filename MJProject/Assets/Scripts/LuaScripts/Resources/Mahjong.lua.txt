@@ -130,7 +130,9 @@ function start()
 	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
-
+	Player.isTingPaied = false
+	Player.isTuoGuan = false
+	Player.isTingPaiTuoGuan = false
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	--[[
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
@@ -461,6 +463,9 @@ function MahJong.ResetGameState()
     MahJong._current_click_pai = nil
     Player._ting_pai_cache = nil
     ClickEvent._play_ui.uselessRound.visible = false
+    Player.isTingPaied = false
+	Player.isTuoGuan = false
+	Player.isTingPaiTuoGuan = false
 end
 
 --牌池
@@ -915,6 +920,18 @@ function MahJong.ZhuaPai()
 	--抓牌先放在边上
 	_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+	--托管自动打牌
+	local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+		if Player.isTingPaiTuoGuan and Player.isTingPaied then
+			ClickEvent.CloseOperationPanel()
+			MahJong.DaPai(paiNumber)
+			ClickEvent.notPushPassMsg = false
+			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
+			Player.isTingPaiTuoGuan = false
+		end
+	end)
+	coroutine.resume(co)
 	--MahJong.SortZhuaPai()
 	--MahJong.SortPlayerPai()
 	
@@ -1093,12 +1110,17 @@ function MahJong.ClickPaiEvent(gameObject)
 			ClickEvent.notPushPassMsg = false
 			if not isTingPaied then
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
+				if Player.isTingPaied then
+					Player.isTingPaiTuoGuan = true
+				end
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
 				for k,v in pairs(_player_father.cards) do
 					v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
 				end
 				isTingPaied = false
+				Player.isTingPaied = true
+				Player.isTingPaiTuoGuan = true
 			end
 		else
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1114,7 +1136,6 @@ end
 function MahJong.TingPaiUpdateState( ... )
 	-- body
 	isTingPaied = true
-	Player.isTingPaied = true
 	if not Player._ting_pai_cache then
 		return
 	end
@@ -1182,7 +1203,7 @@ end
 
 function MahJong.CreateBaoPai(pai,posNumber)
 	-- body
-	if not pai or pai == {} then
+	if not pai then
 		print("not ting")
 		return
 	end
@@ -2490,7 +2511,9 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	end
 	print("dice:"..number)
 	print("diceNumber:"..diceNumber)
-	print("baopai:"..baopai)
+	if baopai then
+		print("baopai:"..baopai)
+	end
 	if _baopai_model then
     	CS.UnityEngine.Object.Destroy(_baopai_model)
     	_baopai_model = nil

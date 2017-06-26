@@ -44,8 +44,10 @@ local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
 local _connected = false
-local isTingPaied = false
 local returnMainUI = false
+local isTingPaied = false
+local isTuoGuan = false
+local isTingPaiTuoGuan = false
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -492,6 +494,7 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     end
     --]]
     Player._operation_alert_cache = message
+    Player.isTingPaiTuoGuan = false
     --Player.ThreadFunction(
     ClickEvent.PaiOperationState()
 end
@@ -521,6 +524,8 @@ function Player.OnRandomSaizi(type_t,stuff)
         Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
+            print("Player.isTingPaied:")
+            print(Player.isTingPaied)
             if Player.isTingPaied then
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else
