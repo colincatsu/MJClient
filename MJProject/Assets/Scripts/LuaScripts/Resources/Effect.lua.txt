@@ -21,6 +21,8 @@ Effect._effect_name = {
 	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝
 }
 local operationShowSmokeOffset = NewVector3(0,-0.0072,0)
+local currentDapaiPointOffset = NewVector3(0,0.0386,0)
+local maybeOperationShowCircleOffset = NewVector3(0,-0.005,0)
 
 function Effect.GetDisableObjPool(effectName)
 	-- body

@@ -2,24 +2,27 @@ local gbk = require "gbk"
 local Effect = require "Effect"
 local StringTable = require "StringTable"
 ClickEvent = {}
-ClickEvent.panelTable = {}
-ClickEvent.panelTable._main_ui = "Login"
-ClickEvent.panelTable._choose_ui = "MainMenu"
-ClickEvent.panelTable._create_room_ui = "CreateRoom"
-ClickEvent.panelTable._join_room_ui = "GetintoRoom"
-ClickEvent.panelTable._other_message_ui = "OtherMessageUI"
-ClickEvent.panelTable._player_message_ui = "PlayerMessageUI"
-ClickEvent.panelTable._mall_ui = "Mall"
-ClickEvent.panelTable._mail_ui = "Mail"
-ClickEvent.panelTable._setting_ui = "Setting"
-ClickEvent.panelTable._history_score_ui = "HistoryScene"
-ClickEvent.panelTable._store_ui = "StoreUI"
-ClickEvent.panelTable._play_game_ui = "PlaySence"
-ClickEvent.panelTable._player_info = "PlayerInfo"
-ClickEvent.panelTable._other_player_info = "OtherPlayerInfo"
-ClickEvent.panelTable._calculate_ui = "ClearRoundScene"
-ClickEvent.panelTable._window_small = "PopWindowsSmall"
-ClickEvent.panelTable._exit_game_ui = "ExitGamePop"
+ClickEvent.panelTable = {
+	_main_ui = "Login",
+	_choose_ui = "MainMenu",
+	_create_room_ui = "CreateRoom",
+	_join_room_ui = "GetintoRoom",
+	_other_message_ui = "OtherMessageUI",
+	_player_message_ui = "PlayerMessageUI",
+	_mall_ui = "Mall",
+	_mail_ui = "Mail",
+	_setting_ui = "Setting",
+	_vip_note_ui = "VIPNote",
+	_history_score_ui = "HistoryScene",
+	_store_ui = "StoreUI",
+	_play_game_ui = "PlaySence",
+	_player_info = "PlayerInfo",
+	_other_player_info = "OtherPlayerInfo",
+	_calculate_ui = "ClearRoundScene",
+	_window_small = "PopWindowsSmall",
+	_exit_game_ui = "ExitGamePop",
+	_instruction_ui = "HowToPlay",
+}
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
 ClickEvent.scale = nil
@@ -319,12 +322,15 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_GANGPAI" then
 				ClickEvent.AddOperationButton("GameGangButton")
 		        Player.MahJong.SetCurrentState(operationState.GANG)
+		        Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_PENGPAI" then
 				ClickEvent.AddOperationButton("GamePengButton")
 		        Player.MahJong.SetCurrentState(operationState.PENG)
+		        Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_CHIPAI" then
 				Player.MahJong.SetCurrentState(operationState.CHI)
 				Player.MahJong.CheckChiPai()
+				Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
 				CS.UnityEngine.Debug.LogWarning("ANGANG")
 				--Player.MahJong.SetCurrentState(operationState.ANGANG)
@@ -537,6 +543,11 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------、
 
+function ClickEvent.VipNoteList(gameObject)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+end
+
 function ClickEvent.GameSettingButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
@@ -550,6 +561,7 @@ end
 
 function ClickEvent.Instruction( ... )
 	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._instruction_ui)
 end
 
 function ClickEvent.Mail( ... )
@@ -560,7 +572,12 @@ end
 
 function ClickEvent.VIPRecordButton( ... )
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+	ClickEvent.PopPanel(ClickEvent.panelTable._vip_note_ui)
+	for i=0,_popPanel.panel:GetChild("NoteList").numChildren-1 do
+		local obj = _popPanel.panel:GetChild("NoteList"):GetChildAt(i)
+		obj.name = "VipNoteList"
+		obj.onClick:Add(ClickEvent.registerButtonClick)
+	end
 end
 
 function ClickEvent.Promotion( ... )
@@ -604,8 +621,7 @@ function ClickEvent.Avatar( ... )
 	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = Player._player_data.common_prop.player_id
 	_popPanel.panel:GetChild("DouNum").text = Player._player_data.common_prop.huanledou
-	_popPanel.panel:GetChild("GemsNum").text = Player._player_data.common_prop.diamond
-	_popPanel.panel:GetChild("RoomCardNum").text = Player._player_data.common_prop.room_card_count
+	_popPanel.panel:GetChild("RoomCardPlay").text = Player._player_data.common_prop.room_card_count
 	_popPanel.panel:GetChild("TotalWin").text = Player._player_data.common_prop.streak_wins
 	_popPanel.panel:GetChild("TotalPlay").text = Player._player_data.common_prop.total_rounds
 	if Player._player_data.common_prop.total_rounds == 0 then
@@ -1083,6 +1099,7 @@ function ClickEvent.GamePassButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.GuoPai()
+	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end
 
 function ClickEvent.GameCancelButton(gameObject)

@@ -1202,6 +1202,8 @@ function MahJong.DelUsedDaPai()
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber - 1
 	end
+	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
+	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	_current_dapai = {}
 end
 
@@ -1314,6 +1316,7 @@ function MahJong.DaPaiPoolShow(message)
 		+ newVector3(-math.fmod(_pai_pool_show.point_d.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
 			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 		MahJong.AddModelShadow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+		_current_dapai.object = _pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber]
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
 		if not _pai_pool_show.point_n.cards then
@@ -1328,6 +1331,7 @@ function MahJong.DaPaiPoolShow(message)
 		+ newVector3(-math.modf((_pai_pool_show.point_n.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 		MahJong.AddModelShadow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+		_current_dapai.object = _pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber]
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
 		if not _pai_pool_show.point_x.cards then
@@ -1342,6 +1346,7 @@ function MahJong.DaPaiPoolShow(message)
 		+ newVector3(math.fmod(_pai_pool_show.point_x.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 		MahJong.AddModelShadow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+		_current_dapai.object = _pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber]
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
 		if not _pai_pool_show.point_b.cards then
@@ -1356,7 +1361,10 @@ function MahJong.DaPaiPoolShow(message)
 		+ newVector3(math.modf((_pai_pool_show.point_b.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
 			0,math.fmod(_pai_pool_show.point_b.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 		MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+		_current_dapai.object = _pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber]
 	end
+	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
+	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,_current_dapai.object,Effect.currentDapaiPointOffset)
 	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
 end
 
@@ -2116,6 +2124,13 @@ function MahJong.SortOperationPaiShow(direction)
 	end
 end
 
+function MahJong.ShowMabeOperationEffect( ... )
+	-- body
+	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
+	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
+	Effect.AddNormalEffect(Effect._effect_name.maybeOperationShowCircle,nil,_current_dapai.object,Effect.maybeOperationShowCircleOffset)
+end
+
 function MahJong.OperationPaiShow(message)
 	-- body
 	---[[
@@ -2207,6 +2222,12 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("east")
 						MahJong.DeleteOtherPai("POSITION_TYPE_EAST",1)
+						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
+						local co = coroutine.create(function()
+					    yield_return(CS.UnityEngine.WaitForSeconds(2))
+					    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+						end)
+						coroutine.resume(co)
 	    				return
 	    			end
 	    		end
@@ -2226,6 +2247,12 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("south")
 						MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",1)
+						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
+						local co = coroutine.create(function()
+					    yield_return(CS.UnityEngine.WaitForSeconds(2))
+					    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+						end)
+						coroutine.resume(co)
 	    				return
 	    			end
 	    		end
@@ -2245,6 +2272,12 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("west")
 						MahJong.DeleteOtherPai("POSITION_TYPE_WEST",1)
+						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
+						local co = coroutine.create(function()
+					    yield_return(CS.UnityEngine.WaitForSeconds(2))
+					    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+						end)
+						coroutine.resume(co)
 	    				return
 	    			end
 	    		end
@@ -2264,6 +2297,12 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("north")
 						MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",1)
+						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
+						local co = coroutine.create(function()
+					    yield_return(CS.UnityEngine.WaitForSeconds(2))
+					    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+						end)
+						coroutine.resume(co)
 	    				return
 	    			end
 	    		end
@@ -2303,6 +2342,12 @@ function MahJong.OperationPaiShow(message)
 		end
 		MahJong.DeleteOtherPai("POSITION_TYPE_EAST",deleteOtheCount)
 		MahJong.SortOperationPaiShow("east")
+		Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father,Effect.operationShowSmokeOffset)
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+		end)
+		coroutine.resume(co)
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		if not _operation_pai_show.point_n.group then
 			_operation_pai_show.point_n.group = {}
@@ -2335,6 +2380,12 @@ function MahJong.OperationPaiShow(message)
 		end
 		MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",deleteOtheCount)
 		MahJong.SortOperationPaiShow("south")
+		Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father,Effect.operationShowSmokeOffset)
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+		end)
+		coroutine.resume(co)
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		if not _operation_pai_show.point_x.group then
 			_operation_pai_show.point_x.group = {}
@@ -2367,6 +2418,12 @@ function MahJong.OperationPaiShow(message)
 		end
 		MahJong.DeleteOtherPai("POSITION_TYPE_WEST",deleteOtheCount)
 		MahJong.SortOperationPaiShow("west")
+		Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father,Effect.operationShowSmokeOffset)
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+		end)
+		coroutine.resume(co)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		if not _operation_pai_show.point_b.group then
 			_operation_pai_show.point_b.group = {}
@@ -2399,6 +2456,12 @@ function MahJong.OperationPaiShow(message)
 		end
 		MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",deleteOtheCount)
 		MahJong.SortOperationPaiShow("north")
+		Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father,Effect.operationShowSmokeOffset)
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
+		end)
+		coroutine.resume(co)
 	end
 	--]]
 
