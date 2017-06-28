@@ -1,7 +1,40 @@
 AudioPlayer = {}
+AudioPlayer._audio_name = {
+	Bgm = "Bg"
+}
 local AudioClip = CS.UnityEngine.AudioClip
+local AudioSource = CS.UnityEngine.AudioSource
+local GameObject = CS.UnityEngine.GameObject
+local DontDestroyOnLoad = CS.UnityEngine.Object.DontDestroyOnLoad
+local Load = CS.UnityEngine.Resources.Load
+local audioFather = nil
+local soundAudioSource = {}
 
+function AudioPlayer.PlaySound(soundName,isLoop,valume)
+	-- body
+	if not audioFather then
+		audioFather = GameObject("Audio")
+		DontDestroyOnLoad(audioFather)
+	end
+	if not soundAudioSource[soundName] then
+		soundAudioSource[soundName] = {}
+		soundAudioSource[soundName].object = GameObject(soundName)
+		soundAudioSource[soundName].object.transform:SetParent(audioFather.transform)
+		soundAudioSource[soundName].audioSource = soundAudioSource[soundName].object:AddComponent(typeof(AudioSource))
+		soundAudioSource[soundName].audioSource.playOnAwake = false
+		soundAudioSource[soundName].audioSource.loop = isLoop
+		soundAudioSource[soundName].audioSource.clip = Load("Audio/"..soundName)
+	end
+	soundAudioSource[soundName].audioSource:Play()
+	soundAudioSource[soundName].audioSource.volume = valume
+end
 
+function AudioPlayer.StopSound(soundName)
+	-- body
+	if soundAudioSource[soundName] then
+		soundAudioSource[soundName].audioSource:Stop()
+	end
+end
 
 
 

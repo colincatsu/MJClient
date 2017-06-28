@@ -203,6 +203,7 @@ function Player.LoadScene(senceName, buffer)
     if senceName == "PlaySence" then
         Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     end
+    CS.UnityEngine.Resources.UnloadUnusedAssets()
     CS.UnityEngine.Application.LoadLevel("LoadingSence")
 end
 

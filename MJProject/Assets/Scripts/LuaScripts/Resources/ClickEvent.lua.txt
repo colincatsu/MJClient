@@ -517,6 +517,7 @@ function ClickEvent.DapaiUIShow(position,card_type,card_value)
 	else
 		CS.UnityEngine.Debug.LogWarning("position nil")
 	end
+	AudioPlayer.PlaySound(card_type.."_"..card_value,false,1)
 	Player.MahJong.DapaiUIHide(whichPlayer)
 end
 
@@ -551,6 +552,20 @@ end
 function ClickEvent.GameSettingButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+	_popPanel.panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
+	_popPanel.panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
+	_popPanel.panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
+	_popPanel.panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
+end
+
+function ClickEvent.MusicSlideButton( ... )
+	-- body
+	Player._player_data.game_setting.music = _popPanel.panel:GetChild("MusicSlideButton").selected
+	if Player._player_data.game_setting.music then
+		AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
+	else
+		AudioPlayer.StopSound(AudioPlayer._audio_name.Bgm)
+	end
 end
 
 function ClickEvent.Shop( ... )
@@ -789,6 +804,9 @@ function ClickEvent.ThreadToMainMenu( ... )
 	-- body
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
+	if Player._player_data.game_setting.music then
+		AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
+	end
 end
 
 function ClickEvent.Admit( gameObject )

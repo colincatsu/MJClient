@@ -7,6 +7,7 @@ local Network = require "Network"
 local FLibEvent = require "FLibEvent"
 local FairyGUI = require "FairyGUI"
 local AssetManager = require "AssetManager"
+local AudioPlayer = require "AudioPlayer"
 
 local _main_ui_sence = "FairyMainUI"
 local _loading_sence = "LoadingSence"
@@ -50,7 +51,7 @@ function start()
 		Network.ConnetServer()
 	end
 	--]]
-
+	--AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
 end
 
 function update( ... )

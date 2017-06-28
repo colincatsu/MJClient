@@ -7,8 +7,8 @@ local LogWarning = CS.UnityEngine.Debug.LogWarning
 local prefabTable = {}
 local objectTable = {}
 local _disableObjPool = {}
-_disableObjPool.front = 1
-_disableObjPool.rear = 0
+_disableObjPool_front = 1
+_disableObjPool_rear = 0
 Effect._effect_name = {
 	operationShowSmoke = "Effect_smoke_01_Position",--操作的烟
 	maybeOperationShowCircle = "Effect_chess_prompt_02_Position",--可能操作的
@@ -20,13 +20,13 @@ Effect._effect_name = {
 	manyCannon = "Effect_special_display_01_Position",--一炮多响
 	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝
 }
-local operationShowSmokeOffset = NewVector3(0,-0.0072,0)
-local currentDapaiPointOffset = NewVector3(0,0.0386,0)
-local maybeOperationShowCircleOffset = NewVector3(0,-0.005,0)
+Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
+Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
+Effect.maybeOperationShowCircleOffset = NewVector3(0,-0.005,0)
 
 function Effect.GetDisableObjPool(effectName)
 	-- body
-	if _disableObjPool.front > _disableObjPool.rear then
+	if _disableObjPool_front > _disableObjPool_rear then
         return nil
     else
     	local changeIndex = nil
@@ -39,24 +39,24 @@ function Effect.GetDisableObjPool(effectName)
     	end
     	if changeIndex then
     		local tempObj = _disableObjPool[changeIndex]
-    		_disableObjPool[changeIndex] = _disableObjPool[_disableObjPool.front]
-    		_disableObjPool[_disableObjPool.front] = tempObj
+    		_disableObjPool[changeIndex] = _disableObjPool[_disableObjPool_front]
+    		_disableObjPool[_disableObjPool_front] = tempObj
     	else
     		return nil
     	end
-        tempData = _disableObjPool[_disableObjPool.front]
+        tempData = _disableObjPool[_disableObjPool_front]
         tempData:SetActive(true)
-        _disableObjPool[_disableObjPool.front] = nil
-        _disableObjPool.front = _disableObjPool.front + 1
+        _disableObjPool[_disableObjPool_front] = nil
+        _disableObjPool_front = _disableObjPool_front + 1
         return tempData
     end
 end
 
 function Effect.SetDisableObjPool(cacheObj)
     -- body
-    _disableObjPool.rear = _disableObjPool.rear + 1
+    _disableObjPool_rear = _disableObjPool_rear + 1
     cacheObj:SetActive(false)
-    _disableObjPool[_disableObjPool.rear] = cacheObj
+    _disableObjPool[_disableObjPool_rear] = cacheObj
 end
 
 
@@ -95,6 +95,8 @@ function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos)
 	end
 	if effectFather then
 		objectTable[effectName][objectTable[effectName].rear].transform.position = effectFather.transform.position + offsetPos
+	else
+		objectTable[effectName][objectTable[effectName].rear].transform.position = offsetPos
 	end
 end
 
