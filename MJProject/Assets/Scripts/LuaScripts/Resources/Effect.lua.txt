@@ -19,6 +19,9 @@ Effect._effect_name = {
 	rain = "Effect_rain_01_Position",
 	manyCannon = "Effect_special_display_01_Position",--一炮多响
 	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝
+	gold_ui = "UI_flash_lizi_01",
+	gem_ui = "UI_flash_lizi_02",
+	head_ui = "Effect_UI_Head portrait_01_Position",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
@@ -60,18 +63,32 @@ function Effect.SetDisableObjPool(cacheObj)
 end
 
 
-function Effect.AddUIEffect(effectName,effectScale,effectFather,targetSize)
+function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,targetSize)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
 	end
-	objectTable[effectName] = Instantiate(prefabTable[effectName])
-	local x = GGraph()
-	effectFather:AddChild(x)
-	x:SetNativeObject(GoWrapper(objectTable[effectName]))
-	objectTable[effectName].transform.localScale = effectScale
-	if effectName == "Effect_UI_button_02" then
+	if effectName == "Effect_UI_Head portrait_01_Position" then
+		objectTable[effectName] = Instantiate(prefabTable[effectName])
+		local x = GGraph()
+		effectFather:AddChild(x)
+		x:SetNativeObject(GoWrapper(objectTable[effectName]))
+		if effectPos then
+			x.displayObject.xy = effectPos
+		end
+		objectTable[effectName].transform.localScale = effectScale
+		return x
 		--LogWarning(objectTable[effectName].transform:Find("UI_plane002"):GetComponent("Renderer").bounds.size.x)
+	end
+	if not objectTable[effectName] then
+		objectTable[effectName] = Instantiate(prefabTable[effectName])
+		local x = GGraph()
+		effectFather:AddChild(x)
+		x:SetNativeObject(GoWrapper(objectTable[effectName]))
+		if effectPos then
+			x.displayObject.xy = effectPos
+		end
+		objectTable[effectName].transform.localScale = effectScale
 	end
 end
 

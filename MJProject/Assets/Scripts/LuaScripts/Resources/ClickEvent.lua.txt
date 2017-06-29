@@ -20,8 +20,10 @@ ClickEvent.panelTable = {
 	_other_player_info = "OtherPlayerInfo",
 	_calculate_ui = "ClearRoundScene",
 	_window_small = "PopWindowsSmall",
+	_window_big = "PopWindowsBig",
 	_exit_game_ui = "ExitGamePop",
 	_instruction_ui = "HowToPlay",
+	_welfare_ui = "WelfareScene",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -97,6 +99,10 @@ function ClickEvent.CreateNewPanel(panelName)
 	end
 
 	if panelName == ClickEvent.panelTable._play_game_ui then
+		ClickEvent._play_ui.chiPaiBar = _currentPanel.panel:GetChild("ChiPaiBg")
+		ClickEvent._play_ui.chiPaiBar.visible = false
+		ClickEvent._play_ui.huPaiBar = _currentPanel.panel:GetChild("HuPaiBg")
+		ClickEvent._play_ui.huPaiBar.visible = false
 		ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
 		ClickEvent._play_ui.passButton = _currentPanel.panel:GetChild("GamePassButton")
 		ClickEvent._play_ui.passButton.visible = false
@@ -148,8 +154,20 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.copyRoomNum.visible = false
 
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
-
-		Effect.AddUIEffect("Effect_UI_Head portrait_01_Position",CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
+		------特效
+		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.oppositePlayerAvatarInfo)
+		ClickEvent._play_ui.frontPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.frontPlayerAvatarInfo)
+		ClickEvent._play_ui.playerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = false
+		---------------
+		ClickEvent._play_ui.playerAvatarInfo.visible = false
+		ClickEvent._play_ui.behindPlayerAvatarInfo.visible = false
+		ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = false
+		ClickEvent._play_ui.frontPlayerAvatarInfo.visible = false
 		--[[
 		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
 			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
@@ -165,6 +183,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
 		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
 		ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang02")
+		local x = 1/ClickEvent.scale
+		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
+		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
 		LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
@@ -251,12 +272,17 @@ function ClickEvent.RoomInformationUpdate( ... )
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
+			ClickEvent._play_ui.behindPlayerAvatarInfo.visible = true
+			--ClickEvent._play_ui.behindPlayerAvatarInfo
 			_currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		elseif tempX == 2 then
+			ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = true
 			_currentPanel.panel:GetChild("OppositePlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		elseif tempX == 3 then
+			ClickEvent._play_ui.frontPlayerAvatarInfo.visible = true
 			_currentPanel.panel:GetChild("FrontPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		else
+			ClickEvent._play_ui.playerAvatarInfo.visible = true
 			_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		end
 	end
@@ -607,10 +633,12 @@ end
 
 function ClickEvent.Promotion( ... )
 	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_big)
 end
 
 function ClickEvent.Welfare( ... )
 	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
 end
 
 function ClickEvent.Setting( ... )
@@ -620,6 +648,7 @@ end
 
 function ClickEvent.More( ... )
 	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 end
 
 function ClickEvent.RoomCardNum( ... )
@@ -690,14 +719,15 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
 			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
-			_popPanel.panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
+			--_popPanel.panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			--[[
-			_popPanel.panel:GetChild("").text = 
-			_popPanel.panel:GetChild("").text = 
-			_popPanel.panel:GetChild("") = 
-			--]]
+			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			if v.common_prop.total_rounds == 0 then
+				_popPanel.panel:GetChild("WinRate").text = 0
+			else
+				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+			end
 			return
 		end
 	end
@@ -721,6 +751,12 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			if v.common_prop.total_rounds == 0 then
+				_popPanel.panel:GetChild("WinRate").text = 0
+			else
+				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+			end
 			return
 		end
 	end
@@ -744,6 +780,12 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			if v.common_prop.total_rounds == 0 then
+				_popPanel.panel:GetChild("WinRate").text = 0
+			else
+				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+			end
 			return
 		end
 	end
@@ -767,6 +809,12 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			if v.common_prop.total_rounds == 0 then
+				_popPanel.panel:GetChild("WinRate").text = 0
+			else
+				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+			end
 			return
 		end
 	end
@@ -814,7 +862,7 @@ function ClickEvent.ThreadToMainMenu( ... )
 	-- body
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
-	if Player._player_data.game_setting.music then
+	if Player._player_data.game_setting.music and not AudioPlayer.isPlaying(AudioPlayer._audio_name.Bgm) then
 		AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
 	end
 end

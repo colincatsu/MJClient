@@ -645,40 +645,48 @@ function Player.OnPaiOperation(type_t,stuff)
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
         LogWarning("give up operation")
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_TINGPAI" then
         Player.MahJong.TingPai(message)
         Player.MahJong.DaPaiPoolShow(message)
         Player.MahJong.DeleteOtherPai(message.position,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
     else
         return
     end

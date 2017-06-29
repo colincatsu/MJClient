@@ -1,6 +1,12 @@
 AudioPlayer = {}
 AudioPlayer._audio_name = {
-	Bgm = "Bg"
+	Bgm = "Bg",
+	Chi = "chi",
+	Gang = "gang",
+	Hu = "hu",
+	Peng = "peng",
+	Ting = "ting",
+	Zimo = "zimo",
 }
 local AudioClip = CS.UnityEngine.AudioClip
 local AudioSource = CS.UnityEngine.AudioSource
@@ -10,7 +16,7 @@ local Load = CS.UnityEngine.Resources.Load
 local audioFather = nil
 local soundAudioSource = {}
 
-function AudioPlayer.PlaySound(soundName,isLoop,valume)
+function AudioPlayer.PlaySound(soundName,isLoop,volume)
 	-- body
 	if not audioFather then
 		audioFather = GameObject("Audio")
@@ -26,7 +32,14 @@ function AudioPlayer.PlaySound(soundName,isLoop,valume)
 		soundAudioSource[soundName].audioSource.clip = Load("Audio/"..soundName)
 	end
 	soundAudioSource[soundName].audioSource:Play()
-	soundAudioSource[soundName].audioSource.volume = valume
+	soundAudioSource[soundName].audioSource.volume = volume
+end
+
+function AudioPlayer.isPlaying(soundName)
+	-- body
+	if soundAudioSource[soundName] then
+		return soundAudioSource[soundName].audioSource.isPlaying
+	end
 end
 
 function AudioPlayer.StopSound(soundName)
