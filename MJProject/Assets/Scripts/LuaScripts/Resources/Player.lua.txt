@@ -332,6 +332,18 @@ end
 ---------------------------------------------
 --
 
+function Player.OnCommonProperty(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.CommonProperty",stuff)
+    if Player._player_data.common_prop.player_id == message.player_id then
+        Player._player_data.common_prop = message.common_prop
+        
+    end
+end
+
 function Player.OnLiuJu(type_t,stuff)
     -- body
     if not stuff then

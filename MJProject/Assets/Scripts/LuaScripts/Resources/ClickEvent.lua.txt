@@ -191,6 +191,16 @@ function ClickEvent.CreateNewPanel(panelName)
 	--]]
 end
 
+function ClickEvent.CommonPropertyUpdate( ... )
+	-- body
+	if _currentPanel.panel.name == ClickEvent.panelTable._choose_ui then
+		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
+		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
+		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
+	end
+end
+
 function ClickEvent.CreateOperationButton( ... )
 	-- body
 	_currentPanel.buttonList = {}
