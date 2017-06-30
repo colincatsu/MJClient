@@ -364,6 +364,7 @@ function ClickEvent.PaiOperationState()
 		        Player.MahJong.SetCurrentState(operationState.PENG)
 		        Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_CHIPAI" then
+				ClickEvent.AddOperationButton("GameChiButton")
 				Player.MahJong.SetCurrentState(operationState.CHI)
 				Player.MahJong.CheckChiPai()
 				Player.MahJong.ShowMabeOperationEffect()
