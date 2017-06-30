@@ -1414,17 +1414,16 @@ end
 
 function MahJong.ClickChiPaiEvent( gameObject )
 	-- body
-	local paiGroup = tonumber(gameObject.transform.parent.name)
+	local paiGroup = tonumber(gameObject.sender.name)
 	_chi_pai_father.cards.deleteCards = {}
 	local deleteCount = 1
 	for k,v in pairs(_chi_pai_father.cards[paiGroup].child) do
 		_chi_pai_father.cards.deleteCards[deleteCount] = {}
 		_chi_pai_father.cards.deleteCards[deleteCount].card_type = _chi_pai_father.cards[paiGroup].paiType
-		_chi_pai_father.cards.deleteCards[deleteCount].paiValue = tonumber(v.name)
+		_chi_pai_father.cards.deleteCards[deleteCount].paiValue = v
 		deleteCount = deleteCount + 1
 	end
 	MahJong.ChiPai()
-	MahJong.DeleteShowModel()
 	ClickEvent.CloseOperationPanel()
 	_chi_pai_father = {}
 end
@@ -1447,6 +1446,7 @@ end
 
 function MahJong.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3)--牌类型、牌组数、牌值、
 	-- body
+	--[[
     local tempPaiPool = {}
     for k,v in pairs(_mj_asset) do
     	if v.card_type == cardType then
@@ -1457,6 +1457,14 @@ function MahJong.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3)--
 	MahJong.CreateChiPaiModel(paiGroup,""..tempPaiPool.cards[paiValue2].model_path,cardType,paiValue2,2)
 	MahJong.CreateChiPaiModel(paiGroup,""..tempPaiPool.cards[paiValue3].model_path,cardType,paiValue3,3)
 	MahJong.SortChiPai()
+	--]]
+	ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3)
+	_chi_pai_father.cards[paiGroup] = {}
+	_chi_pai_father.cards[paiGroup].child = {}
+	_chi_pai_father.cards[paiGroup].paiType = cardType
+	_chi_pai_father.cards[paiGroup].child[1] = paiValue1
+	_chi_pai_father.cards[paiGroup].child[2] = paiValue2
+	_chi_pai_father.cards[paiGroup].child[3] = paiValue3
 end
 
 function MahJong.CreateChiPaiModel(paiGroup,modelName,paiType,paiValue,sortValue)
@@ -1573,7 +1581,7 @@ function MahJong.CheckChiPai(paiTable)
 	end
 	_chi_pai_father.cards = {}
 	if operationPai.card_value == 1 then
-		ClickEvent.ShowChiButton()
+		--ClickEvent.ShowChiButton()
 		_chi_pai_father.cards.deleteCards = {}
 		_chi_pai_father.cards.deleteCards[1] = {}
 		_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1584,6 +1592,7 @@ function MahJong.CheckChiPai(paiTable)
 		_chi_pai_father.cards.deleteCards[3] = {}
 		_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 		_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 2
+		MahJong.ChiPai()
 	elseif operationPai.card_value == 2 then--1/3,3/4
 		if MahJong.CheckPaiValue(sameTypeCardsTable,1)
 			and MahJong.CheckPaiValue(sameTypeCardsTable,3)
@@ -1591,7 +1600,7 @@ function MahJong.CheckChiPai(paiTable)
 			MahJong.CreateChiPai(operationPai.card_type,1,1,2,3)
 			MahJong.CreateChiPai(operationPai.card_type,2,2,3,4)
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,1) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1602,8 +1611,9 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 2
+			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,4) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1614,6 +1624,7 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 1
+			MahJong.ChiPai()
 		end
 	elseif operationPai.card_value == 8 then--6/7,7/9
 		if MahJong.CheckPaiValue(sameTypeCardsTable,6)
@@ -1622,7 +1633,7 @@ function MahJong.CheckChiPai(paiTable)
 			MahJong.CreateChiPai(operationPai.card_type,1,6,7,8)
 			MahJong.CreateChiPai(operationPai.card_type,2,7,8,9)
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,9) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1633,8 +1644,9 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value - 2
+			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,6) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1645,9 +1657,10 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 1
+			MahJong.ChiPai()
 		end
 	elseif operationPai.card_value == 9 then
-		ClickEvent.ShowChiButton()
+		--ClickEvent.ShowChiButton()
 		_chi_pai_father.cards.deleteCards = {}
 		_chi_pai_father.cards.deleteCards[1] = {}
 		_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1658,9 +1671,10 @@ function MahJong.CheckChiPai(paiTable)
 		_chi_pai_father.cards.deleteCards[3] = {}
 		_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 		_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value - 2
+		MahJong.ChiPai()
 	else --/-2-1,-1+1,+1+2
 		if not MahJong.CheckPaiValue(sameTypeCardsTable,operationPai.card_value+1) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1671,9 +1685,10 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value - 2
+			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,operationPai.card_value-2) and 
 			not MahJong.CheckPaiValue(sameTypeCardsTable,operationPai.card_value+2) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1684,8 +1699,9 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 1
+			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,operationPai.card_value-1) then
-			ClickEvent.ShowChiButton()
+			--ClickEvent.ShowChiButton()
 			_chi_pai_father.cards.deleteCards = {}
 			_chi_pai_father.cards.deleteCards[1] = {}
 			_chi_pai_father.cards.deleteCards[1].card_type = operationPai.card_type
@@ -1696,6 +1712,7 @@ function MahJong.CheckChiPai(paiTable)
 			_chi_pai_father.cards.deleteCards[3] = {}
 			_chi_pai_father.cards.deleteCards[3].card_type = operationPai.card_type
 			_chi_pai_father.cards.deleteCards[3].paiValue = operationPai.card_value + 2
+			MahJong.ChiPai()
 		elseif not MahJong.CheckPaiValue(sameTypeCardsTable,operationPai.card_value-2) then
 			MahJong.CreateChiPai(operationPai.card_type,1,operationPai.card_value-1,operationPai.card_value,operationPai.card_value+1)
 			MahJong.CreateChiPai(operationPai.card_type,2,operationPai.card_value,operationPai.card_value+1,operationPai.card_value+2)

@@ -273,16 +273,19 @@ function ClickEvent.RoomInformationUpdate( ... )
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
 			ClickEvent._play_ui.behindPlayerAvatarInfo.visible = true
-			--ClickEvent._play_ui.behindPlayerAvatarInfo
+			ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("PlayerLineState").visible = false
 			_currentPanel.panel:GetChild("BehindPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		elseif tempX == 2 then
 			ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = true
+			ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("PlayerLineState").visible = false
 			_currentPanel.panel:GetChild("OppositePlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		elseif tempX == 3 then
 			ClickEvent._play_ui.frontPlayerAvatarInfo.visible = true
+			ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("PlayerLineState").visible = false
 			_currentPanel.panel:GetChild("FrontPlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		else
 			ClickEvent._play_ui.playerAvatarInfo.visible = true
+			ClickEvent._play_ui.playerAvatarInfo:GetChild("PlayerLineState").visible = false
 			_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
 		end
 	end
@@ -366,7 +369,6 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_CHIPAI" then
 				ClickEvent.AddOperationButton("GameChiButton")
 				Player.MahJong.SetCurrentState(operationState.CHI)
-				Player.MahJong.CheckChiPai()
 				Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
 				CS.UnityEngine.Debug.LogWarning("ANGANG")
@@ -1157,7 +1159,26 @@ end
 function ClickEvent.GameChiButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
-	Player.MahJong.ChiPai()
+	Player.MahJong.CheckChiPai()
+	--Player.MahJong.ChiPai()
+end
+
+function ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3)--牌类型、牌组数、牌值、
+	-- body
+	ClickEvent._play_ui.chiPaiBar.visible = true
+	local chiPaiGroupTemp = ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
+	chiPaiGroupTemp.name = tostring(paiGroup)
+	chiPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue1)
+	chiPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue2)
+	chiPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue3)
+	chiPaiGroupTemp.onClick:Add(Player.MahJong.ClickChiPaiEvent)
+	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList").width = chiPaiGroupTemp.width * paiGroup
+end
+
+function ClickEvent.CloseChiPai()
+	-- body
+	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList"):RemoveChildrenToPool()
+	ClickEvent._play_ui.chiPaiBar.visible = false
 end
 
 function ClickEvent.GamePengButton(gameObject)
