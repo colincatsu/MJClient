@@ -1,5 +1,5 @@
 
-ªd
+ºf
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -103,10 +103,11 @@ login_time (
 inventory_type (2.Adoter.Asset.INVENTORY_TYPE&
 items (2.Adoter.Asset.Item_Item"
 ItemEquipment
-star (">
+star ("Q
 Meta'
 type_t (2.Adoter.Asset.META_TYPE
-stuff ("i
+stuff (
+	player_id ("i
 CreatePlayerF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_CREATE_PLAYER
 	player_id ("m
@@ -308,7 +309,11 @@ out_reason (2.Adoter.Asset.KILL_OUT_REASON"»
 PlayerElement
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE+
-pai_list (2.Adoter.Asset.MultiplePai*u
+pai_list (2.Adoter.Asset.MultiplePai"ê
+RegisterServer?
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
+	role_type (2.Adoter.Asset.ROLE_TYPE
+	global_id (*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -372,7 +377,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*æ
+ERROR_COMMON_REWARD_HAS_GOT3*€
 
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
@@ -418,7 +423,8 @@ ERROR_CODE
 META_TYPE_S2C_ACTIVITYÖ#
 META_TYPE_S2C_SYSTEM_BROADCASTÜ 
 META_TYPE_S2C_PAI_PUSH_DOWNá
-META_TYPE_S2C_COUNTË*Ò
+META_TYPE_S2C_COUNTË
+META_TYPE_S2S_REGISTERÈ*Ò
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -441,4 +447,7 @@ ERROR_CODE
 GAME_OPER_TYPE_KICKOUT*M
 KILL_OUT_REASON
 KILL_OUT_REASON_BEGIN 
-KILL_OUT_REASON_OTHER_LOGIN
+KILL_OUT_REASON_OTHER_LOGIN*<
+	ROLE_TYPE
+ROLE_TYPE_PLAYER
+ROLE_TYPE_GAME_SERVER

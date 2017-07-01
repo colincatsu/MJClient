@@ -7,6 +7,20 @@ AudioPlayer._audio_name = {
 	Peng = "peng",
 	Ting = "ting",
 	Zimo = "zimo",
+	Dice = "deal",
+	FaPai = "fapai",
+	Down = "down",
+	Dapai = "give",
+	CloseUI = "guanbi",
+	PushPai = "lanpai",
+	Reward = "money",
+	Bean = "jinbi",
+	NoTime = "naozhong",
+	SortPai = "sort",
+	ClickUI = "ui_click",
+	MingGang = "windy_rainy",
+	AnGang = "wordbang",
+	SelectUI = "select",
 }
 local AudioClip = CS.UnityEngine.AudioClip
 local AudioSource = CS.UnityEngine.AudioSource
@@ -18,6 +32,12 @@ local soundAudioSource = {}
 
 function AudioPlayer.PlaySound(soundName,isLoop,volume)
 	-- body
+	if not Player._player_data then
+		return
+	end
+	if soundName ~= AudioPlayer._audio_name.Bgm and not Player._player_data.game_setting.audio then
+		return
+	end
 	if not audioFather then
 		audioFather = GameObject("Audio")
 		DontDestroyOnLoad(audioFather)

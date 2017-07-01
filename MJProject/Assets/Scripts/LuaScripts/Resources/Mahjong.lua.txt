@@ -888,6 +888,7 @@ function MahJong.PaiPushDown(paisData)
 		end
     end
     MahJong.SortPushDownPai()
+    AudioPlayer.PlaySound(AudioPlayer._audio_name.PushPai,false,1)
 end
 
 function MahJong.UpdateWhoseTurn(whichPlayer)
@@ -1064,6 +1065,7 @@ function MahJong.CreatePlayerPai()
     end
 	MahJong.SortPlayerPai()
 	MahJong.OtherPlayerPaiInit()
+	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 end
 
 function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
@@ -1253,6 +1255,7 @@ function MahJong.DaPai(paiNumber)
 		MahJong.SortPlayerPai(paiNumber)
 		MahJong.SortZhuaPai()
 		MahJong.SortPlayerPai()
+		AudioPlayer.PlaySound(AudioPlayer._audio_name.SortPai,false,1)
 	end
 	currentOperationState = operationState.WAIT
 end
@@ -1424,6 +1427,7 @@ function MahJong.ClickChiPaiEvent( gameObject )
 		deleteCount = deleteCount + 1
 	end
 	MahJong.ChiPai()
+	ClickEvent.CloseChiPai()
 	ClickEvent.CloseOperationPanel()
 	_chi_pai_father = {}
 end
@@ -2616,6 +2620,7 @@ function update()
 		if diceCountDown + CS.UnityEngine.Time.deltaTime >= _play_dice_animation_time then
 			_red_dice_animation:Play(tostring(redDicePoints))
 			_white_dice_animation:Play(tostring(whiteDicePoints))
+			AudioPlayer.PlaySound(AudioPlayer._audio_name.Dice,false,1)
 		end
 	end
 	--[[

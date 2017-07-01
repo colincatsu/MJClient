@@ -22,6 +22,8 @@ Effect._effect_name = {
 	gold_ui = "UI_flash_lizi_01",
 	gem_ui = "UI_flash_lizi_02",
 	head_ui = "Effect_UI_Head portrait_01_Position",
+	button_ui = "Effect_UI_button_02",
+	shangcheng_ui = "Effect_UI_shangCheng_01",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)

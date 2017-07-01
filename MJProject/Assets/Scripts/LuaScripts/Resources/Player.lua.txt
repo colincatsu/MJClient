@@ -340,7 +340,8 @@ function Player.OnCommonProperty(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CommonProperty",stuff)
     if Player._player_data.common_prop.player_id == message.player_id then
         Player._player_data.common_prop = message.common_prop
-        
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Bean,false,1)
+        ClickEvent.CommonPropertyUpdate()
     end
 end
 
@@ -587,8 +588,7 @@ function Player.OnPaiNotify(type_t,stuff)
             ClickEvent.notPushPassMsg = true
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
-        --Player.ThreadFunction(
-        --Player.MahJong.CreatePlayerPai()
+        ClickEvent.CloseAlready()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.ModelPoolDelete(1)
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
@@ -652,18 +652,22 @@ function Player.OnPaiOperation(type_t,stuff)
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_PENGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_CHIPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
         LogWarning("give up operation")
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
@@ -671,17 +675,23 @@ function Player.OnPaiOperation(type_t,stuff)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.UpdateWhoseTurn(message.position)
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_TINGPAI" then
         Player.MahJong.TingPai(message)
         Player.MahJong.DaPaiPoolShow(message)
@@ -736,8 +746,8 @@ function Player.OnGameOperation(type_t,stuff)
     if not message.source_player_id then
         return
     end
-    LogWarning(message.source_player_id)
-    LogWarning(this._id)
+    --LogWarning(message.source_player_id)
+    --LogWarning(this._id)
     if message.source_player_id then
         --判断id是谁
         if message.source_player_id == this._id then
@@ -745,6 +755,9 @@ function Player.OnGameOperation(type_t,stuff)
         else
             LogWarning(message.source_player_id)
         end
+    end
+    if message.oper_type == "GAME_OPER_TYPE_START" then
+        ClickEvent.ShowAlready(message.source_player_id)
     end
 end
 

@@ -186,6 +186,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
+		Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
 		LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
@@ -232,6 +233,35 @@ function ClickEvent.CreateOperationButton( ... )
 	_currentPanel.buttonList["GameTingButton"] = UIPackage.GetItemURL("MXUI","GameTingButton")
 	_currentPanel.buttonList["XuanFengButton"] = UIPackage.GetItemURL("MXUI","XuanFengButton")
 	_currentPanel.buttonList["ClearShowFan"] = UIPackage.GetItemURL("MXUI","ClearShowFan")
+end
+
+function ClickEvent.ShowAlready(playerID)
+	-- body
+	local currentPositionData
+	for j,m in pairs(Player._all_players_data) do
+		if playerID == m.common_prop.player_id then
+			currentPositionData = m
+			break
+		end
+	end
+	local tempX = _position_index[currentPositionData.position] - _position_index[Player._my_player_data.position]
+	if tempX == 1 then
+		ClickEvent._play_ui.behindAlready.visible = true
+	elseif tempX == 2 then
+		ClickEvent._play_ui.oppositeAlready.visible = true
+	elseif tempX == 3 then
+		ClickEvent._play_ui.frontAlready.visible = true
+	else
+		ClickEvent._play_ui.playerAlready.visible = true
+	end
+end
+
+function ClickEvent.CloseAlready( ... )
+	-- body
+	ClickEvent._play_ui.frontAlready.visible = false
+	ClickEvent._play_ui.oppositeAlready.visible = false
+	ClickEvent._play_ui.behindAlready.visible = false
+	ClickEvent._play_ui.playerAlready.visible = false
 end
 
 function ClickEvent.AddOperationButton( buttonName )
@@ -454,6 +484,10 @@ function ClickEvent.PopPanel( panelName )
 			obj.onClick:Add(ClickEvent.registerButtonClick)
 		end
 	end
+	if panelName == ClickEvent.panelTable._create_room_ui then
+		local x = 1/ClickEvent.scale
+		Effect.AddUIEffect(Effect._effect_name.button_ui,CS.UnityEngine.Vector3(100,100,100),_popPanel.panel:GetChild("CreateButton"),_popPanel.panel:GetChild("CreateButton").size/2)
+	end
 	--[[
 	local image = _popPanel.background:GetChild("Di")
 	LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
@@ -557,6 +591,7 @@ function ClickEvent.DapaiUIShow(position,card_type,card_value)
 		CS.UnityEngine.Debug.LogWarning("position nil")
 	end
 	AudioPlayer.PlaySound(card_type.."_"..card_value,false,1)
+	AudioPlayer.PlaySound(AudioPlayer._audio_name.Dapai,false,1)
 	Player.MahJong.DapaiUIHide(whichPlayer)
 end
 
@@ -605,6 +640,11 @@ function ClickEvent.MusicSlideButton( ... )
 	else
 		AudioPlayer.StopSound(AudioPlayer._audio_name.Bgm)
 	end
+end
+
+function ClickEvent.EffectSlideButton( ... )
+	-- body
+	Player._player_data.game_setting.audio = _popPanel.panel:GetChild("EffectSlideButton").selected
 end
 
 function ClickEvent.Shop( ... )
@@ -1239,6 +1279,11 @@ function ClickEvent.registerButtonClick(gameObject)
 
 	if fSwitch then
 		local result = fSwitch(gameObject.sender)
+		if key == "Close" then
+			AudioPlayer.PlaySound(AudioPlayer._audio_name.CloseUI,false,1)
+		else
+			AudioPlayer.PlaySound(AudioPlayer._audio_name.ClickUI,false,1)
+		end
 	else
 		CS.UnityEngine.Debug.LogWarning(key)
 		CS.UnityEngine.Debug.LogWarning("key no found")
