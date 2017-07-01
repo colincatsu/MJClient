@@ -2244,12 +2244,14 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("east")
 						MahJong.DeleteOtherPai("POSITION_TYPE_EAST",1)
+						--[[
 						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
 						local co = coroutine.create(function()
 					    yield_return(CS.UnityEngine.WaitForSeconds(2))
 					    Effect.DeleteEffect(Effect._effect_name.operationShowSmoke)
 						end)
 						coroutine.resume(co)
+						--]]
 	    				return
 	    			end
 	    		end
