@@ -101,6 +101,8 @@ function ClickEvent.CreateNewPanel(panelName)
 	if panelName == ClickEvent.panelTable._play_game_ui then
 		ClickEvent._play_ui.chiPaiBar = _currentPanel.panel:GetChild("ChiPaiBg")
 		ClickEvent._play_ui.chiPaiBar.visible = false
+		ClickEvent._play_ui.gangPaiBar = _currentPanel.panel:GetChild("GangPaiBg")
+		ClickEvent._play_ui.gangPaiBar.visible = false
 		ClickEvent._play_ui.huPaiBar = _currentPanel.panel:GetChild("HuPaiBg")
 		ClickEvent._play_ui.huPaiBar.visible = false
 		ClickEvent._play_ui.operationBar = _currentPanel.panel:GetChild("GameOperationBar")
@@ -716,15 +718,15 @@ function ClickEvent.Avatar( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
 	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
-	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = Player._player_data.common_prop.player_id
-	_popPanel.panel:GetChild("DouNum").text = Player._player_data.common_prop.huanledou
-	_popPanel.panel:GetChild("RoomCardPlay").text = Player._player_data.common_prop.room_card_count
-	_popPanel.panel:GetChild("TotalWin").text = Player._player_data.common_prop.streak_wins
-	_popPanel.panel:GetChild("TotalPlay").text = Player._player_data.common_prop.total_rounds
+	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	_popPanel.panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
+	_popPanel.panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
+	_popPanel.panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
+	_popPanel.panel:GetChild("TotalPlay").text = tostring(Player._player_data.common_prop.total_rounds)
 	if Player._player_data.common_prop.total_rounds == 0 then
-		_popPanel.panel:GetChild("WinRate").text = 0
+		_popPanel.panel:GetChild("WinRate").text = "0"
 	else
-		_popPanel.panel:GetChild("WinRate").text = math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds).."%"
+		_popPanel.panel:GetChild("WinRate").text = tostring(math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds)).."%"
 	end
 end
 
@@ -767,7 +769,7 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = 0
+				_popPanel.panel:GetChild("WinRate").text = "0"
 			else
 				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -796,7 +798,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = 0
+				_popPanel.panel:GetChild("WinRate").text = "0"
 			else
 				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -825,7 +827,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = 0
+				_popPanel.panel:GetChild("WinRate").text = "0"
 			else
 				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -854,7 +856,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = 0
+				_popPanel.panel:GetChild("WinRate").text = "0"
 			else
 				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end

@@ -24,10 +24,25 @@ Effect._effect_name = {
 	head_ui = "Effect_UI_Head portrait_01_Position",
 	button_ui = "Effect_UI_button_02",
 	shangcheng_ui = "Effect_UI_shangCheng_01",
+	pengShow = "Effect_status_display_peng",
+	chiShow = "Effect_status_display_chi",
+	gangShow = "Effect_status_display_gang",
+	roundEndShow = "Effect_status_display_DuiJuJieShu",
+	gangKaiShow = "Effect_status_display_GangShangKaiHua",
+	huShow = "Effect_status_display_hu",
+	mingPiaoShow = "Effect_status_display_MingPaio",
+	qingYiSeShow = "Effect_status_display_QingYiSe",
+	tingShow = "Effect_status_display_ting",
+	ziMoShow = "Effect_status_display_zimo",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
 Effect.maybeOperationShowCircleOffset = NewVector3(0,-0.005,0)
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    Player.self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 function Effect.GetDisableObjPool(effectName)
 	-- body
@@ -65,7 +80,7 @@ function Effect.SetDisableObjPool(cacheObj)
 end
 
 
-function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,targetSize)
+function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,deleteTime)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
@@ -91,6 +106,13 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,target
 			x.displayObject.xy = effectPos
 		end
 		objectTable[effectName].transform.localScale = effectScale
+	end
+	if deleteTime then
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    Effect.DeleteEffect(effectName)
+		end)
+		coroutine.resume(co)
 	end
 end
 
@@ -125,6 +147,28 @@ function Effect.DeleteEffect(effectName)
 		Effect.SetDisableObjPool(objectTable[effectName][objectTable[effectName].front])
 		objectTable[effectName].front = objectTable[effectName].front + 1
 		--Destroy(objectTable[effectName])
+	end
+end
+
+function Effect.AddSpecialEffect(effectName)
+	-- body
+	if not prefabTable[effectName] then
+		prefabTable[effectName] = Load("Effect/"..effectName)
+	end
+	if not objectTable[effectName] then
+		objectTable[effectName] = {}
+		objectTable[effectName].rear = 0
+		objectTable[effectName].front = 1
+	end
+	objectTable[effectName].rear = objectTable[effectName].rear + 1
+	objectTable[effectName][objectTable[effectName].rear] = Instantiate(prefabTable[effectName])
+end
+
+function Effect.DeleteSpecialEffect(effectName)
+	-- body
+	if objectTable[effectName] and objectTable[effectName].front <= objectTable[effectName].rear then
+		Destroy(objectTable[effectName][objectTable[effectName].front])
+		objectTable[effectName].front = objectTable[effectName].front + 1
 	end
 end
 
