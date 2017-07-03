@@ -10,15 +10,17 @@ local _disableObjPool = {}
 _disableObjPool_front = 1
 _disableObjPool_rear = 0
 Effect._effect_name = {
-	operationShowSmoke = "Effect_smoke_01_Position",--操作的烟
-	maybeOperationShowCircle = "Effect_chess_prompt_02_Position",--可能操作的
-	currentDapaiPoint = "Effect_chess_prompt_01_Position",--上一张打的牌
-	gangShangKaiHua = "Effect_bloom_01_4.0_Postion",
+	operationShowSmoke = "Effect_smoke_01_Position",--操作的烟,
+	maybeOperationShowCircle = "Effect_chess_prompt_02_Position",--可能操作的,
+	currentDapaiPoint = "Effect_chess_prompt_01_Position",--上一张打的牌,
 	huPaiColumn = "Effect_brand_01 1_Position",--自己胡牌
-	fallMoney = "Effect_Enter_01_4.0_Position",--掉钱
-	rain = "Effect_rain_01_Position",
+	haiDiLaoYue = "Effect_Moon_01_4.0_Position",
+	gangShangKaiHua = "Effect_bloom_01_4.0_Postion",--
+	fallMoney = "Effect_Enter_01_4.0_Position",--掉钱,
+	rain = "Effect_rain_01_Position",--
 	manyCannon = "Effect_special_display_01_Position",--一炮多响
-	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝
+	goldIngot = "Effect_Touch treasure_01_4.0_Position",--元宝,
+	dragonMingPiao = "Effect_long_01_Postion",--,
 	gold_ui = "UI_flash_lizi_01",
 	gem_ui = "UI_flash_lizi_02",
 	head_ui = "Effect_UI_Head portrait_01_Position",
@@ -29,6 +31,7 @@ Effect._effect_name = {
 	gangShow = "Effect_status_display_gang",
 	roundEndShow = "Effect_status_display_DuiJuJieShu",
 	gangKaiShow = "Effect_status_display_GangShangKaiHua",
+	seaMoonShow = "Effect_status_display_HaiDiLaoYue",
 	huShow = "Effect_status_display_hu",
 	mingPiaoShow = "Effect_status_display_MingPaio",
 	qingYiSeShow = "Effect_status_display_QingYiSe",
@@ -38,6 +41,11 @@ Effect._effect_name = {
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
 Effect.maybeOperationShowCircleOffset = NewVector3(0,-0.005,0)
+Effect.playerPosition = NewVector3(0,-1.1,7.55)
+Effect.nextPosition = NewVector3(2.8,1.2,7.55)
+Effect.oppositePosition = NewVector3(0,3.02,7.55)
+Effect.forwardPosition = NewVector3(-2.8,1.2,7.55)
+
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
     Player.self:YieldAndCallback(to_yield, cb)
@@ -85,7 +93,7 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,delete
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
 	end
-	if effectName == "Effect_UI_Head portrait_01_Position" then
+	if effectName == Effect._effect_name.head_ui then
 		objectTable[effectName] = Instantiate(prefabTable[effectName])
 		local x = GGraph()
 		effectFather:AddChild(x)
@@ -109,14 +117,14 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,delete
 	end
 	if deleteTime then
 		local co = coroutine.create(function()
-	    yield_return(CS.UnityEngine.WaitForSeconds(2))
+	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
 	    Effect.DeleteEffect(effectName)
 		end)
 		coroutine.resume(co)
 	end
 end
 
-function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos)
+function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos,deleteTime)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
@@ -139,6 +147,13 @@ function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos)
 	else
 		objectTable[effectName][objectTable[effectName].rear].transform.position = offsetPos
 	end
+	if deleteTime then
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
+	    Effect.DeleteEffect(effectName)
+		end)
+		coroutine.resume(co)
+	end
 end
 
 function Effect.DeleteEffect(effectName)
@@ -150,7 +165,7 @@ function Effect.DeleteEffect(effectName)
 	end
 end
 
-function Effect.AddSpecialEffect(effectName)
+function Effect.AddSpecialEffect(effectName,deleteTime)
 	-- body
 	if not prefabTable[effectName] then
 		prefabTable[effectName] = Load("Effect/"..effectName)
@@ -162,6 +177,13 @@ function Effect.AddSpecialEffect(effectName)
 	end
 	objectTable[effectName].rear = objectTable[effectName].rear + 1
 	objectTable[effectName][objectTable[effectName].rear] = Instantiate(prefabTable[effectName])
+	if deleteTime then
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
+	    Effect.DeleteSpecialEffect(effectName)
+		end)
+		coroutine.resume(co)
+	end
 end
 
 function Effect.DeleteSpecialEffect(effectName)

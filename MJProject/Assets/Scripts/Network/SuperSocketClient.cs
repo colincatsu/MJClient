@@ -39,15 +39,15 @@ namespace SuperSocket.ClientEngine
             //    byte[] payload = ms.ToArray();
             //    return Send(payload, 0, payload.Length);
             //}
-            return Send(buffer, 0, buffer.Length);
-            //ushort body_size = (ushort)buffer.Length;
-            //byte[] headBytes = new byte[HeadSize];
-            //headBytes[0] = (byte)(body_size & 0xff >> 8);
-            //headBytes[1] = (byte)(body_size & 0xff);
-            //byte[] newBuffer = new byte[buffer.Length + HeadSize];
-            //headBytes.CopyTo(newBuffer, 0);
-            //buffer.CopyTo(newBuffer, HeadSize);
-            //return Send(newBuffer, 0, newBuffer.Length);
+            //return Send(buffer, 0, buffer.Length);
+            ushort body_size = (ushort)buffer.Length;
+            byte[] headBytes = new byte[HeadSize];
+            headBytes[0] = (byte)(body_size & 0xff >> 8);
+            headBytes[1] = (byte)(body_size & 0xff);
+            byte[] newBuffer = new byte[buffer.Length + HeadSize];
+            headBytes.CopyTo(newBuffer, 0);
+            buffer.CopyTo(newBuffer, HeadSize);
+            return Send(newBuffer, 0, newBuffer.Length);
         }
 
         protected int Send(byte[] buffer, int offset, int length)

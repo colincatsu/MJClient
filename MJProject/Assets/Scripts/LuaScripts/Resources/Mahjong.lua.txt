@@ -467,6 +467,7 @@ function MahJong.ResetGameState()
     Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
+	Player.huPaiPosition = 0
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 end
 
@@ -2031,6 +2032,7 @@ function MahJong.TingPai(message)
 	else
 		CS.UnityEngine.Debug.LogWarning("position nil")
 	end
+	Effect.AddNormalEffect(Effect._effect_name.tingShow,nil,nil,whichPlayer)
 end
 
 function MahJong.SortPlayerPai(deleteNumber)
@@ -2154,6 +2156,50 @@ function MahJong.ShowMabeOperationEffect( ... )
 	Effect.AddNormalEffect(Effect._effect_name.maybeOperationShowCircle,nil,_current_dapai.object,Effect.maybeOperationShowCircleOffset)
 end
 
+function MahJong.OnRoundEndShowEffect(operationPaiShowData)
+	-- body
+	if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
+        if Player.huPaiPosition == 0 then
+        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
+        else
+            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
+        end
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
+    	if Player.huPaiPosition == 0 then
+    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
+        else
+	        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
+        end
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
+    	if Player.huPaiPosition == 0 then
+    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
+        end
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
+    	if Player.huPaiPosition == 0 then
+    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
+        end
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
+        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
+        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
+    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
+    	if Player.huPaiPosition == 0 then
+    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
+        else
+	        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
+	    end
+    else
+        Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
+    end
+    local co = coroutine.create(function()
+        yield_return(CS.UnityEngine.WaitForSeconds(2))
+        Effect.AddNormalEffect(Effect._effect_name.roundEndShow,2)
+        yield_return(CS.UnityEngine.WaitForSeconds(2))
+        ClickEvent.ShowCalculate()
+    end)
+    coroutine.resume(co)
+end
+
 function MahJong.OperationPaiShow(message)
 	-- body
 	---[[
@@ -2167,17 +2213,32 @@ function MahJong.OperationPaiShow(message)
 	local paiValue = {}
 	local anGangAngle = newVector3.zero
 	local deleteOtheCount = 3
+
+	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
+	local tempPosition = 0
+	if playerPos == 0 then
+		tempPosition = Effect.playerPosition
+	elseif playerPos  == 1 then
+		tempPosition = Effect.nextPosition
+	elseif playerPos  == 2 then
+		tempPosition = Effect.oppositePosition
+	elseif playerPos  == 3 then
+		tempPosition = Effect.forwardPosition
+	end
+
 	if operationPaiShowData.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
     	MahJong.DelUsedDaPai()
+		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
     elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_PENGPAI" then
     	for i=1,3 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
     	MahJong.DelUsedDaPai()
     	deleteOtheCount = 2
+		Effect.AddNormalEffect(Effect._effect_name.pengShow,nil,nil,tempPosition,2)
     elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 		if operationPaiShowData.pais then
 			for k,v in pairs(operationPaiShowData.pais) do
@@ -2191,23 +2252,29 @@ function MahJong.OperationPaiShow(message)
 		end
 		MahJong.DelUsedDaPai()
 		deleteOtheCount = 2
+		Effect.AddNormalEffect(Effect._effect_name.chiShow,nil,nil,tempPosition,2)
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
     	anGangAngle = newVector3(-180,0,0)
     	deleteOtheCount = 4
+    	Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
 		paiType = "CARD_TYPE_FENG"
 		for i=1,4 do
 			paiValue[i] = i
 		end
 		deleteOtheCount = 4
+		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 		paiType = "CARD_TYPE_JIAN"
 		for i=1,3 do
 			paiValue[i] = i
 		end
+		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
+	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_HUPAI" then
+		Player.huPaiPosition = playerPos
     end
 
     local tempPaiPool = {}

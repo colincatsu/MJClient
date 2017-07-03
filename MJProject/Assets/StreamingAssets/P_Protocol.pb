@@ -1,5 +1,5 @@
 
-ºf
+òg
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -39,7 +39,7 @@ GameRecord2
 fan_type (2.Adoter.Asset.FAN_TYPE"F
 RoomHistory
 room_id (&
-list (2.Adoter.Asset.GameRecord"À
+list (2.Adoter.Asset.GameRecord"Ê
 
 CommonProp
 	player_id (
@@ -55,8 +55,8 @@ CommonProp
  (
 total_win_rounds (
 streak_wins (
-score (
-room_history ("ï
+score (/
+room_history (2.Adoter.Asset.RoomHistory"ï
 PlayerCommonLimit9
 elements (2'.Adoter.Asset.PlayerCommonLimit.ElementE
 Element
@@ -81,7 +81,7 @@ phone_type ("√
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"Œ
+attachments (2.Adoter.Asset.MailAttachment"·
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -96,7 +96,8 @@ login_time (
 mail_list_system
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
-game_setting (2.Adoter.Asset.PlayerSetting"®
+game_setting (2.Adoter.Asset.PlayerSetting
+	room_list ("®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -275,10 +276,11 @@ card_value ("a
 player_list (2$.Adoter.Asset.RoomInformation.Playerf
 Player-
 position (2.Adoter.Asset.POSITION_TYPE-
-common_prop (2.Adoter.Asset.CommonProp"Ä
+common_prop (2.Adoter.Asset.CommonProp"Æ
 GameCalculateE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE(
-record (2.Adoter.Asset.GameRecord"m
+record (2.Adoter.Asset.GameRecord,
+max_fan_type (2.Adoter.Asset.FAN_TYPE"m
 GameInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_INFO
 banker_player_id ("ê

@@ -48,6 +48,7 @@ local returnMainUI = false
 local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
+Player.huPaiPosition = 0
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -394,7 +395,7 @@ function Player.OnGameCalculate(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
     --Player.ThreadFunction()
-    ClickEvent.ShowCalculate()
+    MahJong.OnRoundEndShowEffect(Player._calculate_data)
 end
 
 function Player.OnSyncCommonReward(type_t,stuff)

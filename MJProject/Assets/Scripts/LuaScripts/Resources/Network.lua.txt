@@ -104,8 +104,8 @@ end
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
     --_socketClient:SendConnect()
-    --_network_manager:ConnectTo("111.230.140.74",50000)
-    _network_manager:ConnectTo("111.230.140.74",50013)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("111.230.140.74",50013)
     --_network_manager:ConnectTo("182.92.87.147",50000)
     --_network_manager:ConnectTo("192.168.136.100",50000)
     CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
