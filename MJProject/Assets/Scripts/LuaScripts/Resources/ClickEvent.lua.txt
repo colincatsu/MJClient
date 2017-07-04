@@ -45,6 +45,7 @@ local notPushPassMsg = false
 
 local _currentPanel = {}
 local _popPanel = {}
+local popPanelIndex = 0
 local Camera = CS.UnityEngine.Camera
 local LogWarning = CS.UnityEngine.Debug.LogWarning
 
@@ -463,48 +464,49 @@ function ClickEvent.PopPanel( panelName )
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
 	end
 	ClickEvent.Close()
-	_popPanel.background = ClickEvent._createObject["Bg"]
-	_popPanel.background:SetSize(GRoot.inst.width, GRoot.inst.height)
-	_popPanel.background:Center()
-	_popPanel.background:SetPosition(0,0,0)
-	_popPanel.background.onTouchBegin:Add(ClickEvent.registerButtonDown)
-	_popPanel.background.onTouchEnd:Add(ClickEvent.registerButtonUp)
+	popPanelIndex = popPanelIndex + 1
+	_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"]
+	_popPanel[popPanelIndex].background:SetSize(GRoot.inst.width, GRoot.inst.height)
+	_popPanel[popPanelIndex].background:Center()
+	_popPanel[popPanelIndex].background:SetPosition(0,0,0)
+	_popPanel[popPanelIndex].background.onTouchBegin:Add(ClickEvent.registerButtonDown)
+	_popPanel[popPanelIndex].background.onTouchEnd:Add(ClickEvent.registerButtonUp)
 
-	_popPanel.panel = ClickEvent._createObject[panelName]
-	_popPanel.panel.name = panelName
-	_popPanel.panel:SetSize(GRoot.inst.width, GRoot.inst.height)
-	_popPanel.panel:Center()
-	_popPanel.panel:SetPosition(0,0,0)
-	GRoot.inst:AddChild(_popPanel.background)
-	GRoot.inst:AddChild(_popPanel.panel)
-	--GRoot.inst:RemoveChild(_popPanel.panel)
-	--GRoot.inst:AddChild(_popPanel.panel)
-	local childNumber = _popPanel.panel.numChildren
+	_popPanel[popPanelIndex].panel = ClickEvent._createObject[panelName]
+	_popPanel[popPanelIndex].panel.name = panelName
+	_popPanel[popPanelIndex].panel:SetSize(GRoot.inst.width, GRoot.inst.height)
+	_popPanel[popPanelIndex].panel:Center()
+	_popPanel[popPanelIndex].panel:SetPosition(0,0,0)
+	GRoot.inst:AddChild(_popPanel[popPanelIndex].background)
+	GRoot.inst:AddChild(_popPanel[popPanelIndex].panel)
+	--GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
+	--GRoot.inst:AddChild(_popPanel[popPanelIndex].panel)
+	local childNumber = _popPanel[popPanelIndex].panel.numChildren
 	for i=0,childNumber-1 do
-		local obj = _popPanel.panel:GetChildAt(i)
+		local obj = _popPanel[popPanelIndex].panel:GetChildAt(i)
 		if obj.group and obj.group.name == "Btns" then
 			obj.onClick:Add(ClickEvent.registerButtonClick)
 		end
 	end
 	if panelName == ClickEvent.panelTable._create_room_ui then
 		local x = 1/ClickEvent.scale
-		Effect.AddUIEffect(Effect._effect_name.button_ui,CS.UnityEngine.Vector3(100,100,100),_popPanel.panel:GetChild("CreateButton"),_popPanel.panel:GetChild("CreateButton").size/2)
+		Effect.AddUIEffect(Effect._effect_name.button_ui,CS.UnityEngine.Vector3(100,100,100),_popPanel[popPanelIndex].panel:GetChild("CreateButton"),_popPanel[popPanelIndex].panel:GetChild("CreateButton").size/2)
 	end
 	--[[
-	local image = _popPanel.background:GetChild("Di")
+	local image = _popPanel[popPanelIndex].background:GetChild("Di")
 	LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
 	LogWarning(_currentPanel.panel:GetChild("Bg").displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
 	LogWarning(image.displayObject.size.x * ClickEvent.scale)
 	if panelName == ClickEvent.panelTable._create_room_ui and addEffect then
-		Effect.AddUIEffect("Effect_UI_button_02",CS.UnityEngine.Vector3(100,100,100),_popPanel.panel:GetChild("CreateButton"),image.displayObject.gameObject)
+		Effect.AddUIEffect("Effect_UI_button_02",CS.UnityEngine.Vector3(100,100,100),_popPanel[popPanelIndex].panel:GetChild("CreateButton"),image.displayObject.gameObject)
 	end
 	local tempObj = CS.UnityEngine.Resources.Load("UIPrefab/"..panelName)
-	_popPanel.panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
-	_popPanel.panel.transform.localScale = CS.UnityEngine.Vector3.one
-	_popPanel.eventTriggerListener = _popPanel.panel:GetComponent("EventTriggerListener")
-	_popPanel.eventTriggerListener.onClick = ClickEvent.registerButtonClick
-	_popPanel.buttonList = _popPanel.eventTriggerListener._buttons
-	_popPanel.toggleList = _popPanel.eventTriggerListener._toggles
+	_popPanel[popPanelIndex].panel = CS.UnityEngine.Object.Instantiate(tempObj,ClickEvent.self.transform)
+	_popPanel[popPanelIndex].panel.transform.localScale = CS.UnityEngine.Vector3.one
+	_popPanel[popPanelIndex].eventTriggerListener = _popPanel[popPanelIndex].panel:GetComponent("EventTriggerListener")
+	_popPanel[popPanelIndex].eventTriggerListener.onClick = ClickEvent.registerButtonClick
+	_popPanel[popPanelIndex].buttonList = _popPanel[popPanelIndex].eventTriggerListener._buttons
+	_popPanel[popPanelIndex].toggleList = _popPanel[popPanelIndex].eventTriggerListener._toggles
 	--]]
 end
 
@@ -535,18 +537,18 @@ function ClickEvent.ShowCalculate( ... )
 		end
 		local tempX = _position_index[currentPositionData.position] - _position_index[myPosition]
 		if tempX == 1 then
-			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
-			_popPanel.panel:GetChild("BehindPlayerClearInfo"):GetChild("DouNum").text = v.score
+			_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 2 then
-			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = v.player_id
-			_popPanel.panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = v.score
+			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = v.score
 		elseif tempX == 3 then
-			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
-			_popPanel.panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = v.score
+			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = v.score
 		else
-			_popPanel.panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = v.player_id
-			_popPanel.panel:GetChild("MyClearInfo"):GetChild("DouNum").text = v.score
-			local detailList = _popPanel.panel:GetChild("MyClearInfo"):GetChild("FanList")
+			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = v.player_id
+			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("DouNum").text = v.score
+			local detailList = _popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("FanList")
 			detailList:RemoveChildrenToPool()
 			for i,c in pairs(v.details) do
 				local fanName = nil
@@ -614,7 +616,7 @@ end
 function ClickEvent.showDisconnect( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel.panel:GetChild("PopWindowsSmallShowText").text = "Network disconnected."
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = "Network disconnected."
 end
 ---------------------------------------------------------------------------
 -------------点击功能函数
@@ -628,15 +630,15 @@ end
 function ClickEvent.GameSettingButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
-	_popPanel.panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
-	_popPanel.panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
-	_popPanel.panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
-	_popPanel.panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
+	_popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
+	_popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
+	_popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
+	_popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
 end
 
 function ClickEvent.MusicSlideButton( ... )
 	-- body
-	Player._player_data.game_setting.music = _popPanel.panel:GetChild("MusicSlideButton").selected
+	Player._player_data.game_setting.music = _popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected
 	if Player._player_data.game_setting.music then
 		AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
 	else
@@ -646,13 +648,13 @@ end
 
 function ClickEvent.EffectSlideButton( ... )
 	-- body
-	Player._player_data.game_setting.audio = _popPanel.panel:GetChild("EffectSlideButton").selected
+	Player._player_data.game_setting.audio = _popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected
 end
 
 function ClickEvent.Shop( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
-	_popPanel.panel:GetChild("MallDouButton").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
 end
 
 function ClickEvent.Instruction( ... )
@@ -669,8 +671,8 @@ end
 function ClickEvent.VIPRecordButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._vip_note_ui)
-	for i=0,_popPanel.panel:GetChild("NoteList").numChildren-1 do
-		local obj = _popPanel.panel:GetChild("NoteList"):GetChildAt(i)
+	for i=0,_popPanel[popPanelIndex].panel:GetChild("NoteList").numChildren-1 do
+		local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):GetChildAt(i)
 		obj.name = "VipNoteList"
 		obj.onClick:Add(ClickEvent.registerButtonClick)
 	end
@@ -699,34 +701,34 @@ end
 function ClickEvent.RoomCardNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
-	_popPanel.panel:GetChild("MallItemButton").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("MallItemButton").selected = true
 end
 
 function ClickEvent.DouNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
-	_popPanel.panel:GetChild("MallDouButton").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
 end
 
 function ClickEvent.GemsNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
-	_popPanel.panel:GetChild("MallGemsButton").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("MallGemsButton").selected = true
 end
 
 function ClickEvent.Avatar( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
-	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
-	_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
-	_popPanel.panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
-	_popPanel.panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
-	_popPanel.panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
-	_popPanel.panel:GetChild("TotalPlay").text = tostring(Player._player_data.common_prop.total_rounds)
+	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
+	_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
+	_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
+	_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(Player._player_data.common_prop.total_rounds)
 	if Player._player_data.common_prop.total_rounds == 0 then
-		_popPanel.panel:GetChild("WinRate").text = "0"
+		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
 	else
-		_popPanel.panel:GetChild("WinRate").text = tostring(math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds)).."%"
+		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds)).."%"
 	end
 end
 
@@ -743,7 +745,7 @@ end
 
 function ClickEvent.YesButton( ... )
 	-- body
-	if _popPanel.panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
+	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
 		Player.returnMainUI = true
 		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 		Player.LoadScene("FairyMainUI")
@@ -757,21 +759,21 @@ function ClickEvent.PlayerAvatarInfo( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
-	_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("BoundAccount"))
+	_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("BoundAccount"))
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 0 then
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
-			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
-			--_popPanel.panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
-			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
-			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			--_popPanel[popPanelIndex].panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
+			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
 			else
-				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
 			return
 		end
@@ -786,21 +788,21 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
-			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
-			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
-			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
 			else
-				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
 			return
 		end
@@ -815,21 +817,21 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 2 then
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
-			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
-			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
-			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
 			else
-				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
 			return
 		end
@@ -844,21 +846,21 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel.panel:RemoveChild(_popPanel.panel:GetChild("KickOutRoomButton"))
+		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 3 then
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel.panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
-			_popPanel.panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
-			_popPanel.panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
-			_popPanel.panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel.panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
+			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel.panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
 			else
-				_popPanel.panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
 			return
 		end
@@ -990,8 +992,12 @@ end
 function ClickEvent.Close( ... )
 	-- body
 	CS.UnityEngine.Debug.LogWarning("ClosePanel")
-	GRoot.inst:RemoveChild(_popPanel.panel)
-	GRoot.inst:RemoveChild(_popPanel.background)
+	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
+	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+	popPanelIndex = popPanelIndex - 1
+	if popPanelIndex < 0 then
+		popPanelIndex = 0
+	end
 end
 
 function ClickEvent.CreateRoomId( gameObject )
@@ -1003,17 +1009,17 @@ end
 function ClickEvent.ClassicMode( ... )
 	-- body
 	for i=1,7 do
-		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = false
+		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = false
 	end
-	_popPanel.panel:GetChild("Multiple8").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("Multiple8").selected = true
 end
 
 function ClickEvent.HighRiskMode( ... )
 	-- body
 	for i=1,7 do
-		_popPanel.panel:GetChild("ChooseFan0"..tostring(i)).selected = true
+		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
 	end
-	_popPanel.panel:GetChild("MultipleNolimit").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
 end
 
 function ClickEvent.CreateButton( )
@@ -1025,52 +1031,52 @@ function ClickEvent.CreateButton( )
 	local top_mutiple = nil
 	local open_rands = nil
 
-	if _popPanel.panel:GetChild("ClassicMode").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ClassicMode").selected then
 		model = "ROOM_MODEL_TYPE_CLASSICAL"
-	elseif _popPanel.panel:GetChild("HighRiskMode").selected then
+	elseif _popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected then
 		model = "ROOM_MODEL_TYPE_MULTIPLE"
 	end
 
-	if _popPanel.panel:GetChild("Multiple8").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("Multiple8").selected then
 		top_mutiple = 8
-	elseif _popPanel.panel:GetChild("Multiple32").selected then
+	elseif _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
 		top_mutiple = 32
-	elseif _popPanel.panel:GetChild("MultipleNolimit").selected then
+	elseif _popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected then
 		top_mutiple = 0
 	end
 
-	if _popPanel.panel:GetChild("Round4").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected then
 		open_rands = 4
-	elseif _popPanel.panel:GetChild("Round8").selected then
+	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
 		open_rands = 8
 	end
 
 	local extend_type_count = 1
-	if _popPanel.panel:GetChild("ChooseFan01").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan01").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_ZHANLIHU"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan02").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan02").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_JIAHU"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan03").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan03").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_XUANFENGGANG"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan04").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan04").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_BAOPAI"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan05").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_DUANMEN"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan06").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan06").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_QIYISE"
 		extend_type_count = extend_type_count + 1
 	end
-	if _popPanel.panel:GetChild("ChooseFan07").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan07").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_BAOSANJIA"
 		extend_type_count = extend_type_count + 1
 	end
@@ -1085,7 +1091,7 @@ end
 
 function ClickEvent.GetinButton( ... )
 	-- body
-	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
+	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	CS.UnityEngine.Debug.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	ClickEvent.Close()
@@ -1094,12 +1100,12 @@ end
 function ClickEvent.KeyBoardNumber(number)
 	-- body
 	if Player._roomId then
-		_popPanel.panel:GetChild("InputText").text = tostring(Player._roomId)
-		_popPanel.panel:GetChild("InputText").text = _popPanel.panel:GetChild("InputText").text..tostring(number)
+		_popPanel[popPanelIndex].panel:GetChild("InputText").text = tostring(Player._roomId)
+		_popPanel[popPanelIndex].panel:GetChild("InputText").text = _popPanel[popPanelIndex].panel:GetChild("InputText").text..tostring(number)
 	else
-		_popPanel.panel:GetChild("InputText").text = tostring(number)
+		_popPanel[popPanelIndex].panel:GetChild("InputText").text = tostring(number)
 	end
-	Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
+	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 end
 
 function ClickEvent.KeyBoardZero( ... )
@@ -1145,15 +1151,15 @@ end
 
 function ClickEvent.Clear( ... )
  	-- body
- 	_popPanel.panel:GetChild("InputText").text = ""
+ 	_popPanel[popPanelIndex].panel:GetChild("InputText").text = ""
  	Player._roomId = nil
 end
 function ClickEvent.BackSpaceButton( ... )
 	-- body
-	local tempStr = _popPanel.panel:GetChild("InputText").text
+	local tempStr = _popPanel[popPanelIndex].panel:GetChild("InputText").text
 	if tempStr then
-		_popPanel.panel:GetChild("InputText").text = string.sub(tempStr,1,-2)
-		Player._roomId = tonumber(_popPanel.panel:GetChild("InputText").text)
+		_popPanel[popPanelIndex].panel:GetChild("InputText").text = string.sub(tempStr,1,-2)
+		Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	end
 end
 --[[
@@ -1166,7 +1172,7 @@ end
 function ClickEvent.GameBackButton(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel.panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
 end
 
 function ClickEvent.GameTingButton(gameObject)
@@ -1295,19 +1301,19 @@ end
 
 function ClickEvent.registerButtonDown(gameObject)
 	-- body
-	_popPanel.background:GetChild("Di").visible  = false
-	--print(_popPanel.panel.name)
-	if _popPanel.panel.name == ClickEvent.panelTable._calculate_ui then
-		_popPanel.panel.visible = false
+	_popPanel[popPanelIndex].background:GetChild("Di").visible  = false
+	--print(_popPanel[popPanelIndex].panel.name)
+	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._calculate_ui then
+		_popPanel[popPanelIndex].panel.visible = false
 	end
 	
 end
 
 function ClickEvent.registerButtonUp(gameObject)
 	-- body
-	_popPanel.background:GetChild("Di").visible  = true
-	if _popPanel.panel.name == ClickEvent.panelTable._calculate_ui then
-		_popPanel.panel.visible = true
+	_popPanel[popPanelIndex].background:GetChild("Di").visible  = true
+	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._calculate_ui then
+		_popPanel[popPanelIndex].panel.visible = true
 	end
 end
 
