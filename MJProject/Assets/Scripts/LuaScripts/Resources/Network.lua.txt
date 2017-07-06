@@ -134,8 +134,7 @@ end
 function Network.OnConnect()
 	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     Player._connected = true
-    --Player.CmdCreatePlayer()
-    --Player.CmdEnterGame(347)
+    ClickEvent.Start(ClickEvent.panelTable._main_ui)
 end
 
 function Network.OnClose()

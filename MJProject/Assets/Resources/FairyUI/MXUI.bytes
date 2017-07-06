@@ -195,14 +195,13 @@
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>isedp5.xml|1493|<component size="1334,750" pivot="0.5,0.5">
+</component>isedp5.xml|1309|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <component id="n0_ised" name="n0" src="i0jkoe" xy="207,28" group="n14_lq2g"/>
     <image id="n1_ised" name="n1" src="isedp4" xy="254,151" size="848,490" group="n14_lq2g"/>
     <list id="n12_ised" name="NoteList" xy="270,173" size="813,449" group="n14_lq2g" overflow="scroll" defaultItem="ui://krtoytc1isedp7">
       <item/>
     </list>
-    <text id="n11_ised" name="Title" xy="307,52" size="252,73" group="n14_lq2g" fontSize="40" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="VIP战绩"/>
     <component id="n2_ised" name="Close" src="w61cj0" xy="1084,98" group="n13_ised"/>
     <group id="n13_ised" name="Btns" xy="1084,98" size="67,67" group="n14_lq2g" advanced="true"/>
     <image id="n15_r8qd" name="n15" src="r8qd4t9" xy="289,48" group="n14_lq2g"/>
@@ -1501,7 +1500,7 @@
     </image>
   </displayList>
   <Button mode="Check" downEffect="dark" downEffectValue="0.80"/>
-</component>uejtqv.xml|1860|<component size="1334,750" pivot="0.5,0.5">
+</component>uejtqv.xml|1691|<component size="1334,750" pivot="0.5,0.5">
   <controller name="c1" pages="0,,1," selected="0"/>
   <displayList>
     <component id="n6_i0jk" name="Bg" src="i0jkod" xy="54,58" group="n4_s5h9"/>
@@ -1510,7 +1509,6 @@
       <gearDisplay controller="c1" pages="1"/>
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <text id="n2_q2o3" name="Title" xy="170,92" size="233,61" group="n4_s5h9" fontSize="40" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="玩法说明"/>
     <component id="n12_uejt" name="n12" src="uejtqx" xy="408,204" group="n4_s5h9"/>
     <component id="n1_q2o3" name="Close" src="w61cj0" xy="1193,127" group="n13_t5ci"/>
     <component id="n11_uejt" name="HowToPlayButton" src="uejtqw" xy="106,201" group="n13_t5ci">
@@ -2865,11 +2863,10 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="16" type="Scale" target="n17_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="18" type="Scale" target="n14_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
   </transition>
-</component>w61cja.xml|2766|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cja.xml|2566|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <image id="n1_k35j" name="Bg" src="w61ccd" xy="389,63" size="553,642" group="n22_q2o3"/>
     <text id="n17_k35j" name="InputText" xy="544,194" size="315,53" group="n22_q2o3" input="true" prompt="请输入6位房间号" maxLength="6" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" text=""/>
-    <text id="n19_k35j" name="Title" xy="566,100" size="198,58" group="n22_q2o3" font="幼圆" fontSize="48" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="加入房间"/>
     <component id="n2_k35j" name="KeyBoardOne" src="w61cch" xy="415,260" group="n21_fb5y"/>
     <component id="n6_k35j" name="KeyBoardZero" src="w61cco" xy="580,494" group="n21_fb5y"/>
     <component id="n7_k35j" name="KeyBoardTwo" src="w61cci" xy="580,260" group="n21_fb5y"/>
@@ -2898,14 +2895,13 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|7982|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|7829|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <controller name="c1" pages="0,,1," selected="0"/>
   <displayList>
     <component id="n50_i0jk" name="Bg" src="i0jkoe" xy="195,43"/>
-    <text id="n3_k35j" name="Title" xy="318,69" size="213,75" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="开设房间"/>
     <image id="n6_nw08" name="n6" src="w61ce2" xy="471,185" size="574,62"/>
     <image id="n7_nw08" name="n7" src="w61ce2" xy="471,266" size="574,124"/>
     <image id="n8_nw08" name="n8" src="w61ce2" xy="471,410" size="574,62"/>
@@ -3152,7 +3148,7 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="1,1" endValue="0,0" duration="4"/>
   </transition>
-</component>w61cjd.xml|9020|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjd.xml|8867|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n58_i0jk" name="Bg" src="i0jkod" xy="62,57" group="n51_s5h9"/>
@@ -3213,7 +3209,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <image id="n31_algd" name="n31" src="w61cdm" xy="717,235" group="n51_s5h9">
       <gearDisplay controller="MallFunctionSelect" pages="2"/>
     </image>
-    <text id="n48_algd" name="Title" xy="239,92" size="105,54" group="n51_s5h9" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="商城"/>
     <component id="n2_algd" name="MallDouButton" src="w61cdo" xy="103,189" group="n49_fb5y">
       <Button checked="true" controller="MallFunctionSelect" page="0"/>
     </component>
@@ -3294,11 +3289,10 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cje.xml|3222|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cje.xml|3069|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n71_i0jk" name="MailBg" src="i0jkod" xy="64,59" group="n70_s5h9"/>
-    <text id="n48_algd" name="Title" xy="241,88" size="105,54" group="n70_s5h9" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="邮件"/>
     <image id="n49_ac8t" name="MailGeneralBg" src="w61ce2" xy="120,194" size="641,384" group="n70_s5h9"/>
     <image id="n53_ac8t" name="MailBodyBg" src="w61cix" xy="792,196" group="n70_s5h9"/>
     <image id="n55_ac8t" name="n55" src="w61cd2" xy="808,559" group="n70_s5h9"/>
@@ -3332,7 +3326,7 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjf.xml|2184|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cjf.xml|2003|<component size="1334,750" pivot="0.5,0.5">
   <controller name="c1" pages="0,,1," selected="0"/>
   <displayList>
     <component id="n6_i0jk" name="Bg" src="i0jkod" xy="54,58" group="n4_s5h9"/>
@@ -3341,7 +3335,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
       <gearDisplay controller="c1" pages="1"/>
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <text id="n2_q2o3" name="Title" xy="171,84" size="233,61" group="n4_s5h9" fontSize="40" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="游戏活动"/>
     <component id="n10_uejt" name="GameNoticeText" src="uejtqo" xy="406,205" group="n4_s5h9">
       <gearDisplay controller="c1" pages="0"/>
     </component>
@@ -3417,7 +3410,7 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cji.xml|3516|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cji.xml|3345|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <component id="n47_i0jk" name="Bg" src="i0jkoe" xy="198,34" group="n46_s5h9"/>
     <text id="n6_ac8t" name="Tdou" xy="451,342" size="118,38" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="欢乐豆:"/>
@@ -3431,7 +3424,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <text id="n31_ac8t" name="Trate" xy="789,435" size="120,38" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="胜率:"/>
     <text id="n32_ac8t" name="WinRate" xy="908,435" size="77,38" group="n46_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="none" text="99%"/>
     <image id="n49_tbm9" name="n49" src="w61ced" xy="268,390" size="801,7" group="n46_s5h9"/>
-    <text id="n41_w3hs" name="Title" xy="308,57" size="230,70" group="n46_s5h9" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="个人信息"/>
     <component id="n37_w3hs" name="ServiveTerm1" src="w61cai" xy="404,598" size="112,50" group="n43_fb5y"/>
     <component id="n45_jujv" name="PlayerInformation" src="w61cgl" xy="267,177" group="n43_fb5y"/>
     <component id="n38_w3hs" name="ServiveTerm2" src="w61caj" xy="590,598" size="137,50" group="n43_fb5y"/>
@@ -3452,7 +3444,7 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjj.xml|3493|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cjj.xml|3371|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <component id="n49_i0jk" name="Bg" src="i0jkoe" xy="195,16" group="n48_s5h9"/>
     <component id="n47_jujv" name="PlayerInformation" src="w61cgl" xy="280,169" group="n45_fb5y"/>
@@ -3462,7 +3454,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <component id="n42_w3hs" name="Close" src="w61cj0" xy="1076,84" group="n45_fb5y"/>
     <component id="n44_w3hs" name="KickOutRoomButton" src="w61can" xy="796,171" group="n45_fb5y"/>
     <group id="n45_fb5y" name="Btns" xy="280,84" size="863,552" group="n48_s5h9" advanced="true"/>
-    <text id="n50_i0jk" name="n50" xy="345,54" size="173,46" group="n48_s5h9" fontSize="42" color="#ffffff" text="个人信息"/>
     <text id="n51_uejt" name="Tdou" xy="469,316" size="118,38" group="n48_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="欢乐豆:"/>
     <text id="n52_uejt" name="DouNum" xy="589,316" size="153,38" group="n48_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="none" text="999999999"/>
     <text id="n53_uejt" name="Twinstreak" xy="262,440" size="161,38" group="n48_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="最高连胜:"/>
@@ -3513,16 +3504,16 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     <group id="n22_fb5y" name="Btns" xy="8,8" size="1325,717" advanced="true"/>
   </displayList>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n11_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n10_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
-    <item time="0" type="Scale" target="n11_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n20_w3hs" value="0,0"/>
     <item time="1" type="Scale" target="n10_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="2" type="Scale" target="n12_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="3" type="Scale" target="n20_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
   </transition>
-</component>w61cjm.xml|4515|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjm.xml|4344|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n17_i0jk" name="Bg" src="i0jkod" xy="70,53" group="n16_s5h9"/>
@@ -3531,7 +3522,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <item/>
     </list>
-    <text id="n11_l3ub" name="Title" xy="189,79" size="224,76" group="n16_s5h9" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="战绩记录"/>
     <component id="n13_l3ub" name="InstructionText" src="w61ces" xy="326,132" group="n16_s5h9">
       <gearDisplay controller="HistorySecenSelect" pages="2"/>
     </component>
@@ -3595,7 +3585,7 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
   </transition>
 </component>w61cjn.xml|57|<component size="1334,750">
   <displayList/>
-</component>w61cjo.xml|1401|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjo.xml|1260|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <component id="n8_i0jk" name="Bg" src="i0jkof" xy="274,177" group="n7_s5h9"/>
     <list id="n4_qb9a" name="AvatarList" xy="317,293" size="692,213" group="n7_s5h9" layout="flow_hz" lineGap="6" colGap="14" defaultItem="ui://krtoytc1w61cis">
@@ -3612,7 +3602,6 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
       <item icon="ui://krtoytc1nnbzkg"/>
       <item icon="ui://krtoytc1nnbzki"/>
     </list>
-    <text id="n5_qb9a" name="Title" xy="403,212" size="206,54" group="n7_s5h9" fontSize="50" color="#ffffff" autoSize="height" text="选择头像"/>
     <component id="n2_qb9a" name="Close" src="w61cj0" xy="992,240" group="n9_v7wh"/>
     <group id="n9_v7wh" name="Btns" xy="992,240" size="67,67" group="n7_s5h9" advanced="true"/>
     <group id="n7_s5h9" name="ChooseAvatar" xy="274,177" size="785,368" advanced="true">
@@ -3620,10 +3609,9 @@ v7wh4sh.xml|639|<component size="190,94" opaque="false">
     </group>
     <image id="n10_r8qd" name="n10" src="r8qd4sw" xy="355,197"/>
   </displayList>
-</component>w61cjp.xml|2730|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjp.xml|2607|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <component id="n28_i0jk" name="Bg" src="i0jkoe" xy="203,38" group="n27_s5h9"/>
-    <text id="n4_qb9a" name="Title" xy="336,72" size="205,54" group="n27_s5h9" fontSize="50" color="#ffffff" text="游戏设置"/>
     <text id="n5_qb9a" name="Tmusic" xy="330,399" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="音乐"/>
     <text id="n6_qb9a" name="Teffect" xy="330,485" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="音效"/>
     <text id="n7_qb9a" name="Tgamevoice" xy="716,398" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="语音"/>

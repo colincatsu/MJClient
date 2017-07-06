@@ -1,5 +1,5 @@
 
-˜g
+…g
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -39,7 +39,7 @@ GameRecord2
 fan_type (2.Adoter.Asset.FAN_TYPE"F
 RoomHistory
 room_id (&
-list (2.Adoter.Asset.GameRecord"æ
+list (2.Adoter.Asset.GameRecord"µ
 
 CommonProp
 	player_id (
@@ -55,8 +55,7 @@ CommonProp
  (
 total_win_rounds (
 streak_wins (
-score (/
-room_history (2.Adoter.Asset.RoomHistory"•
+score ("•
 PlayerCommonLimit9
 elements (2'.Adoter.Asset.PlayerCommonLimit.ElementE
 Element
@@ -81,7 +80,7 @@ phone_type ("Ã
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"á
+attachments (2.Adoter.Asset.MailAttachment"ÿ
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -96,8 +95,8 @@ login_time (
 mail_list_system
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
-game_setting (2.Adoter.Asset.PlayerSetting
-	room_list ("¨
+game_setting (2.Adoter.Asset.PlayerSetting/
+room_history (2.Adoter.Asset.RoomHistory"¨
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4

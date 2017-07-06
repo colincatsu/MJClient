@@ -46,8 +46,10 @@ local notPushPassMsg = false
 local _currentPanel = {}
 local _popPanel = {}
 local popPanelIndex = 0
+local popBgIndex = 0
 local Camera = CS.UnityEngine.Camera
 local LogWarning = CS.UnityEngine.Debug.LogWarning
+local WeChatPlatform = CS.Platform.Instance
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -60,8 +62,10 @@ function ClickEvent.Awake( ... )
 end
 function ClickEvent.Start(loadUI)
 	-- body
-	ClickEvent.uiPanel.ui.visible = false
-	ClickEvent.CreateNewPanel(loadUI)
+	if ClickEvent.uiPanel.ui.visible then
+		ClickEvent.uiPanel.ui.visible = false
+		ClickEvent.CreateNewPanel(loadUI)
+	end
 end
 
 function ClickEvent.DeletePanel(deletePanel)
@@ -177,7 +181,11 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.playerAvatarInfo:AddChild(x)
 		--]]
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
-		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+			_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player.wechat_nickname
+		else
+			_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+		end
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
 		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
@@ -455,17 +463,22 @@ end
 
 function ClickEvent.PopPanel( panelName )
 	-- body
-	local addEffect = false
 	if not ClickEvent._createObject["Bg"] then
-		ClickEvent._createObject["Bg"] = UIPackage.CreateObject("MXUI", "Bg").asCom
-		addEffect = true
+		ClickEvent._createObject["Bg"] = {}
+	end
+	if popBgIndex <= 0 or not ClickEvent._createObject["Bg"][popBgIndex] or ClickEvent._createObject["Bg"][popBgIndex].visible then
+		popBgIndex = popBgIndex + 1
+		if not ClickEvent._createObject["Bg"][popBgIndex] then
+			ClickEvent._createObject["Bg"][popBgIndex] = UIPackage.CreateObject("MXUI", "Bg").asCom
+		end
 	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
 	end
-	ClickEvent.Close()
+	--ClickEvent.Close()
 	popPanelIndex = popPanelIndex + 1
-	_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"]
+	_popPanel[popPanelIndex] = {}
+	_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"][popBgIndex]
 	_popPanel[popPanelIndex].background:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel[popPanelIndex].background:Center()
 	_popPanel[popPanelIndex].background:SetPosition(0,0,0)
@@ -719,7 +732,11 @@ end
 function ClickEvent.Avatar( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
-	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
+	else
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+	end
 	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
 	_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
@@ -905,6 +922,33 @@ function ClickEvent.GuestLogin( gameObject )
 	CS.UnityEngine.Debug.LogWarning("ClickEvent.GuestLogin")
 end
 
+function ClickEvent.WechatLogin(gameObject)
+	-- body
+	CS.UnityEngine.Debug.LogWarning("ClickEvent.WechatLogin")
+	Player._string_id = WeChatPlatform:GetData("getOpenID")
+	CS.UnityEngine.Debug.LogWarning(Player._string_id)
+	if not Player._string_id or Player._string_id == "" then
+		WeChatPlatform:LoginWeChat()
+	else
+		Player.wechat_nickname = WeChatPlatform:GetData("getNickName")
+		Player.wechat_sex = WeChatPlatform:GetData("getUserSex")
+		Player.wechat_headimgurl = WeChatPlatform:GetData("getImageUrl")
+		Player.CmdLogin(Player._string_id)
+		CS.UnityEngine.Debug.LogWarning("WeChatLogin")
+	end
+	--WeChatPlatform.func = ClickEvent.OnReceivedWeChatMsg
+end
+
+function ClickEvent.OnReceivedWeChatMsg(nickname, sex, headimgurl)
+	-- body
+	Player.wechat_nickname = nickname
+	Player.wechat_sex = sex
+	Player.wechat_headimgurl = headimgurl
+	print(Player.wechat_nickname)
+	print(player.wechat_sex)
+	print(player.wechat_headimgurl)
+end
+
 function ClickEvent.ThreadToMainMenu( ... )
 	-- body
 	ClickEvent.DeletePanel(_currentPanel.panel)
@@ -994,9 +1038,13 @@ function ClickEvent.Close( ... )
 	CS.UnityEngine.Debug.LogWarning("ClosePanel")
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+	popBgIndex = popBgIndex - 1
 	popPanelIndex = popPanelIndex - 1
 	if popPanelIndex < 0 then
 		popPanelIndex = 0
+	end
+	if popBgIndex < 0 then
+		popBgIndex = 0
 	end
 end
 
@@ -1302,7 +1350,6 @@ end
 function ClickEvent.registerButtonDown(gameObject)
 	-- body
 	_popPanel[popPanelIndex].background:GetChild("Di").visible  = false
-	--print(_popPanel[popPanelIndex].panel.name)
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._calculate_ui then
 		_popPanel[popPanelIndex].panel.visible = false
 	end

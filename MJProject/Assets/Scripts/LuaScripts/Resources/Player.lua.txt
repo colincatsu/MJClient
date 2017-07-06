@@ -49,6 +49,9 @@ local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
 Player.huPaiPosition = 0
+Player.wechat_nickname = ""
+Player.wechat_sex = ""
+Player.wechat_headimgurl = ""
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -198,7 +201,13 @@ end
 ---------------------------------------------------------------------------
 function Player.LoadScene(senceName, buffer)
     for k,v in pairs(ClickEvent._createObject) do
-        v:Dispose()
+        if type(v) == "table" then
+            for j,c in pairs(v) do
+                c:Dispose()
+            end
+        else
+            v:Dispose()
+        end
     end
     Player._tosence_name = senceName
     if senceName == "PlaySence" then
@@ -480,6 +489,9 @@ function Player.OnPlayerList(type_t,stuff)
     if message.player_list then
         Player._id = message.player_list[1]
         LogWarning(Player._id)
+    end
+    if Player._id and Player_id ~= "" then
+        Player.CmdEnterGame(Player._id)
     end
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
