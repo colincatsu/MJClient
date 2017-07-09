@@ -1,5 +1,5 @@
 
-…g
+ãg
 P_Protocol.protoAdoter.AssetP_Asset.proto"-
 Account
 username (
@@ -36,10 +36,11 @@ GameRecord2
 details (22.Adoter.Asset.GameRecord.GameElement.DetailElementH
 DetailElement
 score ((
-fan_type (2.Adoter.Asset.FAN_TYPE"F
+fan_type (2.Adoter.Asset.FAN_TYPE"[
 RoomHistory
-room_id (&
-list (2.Adoter.Asset.GameRecord"µ
+room_id (
+create_time (&
+list (2.Adoter.Asset.GameRecord"µ
 
 CommonProp
 	player_id (
@@ -329,10 +330,11 @@ out_reason (2.Adoter.Asset.KILL_OUT_REASON"È
 HUANLEDOU_CHANGED_TYPE
 HUANLEDOU_CHANGED_TYPE_GMT
 HUANLEDOU_CHANGED_TYPE_MALL)
-%HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD*Y
+%HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD*
 ROOM_CARD_CHANGED_TYPE
 ROOM_CARD_CHANGED_TYPE_GMT
-ROOM_CARD_CHANGED_TYPE_MALL*‰
+ROOM_CARD_CHANGED_TYPE_MALL$
+ ROOM_CARD_CHANGED_TYPE_OPEN_ROOM*‰
 POSITION_TYPE
 POSITION_TYPE_NULL 
 POSITION_TYPE_EAST
@@ -349,7 +351,7 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*×
+ERROR_SHOW_TYPE_CHAT*ú
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -374,7 +376,8 @@ ERROR_CODE
 ERROR_ROOM_BEANS_MIN_LIMIT
 ERROR_ROOM_BEANS_MAX_LIMIT
 ERROR_ROOM_TYPE_NOT_FOUND
-ERROR_ROOM_HAS_BEEN_IN
+ERROR_ROOM_HAS_BEEN_IN!
+ERROR_ROOM_GUEST_FORBID_ENTER
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2

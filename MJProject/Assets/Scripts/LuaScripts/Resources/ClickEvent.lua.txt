@@ -24,6 +24,8 @@ ClickEvent.panelTable = {
 	_exit_game_ui = "ExitGamePop",
 	_instruction_ui = "HowToPlay",
 	_welfare_ui = "WelfareScene",
+	_activity_ui = "Activity",
+	_toast_ui = "Toast",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -51,6 +53,12 @@ local Camera = CS.UnityEngine.Camera
 local LogWarning = CS.UnityEngine.Debug.LogWarning
 local WeChatPlatform = CS.Platform.Instance
 
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    ClickEvent.self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
+
 function ClickEvent.Awake( ... )
 	-- body
 	UIConfig.defaultFont = "MJFont"
@@ -66,6 +74,18 @@ function ClickEvent.Start(loadUI)
 		ClickEvent.uiPanel.ui.visible = false
 		ClickEvent.CreateNewPanel(loadUI)
 	end
+end
+
+function ClickEvent.WeChatGetMessage()
+    -- body
+    local code = WeChatPlatform:GetData("getWXCode")
+    local token = WeChatPlatform:GetData("getToken")
+    if code and code ~= "" then
+        WeChatPlatform:GetWeChatMethod("getAccess_token")
+        return
+    else
+    	return
+    end
 end
 
 function ClickEvent.DeletePanel(deletePanel)
@@ -193,7 +213,17 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
 		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
 		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
-		ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang02")
+		if not CS.Platform.myWXPic then
+			if WeChatPlatform:GetData("getImageUrl") ~= "" then
+				WeChatPlatform:SetAsyncImage(WeChatPlatform:GetData("getImageUrl"))
+				ClickEvent._play_ui.avatarLoader.url = ""
+			end
+		end
+		if CS.Platform.myWXPic then
+			LogWarning("image is not nil")
+			ClickEvent._play_ui.avatarLoader.url = ""
+			ClickEvent._play_ui.avatarLoader.texture = NTexture(CS.Platform.myWXPic)
+		end
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
@@ -327,7 +357,11 @@ function ClickEvent.RoomInformationUpdate( ... )
 		else
 			ClickEvent._play_ui.playerAvatarInfo.visible = true
 			ClickEvent._play_ui.playerAvatarInfo:GetChild("PlayerLineState").visible = false
-			_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+			if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+				_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = Player.wechat_nickname
+			else
+				_currentPanel.panel:GetChild("PlayerAvatarInfo"):GetChild("DouNum").text = v.common_prop.name
+			end
 		end
 	end
 end
@@ -454,6 +488,17 @@ function ClickEvent.PaiOperationState()
 		ClickEvent.AddOperationButton("GameTingButton")
     end
     Player.MahJong.SetStateTable({})
+end
+
+function ClickEvent.ShowToast(content)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
+	_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
+	local co = coroutine.create(function()
+    yield_return(CS.UnityEngine.WaitForSeconds(3))
+    ClickEvent.Close()
+	end)
+	coroutine.resume(co)
 end
 
 function ClickEvent.ShowChiButton()
@@ -684,16 +729,37 @@ end
 function ClickEvent.VIPRecordButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._vip_note_ui)
-	for i=0,_popPanel[popPanelIndex].panel:GetChild("NoteList").numChildren-1 do
-		local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):GetChildAt(i)
+	_popPanel[popPanelIndex].panel:GetChild("NoteList"):RemoveChildrenToPool()
+	for k,v in pairs(Player._player_data.room_history) do
+		local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
 		obj.name = "VipNoteList"
 		obj.onClick:Add(ClickEvent.registerButtonClick)
+		local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
+		local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
+		obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
+		obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
+		for j,c in pairs(v.list) do
+			if c.player_id == Player._player_data.common_prop.player_id then
+				obj:GetChild("WinLoseNum").text = tostring(c.score)
+			end
+		end
 	end
+end
+
+function ClickEvent.ChangeSecondToDate(t)
+	-- body
+	return os.date("%Y%m%d",t)
+end
+
+function ClickEvent.ChangeSecondToTime(t)
+	-- body
+	return os.date("%H%M",t)
 end
 
 function ClickEvent.Promotion( ... )
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_big)
+	ClickEvent.PopPanel(ClickEvent.panelTable._activity_ui)
+	_popPanel[popPanelIndex].panel:GetChild("UnlimitedRoomCardButton").visible = false
 end
 
 function ClickEvent.Welfare( ... )
@@ -781,7 +847,11 @@ function ClickEvent.PlayerAvatarInfo( ... )
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 0 then
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
+			else
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			end
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			--_popPanel[popPanelIndex].panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
@@ -926,13 +996,14 @@ function ClickEvent.WechatLogin(gameObject)
 	-- body
 	CS.UnityEngine.Debug.LogWarning("ClickEvent.WechatLogin")
 	Player._string_id = WeChatPlatform:GetData("getOpenID")
+	Player.wechat_nickname = WeChatPlatform:GetData("getNickName")
 	CS.UnityEngine.Debug.LogWarning(Player._string_id)
-	if not Player._string_id or Player._string_id == "" then
+	if not Player.wechat_nickname or Player.wechat_nickname == "" then
 		WeChatPlatform:LoginWeChat()
 	else
-		Player.wechat_nickname = WeChatPlatform:GetData("getNickName")
 		Player.wechat_sex = WeChatPlatform:GetData("getUserSex")
 		Player.wechat_headimgurl = WeChatPlatform:GetData("getImageUrl")
+		WeChatPlatform:SetAsyncImage(WeChatPlatform:GetData("getImageUrl"))
 		Player.CmdLogin(Player._string_id)
 		CS.UnityEngine.Debug.LogWarning("WeChatLogin")
 	end
@@ -1036,6 +1107,9 @@ end
 function ClickEvent.Close( ... )
 	-- body
 	CS.UnityEngine.Debug.LogWarning("ClosePanel")
+	if popPanelIndex <= 0 then
+		return
+	end
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
 	popBgIndex = popBgIndex - 1
@@ -1129,6 +1203,7 @@ function ClickEvent.CreateButton( )
 		extend_type_count = extend_type_count + 1
 	end
 	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
+	Player.isFriendRoom = true
 	ClickEvent.Close()
 end
 
@@ -1142,6 +1217,7 @@ function ClickEvent.GetinButton( ... )
 	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	CS.UnityEngine.Debug.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
+	Player.isFriendRoom = true
 	ClickEvent.Close()
 end
 --数字
@@ -1216,6 +1292,24 @@ end
 -------------------------------------
 ---游戏中
 ---------------------------
+
+function ClickEvent.GameListenButton(gameObject)
+	-- body
+	if _currentPanel.panel:GetChild("GameListenButton").selected then
+		WeChatPlatform.m_voiceengine:CloseSpeaker()
+	else
+		WeChatPlatform.m_voiceengine:OpenSpeaker()
+	end
+end
+
+function ClickEvent.GameVoiceButton(gameObject)
+	-- body
+	if _currentPanel.panel:GetChild("GameVoiceButton").selected then
+		WeChatPlatform.m_voiceengine:CloseMic()
+	else
+		WeChatPlatform.m_voiceengine:OpenMic()
+	end
+end
 
 function ClickEvent.GameBackButton(gameObject)
 	-- body

@@ -2,9 +2,9 @@ LoadingCT = {}
 local Enum = require "Enum"
 local FairyGUI = require "FairyGUI"
 local ClickEvent = require "ClickEvent"
+ClickEvent.self = self
 local AssetManager = require "AssetManager"
 local util = require "xlua.util"
-
 local _main_ui_sence = "FairyMainUI"
 local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
@@ -28,6 +28,9 @@ function start()
 	--UIConfig.defaultFont = "MJFont"
 	if CS.LuaCommon.isAndroid then
 		LoadingCT.CopyAndroidRes()
+	end
+	if not _copyed and CS.LuaCommon.isAndroid then
+		return
 	end
 	if Player and Player._tosence_name then
 		LoadingCT.ToSence(Player._tosence_name)
@@ -68,6 +71,7 @@ function LoadingCT.CopyAndroidRes()
 			else
 				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
 			end
+			LoadingCT.ToSence(_main_ui_sence)
 		else
 			CS.UnityEngine.Debug.LogWarning("path error")
 		end

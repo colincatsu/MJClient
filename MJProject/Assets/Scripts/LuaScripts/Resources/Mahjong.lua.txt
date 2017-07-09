@@ -1,13 +1,14 @@
 MahJong = {}
 local Enum = require "Enum"
 local Player = require "Player"
+Player.self = self
 local ClickEvent = require "ClickEvent"
+ClickEvent.self = self
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
 local protobuf = require "protobuf"
 local FairyGUI = require "FairyGUI"
-Player.self = self
 local Effect = require "Effect"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
@@ -113,6 +114,7 @@ local _room_number = nil
 -- body
 ClickEvent.MahJong = MahJong
 Player.MahJong = MahJong
+local GVoicePlatform = CS.Platform.Instance
 
 local _hand_cards = {}--分张
 
@@ -134,6 +136,14 @@ function start()
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	if Player.isFriendRoom then
+		GVoicePlatform:InitGVoice("1762572828","564a544493684e9ed39179f4c26d35a7",tostring(Player._player_data.common_prop.player_id))
+		GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
+		GVoicePlatform:SetCallBack(MahJong.OnJoinRoomComplete,MahJong.OnQuitRoomComplete,MahJong.OnMemberVoice)
+		GVoicePlatform.m_voiceengine:JoinTeamRoom(tostring(Player._roomId),15000)
+	else
+		--hideVoiceButton
+	end
 	--[[
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,nil,Effect.currentDapaiPointOffset)
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
@@ -175,6 +185,20 @@ function start()
 	}
 	MahJong.LiuJuPai(paisData)
 	--]]
+end
+
+function MahJong.OnJoinRoomComplete(code,roomName, memberID)
+	-- body
+	GVoicePlatform.m_voiceengine:OpenMic()
+	GVoicePlatform.m_voiceengine:OpenSpeaker()
+end
+
+function MahJong.OnQuitRoomComplete(code,roomName, memberID)
+	-- body
+end
+
+function MahJong.OnMemberVoice(code,roomName, memberID)
+	-- body
 end
 
 function MahJong.SetModelPoolFrontPointer( pointer )
@@ -2017,22 +2041,27 @@ function MahJong.TingPai(message)
 		CS.UnityEngine.Debug.LogWarning("no tingPai cache")
 		return
 	end
+	local tempPosition = newVector3.zero
 	local whichPlayer = ClickEvent.PlayerPosition(operationPaiShowData.position)
 	if whichPlayer == 0 then
 		ClickEvent._play_ui.playerTing.visible = true
+		tempPosition = Effect.playerPosition
 	elseif whichPlayer == 1 then
+		tempPosition = Effect.nextPosition
 		ClickEvent._play_ui.behindPlayerTing.visible = true
 		_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
 	elseif whichPlayer == 2 then
+		tempPosition = Effect.oppositePosition
 		ClickEvent._play_ui.oppositePlayerTing.visible = true
 		_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
 	elseif whichPlayer == 3 then
+		tempPosition = Effect.forwardPosition
 		ClickEvent._play_ui.frontPlayerTing.visible = true
 		_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
 	else
 		CS.UnityEngine.Debug.LogWarning("position nil")
 	end
-	Effect.AddNormalEffect(Effect._effect_name.tingShow,nil,nil,whichPlayer)
+	Effect.AddNormalEffect(Effect._effect_name.tingShow,nil,nil,tempPosition,2)
 end
 
 function MahJong.SortPlayerPai(deleteNumber)
@@ -2158,6 +2187,16 @@ end
 
 function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	-- body
+	local tempPosition = newVector3.zero
+	if Player.huPaiPosition == 0 then
+		tempPosition = Effect.playerPosition
+	elseif Player.huPaiPosition  == 1 then
+		tempPosition = Effect.nextPosition
+	elseif Player.huPaiPosition  == 2 then
+		tempPosition = Effect.oppositePosition
+	elseif Player.huPaiPosition  == 3 then
+		tempPosition = Effect.forwardPosition
+	end
 	if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
         if Player.huPaiPosition == 0 then
         	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
@@ -2215,7 +2254,7 @@ function MahJong.OperationPaiShow(message)
 	local deleteOtheCount = 3
 
 	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
-	local tempPosition = 0
+	local tempPosition = newVector3.zero
 	if playerPos == 0 then
 		tempPosition = Effect.playerPosition
 	elseif playerPos  == 1 then

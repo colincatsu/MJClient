@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using FairyGUI;
+using gcloud_voice;
 public class LuaEnvSingleton
 {
 
@@ -122,8 +123,12 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(RelationType),
                 typeof(UIConfig),
                 typeof(GoWrapper),
+                typeof(NTexture),
                 typeof(WaitForSeconds),
                 typeof(WWW),
+                typeof(IGCloudVoice),
+                typeof(GCloudVoice),
+                typeof(GCloudVoiceMode),
             };
         }
     }
@@ -135,6 +140,9 @@ public class TestCaseGenConfig : XLua.GenConfig
         {
             return new List<Type>()
             {
+                typeof(IGCloudVoice.JoinRoomCompleteHandler),
+                typeof(IGCloudVoice.QuitRoomCompleteHandler),
+                typeof(IGCloudVoice.MemberVoiceHandler),
                 typeof(EventCallback1),
                 typeof(EventCallback0),
                 typeof(TransitionHook),

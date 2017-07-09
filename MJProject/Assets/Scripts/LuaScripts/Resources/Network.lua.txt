@@ -135,6 +135,7 @@ function Network.OnConnect()
 	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     Player._connected = true
     ClickEvent.Start(ClickEvent.panelTable._main_ui)
+    ClickEvent.WeChatGetMessage()
 end
 
 function Network.OnClose()

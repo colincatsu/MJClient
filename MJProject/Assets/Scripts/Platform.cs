@@ -4,11 +4,13 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using XLua;
+using gcloud_voice;
 
 [LuaCallCSharp]
 public class Platform : MonoBehaviour {
     private static Platform _instance;
-    public Texture2D myWXPic;
+    public static Texture myWXPic;
+    public IGCloudVoice m_voiceengine = null;
     public static Platform Instance
     {
         get
@@ -50,6 +52,8 @@ public class Platform : MonoBehaviour {
 
     void Init()
     {
+        if (!LuaCommon.isAndroid)
+            return;
         Debug.Log("**************Platform Unity Init:" + Debug.isDebugBuild);
         if (Debug.isDebugBuild)
         {
@@ -68,12 +72,32 @@ public class Platform : MonoBehaviour {
         }
         myWXPic = null;
     }
+
+    public void InitGVoice(string appID, string appKey, string openID)
+    {
+        if (m_voiceengine == null)
+        {
+            m_voiceengine = GCloudVoice.GetEngine();
+            m_voiceengine.SetAppInfo(appID, appKey, openID);
+            m_voiceengine.Init();
+        }
+    }
+    [LuaCallCSharp]
+    public void SetCallBack(IGCloudVoice.JoinRoomCompleteHandler OnJoinRoomComplete, IGCloudVoice.QuitRoomCompleteHandler OnQuitRoomComplete, IGCloudVoice.MemberVoiceHandler OnMemberVoice)
+    {
+        if(m_voiceengine != null)
+        {
+            m_voiceengine.OnJoinRoomComplete += OnJoinRoomComplete;
+            m_voiceengine.OnQuitRoomComplete += OnQuitRoomComplete;
+            m_voiceengine.OnMemberVoice += OnMemberVoice;
+        }
+    }
+
     public void SetAsyncImage(string url)
     {
         //开始下载图片前，将UITexture的主图片设置为占位图  
         if (myWXPic != null)
         {
-            image.sprite = myWXPic;
             return;
         }
 
@@ -100,7 +124,7 @@ public class Platform : MonoBehaviour {
         byte[] pngData = tex2d.EncodeToPNG();                         //将材质压缩成byte流  
         File.WriteAllBytes(path + url.GetHashCode(), pngData);        //然后保存到本地  
 
-        myWXPic = tex2d;
+        myWXPic = (Texture)tex2d;
     }
 
     IEnumerator LoadLocalImage(string url)
@@ -112,7 +136,7 @@ public class Platform : MonoBehaviour {
         yield return www;
 
         Texture2D texture = www.texture;
-        myWXPic = texture;
+        myWXPic = (Texture)texture;
     }
 
     public string path
@@ -122,6 +146,14 @@ public class Platform : MonoBehaviour {
             //pc,ios //android :jar:file//  
             return Application.persistentDataPath + "/ImageCache/";
 
+        }
+    }
+
+    public void GetWeChatMethod(string methodName)
+    {
+        if(currentActivity != null)
+        {
+            currentActivity.Call(methodName);
         }
     }
 
@@ -166,6 +198,32 @@ public class Platform : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        if (m_voiceengine != null)
+        {
+            m_voiceengine.Poll();
+        }
+    }
+
+    public void OnApplicationPause(bool pauseStatus)
+    {
+        Debug.Log("Voice OnApplicationPause: " + pauseStatus);
+        if (pauseStatus)
+        {
+            if (m_voiceengine == null)
+            {
+                return;
+            }
+            m_voiceengine.Pause();
+            //s_strLog += "\r\n pause:"+ret;
+        }
+        else
+        {
+            if (m_voiceengine == null)
+            {
+                return;
+            }
+            m_voiceengine.Resume();
+            //s_strLog += "\r\n resume:"+ret;
+        }
+    }
 }

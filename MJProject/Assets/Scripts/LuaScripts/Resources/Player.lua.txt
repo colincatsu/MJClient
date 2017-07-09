@@ -52,6 +52,9 @@ Player.huPaiPosition = 0
 Player.wechat_nickname = ""
 Player.wechat_sex = ""
 Player.wechat_headimgurl = ""
+local WeChatPlatform = CS.Platform.Instance
+Player.isFriendRoom = false
+
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -404,7 +407,7 @@ function Player.OnGameCalculate(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
     --Player.ThreadFunction()
-    MahJong.OnRoundEndShowEffect(Player._calculate_data)
+    Player.MahJong.OnRoundEndShowEffect(Player._calculate_data)
 end
 
 function Player.OnSyncCommonReward(type_t,stuff)
@@ -425,7 +428,7 @@ function Player.OnRoomInformation(type_t,stuff)
         Player._all_players_data = message.player_list
         if not Player._my_player_data then
             for k,v in pairs(Player._all_players_data) do
-                if v.common_prop.player_id == this._id then
+                if v.common_prop.player_id == Player._player_data.common_prop.player_id then
                     Player._my_player_data = v
                     --Player.ThreadFunction(
                     Player.MahJong.UpdateMyDataState()
@@ -858,9 +861,8 @@ function Player.OnAlertMessage(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
-    LogWarning(message.error_type)
-    LogWarning(message.error_show_type)
-    LogWarning(message.error_code)
+    
+    ClickEvent.ShowToast(message.error_code)
 end
 ---------------------------------------------------------------------------
 --通用操作返回协议，模拟RPC处理流程
