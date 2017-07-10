@@ -1035,7 +1035,7 @@ end
 
 function ClickEvent.Back( ... )
 	-- body
-	if not ClickEvent.isInDouRoom then
+	if not ClickEvent.isInDouRoom and _currentPanel.panel.name == ClickEvent.panelTable._choose_ui then
 		_currentPanel.panel:GetTransition("ShowFriendMode"):Stop(true,false)
 		ClickEvent.DeletePanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
