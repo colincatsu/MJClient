@@ -830,6 +830,7 @@ function ClickEvent.YesButton( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
 		Player.returnMainUI = true
+		Player.MahJong.QuitVoiceRoom()
 		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 		Player.LoadScene("FairyMainUI")
 	end

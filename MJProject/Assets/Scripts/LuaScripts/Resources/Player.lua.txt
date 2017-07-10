@@ -54,6 +54,7 @@ Player.wechat_sex = ""
 Player.wechat_headimgurl = ""
 local WeChatPlatform = CS.Platform.Instance
 Player.isFriendRoom = false
+Player.voiceRoomName = ""
 
 
 function Player.GetinvokeFunctionCache()
@@ -426,7 +427,7 @@ function Player.OnRoomInformation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.RoomInformation",stuff)
     if message.player_list then
         Player._all_players_data = message.player_list
-        if not Player._my_player_data then
+        --if not Player._my_player_data then
             for k,v in pairs(Player._all_players_data) do
                 if v.common_prop.player_id == Player._player_data.common_prop.player_id then
                     Player._my_player_data = v
@@ -434,7 +435,7 @@ function Player.OnRoomInformation(type_t,stuff)
                     Player.MahJong.UpdateMyDataState()
                 end
             end
-        end
+        --end
         if Player._my_player_data then
             --Player.ThreadFunction(
             ClickEvent.RoomInformationUpdate()
@@ -464,6 +465,12 @@ function Player.OnPlayerInformation(type_t,stuff)
     if Player._tosence_name ~= "PlaySence" then
         ClickEvent.ThreadToMainMenu()
     end
+end
+
+function Player.OnJoinRoomComplete(code,roomName, memberID)
+    -- body
+    WeChatPlatform.m_voiceengine:OpenMic()
+    WeChatPlatform.m_voiceengine:OpenSpeaker()
 end
 
 function Player.OnEnterRoom(type_t,stuff)

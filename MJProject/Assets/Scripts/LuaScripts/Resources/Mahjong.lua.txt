@@ -189,6 +189,7 @@ end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
 	-- body
+	Player.voiceRoomName = roomName
 	GVoicePlatform.m_voiceengine:OpenMic()
 	GVoicePlatform.m_voiceengine:OpenSpeaker()
 end
@@ -199,6 +200,11 @@ end
 
 function MahJong.OnMemberVoice(code,roomName, memberID)
 	-- body
+end
+
+function MahJong.QuitVoiceRoom()
+	-- body
+	GVoicePlatform.m_voiceengine:QuitRoom(Player.voiceRoomName,15000)
 end
 
 function MahJong.SetModelPoolFrontPointer( pointer )
