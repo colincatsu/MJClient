@@ -612,6 +612,7 @@ function Player.OnPaiNotify(type_t,stuff)
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
         ClickEvent.CloseAlready()
+        Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         Player.MahJong.ModelPoolDelete(1)
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then

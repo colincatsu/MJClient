@@ -1065,6 +1065,13 @@ function MahJong.CreatePlayerModelTest( modelName,paiNumber,paiType,paiValue )
 	end
 end
 
+function MahJong.PlayerPaiSetActive(active)
+	-- body
+	for k,v in pairs(_player_father.cards) do
+		v.parent:SetActive(active)
+	end
+end
+
 function MahJong.CreatePlayerPai()
 	-- body
 	if not _player_father then
@@ -1097,6 +1104,7 @@ function MahJong.CreatePlayerPai()
     end
 	MahJong.SortPlayerPai()
 	MahJong.OtherPlayerPaiInit()
+	MahJong.PlayerPaiSetActive(false)
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 end
 
@@ -1288,6 +1296,7 @@ function MahJong.DaPai(paiNumber)
 		MahJong.SortZhuaPai()
 		MahJong.SortPlayerPai()
 		AudioPlayer.PlaySound(AudioPlayer._audio_name.SortPai,false,1)
+		MahJong._current_click_pai = nil
 	end
 	currentOperationState = operationState.WAIT
 end
@@ -1442,6 +1451,7 @@ function MahJong.PengPai(paiTable)
 			end
 		end
 	end
+	MahJong._current_click_pai = nil
 	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},tempPai)
 	MahJong.DeleteShowModel()
 	currentOperationState = operationState.DAPAI
@@ -1586,6 +1596,7 @@ function MahJong.ChiPai(paiTable)
 			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
 			_player_father.cards[paiNumber] = {}
 			MahJong.SortPlayerPai(paiNumber)
+			MahJong._current_click_pai = nil
 		end
 	end
 	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,operationPai)
@@ -1819,6 +1830,7 @@ function MahJong.XuanFengGang( ... )
 				MahJong._current_click_pai = nil
 			end
 			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+			MahJong._current_click_pai = nil
 			_player_father.cards[paiNumber] = {}
 			MahJong.SortPlayerPai(paiNumber)
 		end
@@ -1842,6 +1854,7 @@ function MahJong.XuanFengGang( ... )
 				MahJong._current_click_pai = nil
 			end
 			CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+			MahJong._current_click_pai = nil
 			_player_father.cards[paiNumber] = {}
 			MahJong.SortPlayerPai(paiNumber)
 		end
@@ -1880,6 +1893,7 @@ function MahJong.GangPai(paiTable)
 					MahJong._current_click_pai = nil
 				end
 				CS.UnityEngine.Object.Destroy(v.parent)
+				MahJong._current_click_pai = nil
 				v = {}
 				MahJong.SortPlayerPai(k)
 				break
@@ -1917,6 +1931,7 @@ function MahJong.ClickGangPai( ... )
 			MahJong._current_click_pai = nil
 		end
 		CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+		MahJong._current_click_pai = nil
 		_player_father.cards[paiNumber] = {}
 		MahJong.SortPlayerPai(paiNumber)
 	end
@@ -2677,7 +2692,8 @@ function MahJong.PlayDoubleDices(number1,number2)
 	modelPoolBackPointer = modelPoolFrontPointer
 	local co = coroutine.create(function()
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
-    MahJong.CreatePlayerPai()
+    --MahJong.CreatePlayerPai()
+    MahJong.PlayerPaiSetActive(true)
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
 	end)
