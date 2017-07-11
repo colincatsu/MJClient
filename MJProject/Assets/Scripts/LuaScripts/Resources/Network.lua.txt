@@ -97,6 +97,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
     FLibEvent.AddEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
     FLibEvent.AddEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
+    FLibEvent.AddEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
 end
 
 ---------------------------------------------------------------------------
@@ -135,7 +136,7 @@ function Network.OnConnect()
 	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
     Player._connected = true
     ClickEvent.Start(ClickEvent.panelTable._main_ui)
-    ClickEvent.WeChatGetMessage()
+    --ClickEvent.WeChatGetMessage()
 end
 
 function Network.OnClose()
@@ -168,6 +169,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
     FLibEvent.DelEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
     FLibEvent.DelEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
+    FLibEvent.DelEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
 end
 
 ---------------------------------------------------------------------------

@@ -9,7 +9,9 @@ using gcloud_voice;
 [LuaCallCSharp]
 public class Platform : MonoBehaviour {
     private static Platform _instance;
-    public static Texture myWXPic;
+    private Texture[] myWXPic;
+    private Dictionary<int, int> code2PicID;
+    private static int spriteCnt;
     public IGCloudVoice m_voiceengine = null;
     public static Platform Instance
     {
@@ -52,6 +54,13 @@ public class Platform : MonoBehaviour {
 
     void Init()
     {
+        if (!Directory.Exists(Application.persistentDataPath + "/ImageCache/"))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/ImageCache/");
+        }
+        myWXPic = new Texture[55];
+        spriteCnt = 0;
+        code2PicID = new Dictionary<int, int>();
         if (!LuaCommon.isAndroid)
             return;
         Debug.Log("**************Platform Unity Init:" + Debug.isDebugBuild);
@@ -66,11 +75,6 @@ public class Platform : MonoBehaviour {
             currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
         }
         Debug.Log("**************Platform Unity InitX:" + currentActivity);
-        if (!Directory.Exists(Application.persistentDataPath + "/ImageCache/"))
-        {
-            Directory.CreateDirectory(Application.persistentDataPath + "/ImageCache/");
-        }
-        myWXPic = null;
     }
 
     public void InitGVoice(string appID, string appKey, string openID)
@@ -93,27 +97,32 @@ public class Platform : MonoBehaviour {
         }
     }
 
-    public void SetAsyncImage(string url)
+    public Texture SetAsyncImage(string url)
     {
         //开始下载图片前，将UITexture的主图片设置为占位图  
-        if (myWXPic != null)
+        if(url == null || url == "")
         {
-            return;
+            return null;
         }
-
-        //判断是否是第一次加载这张图片  
-        if (!File.Exists(path + url.GetHashCode()))
+        int code = url.GetHashCode();  
+        if(code2PicID.ContainsKey(code))  
+        {  
+            return myWXPic[code2PicID[code]];  
+        }  
+        else       //如果之前不存在缓存中  就用WWW类下载  
         {
-            //如果之前不存在缓存文件  
-            StartCoroutine(DownloadImage(url));
+            if (spriteCnt >= 54)
+            {
+                spriteCnt = 0;
+                myWXPic = null;
+                code2PicID.Clear();
+            }
+            StartCoroutine(DownloadImage(url, code));
         }
-        else
-        {
-            StartCoroutine(LoadLocalImage(url));
-        }
+        return null;
     }
 
-    IEnumerator DownloadImage(string url)
+    IEnumerator DownloadImage(string url, int code)
     {
         Debug.Log("downloading new image:" + path + url.GetHashCode());//url转换HD5作为名字  
         WWW www = new WWW(url);
@@ -121,10 +130,12 @@ public class Platform : MonoBehaviour {
 
         Texture2D tex2d = www.texture;
         //将图片保存至缓存路径  
-        byte[] pngData = tex2d.EncodeToPNG();                         //将材质压缩成byte流  
-        File.WriteAllBytes(path + url.GetHashCode(), pngData);        //然后保存到本地  
-
-        myWXPic = (Texture)tex2d;
+        //byte[] pngData = tex2d.EncodeToPNG();                         //将材质压缩成byte流  
+        //File.WriteAllBytes(path + url.GetHashCode(), pngData);        //然后保存到本地  
+        //myWXPic = (Texture)tex2d;
+        code2PicID[code] = spriteCnt;
+        myWXPic[spriteCnt] = (Texture)tex2d;
+        ++spriteCnt;
     }
 
     IEnumerator LoadLocalImage(string url)
@@ -136,7 +147,7 @@ public class Platform : MonoBehaviour {
         yield return www;
 
         Texture2D texture = www.texture;
-        myWXPic = (Texture)texture;
+        //myWXPic = (Texture)texture;
     }
 
     public string path

@@ -123,6 +123,12 @@ public class LuaBehaviour : MonoBehaviour {
             yield return to_yield;
         callback();
     }
+
+    public bool IsNull(UnityEngine.Object o)
+    {
+        return o == null;
+    }
+
     //private static void empty() { }
     //protected static Action mainThreadDelegate = empty;
     //public void Attach(Action callback){

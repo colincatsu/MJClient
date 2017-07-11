@@ -870,6 +870,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
 		        	_player_pai_pool._next_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._next_pai_number = paiCount
@@ -892,6 +893,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
 		        	_player_pai_pool._opposite_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._opposite_pai_number = paiCount
@@ -914,6 +916,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
 		        	_player_pai_pool._forward_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._forward_pai_number = paiCount
@@ -1136,7 +1139,7 @@ end
 
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
-	if MahJong._current_click_pai then
+	if MahJong._current_click_pai and not self:IsNull(MahJong._current_click_pai) then
 		if MahJong._current_click_pai == gameObject then
 			if currentOperationState ~= operationState.DAPAI and currentOperationState ~= operationState.TINGPAI then
 				return
@@ -2253,8 +2256,9 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
     end
     local co = coroutine.create(function()
         yield_return(CS.UnityEngine.WaitForSeconds(2))
-        Effect.AddNormalEffect(Effect._effect_name.roundEndShow,2)
+        Effect.AddNormalEffect(Effect._effect_name.roundEndShow,nil,nil,nil,nil)
         yield_return(CS.UnityEngine.WaitForSeconds(2))
+        Effect.DeleteEffect(Effect._effect_name.roundEndShow)
         ClickEvent.ShowCalculate()
     end)
     coroutine.resume(co)

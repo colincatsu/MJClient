@@ -1,9 +1,10 @@
 
-ãg
-P_Protocol.protoAdoter.AssetP_Asset.proto"-
+‘s
+P_Protocol.protoAdoter.AssetP_Asset.proto"X
 Account
 username (
-password ("`
+password ()
+wechat (2.Adoter.Asset.WechatUnion"`
 
 PaiElement*
 	card_type (2.Adoter.Asset.CARD_TYPE
@@ -111,10 +112,48 @@ login_time (
 	player_id ("i
 CreatePlayerF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_CREATE_PLAYER
-	player_id ("m
+	player_id ("„
+WechatInformation
+access_code (
+access_token (
+openid (
+nickname (
+sex (
+headimage_url ("„
+WeChatAccessToken
+access_token (
+
+expires_in (
+refresh_token (
+openid (
+scope (
+unionid ("o
+WeChatRefresh
+access_token (
+
+expires_in (
+refresh_token (
+openid (
+scope ("Ÿ
 Login<
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGIN&
-account (2.Adoter.Asset.Account"G
+account (2.Adoter.Asset.Account0
+account_type (2.Adoter.Asset.ACCOUNT_TYPE"®
+WechatLoginC
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGINE
+account_type (2.Adoter.Asset.ACCOUNT_TYPE:ACCOUNT_TYPE_WECHAT
+access_code ("¥
+WechatUnion
+openid (
+nickname (
+sex (
+province (
+city (
+country (
+
+headimgurl (
+	privilege (
+unionid	 ("G
 Logout=
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGOUT"a
 	EnterGameA
@@ -283,12 +322,11 @@ card_value ("a
 max_fan_type (2.Adoter.Asset.FAN_TYPE"m
 GameInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_INFO
-banker_player_id ("
-KillOut?
+banker_player_id ("Œ
+KickOut?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_KILL_OUT
-	player_id (1
-
-out_reason (2.Adoter.Asset.KILL_OUT_REASON"È
+	player_id (-
+reason (2.Adoter.Asset.KICK_OUT_REASON"È
 SyncActivity?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ACTIVITYA
 activity_list (2*.Adoter.Asset.SyncActivity.ActivityElement4
@@ -311,11 +349,22 @@ out_reason (2.Adoter.Asset.KILL_OUT_REASON"È
 PlayerElement
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE+
-pai_list (2.Adoter.Asset.MultiplePai"
+pai_list (2.Adoter.Asset.MultiplePai"^
+	GamesFullA
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAMES_FULL
+rounds ("
+
+WeChatInfoH
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_WECHAT_INFOMATION)
+wechat (2.Adoter.Asset.WechatUnion"
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
-	global_id (*u
+	global_id ("˜
+KickOutPlayerE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_KICKOUT_PLAYER-
+reason (2.Adoter.Asset.KICK_OUT_REASON
+	player_id (*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -351,7 +400,7 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*ú
+ERROR_SHOW_TYPE_CHAT*š
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -377,12 +426,12 @@ ERROR_CODE
 ERROR_ROOM_BEANS_MAX_LIMIT
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN!
-ERROR_ROOM_GUEST_FORBID_ENTER
+ERROR_ROOM_GUEST_FORBID_ENTER
+ERROR_ROOM_CARD_GAMES_FULL
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*Û
-
+ERROR_COMMON_REWARD_HAS_GOT3*â
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -397,8 +446,8 @@ ERROR_CODE
  
 META_TYPE_SHARE_RANDOM_SAIZI
 META_TYPE_SHARE_SAY_HI
-META_TYPE_SHARE_GUEST_LOGIN!
-META_TYPE_SHARE_GAME_SETTINGˆ
+META_TYPE_SHARE_GUEST_LOGIN 
+META_TYPE_SHARE_GAME_SETTING
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
@@ -407,7 +456,8 @@ ERROR_CODE
 META_TYPE_C2S_ENTER_GAME7
 META_TYPE_C2S_GET_REWARD8
 META_TYPE_C2S_LOAD_SCENE9
-META_TYPE_C2S_RECONNECT:
+META_TYPE_C2S_RECONNECT:
+META_TYPE_C2S_WECHAT_LOGIN;
 META_TYPE_C2S_COUNTÿ
 META_TYPE_S2C_BEGINõ
 META_TYPE_S2C_TICKETö
@@ -426,9 +476,16 @@ ERROR_CODE
 META_TYPE_S2C_KILL_OUT„
 META_TYPE_S2C_ACTIVITY…#
 META_TYPE_S2C_SYSTEM_BROADCAST† 
-META_TYPE_S2C_PAI_PUSH_DOWN‡
+META_TYPE_S2C_PAI_PUSH_DOWN‡
+META_TYPE_S2C_GAMES_FULLˆ$
+META_TYPE_S2C_WECHAT_INFOMATION‰
 META_TYPE_S2C_COUNTè
-META_TYPE_S2S_REGISTERé*ñ
+META_TYPE_S2S_REGISTERé!
+META_TYPE_S2S_KICKOUT_PLAYERê*T
+ACCOUNT_TYPE
+ACCOUNT_TYPE_8HERE
+ACCOUNT_TYPE_WECHAT
+ACCOUNT_TYPE_QQ*ñ
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -449,9 +506,9 @@ ERROR_CODE
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
 GAME_OPER_TYPE_KICKOUT*M
-KILL_OUT_REASON
-KILL_OUT_REASON_BEGIN 
-KILL_OUT_REASON_OTHER_LOGIN*<
+KICK_OUT_REASON
+KICK_OUT_REASON_BEGIN 
+KICK_OUT_REASON_OTHER_LOGIN*<
 	ROLE_TYPE
 ROLE_TYPE_PLAYER
 ROLE_TYPE_GAME_SERVER

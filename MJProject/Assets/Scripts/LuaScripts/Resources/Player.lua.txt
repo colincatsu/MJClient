@@ -49,6 +49,7 @@ local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
 Player.huPaiPosition = 0
+Player.wechat_code = ""
 Player.wechat_nickname = ""
 Player.wechat_sex = ""
 Player.wechat_headimgurl = ""
@@ -233,6 +234,15 @@ function Player.CmdCreatePlayer()
 end
 
 
+function Player.CmdWechatLogin(m_access_code)
+    -- body
+    local wechatLogin = {
+        access_code = m_access_code,
+       -- account_type = "ACCOUNT_TYPE_WECHAT",
+    }
+    this.SendProtocol("WechatLogin",wechatLogin)
+end
+
 function Player.CmdLogin(name,passWord)
     -- body
     local login = {
@@ -240,6 +250,7 @@ function Player.CmdLogin(name,passWord)
             username = name,--""
             --password = passWord,--""
         },
+        --account_type = "ACCOUNT_TYPE_8HERE",
     }
     this.SendProtocol("Login",login)
 end
@@ -345,6 +356,19 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnWeChatInfo(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.WeChatInfo",stuff)
+    Player._string_id = message.wechat.openid
+    Player.wechat_nickname = message.wechat.nickname
+    Player.wechat_sex = message.wechat.sex
+    Player.wechat_headimgurl = message.wechat.headimgurl
+    Player.CmdLogin(Player._string_id)
+end
 
 function Player.OnCommonProperty(type_t,stuff)
     -- body
