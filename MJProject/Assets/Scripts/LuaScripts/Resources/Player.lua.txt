@@ -49,6 +49,7 @@ local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
 Player.huPaiPosition = 0
+Player._string_id = nil
 Player.wechat_code = ""
 Player.wechat_nickname = ""
 Player.wechat_sex = ""
@@ -363,11 +364,19 @@ function Player.OnWeChatInfo(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.WeChatInfo",stuff)
-    Player._string_id = message.wechat.openid
-    Player.wechat_nickname = message.wechat.nickname
-    Player.wechat_sex = message.wechat.sex
-    Player.wechat_headimgurl = message.wechat.headimgurl
-    Player.CmdLogin(Player._string_id)
+    if not message.wechat and message.wechat_error then
+        WeChatPlatform:LoginWeChat()
+    else
+        local path = CS.UnityEngine.Application.persistentDataPath.."/"
+        Player._string_id = message.wechat.openid
+        local mFile = io.open(path.."openID.txt" ,"w")
+        mFile:write(Player._string_id)  
+        mFile:close()
+        Player.wechat_nickname = message.wechat.nickname
+        Player.wechat_sex = message.wechat.sex
+        Player.wechat_headimgurl = message.wechat.headimgurl
+        Player.CmdLogin(Player._string_id)
+    end
 end
 
 function Player.OnSyncCommonProperty(type_t,stuff)

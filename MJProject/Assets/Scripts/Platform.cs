@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using XLua;
 using gcloud_voice;
+using FairyGUI;
 
 [LuaCallCSharp]
 public class Platform : MonoBehaviour {
@@ -97,17 +98,17 @@ public class Platform : MonoBehaviour {
         }
     }
 
-    public Texture SetAsyncImage(string url)
+    public void SetAsyncImage(string url, ref NTexture targetTexture)
     {
         //开始下载图片前，将UITexture的主图片设置为占位图  
         if(url == null || url == "")
         {
-            return null;
+            return ;
         }
         int code = url.GetHashCode();  
         if(code2PicID.ContainsKey(code))  
-        {  
-            return myWXPic[code2PicID[code]];  
+        {
+            targetTexture = new NTexture(myWXPic[code2PicID[code]]);
         }  
         else       //如果之前不存在缓存中  就用WWW类下载  
         {
@@ -117,12 +118,11 @@ public class Platform : MonoBehaviour {
                 myWXPic = null;
                 code2PicID.Clear();
             }
-            StartCoroutine(DownloadImage(url, code));
+            StartCoroutine(DownloadImage(url, code, targetTexture));
         }
-        return null;
     }
 
-    IEnumerator DownloadImage(string url, int code)
+    IEnumerator DownloadImage(string url, int code, NTexture targetTexture)
     {
         Debug.Log("downloading new image:" + path + url.GetHashCode());//url转换HD5作为名字  
         WWW www = new WWW(url);
@@ -135,6 +135,7 @@ public class Platform : MonoBehaviour {
         //myWXPic = (Texture)tex2d;
         code2PicID[code] = spriteCnt;
         myWXPic[spriteCnt] = (Texture)tex2d;
+        targetTexture = new NTexture(myWXPic[spriteCnt]);
         ++spriteCnt;
     }
 

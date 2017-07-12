@@ -135,7 +135,7 @@ function start()
 	Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	--Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
 		GVoicePlatform:InitGVoice("1762572828","564a544493684e9ed39179f4c26d35a7",tostring(Player._player_data.common_prop.player_id))
 		GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
@@ -184,6 +184,7 @@ function start()
 		{player_id = 1,pai = {card_type = "CARD_TYPE_WANZI",card_value = 1}},
 	}
 	MahJong.LiuJuPai(paisData)
+	MahJong.CreateGangPai({card_type = "CARD_TYPE_WANZI",card_value = 1)
 	--]]
 end
 
@@ -1948,8 +1949,8 @@ function MahJong.ClickGangPai( ... )
 		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},_gang_pai_father.cards.deleteCards[1].paiValue)
 	end
 
-	if _gang_pai_father.father then
-		CS.UnityEngine.Object.Destroy(_gang_pai_father.father)
+	if _gang_pai_father then
+		--CS.UnityEngine.Object.Destroy(_gang_pai_father.father)
 		_gang_pai_father = {}
 	end
 	currentOperationState = operationState.WAIT
@@ -1996,8 +1997,17 @@ function MahJong.CreateGangPai(pai)
 	end
 	MahJong.SortGangPai()
 	--]]
-	for 1,4 do
-		ClickEvent.CreateGangPai()
+	if not _gang_pai_father.currentGroupNumber or _gang_pai_father.currentGroupNumber == 0 then
+		_gang_pai_father.currentGroupNumber = 0
+	end
+	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
+	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber] = {}
+	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child = {}
+	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber)
+	for i=1,4 do
+		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
+		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
+		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = pai.card_value
 	end
 end
 
@@ -2032,17 +2042,18 @@ end
 
 function MahJong.ClickGangPaiEvent( gameObject )
 	-- body
-	local paiGroup = tonumber(gameObject.transform.parent.name)
+	local paiGroup = tonumber(gameObject.sender.name)
 	_gang_pai_father.cards.deleteCards = {}
 	local deleteCount = 1
 	for k,v in pairs(_gang_pai_father.cards[paiGroup].child) do
 		_gang_pai_father.cards.deleteCards[deleteCount] = {}
-		_gang_pai_father.cards.deleteCards[deleteCount].card_type = _gang_pai_father.cards[paiGroup].paiType
-		_gang_pai_father.cards.deleteCards[deleteCount].paiValue = tonumber(v.name)
+		_gang_pai_father.cards.deleteCards[deleteCount].card_type = v.paiType
+		_gang_pai_father.cards.deleteCards[deleteCount].paiValue = v.paiValue
 		deleteCount = deleteCount + 1
 	end
 	MahJong.ClickGangPai()
-	MahJong.DeleteShowModel()
+	ClickEvent.CloseGangPai()
+	--MahJong.DeleteShowModel()
 	ClickEvent.CloseOperationPanel()
 	_gang_pai_father = {}
 end

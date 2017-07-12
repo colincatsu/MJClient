@@ -182,7 +182,7 @@
   <displayList>
     <image id="n3_oc2l" name="n3" src="oc2lls" xy="0,0"/>
     <image id="n4_oc2l" name="n4" src="oc2llr" xy="0,0"/>
-    <loader id="n5_oc2l" name="PaiLoader" xy="23,19" size="81,113" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n5_oc2l" name="PaiLoader" xy="23,25" size="81,113" align="center" vAlign="middle" fill="scale"/>
   </displayList>
   <transition name="PaiShowEffect">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1,1" duration="9"/>
@@ -592,17 +592,17 @@
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>lq2gq0.xml|2814|<component size="1334,750">
+</component>lq2gq0.xml|2866|<component size="1334,750">
   <displayList>
     <image id="n1_lq2g" name="n1" src="w61cii" xy="286,118" size="720,451" group="n23_fuyq"/>
     <image id="n3_lq2g" name="n3" src="w61cio" xy="356,239" size="114,114" group="n23_fuyq"/>
-    <loader id="n4_lq2g" name="PlayAvatarLoader1" xy="361,244" size="106,106" group="n23_fuyq"/>
+    <loader id="n4_lq2g" name="PlayAvatarLoader1" xy="361,244" size="106,106" group="n23_fuyq" fill="scale"/>
     <image id="n5_lq2g" name="n5" src="w61cio" xy="509,240" size="114,114" group="n23_fuyq"/>
-    <loader id="n6_lq2g" name="PlayAvatarLoader2" xy="513,244" size="106,106" group="n23_fuyq"/>
+    <loader id="n6_lq2g" name="PlayAvatarLoader2" xy="513,244" size="106,106" group="n23_fuyq" fill="scale"/>
     <image id="n7_lq2g" name="n7" src="w61cio" xy="664,239" size="114,114" group="n23_fuyq"/>
-    <loader id="n8_lq2g" name="PlayAvatarLoader3" xy="668,243" size="106,106" group="n23_fuyq"/>
+    <loader id="n8_lq2g" name="PlayAvatarLoader3" xy="668,243" size="106,106" group="n23_fuyq" fill="scale"/>
     <image id="n9_lq2g" name="n9" src="w61cio" xy="814,240" size="114,114" group="n23_fuyq"/>
-    <loader id="n10_lq2g" name="PlayAvatarLoader4" xy="818,244" size="106,106" group="n23_fuyq"/>
+    <loader id="n10_lq2g" name="PlayAvatarLoader4" xy="818,244" size="106,106" group="n23_fuyq" fill="scale"/>
     <component id="n12_lq2g" name="YesOrNo1" src="lq2gq4" xy="394,356" group="n23_fuyq"/>
     <component id="n13_lq2g" name="YesOrNo2" src="lq2gq4" xy="547,356" group="n23_fuyq"/>
     <component id="n14_lq2g" name="YesOrNo3" src="lq2gq4" xy="697,356" group="n23_fuyq"/>
@@ -872,7 +872,7 @@
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>package.xml|44238|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|44155|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1002,7 +1002,6 @@
     <component id="w61cfd" name="SlideButton" path="/UIPIC/游戏设置/" size="219,86"/>
     <component id="w61cfe" name="ChangeAccount" path="/UIPIC/游戏设置/" size="262,91"/>
     <component id="w61cff" name="FeedBackButton" path="/UIPIC/游戏设置/" size="89,43"/>
-    <component id="w61cfg" name="AboutUsButton" path="/UIPIC/游戏设置/" size="89,43"/>
     <component id="w61cfh" name="UpdateButton" path="/UIPIC/游戏设置/" size="89,43"/>
     <component id="w61cfi" name="CustomServiceButton" path="/UIPIC/游戏设置/" size="89,43"/>
     <component id="w61cg5" name="Getin" path="/UIPIC/游戏页面/" size="262,91"/>
@@ -1716,10 +1715,10 @@ char id=54 img=uejtrl xoffset=0 yoffset=0 xadvance=0
 char id=55 img=uejtrm xoffset=0 yoffset=0 xadvance=0
 char id=56 img=uejtrn xoffset=0 yoffset=0 xadvance=0
 char id=57 img=uejtro xoffset=0 yoffset=0 xadvance=0
-v7wh4sh.xml|405|<component size="176,82" opaque="false">
+v7wh4sh.xml|418|<component size="176,82" opaque="false">
   <displayList>
     <image id="n24_ised" name="SeeTipsBg" src="isedou" xy="174,81" size="175,80" rotation="180"/>
-    <text id="n25_ised" name="SeeTipsText" xy="18,17" size="136,49" fontSize="20" color="#ffffff" vAlign="middle" autoSize="none" text="按住灰色位置可查看牌桌">
+    <text id="n25_ised" name="SeeTipsText" xy="6,6" size="163,69" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="按住灰色位置可查看牌桌">
       <relation target="" sidePair="right-right,top-top"/>
     </text>
   </displayList>
@@ -1787,11 +1786,11 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
 </component>w61cad.xml|735|<component size="209,95">
   <displayList>
     <image id="n8_k0vi" name="n8" src="oc2llr" xy="57,2" size="54,66" scale="1.4,1.4"/>
-    <image id="n9_k0vi" name="n9" src="oc2llr" xy="119,2" size="54,66" scale="1.4,1.4"/>
-    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-3,2" size="54,66" scale="1.4,1.4"/>
-    <loader id="n0_urom" name="ChiPaiLoader01" xy="7,11" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <image id="n9_k0vi" name="n9" src="oc2llr" xy="112,2" size="54,66" scale="1.4,1.4"/>
+    <image id="n7_k0vi" name="n7" src="oc2llr" xy="2,2" size="54,66" scale="1.4,1.4"/>
+    <loader id="n0_urom" name="ChiPaiLoader01" xy="12,11" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
     <loader id="n5_urom" name="ChiPaiLoader02" xy="67,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <loader id="n6_urom" name="ChiPaiLoader03" xy="128,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n6_urom" name="ChiPaiLoader03" xy="121,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
 </component>w61cae.xml|500|<component size="191,157">
   <displayList>
@@ -2177,7 +2176,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61ccz.xml|762|<component size="424,187">
+</component>w61ccz.xml|822|<component size="424,187">
   <displayList>
     <image id="n0_w3hs" name="PlayerClearInfoBg" src="w61cct" xy="0,-1" size="425,189"/>
     <image id="n1_w3hs" name="AvatarBg" src="w61ccv" xy="11,10"/>
@@ -2186,8 +2185,9 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <image id="n4_w3hs" name="n4" src="w61ccw" xy="245,57"/>
     <loader id="n5_w3hs" name="AvatarLoader" xy="19,15" size="149,151" url="ui://krtoytc1nnbzjx" fill="scale"/>
     <text id="n6_w3hs" name="DouNum" xy="261,60" size="133,38" fontSize="24" color="#ffffff" vAlign="middle" ubb="true" autoSize="none" text="+9999999"/>
+    <image id="n7_k54a" name="n7" src="w61cfk" xy="19,17"/>
   </displayList>
-</component>w61cd0.xml|1258|<component size="784,187">
+</component>w61cd0.xml|1320|<component size="784,187">
   <displayList>
     <image id="n0_w3hs" name="MyClearInfoBg" src="w61ccu" xy="0,0" size="785,188"/>
     <image id="n1_w3hs" name="AvatarBg" src="w61ccv" xy="10,11"/>
@@ -2199,9 +2199,10 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <list id="n7_w3hs" name="FanList" xy="211,67" size="422,105" layout="flow_hz" overflow="scroll" defaultItem="ui://krtoytc1w61cd1">
       <item/>
     </list>
-    <text id="n8_uejt" name="n8" xy="643,67" size="22,20" fontSize="16" color="#5c2c16" text="共"/>
-    <text id="n9_uejt" name="n9" xy="703,67" size="22,20" fontSize="16" color="#5c2c16" text="番"/>
-    <text id="n10_uejt" name="TotalFanNum" xy="670,67" size="32,20" fontSize="16" color="#5c2c16" align="center" vAlign="middle" text="999"/>
+    <text id="n8_uejt" name="n8" xy="643,67" size="21,20" fontSize="16" color="#5c2c16" text="共"/>
+    <text id="n9_uejt" name="n9" xy="703,67" size="21,20" fontSize="16" color="#5c2c16" text="番"/>
+    <text id="n10_uejt" name="TotalFanNum" xy="670,67" size="29,20" fontSize="16" color="#5c2c16" align="center" vAlign="middle" text="999"/>
+    <image id="n11_k54a" name="n11" src="w61cfk" xy="17,19"/>
   </displayList>
 </component>w61cd1.xml|429|<component size="198,27">
   <displayList>
@@ -2501,17 +2502,6 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cfg.xml|552|<component size="89,43" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-  <displayList>
-    <image id="n1" name="n1" src="w61caz" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <text id="n2" name="title" xy="0,0" size="89,43" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="关于">
-      <relation target="" sidePair="width-width,height-height"/>
-    </text>
-  </displayList>
-  <Button/>
 </component>w61cfh.xml|552|<component size="89,43" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -2556,7 +2546,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w61cg7.xml|989|<component size="81,105" extention="Button">
+</component>w61cg7.xml|1002|<component size="81,105" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_algd" name="AvatarBg" src="w61cfl" xy="0,0" size="81,105">
@@ -2565,7 +2555,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <text id="n5_algd" name="DouNum" xy="0,83" size="81,20" fontSize="16" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="99万999">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
-    <loader id="n6_algd" name="AvatarLoader" xy="5,4" size="71,73" align="center" vAlign="middle">
+    <loader id="n6_algd" name="AvatarLoader" xy="5,4" size="71,73" align="center" vAlign="middle" fill="scale">
       <relation target="" sidePair="width-width,height-height"/>
     </loader>
     <image id="n8_algd" name="Zhuang" src="w61cfk" xy="52,-5"/>
@@ -2690,11 +2680,11 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgl.xml|604|<component size="367,166">
+</component>w61cgl.xml|617|<component size="367,166">
   <displayList>
     <text id="n17_jujv" name="PlayerID" xy="259,77" size="108,34" fontSize="27" color="#5c2c16" vAlign="middle" autoSize="none" text="9999999"/>
     <text id="n18_jujv" name="Tid" xy="204,77" size="56,34" fontSize="27" color="#5c2c16" vAlign="middle" autoSize="none" text="ID:"/>
-    <loader id="n16_jujv" name="AvatarLoader" xy="7,6" size="160,160" url="ui://krtoytc1nnbzjv"/>
+    <loader id="n16_jujv" name="AvatarLoader" xy="7,6" size="160,160" url="ui://krtoytc1nnbzjv" fill="scale"/>
     <text id="n15_jujv" name="PlayerName" xy="202,22" size="261,37" fontSize="32" color="#66ffff" vAlign="middle" strokeColor="#0a353b" text="对方根本不想输入"/>
   </displayList>
 </component>w61cik.xml|597|<component size="177,73" extention="Button">
@@ -3101,9 +3091,9 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|9177|<component size="1334,750" adaptationTest="FitSize">
-  <controller name="Menu" pages="0,,1," selected="0"/>
-  <controller name="Emoji" pages="0,,1," selected="1"/>
+</component>w61cjc.xml|9172|<component size="1334,750" adaptationTest="FitSize">
+  <controller name="Menu" pages="0,,1," selected="1"/>
+  <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1016,66">
       <relation target="n3_algd" sidePair="right-left"/>
@@ -3111,7 +3101,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <image id="n8_algd" name="FrontPlayerTing" src="w61cfm" xy="80,308">
       <relation target="n4_algd" sidePair="right-left"/>
     </image>
-    <image id="n9_algd" name="BehindPlayerTing" src="w61cfm" xy="1234,352">
+    <image id="n9_algd" name="BehindPlayerTing" src="w61cfm" xy="1215,352">
       <relation target="" sidePair="right-right,top-top"/>
     </image>
     <image id="n10_algd" name="PlayerTing" src="w61cfm" xy="85,584">
@@ -3129,6 +3119,9 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
+    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
+      <relation target="" sidePair="center-center%"/>
+    </list>
     <component id="n21_algd" name="GameHintBar" src="w61cgf" xy="486,558" touchable="false">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
@@ -3147,7 +3140,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <component id="n6_algd" name="BehindPlayerAvatarInfo" src="w61cg7" xy="1240,248" group="n25_fb5y">
       <relation target="" sidePair="right-right"/>
     </component>
-    <image id="n52_idf3" name="n52" src="isedou" xy="945,78" pivot="0.9,0" size="378,116" group="n25_fb5y">
+    <image id="n52_idf3" name="n52" src="isedou" xy="945,78" pivot="0.9,0" size="378,92" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </image>
@@ -3159,7 +3152,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </component>
     <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1251,492" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
-      <Button checked="true" controller="Emoji" page="1"/>
+      <Button controller="Emoji" page="1"/>
     </component>
     <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1251,652" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
@@ -3170,23 +3163,23 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,412" group="n25_fb5y"/>
     <component id="n43_uejt" name="GameMenuButton" src="uejtqs" xy="1256,14" group="n25_fb5y">
       <relation target="" sidePair="top-top,right-right"/>
-      <Button controller="Menu" page="1"/>
+      <Button checked="true" controller="Menu" page="1"/>
     </component>
-    <component id="n45_uejt" name="GameTrusteeshipButton" src="uejtqu" xy="1067,112" pivot="1,0.5" group="n25_fb5y">
+    <component id="n45_uejt" name="GameTrusteeshipButton" src="uejtqu" xy="1067,91" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1150,112" pivot="1,0.5" group="n25_fb5y">
+    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1150,91" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1232,112" pivot="1,0.5" group="n25_fb5y">
+    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1232,91" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
     <component id="n47_10p14" name="CopyRoomNum" src="10p14s4" xy="343,565" group="n25_fb5y"/>
     <component id="n48_10p14" name="InviteWechatFriends" src="10p14s5" xy="692,564" group="n25_fb5y"/>
-    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="963,113" pivot="1,0.5" group="n25_fb5y">
+    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="963,92" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
@@ -3201,9 +3194,6 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
     <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,736" advanced="true"/>
-    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
-      <relation target="" sidePair="center-center%"/>
-    </list>
     <component id="n32_j3uo" name="Draw" src="j3uokk" xy="542,327"/>
     <component id="n33_oc2l" name="FrontPaiShow" src="i5kclq" xy="236,231">
       <relation target="" sidePair="center-center,middle-middle"/>
@@ -3229,10 +3219,10 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
   </transition>
   <transition name="SlideIn">
-    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
+    <item time="0" type="Alpha" target="n17_algd" value="0"/>
     <item time="0" type="Alpha" target="n24_l3ub" value="0"/>
     <item time="0" type="Alpha" target="n45_uejt" value="0"/>
-    <item time="0" type="Alpha" target="n17_algd" value="0"/>
+    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="0,0" endValue="1.1,1.1" duration="6"/>
     <item time="4" type="Alpha" target="n17_algd" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n24_l3ub" tween="true" startValue="0" endValue="1" duration="4"/>
@@ -3241,9 +3231,9 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <item time="6" type="Scale" target="n52_idf3" tween="true" startValue="1.1,1.1" endValue="1,1" duration="2"/>
   </transition>
   <transition name="SlideOut" options="1">
-    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="1,1" endValue="0,0" duration="4"/>
   </transition>
@@ -3497,7 +3487,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjg.xml|1533|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cjg.xml|1445|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <image id="n0_q2o3" name="Bg" src="w61cii" xy="152,53" size="1029,645" group="n6_s5h9">
       <relation target="" sidePair="top-top,bottom-bottom"/>
@@ -3505,9 +3495,8 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <image id="n9_uejt" name="n9" src="isedp4" xy="180,74" size="973,510" group="n6_s5h9">
       <relation target="n8_r7ee" sidePair=""/>
     </image>
-    <component id="n1_q2o3" name="NoButton" src="w61cim" xy="797,588" group="n4_qb9a"/>
     <component id="n2_q2o3" name="YesButton" src="w61cik" xy="578,589" group="n4_qb9a"/>
-    <group id="n4_qb9a" name="Btns" xy="578,588" size="396,74" group="n6_s5h9" advanced="true">
+    <group id="n4_qb9a" name="Btns" xy="578,589" size="177,73" group="n6_s5h9" advanced="true">
       <relation target="n0_q2o3" sidePair="bottom-bottom,center-center"/>
     </group>
     <component id="n8_r7ee" name="PopWindowsMidShowText" src="r7eeo4" xy="204,98" size="927,462" group="n6_s5h9"/>
@@ -3747,7 +3736,7 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     </group>
     <image id="n10_r8qd" name="n10" src="r8qd4sw" xy="355,197"/>
   </displayList>
-</component>w61cjp.xml|2805|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjp.xml|2710|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <component id="n28_i0jk" name="Bg" src="i0jkoe" xy="203,38" group="n27_s5h9"/>
     <text id="n5_qb9a" name="Tmusic" xy="330,399" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="音乐"/>
@@ -3762,7 +3751,6 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
     <component id="n12_qb9a" name="ClickOutSlideButton" src="w61cfd" xy="847,473" group="n25_jujv"/>
     <component id="n20_jujv" name="ChangeAccount" src="w61cfe" xy="810,212" group="n25_jujv"/>
     <component id="n21_jujv" name="FeedBackButton" src="w61cff" xy="355,588" group="n25_jujv"/>
-    <component id="n22_jujv" name="AboutUsButton" src="w61cfg" xy="575,589" group="n25_jujv"/>
     <component id="n23_jujv" name="UpdateButton" src="w61cfh" xy="472,588" group="n25_jujv"/>
     <component id="n24_jujv" name="CustomServiceButton" src="w61cfi" xy="596,588" group="n25_jujv"/>
     <component id="n30_lidq" name="n30" src="lidq4ty" xy="785,585" size="122,50" group="n25_jujv"/>
@@ -3809,13 +3797,13 @@ v7wh4sh.xml|405|<component size="176,82" opaque="false">
   <transition name="Rotation" autoPlay="true" autoPlayRepeat="-1">
     <item time="0" type="Rotation" target="n4_urom" tween="true" startValue="0" endValue="360" duration="360" ease="Linear" repeat="-1"/>
   </transition>
-</component>xgtz4u2.xml|424|<component size="1334,750">
+</component>xgtz4u2.xml|425|<component size="1334,750">
   <displayList>
     <component id="n0_xgtz" name="n0" src="g09nlv" xy="150,302"/>
   </displayList>
   <transition name="ToastMove" autoPlay="true">
-    <item time="0" type="XY" target="n0_xgtz" tween="true" startValue="150,257" endValue="150,156" duration="48"/>
-    <item time="42" type="Alpha" target="n0_xgtz" tween="true" startValue="1" endValue="0" duration="6"/>
+    <item time="0" type="XY" target="n0_xgtz" tween="true" startValue="150,257" endValue="150,156" duration="84"/>
+    <item time="42" type="Alpha" target="n0_xgtz" tween="true" startValue="1" endValue="0" duration="42"/>
   </transition>
 </component>ysjnog.fnt|687|info creator=UIBuilder resizable=true colored=true
 char id=43 img=ysjnoh xoffset=0 yoffset=0 xadvance=0

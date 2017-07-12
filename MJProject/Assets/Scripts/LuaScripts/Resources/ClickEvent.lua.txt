@@ -217,7 +217,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
 		if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 			ClickEvent._play_ui.avatarLoader.url = ""
-			ClickEvent._play_ui.avatarLoader.texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+			WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl,ClickEvent._play_ui.avatarLoader.texture)
 		end
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
@@ -614,7 +614,7 @@ function ClickEvent.ShowCalculate( ... )
 				local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 				listChild.name = ""..i
 				listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-				listChild:GetChild("FanNum").text = "+"..tostring(fanNum).."番"
+				listChild:GetChild("FanNum").text = tostring(fanNum).."番"
 				--[[
 				if c.score < 0 then
 					listChild:GetChild("FanDou").text = ""..c.score
@@ -674,6 +674,43 @@ end
 function ClickEvent.VipNoteList(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+	for k,v in pairs(Player._player_data.room_history) do
+		if v.room_id == tonumber(gameObject.gameObjectName) then
+			local historyList = _popPanel[popPanelIndex].panel:GetChild("HistoryList")
+			historyList:RemoveChildrenToPool()
+			local countScore = {}
+			for i=1,4 do
+				countScore[i] = {}
+				countScore[i].player_id = 0
+				countScore[i].allScore = 0
+			end
+			for j,c in pairs(v.list) do
+				local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
+				obj.name = "VipNoteListInRound"
+				obj:GetChild("RoundNum").text = tostring(j)
+				local playerNumber = 1
+				for roundKey,roundData in pairs(c.list) do
+					countScore[playerNumber].player_id = roundData.player_id
+					countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
+					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(roundData.player_id)
+					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
+					playerNumber = playerNumber + 1
+				end
+			end
+			local historyShareList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
+			historyShareList:RemoveChildrenToPool()
+			for i=1,4 do
+				local obj = historyShareList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInTotal"))
+				obj.name = "VipNoteListInTotal"
+				obj:GetChild("Rank").text = tostring(i)
+				obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
+				obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].player_id)
+			end
+			--[[
+			--]]
+		end
+	end
+	
 end
 
 function ClickEvent.GameSettingButton( ... )
@@ -724,6 +761,7 @@ function ClickEvent.VIPRecordButton( ... )
 	for k,v in pairs(Player._player_data.room_history) do
 		local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
 		obj.name = "VipNoteList"
+		obj.gameObjectName = tostring(v.room_id)
 		obj.onClick:Add(ClickEvent.registerButtonClick)
 		local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
 		local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
@@ -731,7 +769,11 @@ function ClickEvent.VIPRecordButton( ... )
 		obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
 		for j,c in pairs(v.list) do
 			if c.player_id == Player._player_data.common_prop.player_id then
-				obj:GetChild("WinLoseNum").text = tostring(c.score)
+				if c.score > 0 then
+					obj:GetChild("WinLoseNum").text = "+"..tostring(c.score)
+				else
+					obj:GetChild("WinLoseNum").text = tostring(c.score)
+				end
 			end
 		end
 	end
@@ -987,6 +1029,7 @@ end
 function ClickEvent.WechatLogin(gameObject)
 	-- body
 	CS.UnityEngine.Debug.LogWarning("ClickEvent.WechatLogin")
+	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	--[[
 	Player._string_id = WeChatPlatform:GetData("getOpenID")
 	Player.wechat_nickname = WeChatPlatform:GetData("getNickName")
@@ -997,13 +1040,24 @@ function ClickEvent.WechatLogin(gameObject)
 		Player.CmdLogin(Player._string_id)
 		CS.UnityEngine.Debug.LogWarning("WeChatLogin")
 	--]]
-	Player.wechat_code = WeChatPlatform:GetData("getWXCode")
-	if not Player.wechat_code or Player.wechat_code == "" then
-		CS.UnityEngine.Debug.LogWarning("getWXCode")
-		WeChatPlatform:LoginWeChat()
+	local openIdFile = io.open(path.."openID.txt")
+	if not openIdFile then
+		Player._string_id = ""
 	else
-		CS.UnityEngine.Debug.LogWarning("getWXMsg")
-		Player.CmdWechatLogin(Player.wechat_code)
+		Player._string_id = openIdFile:read "*a"
+        openIdFile:close()
+	end
+	Player.wechat_code = WeChatPlatform:GetData("getWXCode")
+	if not Player._string_id or Player._string_id == "" then
+		if not Player.wechat_code or Player.wechat_code == "" then
+			CS.UnityEngine.Debug.LogWarning("getWXCode")
+			WeChatPlatform:LoginWeChat()
+		else
+			CS.UnityEngine.Debug.LogWarning("getWXMsg")
+			Player.CmdWechatLogin(Player.wechat_code)
+		end
+	else
+		Player.CmdLogin(Player._string_id)
 	end
 end
 
@@ -1384,15 +1438,29 @@ function ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3
 	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList").width = chiPaiGroupTemp.width * paiGroup
 end
 
-function ClickEvent.CreateGangPai(modelName,paiType,paiValue,paiGroup,sortValue)
+function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 	-- body
-	
+	ClickEvent._play_ui.gangPaiBar.visible = true
+	local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
+	gangPaiGroupTemp.name = tostring(paiGroup)
+	gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+	gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+	gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+	gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+	gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
+	ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList").width = gangPaiGroupTemp.width * paiGroup
 end
 
 function ClickEvent.CloseChiPai()
 	-- body
 	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList"):RemoveChildrenToPool()
 	ClickEvent._play_ui.chiPaiBar.visible = false
+end
+
+function ClickEvent.CloseGangPai()
+	-- body
+	ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):RemoveChildrenToPool()
+	ClickEvent._play_ui.gangPaiBar.visible = false
 end
 
 function ClickEvent.GamePengButton(gameObject)

@@ -1,10 +1,10 @@
 
-‘s
-P_Protocol.protoAdoter.AssetP_Asset.proto"X
+àr
+P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
-password ()
-wechat (2.Adoter.Asset.WechatUnion"`
+password (0
+account_type (2.Adoter.Asset.ACCOUNT_TYPE"`
 
 PaiElement*
 	card_type (2.Adoter.Asset.CARD_TYPE
@@ -15,10 +15,12 @@ card_index ("e
 ItemElement4
 inventory_type (2.Adoter.Asset.INVENTORY_TYPE
 index (
-	global_id ("C
+	global_id ("¥
 User&
 account (2.Adoter.Asset.Account
-player_list ("á
+player_list (5
+wechat_token (2.Adoter.Asset.WechatAccessToken)
+wechat (2.Adoter.Asset.WechatUnion"á
 
 PlayerProp-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -82,7 +84,7 @@ phone_type ("Ã
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"ÿ
+attachments (2.Adoter.Asset.MailAttachment"ª
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 	server_id (*
@@ -98,7 +100,8 @@ login_time (
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
 game_setting (2.Adoter.Asset.PlayerSetting/
-room_history (2.Adoter.Asset.RoomHistory"¨
+room_history (2.Adoter.Asset.RoomHistory)
+wechat (2.Adoter.Asset.WechatUnion"¨
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -112,37 +115,24 @@ login_time (
 	player_id ("i
 CreatePlayerF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_CREATE_PLAYER
-	player_id ("„
-WechatInformation
-access_code (
-access_token (
-openid (
-nickname (
-sex (
-headimage_url ("„
-WeChatAccessToken
+	player_id ("m
+Login<
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGIN&
+account (2.Adoter.Asset.Account"„
+WechatAccessToken
 access_token (
 
 expires_in (
 refresh_token (
 openid (
 scope (
-unionid ("o
-WeChatRefresh
-access_token (
-
-expires_in (
-refresh_token (
-openid (
-scope ("Ÿ
-Login<
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGIN&
-account (2.Adoter.Asset.Account0
-account_type (2.Adoter.Asset.ACCOUNT_TYPE"®
+unionid (".
+WechatError
+errcode (
+errmsg ("g
 WechatLoginC
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGINE
-account_type (2.Adoter.Asset.ACCOUNT_TYPE:ACCOUNT_TYPE_WECHAT
-access_code ("¥
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGIN
+access_code ("¥
 WechatUnion
 openid (
 nickname (
@@ -289,10 +279,10 @@ card_value ("a
 CARDS_DATA_TYPE
 CARDS_DATA_TYPE_START
 CARDS_DATA_TYPE_FAPAI
-CARDS_DATA_TYPE_SYNC"©
-CommonPropertyH
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_COMMON_PROPERTYB
-reason_type (2-.Adoter.Asset.CommonProperty.SYNC_REASON_TYPE
+CARDS_DATA_TYPE_SYNC"±
+SyncCommonPropertyH
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_COMMON_PROPERTYF
+reason_type (21.Adoter.Asset.SyncCommonProperty.SYNC_REASON_TYPE
 	player_id (-
 common_prop (2.Adoter.Asset.CommonProp"G
 SYNC_REASON_TYPE
@@ -309,13 +299,14 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("ö
+common_reward_id ("¢
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO9
-player_list (2$.Adoter.Asset.RoomInformation.Playerf
+player_list (2$.Adoter.Asset.RoomInformation.Player‘
 Player-
 position (2.Adoter.Asset.POSITION_TYPE-
-common_prop (2.Adoter.Asset.CommonProp"®
+common_prop (2.Adoter.Asset.CommonProp)
+wechat (2.Adoter.Asset.WechatUnion"®
 GameCalculateE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE(
 record (2.Adoter.Asset.GameRecord,
@@ -352,11 +343,12 @@ card_value ("a
 pai_list (2.Adoter.Asset.MultiplePai"^
 	GamesFullA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAMES_FULL
-rounds ("
+rounds ("²
 
 WeChatInfoH
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_WECHAT_INFOMATION)
-wechat (2.Adoter.Asset.WechatUnion"
+wechat (2.Adoter.Asset.WechatUnion/
+wechat_error (2.Adoter.Asset.WechatError"
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -481,11 +473,12 @@ ERROR_CODE
 META_TYPE_S2C_WECHAT_INFOMATION‰
 META_TYPE_S2C_COUNTè
 META_TYPE_S2S_REGISTERé!
-META_TYPE_S2S_KICKOUT_PLAYERê*T
+META_TYPE_S2S_KICKOUT_PLAYERê*l
 ACCOUNT_TYPE
-ACCOUNT_TYPE_8HERE
-ACCOUNT_TYPE_WECHAT
-ACCOUNT_TYPE_QQ*ñ
+ACCOUNT_TYPE_8HERE
+ACCOUNT_TYPE_GUEST
+ACCOUNT_TYPE_WECHAT
+ACCOUNT_TYPE_QQ*ñ
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
