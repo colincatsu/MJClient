@@ -370,12 +370,12 @@ function Player.OnWeChatInfo(type_t,stuff)
     Player.CmdLogin(Player._string_id)
 end
 
-function Player.OnCommonProperty(type_t,stuff)
+function Player.OnSyncCommonProperty(type_t,stuff)
     -- body
     if not stuff then
         return
     end
-    local message = protobuf.decode("Adoter.Asset.CommonProperty",stuff)
+    local message = protobuf.decode("Adoter.Asset.SyncCommonProperty",stuff)
     if Player._player_data.common_prop.player_id == message.player_id then
         Player._player_data.common_prop = message.common_prop
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Bean,false,1)

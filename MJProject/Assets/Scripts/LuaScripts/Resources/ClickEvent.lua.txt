@@ -420,7 +420,7 @@ function ClickEvent.PaiOperationState()
 			end
 		end
 	end
-	
+
     for k,v in pairs(Player._operation_alert_cache.pais) do
     	for j,m in pairs(v.oper_list) do
 	    	CS.UnityEngine.Debug.LogWarning(m)
@@ -443,11 +443,7 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
 				CS.UnityEngine.Debug.LogWarning("ANGANG")
 				--Player.MahJong.SetCurrentState(operationState.ANGANG)
-				if angangCount > 1 then
-					Player.MahJong.CreateGangPai(v.pai)
-				else
-					ClickEvent.AddOperationButton("GameGangButton")
-				end
+				ClickEvent.AddOperationButton("GameGangButton")
 			elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" then
 				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
@@ -1336,9 +1332,31 @@ end
 
 function ClickEvent.GameGangButton(gameObject)
 	-- body
-
 	ClickEvent.CloseOperationPanel()
-	Player.MahJong.GangPai()
+	local angangCount = 0
+	local tempPai = nil
+	if Player._operation_alert_cache.pais then
+		for k,v in pairs(Player._operation_alert_cache.pais) do
+			for j,m in pairs(v.oper_list) do
+				if m == "PAI_OPER_TYPE_ANGANGPAI" then
+					angangCount = angangCount + 1
+				end
+			end
+		end
+	end
+	if angangCount > 1 then
+		if Player._operation_alert_cache.pais then
+			for k,v in pairs(Player._operation_alert_cache.pais) do
+				for j,m in pairs(v.oper_list) do
+					if m == "PAI_OPER_TYPE_ANGANGPAI" then
+						Player.MahJong.CreateGangPai(v.pai)
+					end
+				end
+			end
+		end
+	else
+		Player.MahJong.GangPai()
+	end
 end
 
 function ClickEvent.XuanFengButton(gameObject)
@@ -1364,6 +1382,11 @@ function ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3
 	chiPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue3)
 	chiPaiGroupTemp.onClick:Add(Player.MahJong.ClickChiPaiEvent)
 	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList").width = chiPaiGroupTemp.width * paiGroup
+end
+
+function ClickEvent.CreateGangPai(modelName,paiType,paiValue,paiGroup,sortValue)
+	-- body
+	
 end
 
 function ClickEvent.CloseChiPai()

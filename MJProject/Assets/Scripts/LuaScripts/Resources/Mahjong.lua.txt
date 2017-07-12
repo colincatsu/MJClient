@@ -1349,6 +1349,8 @@ function MahJong.DaPaiPoolShow(message)
     	return
     end
 	_current_dapai.whichPlayer = whichPlayer
+	_current_dapai.card_type = paiType
+	_current_dapai.card_value = paiValue
     local modelTemp = Load("MJModel/"..modelName)
 	if whichPlayer == "POSITION_TYPE_EAST" then
 		_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
@@ -1964,6 +1966,7 @@ end
 
 function MahJong.CreateGangPai(pai)
 	-- body
+	--[[
 	local tempPaiPool = {}
     for k,v in pairs(_mj_asset) do
     	if v.card_type == pai.card_type then
@@ -1992,6 +1995,10 @@ function MahJong.CreateGangPai(pai)
     	end
 	end
 	MahJong.SortGangPai()
+	--]]
+	for 1,4 do
+		ClickEvent.CreateGangPai()
+	end
 end
 
 function MahJong.CreateGangPaiModel(modelName,paiType,paiValue,paiGroup,sortValue)
@@ -2294,7 +2301,9 @@ function MahJong.OperationPaiShow(message)
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     	end
-    	MahJong.DelUsedDaPai()
+    	if _current_dapai.card_type == paiType and _current_dapai.card_value == operationPaiShowData.pai.card_value then
+	    	MahJong.DelUsedDaPai()
+    	end
 		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
     elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_PENGPAI" then
     	for i=1,3 do
