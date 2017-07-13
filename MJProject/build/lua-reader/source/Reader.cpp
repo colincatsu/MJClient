@@ -257,3 +257,5 @@ std::string AssetManager::GetBinContent(int64_t global_id)
 	return _bin_assets[global_id];
 }
 
+}
+
