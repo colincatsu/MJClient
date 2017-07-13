@@ -98,7 +98,7 @@ public class Platform : MonoBehaviour {
         }
     }
 
-    public Texture SetAsyncImage(string url, ref NTexture targetTexture)
+    public Texture SetAsyncImage(string url,NTexture targetTexture)
     {
         //开始下载图片前，将UITexture的主图片设置为占位图  
         if(url == null || url == "")
@@ -119,6 +119,15 @@ public class Platform : MonoBehaviour {
                 code2PicID.Clear();
             }
             StartCoroutine(DownloadImage(url, code));
+        }
+        return null;
+    }
+    public LDelegate onWeChatCallBack;
+    public void OnWeChatLogin()
+    {
+        if(onWeChatCallBack != null)
+        {
+            onWeChatCallBack();
         }
     }
 
@@ -179,7 +188,7 @@ public class Platform : MonoBehaviour {
     }
 
     [CSharpCallLua]
-    public delegate int LDelegate();
+    public delegate void LDelegate();
     public LDelegate func = null;
 
     public void LoginUserMsg()

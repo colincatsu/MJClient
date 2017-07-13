@@ -1,5 +1,5 @@
 
-àr
+Œs
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -241,11 +241,12 @@ click_push ("‡
 scene_id ("`
 	ReConnect@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_RECONNECT
-	player_id ("a
+	player_id ("Œ
 
 PlayerList>
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PLAYERS
-player_list ("}
+player_list ()
+wechat (2.Adoter.Asset.WechatUnion"}
 PlayerInformationB
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PLAYER_INFO$
 player (2.Adoter.Asset.Player"æ

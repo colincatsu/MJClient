@@ -368,6 +368,9 @@ function Player.OnWeChatInfo(type_t,stuff)
         WeChatPlatform:LoginWeChat()
     else
         local path = CS.UnityEngine.Application.persistentDataPath.."/"
+        if not message.wechat.openid or message.wechat.openid == "" then
+            return
+        end
         Player._string_id = message.wechat.openid
         local mFile = io.open(path.."openID.txt" ,"w")
         mFile:write(Player._string_id)  
@@ -533,12 +536,15 @@ function Player.OnPlayerList(type_t,stuff)
         Player._id = message.player_list[1]
         LogWarning(Player._id)
     end
-    Player.wechat_nickname = message.wechat.nickname
-    Player.wechat_sex = message.wechat.sex
-    Player.wechat_headimgurl = message.wechat.headimgurl
     if Player._id and Player_id ~= "" then
         Player.CmdEnterGame(Player._id)
     end
+    if not message.wechat.nickname or message.wechat.nickname == "" then
+        return
+    end
+    Player.wechat_nickname = message.wechat.nickname
+    Player.wechat_sex = message.wechat.sex
+    Player.wechat_headimgurl = message.wechat.headimgurl
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
