@@ -6,9 +6,10 @@ end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 local resultPath = CS.LuaCommon.resultPath
 local isAndroid = CS.LuaCommon.isAndroid
+local isIos = CS.LuaCommon.isIos
 
 if not Player._connected then
-    if isAndroid then
+    if isAndroid or isIos then
         CS.UnityEngine.Debug.LogWarning("android")
         _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb","rb")
         _buffer = _addr:read "*a"

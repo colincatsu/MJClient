@@ -29,9 +29,11 @@ public class LuaCommon
 #if     UNITY_IOS || UNITY_IPHONE
     public static string resultPath = Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
+    public static bool isIos = true;
 #elif   UNITY_ANDROID && !UNITY_EDITOR
     public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
     public static bool isAndroid = true;
+    public static bool isIos = false;
 #elif   UNITY_EDITOR
     public static string resultPath = Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;

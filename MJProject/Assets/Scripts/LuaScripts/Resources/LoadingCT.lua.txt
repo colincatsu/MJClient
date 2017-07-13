@@ -26,10 +26,13 @@ end
 function start()
 	-- body
 	--UIConfig.defaultFont = "MJFont"
-	if CS.LuaCommon.isAndroid then
+	if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
 		LoadingCT.CopyAndroidRes()
 	end
 	if not _copyed and CS.LuaCommon.isAndroid then
+		return
+	end
+	if not _copyed and CS.LuaCommon.isIos then
 		return
 	end
 	if Player and Player._tosence_name then

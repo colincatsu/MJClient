@@ -533,6 +533,9 @@ function Player.OnPlayerList(type_t,stuff)
         Player._id = message.player_list[1]
         LogWarning(Player._id)
     end
+    Player.wechat_nickname = message.wechat.nickname
+    Player.wechat_sex = message.wechat.sex
+    Player.wechat_headimgurl = message.wechat.headimgurl
     if Player._id and Player_id ~= "" then
         Player.CmdEnterGame(Player._id)
     end

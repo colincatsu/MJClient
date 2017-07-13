@@ -217,7 +217,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
 		if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 			ClickEvent._play_ui.avatarLoader.url = ""
-			WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl,ClickEvent._play_ui.avatarLoader.texture)
+			ClickEvent._play_ui.avatarLoader.texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+			WeChatPlatform.func = nil
+			WeChatPlatform.func = function ()
+				-- body
+				ClickEvent._play_ui.avatarLoader.texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+			end
 		end
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)

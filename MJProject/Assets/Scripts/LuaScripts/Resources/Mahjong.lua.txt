@@ -243,7 +243,7 @@ function MahJong.MjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
 	local resultPath = CS.LuaCommon.resultPath
-	if CS.LuaCommon.isAndroid then
+	if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
 		resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
 	end
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
@@ -771,7 +771,7 @@ function MahJong.LiuJuPai(paisData)
 	ClickEvent._play_ui.uselessRound.visible = true
 	for k,v in pairs(paisData) do
 		for dataNum,playerData in pairs(Player._all_players_data) do
-			if playerData.player_id == v.player_id then
+			if playerData.common_prop.player_id == v.player_id then
 				local playerPos = ClickEvent.PlayerPosition(playerData.position)
 				if playerPos == 1 then
 			        local tempPaiPool = {}
