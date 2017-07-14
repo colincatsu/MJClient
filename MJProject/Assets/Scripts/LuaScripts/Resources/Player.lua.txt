@@ -58,6 +58,8 @@ Player.wechat_headimgurl = ""
 local WeChatPlatform = CS.Platform.Instance
 Player.isFriendRoom = false
 Player.voiceRoomName = ""
+Player.latitude = -1.0
+Player.longitude = -1.0
 
 
 function Player.GetinvokeFunctionCache()
@@ -106,6 +108,23 @@ function Player.SetPaiOperationShowCache(cacheData)
     -- body
     _pai_operation_show_cache.rear = _pai_operation_show_cache.rear + 1
     _pai_operation_show_cache[_pai_operation_show_cache.rear] = cacheData
+end
+
+function Player.GetGpsInformation()
+    -- body
+    WeChatPlatform.gpsGet = Player.GpsCallBack
+    WeChatPlatform:GetGps()
+end
+function Player.GpsCallBack(latitude,longitude)
+    -- body
+    Player.latitude = latitude
+    Player.longitude = longitude
+    WeChatPlatform.gpsGet = nil
+    if Player.latitude == -1.0 then
+
+    else
+        Player.CmdUpdateClientData(Player.latitude,Player.longitude)
+    end
 end
 ---------------------------------------------------------------------------
 --获取玩家ID
@@ -228,6 +247,32 @@ end
 --数据封装
 ---------------------------------------------------------------------------
 
+
+function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
+    -- body
+    gameSetting = {
+        game_setting = {
+            music = musicSet,
+            voice = voiceSet,
+            audio = audioSet,
+            click_push = click_pushSet,
+        },
+    }
+    this.SendProtocol("GameSetting",gameSetting)
+end
+
+function Player.CmdUpdateClientData(latitudeInfo,longitudeInfo)
+    -- body
+    updateClientData = {
+        client_info = {
+            location = {
+                longitude = longitudeInfo,
+                latitude = latitudeInfo,
+            },
+        },
+    }
+    this.SendProtocol("UpdateClientData",updateClientData)
+end
 
 function Player.CmdCreatePlayer()
     -- body
@@ -466,6 +511,9 @@ function Player.OnRoomInformation(type_t,stuff)
         Player._all_players_data = message.player_list
         --if not Player._my_player_data then
             for k,v in pairs(Player._all_players_data) do
+                if v.oper_type == "GAME_OPER_TYPE_START" then
+                    ClickEvent.ShowAlready(v.common_prop.player_id)
+                end
                 if v.common_prop.player_id == Player._player_data.common_prop.player_id then
                     Player._my_player_data = v
                     --Player.ThreadFunction(
@@ -501,6 +549,7 @@ function Player.OnPlayerInformation(type_t,stuff)
     Player._player_data = message.player
     if Player._tosence_name ~= "PlaySence" then
         ClickEvent.ThreadToMainMenu()
+        Player.GetGpsInformation()
     end
 end
 
@@ -824,7 +873,7 @@ function Player.OnGameOperation(type_t,stuff)
         end
     end
     if message.oper_type == "GAME_OPER_TYPE_START" then
-        ClickEvent.ShowAlready(message.source_player_id)
+        --ClickEvent.ShowAlready(message.source_player_id)
     end
 end
 

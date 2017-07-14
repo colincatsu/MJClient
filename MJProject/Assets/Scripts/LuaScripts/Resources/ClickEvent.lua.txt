@@ -19,8 +19,9 @@ ClickEvent.panelTable = {
 	_player_info = "PlayerInfo",
 	_other_player_info = "OtherPlayerInfo",
 	_calculate_ui = "ClearRoundScene",
-	_window_small = "PopWindowsSmall",
 	_window_big = "PopWindowsBig",
+	_window_mid = "PopWindowsMid",
+	_window_small = "PopWindowsSmall",
 	_exit_game_ui = "ExitGamePop",
 	_instruction_ui = "HowToPlay",
 	_welfare_ui = "WelfareScene",
@@ -169,6 +170,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
 		ClickEvent._play_ui.remainNum = _currentPanel.panel:GetChild("RemainNum")
+		ClickEvent._play_ui.remainNum.text = "136"
 		ClickEvent._play_ui.frontAlready = _currentPanel.panel:GetChild("FrontAlready")
 		ClickEvent._play_ui.oppositeAlready = _currentPanel.panel:GetChild("OppositeAlready")
 		ClickEvent._play_ui.behindAlready = _currentPanel.panel:GetChild("BehindAlready")
@@ -682,7 +684,21 @@ function ClickEvent.showDisconnect( ... )
 end
 ---------------------------------------------------------------------------
 -------------点击功能函数
----------------------------------------------------------------------------、
+---------------------------------------------------------------------------
+
+function ClickEvent.ChangeAccount(gameObject)
+	-- body
+	ClickEvent.Close()
+	ClickEvent.DeletePanel(_currentPanel.panel)
+	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+	os.remove(CS.UnityEngine.Application.persistentDataPath.."/")
+end
+
+function ClickEvent.ServiveTerm3(gameObject)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3005)
+end
 
 function ClickEvent.VipNoteList(gameObject)
 	-- body
@@ -748,6 +764,16 @@ end
 function ClickEvent.EffectSlideButton( ... )
 	-- body
 	Player._player_data.game_setting.audio = _popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected
+end
+
+function ClickEvent.GameVoiceSlideButton( ... )
+	-- body
+	Player._player_data.game_setting.voice = _popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected
+end
+
+function ClickEvent.ClickOutSlideButton( ... )
+	-- body
+	Player._player_data.game_setting.click_push = _popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected
 end
 
 function ClickEvent.Shop( ... )
@@ -816,6 +842,25 @@ end
 function ClickEvent.Setting( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
+	else
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
+	end
+	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
+		WeChatPlatform.func = nil
+		WeChatPlatform.func = function ()
+			-- body
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+		end
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+	end
+	_popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
+	_popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
+	_popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
+	_popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
 end
 
 function ClickEvent.More( ... )
@@ -850,6 +895,15 @@ function ClickEvent.Avatar( ... )
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
+		WeChatPlatform.func = nil
+		WeChatPlatform.func = function ()
+			-- body
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+		end
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl))
+	end
 	_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
 	_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
@@ -874,7 +928,7 @@ end
 
 function ClickEvent.YesButton( ... )
 	-- body
-	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
+	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
 		Player.returnMainUI = true
 		Player.MahJong.QuitVoiceRoom()
 		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
@@ -1179,6 +1233,9 @@ function ClickEvent.Close( ... )
 	CS.UnityEngine.Debug.LogWarning("ClosePanel")
 	if popPanelIndex <= 0 then
 		return
+	end
+	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._setting_ui then
+		Player.CmdGameSetting(Player._player_data.game_setting.music, Player._player_data.game_setting.voice, Player._player_data.game_setting.audio, Player._player_data.game_setting.click_push)
 	end
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)

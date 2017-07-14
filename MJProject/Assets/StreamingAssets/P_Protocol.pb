@@ -1,5 +1,5 @@
 
-ås
+∞x
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -72,12 +72,16 @@ time_stamp (
 Element
 cool_down_id (
 
-time_stamp ("I
+time_stamp ("/
+Location
+	longitude (
+latitude ("s
 ClientInfomation
 	client_ip (
 system (
 
-phone_type ("√
+phone_type ((
+location (2.Adoter.Asset.Location"√
 Mail
 title (E
 send_player (:0\347\263\273\347\273\237\351\202\256\344\273\266
@@ -148,7 +152,10 @@ headimgurl (
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGOUT"a
 	EnterGameA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_ENTER_GAME
-	player_id ("á
+	player_id ("î
+UpdateClientDataK
+type_t (2.Adoter.Asset.META_TYPE:"META_TYPE_SHARE_UPDATE_CLIENT_DATA3
+client_info (2.Adoter.Asset.ClientInfomation"á
 Room
 room_id (*
 	room_type (2.Adoter.Asset.ROOM_TYPE
@@ -300,14 +307,19 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("¢
+common_reward_id ("Ô
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO9
-player_list (2$.Adoter.Asset.RoomInformation.Playerë
+player_list (2$.Adoter.Asset.RoomInformation.Playerﬁ
 Player-
-position (2.Adoter.Asset.POSITION_TYPE-
-common_prop (2.Adoter.Asset.CommonProp)
-wechat (2.Adoter.Asset.WechatUnion"Æ
+position (2.Adoter.Asset.POSITION_TYPE/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
+common_prop (2.Adoter.Asset.CommonProp)
+wechat (2.Adoter.Asset.WechatUnionF
+dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
+DistanceElement-
+position (2.Adoter.Asset.POSITION_TYPE
+distance ("Æ
 GameCalculateE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE(
 record (2.Adoter.Asset.GameRecord,
@@ -349,7 +361,11 @@ card_value ("a
 WeChatInfoH
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_WECHAT_INFOMATION)
 wechat (2.Adoter.Asset.WechatUnion/
-wechat_error (2.Adoter.Asset.WechatError"ê
+wechat_error (2.Adoter.Asset.WechatError"|
+	GameStartA
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_START
+total_rounds (
+current_rounds ("ê
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -424,7 +440,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*‚
+ERROR_COMMON_REWARD_HAS_GOT3*©
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -440,7 +456,8 @@ ERROR_CODE
 META_TYPE_SHARE_RANDOM_SAIZI
 META_TYPE_SHARE_SAY_HI
 META_TYPE_SHARE_GUEST_LOGIN 
-META_TYPE_SHARE_GAME_SETTING
+META_TYPE_SHARE_GAME_SETTING&
+"META_TYPE_SHARE_UPDATE_CLIENT_DATA
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
@@ -471,7 +488,8 @@ ERROR_CODE
 META_TYPE_S2C_SYSTEM_BROADCASTÜ 
 META_TYPE_S2C_PAI_PUSH_DOWNá
 META_TYPE_S2C_GAMES_FULLà$
-META_TYPE_S2C_WECHAT_INFOMATIONâ
+META_TYPE_S2C_WECHAT_INFOMATIONâ
+META_TYPE_S2C_GAME_STARTä
 META_TYPE_S2C_COUNTË
 META_TYPE_S2S_REGISTERÈ!
 META_TYPE_S2S_KICKOUT_PLAYERÍ*l
@@ -499,10 +517,11 @@ ERROR_CODE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
-GAME_OPER_TYPE_KICKOUT*M
+GAME_OPER_TYPE_KICKOUT*m
 KICK_OUT_REASON
-KICK_OUT_REASON_BEGIN 
-KICK_OUT_REASON_OTHER_LOGIN*<
+KICK_OUT_REASON_BEGIN 
+KICK_OUT_REASON_DISCONNECT
+KICK_OUT_REASON_OTHER_LOGIN*<
 	ROLE_TYPE
 ROLE_TYPE_PLAYER
 ROLE_TYPE_GAME_SERVER

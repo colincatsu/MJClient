@@ -35,9 +35,22 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume)
 	if not Player._player_data then
 		return
 	end
-	if soundName ~= AudioPlayer._audio_name.Bgm and not Player._player_data.game_setting.audio then
-		return
+	if not Player._player_data.game_setting.audio then
+		if soundName == AudioPlayer._audio_name.Dice or soundName == AudioPlayer._audio_name.FaPai or
+			soundName == AudioPlayer._audio_name.Down or soundName == AudioPlayer._audio_name.Dapai or
+			soundName == AudioPlayer._audio_name.CloseUI or soundName == AudioPlayer._audio_name.PushPai or
+			soundName == AudioPlayer._audio_name.Reward or soundName == AudioPlayer._audio_name.Bean or
+			soundName == AudioPlayer._audio_name.NoTime or soundName == AudioPlayer._audio_name.SortPai or
+			soundName == AudioPlayer._audio_name.ClickUI or soundName == AudioPlayer._audio_name.MingGang or
+			soundName == AudioPlayer._audio_name.AnGang or soundName == AudioPlayer._audio_name.SelectUI then
+			return
+		else
+			if not Player._player_data.game_setting.voice and soundName ~= AudioPlayer._audio_name.Bgm then
+				return
+			end
+		end
 	end
+
 	if not audioFather then
 		audioFather = GameObject("Audio")
 		DontDestroyOnLoad(audioFather)

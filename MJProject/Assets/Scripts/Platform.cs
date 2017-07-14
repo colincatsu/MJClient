@@ -162,6 +162,62 @@ public class Platform : MonoBehaviour {
         Texture2D texture = www.texture;
         //myWXPic = (Texture)texture;
     }
+    [CSharpCallLua]
+    public delegate void SDelegate(float latitude,float longitude);
+    public SDelegate gpsGet;
+
+    public void GetGps()
+    {
+        StartCoroutine(StartGPS());
+    }
+
+    IEnumerator StartGPS()
+    {
+        // Input.location 用于访问设备的位置属性（手持设备）, 静态的LocationService位置  
+        // LocationService.isEnabledByUser 用户设置里的定位服务是否启用
+        float latitudeInfo = 0f;
+        float longitudeInfo = 0f;
+        if (!Input.location.isEnabledByUser)
+        {
+            Debug.LogWarning("isEnabledByUser value is:" + Input.location.isEnabledByUser.ToString() + " Please turn on the GPS");
+            yield return false;
+        }
+
+        // LocationService.Start() 启动位置服务的更新,最后一个位置坐标会被使用  
+        Input.location.Start();
+
+        int maxWait = 20;
+        while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
+        {
+            // 暂停协同程序的执行(1秒)  
+            yield return new WaitForSeconds(1);
+            maxWait--;
+        }
+
+        if (maxWait < 1)
+        {
+            Debug.LogWarning("Init GPS service time out");
+            yield return false;
+        }
+
+        if (Input.location.status == LocationServiceStatus.Failed)
+        {
+            Debug.LogWarning("Unable to determine device location");
+            //yield return false;
+        }
+        else
+        {
+            latitudeInfo = Input.location.lastData.latitude;
+            longitudeInfo = Input.location.lastData.longitude;
+            //" Time:" + Input.location.lastData.timestamp;
+            //yield return new WaitForSeconds(100);
+        }
+        if(gpsGet != null)
+        {
+            gpsGet(latitudeInfo, longitudeInfo);
+        }
+        Input.location.Stop();
+    }
 
     public string path
     {
