@@ -37,7 +37,9 @@ function start()
 		if Player.returnMainUI then
 			ClickEvent.Start(ClickEvent.panelTable._choose_ui)
 		else
-			ClickEvent.Start(ClickEvent.panelTable._main_ui)
+			if Player._tosence_name ~= "PlaySence" then
+				ClickEvent.Start(ClickEvent.panelTable._main_ui)
+			end
 		end
 	end
 

@@ -48,6 +48,7 @@ local returnMainUI = false
 local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
+Player._tosence_name = "FairyMainUI"
 Player.huPaiPosition = 0
 Player._string_id = nil
 Player.wechat_code = ""

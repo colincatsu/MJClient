@@ -135,7 +135,7 @@ function start()
 	Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
-	--Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
 		GVoicePlatform:InitGVoice("1762572828","564a544493684e9ed39179f4c26d35a7",tostring(Player._player_data.common_prop.player_id))
 		GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
