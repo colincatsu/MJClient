@@ -478,6 +478,24 @@ function MahJong.ResetGameState()
     _player_pai_pool._forward_pai_number = 0
     _player_pai_pool._forward_card = {}
 
+    --流局牌
+    if _hand_cards._next_card then
+	    CS.UnityEngine.Object.Destroy(_hand_cards._next_card)
+	    _hand_cards._next_card = nil
+    end
+    if _hand_cards._opposite_card then
+	    CS.UnityEngine.Object.Destroy(_hand_cards._opposite_card)
+	    _hand_cards._opposite_card = nil
+    end
+    if _hand_cards._forward_card then
+	    CS.UnityEngine.Object.Destroy(_hand_cards._forward_card)
+	    _hand_cards._forward_card = nil
+    end
+    if _hand_cards._my_card then
+	    CS.UnityEngine.Object.Destroy(_hand_cards._my_card)
+	    _hand_cards._my_card = nil
+    end
+
     --玩家面前牌
     CS.UnityEngine.Object.Destroy(_player_father.father)
     _player_father = nil
@@ -500,6 +518,7 @@ function MahJong.ResetGameState()
 	Player.isTingPaiTuoGuan = false
 	Player.huPaiPosition = 0
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
+	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end
 
 --牌池
@@ -769,6 +788,7 @@ end
 function MahJong.LiuJuPai(paisData)
 	-- body
 	ClickEvent._play_ui.uselessRound.visible = true
+	MahJong.ModelPoolDelete(4)
 	for k,v in pairs(paisData) do
 		for dataNum,playerData in pairs(Player._all_players_data) do
 			if playerData.common_prop.player_id == v.player_id then
@@ -785,7 +805,7 @@ function MahJong.LiuJuPai(paisData)
 			        _hand_cards._next_card = Instantiate(modelTemp)
 			        _hand_cards._next_card.layer = 0
 			        _hand_cards._next_card.transform.position = _player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.position - newVector3(0,0,2*_modelSize.width)
-			        _hand_cards._next_card.transform.eulerAngles = _player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.eulerAngles
+			        _hand_cards._next_card.transform.eulerAngles = newVector3(180,-90,0) --_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._next_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 2 then
 					local tempPaiPool = {}
@@ -799,7 +819,7 @@ function MahJong.LiuJuPai(paisData)
 			        _hand_cards._opposite_card = Instantiate(modelTemp)
 			        _hand_cards._opposite_card.layer = 0
 			        _hand_cards._opposite_card.transform.position = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.position + newVector3(2*_modelSize.width,0,0)
-			        _hand_cards._opposite_card.transform.eulerAngles = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.eulerAngles
+			        _hand_cards._opposite_card.transform.eulerAngles = newVector3(180,-180,0) --_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._opposite_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 3 then
 					local tempPaiPool = {}
@@ -813,7 +833,7 @@ function MahJong.LiuJuPai(paisData)
 			        _hand_cards._forward_card = Instantiate(modelTemp)
 			        _hand_cards._forward_card.layer = 0
 			        _hand_cards._forward_card.transform.position = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position + newVector3(0,0,2*_modelSize.width)
-			        _hand_cards._forward_card.transform.eulerAngles = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.eulerAngles
+			        _hand_cards._forward_card.transform.eulerAngles = newVector3(180,90,0) --_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._forward_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 0 then
 					local tempPaiPool = {}
@@ -824,11 +844,11 @@ function MahJong.LiuJuPai(paisData)
 			        		break
 			        	end
 			        end
-			        _hand_cards._forward_card = Instantiate(modelTemp)
-			        _hand_cards._forward_card.layer = 0
-			        _hand_cards._forward_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.27)
-			        _hand_cards._forward_card.transform.eulerAngles = newVector3(180,0,0)
-		        	MahJong.AddModelShadow(_hand_cards._forward_card,-_modelSize.length/2+_modelSize.shadowShift,1)
+			        _hand_cards._my_card = Instantiate(modelTemp)
+			        _hand_cards._my_card.layer = 0
+			        _hand_cards._my_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.27)
+			        _hand_cards._my_card.transform.eulerAngles = newVector3(180,0,0)
+		        	MahJong.AddModelShadow(_hand_cards._my_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				end
 			end
 		end
@@ -853,6 +873,7 @@ function MahJong.PaiPushDown(paisData)
 	for k, v in pairs(paisData)do
 		local playerPos = ClickEvent.PlayerPosition(v.position)
 		if playerPos == 1 then
+			_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3.zero
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -876,6 +897,7 @@ function MahJong.PaiPushDown(paisData)
 			end
 			_player_pai_pool._next_pai_number = paiCount
 		elseif playerPos == 2 then
+			_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3.zero
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -899,6 +921,7 @@ function MahJong.PaiPushDown(paisData)
 			end
 			_player_pai_pool._opposite_pai_number = paiCount
 		elseif playerPos == 3 then
+			_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3.zero
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -2239,39 +2262,41 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	elseif Player.huPaiPosition  == 3 then
 		tempPosition = Effect.forwardPosition
 	end
-	if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
-        if Player.huPaiPosition == 0 then
-        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
-        else
-            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
-        end
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
-    	if Player.huPaiPosition == 0 then
-    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
-        else
-	        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
-        end
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
-    	if Player.huPaiPosition == 0 then
-    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
-        end
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
-    	if Player.huPaiPosition == 0 then
-    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
-        end
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
-        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
-        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
-    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
-    	if Player.huPaiPosition == 0 then
-    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
-        else
-	        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
+	if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
+		if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
+	        if Player.huPaiPosition == 0 then
+	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
+	        else
+	            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
+	        end
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
+	    	if Player.huPaiPosition == 0 then
+	    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
+	        else
+		        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
+	        end
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
+	    	if Player.huPaiPosition == 0 then
+	    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
+	        end
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
+	    	if Player.huPaiPosition == 0 then
+	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
+	        end
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
+	        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
+	        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
+	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
+	    	if Player.huPaiPosition == 0 then
+	    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
+	        else
+		        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
+		    end
+	    else
+	        Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
 	    end
-    else
-        Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
-    end
+	end
     local co = coroutine.create(function()
         yield_return(CS.UnityEngine.WaitForSeconds(2))
         Effect.AddNormalEffect(Effect._effect_name.roundEndShow,nil,nil,nil,nil)

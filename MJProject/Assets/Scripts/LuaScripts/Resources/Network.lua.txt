@@ -99,6 +99,8 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
     FLibEvent.AddEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
     FLibEvent.AddEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
+    FLibEvent.AddEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
+    FLibEvent.AddEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
 end
 
 ---------------------------------------------------------------------------
@@ -171,6 +173,8 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
     FLibEvent.DelEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
     FLibEvent.DelEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
+    FLibEvent.DelEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
+    FLibEvent.DelEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
 end
 
 ---------------------------------------------------------------------------

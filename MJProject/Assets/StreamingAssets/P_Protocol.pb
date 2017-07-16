@@ -1,5 +1,5 @@
 
-∞x
+◊|
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -15,12 +15,13 @@ card_index ("e
 ItemElement4
 inventory_type (2.Adoter.Asset.INVENTORY_TYPE
 index (
-	global_id ("•
+	global_id ("⁄
 User&
 account (2.Adoter.Asset.Account
 player_list (5
 wechat_token (2.Adoter.Asset.WechatAccessToken)
-wechat (2.Adoter.Asset.WechatUnion"·
+wechat (2.Adoter.Asset.WechatUnion3
+client_info (2.Adoter.Asset.ClientInfomation"·
 
 PlayerProp-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -29,21 +30,25 @@ PlayerProp-
 game_oper_state (2.Adoter.Asset.GAME_OPER_TYPE
 pai_oper_count (
 
-has_tinged ("Å
+has_tinged ("ß
 
 GameRecord2
-list (2$.Adoter.Asset.GameRecord.GameElementæ
+list (2$.Adoter.Asset.GameRecord.GameElement‰
 GameElement
-	player_id (
-score (C
-details (22.Adoter.Asset.GameRecord.GameElement.DetailElementH
+	player_id (
+nickname (
+
+headimgurl (
+score (C
+details (22.Adoter.Asset.GameRecord.GameElement.DetailElementH
 DetailElement
 score ((
-fan_type (2.Adoter.Asset.FAN_TYPE"[
+fan_type (2.Adoter.Asset.FAN_TYPE"á
 RoomHistory
 room_id (
-create_time (&
-list (2.Adoter.Asset.GameRecord"µ
+create_time (*
+options (2.Adoter.Asset.RoomOptions&
+list (2.Adoter.Asset.GameRecord"µ
 
 CommonProp
 	player_id (
@@ -88,24 +93,23 @@ phone_type ((
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"™
+attachments (2.Adoter.Asset.MailAttachment"€
 Player-
-common_prop (2.Adoter.Asset.CommonProp
-	server_id (*
-	inventory (2.Adoter.Asset.Inventory5
-common_limit (2.Adoter.Asset.PlayerCommonLimit/
-	cool_down (2.Adoter.Asset.PlayerCoolDown
+common_prop (2.Adoter.Asset.CommonProp
+account (
+	server_id (*
+	inventory (2.Adoter.Asset.Inventory5
+common_limit (2.Adoter.Asset.PlayerCommonLimit/
+	cool_down (2.Adoter.Asset.PlayerCoolDown
 
-login_time (
-logout_time (
-	sign_time (3
-client_info	 (2.Adoter.Asset.ClientInfomation
+login_time (
+logout_time (
+	sign_time	 (
 mail_list_system
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
 game_setting (2.Adoter.Asset.PlayerSetting/
-room_history (2.Adoter.Asset.RoomHistory)
-wechat (2.Adoter.Asset.WechatUnion"®
+room_history (2.Adoter.Asset.RoomHistory"®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -319,11 +323,26 @@ card_value ("a
 dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
 DistanceElement-
 position (2.Adoter.Asset.POSITION_TYPE
-distance ("Æ
+distance ("„
 GameCalculateE
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE(
-record (2.Adoter.Asset.GameRecord,
-max_fan_type (2.Adoter.Asset.FAN_TYPE"m
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE3
+calculte_type (2.Adoter.Asset.CALCULATE_TYPE(
+record (2.Adoter.Asset.GameRecord,
+max_fan_type (2.Adoter.Asset.FAN_TYPE"¶
+
+RoomRecord
+	player_id (
+nickname (
+
+headimgurl (
+score (
+pk_count (
+banker_count (
+	win_count (
+dianpao_count ("Ä
+RoomCalculateE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_CALCULATE(
+record (2.Adoter.Asset.RoomRecord"m
 GameInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_INFO
 banker_player_id ("å
@@ -440,7 +459,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*©
+ERROR_COMMON_REWARD_HAS_GOT3*Ã
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -489,7 +508,8 @@ ERROR_CODE
 META_TYPE_S2C_PAI_PUSH_DOWNá
 META_TYPE_S2C_GAMES_FULLà$
 META_TYPE_S2C_WECHAT_INFOMATIONâ
-META_TYPE_S2C_GAME_STARTä
+META_TYPE_S2C_GAME_STARTä!
+META_TYPE_S2C_ROOM_CALCULATEã
 META_TYPE_S2C_COUNTË
 META_TYPE_S2S_REGISTERÈ!
 META_TYPE_S2S_KICKOUT_PLAYERÍ*l
@@ -517,11 +537,15 @@ ERROR_CODE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
-GAME_OPER_TYPE_KICKOUT*m
+GAME_OPER_TYPE_KICKOUT*D
+CALCULATE_TYPE
+CALCULATE_TYPE_HUPAI
+CALCULATE_TYPE_LIUJU*ê
 KICK_OUT_REASON
 KICK_OUT_REASON_BEGIN 
 KICK_OUT_REASON_DISCONNECT
-KICK_OUT_REASON_OTHER_LOGIN*<
+KICK_OUT_REASON_OTHER_LOGIN!
+KICK_OUT_REASON_CHANGE_SERVER*<
 	ROLE_TYPE
 ROLE_TYPE_PLAYER
 ROLE_TYPE_GAME_SERVER

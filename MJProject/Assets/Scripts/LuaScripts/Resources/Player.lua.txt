@@ -40,6 +40,10 @@ _invokeFunctionTable.front = 1
 _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
+Player._all_calculate_data = {}--所有结算数据
+Player._calculate_table_number = 0
+Player._room_information = {}--房间信息
+Player._room_calculate_data = nil--房间结算
 local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
@@ -60,6 +64,7 @@ Player.isFriendRoom = false
 Player.voiceRoomName = ""
 Player.latitude = -1.0
 Player.longitude = -1.0
+Player.isPlaying = false
 
 
 function Player.GetinvokeFunctionCache()
@@ -404,6 +409,17 @@ end
 ---------------------------------------------
 --
 
+function Player.OnGameStart(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.GameStart",stuff)
+    if message.total_rounds and message.current_rounds then
+        ClickEvent.UpdateRoundNumber(message.current_rounds,message.total_rounds)
+    end
+end
+
 function Player.OnWeChatInfo(type_t,stuff)
     -- body
     if not stuff then
@@ -447,6 +463,7 @@ function Player.OnLiuJu(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.LiuJu",stuff)
+    ClickEvent.SetRemainNum(16)
     Player.MahJong.LiuJuPai(message.elements)
 end
 
@@ -482,6 +499,16 @@ function Player.OnGameInformation(type_t,stuff)
     end
 end
 
+function Player.OnRoomCalculate(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.RoomCalculate",stuff)
+    Player._room_calculate_data = message
+    ClickEvent.ShowRoomCalculate()
+end
+
 function Player.OnGameCalculate(type_t,stuff)
     -- body
     if not stuff then
@@ -489,7 +516,12 @@ function Player.OnGameCalculate(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.GameCalculate",stuff)
     Player._calculate_data = message
+    if message.record then
+        Player._calculate_table_number = Player._calculate_table_number + 1
+        Player._all_calculate_data[Player._calculate_table_number] = message.record
+    end
     --Player.ThreadFunction()
+    Player.isPlaying = false
     Player.MahJong.OnRoundEndShowEffect(Player._calculate_data)
 end
 
@@ -510,20 +542,23 @@ function Player.OnRoomInformation(type_t,stuff)
     if message.player_list then
         Player._all_players_data = message.player_list
         --if not Player._my_player_data then
-            for k,v in pairs(Player._all_players_data) do
-                if v.oper_type == "GAME_OPER_TYPE_START" then
-                    ClickEvent.ShowAlready(v.common_prop.player_id)
-                end
-                if v.common_prop.player_id == Player._player_data.common_prop.player_id then
-                    Player._my_player_data = v
-                    --Player.ThreadFunction(
-                    Player.MahJong.UpdateMyDataState()
-                end
+        for k,v in pairs(Player._all_players_data) do
+            if v.common_prop.player_id == Player._player_data.common_prop.player_id then
+                Player._my_player_data = v
+                --Player.ThreadFunction(
+                Player.MahJong.UpdateMyDataState()
             end
-        --end
+        end
         if Player._my_player_data then
             --Player.ThreadFunction(
             ClickEvent.RoomInformationUpdate()
+        end
+        for k,v in pairs(Player._all_players_data) do
+            if v.oper_type == "GAME_OPER_TYPE_START" then
+                if not Player.isPlaying and Player._my_player_data then
+                    ClickEvent.ShowAlready(v.common_prop.player_id)
+                end
+            end
         end
     else
         LogWarning("list null")
@@ -546,10 +581,10 @@ function Player.OnPlayerInformation(type_t,stuff)
     else
     end
     --]]
+    Player.GetGpsInformation()
     Player._player_data = message.player
     if Player._tosence_name ~= "PlaySence" then
         ClickEvent.ThreadToMainMenu()
-        Player.GetGpsInformation()
     end
 end
 
@@ -566,13 +601,17 @@ function Player.OnEnterRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
     if message.error_code == "ERROR_SUCCESS" then
+        Player._room_information = message.room
         this._roomId = message.room.room_id
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
+        ClickEvent.ShowSmallWindow(2010)
         LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
+        ClickEvent.ShowSmallWindow(2008)
         LogWarning("is full")
     end
+    LogWarning(message.error_code)
 end
 
 function Player.OnPlayerList(type_t,stuff)
@@ -703,6 +742,7 @@ function Player.OnPaiNotify(type_t,stuff)
             ClickEvent.notPushPassMsg = true
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
+        Player.isPlaying = true
         ClickEvent.CloseAlready()
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
@@ -873,7 +913,9 @@ function Player.OnGameOperation(type_t,stuff)
         end
     end
     if message.oper_type == "GAME_OPER_TYPE_START" then
-        --ClickEvent.ShowAlready(message.source_player_id)
+        if not Player.isPlaying then
+            ClickEvent.ShowAlready(message.source_player_id)
+        end
     end
 end
 
@@ -895,6 +937,7 @@ function Player.OnCreateRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
+    Player._room_information = message.room
     --Player.ThreadFunction(
     Player.LoadScene("PlaySence")
     --this._roomType = message.room.room_type
@@ -961,7 +1004,7 @@ function Player.OnAlertMessage(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
-    
+    LogWarning(message.error_code)
     ClickEvent.ShowToast(message.error_code)
 end
 ---------------------------------------------------------------------------
