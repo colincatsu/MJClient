@@ -124,6 +124,8 @@ function Player.GpsCallBack(latitude,longitude)
     -- body
     Player.latitude = latitude
     Player.longitude = longitude
+    LogWarning("jxyGps:"..tostring(Player.latitude))
+    LogWarning("jxyGps:"..tostring(Player.longitude))
     WeChatPlatform.gpsGet = nil
     if Player.latitude == -1.0 then
 
@@ -245,7 +247,7 @@ function Player.LoadScene(senceName, buffer)
         Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     end
     CS.UnityEngine.Resources.UnloadUnusedAssets()
-    CS.UnityEngine.Application.LoadLevel("LoadingSence")
+    CS.UnityEngine.Application.LoadLevelAsync("LoadingSence")
 end
 
 ---------------------------------------------------------------------------
@@ -285,6 +287,11 @@ function Player.CmdCreatePlayer()
     this.SendProtocol("CreatePlayer",createPlayer)
 end
 
+function Player.CmdGuestLogin()
+    -- body
+    local guestLogin = {}
+    this.SendProtocol("GuestLogin",guestLogin)
+end
 
 function Player.CmdWechatLogin(m_access_code)
     -- body
@@ -408,6 +415,20 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnGuestLogin(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.GuestLogin",stuff)
+    Player._string_id = message.account
+    local path = CS.UnityEngine.Application.persistentDataPath.."/"
+    local mFile = io.open(path.."guestID.txt" ,"w")
+    mFile:write(Player._string_id)  
+    mFile:close()
+    Player.CmdLogin(Player._string_id)
+end
 
 function Player.OnGameStart(type_t,stuff)
     -- body
@@ -961,7 +982,7 @@ function Player.OnKillOut(type_t,stuff)
     if not stuff then
         return
     end
-    local message = protobuf.decode("Adoter.Asset.KillOut", stuff)
+    local message = protobuf.decode("Adoter.Asset.KickOut", stuff)
     if Player._my_player_data.common_prop.player_id and Player._my_player_data.common_prop.player_id == message.player_id then
 
     end

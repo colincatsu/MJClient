@@ -63,8 +63,8 @@ local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 function ClickEvent.Awake( ... )
 	-- body
-	UIConfig.defaultFont = "MJFont"
 	UIPackage.AddPackage("FairyUI/MXUI")
+	UIConfig.defaultFont = "MJFont"
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
 	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
 	ClickEvent._createObject = {}
@@ -72,9 +72,10 @@ function ClickEvent.Awake( ... )
 end
 function ClickEvent.Start(loadUI)
 	-- body
+	ClickEvent.uiPanel.ui.visible = false
+	GRoot.inst:RemoveChildren()
+	ClickEvent.CreateNewPanel(loadUI)
 	if ClickEvent.uiPanel.ui.visible then
-		ClickEvent.uiPanel.ui.visible = false
-		ClickEvent.CreateNewPanel(loadUI)
 	end
 end
 
@@ -99,8 +100,12 @@ end
 
 function ClickEvent.CreateNewPanel(panelName)
 	-- body
-	if not panelName and Player._invoke_data then
-		panelName = Player._invoke_data
+	if panelName == ClickEvent.panelTable._main_ui then
+		if Player and Player._tosence_name then
+			if Player._tosence_name == "LoadingSence" or Player._tosence_name == "PlaySence" then
+				return
+			end
+		end 
 	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
@@ -250,6 +255,12 @@ function ClickEvent.CreateNewPanel(panelName)
 			end
 		end
 		--]]
+		elseif panelName == ClickEvent.panelTable._main_ui then
+			if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
+				_currentPanel.panel:GetChild("Title").visible = false
+				_currentPanel.panel:GetChild("Account").visible = false
+				_currentPanel.panel:GetChild("LoginButton").visible = false
+			end
 	end
 	
 	--[[
@@ -869,7 +880,7 @@ function ClickEvent.ChangeAccount(gameObject)
 	ClickEvent.Close()
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
-	os.remove(CS.UnityEngine.Application.persistentDataPath.."/")
+	os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
 end
 
 function ClickEvent.ServiveTerm1(gameObject)
@@ -1291,6 +1302,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 				end
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
+			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			if v.dis_list then
 				for gpsKey,gpsData in pairs(v.dis_list) do
 					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
@@ -1298,7 +1310,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 						if gpsData.distance == -1.0 then
 							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance)
+							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 						end
 					end
 				end
@@ -1340,6 +1352,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 				end
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
+			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			if v.dis_list then
 				for gpsKey,gpsData in pairs(v.dis_list) do
 					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
@@ -1347,7 +1360,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 						if gpsData.distance == -1.0 then
 							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance)
+							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 						end
 					end
 				end
@@ -1389,6 +1402,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 				end
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
+			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			if v.dis_list then
 				for gpsKey,gpsData in pairs(v.dis_list) do
 					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
@@ -1396,7 +1410,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 						if gpsData.distance == -1.0 then
 							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance)
+							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 						end
 					end
 				end
@@ -1420,10 +1434,11 @@ end
 function ClickEvent.LoginButton(gameObject)
 	-- body
 	--[[
-	--]]
 	local textShow = _currentPanel.panel:GetChild("Account"):GetChild("InputText")
 	Player._string_id = textShow.text
 	Player.CmdLogin(Player._string_id)
+	--]]
+
 end
 function ClickEvent.Account( gameObject )
 	-- body
@@ -1439,8 +1454,18 @@ function ClickEvent.GuestLogin( gameObject )
 	else
 		CS.UnityEngine.Debug.LogWarning("no find toggle")
 	end
-	--]]
 	Player.CmdEnterGame(Player._id)
+	--]]
+	local path = CS.UnityEngine.Application.persistentDataPath.."/"
+	local openIdFile = io.open(path.."guestID.txt")
+	if not openIdFile then
+		Player._string_id = ""
+		Player.CmdGuestLogin()
+	else
+		Player._string_id = openIdFile:read "*a"
+        openIdFile:close()
+        Player.CmdLogin(Player._string_id)
+	end
 	CS.UnityEngine.Debug.LogWarning("ClickEvent.GuestLogin")
 end
 

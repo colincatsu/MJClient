@@ -10,7 +10,7 @@ local _loading_sence = "LoadingSence"
 local _play_sence = "PlaySence"
 local _tosence_name = nil
 
-local _copyed = false
+LoadingCT._copyed = false
 
 local function AsyncYieldReturn(to_yield, cb)
     self:YieldAndCallback(to_yield, cb)
@@ -29,10 +29,10 @@ function start()
 	if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
 		LoadingCT.CopyAndroidRes()
 	end
-	if not _copyed and CS.LuaCommon.isAndroid then
+	if not LoadingCT._copyed and CS.LuaCommon.isAndroid then
 		return
 	end
-	if not _copyed and CS.LuaCommon.isIos then
+	if not LoadingCT._copyed and CS.LuaCommon.isIos then
 		return
 	end
 	if Player and Player._tosence_name then
@@ -50,8 +50,8 @@ end
 function LoadingCT.CopyAndroidRes()
 	-- body
 	--android load
-	if _copyed then return true end
-	_copyed = true
+	if LoadingCT._copyed then return end
+	LoadingCT._copyed = true
 	local co = coroutine.create(function()
 		local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 		if not folder.Exists then

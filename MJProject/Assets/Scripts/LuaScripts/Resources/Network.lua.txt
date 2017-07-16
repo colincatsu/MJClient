@@ -83,6 +83,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
     FLibEvent.AddEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
     FLibEvent.AddEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
+    FLibEvent.AddEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
     
     FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
@@ -108,10 +109,10 @@ end
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
     --_socketClient:SendConnect()
-    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("111.230.140.74",50000)
     --_network_manager:ConnectTo("111.230.140.74",50013)
     --_network_manager:ConnectTo("182.92.87.147",50000)
-    --_network_manager:ConnectTo("192.168.136.100",50000)
+    _network_manager:ConnectTo("123.206.24.228",60032)
     CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
 
@@ -157,6 +158,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
     FLibEvent.DelEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
     FLibEvent.DelEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
+    FLibEvent.DelEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
 
     FLibEvent.DelEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
