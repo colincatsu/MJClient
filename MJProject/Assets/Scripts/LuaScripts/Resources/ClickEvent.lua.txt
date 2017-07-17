@@ -27,6 +27,7 @@ ClickEvent.panelTable = {
 	_welfare_ui = "WelfareScene",
 	_activity_ui = "Activity",
 	_toast_ui = "Toast",
+	_not_move_toast_ui = "NotMoveToast",
 	_room_calculate_ui = "FinishBalance",
 }
 ClickEvent.uiPanel = nil
@@ -261,6 +262,8 @@ function ClickEvent.CreateNewPanel(panelName)
 				_currentPanel.panel:GetChild("Account").visible = false
 				_currentPanel.panel:GetChild("LoginButton").visible = false
 			end
+			local x = 1/ClickEvent.scale
+			Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.48,_currentPanel.panel:GetChild("n20").height*0.5))
 	end
 	
 	--[[
@@ -607,6 +610,20 @@ function ClickEvent.ShowToast(content)
 	coroutine.resume(co)
 end
 
+function ClickEvent.ShowNotMoveToast(content,deleteTime)
+	-- body
+	ClickEvent.Close()
+	ClickEvent.PopPanel(ClickEvent.panelTable._not_move_toast_ui)
+	_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(content)
+	if deleteTime then
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
+	    ClickEvent.Close()
+		end)
+		coroutine.resume(co)
+	end
+end
+
 function ClickEvent.ShowChiButton()
 	-- body
 	ClickEvent.AddOperationButton("GameChiButton")
@@ -866,10 +883,10 @@ function ClickEvent.DapaiUIHide(position)
 	end
 end
 
-function ClickEvent.showDisconnect( ... )
+function ClickEvent.showDisconnect(content)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = "Network disconnected."
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(content)
 end
 ---------------------------------------------------------------------------
 -------------点击功能函数
@@ -1284,7 +1301,11 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			if v.wechat and v.wechat.nickname then
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.wechat.nickname)
+			else
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			end
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -1303,15 +1324,12 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-			if v.dis_list then
-				for gpsKey,gpsData in pairs(v.dis_list) do
-					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
-					if tempPos == 1 then
-						if gpsData.distance == -1.0 then
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
-						end
+			for gpsKey,gpsData in pairs(v.dis_list) do
+				if v.position == gpsData.position then
+					if gpsData.distance == -1.0 then
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
+					else
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 					end
 				end
 			end
@@ -1334,7 +1352,11 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 2 then
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			if v.wechat and v.wechat.nickname then
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.wechat.nickname)
+			else
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			end
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -1353,15 +1375,12 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-			if v.dis_list then
-				for gpsKey,gpsData in pairs(v.dis_list) do
-					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
-					if tempPos == 2 then
-						if gpsData.distance == -1.0 then
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
-						end
+			for gpsKey,gpsData in pairs(v.dis_list) do
+				if v.position == gpsData.position then
+					if gpsData.distance == -1.0 then
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
+					else
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 					end
 				end
 			end
@@ -1384,7 +1403,11 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 3 then
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(v.common_prop.player_id)
-			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			if v.wechat and v.wechat.nickname then
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.wechat.nickname)
+			else
+				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
+			end
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
@@ -1403,15 +1426,12 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(WeChatPlatform:SetAsyncImage(v.wechat.headimgurl))
 			end
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-			if v.dis_list then
-				for gpsKey,gpsData in pairs(v.dis_list) do
-					local tempPos = _position_index[gpsData.position] - _position_index[Player._my_player_data.position]
-					if tempPos == 3 then
-						if gpsData.distance == -1.0 then
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
-						else
-							_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
-						end
+			for gpsKey,gpsData in pairs(v.dis_list) do
+				if v.position == gpsData.position then
+					if gpsData.distance == -1.0 then
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
+					else
+						_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(gpsData.distance).."m"
 					end
 				end
 			end

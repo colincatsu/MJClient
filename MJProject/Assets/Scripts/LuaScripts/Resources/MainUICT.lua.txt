@@ -62,6 +62,7 @@ end
 
 function update( ... )
 	-- body
+	Player.myUpdate()
 	--[[
 	if Player.self == self then
 		local x = Player.GetinvokeFunctionCache()
@@ -69,6 +70,7 @@ function update( ... )
 			x()
 		end
 	end
+	print("jxy")
 	--]]
 end
 

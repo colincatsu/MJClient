@@ -47,7 +47,7 @@ Player._room_calculate_data = nil--房间结算
 local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
-local _connected = false
+Player._connected = false
 local returnMainUI = false
 local isTingPaied = false
 local isTuoGuan = false
@@ -65,6 +65,13 @@ Player.voiceRoomName = ""
 Player.latitude = -1.0
 Player.longitude = -1.0
 Player.isPlaying = false
+
+Player.reConnect = false
+Player.disConnetedTime = nil
+Player.connectTimes = 3
+local hasConnectTimes = 0
+Player.connectCountDownTime = 5
+Player.isTimeOut = false
 
 
 function Player.GetinvokeFunctionCache()
@@ -254,6 +261,32 @@ end
 --数据封装
 ---------------------------------------------------------------------------
 
+function Player.myUpdate( ... )
+    -- body
+    if Player.reConnect and Player.disConnetedTime then
+        if (CS.UnityEngine.Time.time - Player.disConnetedTime) >= Player.connectCountDownTime then
+            Network.Start()
+            Network.ConnetServer()
+            Player.disConnetedTime = CS.UnityEngine.Time.time
+            hasConnectTimes = hasConnectTimes + 1
+        end
+        if hasConnectTimes >= Player.connectTimes then
+            hasConnectTimes = 0
+            Player.reConnect = false
+            Player.disConnetedTime = nil
+            Player.isTimeOut = true
+            ClickEvent.ShowNotMoveToast(2029,5)
+        end
+    end
+end
+
+function Player.CmdReConnect()
+    -- body
+    reConnect = {
+        player_id = Player._player_data.common_prop.player_id,
+    }
+    this.SendProtocol("ReConnect",reConnect)
+end
 
 function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
     -- body
@@ -1000,12 +1033,14 @@ function Player.OnSayHi( type_t,stuff )
         return
     end
     local message = protobuf.decode("Adoter.Asset.SayHi", stuff)
+    --[[
     if not message.heart_count then
         LogWarning("heart_count is nil")
         return
     end
     local tempHertCount = message.heart_count + 1
     Player.CmdSayHi(tempHertCount)
+    --]]
 end
 
 function Player.CmdSayHi( heart_count_client )

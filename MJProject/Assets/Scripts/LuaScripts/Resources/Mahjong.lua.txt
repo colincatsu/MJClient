@@ -2817,6 +2817,7 @@ function update()
 			AudioPlayer.PlaySound(AudioPlayer._audio_name.Dice,false,1)
 		end
 	end
+	Player.myUpdate()
 	--[[
 	if Player.self == self then
 		local x = Player.GetinvokeFunctionCache()

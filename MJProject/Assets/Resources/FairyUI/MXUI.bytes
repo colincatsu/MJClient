@@ -530,7 +530,7 @@
 </component>ldfsql.xml|764|<component size="193,88">
   <displayList>
     <image id="n0_ldfs" name="AvatarBg" src="isedp2" xy="0,0" size="88,88"/>
-    <text id="n1_ldfs" name="WinLoseNum" xy="91,43" size="72,47" font="ui://krtoytc1ysjnog" fontSize="26" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="none" text="+59"/>
+    <text id="n1_ldfs" name="WinLoseNum" xy="91,43" size="72,47" font="ui://krtoytc1ysjnog" fontSize="26" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="none" text="-59"/>
     <text id="n2_ldfs" name="n2" xy="162,43" size="31,47" fontSize="26" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="分"/>
     <loader id="n3_ldfs" name="AvatarLoader" xy="4,3" size="81,81" url="ui://krtoytc1nnbzjw" fill="scale"/>
     <text id="n4_ldfs" name="PlayerName" xy="89,-2" size="103,47" fontSize="16" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="对方根本不想输入"/>
@@ -872,7 +872,7 @@
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>package.xml|44156|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|44247|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1275,6 +1275,7 @@
     <component id="ngmx4sk" name="GangPai" path="/UIPIC/xinzeng/" size="255,94" exported="true"/>
     <component id="qpkkjs" name="TingArrow" path="/UIPIC/游戏页面/" size="47,51" exported="true"/>
     <component id="r7eeo4" name="PopWindowsMidShowText" path="/UIPIC/xinzeng/" size="927,462" exported="true"/>
+    <component id="ro1n4u3" name="NotMoveToast" path="/" size="1334,750" exported="true"/>
     <component id="s1q8o3" name="ServerSelect" path="/" size="1334,750" exported="true"/>
     <component id="s5h9jr" name="Bg" path="/" size="1334,750" exported="true"/>
     <component id="t5cirr" name="Share" path="/" size="1334,750" exported="true"/>
@@ -1409,6 +1410,11 @@
     </image>
   </displayList>
   <Button mode="Check"/>
+</component>ro1n4u3.xml|188|<component size="1334,750">
+  <displayList>
+    <component id="n1_ro1n" name="n0" src="g09nlv" xy="150,360"/>
+  </displayList>
+  <transition name="ToastMove" autoPlay="true"/>
 </component>s1q8o2.xml|213|<component size="100,100" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList/>
@@ -1590,11 +1596,11 @@
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>uejtqo.xml|1021|<component size="795,454" overflow="scroll">
+</component>uejtqo.xml|1024|<component size="795,454" overflow="scroll">
   <displayList>
     <loader id="n1_kew4" name="n1" xy="16,11" size="768,440" fill="scaleMatchWidth"/>
-    <text id="n2_tb6z" name="AgentInfo" xy="233,108" size="445,41" fontSize="36" color="#663300" autoSize="height" text="购买房卡请联系所在群主"/>
-    <text id="n3_lidq" name="AgentInfo" xy="234,232" size="443,119" fontSize="36" color="#663300" autoSize="height" text="代理咨询请联系微信客服：&#xA;微信号：8887878&#xA;微信号：7894212wsa"/>
+    <text id="n2_tb6z" name="AgentInfo" xy="233,108" size="445,40" fontSize="36" color="#663300" autoSize="height" text="购买房卡请联系所在群主"/>
+    <text id="n3_lidq" name="AgentInfo" xy="234,232" size="540,118" fontSize="36" color="#663300" autoSize="height" text="免费代理咨询请联系微信客服:&#xA;微信号：xlcyqp001&#xA;微信号：xlcyqp002"/>
     <image id="n4_lidq" name="n4" src="w61cfb" xy="142,86"/>
     <image id="n5_lidq" name="n5" src="r8qd4te" xy="144,211"/>
     <image id="n6_lidq" name="n6" src="w61ced" xy="112,187"/>
@@ -1692,8 +1698,8 @@
     <text id="n14_v7wh" name="n14" xy="111,898" size="112,31" font="書體坊顏體㊣" fontSize="26" color="#ffffff" text="番数计算"/>
     <text id="n15_v7wh" name="n15" xy="21,954" size="766,85" fontSize="20" color="#663300" leading="5" autoSize="none" text="番数叠加方式为1/2/4/8/16/32/64/128以此类推&#xA;自摸加一番且三家给，点炮其他两家坐车也需要给&#xA;付分公式为 付分=2番数*房间基础分"/>
   </displayList>
-</component>uejtrp.fnt|634|info creator=UIBuilder resizable=true colored=true
-char id=45 img=uejtr4 xoffset=0 yoffset=0 xadvance=0
+</component>uejtrp.fnt|636|info creator=UIBuilder resizable=true colored=true
+char id=45 img=uejtr4 xoffset=0 yoffset=-17 xadvance=0
 char id=48 img=uejtr5 xoffset=0 yoffset=0 xadvance=0
 char id=49 img=uejtr6 xoffset=0 yoffset=0 xadvance=0
 char id=50 img=uejtr7 xoffset=0 yoffset=0 xadvance=0
@@ -1894,9 +1900,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <loader id="n2_fb5y" name="AvatarLoader" xy="2,3" size="67,67" url="ui://krtoytc1nnbzjv" fill="scale"/>
   </displayList>
   <Button/>
-</component>w61cbv.xml|226|<component size="241,66">
+</component>w61cbv.xml|248|<component size="241,66" overflow="hidden">
   <displayList>
-    <text id="n0_npla" name="PlayerName" xy="18,-2" size="242,72" font="幼圆" fontSize="30" color="#ffffff" vAlign="middle" autoSize="none" text="对方正在输入."/>
+    <text id="n0_npla" name="PlayerName" xy="22,15" size="500,34" font="幼圆" fontSize="30" color="#ffffff" vAlign="middle" text="对方正在输入.ssssssssssssssssssss"/>
   </displayList>
 </component>w61cbw.xml|512|<component size="219,62" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -2800,7 +2806,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="0" endValue="1" duration="24"/>
     <item time="24" type="Alpha" tween="true" startValue="1"/>
   </transition>
-</component>w61cj9.xml|10603|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cj9.xml|10686|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_npla" name="Bg" src="w61cbq" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
@@ -2890,7 +2896,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </component>
     <group id="n37_fze1" name="GreatMasterHandRoom" xy="2070,205" size="351,390" group="n27_fb5y" advanced="true"/>
     <group id="n27_fb5y" name="Btns" xy="-1,7" size="2422,720" advanced="true"/>
-    <component id="n29_cton" name="Inform" src="j3uokm" xy="133,105"/>
+    <component id="n29_cton" name="Inform" src="j3uokm" xy="133,105">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
   </displayList>
   <transition name="HideFriendMode">
     <item time="0" type="XY" target="n22_k35j" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
@@ -3805,9 +3813,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="XY" target="n0_xgtz" tween="true" startValue="150,257" endValue="150,156" duration="84"/>
     <item time="42" type="Alpha" target="n0_xgtz" tween="true" startValue="1" endValue="0" duration="42"/>
   </transition>
-</component>ysjnog.fnt|687|info creator=UIBuilder resizable=true colored=true
+</component>ysjnog.fnt|688|info creator=UIBuilder resizable=true colored=true
 char id=43 img=ysjnoh xoffset=0 yoffset=0 xadvance=0
-char id=45 img=ysjnoi xoffset=0 yoffset=0 xadvance=0
+char id=45 img=ysjnoi xoffset=0 yoffset=-9 xadvance=0
 char id=48 img=ysjnoj xoffset=0 yoffset=0 xadvance=0
 char id=49 img=ysjnok xoffset=0 yoffset=0 xadvance=0
 char id=50 img=ysjnol xoffset=0 yoffset=0 xadvance=0

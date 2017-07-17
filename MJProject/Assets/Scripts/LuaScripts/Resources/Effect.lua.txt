@@ -37,6 +37,7 @@ Effect._effect_name = {
 	qingYiSeShow = "Effect_status_display_QingYiSe",
 	tingShow = "Effect_status_display_ting",
 	ziMoShow = "Effect_status_display_zimo",
+	mainUI = "Effects_ZhuJieMian_01",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
