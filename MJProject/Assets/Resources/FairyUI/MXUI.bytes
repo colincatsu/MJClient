@@ -248,7 +248,7 @@
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0,0" duration="5"/>
   </transition>
-</component>isedpc.xml|811|<component size="178,75" extention="Button">
+</component>isedpc.xml|799|<component size="178,75" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="isedox" xy="0,0">
@@ -256,7 +256,7 @@
     </image>
     <text id="n2_ised" name="n2" xy="22,12" size="78,44" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="领取"/>
     <text id="n4_ised" name="n4" xy="85,11" size="78,44" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="( /2)"/>
-    <text id="n5_ised" name="Num" xy="97,11" size="32,44" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="2"/>
+    <text id="n5_ised" name="Num" xy="98,11" size="32,44" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="2"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
 </component>isedpe.xml|504|<component size="178,75" extention="Button">
@@ -2552,7 +2552,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w61cg7.xml|1002|<component size="81,105" extention="Button">
+</component>w61cg7.xml|1300|<component size="81,105" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_algd" name="AvatarBg" src="w61cfl" xy="0,0" size="81,105">
@@ -2566,7 +2566,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </loader>
     <image id="n8_algd" name="Zhuang" src="w61cfk" xy="52,-5"/>
     <image id="n9_s5h9" name="RoomLord" src="w61cdy" xy="-4,-7" rotation="-8"/>
-    <component id="n10_ldfs" name="PlayerLineState" src="ldfsqh" xy="16,48"/>
+    <component id="n10_ldfs" name="PlayerLineState" src="ldfsqh" xy="17,26"/>
+    <text id="n11_raum" name="PlayerName" xy="0,61" size="79,20" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" singleLine="true" text="对方根本不想输入...">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
   </displayList>
   <Button/>
 </component>w61cg8.xml|370|<component size="76,74" extention="Button">
@@ -3744,12 +3747,13 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </group>
     <image id="n10_r8qd" name="n10" src="r8qd4sw" xy="355,197"/>
   </displayList>
-</component>w61cjp.xml|2728|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjp.xml|2878|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <component id="n28_i0jk" name="Bg" src="i0jkoe" xy="203,38" group="n27_s5h9"/>
     <text id="n5_qb9a" name="Tmusic" xy="330,399" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="音乐"/>
     <text id="n6_qb9a" name="Teffect" xy="330,485" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="音效"/>
     <text id="n7_qb9a" name="Tgamevoice" xy="716,398" size="85,44" group="n27_s5h9" fontSize="40" color="#7c604c" text="语音"/>
+    <text id="n32_raum" name="Version" xy="364,650" size="73,17" group="n27_s5h9" fontSize="12" color="#ffffff" autoSize="height" text="1.0.0.0718"/>
     <text id="n8_qb9a" name="Tclickout" xy="676,484" size="168,44" group="n27_s5h9" fontSize="40" color="#7c604c" autoSize="height" text="单击出牌"/>
     <component id="n3_qb9a" name="Close" src="w61cj0" xy="1091,94" group="n25_jujv"/>
     <component id="n19_jujv" name="PlayerInformation" src="w61cgl" xy="308,172" group="n25_jujv"/>

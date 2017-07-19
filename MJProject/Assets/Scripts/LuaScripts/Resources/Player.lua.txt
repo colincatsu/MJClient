@@ -65,13 +65,20 @@ Player.voiceRoomName = ""
 Player.latitude = -1.0
 Player.longitude = -1.0
 Player.isPlaying = false
+Player.playerScore = {--游戏每家分数保存
+    [0] = 0,
+    [1] = 0,
+    [2] = 0,
+    [3] = 0,
+}
 
 Player.reConnect = false
 Player.disConnetedTime = nil
 Player.connectTimes = 3
-local hasConnectTimes = 0
+Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
+Player.pc_version = "1.0.1.0720"
 
 
 function Player.GetinvokeFunctionCache()
@@ -137,6 +144,7 @@ function Player.GpsCallBack(latitude,longitude)
     if Player.latitude == -1.0 then
 
     else
+        --Player.CmdUpdateClientData(38.115556395496299,13.361389338970184)
         Player.CmdUpdateClientData(Player.latitude,Player.longitude)
     end
 end
@@ -268,14 +276,18 @@ function Player.myUpdate( ... )
             Network.Start()
             Network.ConnetServer()
             Player.disConnetedTime = CS.UnityEngine.Time.time
-            hasConnectTimes = hasConnectTimes + 1
+            Player.hasConnectTimes = Player.hasConnectTimes + 1
         end
-        if hasConnectTimes >= Player.connectTimes then
-            hasConnectTimes = 0
+        if Player.hasConnectTimes >= Player.connectTimes then
+            Player.hasConnectTimes = 0
             Player.reConnect = false
             Player.disConnetedTime = nil
             Player.isTimeOut = true
-            ClickEvent.ShowNotMoveToast(2029,5)
+            if Player._tosence_name == "PlaySence" then
+                ClickEvent.ShowNotMoveToast(2029,5)
+            else
+                ClickEvent.ShowNotMoveToast(2033,5)
+            end
         end
     end
 end
@@ -335,12 +347,13 @@ function Player.CmdWechatLogin(m_access_code)
     this.SendProtocol("WechatLogin",wechatLogin)
 end
 
-function Player.CmdLogin(name,passWord)
+function Player.CmdLogin(name,passWord,accountType)
     -- body
     local login = {
         account = {
             username = name,--""
             --password = passWord,--""
+            account_type = accountType,
         },
         --account_type = "ACCOUNT_TYPE_8HERE",
     }
@@ -460,7 +473,7 @@ function Player.OnGuestLogin(type_t,stuff)
     local mFile = io.open(path.."guestID.txt" ,"w")
     mFile:write(Player._string_id)  
     mFile:close()
-    Player.CmdLogin(Player._string_id)
+    Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_GUEST")
 end
 
 function Player.OnGameStart(type_t,stuff)
@@ -494,7 +507,7 @@ function Player.OnWeChatInfo(type_t,stuff)
         Player.wechat_nickname = message.wechat.nickname
         Player.wechat_sex = message.wechat.sex
         Player.wechat_headimgurl = message.wechat.headimgurl
-        Player.CmdLogin(Player._string_id)
+        Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
     end
 end
 
@@ -560,7 +573,9 @@ function Player.OnRoomCalculate(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.RoomCalculate",stuff)
     Player._room_calculate_data = message
-    ClickEvent.ShowRoomCalculate()
+    if Player._calculate_table_number >= Player._room_information.options.open_rands then
+        ClickEvent.ShowRoomCalculate()
+    end
 end
 
 function Player.OnGameCalculate(type_t,stuff)
@@ -607,6 +622,7 @@ function Player.OnRoomInformation(type_t,stuff)
             --Player.ThreadFunction(
             ClickEvent.RoomInformationUpdate()
         end
+        ClickEvent.CloseAlready()
         for k,v in pairs(Player._all_players_data) do
             if v.oper_type == "GAME_OPER_TYPE_START" then
                 if not Player.isPlaying and Player._my_player_data then
@@ -637,6 +653,15 @@ function Player.OnPlayerInformation(type_t,stuff)
     --]]
     Player.GetGpsInformation()
     Player._player_data = message.player
+    if not Player._player_data.game_setting.music or Player._player_data.game_setting == {} then
+        Player._player_data.game_setting.music = true
+    end
+    if not Player._player_data.game_setting.voice or Player._player_data.game_setting == {} then
+        Player._player_data.game_setting.voice = true
+    end
+    if not Player._player_data.game_setting.audio or Player._player_data.game_setting == {} then
+        Player._player_data.game_setting.audio = true
+    end
     if Player._tosence_name ~= "PlaySence" then
         ClickEvent.ThreadToMainMenu()
     end
@@ -1016,9 +1041,11 @@ function Player.OnKillOut(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.KickOut", stuff)
+    print(reason)
+    --[[
     if Player._my_player_data.common_prop.player_id and Player._my_player_data.common_prop.player_id == message.player_id then
-
     end
+    --]]
 end
 
 function Player.OnLoadSuccess()

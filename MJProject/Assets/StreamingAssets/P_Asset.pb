@@ -1,5 +1,5 @@
 
-’S
+àS
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -13,7 +13,7 @@
 extend_type (2.Adoter.Asset.ROOM_EXTEND_TYPE
 top_mutiple (
 
-open_rands (:4"¥
+open_rands (:4"Ù
 	RoomLimit9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM2
 common_prop (2.Adoter.Asset.AssetCommonProp*
@@ -24,7 +24,10 @@ open_rands (:4"¥
 cost_count (
 
 base_count (/
-room_options (2.Adoter.Asset.RoomOptions"Ñ
+room_options (2.Adoter.Asset.RoomOptions
+reconnect_timeout	 (
+reconnect_count
+ ("Ñ
 CommonLimitA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_LIMIT2
 common_prop (2.Adoter.Asset.AssetCommonProp?
@@ -64,7 +67,7 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("Û
+voice_path ("õ
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -81,7 +84,8 @@ voice_path ("Û
 liuju_count (
 room_last_time ((
  room_card_limit_free_activity_id ( 
-guest_forbid_friend_room ("Ô
+guest_forbid_friend_room (
+mall_activity_id ("Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp

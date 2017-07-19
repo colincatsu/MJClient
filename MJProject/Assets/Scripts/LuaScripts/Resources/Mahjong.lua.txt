@@ -135,6 +135,7 @@ function start()
 	Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
+	Player.isPlaying = false
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
 		GVoicePlatform:InitGVoice("1762572828","564a544493684e9ed39179f4c26d35a7",tostring(Player._player_data.common_prop.player_id))
@@ -632,6 +633,9 @@ function MahJong.UpdateMyDataState()
 		_south.transform.position = _operation_pai_show_position.west
 		_west.transform.position = _operation_pai_show_position.north
 	else
+		_player_direction.father.transform.localEulerAngles = newVector3(0,0,0)
+		_pai_pool_show_obj.transform.localEulerAngles = newVector3(0,0,0)
+		_operation_pool_show.transform.localEulerAngles = newVector3(0,0,0)
 		_east.transform.position = _operation_pai_show_position.east
 		_south.transform.position = _operation_pai_show_position.south
 		_west.transform.position = _operation_pai_show_position.west

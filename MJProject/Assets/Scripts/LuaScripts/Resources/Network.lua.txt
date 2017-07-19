@@ -113,8 +113,8 @@ function Network.ConnetServer()
     --_socketClient:SendConnect()
     --_network_manager:ConnectTo("111.230.140.74",50013)
     --_network_manager:ConnectTo("182.92.87.147",50000)
-    _network_manager:ConnectTo("111.230.140.74",50000)
-    --_network_manager:ConnectTo("123.206.24.228",60032)
+    --_network_manager:ConnectTo("111.230.140.74",50000)
+    _network_manager:ConnectTo("123.206.24.228",60032)
     Network.isConnecting = true
     CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
 end
@@ -144,9 +144,12 @@ function Network.OnConnect()
     Player._connected = true
     Network.isConnecting = false
     Player.disConnetedTime = nil
+    Player.hasConnectTimes = 0
     if Player.reConnect then
         ClickEvent.ShowNotMoveToast(2030,3)
-        Player.CmdReConnect()
+        if Player._player_data and Player._player_data.common_prop and Player._player_data.common_prop.player_id then
+            Player.CmdReConnect()
+        end
         Player.reConnect = false
         return
     end
@@ -228,7 +231,7 @@ function Network.OnReceived(buffer)
     --buffer:Close()
     --local meta = P_Protocol.Meta()
     --meta:ParseFromString(data)
-    print(data)
+    --print(data)
     ----------------------------------------------------
     local meta = nil
     if data then
@@ -246,6 +249,7 @@ function Network.OnReceived(buffer)
     --]]
     CS.UnityEngine.Debug.LogWarning(type(meta))
     CS.UnityEngine.Debug.LogWarning('OnSocket:type_t:>'..(meta.type_t))
+
     CS.UnityEngine.Debug.LogWarning("ddddddddddd"..meta.stuff)
     ----------------------------------------------------
     if meta then
