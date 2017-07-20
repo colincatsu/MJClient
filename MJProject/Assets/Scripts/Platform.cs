@@ -122,12 +122,14 @@ public class Platform : MonoBehaviour {
         }
         return null;
     }
-    public LDelegate onWeChatCallBack;
-    public void OnWeChatLogin()
+    [CSharpCallLua]
+    public delegate void paraDelegate(String para);
+    public paraDelegate onWeChatCallBack;
+    public void OnWeChatLogin(string userCode)
     {
         if(onWeChatCallBack != null)
         {
-            onWeChatCallBack();
+            onWeChatCallBack(userCode);
         }
     }
 

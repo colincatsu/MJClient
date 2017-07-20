@@ -52,6 +52,8 @@ local returnMainUI = false
 local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
+Player.hasOperation = false
+Player.hasBeginned = false
 Player._tosence_name = "FairyMainUI"
 Player.huPaiPosition = 0
 Player._string_id = nil
@@ -78,7 +80,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0720"
+Player.pc_version = "1.0.3.0720"
 
 
 function Player.GetinvokeFunctionCache()
@@ -462,6 +464,18 @@ end
 ---------------------------------------------
 --
 
+function Player.OnGameSetting(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.GameSetting",stuff)
+    Player._player_data.game_setting.music = message.game_setting.music
+    Player._player_data.game_setting.voice = message.game_setting.voice
+    Player._player_data.game_setting.audio = message.game_setting.audio
+    Player._player_data.game_setting.click_push = message.game_setting.click_push
+end
+
 function Player.OnGuestLogin(type_t,stuff)
     -- body
     if not stuff then
@@ -483,6 +497,7 @@ function Player.OnGameStart(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.GameStart",stuff)
     if message.total_rounds and message.current_rounds then
+        Player._room_information.options.open_rands = message.total_rounds
         ClickEvent.UpdateRoundNumber(message.current_rounds,message.total_rounds)
     end
 end
@@ -572,6 +587,7 @@ function Player.OnRoomCalculate(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomCalculate",stuff)
+    Player.hasBeginned = false
     Player._room_calculate_data = message
     if Player._calculate_table_number >= Player._room_information.options.open_rands then
         ClickEvent.ShowRoomCalculate()
@@ -590,6 +606,9 @@ function Player.OnGameCalculate(type_t,stuff)
         Player._all_calculate_data[Player._calculate_table_number] = message.record
     end
     --Player.ThreadFunction()
+    if Player._calculate_table_number >= Player._room_information.options.open_rands then
+        Player.hasBeginned = false
+    end
     Player.isPlaying = false
     Player.MahJong.OnRoundEndShowEffect(Player._calculate_data)
 end
@@ -652,16 +671,26 @@ function Player.OnPlayerInformation(type_t,stuff)
     end
     --]]
     Player.GetGpsInformation()
+    local mMusic = true
+    local mVoice = true
+    local mAudio = true
+    if Player._player_data and Player._player_data.game_setting ~= {} then
+        mMusic = Player._player_data.game_setting.music
+        mVoice = Player._player_data.game_setting.voice
+        mAudio = Player._player_data.game_setting.audio
+    end
     Player._player_data = message.player
+    Player._player_data.game_setting.music = mMusic
+    Player._player_data.game_setting.voice = mVoice
+    Player._player_data.game_setting.audio = mAudio
+    --[[
     if not Player._player_data.game_setting.music or Player._player_data.game_setting == {} then
-        Player._player_data.game_setting.music = true
     end
     if not Player._player_data.game_setting.voice or Player._player_data.game_setting == {} then
-        Player._player_data.game_setting.voice = true
     end
     if not Player._player_data.game_setting.audio or Player._player_data.game_setting == {} then
-        Player._player_data.game_setting.audio = true
     end
+    --]]
     if Player._tosence_name ~= "PlaySence" then
         ClickEvent.ThreadToMainMenu()
     end
@@ -741,7 +770,7 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     end
     --]]
     Player._operation_alert_cache = message
-    Player.isTingPaiTuoGuan = false
+    Player.hasOperation = true
     --Player.ThreadFunction(
     ClickEvent.PaiOperationState()
 end
@@ -798,6 +827,7 @@ function Player.OnPaiNotify(type_t,stuff)
     end
     LogWarning(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
+        Player.hasBeginned = true
         --[[
         Player._invoke_table_test = message
         Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)

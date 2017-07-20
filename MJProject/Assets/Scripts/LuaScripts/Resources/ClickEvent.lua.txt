@@ -192,6 +192,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.copyRoomNum.visible = false
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
+		_currentPanel.panel:GetChild("GameListenButton").selected = true
+		_currentPanel.panel:GetChild("GameVoiceButton").selected = true
 
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 		------特效
@@ -754,9 +756,6 @@ end
 
 function ClickEvent.ShowRoomCalculate( ... )
 	-- body
-	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._calculate_ui then
-		return
-	end
 	if not Player._room_calculate_data then
 		return
 	end
@@ -784,9 +783,12 @@ end
 
 function ClickEvent.ExitRoomButton( ... )
 	-- body
+	for i=1,4 do
+		Player.playerScore[i] = 0
+	end
 	Player.returnMainUI = true
-	Player.MahJong.QuitVoiceRoom()
 	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+	Player.MahJong.QuitVoiceRoom()
 	Player.LoadScene("FairyMainUI")
 end
 
@@ -1117,8 +1119,10 @@ end
 function ClickEvent.GameSettingButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+	CS.UnityEngine.Debug.LogWarning("Music:")
+	CS.UnityEngine.Debug.LogWarning(Player._player_data.game_setting.music)
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
-		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
+		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(Player.wechat_nickname)
 	else
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
@@ -1237,6 +1241,8 @@ end
 function ClickEvent.Setting( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
+	CS.UnityEngine.Debug.LogWarning("Music:")
+	CS.UnityEngine.Debug.LogWarning(Player._player_data.game_setting.music)
 	_popPanel[popPanelIndex].panel:GetChild("Version").text = Player.pc_version
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
@@ -1323,6 +1329,8 @@ function ClickEvent.NextRoundButton( ... )
 	ClickEvent.Close()
 	Player.MahJong.ResetGameState()
 	ClickEvent.ShowRoomCalculate()
+	--if Player._calculate_table_number >= Player._room_information.options.open_rands then
+	--end
 end
 
 function ClickEvent.NoButton( ... )
@@ -1333,10 +1341,12 @@ end
 function ClickEvent.YesButton( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
-		Player.returnMainUI = true
-		Player.MahJong.QuitVoiceRoom()
-		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
-		Player.LoadScene("FairyMainUI")
+		if Player.hasBeginned == false then
+			Player.returnMainUI = true
+			Player.MahJong.QuitVoiceRoom()
+			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+			Player.LoadScene("FairyMainUI")
+		end
 	end
 	ClickEvent.Close()
 end
@@ -1408,7 +1418,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
-			ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 				local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
@@ -1467,7 +1477,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
-			ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 				local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
@@ -1526,7 +1536,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
-			ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 				local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
@@ -1631,9 +1641,9 @@ function ClickEvent.WechatLogin(gameObject)
 	CS.UnityEngine.Debug.LogWarning(Player._string_id)
 	if not Player._string_id or Player._string_id == "" then
 		if not Player.wechat_code or Player.wechat_code == "" then
-			WeChatPlatform.onWeChatCallBack = function()
+			WeChatPlatform.onWeChatCallBack = function(paraCode)
 				-- body
-				Player.wechat_code = WeChatPlatform:GetData("getWXCode")
+				Player.wechat_code = paraCode--WeChatPlatform:GetData("getWXCode")
 				Player.CmdWechatLogin(Player.wechat_code)
 				WeChatPlatform.onWeChatCallBack = nil
 			end
@@ -1985,7 +1995,7 @@ function ClickEvent.GameBillButton(gameObject)
 			roundCount = roundCount + 1
 			local playerNumber = 1
 			for roundKey,roundData in pairs(c.list) do
-				countScore[playerNumber].nickname = roundData.nickname
+				countScore[playerNumber].nickname = tostring(roundData.nickname)
 				countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(roundData.nickname)
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)

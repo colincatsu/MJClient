@@ -192,8 +192,8 @@ end
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
 	-- body
 	Player.voiceRoomName = roomName
-	GVoicePlatform.m_voiceengine:OpenMic()
-	GVoicePlatform.m_voiceengine:OpenSpeaker()
+	--GVoicePlatform.m_voiceengine:OpenMic()
+	--GVoicePlatform.m_voiceengine:OpenSpeaker()
 end
 
 function MahJong.OnQuitRoomComplete(code,roomName, memberID)
@@ -896,7 +896,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
 		        	_player_pai_pool._next_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._next_pai_number = paiCount
@@ -920,7 +920,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
 		        	_player_pai_pool._opposite_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._opposite_pai_number = paiCount
@@ -944,7 +944,7 @@ function MahJong.PaiPushDown(paisData)
 		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
 		        	_player_pai_pool._forward_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._forward_pai_number = paiCount
@@ -986,21 +986,27 @@ function MahJong.ZhuaPai()
 	_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
 	--托管自动打牌
-	local co = coroutine.create(function()
-	    yield_return(CS.UnityEngine.WaitForSeconds(2))
-		if Player.isTingPaiTuoGuan and Player.isTingPaied then
-			local paiElement = {
-				card_type = _player_father.cards[_player_father.currentPaiNumber].paiType,
-				card_value = _player_father.cards[_player_father.currentPaiNumber].paiValue,
-			}
-			ClickEvent.CloseOperationPanel()
-			MahJong.DaPai(_player_father.currentPaiNumber)
-			ClickEvent.notPushPassMsg = false
-			Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
-		end
+	if Player.isTingPaied then
 		Player.isTingPaiTuoGuan = true
-	end)
-	coroutine.resume(co)
+	end
+	if Player.isTingPaiTuoGuan and Player.hasOperation == false then
+		local co = coroutine.create(function()
+		    yield_return(CS.UnityEngine.WaitForSeconds(2))
+			if Player.isTingPaiTuoGuan and Player.isTingPaied then
+				local paiElement = {
+					card_type = _player_father.cards[_player_father.currentPaiNumber].paiType,
+					card_value = _player_father.cards[_player_father.currentPaiNumber].paiValue,
+				}
+				ClickEvent.CloseOperationPanel()
+				MahJong.DaPai(_player_father.currentPaiNumber)
+				ClickEvent.notPushPassMsg = false
+				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
+			end
+			Player.isTingPaiTuoGuan = true
+		end)
+		coroutine.resume(co)
+	end
+	Player.hasOperation = false
 	--MahJong.SortZhuaPai()
 	--MahJong.SortPlayerPai()
 	
@@ -1187,10 +1193,12 @@ function MahJong.ClickPaiEvent(gameObject)
 			MahJong.DaPai(paiNumber)
 			ClickEvent.notPushPassMsg = false
 			if not isTingPaied then
-				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 				if Player.isTingPaied then
 					Player.isTingPaiTuoGuan = false
 				end
+				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
+				--[[
+				--]]
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
 				for k,v in pairs(_player_father.cards) do
