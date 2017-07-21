@@ -10,7 +10,7 @@ local isIos = CS.LuaCommon.isIos
 
 if not Player._connected then
     if isAndroid or isIos then
-        CS.UnityEngine.Debug.LogWarning("android")
+        Player.LogWarning("android")
         _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb","rb")
         _buffer = _addr:read "*a"
         _addr:close()
@@ -27,20 +27,20 @@ if not Player._connected then
             if not www.error then
                 protobuf.register(www.bytes)
             else
-                CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+                Player.LogWarning('error:'..www.error)
             end
             www = CS.UnityEngine.WWW(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Protocol.pb")
             yield_return(www)
             if not www.error then
                 protobuf.register(www.bytes)
             else
-                CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+                Player.LogWarning('error:'..www.error)
             end
         end)
         coroutine.resume(co)
         --]]
     else
-        CS.UnityEngine.Debug.LogWarning("editor")
+        Player.LogWarning("editor")
         _addr = io.open(resultPath.."P_Asset.pb","rb")
         _buffer = _addr:read "*a"
         _addr:close()
@@ -113,10 +113,10 @@ function Network.ConnetServer()
     --_socketClient:SendConnect()
     --_network_manager:ConnectTo("111.230.140.74",50013)
     --_network_manager:ConnectTo("182.92.87.147",50000)
-    --_network_manager:ConnectTo("111.230.140.74",50000)
-    _network_manager:ConnectTo("123.206.24.228",60032)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("123.206.24.228",60032)
     Network.isConnecting = true
-    CS.UnityEngine.Debug.LogWarning("Server Connect----->>>")
+    Player.LogWarning("Server Connect----->>>")
 end
 
 ---------------------------------------------------------------------------
@@ -140,7 +140,7 @@ end
 
 ---------------------------------------------------------------------------
 function Network.OnConnect()
-	CS.UnityEngine.Debug.LogWarning("ConnetServer Success----->>>")
+	Player.LogWarning("ConnetServer Success----->>>")
     Player._connected = true
     Network.isConnecting = false
     Player.disConnetedTime = nil
@@ -160,7 +160,7 @@ function Network.OnConnect()
 end
 
 function Network.OnClose()
-	CS.UnityEngine.Debug.LogWarning("Server Close----->>>")
+	Player.LogWarning("Server Close----->>>")
     this.DelEventListener()
 end
 
@@ -199,7 +199,7 @@ end
 --异常断线
 ---------------------------------------------------------------------------
 function Network.OnException() 
-    CS.UnityEngine.Debug.LogWarning("OnException------->>>")
+    Player.LogWarning("OnException------->>>")
     if Player.isTimeOut then
         return
     end
@@ -213,7 +213,7 @@ end
 --连接中断，或者被踢掉
 ---------------------------------------------------------------------------
 function Network.OnDisconnect() 
-    CS.UnityEngine.Debug.LogWarning("OnDisconnect------->>>")
+    Player.LogWarning("OnDisconnect------->>>")
     if Player.isTimeOut then
         return
     end
@@ -225,7 +225,7 @@ function Network.OnDisconnect()
 end
 
 function Network.OnReceived(buffer)
-	CS.UnityEngine.Debug.LogWarning("OnReceived------>>>")
+	Player.LogWarning("OnReceived------>>>")
     if not buffer then return 1 end
     local data = buffer:ReadBytes()
     --buffer:Close()
@@ -239,29 +239,29 @@ function Network.OnReceived(buffer)
     end
     ---[[
     if type(meta) ~= "table" then
-        CS.UnityEngine.Debug.LogWarning(type(meta))
+        Player.LogWarning(type(meta))
         return 0
     end
     if not meta.type_t then
-        CS.UnityEngine.Debug.LogWarning("148,type is nil")
+        Player.LogWarning("148,type is nil")
         return 0
     end
     --]]
-    CS.UnityEngine.Debug.LogWarning(type(meta))
-    CS.UnityEngine.Debug.LogWarning('OnSocket:type_t:>'..(meta.type_t))
+    Player.LogWarning(type(meta))
+    Player.LogWarning('OnSocket:type_t:>'..(meta.type_t))
 
-    CS.UnityEngine.Debug.LogWarning("ddddddddddd"..meta.stuff)
+    Player.LogWarning("ddddddddddd"..meta.stuff)
     ----------------------------------------------------
     if meta then
         FLibEvent.Fire(meta.type_t, meta.stuff)
-        --CS.UnityEngine.Debug.LogWarning("Fire Success")
+        --Player.LogWarning("Fire Success")
     end
     return 0
 end
 
 function Network.OnReceiveMessageQueue(protocal,buffer)
     -- body
-    print(protocal)
+    Player.LogWarning(protocal)
     if protocal == _network_protocal.Connect then
         Network.OnConnect()
     elseif protocal == _network_protocal.Exception then

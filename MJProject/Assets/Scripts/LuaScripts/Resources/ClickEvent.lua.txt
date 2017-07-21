@@ -125,7 +125,7 @@ function ClickEvent.CreateNewPanel(panelName)
 	end
 	--[[
 	if Player._player_data and Player._player_data.common_prop and _currentPanel.panel:GetChild("Name") and _currentPanel.panel:GetChild("Name"):GetChild("PlayerName") then
-		CS.UnityEngine.Debug.LogWarning(Player._player_data.common_prop.name)
+		CS.UnityEngine.Debug.Player.LogWarning(Player._player_data.common_prop.name)
 		_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	--]]
@@ -154,6 +154,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPlayerTing.visible = false
 		ClickEvent._play_ui.playerTing.visible = false
 		ClickEvent._play_ui.gamePlayButton = _currentPanel.panel:GetChild("GamePlayButton")
+		ClickEvent._play_ui.gamePlayButton.visible = false
 		ClickEvent._play_ui.hintBar = _currentPanel.panel:GetChild("GameHintBar")
 		ClickEvent._play_ui.hintBar.visible = false
 		ClickEvent._play_ui.uselessRound = _currentPanel.panel:GetChild("Draw")
@@ -189,7 +190,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.inviteWechatFriends = _currentPanel.panel:GetChild("InviteWechatFriends")
 		ClickEvent._play_ui.inviteWechatFriends.visible = false
 		ClickEvent._play_ui.copyRoomNum = _currentPanel.panel:GetChild("CopyRoomNum")
-		ClickEvent._play_ui.copyRoomNum.visible = false
+		--ClickEvent._play_ui.copyRoomNum.visible = false
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
 		_currentPanel.panel:GetChild("GameListenButton").selected = true
@@ -210,6 +211,11 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPlayerAvatarInfo.visible = false
 		ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = false
 		ClickEvent._play_ui.frontPlayerAvatarInfo.visible = false
+
+		ClickEvent._play_ui.titleFather = _currentPanel.panel:GetChild("Inform")
+		ClickEvent._play_ui.moveTitleText = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtMove")
+		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
+		ClickEvent._play_ui.titleFather.visible = false
 		--[[
 		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
 			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
@@ -226,8 +232,11 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
 
 		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
-		_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
-		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt"):SetHook("Time",)
+		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
+		ClickEvent._play_ui.titleFather = _currentPanel.panel:GetChild("Inform")
+		ClickEvent._play_ui.moveTitleText = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtMove")
+		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
+		ClickEvent._play_ui.titleFather.visible = false
 		if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 			ClickEvent._play_ui.avatarLoader.url = ""
 			WeChatPlatform.func = nil
@@ -249,12 +258,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
-		LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
-		LogWarning(image.displayObject.size.x * ClickEvent.scale)
+		Player.LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
+		Player.LogWarning(image.displayObject.size.x * ClickEvent.scale)
 		for k,v in pairs(Player._player_data.inventory.inventory) do
 			for j,c in pairs(v.items) do
-				print("ITEM_TYPE_ROOM_CARD")
-				print(c.type_t)
+				Player.LogWarning("ITEM_TYPE_ROOM_CARD")
+				Player.LogWarning(c.type_t)
 				if c.type_t == "ITEM_TYPE_ROOM_CARD" then
 					local tempMsg = protobuf.decode(AssetManager.GetMessagesByType(c.type_t),c.stuff)
 					_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(tempMsg.item_common_prop.count)
@@ -330,6 +339,32 @@ function ClickEvent.ShowAlready(playerID)
 	end
 end
 
+function ClickEvent.PlayMoveTitle()
+	-- body
+	if not _currentPanel or not _currentPanel.panel or not ClickEvent._play_ui.titleFather then
+		return
+	end
+	if _currentPanel.panel.name ~= ClickEvent.panelTable._choose_ui and _currentPanel.panel.name ~= ClickEvent.panelTable._play_game_ui then
+		return
+	end
+	ClickEvent._play_ui.titleFather.visible = true
+	if ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2050) then
+		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2051)
+	elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2051) then
+		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2052)
+	elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2052) then
+		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+	else
+		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+	end
+	ClickEvent._play_ui.moveTitle:SetValue("Time",-ClickEvent._play_ui.moveTitleText.width,0)
+	ClickEvent._play_ui.moveTitle:SetHook("Time",function( ... )
+		-- body
+		ClickEvent._play_ui.titleFather.visible = false
+	end)
+	ClickEvent._play_ui.moveTitle:Play()
+end
+
 function ClickEvent.UpdateRoundNumber(CurrentRoundNum,TotalRoundNum)
 	-- body
 	_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = tostring(CurrentRoundNum)
@@ -376,14 +411,16 @@ function ClickEvent.RoomInformationUpdate( ... )
 		end
 	end
 	for k,v in pairs(_position_index) do
-		CS.UnityEngine.Debug.LogWarning(k)
-		CS.UnityEngine.Debug.LogWarning(v)
+		Player.LogWarning(k)
+		Player.LogWarning(v)
 	end
 	ClickEvent._play_ui.behindPlayerAvatarInfo.visible = false
 	ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = false
 	ClickEvent._play_ui.frontPlayerAvatarInfo.visible = false
 	WeChatPlatform.func = ClickEvent.UpdatePlayersHeadImg
+	local countPlayerNumber = 0
 	for k,v in pairs(Player._all_players_data) do
+		countPlayerNumber = countPlayerNumber + 1
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
 		if tempX == 1 then
 			ClickEvent._play_ui.behindPlayerAvatarInfo.visible = true
@@ -485,6 +522,11 @@ function ClickEvent.RoomInformationUpdate( ... )
 			end
 		end
 	end
+	if countPlayerNumber >= 4 then
+		ClickEvent._play_ui.gamePlayButton.visible = true
+		ClickEvent._play_ui.inviteWechatFriends.visible = false
+		ClickEvent._play_ui.copyRoomNum.visible = false
+	end
 end
 
 function ClickEvent.UpdatePlayersHeadImg( ... )
@@ -561,7 +603,7 @@ function ClickEvent.BankerStateUpdate(bankerPos)
 		ClickEvent._play_ui.forwardBanker.visible = true
 		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34*3)
 	else
-		CS.UnityEngine.Debug.LogWarning("bankerPos nil")
+		Player.LogWarning("bankerPos nil")
 	end
 end
 
@@ -594,7 +636,7 @@ function ClickEvent.PaiOperationState()
 
     for k,v in pairs(Player._operation_alert_cache.pais) do
     	for j,m in pairs(v.oper_list) do
-	    	CS.UnityEngine.Debug.LogWarning(m)
+	    	Player.LogWarning(m)
 	    	ClickEvent._play_ui.passButton.visible = true
 			if m == "PAI_OPER_TYPE_HUPAI" then
 				ClickEvent.AddOperationButton("GameHuButton")
@@ -612,11 +654,11 @@ function ClickEvent.PaiOperationState()
 				Player.MahJong.SetCurrentState(operationState.CHI)
 				Player.MahJong.ShowMabeOperationEffect()
 			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
-				CS.UnityEngine.Debug.LogWarning("ANGANG")
+				Player.LogWarning("ANGANG")
 				--Player.MahJong.SetCurrentState(operationState.ANGANG)
 				ClickEvent.AddOperationButton("GameGangButton")
 			elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" then
-				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
+				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 				if xuanfengCount > 1 then
 					Player.MahJong.CreateGangPai(v.pai)
@@ -624,7 +666,7 @@ function ClickEvent.PaiOperationState()
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
 			elseif m == "PAI_OPER_TYPE_XUANFENG_JIAN" then
-				CS.UnityEngine.Debug.LogWarning("XuanFengButton")
+				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 				if xuanfengCount > 1 then
 					Player.MahJong.CreateGangPai(v.pai)
@@ -632,18 +674,18 @@ function ClickEvent.PaiOperationState()
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
-				CS.UnityEngine.Debug.LogWarning("tingpai")
+				Player.LogWarning("tingpai")
 				Player.MahJong.SetCurrentState(operationState.TINGPAI)
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
 		    	ClickEvent._play_ui.passButton.visible = false
-				CS.UnityEngine.Debug.LogWarning("PAI_OPER_TYPE_BEGIN ")
-				CS.UnityEngine.Debug.LogWarning(ClickEvent.MahJong.GetCurrentState())
+				Player.LogWarning("PAI_OPER_TYPE_BEGIN ")
+				Player.LogWarning(ClickEvent.MahJong.GetCurrentState())
 			end
     	end
     end
-    CS.UnityEngine.Debug.LogWarning("tingpaiCount"..tingpaiCount)
+    Player.LogWarning("tingpaiCount"..tingpaiCount)
     if tingpaiCount > 0 then
     	ClickEvent._play_ui.cancelButton.visible = true
     	ClickEvent._play_ui.passButton.visible = false
@@ -783,9 +825,6 @@ end
 
 function ClickEvent.ExitRoomButton( ... )
 	-- body
-	for i=1,4 do
-		Player.playerScore[i] = 0
-	end
 	Player.returnMainUI = true
 	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 	Player.MahJong.QuitVoiceRoom()
@@ -848,7 +887,9 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				typeNumber = typeNumber + 1
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" then
+					typeNumber = typeNumber + 1
+				end
 			end
 			for i,c in pairs(v.details) do
 				local fanName = nil
@@ -863,10 +904,10 @@ function ClickEvent.ShowCalculate( ... )
 					end
 				end
 				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
-					CS.UnityEngine.Debug.LogWarning("0 fan")
+					Player.LogWarning("0 fan")
 				else
 					if c.fan_type == "FAN_TYPE_PINGHU" and typeNumber ~= 1 then
-						CS.UnityEngine.Debug.LogWarning("many fantype")
+						Player.LogWarning("many fantype")
 					else
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
@@ -944,7 +985,7 @@ function ClickEvent.DapaiUIShow(position,card_type,card_value)
 		ClickEvent._play_ui.frontPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
 		ClickEvent._play_ui.frontPaiShow.visible = true
 	else
-		CS.UnityEngine.Debug.LogWarning("position nil")
+		Player.LogWarning("position nil")
 	end
 	AudioPlayer.PlaySound(card_type.."_"..card_value,false,1)
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.Dapai,false,1)
@@ -961,7 +1002,7 @@ function ClickEvent.DapaiUIHide(position)
 	elseif position == 3 then
 		ClickEvent._play_ui.frontPaiShow.visible = false
 	else
-		CS.UnityEngine.Debug.LogWarning("position nil")
+		Player.LogWarning("position nil")
 	end
 end
 
@@ -973,6 +1014,38 @@ end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+
+function ClickEvent.InviteWechatFriends(gameObject)
+	-- body
+	local title = "乡乐朝阳麻将,房间号:"..tostring(Player._roomId)
+	local fanxing = ""
+	for k,v in pairs(Player._room_information.options.extend_type) do
+		if v == "ROOM_EXTEND_TYPE_ZHANLIHU" then
+			fanxing = fanxing.."站立胡"
+		elseif v == "ROOM_EXTEND_TYPE_JIAHU" then
+			fanxing = fanxing.."带夹胡"
+		elseif v == "ROOM_EXTEND_TYPE_XUANFENGGANG" then
+			fanxing = fanxing.."旋风杠"
+		elseif v == "ROOM_EXTEND_TYPE_BAOPAI" then
+			fanxing = fanxing.."宝牌"
+		elseif v == "ROOM_EXTEND_TYPE_DUANMEN" then
+			fanxing = fanxing.."可断门"
+		elseif v == "ROOM_EXTEND_TYPE_QIYISE" then
+			fanxing = fanxing.."清一色"
+		elseif v == "ROOM_EXTEND_TYPE_BAOSANJIA" then
+			fanxing = fanxing.."点炮包三家"
+		end
+		fanxing = fanxing.."、"
+	end
+	fanxing = string.sub(fanxing, 1, -2)
+	local description = "局数:"..tostring(Player._room_information.options.open_rands)..fanxing
+	WeChatPlatform:WXShare(title,description)
+end
+
+function ClickEvent.CopyRoomNum( ... )
+	-- body
+	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
+end
 
 function ClickEvent.ChangeAccount(gameObject)
 	-- body
@@ -1119,8 +1192,8 @@ end
 function ClickEvent.GameSettingButton( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
-	CS.UnityEngine.Debug.LogWarning("Music:")
-	CS.UnityEngine.Debug.LogWarning(Player._player_data.game_setting.music)
+	Player.LogWarning("Music:")
+	Player.LogWarning(Player._player_data.game_setting.music)
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(Player.wechat_nickname)
 	else
@@ -1184,7 +1257,7 @@ end
 
 function ClickEvent.Mail( ... )
 	-- body
-	print("mail")
+	Player.LogWarning("mail")
 	ClickEvent.PopPanel(ClickEvent.panelTable._mail_ui)
 end
 
@@ -1235,14 +1308,16 @@ end
 
 function ClickEvent.Welfare( ... )
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
+	--ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
 end
 
 function ClickEvent.Setting( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
-	CS.UnityEngine.Debug.LogWarning("Music:")
-	CS.UnityEngine.Debug.LogWarning(Player._player_data.game_setting.music)
+	Player.LogWarning("Music:")
+	Player.LogWarning(Player._player_data.game_setting.music)
 	_popPanel[popPanelIndex].panel:GetChild("Version").text = Player.pc_version
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player.wechat_nickname
@@ -1290,6 +1365,79 @@ function ClickEvent.GemsNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallGemsButton").selected = true
+end
+
+function ClickEvent.PriceButtonGems1( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonGems2( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonGems3( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonGems4( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonGems5( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonGems6( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+
+function ClickEvent.PriceButtonDou1( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonDou2( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonDou3( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonDou4( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonDou5( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonDou6( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+
+function ClickEvent.PriceButtonItem1( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+end
+function ClickEvent.PriceButtonItem2( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
 end
 
 function ClickEvent.Avatar( ... )
@@ -1347,6 +1495,8 @@ function ClickEvent.YesButton( ... )
 			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 			Player.LoadScene("FairyMainUI")
 		end
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
+		CS.UnityEngine.Application.Quit()
 	end
 	ClickEvent.Close()
 end
@@ -1589,7 +1739,7 @@ function ClickEvent.LoginButton(gameObject)
 end
 function ClickEvent.Account( gameObject )
 	-- body
-	CS.UnityEngine.Debug.LogWarning(gameObject.name)
+	Player.LogWarning(gameObject.name)
 end
 
 function ClickEvent.GuestLogin( gameObject )
@@ -1599,7 +1749,7 @@ function ClickEvent.GuestLogin( gameObject )
 		ClickEvent.DestroyPanel(_currentPanel.panel)
 		ClickEvent.CreateNewPanel(ClickEvent.panelTable._choose_ui)
 	else
-		CS.UnityEngine.Debug.LogWarning("no find toggle")
+		Player.LogWarning("no find toggle")
 	end
 	Player.CmdEnterGame(Player._id)
 	--]]
@@ -1613,22 +1763,22 @@ function ClickEvent.GuestLogin( gameObject )
         openIdFile:close()
         Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_GUEST")
 	end
-	CS.UnityEngine.Debug.LogWarning("ClickEvent.GuestLogin")
+	Player.LogWarning("ClickEvent.GuestLogin")
 end
 
 function ClickEvent.WechatLogin(gameObject)
 	-- body
-	CS.UnityEngine.Debug.LogWarning("ClickEvent.WechatLogin")
+	Player.LogWarning("ClickEvent.WechatLogin")
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	--[[
 	Player._string_id = WeChatPlatform:GetData("getOpenID")
 	Player.wechat_nickname = WeChatPlatform:GetData("getNickName")
-	CS.UnityEngine.Debug.LogWarning(Player._string_id)
+	Player.LogWarning(Player._string_id)
 		Player.wechat_sex = WeChatPlatform:GetData("getUserSex")
 		Player.wechat_headimgurl = WeChatPlatform:GetData("getImageUrl")
 		WeChatPlatform:SetAsyncImage(WeChatPlatform:GetData("getImageUrl"))
 		Player.CmdLogin(Player._string_id)
-		CS.UnityEngine.Debug.LogWarning("WeChatLogin")
+		Player.LogWarning("WeChatLogin")
 	--]]
 	local openIdFile = io.open(path.."openID.txt")
 	if not openIdFile then
@@ -1638,7 +1788,7 @@ function ClickEvent.WechatLogin(gameObject)
         openIdFile:close()
 	end
 	--Player.wechat_code = WeChatPlatform:GetData("getWXCode")
-	CS.UnityEngine.Debug.LogWarning(Player._string_id)
+	Player.LogWarning(Player._string_id)
 	if not Player._string_id or Player._string_id == "" then
 		if not Player.wechat_code or Player.wechat_code == "" then
 			WeChatPlatform.onWeChatCallBack = function(paraCode)
@@ -1649,7 +1799,7 @@ function ClickEvent.WechatLogin(gameObject)
 			end
 			WeChatPlatform:LoginWeChat()
 		else
-			CS.UnityEngine.Debug.LogWarning("getWXMsg")
+			Player.LogWarning("getWXMsg")
 			Player.CmdWechatLogin(Player.wechat_code)
 		end
 	else
@@ -1662,9 +1812,9 @@ function ClickEvent.OnReceivedWeChatMsg(nickname, sex, headimgurl)
 	Player.wechat_nickname = nickname
 	Player.wechat_sex = sex
 	Player.wechat_headimgurl = headimgurl
-	print(Player.wechat_nickname)
-	print(player.wechat_sex)
-	print(player.wechat_headimgurl)
+	Player.LogWarning(Player.wechat_nickname)
+	Player.LogWarning(player.wechat_sex)
+	Player.LogWarning(player.wechat_headimgurl)
 end
 
 function ClickEvent.ThreadToMainMenu( ... )
@@ -1683,9 +1833,11 @@ end
 function ClickEvent.Back( ... )
 	-- body
 	if not ClickEvent.isInDouRoom and _currentPanel.panel.name == ClickEvent.panelTable._choose_ui then
-		_currentPanel.panel:GetTransition("ShowFriendMode"):Stop(true,false)
-		ClickEvent.DeletePanel(_currentPanel.panel)
-		ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
+		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2002)
+		--_currentPanel.panel:GetTransition("ShowFriendMode"):Stop(true,false)
+		--ClickEvent.DeletePanel(_currentPanel.panel)
+		--ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 	else
 		ClickEvent.isInDouRoom = false
 		_currentPanel.panel:GetTransition("ShowFriendMode"):Play()
@@ -1694,24 +1846,24 @@ end
 
 function ClickEvent.PlayerLogo( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("playLogoShow")
+	Player.LogWarning("playLogoShow")
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_message_ui)
 	--_Player_Message_UI:SetActive(true)
 end
 
 function ClickEvent.DiamondPlus( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("DiamondPlusShow")
+	Player.LogWarning("DiamondPlusShow")
 end
 
 function ClickEvent.BeanPlus( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("BeanPlusShow")
+	Player.LogWarning("BeanPlusShow")
 end
 
 function ClickEvent.TicketPlus( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("TicketPlusShow")
+	Player.LogWarning("TicketPlusShow")
 end
 
 function ClickEvent.DouRoomButton( ... )
@@ -1725,13 +1877,15 @@ end
 
 function ClickEvent.GetintoRoomButton( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("JoinRoom")
+	Player.LogWarning("JoinRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
+	Player._roomId = ""
+	_popPanel[popPanelIndex].panel:GetChild("InputText").text = ""
 end
 
 function ClickEvent.CreateRoomButton( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("CreateRoom")
+	Player.LogWarning("CreateRoom")
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
@@ -1754,7 +1908,7 @@ end
 
 function ClickEvent.Close( ... )
 	-- body
-	CS.UnityEngine.Debug.LogWarning("ClosePanel")
+	Player.LogWarning("ClosePanel")
 	if popPanelIndex <= 0 then
 		return
 	end
@@ -1776,7 +1930,7 @@ end
 function ClickEvent.CreateRoomId( gameObject )
 	-- body
 	Player._roomId = tonumber(gameObject:GetComponent("InputField").text)
-	CS.UnityEngine.Debug.LogWarning(gameObject.name)
+	Player.LogWarning(gameObject.name)
 end
 
 function ClickEvent.ClassicMode( ... )
@@ -1798,7 +1952,7 @@ end
 function ClickEvent.CreateButton( )
 	-- body
 	--roomid
-	CS.UnityEngine.Debug.LogWarning("CreateRoom")
+	Player.LogWarning("CreateRoom")
 	local model = nil
 	local extend_type = {}
 	local top_mutiple = nil
@@ -1866,7 +2020,7 @@ end
 function ClickEvent.GetinButton( ... )
 	-- body
 	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
-	CS.UnityEngine.Debug.LogWarning(tonumber(Player._roomId))
+	Player.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	Player.isFriendRoom = true
 	ClickEvent.Close()
@@ -2205,8 +2359,8 @@ function ClickEvent.registerButtonClick(gameObject)
 			AudioPlayer.PlaySound(AudioPlayer._audio_name.ClickUI,false,1)
 		end
 	else
-		CS.UnityEngine.Debug.LogWarning(key)
-		CS.UnityEngine.Debug.LogWarning("key no found")
+		Player.LogWarning(key)
+		Player.LogWarning("key no found")
 	end
 
 end

@@ -245,6 +245,22 @@ public class Platform : MonoBehaviour {
             currentActivity.Call("wxLogin");
     }
 
+    public void WXShare(string title,string description)
+    {
+        if(currentActivity != null)
+        {
+            currentActivity.Call("wxShare",title,description);
+        }
+    }
+
+    public void CopyRoomID(string roomid)
+    {
+        if (currentActivity != null)
+        {
+            currentActivity.Call("wxCopyRoom", roomid);
+        }
+    }
+
     [CSharpCallLua]
     public delegate void LDelegate();
     public LDelegate func = null;

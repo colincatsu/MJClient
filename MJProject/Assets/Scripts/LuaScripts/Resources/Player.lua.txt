@@ -73,6 +73,8 @@ Player.playerScore = {--游戏每家分数保存
     [2] = 0,
     [3] = 0,
 }
+Player.moveTitleTimestamp = nil
+Player.moveInterval = 45
 
 Player.reConnect = false
 Player.disConnetedTime = nil
@@ -80,8 +82,13 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.3.0720"
+Player.pc_version = "1.0.1.0722"
 
+
+function Player.LogWarning(para)
+    -- body
+    --CS.UnityEngine.Debug.LogWarning(para)
+end
 
 function Player.GetinvokeFunctionCache()
     -- body
@@ -140,8 +147,8 @@ function Player.GpsCallBack(latitude,longitude)
     -- body
     Player.latitude = latitude
     Player.longitude = longitude
-    LogWarning("jxyGps:"..tostring(Player.latitude))
-    LogWarning("jxyGps:"..tostring(Player.longitude))
+    Player.LogWarning("jxyGps:"..tostring(Player.latitude))
+    Player.LogWarning("jxyGps:"..tostring(Player.longitude))
     WeChatPlatform.gpsGet = nil
     if Player.latitude == -1.0 then
 
@@ -292,6 +299,15 @@ function Player.myUpdate( ... )
             end
         end
     end
+    if not Player.moveTitleTimestamp then
+        Player.moveTitleTimestamp = CS.UnityEngine.Time.time
+        ClickEvent.PlayMoveTitle()
+    else
+        if (CS.UnityEngine.Time.time - Player.moveTitleTimestamp) >= Player.moveInterval then
+            Player.moveTitleTimestamp = CS.UnityEngine.Time.time
+            ClickEvent.PlayMoveTitle()
+        end
+    end
 end
 
 function Player.CmdReConnect()
@@ -411,8 +427,8 @@ end
 
 function Player.CmdPaiOperation(paiOperType,paiChiTable,paiDaTable)
     -- body
-    LogWarning("---------------ClientOperation")
-    LogWarning(paiOperType)
+    Player.LogWarning("---------------ClientOperation")
+    Player.LogWarning(paiOperType)
     local paiOperation = {
         oper_type = paiOperType,
         pais = paiChiTable,
@@ -429,7 +445,7 @@ function Player.CmdLoadScene(loadType,sceneId)
         load_type = loadType,
         scene_id = sceneId,
     }
-    LogWarning("jxyDebugLoadSence"..loadType)
+    Player.LogWarning("jxyDebugLoadSence"..loadType)
     this.SendProtocol("LoadScene",loadScene)
 end
 ---------------------------------------------------------------------------
@@ -565,11 +581,11 @@ function Player.OnGameInformation(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.GameInformation",stuff)
     if not message.banker_player_id then
-        LogWarning("banker_player_id is nil")
+        Player.LogWarning("banker_player_id is nil")
         return
     end
     if not Player._all_players_data then
-        LogWarning("_all_players_data is nil")
+        Player.LogWarning("_all_players_data is nil")
         return
     end
 
@@ -650,7 +666,7 @@ function Player.OnRoomInformation(type_t,stuff)
             end
         end
     else
-        LogWarning("list null")
+        Player.LogWarning("list null")
     end
 end
 
@@ -714,12 +730,12 @@ function Player.OnEnterRoom(type_t,stuff)
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         ClickEvent.ShowSmallWindow(2010)
-        LogWarning("no found")
+        Player.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
         ClickEvent.ShowSmallWindow(2008)
-        LogWarning("is full")
+        Player.LogWarning("is full")
     end
-    LogWarning(message.error_code)
+    Player.LogWarning(message.error_code)
 end
 
 function Player.OnPlayerList(type_t,stuff)
@@ -728,10 +744,10 @@ function Player.OnPlayerList(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PlayerList",stuff)
-    LogWarning("---------")
+    Player.LogWarning("---------")
     if message.player_list then
         Player._id = message.player_list[1]
-        LogWarning(Player._id)
+        Player.LogWarning(Player._id)
     end
     if Player._id and Player_id ~= "" then
         Player.CmdEnterGame(Player._id)
@@ -754,14 +770,14 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperationAlert",stuff)
 
     if not message.pais then
-        LogWarning("pais data is nil")
+        Player.LogWarning("pais data is nil")
         return
     end
 
     --[[
     if not message.pai then
         if not message.pais then
-            LogWarning("pais is nil")
+            Player.LogWarning("pais is nil")
             return
         end
         Player._pais_operation_alert_cache = message.pais
@@ -782,7 +798,7 @@ function Player.OnRandomSaizi(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.RandomSaizi",stuff)
     if not message.reason_type then
-        LogWarning("reason_type is nil")
+        Player.LogWarning("reason_type is nil")
         return
     end
     if message.reason_type == "REASON_TYPE_START" then
@@ -800,8 +816,8 @@ function Player.OnRandomSaizi(type_t,stuff)
         Player.MahJong.PlayDoubleDices(number1,number2)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
-            print("Player.isTingPaied:")
-            print(Player.isTingPaied)
+            Player.LogWarning("Player.isTingPaied:")
+            Player.LogWarning(Player.isTingPaied)
             if Player.isTingPaied then
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else
@@ -819,13 +835,13 @@ function Player.OnPaiNotify(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PaiNotify",stuff)
     if not message.data_type then
-        LogWarning("type is nil")
+        Player.LogWarning("type is nil")
         return
     end
     if message.cards_remain then
         ClickEvent.SetRemainNum(message.cards_remain)
     end
-    LogWarning(message.data_type)
+    Player.LogWarning(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         Player.hasBeginned = true
         --[[
@@ -845,8 +861,8 @@ function Player.OnPaiNotify(type_t,stuff)
             end
         end
         
-        LogWarning("countPai----------------")
-        LogWarning(countPai)
+        Player.LogWarning("countPai----------------")
+        Player.LogWarning(countPai)
         if countPai == 14 then
             ClickEvent.notPushPassMsg = true
             Player.MahJong.SetCurrentState(operationState.DAPAI)
@@ -879,9 +895,9 @@ function Player.OnPaiNotify(type_t,stuff)
     end
     --[[
     for k, v in pairs(message.pais) do
-        LogWarning(v.card_type)
+        Player.LogWarning(v.card_type)
         for i, m in pairs(v.cards) do
-            LogWarning(m)
+            Player.LogWarning(m)
         end
     end
     ]]
@@ -895,10 +911,10 @@ function Player.OnPaiOperation(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PaiOperation",stuff)
 
     if not message.oper_type then
-        LogWarning("type is nil")
+        Player.LogWarning("type is nil")
         return
     end
-    LogWarning(message.oper_type)
+    Player.LogWarning(message.oper_type)
     --Player._pai_operation_alert_cache = message.pai
 
     if message.oper_type == "PAI_OPER_TYPE_DAPAI" then
@@ -934,7 +950,7 @@ function Player.OnPaiOperation(type_t,stuff)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_GIVEUP" then
-        LogWarning("give up operation")
+        Player.LogWarning("give up operation")
     elseif message.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
@@ -1011,14 +1027,14 @@ function Player.OnGameOperation(type_t,stuff)
     if not message.source_player_id then
         return
     end
-    --LogWarning(message.source_player_id)
-    --LogWarning(this._id)
+    --Player.LogWarning(message.source_player_id)
+    --Player.LogWarning(this._id)
     if message.source_player_id then
         --判断id是谁
         if message.source_player_id == this._id then
             --变化按钮
         else
-            LogWarning(message.source_player_id)
+            Player.LogWarning(message.source_player_id)
         end
     end
     if message.oper_type == "GAME_OPER_TYPE_START" then
@@ -1036,7 +1052,7 @@ function Player.OnCreatePlayer(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CreatePlayer", stuff)
 
     this._id = message.player_id
-    LogWarning(this._id)
+    Player.LogWarning(this._id)
 end
 
 function Player.OnCreateRoom(type_t,stuff)
@@ -1061,7 +1077,7 @@ function Player.OnAlterError(type_t,stuff)
     this.error_type = message.error_type
     this.error_show_type = message.error_show_type
     this.error_code = message.error_code
-    LogWarning(this.error_type)
+    Player.LogWarning(this.error_type)
     --Player.ThreadFunction(Player.LoadScene)
 end
 --踢玩家
@@ -1071,7 +1087,6 @@ function Player.OnKillOut(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.KickOut", stuff)
-    print(reason)
     --[[
     if Player._my_player_data.common_prop.player_id and Player._my_player_data.common_prop.player_id == message.player_id then
     end
@@ -1092,7 +1107,7 @@ function Player.OnSayHi( type_t,stuff )
     local message = protobuf.decode("Adoter.Asset.SayHi", stuff)
     --[[
     if not message.heart_count then
-        LogWarning("heart_count is nil")
+        Player.LogWarning("heart_count is nil")
         return
     end
     local tempHertCount = message.heart_count + 1
@@ -1117,7 +1132,7 @@ function Player.OnAlertMessage(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
-    LogWarning(message.error_code)
+    Player.LogWarning(message.error_code)
     ClickEvent.ShowToast(message.error_code)
 end
 ---------------------------------------------------------------------------
@@ -1150,13 +1165,13 @@ function Player.ThreadFunction(invokeFunction)
     if Player.self then
         Player.self:Attach(invokeFunction)
     else
-        LogWarning("no init Player.self")
+        Player.LogWarning("no init Player.self")
     end
 
     if Player.self then
         Player.SetinvokeFunctionCache(invokeFunction)
     else
-        LogWarning("no init Player.self")
+        Player.LogWarning("no init Player.self")
     end
     --]]
     invokeFunction()

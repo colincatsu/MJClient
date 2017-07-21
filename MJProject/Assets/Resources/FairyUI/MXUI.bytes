@@ -421,14 +421,14 @@
     <component id="n6_j3uo" name="InformText" src="j3uokn" xy="64,0"/>
     <image id="n1_j3uo" name="n1" src="w61cb3" xy="0,0"/>
   </displayList>
-</component>j3uokn.xml|757|<component size="1000,69" overflow="hidden">
+</component>j3uokn.xml|754|<component size="1000,69" overflow="hidden">
   <displayList>
-    <text id="n0_j3uo" name="txtMove" xy="1007,0" size="1758,69" font="幼圆" fontSize="32" color="#ffe3bd" vAlign="middle" ubb="true" autoSize="shrink" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>
+    <text id="n0_j3uo" name="txtMove" xy="1007,16" size="1077,37" font="幼圆" fontSize="32" color="#ffe3bd" vAlign="middle" ubb="true" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>
     <text id="n1_j3uo" name="txtFixed" xy="0,0" size="993,69" fontSize="32" color="#ffffff" align="center" vAlign="middle" ubb="true" autoSize="shrink" text=""/>
   </displayList>
   <transition name="Txt" autoPlayRepeat="-1">
-    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007.24,0.49" endValue="-1754,0" duration="360" label2="Time"/>
-    <item time="360" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1754,0" ease="Linear"/>
+    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007.24,16" endValue="-1255,16" duration="240" label2="Time" ease="Linear"/>
+    <item time="240" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1255,16" ease="Linear"/>
   </transition>
 </component>jde84tn.xml|597|<component size="106,45" extention="Button">
   <controller name="Useable" pages="0,,1,,2," selected="0"/>
@@ -872,7 +872,7 @@
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>package.xml|44247|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|44325|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1074,6 +1074,7 @@
     <image id="r8qd4te" name="ui_Shezhi_04_2" path="/UIPIC/游戏设置/" size="89,89"/>
     <image id="r8qd4tf" name="222" path="/UIPIC/游戏页面/" size="72,73"/>
     <image id="r8qd4tg" name="444" path="/UIPIC/游戏页面/" size="72,73"/>
+    <image id="soml4u4" name="hua_01" path="/UIPIC/xinzeng/" size="304,224"/>
     <image id="t5ciry" name="fenxiang_pengyouquan" path="/UIPIC/Share/" size="55,54"/>
     <image id="uejtqp" name="yxnei_jiesan" path="/UIPIC/游戏页面/" size="94,69"/>
     <image id="uejtqq" name="yxnei_shezhi" path="/UIPIC/游戏页面/" size="70,69"/>
@@ -2552,7 +2553,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w61cg7.xml|1300|<component size="81,105" extention="Button">
+</component>w61cg7.xml|1286|<component size="81,105" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_algd" name="AvatarBg" src="w61cfl" xy="0,0" size="81,105">
@@ -2567,8 +2568,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n8_algd" name="Zhuang" src="w61cfk" xy="52,-5"/>
     <image id="n9_s5h9" name="RoomLord" src="w61cdy" xy="-4,-7" rotation="-8"/>
     <component id="n10_ldfs" name="PlayerLineState" src="ldfsqh" xy="17,26"/>
-    <text id="n11_raum" name="PlayerName" xy="0,61" size="79,20" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" shadowColor="#000000" shadowOffset="1,1" singleLine="true" text="对方根本不想输入...">
-      <relation target="" sidePair="width-width,height-height"/>
+    <text id="n11_raum" name="PlayerName" xy="2,61" size="78,18" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="height" shadowColor="#000000" shadowOffset="1,1" singleLine="true" text="对方根本不想输入...">
+      <relation target="" sidePair="left-left"/>
     </text>
   </displayList>
   <Button/>
@@ -2782,7 +2783,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n10_jde8" name="GetMailRewardButton" src="jde84tn" xy="330,19"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cj8.xml|1527|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cj8.xml|1657|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Server" pages="0,,1,,2,,3," selected="0"/>
   <displayList>
     <image id="n19_ised" name="n19" src="w61cbq" xy="0,0"/>
@@ -2804,6 +2805,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <relation target="" sidePair="right-right"/>
     </component>
     <group id="n10_fb5y" name="Btns" xy="222,118" size="1040,532" advanced="true"/>
+    <image id="n21_soml" name="n21" src="soml4u4" xy="0,0">
+      <relation target="" sidePair="top-top,left-left"/>
+    </image>
   </displayList>
   <transition name="t0" autoPlay="true">
     <item time="0" type="Alpha" tween="true" startValue="0" endValue="1" duration="24"/>
@@ -2991,7 +2995,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|7914|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|7923|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
@@ -3033,7 +3037,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n37_nw08" name="Tround4" xy="535,502" size="43,29" fontSize="25" color="#ffe3bd" text="8局">
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n38_nw08" name="Tround8" xy="804,502" size="56,29" fontSize="25" color="#ffe3bd" text="16局">
+    <text id="n38_nw08" name="Tround8" xy="803,502" size="56,29" fontSize="25" color="#ffe3bd" text="16局">
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n39_nw08" name="Tchoosefan06" xy="659,345" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="清一色">
@@ -3086,7 +3090,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n25_nw08" name="ChooseFan05" src="w61ceb" xy="488,336" group="n45_fb5y"/>
     <component id="n26_nw08" name="ChooseFan06" src="w61ceb" xy="619,336" group="n45_fb5y"/>
     <component id="n47_mc24" name="ChooseFan07" src="w61ceb" xy="764,336" group="n45_fb5y"/>
-    <component id="n52_lidq" name="n52" src="lidq4u0" xy="255,627" group="n45_fb5y"/>
+    <component id="n52_lidq" name="ServiceTerm6" src="lidq4u0" xy="255,627" group="n45_fb5y"/>
     <group id="n45_fb5y" name="Btns" xy="255,95" size="904,582" advanced="true"/>
     <text id="n48_mc24" name="Tchoosefan07" xy="803,345" size="130,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="点炮包三家">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
@@ -3102,7 +3106,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|9157|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|9228|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
@@ -3223,6 +3227,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n57_doyw" name="FrontEmojiShow" src="doyw4st" xy="95,243"/>
     <component id="n58_doyw" name="OppositeEmojiShow" src="doyw4su" xy="728,120"/>
     <component id="n59_doyw" name="BehindEmojiShow" src="doyw4su" xy="940,290"/>
+    <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,157"/>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
@@ -3230,10 +3235,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
   </transition>
   <transition name="SlideIn">
-    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
+    <item time="0" type="Alpha" target="n17_algd" value="0"/>
     <item time="0" type="Alpha" target="n24_l3ub" value="0"/>
     <item time="0" type="Alpha" target="n45_uejt" value="0"/>
-    <item time="0" type="Alpha" target="n17_algd" value="0"/>
+    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="0,0" endValue="1.1,1.1" duration="6"/>
     <item time="4" type="Alpha" target="n17_algd" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n24_l3ub" tween="true" startValue="0" endValue="1" duration="4"/>
@@ -3242,9 +3247,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="6" type="Scale" target="n52_idf3" tween="true" startValue="1.1,1.1" endValue="1,1" duration="2"/>
   </transition>
   <transition name="SlideOut" options="1">
-    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="1,1" endValue="0,0" duration="4"/>
   </transition>
@@ -3603,7 +3608,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n61_uejt" name="n61" src="w61ced" xy="274,387" size="801,7" group="n48_s5h9"/>
     <image id="n62_r8qd" name="n62" src="r8qd4t8" xy="277,35" group="n48_s5h9"/>
     <text id="n63_tb6z" name="n63" xy="483,305" size="70,30" group="n48_s5h9" fontSize="26" color="#663300" text="距离:"/>
-    <text id="n64_tb6z" name="n64" xy="553,305" size="133,30" group="n48_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="height" text="999999m"/>
+    <text id="n64_tb6z" name="n64" xy="553,305" size="227,30" group="n48_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="height" text="999999m"/>
     <group id="n48_s5h9" name="OtherPlayerInfo" xy="195,16" size="969,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
