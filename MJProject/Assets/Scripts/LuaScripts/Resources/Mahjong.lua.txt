@@ -118,6 +118,8 @@ local GVoicePlatform = CS.Platform.Instance
 
 local _hand_cards = {}--分张
 
+local _my_position = ""
+
 function awake( ... )
 	-- body
 	ClickEvent.Awake()
@@ -127,10 +129,11 @@ function start()
 
 	MahJong.Init()
 	Player._calculate_data = {}
-	for i=1,4 do
+	for i=0,3 do
 		Player.playerScore[i] = 0
 	end
 	Player._all_calculate_data = {}
+	Player._room_calculate_data = nil
 	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 	ClickEvent.CreateOperationButton()
 	MahJong.ModelPoolInit()
@@ -607,6 +610,7 @@ end
 function MahJong.UpdateMyDataState()
 	-- body
 	local myPosition = Player._my_player_data.position
+	_my_position = Player._my_player_data.position
 	local _east = self.transform:Find("OperationPoolShow/Point_D").gameObject
 	local _south = self.transform:Find("OperationPoolShow/Point_N").gameObject
 	local _west = self.transform:Find("OperationPoolShow/Point_X").gameObject
@@ -813,7 +817,7 @@ function MahJong.LiuJuPai(paisData)
 			        end
 			        _hand_cards._next_card = Instantiate(modelTemp)
 			        _hand_cards._next_card.layer = 0
-			        _hand_cards._next_card.transform.position = newVector3(_player_pai_pool._next_card[1].transform.position.x,_modelSize.length/2,_player_pai_pool._next_card[1].transform.position.z-2*_modelSize.width)
+			        _hand_cards._next_card.transform.position = newVector3(_player_pai_pool._next_player_father.transform.position.x,_modelSize.length/2,_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.position.z-2*_modelSize.width)
 			        _hand_cards._next_card.transform.eulerAngles = newVector3(180,-90,0) --_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._next_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 2 then
@@ -827,7 +831,7 @@ function MahJong.LiuJuPai(paisData)
 			        end
 			        _hand_cards._opposite_card = Instantiate(modelTemp)
 			        _hand_cards._opposite_card.layer = 0
-			        _hand_cards._opposite_card.transform.position = newVector3(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.position.x+2*_modelSize.width,_modelSize.length/2,_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.position.z)
+			        _hand_cards._opposite_card.transform.position = newVector3(_player_pai_pool._opposite_card[1].transform.position.x+2*_modelSize.width,_modelSize.length/2,_player_pai_pool._opposite_player_father.transform.position.z)
 			        _hand_cards._opposite_card.transform.eulerAngles = newVector3(180,-180,0) --_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._opposite_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 3 then
@@ -841,7 +845,7 @@ function MahJong.LiuJuPai(paisData)
 			        end
 			        _hand_cards._forward_card = Instantiate(modelTemp)
 			        _hand_cards._forward_card.layer = 0
-			        _hand_cards._forward_card.transform.position = newVector3(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position.x,_modelSize.length/2,_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position.z+2*_modelSize.width)
+			        _hand_cards._forward_card.transform.position = newVector3(_player_pai_pool._forward_player_father.transform.position.x,_modelSize.length/2,_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position.z+2*_modelSize.width)
 			        _hand_cards._forward_card.transform.eulerAngles = newVector3(180,90,0) --_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.eulerAngles
 		        	MahJong.AddModelShadow(_hand_cards._forward_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				elseif playerPos == 0 then
@@ -996,7 +1000,7 @@ function MahJong.ZhuaPai()
 	end
 	if Player.isTingPaiTuoGuan and Player.hasOperation == false then
 		local co = coroutine.create(function()
-		    yield_return(CS.UnityEngine.WaitForSeconds(2))
+		    yield_return(CS.UnityEngine.WaitForSeconds(0.5))
 			if Player.isTingPaiTuoGuan and Player.isTingPaied and Player.hasOperation == false then
 				local paiElement = {
 					card_type = _player_father.cards[_player_father.currentPaiNumber].paiType,
@@ -1201,6 +1205,7 @@ function MahJong.ClickPaiEvent(gameObject)
 			if not isTingPaied then
 				if Player.isTingPaied then
 					Player.isTingPaiTuoGuan = false
+					Player.hasOperation = false
 				end
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 				--[[
@@ -1213,6 +1218,7 @@ function MahJong.ClickPaiEvent(gameObject)
 				isTingPaied = false
 				Player.isTingPaied = true
 				Player.isTingPaiTuoGuan = true
+				Player.hasOperation = false
 			end
 		else
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1836,7 +1842,7 @@ end
 
 function MahJong.GuoPai()
 	-- body
-	MahJong.DeleteShowModel()
+	--MahJong.DeleteShowModel()
 	if ClickEvent.notPushPassMsg then
 		ClickEvent.notPushPassMsg = false
 		currentOperationState = operationState.DAPAI
@@ -2282,32 +2288,32 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	end
 	if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
 		if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
+        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
 	        if Player.huPaiPosition == 0 then
-	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
 	        else
 	            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
 	        end
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
+    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
 	    	if Player.huPaiPosition == 0 then
-	    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
 	        else
 		        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
 	        end
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
 	    	if Player.huPaiPosition == 0 then
-	    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
 	        end
+    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
 	    	if Player.huPaiPosition == 0 then
-	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
 	        end
+    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
 	        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
 	        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
+    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
 	    	if Player.huPaiPosition == 0 then
-	    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
 	        else
 		        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
 		    end
@@ -2338,6 +2344,7 @@ function MahJong.OperationPaiShow(message)
 	local paiValue = {}
 	local anGangAngle = newVector3.zero
 	local deleteOtheCount = 3
+	local myAnGangOpration = false
 
 	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
 	local tempPosition = newVector3.zero
@@ -2383,6 +2390,9 @@ function MahJong.OperationPaiShow(message)
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
+    	end
+    	if whichPlayer == _my_position then
+	    	myAnGangOpration = true
     	end
     	anGangAngle = newVector3(-180,0,0)
     	deleteOtheCount = 4
@@ -2553,7 +2563,11 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+				if myAnGangOpration == true then
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+				else
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+				end
 			else
 				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
 			end
@@ -2593,7 +2607,11 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+				if myAnGangOpration == true then
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+				else
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+				end
 			else
 				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
 			end
@@ -2633,7 +2651,11 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+				if myAnGangOpration == true then
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+				else
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+				end
 			else
 				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
 			end
@@ -2673,7 +2695,11 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 			if k == 2 then
-				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+				if myAnGangOpration == true then
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+				else
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+				end
 			else
 				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
 			end

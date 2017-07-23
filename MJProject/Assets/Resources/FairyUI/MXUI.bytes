@@ -47,16 +47,32 @@
     <image id="n3_10p14" name="n3" src="isedpu" xy="37,14"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>doyw4st.xml|316|<component size="290,61">
+</component>doyw4st.xml|801|<component size="290,61">
   <displayList>
-    <loader id="n0_doyw" name="icon" xy="11,11" size="50,50"/>
-    <text id="n1_doyw" name="title" xy="11,16" size="279,37" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" strokeColor="#000000" text=""/>
+    <loader id="n0_doyw" name="icon" xy="2,-19" size="80,80" fill="scale"/>
+    <text id="n1_doyw" name="title" xy="-1,17" size="10,29" fontSize="25" color="#ffffff" align="center" vAlign="middle" strokeColor="#000000" text=""/>
   </displayList>
-</component>doyw4su.xml|317|<component size="290,61">
+  <transition name="TextMove">
+    <item time="0" type="XY" target="n1_doyw" tween="true" startValue="-,17" endValue="-,-35" duration="72" ease="Sine.Out"/>
+    <item time="60" type="Alpha" target="n1_doyw" tween="true" startValue="1" endValue="0" duration="12"/>
+  </transition>
+  <transition name="EmojiShake">
+    <item time="0" type="Shake" target="n0_doyw" value="5,0.5"/>
+    <item time="48" type="Alpha" target="n0_doyw" tween="true" startValue="1" endValue="0" duration="24"/>
+  </transition>
+</component>doyw4su.xml|823|<component size="290,61">
   <displayList>
-    <loader id="n0_doyw" name="icon" xy="231,11" size="50,50"/>
-    <text id="n1_doyw" name="title" xy="11,16" size="279,37" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" strokeColor="#000000" text=""/>
+    <loader id="n0_doyw" name="icon" xy="213,-17" size="80,80" fill="scale"/>
+    <text id="n1_doyw" name="title" xy="-101,14" size="395,29" fontSize="25" color="#ffffff" align="right" vAlign="middle" autoSize="height" strokeColor="#000000" text=""/>
   </displayList>
+  <transition name="TextMove">
+    <item time="0" type="XY" target="n1_doyw" tween="true" startValue="-,17" endValue="-,-35" duration="72" ease="Sine.Out"/>
+    <item time="60" type="Alpha" target="n1_doyw" tween="true" startValue="1" endValue="0" duration="12"/>
+  </transition>
+  <transition name="EmojiShake">
+    <item time="0" type="Shake" target="n0_doyw" value="5,0.5"/>
+    <item time="48" type="Alpha" target="n0_doyw" tween="true" startValue="1" endValue="0" duration="24"/>
+  </transition>
 </component>fze14s9.xml|495|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -421,14 +437,14 @@
     <component id="n6_j3uo" name="InformText" src="j3uokn" xy="64,0"/>
     <image id="n1_j3uo" name="n1" src="w61cb3" xy="0,0"/>
   </displayList>
-</component>j3uokn.xml|754|<component size="1000,69" overflow="hidden">
+</component>j3uokn.xml|748|<component size="1000,69" overflow="hidden">
   <displayList>
     <text id="n0_j3uo" name="txtMove" xy="1007,16" size="1077,37" font="幼圆" fontSize="32" color="#ffe3bd" vAlign="middle" ubb="true" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>
     <text id="n1_j3uo" name="txtFixed" xy="0,0" size="993,69" fontSize="32" color="#ffffff" align="center" vAlign="middle" ubb="true" autoSize="shrink" text=""/>
   </displayList>
   <transition name="Txt" autoPlayRepeat="-1">
-    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007.24,16" endValue="-1255,16" duration="240" label2="Time" ease="Linear"/>
-    <item time="240" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1255,16" ease="Linear"/>
+    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007,-" endValue="-1255,-" duration="240" label2="Time" ease="Linear"/>
+    <item time="240" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1255,-" ease="Linear"/>
   </transition>
 </component>jde84tn.xml|597|<component size="106,45" extention="Button">
   <controller name="Useable" pages="0,,1,,2," selected="0"/>
@@ -776,7 +792,7 @@
     <image id="n10_ngmx" name="n10" src="oc2llr" xy="179,2" size="54,66" scale="1.4,1.4"/>
     <loader id="n11_ngmx" name="ChiPaiLoader04" xy="188,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
-</component>nxeh4sm.xml|2100|<component size="323,359">
+</component>nxeh4sm.xml|2642|<component size="323,359">
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n1_nxeh" name="n1" src="w61cib" xy="0,0" size="323,359"/>
@@ -788,41 +804,41 @@
     </component>
     <list id="n5_doyw" name="HelloTextList" xy="0,3" size="279,351" overflow="scroll" defaultItem="ui://krtoytc1nxeh4ss">
       <gearDisplay controller="Emoji" pages="0"/>
-      <item title="你的牌打的也太好了"/>
-      <item title="朋友~点的轻搂的重"/>
-      <item title="别琢磨了！上听不要命~"/>
-      <item title="人生如戏，全看演技"/>
-      <item title="坐上瘾了呢，这把就断你的庄！"/>
-      <item title="鱼咬钩~飘自搂"/>
-      <item title="愣头把脑看对倒！"/>
-      <item title="这把牌基本告别自行车了..."/>
-      <item title="朋友，求开门啊。"/>
-      <item title="网不太好，多担待。"/>
-      <item title="时间紧，任务重，抓牌打牌啊"/>
-      <item title="大家好~凑在一桌就是缘分"/>
+      <item title="你的牌打的也太好了" name="HelloText_1"/>
+      <item title="朋友~点的轻搂的重" name="HelloText_2"/>
+      <item title="别琢磨了！上听不要命~" name="HelloText_3"/>
+      <item title="人生如戏，全看演技" name="HelloText_4"/>
+      <item title="坐上瘾了呢，这把就断你的庄！" name="HelloText_5"/>
+      <item title="鱼咬钩~飘自搂" name="HelloText_6"/>
+      <item title="愣头把脑看对倒！" name="HelloText_7"/>
+      <item title="这把牌基本告别自行车了..." name="HelloText_8"/>
+      <item title="朋友，求开门啊。" name="HelloText_9"/>
+      <item title="网不太好，多担待。" name="HelloText_10"/>
+      <item title="时间紧，任务重，抓牌打牌啊" name="HelloText_11"/>
+      <item title="大家好~凑在一桌就是缘分" name="HelloText_12"/>
     </list>
     <list id="n6_doyw" name="HelloEmojiList" xy="2,3" size="279,351" layout="flow_hz" overflow="scroll" defaultItem="ui://krtoytc1nxeh4sp">
       <gearDisplay controller="Emoji" pages="1"/>
-      <item icon="ui://krtoytc1w61chr"/>
-      <item icon="ui://krtoytc1w61chs"/>
-      <item icon="ui://krtoytc1w61cht"/>
-      <item icon="ui://krtoytc1w61chu"/>
-      <item icon="ui://krtoytc1w61chv"/>
-      <item icon="ui://krtoytc1w61chw"/>
-      <item icon="ui://krtoytc1w61chx"/>
-      <item icon="ui://krtoytc1w61chy"/>
-      <item icon="ui://krtoytc1w61chz"/>
-      <item icon="ui://krtoytc1w61ci0"/>
-      <item icon="ui://krtoytc1w61ci1"/>
-      <item icon="ui://krtoytc1w61ci2"/>
-      <item icon="ui://krtoytc1w61ci3"/>
-      <item icon="ui://krtoytc1w61ci4"/>
-      <item icon="ui://krtoytc1w61ci5"/>
-      <item icon="ui://krtoytc1w61ci6"/>
-      <item icon="ui://krtoytc1w61ci7"/>
-      <item icon="ui://krtoytc1w61ci8"/>
-      <item icon="ui://krtoytc1w61ci9"/>
-      <item icon="ui://krtoytc1w61cia"/>
+      <item icon="ui://krtoytc1w61chr" name="Emoji_1"/>
+      <item icon="ui://krtoytc1w61chs" name="Emoji_2"/>
+      <item icon="ui://krtoytc1w61cht" name="Emoji_3"/>
+      <item icon="ui://krtoytc1w61chu" name="Emoji_4"/>
+      <item icon="ui://krtoytc1w61chv" name="Emoji_5"/>
+      <item icon="ui://krtoytc1w61chw" name="Emoji_6"/>
+      <item icon="ui://krtoytc1w61chx" name="Emoji_7"/>
+      <item icon="ui://krtoytc1w61chy" name="Emoji_8"/>
+      <item icon="ui://krtoytc1w61chz" name="Emoji_9"/>
+      <item icon="ui://krtoytc1w61ci0" name="Emoji_10"/>
+      <item icon="ui://krtoytc1w61ci1" name="Emoji_11"/>
+      <item icon="ui://krtoytc1w61ci2" name="Emoji_12"/>
+      <item icon="ui://krtoytc1w61ci3" name="Emoji_13"/>
+      <item icon="ui://krtoytc1w61ci4" name="Emoji_14"/>
+      <item icon="ui://krtoytc1w61ci5" name="Emoji_15"/>
+      <item icon="ui://krtoytc1w61ci6" name="Emoji_16"/>
+      <item icon="ui://krtoytc1w61ci7" name="Emoji_17"/>
+      <item icon="ui://krtoytc1w61ci8" name="Emoji_18"/>
+      <item icon="ui://krtoytc1w61ci9" name="Emoji_19"/>
+      <item icon="ui://krtoytc1w61cia" name="Emoji_20"/>
     </list>
   </displayList>
 </component>nxeh4sn.xml|570|<component size="42,175" extention="Button">
@@ -856,10 +872,10 @@
     <loader id="n5_doyw" name="icon" xy="8,8" size="50,50"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>nxeh4ss.xml|467|<component size="279,40" extention="Button">
+</component>nxeh4ss.xml|455|<component size="279,40" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <text id="n4_nxeh" name="title" xy="0,0" size="279,37" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" strokeColor="#000000" text=""/>
+    <text id="n4_nxeh" name="title" xy="0,0" size="279,37" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#000000" text=""/>
     <image id="n6_doyw" name="n6" src="w61cic" xy="9,37"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
@@ -3106,7 +3122,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|9228|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|9207|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
@@ -3132,7 +3148,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
     <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
-      <relation target="" sidePair="top-top,right-right"/>
+      <relation target="" sidePair="top-top,left-left"/>
     </component>
     <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
       <relation target="" sidePair="center-center%"/>
@@ -3204,12 +3220,12 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1251,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n55_doyw" name="Emoji" src="nxeh4sm" xy="923,387" group="n25_fb5y">
+    <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,716" advanced="true"/>
+    <component id="n32_j3uo" name="Draw" src="j3uokk" xy="542,327"/>
+    <component id="n55_doyw" name="Emoji" src="nxeh4sm" xy="923,387">
       <gearDisplay controller="Emoji" pages="1"/>
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,736" advanced="true"/>
-    <component id="n32_j3uo" name="Draw" src="j3uokk" xy="542,327"/>
     <component id="n33_oc2l" name="FrontPaiShow" src="i5kclq" xy="236,231">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
@@ -3225,9 +3241,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n42_ldfs" name="PlayerAlready" src="ldfsqg" xy="604,530"/>
     <component id="n56_doyw" name="PlayerEmojiShow" src="doyw4st" xy="99,500"/>
     <component id="n57_doyw" name="FrontEmojiShow" src="doyw4st" xy="95,243"/>
-    <component id="n58_doyw" name="OppositeEmojiShow" src="doyw4su" xy="728,120"/>
+    <component id="n58_doyw" name="OppositeEmojiShow" src="doyw4su" xy="646,61"/>
     <component id="n59_doyw" name="BehindEmojiShow" src="doyw4su" xy="940,290"/>
-    <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,157"/>
+    <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,82"/>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
@@ -3235,10 +3251,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
   </transition>
   <transition name="SlideIn">
-    <item time="0" type="Alpha" target="n17_algd" value="0"/>
+    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
     <item time="0" type="Alpha" target="n24_l3ub" value="0"/>
     <item time="0" type="Alpha" target="n45_uejt" value="0"/>
-    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
+    <item time="0" type="Alpha" target="n17_algd" value="0"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="0,0" endValue="1.1,1.1" duration="6"/>
     <item time="4" type="Alpha" target="n17_algd" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n24_l3ub" tween="true" startValue="0" endValue="1" duration="4"/>
@@ -3247,9 +3263,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="6" type="Scale" target="n52_idf3" tween="true" startValue="1.1,1.1" endValue="1,1" duration="2"/>
   </transition>
   <transition name="SlideOut" options="1">
-    <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Scale" target="n52_idf3" tween="true" startValue="1,1" endValue="0,0" duration="4"/>
   </transition>

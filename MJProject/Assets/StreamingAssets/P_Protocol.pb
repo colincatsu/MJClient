@@ -1,5 +1,5 @@
 
-◊|
+’Å
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -93,7 +93,7 @@ phone_type ((
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"€
+attachments (2.Adoter.Asset.MailAttachment"Ï
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 account (
@@ -109,7 +109,8 @@ login_time (
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
 game_setting (2.Adoter.Asset.PlayerSetting/
-room_history (2.Adoter.Asset.RoomHistory"®
+room_history (2.Adoter.Asset.RoomHistory
+room_id ("®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -140,7 +141,11 @@ expires_in (
 errmsg ("g
 WechatLoginC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGIN
-access_code ("•
+access_code ("
+SwitchAccountE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_SWITCH_ACCOUNT
+account_name (
+	player_id ("∫
 WechatUnion
 openid (
 nickname (
@@ -151,7 +156,9 @@ expires_in (
 
 headimgurl (
 	privilege (
-unionid	 ("G
+unionid	 (
+json_wechat
+ ("G
 Logout=
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGOUT"a
 	EnterGameA
@@ -159,7 +166,13 @@ headimgurl (
 	player_id ("î
 UpdateClientDataK
 type_t (2.Adoter.Asset.META_TYPE:"META_TYPE_SHARE_UPDATE_CLIENT_DATA3
-client_info (2.Adoter.Asset.ClientInfomation"á
+client_info (2.Adoter.Asset.ClientInfomation"º
+
+SystemChatD
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_SYSTEM_CHAT*
+	chat_type (2.Adoter.Asset.CHAT_TYPE-
+position (2.Adoter.Asset.POSITION_TYPE
+index ("á
 Room
 room_id (*
 	room_type (2.Adoter.Asset.ROOM_TYPE
@@ -202,11 +215,11 @@ ENTER_TYPE
 
 GuestLoginD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GUEST_LOGIN
-account ("P
-PlayerSetting
-music (
-voice (
-audio (
+account ("b
+PlayerSetting
+music (:true
+voice (:true
+audio (:true
 
 click_push ("á
 GameSettingE
@@ -392,7 +405,11 @@ WeChatInfoH
 KickOutPlayerE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_KICKOUT_PLAYER-
 reason (2.Adoter.Asset.KICK_OUT_REASON
-	player_id (*u
+	player_id ("i
+GmtInnerMetaE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_GMT_INNER_META
+
+inner_meta (*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -459,7 +476,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*Ã
+ERROR_COMMON_REWARD_HAS_GOT3*≤
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -476,7 +493,8 @@ ERROR_CODE
 META_TYPE_SHARE_SAY_HI
 META_TYPE_SHARE_GUEST_LOGIN 
 META_TYPE_SHARE_GAME_SETTING&
-"META_TYPE_SHARE_UPDATE_CLIENT_DATA
+"META_TYPE_SHARE_UPDATE_CLIENT_DATA
+META_TYPE_SHARE_SYSTEM_CHAT
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
@@ -486,7 +504,8 @@ ERROR_CODE
 META_TYPE_C2S_GET_REWARD8
 META_TYPE_C2S_LOAD_SCENE9
 META_TYPE_C2S_RECONNECT:
-META_TYPE_C2S_WECHAT_LOGIN;
+META_TYPE_C2S_WECHAT_LOGIN; 
+META_TYPE_C2S_SWITCH_ACCOUNT<
 META_TYPE_C2S_COUNTˇ
 META_TYPE_S2C_BEGINı
 META_TYPE_S2C_TICKETˆ
@@ -512,12 +531,16 @@ ERROR_CODE
 META_TYPE_S2C_ROOM_CALCULATEã
 META_TYPE_S2C_COUNTË
 META_TYPE_S2S_REGISTERÈ!
-META_TYPE_S2S_KICKOUT_PLAYERÍ*l
+META_TYPE_S2S_KICKOUT_PLAYERÍ!
+META_TYPE_S2S_GMT_INNER_METAÎ*l
 ACCOUNT_TYPE
 ACCOUNT_TYPE_8HERE
 ACCOUNT_TYPE_GUEST
 ACCOUNT_TYPE_WECHAT
-ACCOUNT_TYPE_QQ*Ò
+ACCOUNT_TYPE_QQ*3
+	CHAT_TYPE
+CHAT_TYPE_TEXT
+CHAT_TYPE_FACE*Ò
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI

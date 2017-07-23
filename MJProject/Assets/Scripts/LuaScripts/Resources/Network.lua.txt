@@ -86,6 +86,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
     FLibEvent.AddEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
     FLibEvent.AddEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
+    FLibEvent.AddEvent(Player.OnSystemChat,"META_TYPE_SHARE_SYSTEM_CHAT")
     
     FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
@@ -104,6 +105,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
     FLibEvent.AddEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
     FLibEvent.AddEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
+    FLibEvent.AddEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
 end
 
 ---------------------------------------------------------------------------
@@ -175,6 +177,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
     FLibEvent.DelEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
     FLibEvent.DelEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
+    FLibEvent.DelEvent(Player.OnSystemChat,"META_TYPE_SHARE_SYSTEM_CHAT")
 
     FLibEvent.DelEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
     FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
@@ -193,6 +196,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
     FLibEvent.DelEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
     FLibEvent.DelEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
+    FLibEvent.DelEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
 end
 
 ---------------------------------------------------------------------------

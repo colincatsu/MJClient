@@ -59,13 +59,13 @@ function AssetManager.PrintMessage(message)
 	if type(message) == "table" then
 		for k, v in pairs(message) do
 			if type(v) ~= "table" then
-				print (k, v)
+				print(k, v)
 			else 
 				AssetManager.PrintMessage(v)
 			end
 		end
 	else
-		print (message)
+		Player.LogWarning(message)
 	end
 end
 

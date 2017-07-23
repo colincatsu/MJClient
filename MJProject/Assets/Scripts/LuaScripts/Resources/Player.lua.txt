@@ -1,6 +1,8 @@
 local protobuf = require "protobuf"
 local AssetManager = require "AssetManager"
 local LoadingCT = require "LoadingCT"
+--local rapidjson = require "rapidjson"
+local gbk = require "gbk"
 
 ---------------------------------------------------------------------------
 --成员变量
@@ -41,6 +43,8 @@ _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
 Player._all_calculate_data = {}--所有结算数据
+Player.activityDataTable = {}
+Player.activityTable = {}
 Player._calculate_table_number = 0
 Player._room_information = {}--房间信息
 Player._room_calculate_data = nil--房间结算
@@ -82,8 +86,27 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0722"
+Player.pc_version = "1.0.4.0723"
 
+
+function Player.LoadData( ... )
+    -- body
+    if next(Player.activityDataTable) == nil then
+        local AssetManager = require "AssetManager"
+        local resultPath = CS.LuaCommon.resultPath
+        if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
+            resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
+        end
+        local loader = AssetManager.Load(resultPath.."Asset/Asset/")
+        local message = AssetManager.GetMessagesByType("ASSET_TYPE_COMMON_CONST")
+        local data = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonConst")
+        for k,v in pairs(data) do
+            Player.activityDataTable =  v
+        end
+        --AssetManager.PrintMessage(Player.activityDataTable)
+        --Player.LogWarning(Player.activityDataTable.room_card_limit_free_activity_id)
+    end
+end
 
 function Player.LogWarning(para)
     -- body
@@ -270,16 +293,17 @@ function Player.LoadScene(senceName, buffer)
     if senceName == "PlaySence" then
         Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     end
+    Effect.DestroyObj()
     CS.UnityEngine.Resources.UnloadUnusedAssets()
     CS.UnityEngine.Application.LoadLevelAsync("LoadingSence")
 end
 
 ---------------------------------------------------------------------------
---数据封装
+--每帧更新
 ---------------------------------------------------------------------------
-
 function Player.myUpdate( ... )
     -- body
+    ClickEvent.UpdateTime()
     if Player.reConnect and Player.disConnetedTime then
         if (CS.UnityEngine.Time.time - Player.disConnetedTime) >= Player.connectCountDownTime then
             Network.Start()
@@ -308,6 +332,32 @@ function Player.myUpdate( ... )
             ClickEvent.PlayMoveTitle()
         end
     end
+
+    if CS.UnityEngine.Input.GetKeyDown(CS.UnityEngine.KeyCode.Escape) then
+        if ClickEvent.Close() == false then
+            if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+                ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+                ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2003))
+            elseif CS.UnityEngine.Application.loadedLevelName == "FairyMainUI" then
+                ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+                ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2002))
+            end
+        end
+    end
+end
+
+
+---------------------------------------------------------------------------
+--数据封装
+---------------------------------------------------------------------------
+
+function Player.CmdSystemChat(chatType,chatIndex)
+    -- body
+    systemChat = {
+        chat_type = chatType,
+        index = chatIndex,
+    }
+    this.SendProtocol("SystemChat",systemChat)
 end
 
 function Player.CmdReConnect()
@@ -480,6 +530,15 @@ end
 ---------------------------------------------
 --
 
+function Player.OnSystemChat(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SystemChat",stuff)
+    ClickEvent.ShowEmoji(message.position,message.chat_type,message.index)
+end
+
 function Player.OnGameSetting(type_t,stuff)
     -- body
     if not stuff then
@@ -535,7 +594,7 @@ function Player.OnWeChatInfo(type_t,stuff)
         local mFile = io.open(path.."openID.txt" ,"w")
         mFile:write(Player._string_id)  
         mFile:close()
-        Player.wechat_nickname = message.wechat.nickname
+        Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(message.wechat.nickname))
         Player.wechat_sex = message.wechat.sex
         Player.wechat_headimgurl = message.wechat.headimgurl
         Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
@@ -606,7 +665,7 @@ function Player.OnRoomCalculate(type_t,stuff)
     Player.hasBeginned = false
     Player._room_calculate_data = message
     if Player._calculate_table_number >= Player._room_information.options.open_rands then
-        ClickEvent.ShowRoomCalculate()
+        --ClickEvent.ShowRoomCalculate()
     end
 end
 
@@ -718,6 +777,15 @@ function Player.OnJoinRoomComplete(code,roomName, memberID)
     WeChatPlatform.m_voiceengine:OpenSpeaker()
 end
 
+function Player.OnSyncActivity(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SyncActivity",stuff)
+    Player.activityTable = message.activity_list
+end
+
 function Player.OnEnterRoom(type_t,stuff)
     -- body
     if not stuff then
@@ -755,7 +823,14 @@ function Player.OnPlayerList(type_t,stuff)
     if not message.wechat.nickname or message.wechat.nickname == "" then
         return
     end
-    Player.wechat_nickname = message.wechat.nickname
+
+    --[[
+    local jsonData = rapidjson.decode(message.wechat.json_wechat)
+    Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(jsonData.nickname))
+    local tempData = rapidjson.encode(message.wechat.json_wechat)
+    print(jsonData.nickname)
+    --]]
+    Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(message.wechat.nickname))
     Player.wechat_sex = message.wechat.sex
     Player.wechat_headimgurl = message.wechat.headimgurl
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)

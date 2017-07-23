@@ -88,6 +88,15 @@ function Effect.SetDisableObjPool(cacheObj)
     _disableObjPool[_disableObjPool_rear] = cacheObj
 end
 
+function Effect.DestroyObj( ... )
+	-- body
+	_disableObjPool = {}
+	--prefabTable = {}
+	objectTable = {}
+	_disableObjPool_front = 1
+	_disableObjPool_rear = 0
+end
+
 
 function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,deleteTime)
 	-- body
