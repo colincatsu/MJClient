@@ -1056,8 +1056,6 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	local whichPlayer = ClickEvent.PlayerPosition(position)
 	if whichPlayer == 1 then
 		ClickEvent._play_ui.behindEmoji.visible = true
-		ClickEvent._play_ui.behindEmoji:GetTransition("TextMove"):Stop(true,false)
-		ClickEvent._play_ui.behindEmoji:GetTransition("EmojiShake"):Stop(true,false)
 		if chat_type == "CHAT_TYPE_TEXT" then
 			ClickEvent._play_ui.behindEmoji:GetChild("icon").url = ""
 			ClickEvent._play_ui.behindEmoji:GetChild("title").text = StringTable.Get(index+2059)
@@ -1067,6 +1065,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 			ClickEvent._play_ui.behindEmoji:GetChild("title").text = ""
 			ClickEvent._play_ui.behindEmoji:GetTransition("EmojiShake"):Play()
 		end
+		--[[
+		ClickEvent._play_ui.behindEmoji:GetTransition("TextMove"):Stop(true,false)
+		ClickEvent._play_ui.behindEmoji:GetTransition("EmojiShake"):Stop(true,false)
 		behindTimeStamp = CS.UnityEngine.Time.time
 		local co = coroutine.create(function()
 	    yield_return(CS.UnityEngine.WaitForSeconds(3))
@@ -1075,9 +1076,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	    end
 		end)
 		coroutine.resume(co)
+		--]]
 	elseif whichPlayer == 2 then
-		ClickEvent._play_ui.oppositeEmoji:GetTransition("TextMove"):Stop(true,false)
-		ClickEvent._play_ui.oppositeEmoji:GetTransition("EmojiShake"):Stop(true,false)
+		ClickEvent._play_ui.oppositeEmoji.visible = true
 		if chat_type == "CHAT_TYPE_TEXT" then
 			ClickEvent._play_ui.oppositeEmoji:GetChild("icon").url = ""
 			ClickEvent._play_ui.oppositeEmoji:GetChild("title").text = StringTable.Get(index+2059)
@@ -1087,7 +1088,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 			ClickEvent._play_ui.oppositeEmoji:GetChild("title").text = ""
 			ClickEvent._play_ui.oppositeEmoji:GetTransition("EmojiShake"):Play()
 		end
-		ClickEvent._play_ui.oppositeEmoji.visible = true
+		--[[
+		ClickEvent._play_ui.oppositeEmoji:GetTransition("TextMove"):Stop(true,false)
+		ClickEvent._play_ui.oppositeEmoji:GetTransition("EmojiShake"):Stop(true,false)
 		oppositeTimeStamp = CS.UnityEngine.Time.time
 		local co = coroutine.create(function()
 	    yield_return(CS.UnityEngine.WaitForSeconds(3))
@@ -1096,9 +1099,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	    end
 		end)
 		coroutine.resume(co)
+		--]]
 	elseif whichPlayer == 3 then
-		ClickEvent._play_ui.FrontEmoji:GetTransition("TextMove"):Stop(true,false)
-		ClickEvent._play_ui.FrontEmoji:GetTransition("EmojiShake"):Stop(true,false)
+		ClickEvent._play_ui.FrontEmoji.visible = true
 		if chat_type == "CHAT_TYPE_TEXT" then
 			ClickEvent._play_ui.FrontEmoji:GetChild("icon").url = ""
 			ClickEvent._play_ui.FrontEmoji:GetChild("title").text = StringTable.Get(index+2059)
@@ -1108,8 +1111,10 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 			ClickEvent._play_ui.FrontEmoji:GetChild("title").text = ""
 			ClickEvent._play_ui.FrontEmoji:GetTransition("EmojiShake"):Play()
 		end
-		ClickEvent._play_ui.FrontEmoji.visible = true
+		--[[
 		frontTimeStamp = CS.UnityEngine.Time.time
+		ClickEvent._play_ui.FrontEmoji:GetTransition("TextMove"):Stop(true,false)
+		ClickEvent._play_ui.FrontEmoji:GetTransition("EmojiShake"):Stop(true,false)
 		local co = coroutine.create(function()
 	    yield_return(CS.UnityEngine.WaitForSeconds(3))
 	    if CS.UnityEngine.Time.time - frontTimeStamp >= 3 then
@@ -1117,10 +1122,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	    end
 		end)
 		coroutine.resume(co)
+		--]]
 	else
-		--ClickEvent._play_ui.playerEmoji.visible = true
-		--ClickEvent._play_ui.playerEmoji:GetTransition("TextMove"):Stop(true,false)
-		--ClickEvent._play_ui.playerEmoji:GetTransition("EmojiShake"):Stop(true,false)
+		ClickEvent._play_ui.playerEmoji.visible = true
 		if chat_type == "CHAT_TYPE_TEXT" then
 			ClickEvent._play_ui.playerEmoji:GetChild("icon").url = ""
 			ClickEvent._play_ui.playerEmoji:GetChild("title").text = StringTable.Get(index+2059)
@@ -1130,14 +1134,18 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 			ClickEvent._play_ui.playerEmoji:GetChild("title").text = ""
 			ClickEvent._play_ui.playerEmoji:GetTransition("EmojiShake"):Play()
 		end
-		playerTimeStamp = CS.UnityEngine.Time.time
+		--[[
+		ClickEvent._play_ui.playerEmoji:GetTransition("TextMove"):Stop(true,false)
+		ClickEvent._play_ui.playerEmoji:GetTransition("EmojiShake"):Stop(true,false)
 		local co = coroutine.create(function()
+		playerTimeStamp = CS.UnityEngine.Time.time
 	    yield_return(CS.UnityEngine.WaitForSeconds(3))
 	    if CS.UnityEngine.Time.time - playerTimeStamp >= 3 then
 	    	--ClickEvent._play_ui.playerEmoji.visible = false
 	    end
 		end)
 		coroutine.resume(co)
+		--]]
 	end
 end
 ---------------------------------------------------------------------------
@@ -2373,11 +2381,12 @@ function ClickEvent.GameBillButton(gameObject)
 			local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
 			obj.name = "VipNoteListInRound"
 			roundCount = roundCount + 1
+			obj:GetChild("RoundNum").text = tostring(roundCount)
 			local playerNumber = 1
 			for roundKey,roundData in pairs(c.list) do
-				countScore[playerNumber].nickname = tostring(roundData.nickname)
+				countScore[playerNumber].nickname = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 				countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
-				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(roundData.nickname)
+				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
 				local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
 				if tempTexture then
@@ -2389,6 +2398,16 @@ function ClickEvent.GameBillButton(gameObject)
 	end
 	local historyShareList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
 	historyShareList:RemoveChildrenToPool()
+	for i=1,4 do
+		local tempTable = {}
+		for j=i,4 do
+			if countScore[i].allScore < countScore[j].allScore then
+				tempTable = countScore[i]
+				countScore[i] = countScore[j]
+				countScore[j] = tempTable
+			end
+		end
+	end
 	for i=1,4 do
 		local obj = historyShareList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInTotal"))
 		obj.name = "VipNoteListInTotal"

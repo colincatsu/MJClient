@@ -1012,7 +1012,7 @@ function MahJong.ZhuaPai()
 				Player.CmdPaiOperation("PAI_OPER_TYPE_DAPAI",{},paiElement)
 			end
 			Player.isTingPaiTuoGuan = true
-			_dice_red:SetActive(false)
+			--_dice_red:SetActive(false)
 		end)
 		coroutine.resume(co)
 	end
