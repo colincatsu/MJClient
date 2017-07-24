@@ -77,6 +77,8 @@ Player.playerScore = {--游戏每家分数保存
     [2] = 0,
     [3] = 0,
 }
+
+Player.coolDown = nil
 Player.moveTitleTimestamp = nil
 Player.moveInterval = 45
 
@@ -86,8 +88,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.4.0723"
-
+Player.pc_version = "1.0.1.0725"
 
 function Player.LoadData( ... )
     -- body
@@ -110,7 +111,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -350,6 +351,15 @@ end
 ---------------------------------------------------------------------------
 --数据封装
 ---------------------------------------------------------------------------
+
+function Player.CmdSwitchAccount(account,playerId)
+    -- body
+    switchAccount = {
+        account_name = account,
+        player_id = playerId,
+    }
+    this.SendProtocol("SwitchAccount",switchAccount)
+end
 
 function Player.CmdSystemChat(chatType,chatIndex)
     -- body
@@ -607,7 +617,7 @@ function Player.OnSyncCommonProperty(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.SyncCommonProperty",stuff)
-    if Player._player_data.common_prop.player_id == message.player_id then
+    if Player._player_data and Player._player_data.common_prop.player_id == message.player_id then
         Player._player_data.common_prop = message.common_prop
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Bean,false,1)
         ClickEvent.CommonPropertyUpdate()

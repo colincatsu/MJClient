@@ -233,6 +233,10 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindEmoji = _currentPanel.panel:GetChild("BehindEmojiShow")
 		ClickEvent._play_ui.oppositeEmoji = _currentPanel.panel:GetChild("OppositeEmojiShow")
 		ClickEvent._play_ui.FrontEmoji = _currentPanel.panel:GetChild("FrontEmojiShow")
+
+		if Player.isFriendRoom == true then
+			_currentPanel.panel:GetChild("GameTrusteeshipButton").visible = false
+		end
 		--[[
 		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
 			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
@@ -359,7 +363,15 @@ end
 function ClickEvent.UpdateTime( ... )
 	-- body
 	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui then
-		ClickEvent._play_ui.timeShow.text = tostring(CS.System.DateTime.Now.Hour)..":"..tostring(CS.System.DateTime.Now.Minute)
+		local hour = tostring(CS.System.DateTime.Now.Hour)
+		local minute = tostring(CS.System.DateTime.Now.Minute)
+		if CS.System.DateTime.Now.Hour < 10 then
+			hour = "0"..tostring(CS.System.DateTime.Now.Hour)
+		end
+		if CS.System.DateTime.Now.Minute < 10 then
+			minute = "0"..tostring(CS.System.DateTime.Now.Minute)
+		end
+		ClickEvent._play_ui.timeShow.text = hour..":"..minute
 	end
 end
 
@@ -546,7 +558,7 @@ function ClickEvent.RoomInformationUpdate( ... )
 			end
 		end
 	end
-	if countPlayerNumber >= 4 then
+	if countPlayerNumber >= 4 and ClickEvent._play_ui.playerAlready.visible == false then
 		ClickEvent._play_ui.gamePlayButton.visible = true
 		ClickEvent._play_ui.inviteWechatFriends.visible = false
 		ClickEvent._play_ui.copyRoomNum.visible = false
@@ -1152,11 +1164,19 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.GameInstructionButton(gameObject)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._instruction_ui)
+end
+
 function ClickEvent.HelloText(gameObject)
 	-- body
 	local index = string.find(gameObject.name,"_")
 	local number = string.sub(gameObject.name,index+1)
 	Player.CmdSystemChat("CHAT_TYPE_TEXT",tonumber(number))
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel:GetChild("GameEmojiButton") then
+		_currentPanel.panel:GetChild("GameEmojiButton").selected = false
+	end
 end
 
 function ClickEvent.Emoji(gameObject)
@@ -1164,8 +1184,10 @@ function ClickEvent.Emoji(gameObject)
 	local index = string.find(gameObject.name,"_")
 	local number = string.sub(gameObject.name,index+1)
 	Player.CmdSystemChat("CHAT_TYPE_FACE",tonumber(number))
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel:GetChild("GameEmojiButton") then
+		_currentPanel.panel:GetChild("GameEmojiButton").selected = false
+	end
 end
-
 
 function ClickEvent.InviteWechatFriends(gameObject)
 	-- body
@@ -1205,6 +1227,9 @@ function ClickEvent.ChangeAccount(gameObject)
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 	os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
+	Player.LogWarning(Player._string_id)
+	Player.LogWarning(Player._player_data.common_prop.player_id)
+	Player.CmdSwitchAccount(Player._string_id,Player._player_data.common_prop.player_id)
 end
 
 function ClickEvent.ServiveTerm1(gameObject)
@@ -1351,6 +1376,9 @@ function ClickEvent.VipNoteList(gameObject)
 					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = loseFont
 					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 				else
+					local winFont = obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat
+					winFont.font = UIPackage.GetItemURL("MXUI","WinFont")
+					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = winFont
 					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 				end
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
@@ -1945,6 +1973,16 @@ function ClickEvent.GuestLogin( gameObject )
 	end
 	Player.CmdEnterGame(Player._id)
 	--]]
+	if not Player.coolDown then
+		Player.coolDown = CS.UnityEngine.Time.time
+	else
+		if (CS.UnityEngine.Time.time - Player.coolDown) <= Player.connectTimes then
+			return
+		else
+			Player.coolDown = CS.UnityEngine.Time.time
+		end
+	end
+
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	local openIdFile = io.open(path.."guestID.txt")
 	if not openIdFile then
@@ -1960,6 +1998,16 @@ end
 
 function ClickEvent.WechatLogin(gameObject)
 	-- body
+	if not Player.coolDown then
+		Player.coolDown = CS.UnityEngine.Time.time
+	else
+		if Player.coolDown - CS.UnityEngine.Time.time <= Player.connectTimes then
+			return
+		else
+			Player.coolDown = CS.UnityEngine.Time.time
+		end
+	end
+
 	Player.LogWarning("ClickEvent.WechatLogin")
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	--[[
@@ -2418,6 +2466,9 @@ function ClickEvent.GameBillButton(gameObject)
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = loseFont
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 		else
+			local winFont = obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat
+			winFont.font = UIPackage.GetItemURL("MXUI","WinFont")
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = winFont
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 		end
 		obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)

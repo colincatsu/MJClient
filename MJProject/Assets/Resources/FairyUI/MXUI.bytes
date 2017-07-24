@@ -47,29 +47,33 @@
     <image id="n3_10p14" name="n3" src="isedpu" xy="37,14"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>doyw4st.xml|801|<component size="290,61">
+</component>doyw4st.xml|923|<component size="290,61">
   <displayList>
     <loader id="n0_doyw" name="icon" xy="2,-19" size="80,80" fill="scale"/>
     <text id="n1_doyw" name="title" xy="-1,17" size="10,29" fontSize="25" color="#ffffff" align="center" vAlign="middle" strokeColor="#000000" text=""/>
   </displayList>
   <transition name="TextMove">
+    <item time="0" type="Alpha" target="n1_doyw" value="1"/>
     <item time="0" type="XY" target="n1_doyw" tween="true" startValue="-,17" endValue="-,-35" duration="72" ease="Sine.Out"/>
     <item time="60" type="Alpha" target="n1_doyw" tween="true" startValue="1" endValue="0" duration="12"/>
   </transition>
   <transition name="EmojiShake">
+    <item time="0" type="Alpha" target="n0_doyw" value="1"/>
     <item time="0" type="Shake" target="n0_doyw" value="5,0.5"/>
     <item time="48" type="Alpha" target="n0_doyw" tween="true" startValue="1" endValue="0" duration="24"/>
   </transition>
-</component>doyw4su.xml|823|<component size="290,61">
+</component>doyw4su.xml|945|<component size="290,61">
   <displayList>
     <loader id="n0_doyw" name="icon" xy="213,-17" size="80,80" fill="scale"/>
     <text id="n1_doyw" name="title" xy="-101,14" size="395,29" fontSize="25" color="#ffffff" align="right" vAlign="middle" autoSize="height" strokeColor="#000000" text=""/>
   </displayList>
   <transition name="TextMove">
+    <item time="0" type="Alpha" target="n1_doyw" value="1"/>
     <item time="0" type="XY" target="n1_doyw" tween="true" startValue="-,17" endValue="-,-35" duration="72" ease="Sine.Out"/>
     <item time="60" type="Alpha" target="n1_doyw" tween="true" startValue="1" endValue="0" duration="12"/>
   </transition>
   <transition name="EmojiShake">
+    <item time="0" type="Alpha" target="n0_doyw" value="1"/>
     <item time="0" type="Shake" target="n0_doyw" value="5,0.5"/>
     <item time="48" type="Alpha" target="n0_doyw" tween="true" startValue="1" endValue="0" duration="24"/>
   </transition>

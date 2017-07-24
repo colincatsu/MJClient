@@ -210,6 +210,11 @@ function Network.OnException()
     ClickEvent.ShowNotMoveToast(2028)
     if not Player.disConnetedTime then
         Player.disConnetedTime = CS.UnityEngine.Time.time
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            Player.LoadScene("FairyMainUI")
+        end
     end
     Player.reConnect = true
 end
@@ -224,6 +229,11 @@ function Network.OnDisconnect()
     ClickEvent.ShowNotMoveToast(2028)
     if not Player.disConnetedTime then
         Player.disConnetedTime = CS.UnityEngine.Time.time
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            Player.LoadScene("FairyMainUI")
+        end
     end
     Player.reConnect = true
 end

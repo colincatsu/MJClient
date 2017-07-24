@@ -1,5 +1,5 @@
 
-’Å
+¿Å
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -145,7 +145,7 @@ expires_in (
 SwitchAccountE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_SWITCH_ACCOUNT
 account_name (
-	player_id ("∫
+	player_id ("•
 WechatUnion
 openid (
 nickname (
@@ -156,9 +156,7 @@ expires_in (
 
 headimgurl (
 	privilege (
-unionid	 (
-json_wechat
- ("G
+unionid	 ("G
 Logout=
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOGOUT"a
 	EnterGameA
