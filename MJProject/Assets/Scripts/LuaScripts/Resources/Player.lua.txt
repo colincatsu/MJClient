@@ -88,7 +88,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0725"
+Player.pc_version = "1.0.1.0726"
 
 function Player.LoadData( ... )
     -- body
@@ -539,6 +539,19 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnRoomState(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.RoomState",stuff)
+    if message.oper_type == "GAME_OPER_TYPE_LEAVE" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            Player.LoadScene("FairyMainUI")
+        end
+    end
+end
 
 function Player.OnSystemChat(type_t,stuff)
     -- body

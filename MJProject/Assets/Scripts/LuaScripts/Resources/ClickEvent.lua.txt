@@ -872,7 +872,7 @@ function ClickEvent.ExitRoomButton( ... )
 	Player.returnMainUI = true
 	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 	Player.MahJong.QuitVoiceRoom()
-	Player.LoadScene("FairyMainUI")
+	--Player.LoadScene("FairyMainUI")
 end
 
 function ClickEvent.ShowCalculate( ... )
@@ -1714,7 +1714,7 @@ function ClickEvent.YesButton( ... )
 			Player.returnMainUI = true
 			Player.MahJong.QuitVoiceRoom()
 			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
-			Player.LoadScene("FairyMainUI")
+			--Player.LoadScene("FairyMainUI")
 		end
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
 		CS.UnityEngine.Application.Quit()
@@ -2037,6 +2037,15 @@ function ClickEvent.WechatLogin(gameObject)
 				Player.wechat_code = paraCode--WeChatPlatform:GetData("getWXCode")
 				Player.CmdWechatLogin(Player.wechat_code)
 				WeChatPlatform.onWeChatCallBack = nil
+				if not Player.coolDown then
+					Player.coolDown = CS.UnityEngine.Time.time
+				else
+					if Player.coolDown - CS.UnityEngine.Time.time <= Player.connectTimes then
+						return
+					else
+						Player.coolDown = CS.UnityEngine.Time.time
+					end
+				end
 			end
 			WeChatPlatform:LoginWeChat()
 		else

@@ -106,6 +106,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
     FLibEvent.AddEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
     FLibEvent.AddEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
+    FLibEvent.AddEvent(Player.OnRoomState,"META_TYPE_S2C_ROOM_STATE")
 end
 
 ---------------------------------------------------------------------------
@@ -197,6 +198,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
     FLibEvent.DelEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
     FLibEvent.DelEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
+    FLibEvent.DelEvent(Player.OnRoomState,"META_TYPE_S2C_ROOM_STATE")
 end
 
 ---------------------------------------------------------------------------

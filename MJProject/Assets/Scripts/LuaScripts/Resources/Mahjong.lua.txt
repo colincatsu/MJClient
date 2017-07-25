@@ -978,6 +978,21 @@ function MahJong.UpdateWhoseTurn(whichPlayer)
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_player_direction.north:GetComponent("Renderer").material = Load("Material/DirLight")
 	end
+
+	ClickEvent._play_ui.playerAvatarInfoEffect.visible = false
+	ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = false
+	ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
+	ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = false
+	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
+	if playerPos == 0 then
+		ClickEvent._play_ui.playerAvatarInfoEffect.visible = true
+	elseif playerPos  == 1 then
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = true
+	elseif playerPos  == 2 then
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = true
+	elseif playerPos  == 3 then
+		ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = true
+	end
 end
 
 function MahJong.ZhuaPai()

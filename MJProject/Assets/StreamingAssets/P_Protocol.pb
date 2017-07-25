@@ -1,5 +1,5 @@
 
-õÇ
+˙Ö
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -397,7 +397,18 @@ WeChatInfoH
 	GameStartA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_START
 total_rounds (
-current_rounds ("ê
+current_rounds ("õ
+RoomDisMissC
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_DISMISS
+room_id (3
+list (2%.Adoter.Asset.RoomDisMiss.RoomElementÄ
+RoomElement
+	player_id (-
+position (2.Adoter.Asset.POSITION_TYPE/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"
+	RoomStateA
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_STATE/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"ê
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -476,7 +487,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*≤
+ERROR_COMMON_REWARD_HAS_GOT3*Ú
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -528,7 +539,9 @@ ERROR_CODE
 META_TYPE_S2C_GAMES_FULLà$
 META_TYPE_S2C_WECHAT_INFOMATIONâ
 META_TYPE_S2C_GAME_STARTä!
-META_TYPE_S2C_ROOM_CALCULATEã
+META_TYPE_S2C_ROOM_CALCULATEã
+META_TYPE_S2C_ROOM_DISMISSå
+META_TYPE_S2C_ROOM_STATEç
 META_TYPE_S2C_COUNTË
 META_TYPE_S2S_REGISTERÈ!
 META_TYPE_S2S_KICKOUT_PLAYERÍ!
