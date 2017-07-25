@@ -1,5 +1,5 @@
 
-¿Å
+õÇ
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -93,7 +93,7 @@ phone_type ((
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"Ï
+attachments (2.Adoter.Asset.MailAttachment"—
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 account (
@@ -108,8 +108,8 @@ login_time (
 mail_list_system
  (0
 mail_list_customized (2.Adoter.Asset.Mail1
-game_setting (2.Adoter.Asset.PlayerSetting/
-room_history (2.Adoter.Asset.RoomHistory
+game_setting (2.Adoter.Asset.PlayerSetting
+room_history (
 room_id ("®
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
@@ -247,12 +247,14 @@ click_push ("á
 	oper_type (2.Adoter.Asset.PAI_OPER_TYPE-
 position (2.Adoter.Asset.POSITION_TYPE&
 pais (2.Adoter.Asset.PaiElement%
-pai (2.Adoter.Asset.PaiElement"¬
+pai (2.Adoter.Asset.PaiElement"
 GameOperationG
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GAME_OPERATION/
 	oper_type (2.Adoter.Asset.GAME_OPER_TYPE
 source_player_id (
-destination_player_id ("w
+destination_player_id (,
+
+error_code (2.Adoter.Asset.ERROR_CODE"w
 BuySomethingF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_BUY_SOMETHING
 mall_id (
@@ -553,12 +555,14 @@ ERROR_CODE
 PAI_OPER_TYPE_TINGPAI
 
 PAI_OPER_TYPE_BAOPAI
-PAI_OPER_TYPE_COUNT*y
+PAI_OPER_TYPE_COUNT*¿
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
-GAME_OPER_TYPE_KICKOUT*D
+GAME_OPER_TYPE_KICKOUT 
+GAME_OPER_TYPE_DISMISS_AGREE#
+GAME_OPER_TYPE_DISMISS_DISAGREE*D
 CALCULATE_TYPE
 CALCULATE_TYPE_HUPAI
 CALCULATE_TYPE_LIUJU*ê

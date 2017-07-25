@@ -539,6 +539,7 @@ function ClickEvent.RoomInformationUpdate( ... )
 			end
 			ClickEvent._play_ui.playerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[0])
 			ClickEvent._play_ui.playerAvatarInfo:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+			Player.LogWarning(v.wechat.headimgurl)
 			if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				ClickEvent._play_ui.playerAvatarInfo:GetChild("AvatarLoader").url = ""
 				local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
