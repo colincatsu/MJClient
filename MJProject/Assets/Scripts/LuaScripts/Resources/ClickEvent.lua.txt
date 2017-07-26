@@ -29,6 +29,7 @@ ClickEvent.panelTable = {
 	_toast_ui = "Toast",
 	_not_move_toast_ui = "NotMoveToast",
 	_room_calculate_ui = "FinishBalance",
+	_vote_ui = "Vote",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -1161,9 +1162,74 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 		--]]
 	end
 end
+
+function ClickEvent.IsPopPanel(name)
+	-- body
+	if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == name then
+		return true
+	else
+		return false
+    end
+end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+
+function ClickEvent.GameDissolveButton(gameObject)
+	-- body
+	if not Player.dismissTimestarmp or CS.UnityEngine.Time.time - Player.dismissTimestarmp > Player.dismissInterval then
+		if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._instruction_ui then
+			return
+		end
+		Player.dismissHasClicked = false
+		Player.dismissTimestarmp = CS.UnityEngine.Time.time
+		ClickEvent.PopPanel(ClickEvent.panelTable._instruction_ui)
+		for k,v in pairs(Player._all_players_data) do
+			if v.position == "POSITION_TYPE_EAST" then
+				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader1").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+				if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader1").url = ""
+					local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
+					if tempTexture then
+						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader1").texture = NTexture(tempTexture)
+					end
+				end
+			elseif v.position == "POSITION_TYPE_SOUTH" then
+				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+				if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").url = ""
+					local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
+					if tempTexture then
+						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").texture = NTexture(tempTexture)
+					end
+				end
+			elseif v.position == "POSITION_TYPE_WEST" then
+				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader3").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+				if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader3").url = ""
+					local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
+					if tempTexture then
+						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader3").texture = NTexture(tempTexture)
+					end
+				end
+			elseif v.position == "POSITION_TYPE_NORTH" then
+				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").url = UIPackage.GetItemURL("MXUI","Touxiang01")
+				if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").url = ""
+					local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
+					if tempTexture then
+						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").texture = NTexture(tempTexture)
+					end
+				end
+			end
+		end
+		_popPanel[popPanelIndex].panel:GetChild("Agree").visible = false
+		_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = false
+		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+		Player.dismissHasClicked = true
+	end
+
+end
 
 function ClickEvent.GameInstructionButton(gameObject)
 	-- body

@@ -78,6 +78,10 @@ Player.playerScore = {--游戏每家分数保存
     [3] = 0,
 }
 
+Player.dismissInterval = 180
+Player.dismissTimestarmp = nil
+Player.dismissHasClicked = false
+
 Player.coolDown = nil
 Player.moveTitleTimestamp = nil
 Player.moveInterval = 45
@@ -88,7 +92,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0726"
+Player.pc_version = "1.0.1.0727"
 
 function Player.LoadData( ... )
     -- body
@@ -111,7 +115,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -335,6 +339,9 @@ function Player.myUpdate( ... )
     end
 
     if CS.UnityEngine.Input.GetKeyDown(CS.UnityEngine.KeyCode.Escape) then
+        if ClickEvent.IsPopPanel(ClickEvent.panelTable._instruction_ui) == true then
+            return
+        end
         if ClickEvent.Close() == false then
             if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -915,7 +922,9 @@ function Player.OnRandomSaizi(type_t,stuff)
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
             Player.LogWarning("Player.isTingPaied:")
-            Player.LogWarning(Player.isTingPaied)
+            Player.LogWarning(v)
+            Player.LogWarning(message.pai.card_value)
+            Player.LogWarning(message.pai.card_type)
             if Player.isTingPaied then
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else

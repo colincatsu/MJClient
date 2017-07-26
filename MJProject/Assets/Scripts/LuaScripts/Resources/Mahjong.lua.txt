@@ -144,6 +144,9 @@ function start()
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
 	Player.isPlaying = false
+	Player.dismissTimestarmp = nil
+	Player.dismissHasClicked = false
+	diceNumber = nil
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
 		GVoicePlatform:InitGVoice("1762572828","564a544493684e9ed39179f4c26d35a7",tostring(Player._player_data.common_prop.player_id))
@@ -525,6 +528,7 @@ function MahJong.ResetGameState()
     Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
+	diceNumber = nil
 	Player.huPaiPosition = 0
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
@@ -2818,33 +2822,33 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		for i=1,redDicePoints-1 do
 			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
 			if _modelPool[forwardPoolNumber].activeInHierarchy then
-				_modelPool[diceNumber-1].SetActive(true)
+				_modelPool[diceNumber-1]:SetActive(true)
 			else
-				_modelPool[diceNumber-1].SetActive(false)
+				_modelPool[diceNumber-1]:SetActive(false)
 			end
-			_modelPool[diceNumber].SetActive(true)
+			_modelPool[diceNumber]:SetActive(true)
 			diceNumber = math.fmod((diceNumber + 2),_model_all_pai_number)
 			if diceNumber == 0 then
 				diceNumber = _model_all_pai_number
 			end
 		end
-		_modelPool[modelPoolBackPointer].SetActive(false)
-		_modelPool[modelPoolBackPointer-1].SetActive(false)
+		_modelPool[modelPoolBackPointer]:SetActive(false)
+		_modelPool[modelPoolBackPointer-1]:SetActive(false)
 		modelPoolBackPointer = modelPoolBackPointer - 2
 		if modelPoolBackPointer <= 0 then
 			modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
 		end
-		modelPoolBackPointer = math.fmod(modelPoolBackPointer,_model_all_pai_number)
+		modelPoolBackPointer = modelPoolBackPointer%_model_all_pai_number
 		if modelPoolBackPointer == 0 then
 			modelPoolBackPointer = _model_all_pai_number
 		end
 	end
 	redDicePoints =	number
-	diceNumber = modelPoolBackPointer -1 - (redDicePoints - 1)*2
+	diceNumber = modelPoolBackPointer - redDicePoints*2 + 1
 	if diceNumber <= 0 then
 		diceNumber = diceNumber + _model_all_pai_number
 	end
-	diceNumber = math.fmod(diceNumber,_model_all_pai_number)
+	diceNumber = diceNumber%_model_all_pai_number
 	if diceNumber == 0 then
 		diceNumber = _model_all_pai_number
 	end
