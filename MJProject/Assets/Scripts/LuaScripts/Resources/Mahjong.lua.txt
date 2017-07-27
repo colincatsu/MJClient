@@ -146,6 +146,7 @@ function start()
 	Player.isPlaying = false
 	Player.dismissTimestarmp = nil
 	Player.dismissHasClicked = false
+	Player.dismissIsShowing = false
 	diceNumber = nil
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
