@@ -78,6 +78,22 @@ Player.playerScore = {--游戏每家分数保存
     [3] = 0,
 }
 
+Player.operation_calculate_data = {
+    [0] = {operationNumber = 0,},
+    [1] = {operationNumber = 0,},
+    [2] = {operationNumber = 0,},
+    [3] = {operationNumber = 0,},
+}
+Player.baopai_calculate_data = {}
+Player.hupai_calculate_data = {}
+Player.pai_push_down = {}
+
+Player.history_data = {}
+Player.history_count = 0
+Player.current_history_index = 0
+Player.history_start = 0
+Player.history_end = 0
+
 Player.dismissInterval = 180
 Player.dismissTimestarmp = nil
 Player.dismissHasClicked = false
@@ -93,7 +109,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0727"
+Player.pc_version = "1.0.1.0730"
 
 function Player.LoadData( ... )
     -- body
@@ -116,7 +132,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -371,6 +387,15 @@ end
 --数据封装
 ---------------------------------------------------------------------------
 
+function Player.CmdBattleHistory(startIndex,endIndex)
+    -- body
+    battleHistory = {
+        start_index = startIndex,
+        end_index = endIndex,
+    }
+    this.SendProtocol("BattleHistory",battleHistory)
+end
+
 function Player.CmdSwitchAccount(account,playerId)
     -- body
     switchAccount = {
@@ -559,6 +584,21 @@ end
 ---------------------------------------------
 --
 
+function Player.OnBattleHistory(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.BattleHistory",stuff)
+    for k,v in pairs(message.history_list) do
+        Player.current_history_index = Player.current_history_index + 1
+        Player.history_data[Player.current_history_index] = v
+    end
+    Player.history_start = message.start_index
+    Player.history_end = message.end_index
+    ClickEvent.OnReceiveHistory()
+end
+
 function Player.OnRoomDisMiss(type_t,stuff)
     -- body
     if not stuff then
@@ -683,6 +723,7 @@ function Player.OnPaiPushDown(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PaiPushDown",stuff)
+    Player.pai_push_down = message.player_list
     Player.MahJong.PaiPushDown(message.player_list)
 end
 
@@ -798,19 +839,26 @@ function Player.OnPlayerInformation(type_t,stuff)
     else
     end
     --]]
+    Player._player_data = message.player
     Player.GetGpsInformation()
     local mMusic = true
     local mVoice = true
     local mAudio = true
     if Player._player_data and Player._player_data.game_setting ~= {} then
+        Player.LogWarning("jxyjxyjxy")
+        Player.LogWarning(Player._player_data.game_setting.music)
+        Player.LogWarning(Player._player_data.game_setting.voice)
+        Player.LogWarning(Player._player_data.game_setting.audio)
         mMusic = Player._player_data.game_setting.music
         mVoice = Player._player_data.game_setting.voice
         mAudio = Player._player_data.game_setting.audio
     end
-    Player._player_data = message.player
     Player._player_data.game_setting.music = mMusic
     Player._player_data.game_setting.voice = mVoice
     Player._player_data.game_setting.audio = mAudio
+    for k,v in pairs(Player._player_data.room_history) do
+        Player.history_count = Player.history_count + 1
+    end
     --[[
     if not Player._player_data.game_setting.music or Player._player_data.game_setting == {} then
     end
@@ -949,6 +997,7 @@ function Player.OnRandomSaizi(type_t,stuff)
             Player.LogWarning(message.pai.card_value)
             Player.LogWarning(message.pai.card_type)
             if Player.isTingPaied then
+                Player.baopai_calculate_data = message.pai
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else
                 Player.MahJong.PlayerSingleDice(v,nil,message.has_rand_saizi)

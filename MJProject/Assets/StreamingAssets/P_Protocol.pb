@@ -1,5 +1,5 @@
 
-ú…
+Î‡
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -222,7 +222,12 @@ GuestLoginD
 click_push ("‡
 GameSettingE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GAME_SETTING1
-game_setting (2.Adoter.Asset.PlayerSetting"û
+game_setting (2.Adoter.Asset.PlayerSetting"¯
+BattleHistoryE
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_ROOM_HISTORY
+start_index (
+	end_index (/
+history_list (2.Adoter.Asset.RoomHistory"û
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON
@@ -487,7 +492,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*ò
+ERROR_COMMON_REWARD_HAS_GOT3*”
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -505,7 +510,8 @@ ERROR_CODE
 META_TYPE_SHARE_GUEST_LOGIN 
 META_TYPE_SHARE_GAME_SETTING&
 "META_TYPE_SHARE_UPDATE_CLIENT_DATA
-META_TYPE_SHARE_SYSTEM_CHAT
+META_TYPE_SHARE_SYSTEM_CHAT 
+META_TYPE_SHARE_ROOM_HISTORY
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
