@@ -23,28 +23,16 @@
     <image id="n7_gepq" name="n7" src="gepqlt" xy="17,8"/>
     <component id="n6_j3uo" name="InformText" src="j3uokn" xy="64,0"/>
   </displayList>
-</component>10p14s4.xml|622|<component size="301,99" extention="Button">
+</component>10p14s4.xml|247|<component size="301,99" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="10p14s2" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <text id="n2" name="title" xy="90,-6" size="195,99" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="复制房间号">
-      <relation target="" sidePair="width-width,height-height"/>
-    </text>
-    <image id="n3_10p14" name="n3" src="10p14s6" xy="45,21"/>
+    <image id="n4_jx2c" name="n4" src="jx2c4ui" xy="9,-2"/>
   </displayList>
   <Button/>
-</component>10p14s5.xml|663|<component size="301,99" extention="Button">
+</component>10p14s5.xml|288|<component size="301,99" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="10p14s3" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <text id="n2" name="title" xy="54,-6" size="258,99" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="邀请微信好友">
-      <relation target="" sidePair="width-width,height-height"/>
-    </text>
-    <image id="n3_10p14" name="n3" src="isedpu" xy="37,14"/>
+    <image id="n4_jx2c" name="n4" src="jx2c4uj" xy="9,-2"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
 </component>doyw4st.xml|923|<component size="290,61">
@@ -943,7 +931,7 @@
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>package.xml|45161|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|45250|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1097,7 +1085,6 @@
     <component id="w61cj6" name="MailBody" path="/UIPIC/邮件/" size="445,210"/>
     <image id="10p14s2" name="fenxiang_button3" path="/UIPIC/Share/" size="301,99"/>
     <image id="10p14s3" name="fenxiang_button4" path="/UIPIC/Share/" size="301,99"/>
-    <image id="10p14s6" name="yxnei_fuzhi" path="/UIPIC/战绩记录/" size="33,42"/>
     <image id="gepqlt" name="jiazailaba" path="/UIPIC/xinzeng/" size="1034,52"/>
     <image id="ghpfqc" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31"/>
     <image id="ghpfqd" name="jindutiao_3" path="/UIPIC/主界面/" size="769,114" scale="9grid" scale9grid="193,54,386,2"/>
@@ -1126,6 +1113,8 @@
     <image id="jde84tl" name="ui_Zhanji_06" path="/UIPIC/战绩记录/" size="319,250" scale="9grid" scale9grid="111,136,63,23"/>
     <image id="jde84tu" name="ui_Youjian_02" path="/UIPIC/邮件/" size="128,65"/>
     <image id="jde84tv" name="ui_Youjian_01" path="/UIPIC/邮件/" size="199,200"/>
+    <image id="jx2c4ui" name="fuzhitubiao" path="/UIPIC/xinzeng/" size="282,104"/>
+    <image id="jx2c4uj" name="weixintubiao" path="/UIPIC/xinzeng/" size="282,104"/>
     <image id="ldfsqg" name="yxnei_zhunbei" path="/UIPIC/游戏页面/" size="126,70"/>
     <image id="ldfsqi" name="DisconnectState" path="/UIPIC/游戏页面/" size="49,29"/>
     <image id="ldfsqj" name="LeaveState" path="/UIPIC/游戏页面/" size="50,31"/>
@@ -3731,20 +3720,22 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjl.xml|2469|<component size="1334,750" opaque="false" adaptationTest="FitSize">
+</component>w61cjl.xml|2718|<component size="1334,750" opaque="false" adaptationTest="FitSize">
   <displayList>
-    <image id="n31_ics6" name="n31" src="i0jkoa" xy="22,96" size="1290,555"/>
+    <image id="n31_ics6" name="n31" src="i0jkoa" xy="22,96" size="1290,555">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
     <component id="n10_w3hs" name="OppositePlayerClearInfo" src="w61ccz" xy="43,380" pivot="0.5,0.5">
-      <relation target="" sidePair="center-center,top-top"/>
+      <relation target="" sidePair="center-center,middle-middle"/>
     </component>
     <component id="n11_w3hs" name="FrontPlayerClearInfo" src="w61ccz" xy="43,514" pivot="0.5,0.5">
-      <relation target="" sidePair="middle-middle,left-left"/>
+      <relation target="" sidePair="middle-middle,center-center"/>
     </component>
     <component id="n12_w3hs" name="BehindPlayerClearInfo" src="w61ccz" xy="43,246" pivot="0.5,0.5">
-      <relation target="" sidePair="middle-middle,right-right"/>
+      <relation target="" sidePair="middle-middle,center-center"/>
     </component>
     <component id="n20_w3hs" name="MyClearInfo" src="w61cd0" xy="43,113" pivot="0.5,0.5">
-      <relation target="" sidePair="center-center,bottom-bottom"/>
+      <relation target="" sidePair="center-center,middle-middle"/>
     </component>
     <component id="n3_w3hs" name="GameBackButton" src="w61cg8" xy="8,8" pivot="0.5,0.5" group="n22_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
@@ -3756,14 +3747,18 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <relation target="" sidePair="right-right,top-top"/>
     </component>
     <group id="n22_fb5y" name="Btns" xy="8,8" size="1311,733" advanced="true"/>
-    <image id="n32_ics6" name="n32" src="uejtr3" xy="453,26" size="427,93"/>
-    <image id="n33_ics6" name="n33" src="ics64u5" xy="596,9"/>
+    <image id="n32_ics6" name="n32" src="uejtr3" xy="453,26" size="427,93">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+    <image id="n33_ics6" name="n33" src="ics64u5" xy="596,9">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
   </displayList>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
+    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n20_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n10_w3hs" value="0,0"/>
-    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n11_w3hs" value="0,0"/>
     <item time="2" type="Scale" target="n12_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="3" type="Scale" target="n10_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>

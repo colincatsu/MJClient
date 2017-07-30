@@ -109,7 +109,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0730"
+Player.pc_version = "1.0.2.0731"
 
 function Player.LoadData( ... )
     -- body
@@ -761,6 +761,9 @@ function Player.OnRoomCalculate(type_t,stuff)
     if Player._calculate_table_number >= Player._room_information.options.open_rands then
         --ClickEvent.ShowRoomCalculate()
     end
+    if message.calculte_type == "CALCULATE_TYPE_DISMISS" then
+       ClickEvent.ShowRoomCalculate() 
+    end
 end
 
 function Player.OnGameCalculate(type_t,stuff)
@@ -997,7 +1000,7 @@ function Player.OnRandomSaizi(type_t,stuff)
             Player.LogWarning(message.pai.card_value)
             Player.LogWarning(message.pai.card_type)
             if Player.isTingPaied then
-                Player.baopai_calculate_data = message.pai
+                --Player.baopai_calculate_data = message.pai
                 Player.MahJong.PlayerSingleDice(v,message.pai,message.has_rand_saizi)
             else
                 Player.MahJong.PlayerSingleDice(v,nil,message.has_rand_saizi)

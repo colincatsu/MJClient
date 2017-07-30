@@ -1,5 +1,5 @@
 
-Î‡
+„Ž
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -341,12 +341,14 @@ card_value ("a
 dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
 DistanceElement-
 position (2.Adoter.Asset.POSITION_TYPE
-distance ("ã
+distance ("Ë
 GameCalculateE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_CALCULATE3
-calculte_type (2.Adoter.Asset.CALCULATE_TYPE(
-record (2.Adoter.Asset.GameRecord,
-max_fan_type (2.Adoter.Asset.FAN_TYPE"¦
+calculte_type (2.Adoter.Asset.CALCULATE_TYPE<
+dianpao_player_position (2.Adoter.Asset.POSITION_TYPE(
+baopai (2.Adoter.Asset.PaiElement(
+record (2.Adoter.Asset.GameRecord,
+max_fan_type (2.Adoter.Asset.FAN_TYPE"¦
 
 RoomRecord
 	player_id (
@@ -357,10 +359,11 @@ headimgurl (
 pk_count (
 banker_count (
 	win_count (
-dianpao_count ("€
+dianpao_count ("µ
 RoomCalculateE
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_CALCULATE(
-record (2.Adoter.Asset.RoomRecord"m
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_CALCULATE3
+calculte_type (2.Adoter.Asset.CALCULATE_TYPE(
+record (2.Adoter.Asset.RoomRecord"m
 GameInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_GAME_INFO
 banker_player_id ("Œ
@@ -413,7 +416,24 @@ WeChatInfoH
 	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"
 	RoomStateA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_STATE/
-	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"d
+
+BattleListC
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
+	room_list ("½
+RoomAll?
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
+room_id (1
+player_list (2.Adoter.Asset.RoomAll.Player;
+curr_operator_position (2.Adoter.Asset.POSITION_TYPEï
+Player
+	player_id (-
+position (2.Adoter.Asset.POSITION_TYPE
+pai_count_inhand (-
+
+pai_inhand (2.Adoter.Asset.MultiplePai.
+pai_outhand (2.Adoter.Asset.MultiplePai*
+pai_pool (2.Adoter.Asset.PaiElement"
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -492,7 +512,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*”
+ERROR_COMMON_REWARD_HAS_GOT3*Ò
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -547,7 +567,9 @@ ERROR_CODE
 META_TYPE_S2C_GAME_STARTŠ!
 META_TYPE_S2C_ROOM_CALCULATE‹
 META_TYPE_S2C_ROOM_DISMISSŒ
-META_TYPE_S2C_ROOM_STATE
+META_TYPE_S2C_ROOM_STATE
+META_TYPE_S2C_ROOM_HISTORYŽ
+META_TYPE_S2C_ROOM_ALL
 META_TYPE_S2C_COUNTè
 META_TYPE_S2S_REGISTERé!
 META_TYPE_S2S_KICKOUT_PLAYERê!
@@ -581,10 +603,12 @@ ERROR_CODE
 GAME_OPER_TYPE_LEAVE
 GAME_OPER_TYPE_KICKOUT 
 GAME_OPER_TYPE_DISMISS_AGREE#
-GAME_OPER_TYPE_DISMISS_DISAGREE*D
+GAME_OPER_TYPE_DISMISS_DISAGREE*y
 CALCULATE_TYPE
 CALCULATE_TYPE_HUPAI
-CALCULATE_TYPE_LIUJU*
+CALCULATE_TYPE_LIUJU
+CALCULATE_TYPE_FULL
+CALCULATE_TYPE_DISMISS*
 KICK_OUT_REASON
 KICK_OUT_REASON_BEGIN 
 KICK_OUT_REASON_DISCONNECT
