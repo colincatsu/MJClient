@@ -132,7 +132,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -1008,6 +1008,21 @@ function Player.OnRandomSaizi(type_t,stuff)
             break
         end
     end
+end
+
+function Player.OnRoomAll(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.RoomAll",stuff)
+    local playerPos = ClickEvent.PlayerPosition(message.curr_operator_position)
+    if playerPos == 0 then
+        ClickEvent.notPushPassMsg = true
+        Player.MahJong.SetCurrentState(operationState.DAPAI)
+    end
+    Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
+    MahJong.ReturnRoomSync(message.player_list)
 end
 
 function Player.OnPaiNotify(type_t,stuff)

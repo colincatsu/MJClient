@@ -1150,6 +1150,269 @@ function MahJong.CreatePlayerModelTest( modelName,paiNumber,paiType,paiValue )
 	end
 end
 
+function MahJong.ReturnRoomSync(paiData)
+	-- body
+	Player.hasBeginned = true
+	local playerPos = ClickEvent.PlayerPosition(playerData.position)
+	for playerKey,playerData in pairs(paiData) do
+		--cardWall
+		if Player._my_player_data.common_prop.player_id == playerData.player_id then
+			Player.isPlaying = true
+			Player._invoke_table = {}
+			Player._invoke_table.pais = playerData.pai_inhand
+			Player.MahJong.CreatePlayerPai()
+        else
+        	if playerPos == 1 then
+	        	MahJong.CreateOtherPai("next",playerData.pai_count_inhand)
+        	elseif playerPos == 2 then
+				MahJong.CreateOtherPai("opposite",playerData.pai_count_inhand)
+        	elseif playerPos == 3 then
+				MahJong.CreateOtherPai("forward",playerData.pai_count_inhand)
+        	end
+        end
+        --operationPai
+        local anGangAngle = newVector3.zero
+		local myAnGangOpration = false
+        for operationKey,operationData in pairs(playerData.pai_outhand) do
+        	local tempPaiPool = {}
+		    local modelName = {}
+		    for k, v in pairs(_mj_asset) do
+		    	if operationData.card_type == v.card_type then
+		    		tempPaiPool = v
+		    	end
+		    end
+		    if tempPaiPool and tempPaiPool.cards then
+		    	for k,v in pairs(operationData.cards) do
+				    modelName[k] = tostring(tempPaiPool.cards[v].model_path)
+		    	end
+			else
+		    	Player.LogWarning("no modelName")
+				Player.LogWarning(paiType)
+		    end
+		    if not modelName then
+		    	return
+		    end
+		    if playerData.position == "POSITION_TYPE_EAST" then
+				if not _operation_pai_show.point_d.group then
+					_operation_pai_show.point_d.group = {}
+				end
+			    local modelTemp
+				_operation_pai_show.point_d.paiNumber = _operation_pai_show.point_d.paiNumber + 1
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber] = {}
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_d.paiNumber))
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform:SetParent(_operation_pai_show.point_d.father.transform)
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform.localEulerAngles = newVector3.zero
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards = {}
+				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber = 0
+				for k,v in pairs(modelName) do
+					modelTemp = Load("MJModel/"..v)
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
+					if k == 2 then
+						if myAnGangOpration == true then
+							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+						else
+							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+						end
+					else
+						_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
+					end
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+					if k == 4 then
+						_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k-1].transform.localPosition + 
+						newVector3(_modelSize.width,0,0)
+					end
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber + 1
+					MahJong.AddModelShadow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
+				end
+				MahJong.SortOperationPaiShow("east")
+			elseif playerData.position == "POSITION_TYPE_SOUTH" then
+				if not _operation_pai_show.point_n.group then
+					_operation_pai_show.point_n.group = {}
+				end
+			    local modelTemp
+				_operation_pai_show.point_n.paiNumber = _operation_pai_show.point_n.paiNumber + 1
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber] = {}
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_n.paiNumber))
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform:SetParent(_operation_pai_show.point_n.father.transform)
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform.localEulerAngles = newVector3.zero
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards = {}
+				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber = 0
+				for k,v in pairs(modelName) do
+					modelTemp = Load("MJModel/"..v)
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
+					if k == 2 then
+						if myAnGangOpration == true then
+							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+						else
+							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+						end
+					else
+						_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
+					end
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
+					if k == 4 then
+						_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k-1].transform.localPosition + 
+						newVector3(0,0,_modelSize.width)
+					end
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber + 1
+					MahJong.AddModelShadow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
+				end
+				MahJong.SortOperationPaiShow("south")
+			elseif playerData.position == "POSITION_TYPE_WEST" then
+				if not _operation_pai_show.point_x.group then
+					_operation_pai_show.point_x.group = {}
+				end
+			    local modelTemp
+				_operation_pai_show.point_x.paiNumber = _operation_pai_show.point_x.paiNumber + 1
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber] = {}
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_x.paiNumber))
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform:SetParent(_operation_pai_show.point_x.father.transform)
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform.localEulerAngles = newVector3.zero
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards = {}
+				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber = 0
+				for k,v in pairs(modelName) do
+					modelTemp = Load("MJModel/"..v)
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
+					if k == 2 then
+						if myAnGangOpration == true then
+							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+						else
+							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+						end
+					else
+						_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
+					end
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+					if k == 4 then
+						_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k-1].transform.localPosition + 
+						newVector3(-_modelSize.width,0,0)
+					end
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber + 1
+					MahJong.AddModelShadow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
+				end
+				MahJong.SortOperationPaiShow("west")
+			elseif playerData.position == "POSITION_TYPE_NORTH" then
+				if not _operation_pai_show.point_b.group then
+					_operation_pai_show.point_b.group = {}
+				end
+			    local modelTemp
+				_operation_pai_show.point_b.paiNumber = _operation_pai_show.point_b.paiNumber + 1
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber] = {}
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father = CS.UnityEngine.GameObject(tostring(_operation_pai_show.point_b.paiNumber))
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform:SetParent(_operation_pai_show.point_b.father.transform)
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform.localEulerAngles = newVector3.zero
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards = {}
+				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber = 0
+				for k,v in pairs(modelName) do
+					modelTemp = Load("MJModel/"..v)
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
+					if k == 2 then
+						if myAnGangOpration == true then
+							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+						else
+							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+						end
+					else
+						_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
+					end
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
+					if k == 4 then
+						_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k-1].transform.localPosition + 
+						newVector3(0,0,-_modelSize.width)
+					end
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber + 1
+					MahJong.AddModelShadow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k],-_modelSize.length/2+_modelSize.shadowShift,1)
+				end
+				MahJong.SortOperationPaiShow("north")
+			end
+        end
+        --paiPool
+        for paiPoolKey,paiPoolData in pairs(playerData.pai_pool) do
+        	local tempPaiPool = {}
+		    local modelName
+		    for k, v in pairs(_mj_asset) do
+		    	if paiPoolData.card_type == v.card_type then
+		    		tempPaiPool = v
+		    	end
+		    end
+		    if tempPaiPool and tempPaiPool.cards and tempPaiPool.cards[paiPoolData.card_value] then
+			    modelName = tostring(tempPaiPool.cards[paiPoolData.card_value].model_path)
+			else
+		    	Player.LogWarning("no modelName")
+		    end
+		    if not modelName then
+		    	return
+		    end
+		    local modelTemp = Load("MJModel/"..modelName)
+			if playerData.position == "POSITION_TYPE_EAST" then
+				_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber + 1
+				if not _pai_pool_show.point_d.cards then
+					_pai_pool_show.point_d.cards = {}
+				end
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
+				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localPosition = _pai_pool_show.point_d.startPosition 
+				+ newVector3(-math.fmod(_pai_pool_show.point_d.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
+					0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
+				MahJong.AddModelShadow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+			elseif playerData.position == "POSITION_TYPE_SOUTH" then
+				_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
+				if not _pai_pool_show.point_n.cards then
+					_pai_pool_show.point_n.cards = {}
+				end
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_n.father.transform)
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].layer = 0
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].name = modelName
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].transform.localEulerAngles = _pai_pool_show.point_n.startRotation
+				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].transform.localPosition = _pai_pool_show.point_n.startPosition 
+				+ newVector3(-math.modf((_pai_pool_show.point_n.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
+					0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
+				MahJong.AddModelShadow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+			elseif playerData.position == "POSITION_TYPE_WEST" then
+				_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
+				if not _pai_pool_show.point_x.cards then
+					_pai_pool_show.point_x.cards = {}
+				end
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_x.father.transform)
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].layer = 0
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].name = modelName
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].transform.localEulerAngles = _pai_pool_show.point_x.startRotation
+				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].transform.localPosition = _pai_pool_show.point_x.startPosition 
+				+ newVector3(math.fmod(_pai_pool_show.point_x.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
+					0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
+				MahJong.AddModelShadow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+			elseif playerData.position == "POSITION_TYPE_NORTH" then
+				_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
+				if not _pai_pool_show.point_b.cards then
+					_pai_pool_show.point_b.cards = {}
+				end
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_b.father.transform)
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].layer = 0
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].name = modelName
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].transform.localEulerAngles = _pai_pool_show.point_b.startRotation
+				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].transform.localPosition = _pai_pool_show.point_b.startPosition 
+				+ newVector3(math.modf((_pai_pool_show.point_b.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
+					0,math.fmod(_pai_pool_show.point_b.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
+				MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+			end
+        end
+	end
+end
+
 function MahJong.PlayerPaiSetActive(active)
 	-- body
 	for k,v in pairs(_player_father.cards) do
@@ -1390,7 +1653,7 @@ function MahJong.DaPai(paiNumber)
 	currentOperationState = operationState.WAIT
 end
 
-function MahJong.DaPaiPoolShow(message)
+function MahJong.DaPaiPoolShow(message,)
 	-- body
 	local daPaiCacheData = message
 	if not daPaiCacheData then
