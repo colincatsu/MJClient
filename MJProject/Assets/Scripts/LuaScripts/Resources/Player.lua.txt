@@ -109,7 +109,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.2.0731"
+Player.pc_version = "1.0.1.0802"
 
 function Player.LoadData( ... )
     -- body
@@ -132,7 +132,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -370,6 +370,9 @@ function Player.myUpdate( ... )
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._vote_ui) == true then
             return
         end
+        if ClickEvent.IsPopPanel(ClickEvent.panelTable._calculate_ui) == true then
+            return
+        end
         if ClickEvent.Close() == false then
             if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -377,6 +380,25 @@ function Player.myUpdate( ... )
             elseif CS.UnityEngine.Application.loadedLevelName == "FairyMainUI" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
                 ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2002))
+            end
+        end
+    end
+
+    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        if CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.IPhonePlayer or CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.Android then
+            if CS.UnityEngine.Input.touchCount > 0 then
+                local touchPoint = CS.UnityEngine.Input.touches[0]
+                if touchPoint.phase == CS.UnityEngine.TouchPhase.Began then
+                    local movePos = touchPoint.position
+                    movePos.z = 0.35
+                    Player.MahJong.CheckClickPos(movePos)
+                end
+            end
+        else
+            if CS.UnityEngine.Input.GetMouseButtonDown(0) then
+                local movePos = CS.UnityEngine.Input.mousePosition
+                movePos.z = 0.35
+                Player.MahJong.CheckClickPos(movePos)
             end
         end
     end
@@ -616,6 +638,7 @@ function Player.OnRoomState(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.RoomState",stuff)
     if message.oper_type == "GAME_OPER_TYPE_LEAVE" then
         if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            Player._player_data.room_id = nil
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             Player.LoadScene("FairyMainUI")
@@ -901,6 +924,7 @@ function Player.OnEnterRoom(type_t,stuff)
         this._roomId = message.room.room_id
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
+        Player._player_data.room_id = nil
         ClickEvent.ShowSmallWindow(2010)
         Player.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then

@@ -149,6 +149,7 @@ function start()
 	Player.dismissIsShowing = false
 	Player.hasBeginned = false
 	diceNumber = nil
+	_player_father = nil
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -1467,8 +1468,8 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].parent.transform:SetParent(_player_father.father.transform)
 		_player_father.cards[paiNumber].child = Instantiate(modelTemp,_player_father.cards[paiNumber].parent.transform)
 		_player_father.cards[paiNumber].child.name = modelName
-		_player_father.cards[paiNumber].child:AddComponent(typeof(CS.TouchCT))
-		_player_father.cards[paiNumber].child:GetComponent("TouchCT").onClick = MahJong.ClickPaiEvent
+		_player_father.cards[paiNumber].touchCT = _player_father.cards[paiNumber].child:AddComponent(typeof(CS.TouchCT))
+		_player_father.cards[paiNumber].touchCT.onClick = MahJong.ClickPaiEvent
 		_player_father.cards[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
 		_player_father.cards[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		--_player_father.cards[paiNumber].child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color.black)-- = CS.UnityEngine.Color(0,0,0,1)
@@ -1529,6 +1530,21 @@ function MahJong.ClickPaiEvent(gameObject)
 	else	
 		MahJong._current_click_pai = gameObject
 		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+	end
+end
+
+function MahJong.CheckClickPos(movePos)
+	-- body
+	if _player_father and _player_father.cards then
+		for cardKey,cardData in pairs(_player_father.cards) do
+			if cardData.child.activeInHierarchy == true and cardData.touchCT:inArea(Camera.main:ScreenToWorldPoint(movePos)) == true then
+				return
+			end
+		end
+		for cardKey,cardData in pairs(_player_father.cards) do
+			cardData.child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
+		end
+		MahJong._current_click_pai = nil
 	end
 end
 
@@ -1653,7 +1669,7 @@ function MahJong.DaPai(paiNumber)
 	currentOperationState = operationState.WAIT
 end
 
-function MahJong.DaPaiPoolShow(message,)
+function MahJong.DaPaiPoolShow(message)
 	-- body
 	local daPaiCacheData = message
 	if not daPaiCacheData then
@@ -2150,6 +2166,7 @@ function MahJong.GuoPai()
 	else
 		Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
 	end
+	Player.hasOperation = false
 end
 
 function MahJong.XuanFengGang( ... )

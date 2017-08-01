@@ -281,10 +281,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
-			Player._roomId = Player._player_data.room_id
-			Player.LogWarning(tonumber(Player._roomId))
-			Player.isFriendRoom = true
-			Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2036)
 		end
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
@@ -1812,6 +1810,8 @@ end
 function ClickEvent.CopyRoomNum( ... )
 	-- body
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2031)
 end
 
 function ClickEvent.ChangeAccount(gameObject)
@@ -2385,6 +2385,11 @@ function ClickEvent.YesButton( ... )
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
 		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2036) then
+		Player._roomId = Player._player_data.room_id
+		Player.LogWarning(tonumber(Player._roomId))
+		Player.isFriendRoom = true
+		Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	end
 	ClickEvent.Close()
 end
