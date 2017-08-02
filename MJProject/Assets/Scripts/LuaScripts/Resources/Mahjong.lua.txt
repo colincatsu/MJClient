@@ -150,6 +150,7 @@ function start()
 	Player.hasBeginned = false
 	diceNumber = nil
 	_player_father = nil
+	Player.baopaiPosition = nil
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -541,6 +542,7 @@ function MahJong.ResetGameState()
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
 	diceNumber = nil
+	Player.baopaiPosition = nil
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -3158,8 +3160,19 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
 	end
+
+	if not Player.baopaiPosition then
+		Player.baopaiPosition = number
+	else
+		if diceNumber and diceNumber%2 == 1 then
+			diceNumber = diceNumber + 1
+		else
+			Player.baopaiPosition =	number
+		end
+	end
+	
 	if diceNumber and diceNumber%2 == 0 then
-		for i=1,redDicePoints-1 do
+		for i=1,Player.baopaiPosition-1 do
 			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
 			if _modelPool[forwardPoolNumber].activeInHierarchy then
 				_modelPool[diceNumber-1]:SetActive(true)
@@ -3183,8 +3196,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 			modelPoolBackPointer = _model_all_pai_number
 		end
 	end
-	redDicePoints =	number
-	diceNumber = modelPoolBackPointer - redDicePoints*2 + 1
+	diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
 	if diceNumber <= 0 then
 		diceNumber = diceNumber + _model_all_pai_number
 	end

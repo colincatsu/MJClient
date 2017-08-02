@@ -913,9 +913,10 @@ function ClickEvent.ShowRoomCalculate( ... )
 		obj:GetChild("WinNum").text = tostring(v.win_count)
 		obj:GetChild("PaoNum").text = tostring(v.dianpao_count)
 		obj:GetChild("TotalNum").text = tostring(v.score)
-		obj:GetChild("AvatarLoader").url = ""
+		obj:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 		local delegateTex = WeChatPlatform:SetAsyncImage(v.headimgurl)
 		if delegateTex then
+			obj:GetChild("AvatarLoader").url = ""
 			obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 		end
 	end

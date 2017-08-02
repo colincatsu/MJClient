@@ -109,7 +109,9 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0802"
+Player.pc_version = "1.0.1.0803"
+
+Player.baopaiPosition = nil
 
 function Player.LoadData( ... )
     -- body
@@ -125,14 +127,18 @@ function Player.LoadData( ... )
         for k,v in pairs(data) do
             Player.activityDataTable =  v
         end
-        --AssetManager.PrintMessage(Player.activityDataTable)
+        --[[
+        message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
+        Player._calculate_table_loader = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.RoomFan")
+        AssetManager.PrintMessage(Player._calculate_table_loader)
+        --]]
         --Player.LogWarning(Player.activityDataTable.room_card_limit_free_activity_id)
     end
 end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -323,6 +329,7 @@ end
 ---------------------------------------------------------------------------
 --每帧更新
 ---------------------------------------------------------------------------
+local movePos = CS.UnityEngine.Vector3(0,0,0)
 function Player.myUpdate( ... )
     -- body
     ClickEvent.UpdateTime()
@@ -389,14 +396,13 @@ function Player.myUpdate( ... )
             if CS.UnityEngine.Input.touchCount > 0 then
                 local touchPoint = CS.UnityEngine.Input.touches[0]
                 if touchPoint.phase == CS.UnityEngine.TouchPhase.Began then
-                    local movePos = touchPoint.position
-                    movePos.z = 0.35
+                    movePos = CS.UnityEngine.Vector3(touchPoint.position.x,touchPoint.position.y,0.35)
                     Player.MahJong.CheckClickPos(movePos)
                 end
             end
         else
             if CS.UnityEngine.Input.GetMouseButtonDown(0) then
-                local movePos = CS.UnityEngine.Input.mousePosition
+                movePos = CS.UnityEngine.Input.mousePosition
                 movePos.z = 0.35
                 Player.MahJong.CheckClickPos(movePos)
             end
