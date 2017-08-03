@@ -58,6 +58,7 @@ local isTuoGuan = false
 local isTingPaiTuoGuan = false
 Player.hasOperation = false
 Player.hasBeginned = false
+Player.isGangPaiing = false
 Player._tosence_name = "FairyMainUI"
 Player.huPaiPosition = 0
 Player._string_id = nil
@@ -109,7 +110,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0803"
+Player.pc_version = "1.0.1.0804"
 
 Player.baopaiPosition = nil
 
@@ -138,7 +139,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -1052,7 +1053,7 @@ function Player.OnRoomAll(type_t,stuff)
         Player.MahJong.SetCurrentState(operationState.DAPAI)
     end
     Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
-    MahJong.ReturnRoomSync(message.player_list)
+    Player.MahJong.ReturnRoomSync(message.player_list)
 end
 
 function Player.OnPaiNotify(type_t,stuff)
@@ -1085,7 +1086,7 @@ function Player.OnPaiNotify(type_t,stuff)
         for k,v in pairs(Player._invoke_table.pais) do
             for j,m in pairs(v.cards) do
                 countPai = countPai + 1
-            end
+            end 
         end
         
         Player.LogWarning("countPai----------------")
@@ -1098,7 +1099,11 @@ function Player.OnPaiNotify(type_t,stuff)
         ClickEvent.CloseAlready()
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
-        Player.MahJong.ModelPoolDelete(1)
+        if Player.isGangPaiing == true then
+            Player.isGangPaiing = false
+        else
+            Player.MahJong.ModelPoolDelete(1)
+        end
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
             Player.MahJong.SetCurrentState(operationState.DAPAI)
             Player._fa_pai_cache = message.pai

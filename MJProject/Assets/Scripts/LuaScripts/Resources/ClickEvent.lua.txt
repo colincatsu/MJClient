@@ -200,6 +200,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("GameVoiceButton").selected = true
 
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
+
+		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("n66"):GetChild("BaoPaiLoader")
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
@@ -366,6 +368,11 @@ function ClickEvent.ShowAlready(playerID)
 		ClickEvent._play_ui.playerAlready.visible = true
 	end
 end
+
+function ClickEvent.ShowBaoPai(paiData)
+	-- body
+	ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
+ end
 
 function ClickEvent.UpdateTime( ... )
 	-- body
@@ -567,7 +574,11 @@ function ClickEvent.RoomInformationUpdate( ... )
 		end
 	end
 	if countPlayerNumber >= 4 and ClickEvent._play_ui.playerAlready.visible == false then
-		ClickEvent._play_ui.gamePlayButton.visible = true
+		if Player.hasBeginned == true then
+			ClickEvent._play_ui.gamePlayButton.visible = false
+		else
+			ClickEvent._play_ui.gamePlayButton.visible = true
+		end
 		ClickEvent._play_ui.inviteWechatFriends.visible = false
 		ClickEvent._play_ui.copyRoomNum.visible = false
 	end

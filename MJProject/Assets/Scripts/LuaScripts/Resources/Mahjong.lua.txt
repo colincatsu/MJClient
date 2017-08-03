@@ -148,6 +148,7 @@ function start()
 	Player.dismissHasClicked = false
 	Player.dismissIsShowing = false
 	Player.hasBeginned = false
+	Player.isGangPaiing = false
 	diceNumber = nil
 	_player_father = nil
 	Player.baopaiPosition = nil
@@ -159,6 +160,7 @@ function start()
 	}
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
+	ClickEvent._play_ui.baopaiLoader.url = ""
 
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
@@ -541,6 +543,7 @@ function MahJong.ResetGameState()
     Player.isTingPaied = false
 	Player.isTuoGuan = false
 	Player.isTingPaiTuoGuan = false
+	Player.isGangPaiing = false
 	diceNumber = nil
 	Player.baopaiPosition = nil
 	Player.operation_calculate_data = {
@@ -551,6 +554,7 @@ function MahJong.ResetGameState()
 	}
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
+	ClickEvent._play_ui.baopaiLoader.url = ""
 	Player.huPaiPosition = 0
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
@@ -601,7 +605,7 @@ function MahJong.ModelPoolInit()
 	--CS.UnityEngine.Debug.LogWarning(i)
 end
 
-function MahJong.ModelPoolDelete(cardNumber)
+function MahJong.ModelPoolDelete(cardNumber,isBack)
 	-- body 
 	--_model_all_pai_number--总牌数
 	for i=1,cardNumber do
@@ -1156,15 +1160,19 @@ end
 function MahJong.ReturnRoomSync(paiData)
 	-- body
 	Player.hasBeginned = true
-	local playerPos = ClickEvent.PlayerPosition(playerData.position)
 	for playerKey,playerData in pairs(paiData) do
+		local playerPos = ClickEvent.PlayerPosition(playerData.position)
 		--cardWall
 		if Player._my_player_data.common_prop.player_id == playerData.player_id then
 			Player.isPlaying = true
 			Player._invoke_table = {}
 			Player._invoke_table.pais = playerData.pai_inhand
-			Player.MahJong.CreatePlayerPai()
+			Player.MahJong.CreatePlayerPai(true)
+			ClickEvent._play_ui.gamePlayButton.visible = false
+		    _dice_red:SetActive(false)
+		    _dice_white:SetActive(false)
         else
+        	Player.LogWarning(playerData.pai_count_inhand)
         	if playerPos == 1 then
 	        	MahJong.CreateOtherPai("next",playerData.pai_count_inhand)
         	elseif playerPos == 2 then
@@ -1423,7 +1431,7 @@ function MahJong.PlayerPaiSetActive(active)
 	end
 end
 
-function MahJong.CreatePlayerPai()
+function MahJong.CreatePlayerPai(isRoomSync)
 	-- body
 	if not _player_father then
 		_player_father = {}
@@ -1454,8 +1462,10 @@ function MahJong.CreatePlayerPai()
         end
     end
 	MahJong.SortPlayerPai()
-	MahJong.OtherPlayerPaiInit()
-	MahJong.PlayerPaiSetActive(false)
+	if not isRoomSync then
+		MahJong.OtherPlayerPaiInit()
+		MahJong.PlayerPaiSetActive(false)
+	end
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 end
 
@@ -2208,6 +2218,7 @@ function MahJong.XuanFengGang( ... )
 			MahJong.SortPlayerPai(paiNumber)
 		end
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
+		Player.isGangPaiing = true
 	elseif tempOperation == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 		tempPaiType = "CARD_TYPE_JIAN"
 		for i=1,3 do
@@ -2278,6 +2289,7 @@ function MahJong.GangPai(paiTable)
 	elseif tempOperation == "PAI_OPER_TYPE_ANGANGPAI" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},tempPai)
 	end
+	Player.isGangPaiing = false
 	MahJong.DeleteShowModel()
 	currentOperationState = operationState.WAIT
 end
@@ -2310,10 +2322,12 @@ function MahJong.ClickGangPai( ... )
 	end
 	if tempPaiType == "CARD_TYPE_FENG" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
+		Player.isGangPaiing = true
 	elseif tempPaiType == "CARD_TYPE_JIAN" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
 	else
 		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},_gang_pai_father.cards.deleteCards[1].paiValue)
+		Player.isGangPaiing = true
 	end
 
 	if _gang_pai_father then
@@ -3188,7 +3202,16 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
     	CS.UnityEngine.Object.Destroy(_baopai_model)
     	_baopai_model = nil
     end
-    MahJong.CreateBaoPai(baopai,diceNumber)
+    --MahJong.CreateBaoPai(baopai,diceNumber)
+    if not baopai then
+		Player.LogWarning("not ting")
+	else
+		if _modelPool[posNumber] then
+			_modelPool[posNumber]:SetActive(false)
+		end
+		ClickEvent.ShowBaoPai(baopai)
+	end
+
 	if diceNumber and diceNumber%2 == 0 then
 		for i=1,Player.baopaiPosition-1 do
 			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
