@@ -3171,6 +3171,24 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		end
 	end
 	
+	diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
+	if diceNumber <= 0 then
+		diceNumber = diceNumber + _model_all_pai_number
+	end
+	diceNumber = diceNumber%_model_all_pai_number
+	if diceNumber == 0 then
+		diceNumber = _model_all_pai_number
+	end
+	if not _modelPool[diceNumber].activeInHierarchy then
+		diceNumber = diceNumber + 1
+	end
+	Player.LogWarning("dice:"..number)
+	Player.LogWarning("diceNumber:"..diceNumber)
+	if _baopai_model then
+    	CS.UnityEngine.Object.Destroy(_baopai_model)
+    	_baopai_model = nil
+    end
+    MahJong.CreateBaoPai(baopai,diceNumber)
 	if diceNumber and diceNumber%2 == 0 then
 		for i=1,Player.baopaiPosition-1 do
 			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
@@ -3196,24 +3214,6 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 			modelPoolBackPointer = _model_all_pai_number
 		end
 	end
-	diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
-	if diceNumber <= 0 then
-		diceNumber = diceNumber + _model_all_pai_number
-	end
-	diceNumber = diceNumber%_model_all_pai_number
-	if diceNumber == 0 then
-		diceNumber = _model_all_pai_number
-	end
-	if not _modelPool[diceNumber].activeInHierarchy then
-		diceNumber = diceNumber + 1
-	end
-	Player.LogWarning("dice:"..number)
-	Player.LogWarning("diceNumber:"..diceNumber)
-	if _baopai_model then
-    	CS.UnityEngine.Object.Destroy(_baopai_model)
-    	_baopai_model = nil
-    end
-    MahJong.CreateBaoPai(baopai,diceNumber)
 end
 
 function update()
