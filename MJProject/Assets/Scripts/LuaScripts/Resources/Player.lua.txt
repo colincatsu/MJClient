@@ -1101,6 +1101,7 @@ function Player.OnPaiNotify(type_t,stuff)
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         if Player.isGangPaiing == true then
             Player.isGangPaiing = false
+            Player.MahJong.ModelPoolDelete(1,true)
         else
             Player.MahJong.ModelPoolDelete(1)
         end

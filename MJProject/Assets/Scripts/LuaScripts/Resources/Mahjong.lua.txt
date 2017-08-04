@@ -608,6 +608,24 @@ end
 function MahJong.ModelPoolDelete(cardNumber,isBack)
 	-- body 
 	--_model_all_pai_number--总牌数
+	if isBack and isBack == true then
+		for i=1,cardNumber do
+			if _modelPool[modelPoolBackPointer-1].activeInHierarchy == true then
+				_modelPool[modelPoolBackPointer-1]:SetActive(false)
+			else
+				_modelPool[modelPoolBackPointer]:SetActive(false)
+				diceNumber = nil
+				if modelPoolBackPointer <= 0 then
+					modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
+				end
+				modelPoolBackPointer = modelPoolBackPointer%_model_all_pai_number
+				if modelPoolBackPointer == 0 then
+					modelPoolBackPointer = _model_all_pai_number
+				end
+			end
+		end
+	end
+
 	for i=1,cardNumber do
 		modelPoolFrontPointer = math.fmod((modelPoolFrontPointer + 1),_model_all_pai_number)
 		if modelPoolFrontPointer == 0 then
@@ -3206,24 +3224,25 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
     if not baopai then
 		Player.LogWarning("not ting")
 	else
-		if _modelPool[posNumber] then
-			_modelPool[posNumber]:SetActive(false)
+		if _modelPool[diceNumber] then
+			_modelPool[diceNumber]:SetActive(false)
 		end
 		ClickEvent.ShowBaoPai(baopai)
 	end
 
 	if diceNumber and diceNumber%2 == 0 then
+		local tempDiceNumber = diceNumber
 		for i=1,Player.baopaiPosition-1 do
-			local forwardPoolNumber = math.fmod((diceNumber + 1),_model_all_pai_number)
+			local forwardPoolNumber = math.fmod((tempDiceNumber + 1),_model_all_pai_number)
 			if _modelPool[forwardPoolNumber].activeInHierarchy then
-				_modelPool[diceNumber-1]:SetActive(true)
+				_modelPool[tempDiceNumber-1]:SetActive(true)
 			else
-				_modelPool[diceNumber-1]:SetActive(false)
+				_modelPool[tempDiceNumber-1]:SetActive(false)
 			end
-			_modelPool[diceNumber]:SetActive(true)
-			diceNumber = math.fmod((diceNumber + 2),_model_all_pai_number)
-			if diceNumber == 0 then
-				diceNumber = _model_all_pai_number
+			_modelPool[tempDiceNumber]:SetActive(true)
+			tempDiceNumber = math.fmod((tempDiceNumber + 2),_model_all_pai_number)
+			if tempDiceNumber == 0 then
+				tempDiceNumber = _model_all_pai_number
 			end
 		end
 		_modelPool[modelPoolBackPointer]:SetActive(false)
@@ -3236,6 +3255,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		if modelPoolBackPointer == 0 then
 			modelPoolBackPointer = _model_all_pai_number
 		end
+		diceNumber = nil
 	end
 end
 
