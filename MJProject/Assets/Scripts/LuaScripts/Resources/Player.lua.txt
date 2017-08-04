@@ -43,7 +43,7 @@ _invokeFunctionTable.rear = 0
 
 local _calculate_data = {}--结算数据
 Player._all_calculate_data = {}--所有结算数据
-Player.activityDataTable = {}
+Player.activityDataTable = {}--活动数据
 Player.activityTable = {}
 Player._calculate_table_number = 0
 Player._room_information = {}--房间信息
@@ -57,6 +57,7 @@ local isTingPaied = false
 local isTuoGuan = false
 local isTingPaiTuoGuan = false
 Player.hasOperation = false
+Player.startOperation = false
 Player.hasBeginned = false
 Player.isGangPaiing = false
 Player._tosence_name = "FairyMainUI"
@@ -72,6 +73,7 @@ Player.voiceRoomName = ""
 Player.latitude = -1.0
 Player.longitude = -1.0
 Player.isPlaying = false
+Player.isPlayerPaiShowing = false
 Player.playerScore = {--游戏每家分数保存
     [0] = 0,
     [1] = 0,
@@ -110,7 +112,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0804"
+Player.pc_version = "1.0.1.0805"
 
 Player.baopaiPosition = nil
 
@@ -365,8 +367,8 @@ function Player.myUpdate( ... )
 
     if Player.dismissIsShowing == true and Player.dismissHasClicked == false then
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._vote_ui) == true then
-            if math.modf(CS.UnityEngine.Time.time - Player.dismissTimestarmp) <= 120 then
-                ClickEvent.ShowDissolveTime(120 - math.modf(CS.UnityEngine.Time.time - Player.dismissTimestarmp))
+            if math.modf(CS.UnityEngine.Time.time - Player.dismissTimestarmp) <= Player.activityDataTable.room_dismiss_timeout then
+                ClickEvent.ShowDissolveTime(Player.activityDataTable.room_dismiss_timeout - math.modf(CS.UnityEngine.Time.time - Player.dismissTimestarmp))
             else
                 Player.dismissHasClicked = true
                 Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
@@ -997,8 +999,11 @@ function Player.OnPaiOperationAlert(type_t,stuff)
     --]]
     Player._operation_alert_cache = message
     Player.hasOperation = true
+    Player.startOperation = true
     --Player.ThreadFunction(
-    ClickEvent.PaiOperationState()
+    if Player.isPlayerPaiShowing == true then
+        ClickEvent.PaiOperationState()
+    end
 end
 
 function Player.OnRandomSaizi(type_t,stuff)

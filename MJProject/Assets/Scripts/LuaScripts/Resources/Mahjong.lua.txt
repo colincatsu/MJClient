@@ -1483,6 +1483,9 @@ function MahJong.CreatePlayerPai(isRoomSync)
 	if not isRoomSync then
 		MahJong.OtherPlayerPaiInit()
 		MahJong.PlayerPaiSetActive(false)
+		Player.isPlayerPaiShowing = false
+	else
+		Player.isPlayerPaiShowing = true
 	end
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 end
@@ -3180,6 +3183,11 @@ function MahJong.PlayDoubleDices(number1,number2)
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
     --MahJong.CreatePlayerPai()
     MahJong.PlayerPaiSetActive(true)
+    Player.isPlayerPaiShowing = true
+    if Player.startOperation == true then
+    	ClickEvent.PaiOperationState()
+    	Player.startOperation = false
+    end
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
 	end)

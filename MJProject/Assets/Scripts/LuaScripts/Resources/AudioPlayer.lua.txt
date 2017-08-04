@@ -21,6 +21,7 @@ AudioPlayer._audio_name = {
 	MingGang = "windy_rainy",
 	AnGang = "wordbang",
 	SelectUI = "select",
+	SayWords = "biaoqingyinxiao_",
 }
 local AudioClip = CS.UnityEngine.AudioClip
 local AudioSource = CS.UnityEngine.AudioSource

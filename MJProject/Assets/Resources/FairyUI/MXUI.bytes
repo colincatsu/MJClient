@@ -38,7 +38,7 @@
 </component>doyw4st.xml|929|<component size="290,61">
   <displayList>
     <loader id="n0_doyw" name="icon" xy="1,-40" size="100,100" fill="scale"/>
-    <text id="n1_doyw" name="title" xy="-1,11" size="372,37" fontSize="30" color="#ffffff" vAlign="middle" autoSize="shrink" strokeColor="#000000" text=""/>
+    <text id="n1_doyw" name="title" xy="-1,11" size="477,37" fontSize="30" color="#ffffff" vAlign="middle" autoSize="shrink" strokeColor="#000000" text=""/>
   </displayList>
   <transition name="TextMove">
     <item time="0" type="Alpha" target="n1_doyw" value="1"/>
@@ -929,7 +929,7 @@
     </text>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|45489|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|45578|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -980,6 +980,7 @@
     <component id="nxeh4sp" name="HelloEmojiListButton" path="/UIPIC/表情框/" size="100,100"/>
     <component id="nxeh4ss" name="HelloTextListButton" path="/UIPIC/表情框/" size="399,78"/>
     <component id="oorx4s8" name="ShareRank" path="/UIPIC/投票/" size="181,73"/>
+    <component id="qnb54uq" name="BigButton" path="/UIPIC/ClearRound/" size="1334,750"/>
     <component id="qpkkjt" name="GameCancelButton" path="/UIPIC/游戏页面/" size="112,112"/>
     <component id="r8my4uo" name="BaoPai" path="/" size="76,120"/>
     <component id="r8qd4ti" name="GameListenButton" path="/UIPIC/游戏页面/" size="76,74"/>
@@ -1455,7 +1456,11 @@
     <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas3" size="2048,1024" file="atlas3.png"/>
   </resources>
-</packageDescription>qpkkjs.xml|128|<component size="47,51">
+</packageDescription>qnb54uq.xml|173|<component size="1334,750" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList/>
+  <Button/>
+</component>qpkkjs.xml|128|<component size="47,51">
   <displayList>
     <image id="n0_qpkk" name="n0" src="w61cfs" xy="0,0"/>
   </displayList>
@@ -3212,8 +3217,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|8810|<component size="1334,750" adaptationTest="FitSize">
-  <controller name="Menu" pages="0,,1," selected="0"/>
+</component>w61cjc.xml|8971|<component size="1334,750" adaptationTest="FitSize">
+  <controller name="Menu" pages="0,,1," selected="1"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1016,66">
@@ -3265,6 +3270,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n58_doyw" name="OppositeEmojiShow" src="doyw4su" xy="646,61"/>
     <component id="n59_doyw" name="BehindEmojiShow" src="doyw4su" xy="940,290"/>
     <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,82"/>
+    <component id="n67_qnb5" name="BigButton" src="qnb54uq" xy="0,0" group="n25_fb5y"/>
     <component id="n3_algd" name="OppositePlayerAvatarInfo" src="w61cg7" xy="937,11" group="n25_fb5y">
       <relation target="" sidePair="top-top"/>
     </component>
@@ -3282,6 +3288,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </component>
     <image id="n63_febl" name="n63" src="febl4ul" xy="1119,84" size="208,206" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
+      <relation target="" sidePair="top-top,right-right"/>
     </image>
     <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="10,10" group="n25_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
@@ -3302,7 +3309,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,412" group="n25_fb5y"/>
     <component id="n43_uejt" name="GameMenuButton" src="uejtqs" xy="1256,14" group="n25_fb5y">
       <relation target="" sidePair="top-top,right-right"/>
-      <Button controller="Menu" page="1"/>
+      <Button checked="true" controller="Menu" page="1"/>
     </component>
     <component id="n45_uejt" name="GameTrusteeshipButton" src="uejtqu" xy="1234,196" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
@@ -3328,7 +3335,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1251,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <group id="n25_fb5y" name="Btns" xy="2,10" size="1325,716" advanced="true"/>
+    <group id="n25_fb5y" name="Btns" xy="0,0" size="1334,750" advanced="true"/>
     <component id="n62_febl" name="Emoji" src="nxeh4sm" xy="736,183">
       <gearDisplay controller="Emoji" pages="1"/>
     </component>

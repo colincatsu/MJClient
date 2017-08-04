@@ -221,6 +221,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.moveTitleText = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtMove")
 		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
 		ClickEvent._play_ui.titleFather.visible = false
+		ClickEvent._play_ui.gameMoreControl = _currentPanel.panel:GetController("Menu")
 
 		local emojiList = _currentPanel.panel:GetChild("Emoji"):GetChild("HelloEmojiList")--.onClickItem:Add(ClickEvent.registerButtonClick)
 		for i=0,emojiList.numChildren-1 do
@@ -1062,7 +1063,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1079,7 +1080,7 @@ function ClickEvent.ShowCalculate( ... )
 						end
 					end
 				end
-				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
+				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
 					Player.LogWarning("0 fan")
 				else
 					if c.fan_type == "FAN_TYPE_PINGHU" and typeNumber ~= 1 then
@@ -1088,7 +1089,7 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" then
+						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
 							if c.score > 0 then
 								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
 							else
@@ -1150,7 +1151,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1167,7 +1168,7 @@ function ClickEvent.ShowCalculate( ... )
 						end
 					end
 				end
-				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
+				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
 					Player.LogWarning("0 fan")
 				else
 					if c.fan_type == "FAN_TYPE_PINGHU" and typeNumber ~= 1 then
@@ -1176,7 +1177,7 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" then
+						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
 							if c.score > 0 then
 								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
 							else
@@ -1238,7 +1239,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1255,7 +1256,7 @@ function ClickEvent.ShowCalculate( ... )
 						end
 					end
 				end
-				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
+				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
 					Player.LogWarning("0 fan")
 				else
 					if c.fan_type == "FAN_TYPE_PINGHU" and typeNumber ~= 1 then
@@ -1264,7 +1265,7 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" then
+						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
 							if c.score > 0 then
 								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
 							else
@@ -1326,7 +1327,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1343,7 +1344,7 @@ function ClickEvent.ShowCalculate( ... )
 						end
 					end
 				end
-				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
+				if c.fan_type ~= "FAN_TYPE_MING_GANG" and c.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" and c.fan_type ~= "FAN_TYPE_PINGHU" and fanNum == 0 then
 					Player.LogWarning("0 fan")
 				else
 					if c.fan_type == "FAN_TYPE_PINGHU" and typeNumber ~= 1 then
@@ -1352,7 +1353,7 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" then
+						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
 							if c.score > 0 then
 								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
 							else
@@ -1463,6 +1464,9 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	local textureIndex = tostring(index)
 	if index < 10 then
 		textureIndex = "0"..tostring(index)
+	end
+	if chat_type == "CHAT_TYPE_TEXT" then
+		AudioPlayer.PlaySound(AudioPlayer._audio_name.SayWords..tostring(index),false,1)
 	end
 	local whichPlayer = ClickEvent.PlayerPosition(position)
 	if whichPlayer == 1 then
@@ -1686,6 +1690,11 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.BigButton( ... )
+	-- body
+	ClickEvent._play_ui.gameMoreControl.selectedIndex = 0
+end
+
 function ClickEvent.Agree( ... )
 	-- body
 	Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
@@ -1705,7 +1714,7 @@ function ClickEvent.GameDissolveButton(gameObject)
 		end
 		return
 	end
-	if not Player.dismissTimestarmp or CS.UnityEngine.Time.time - Player.dismissTimestarmp > Player.dismissInterval then
+	if not Player.dismissTimestarmp or CS.UnityEngine.Time.time - Player.dismissTimestarmp > Player.activityDataTable.room_dismiss_cooldown then
 		if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
 			Player.LogWarning("panelnil")
 			return
@@ -1822,8 +1831,7 @@ end
 function ClickEvent.CopyRoomNum( ... )
 	-- body
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2031)
+	ClickEvent.ShowToast(StringTable.Get(2031))
 end
 
 function ClickEvent.ChangeAccount(gameObject)

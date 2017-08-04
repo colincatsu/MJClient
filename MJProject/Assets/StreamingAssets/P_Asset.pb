@@ -1,5 +1,5 @@
 
-àS
+§T
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -67,7 +67,7 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("õ
+voice_path ("¼
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -85,7 +85,9 @@ voice_path ("õ
 room_last_time ((
  room_card_limit_free_activity_id ( 
 guest_forbid_friend_room (
-mall_activity_id ("Ô
+mall_activity_id (!
+room_dismiss_timeout (:120"
+room_dismiss_cooldown (:180"Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
