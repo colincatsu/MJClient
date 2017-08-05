@@ -152,6 +152,9 @@ function start()
 	diceNumber = nil
 	_player_father = nil
 	Player.baopaiPosition = nil
+	Player.startOperation = false
+	Player.hasPlayedRoundEnd = false
+	Player.isPlayerPaiShowing = false
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -546,6 +549,9 @@ function MahJong.ResetGameState()
 	Player.isGangPaiing = false
 	diceNumber = nil
 	Player.baopaiPosition = nil
+	Player.startOperation = false
+	Player.hasPlayedRoundEnd = false
+	Player.isPlayerPaiShowing = false
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -1200,8 +1206,49 @@ function MahJong.ReturnRoomSync(paiData)
         	end
         end
         --operationPai
+        local operationCount = 0
+        for operaKey,operaData in pairs(playerData.pai_outhand) do
+        	operationCount = operationCount + 1
+        end
+        for i=1,playerData.fenggang_count do
+        	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_FENG"
+        	playerData.pai_outhand[operationCount].cards = {}
+        	for j=1,4 do
+        		playerData.pai_outhand[operationCount].cards[j] = j
+        	end
+        end
+        for i=1,playerData.fenggang_count do
+        	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_JIAN"
+        	playerData.pai_outhand[operationCount].cards = {}
+        	for j=1,3 do
+        		playerData.pai_outhand[operationCount].cards[j] = j
+        	end
+        end
+        for mingKey,mingData in pairs(playerData.minggang_list) do
+        	operationCount = operationCount + 1
+        	playerData.pai_outhand.pai_outhand[operationCount].card_type = mingData.card_type
+        	playerData.pai_outhand[operationCount].cards = {}
+        	for j=1,4 do
+        		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
+        	end
+        end
         local anGangAngle = newVector3.zero
 		local myAnGangOpration = false
+        for angangKey,angangData in pairs(playerData.angang_list) do
+        	if playerData.position == _my_position then
+		    	myAnGangOpration = true
+	    	end
+	    	anGangAngle = newVector3(-180,0,0)
+	    	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount].card_type = mingData.card_type
+        	playerData.pai_outhand[operationCount].cards = {}
+        	playerData.pai_outhand[operationCount].isAnGang = true
+        	for j=1,4 do
+        		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
+        	end
+        end
         for operationKey,operationData in pairs(playerData.pai_outhand) do
         	local tempPaiPool = {}
 		    local modelName = {}
@@ -1242,10 +1289,18 @@ function MahJong.ReturnRoomSync(paiData)
 						if myAnGangOpration == true then
 							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
 						else
-							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+							if operationData.isAnGang and operationData.isAnGang == true then
+								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+							else
+								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+							end
 						end
 					else
-						_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
+						if operationData.isAnGang and operationData.isAnGang == true then
+							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
+						else
+							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
+						end
 					end
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
 					if k == 4 then
@@ -1277,10 +1332,18 @@ function MahJong.ReturnRoomSync(paiData)
 						if myAnGangOpration == true then
 							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
 						else
-							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+							if operationData.isAnGang and operationData.isAnGang == true then
+								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+							else
+								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+							end
 						end
 					else
-						_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
+						if operationData.isAnGang and operationData.isAnGang == true then
+							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
+						else
+							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
+						end
 					end
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
 					if k == 4 then
@@ -1312,10 +1375,18 @@ function MahJong.ReturnRoomSync(paiData)
 						if myAnGangOpration == true then
 							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
 						else
-							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+							if operationData.isAnGang and operationData.isAnGang == true then
+								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+							else
+								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+							end
 						end
 					else
-						_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
+						if operationData.isAnGang and operationData.isAnGang == true then
+							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
+						else
+							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
+						end
 					end
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
 					if k == 4 then
@@ -1347,10 +1418,18 @@ function MahJong.ReturnRoomSync(paiData)
 						if myAnGangOpration == true then
 							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
 						else
-							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+							if operationData.isAnGang and operationData.isAnGang == true then
+								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+							else
+								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+							end
 						end
 					else
-						_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
+						if operationData.isAnGang and operationData.isAnGang == true then
+							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
+						else
+							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
+						end
 					end
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
 					if k == 4 then
@@ -1439,6 +1518,7 @@ function MahJong.ReturnRoomSync(paiData)
 				MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 			end
         end
+        --
 	end
 end
 
@@ -1447,6 +1527,7 @@ function MahJong.PlayerPaiSetActive(active)
 	for k,v in pairs(_player_father.cards) do
 		v.parent:SetActive(active)
 	end
+	Player.isPlayerPaiShowing = active
 end
 
 function MahJong.CreatePlayerPai(isRoomSync)
@@ -1483,9 +1564,6 @@ function MahJong.CreatePlayerPai(isRoomSync)
 	if not isRoomSync then
 		MahJong.OtherPlayerPaiInit()
 		MahJong.PlayerPaiSetActive(false)
-		Player.isPlayerPaiShowing = false
-	else
-		Player.isPlayerPaiShowing = true
 	end
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 end
@@ -2384,19 +2462,6 @@ function MahJong.CreateGangPai(pai)
 	end
 	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
 
-    if pai.card_type == "CARD_TYPE_FENG" then
-    	for i=1,4 do
-			MahJong.CreateGangPaiModel(""..tempPaiPool.cards[i].model_path, pai.card_type, i, _gang_pai_father.currentGroupNumber, i)
-    	end
-	elseif pai.card_type == "CARD_TYPE_JIAN" then
-    	for i=1,3 do
-			MahJong.CreateGangPaiModel(""..tempPaiPool.cards[i].model_path, pai.card_type, i, _gang_pai_father.currentGroupNumber, i)
-    	end
-	else
-		for i=1,4 do
-			MahJong.CreateGangPaiModel(""..tempPaiPool.cards[pai.card_value].model_path, pai.card_type, pai.card_value, _gang_pai_father.currentGroupNumber, i)
-    	end
-	end
 	MahJong.SortGangPai()
 	--]]
 	if not _gang_pai_father.currentGroupNumber or _gang_pai_father.currentGroupNumber == 0 then
@@ -2406,10 +2471,24 @@ function MahJong.CreateGangPai(pai)
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber] = {}
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child = {}
 	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber)
-	for i=1,4 do
-		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
-		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
-		_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = pai.card_value
+    if pai.card_type == "CARD_TYPE_FENG" then
+    	for i=1,4 do
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = i
+		end
+	elseif pai.card_type == "CARD_TYPE_JIAN" then
+    	for i=1,3 do
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = i
+		end
+	else
+		for i=1,4 do
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
+			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = pai.card_value
+		end
 	end
 end
 
@@ -2681,6 +2760,7 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
         Effect.AddNormalEffect(Effect._effect_name.roundEndShow,nil,nil,nil,nil)
         yield_return(CS.UnityEngine.WaitForSeconds(2))
         Effect.DeleteEffect(Effect._effect_name.roundEndShow)
+        Player.hasPlayedRoundEnd = true
         ClickEvent.ShowCalculate()
     end)
     coroutine.resume(co)
@@ -2720,6 +2800,7 @@ function MahJong.OperationPaiShow(message)
 	    	MahJong.DelUsedDaPai()
     	end
 		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
+		Effect.AddSpecialEffect(Effect._effect_name.rain,2)
 		local isGuoGang = false
 		for i=1,Player.operation_calculate_data[playerPos].operationNumber do
 			if Player.operation_calculate_data[playerPos][i].card_type == operationPaiShowData.pai.card_type and
@@ -2777,6 +2858,7 @@ function MahJong.OperationPaiShow(message)
     	anGangAngle = newVector3(-180,0,0)
     	deleteOtheCount = 4
     	Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
+    	Effect.AddSpecialEffect(Effect._effect_name.rain,2)
     	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
     	Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = operationPaiShowData.oper_type
@@ -2789,6 +2871,7 @@ function MahJong.OperationPaiShow(message)
 		end
 		deleteOtheCount = 4
 		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
+		Effect.AddSpecialEffect(Effect._effect_name.xuanfengGang,2)
 		Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = operationPaiShowData.oper_type
@@ -2800,6 +2883,7 @@ function MahJong.OperationPaiShow(message)
 			paiValue[i] = i
 		end
 		Effect.AddNormalEffect(Effect._effect_name.gangShow,nil,nil,tempPosition,2)
+		Effect.AddSpecialEffect(Effect._effect_name.xuanfengGang,2)
 		Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = operationPaiShowData.oper_type
@@ -3182,12 +3266,11 @@ function MahJong.PlayDoubleDices(number1,number2)
 	local co = coroutine.create(function()
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
     --MahJong.CreatePlayerPai()
-    MahJong.PlayerPaiSetActive(true)
-    Player.isPlayerPaiShowing = true
     if Player.startOperation == true then
     	ClickEvent.PaiOperationState()
     	Player.startOperation = false
     end
+    MahJong.PlayerPaiSetActive(true)
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
 	end)

@@ -3217,8 +3217,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|8971|<component size="1334,750" adaptationTest="FitSize">
-  <controller name="Menu" pages="0,,1," selected="1"/>
+</component>w61cjc.xml|9220|<component size="1334,750" adaptationTest="FitSize">
+  <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1016,66">
@@ -3245,9 +3245,6 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
       <relation target="" sidePair="top-top,left-left"/>
     </component>
-    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
-      <relation target="" sidePair="center-center%"/>
-    </list>
     <component id="n21_algd" name="GameHintBar" src="w61cgf" xy="486,558" touchable="false">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
@@ -3303,13 +3300,13 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1251,652" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1013,413" group="n25_fb5y">
+    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1013,398" group="n25_fb5y">
       <relation target="" sidePair="center-center%"/>
     </component>
-    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,412" group="n25_fb5y"/>
+    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,398" group="n25_fb5y"/>
     <component id="n43_uejt" name="GameMenuButton" src="uejtqs" xy="1256,14" group="n25_fb5y">
       <relation target="" sidePair="top-top,right-right"/>
-      <Button checked="true" controller="Menu" page="1"/>
+      <Button controller="Menu" page="1"/>
     </component>
     <component id="n45_uejt" name="GameTrusteeshipButton" src="uejtqu" xy="1234,196" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="1"/>
@@ -3329,9 +3326,15 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="516,505" group="n25_fb5y"/>
-    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="548,504" group="n25_fb5y"/>
-    <component id="n53_ngmx" name="GangPaiBg" src="ngmx4si" xy="492,501" group="n25_fb5y"/>
+    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="516,505" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="548,504" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n53_ngmx" name="GangPaiBg" src="ngmx4si" xy="492,501" size="627,122" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
     <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1251,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
@@ -3340,6 +3343,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="Emoji" pages="1"/>
     </component>
     <component id="n66_r8my" name="BaoPai" src="r8my4uo" xy="4,96"/>
+    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
+      <relation target="" sidePair="center-center%"/>
+    </list>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
@@ -3347,19 +3353,19 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
   </transition>
   <transition name="SlideIn">
-    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
+    <item time="0" type="Alpha" target="n17_algd" value="0"/>
     <item time="0" type="Alpha" target="n24_l3ub" value="0"/>
     <item time="0" type="Alpha" target="n45_uejt" value="0"/>
-    <item time="0" type="Alpha" target="n17_algd" value="0"/>
+    <item time="0" type="Alpha" target="n46_uejt" value="0"/>
     <item time="4" type="Alpha" target="n17_algd" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n24_l3ub" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n46_uejt" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n45_uejt" tween="true" startValue="0" endValue="1" duration="4"/>
   </transition>
   <transition name="SlideOut" options="1">
-    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
   </transition>
 </component>w61cjd.xml|11390|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">

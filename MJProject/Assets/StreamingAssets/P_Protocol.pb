@@ -1,5 +1,5 @@
 
-Ñé
+µè
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -420,20 +420,25 @@ WeChatInfoH
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("Ω
+	room_list ("Õ
 RoomAll?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
 room_id (1
 player_list (2.Adoter.Asset.RoomAll.Player;
-curr_operator_position (2.Adoter.Asset.POSITION_TYPEÔ
+curr_operator_position (2.Adoter.Asset.POSITION_TYPEˇ
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE
 pai_count_inhand (-
 
 pai_inhand (2.Adoter.Asset.MultiplePai.
-pai_outhand (2.Adoter.Asset.MultiplePai*
-pai_pool (2.Adoter.Asset.PaiElement"ê
+pai_outhand (2.Adoter.Asset.MultiplePai/
+minggang_list (2.Adoter.Asset.PaiElement-
+angang_list (2.Adoter.Asset.PaiElement
+fenggang_count (
+jiangang_count	 (*
+pai_pool
+ (2.Adoter.Asset.PaiElement"ê
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -481,7 +486,7 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*ö
+ERROR_SHOW_TYPE_CHAT*ª
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -508,7 +513,8 @@ ERROR_CODE
 ERROR_ROOM_TYPE_NOT_FOUND
 ERROR_ROOM_HAS_BEEN_IN!
 ERROR_ROOM_GUEST_FORBID_ENTER
-ERROR_ROOM_CARD_GAMES_FULL
+ERROR_ROOM_CARD_GAMES_FULL
+ERROR_ROOM_DISMISS_COOLDOWN
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2

@@ -70,7 +70,7 @@ function ClickEvent.Awake( ... )
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
 	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
 	ClickEvent._createObject = {}
-	CS.UnityEngine.Application.targetFrameRate = 60
+	CS.UnityEngine.Application.targetFrameRate = 30
 end
 function ClickEvent.Start(loadUI)
 	-- body
@@ -453,6 +453,7 @@ function ClickEvent.SetRemainNum( paiRemainNum )
 
 function ClickEvent.RoomInformationUpdate( ... )
 	-- body
+	Player.LogWarning(Player._my_player_data.position)
 	local x = _position_index[Player._my_player_data.position]
 	for k,v in pairs(_position_index) do
 		if v >= x then
@@ -717,6 +718,8 @@ function ClickEvent.PaiOperationState()
 				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 				if xuanfengCount > 1 then
+					v.pai.card_type = "PAI_OPER_TYPE_XUANFENG_FENG"
+					v.pai.card_value = 1
 					Player.MahJong.CreateGangPai(v.pai)
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
@@ -725,6 +728,8 @@ function ClickEvent.PaiOperationState()
 				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 				if xuanfengCount > 1 then
+					v.pai.card_type = "PAI_OPER_TYPE_XUANFENG_JIAN"
+					v.pai.card_value = 1
 					Player.MahJong.CreateGangPai(v.pai)
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
@@ -1063,7 +1068,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and countNum.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1072,7 +1077,7 @@ function ClickEvent.ShowCalculate( ... )
 				local fanNum = nil
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type then
+						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 							fanName = b1.name
 							fanNum = b1.multiple
 							allFanNumber = allFanNumber + fanNum
@@ -1151,7 +1156,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and countNum.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1160,7 +1165,7 @@ function ClickEvent.ShowCalculate( ... )
 				local fanNum = nil
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type then
+						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 							fanName = b1.name
 							fanNum = b1.multiple
 							allFanNumber = allFanNumber + fanNum
@@ -1239,7 +1244,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and countNum.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1248,7 +1253,7 @@ function ClickEvent.ShowCalculate( ... )
 				local fanNum = nil
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type then
+						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 							fanName = b1.name
 							fanNum = b1.multiple
 							allFanNumber = allFanNumber + fanNum
@@ -1327,7 +1332,7 @@ function ClickEvent.ShowCalculate( ... )
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
 			for countKey,countNum in pairs(v.details) do
-				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+				if countNum.fan_type ~= "FAN_TYPE_MING_GANG" and countNum.fan_type ~= "FAN_TYPE_AN_GANG" and countNum.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 					typeNumber = typeNumber + 1
 				end
 			end
@@ -1336,7 +1341,7 @@ function ClickEvent.ShowCalculate( ... )
 				local fanNum = nil
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type then
+						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
 							fanName = b1.name
 							fanNum = b1.multiple
 							allFanNumber = allFanNumber + fanNum
@@ -1902,7 +1907,7 @@ end
 function ClickEvent.VipNoteList(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
-	for k,v in pairs(Player._player_data.room_history) do
+	for k,v in pairs(Player.history_data) do
 		if v.room_id == tonumber(gameObject.gameObjectName) then
 			--[[
 			--]]
@@ -3279,13 +3284,30 @@ end
 function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 	-- body
 	ClickEvent._play_ui.gangPaiBar.visible = true
-	local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
-	gangPaiGroupTemp.name = tostring(paiGroup)
-	gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
-	gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
-	gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
-	gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
-	gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
+	if cardType == "CARD_TYPE_JIAN" then
+		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
+		gangPaiGroupTemp.name = tostring(paiGroup)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..1)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..2)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..3)
+		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
+	elseif cardType == "CARD_TYPE_FENG" then
+		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
+		gangPaiGroupTemp.name = tostring(paiGroup)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..1)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..2)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..3)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..4)
+		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
+	else
+		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
+		gangPaiGroupTemp.name = tostring(paiGroup)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+		gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
+		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
+	end
 	ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList").width = gangPaiGroupTemp.width * paiGroup
 end
 

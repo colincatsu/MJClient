@@ -74,6 +74,7 @@ Player.latitude = -1.0
 Player.longitude = -1.0
 Player.isPlaying = false
 Player.isPlayerPaiShowing = false
+Player.hasPlayedRoundEnd = false
 Player.playerScore = {--游戏每家分数保存
     [0] = 0,
     [1] = 0,
@@ -112,7 +113,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0805"
+Player.pc_version = "1.0.1.0806"
 
 Player.baopaiPosition = nil
 
