@@ -155,6 +155,9 @@ function start()
 	Player.startOperation = false
 	Player.hasPlayedRoundEnd = false
 	Player.isPlayerPaiShowing = false
+	Player._ting_pai_cache = nil
+	Player.huPaiPosition = -1
+	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -552,6 +555,7 @@ function MahJong.ResetGameState()
 	Player.startOperation = false
 	Player.hasPlayedRoundEnd = false
 	Player.isPlayerPaiShowing = false
+	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
 	    [1] = {operationNumber = 0,},
@@ -561,7 +565,7 @@ function MahJong.ResetGameState()
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
 	ClickEvent._play_ui.baopaiLoader.url = ""
-	Player.huPaiPosition = 0
+	Player.huPaiPosition = -1
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end
@@ -1209,6 +1213,11 @@ function MahJong.ReturnRoomSync(paiData)
         local operationCount = 0
         for operaKey,operaData in pairs(playerData.pai_outhand) do
         	operationCount = operationCount + 1
+        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_CHIPAI"
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = operaData.card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = operaData.cards
         end
         for i=1,playerData.fenggang_count do
         	operationCount = operationCount + 1
@@ -1217,6 +1226,11 @@ function MahJong.ReturnRoomSync(paiData)
         	for j=1,4 do
         		playerData.pai_outhand[operationCount].cards[j] = j
         	end
+        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_XUANFENG_FENG"
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
         end
         for i=1,playerData.fenggang_count do
         	operationCount = operationCount + 1
@@ -1225,6 +1239,11 @@ function MahJong.ReturnRoomSync(paiData)
         	for j=1,3 do
         		playerData.pai_outhand[operationCount].cards[j] = j
         	end
+        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_XUANFENG_JIAN"
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
         end
         for mingKey,mingData in pairs(playerData.minggang_list) do
         	operationCount = operationCount + 1
@@ -1233,6 +1252,11 @@ function MahJong.ReturnRoomSync(paiData)
         	for j=1,4 do
         		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
         	end
+        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_GANGPAI"
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
         end
         local anGangAngle = newVector3.zero
 		local myAnGangOpration = false
@@ -1248,6 +1272,11 @@ function MahJong.ReturnRoomSync(paiData)
         	for j=1,4 do
         		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
         	end
+        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_GANGPAI"
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
         end
         for operationKey,operationData in pairs(playerData.pai_outhand) do
         	local tempPaiPool = {}
@@ -3293,7 +3322,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 			Player.baopaiPosition =	number
 		end
 	end
-	
+	redDicePoints = Player.baopaiPosition
 	diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
 	if diceNumber <= 0 then
 		diceNumber = diceNumber + _model_all_pai_number

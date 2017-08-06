@@ -392,6 +392,9 @@ end
 
 function ClickEvent.PlayMoveTitle()
 	-- body
+	if CS.UnityEngine.Application.loadedLevelName ~= "PlaySence" and CS.UnityEngine.Application.loadedLevelName ~= "FairyMainUI" then
+		return
+	end
 	if not _currentPanel or not _currentPanel.panel or not ClickEvent._play_ui.titleFather then
 		return
 	end
@@ -669,9 +672,7 @@ function ClickEvent.PaiOperationState()
 	local xuanfengCount = 0
 	local angangCount = 0
 	local tingpaiCount = 0
-	if not Player._ting_pai_cache then
-		Player._ting_pai_cache = {}
-	end
+	Player._ting_pai_cache = {}
 	if Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
@@ -917,7 +918,7 @@ function ClickEvent.ShowRoomCalculate( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._room_calculate_ui)
-	_popPanel[popPanelIndex].panel:GetChild("ShareRank").visible = false
+	--_popPanel[popPanelIndex].panel:GetChild("ShareRank").visible = false
 	local listObj = _popPanel[popPanelIndex].panel:GetChild("FinishBalanceList")
 	listObj:RemoveChildrenToPool()
 	for k,v in pairs(Player._room_calculate_data.record) do
@@ -937,6 +938,11 @@ function ClickEvent.ShowRoomCalculate( ... )
 			obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 		end
 	end
+end
+
+function ClickEvent.ShareRank( ... )
+	-- body
+	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,CS.UnityEngine.Screen.width*0.5,CS.UnityEngine.Screen.height*0.5))
 end
 
 function ClickEvent.ExitRoomButton( ... )
@@ -1007,6 +1013,7 @@ function ClickEvent.ShowCalculate( ... )
 		_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("ClearState"):GetController("ClearState").selectedIndex = 0
 		_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("HuZhang").visible = true
 		_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("HuZhang"):GetChild("BaoPaiLoader").url = UIPackage.GetItemURL("MXUI",Player.hupai_calculate_data.card_type.."_"..Player.hupai_calculate_data.card_value)
+	else
 	end
 
 	if Player._calculate_data.baopai and Player._calculate_data.baopai ~= {} then
@@ -1073,14 +1080,16 @@ function ClickEvent.ShowCalculate( ... )
 				end
 			end
 			for i,c in pairs(v.details) do
-				local fanName = nil
-				local fanNum = nil
+				local fanName = ""
+				local fanNum = 0
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+						if c.fan_type == b1.fan_type then
 							fanName = b1.name
 							fanNum = b1.multiple
-							allFanNumber = allFanNumber + fanNum
+							if c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+								allFanNumber = allFanNumber + fanNum
+							end
 							break
 						end
 					end
@@ -1161,14 +1170,16 @@ function ClickEvent.ShowCalculate( ... )
 				end
 			end
 			for i,c in pairs(v.details) do
-				local fanName = nil
-				local fanNum = nil
+				local fanName = ""
+				local fanNum = 0
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+						if c.fan_type == b1.fan_type then
 							fanName = b1.name
 							fanNum = b1.multiple
-							allFanNumber = allFanNumber + fanNum
+							if c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+								allFanNumber = allFanNumber + fanNum
+							end
 							break
 						end
 					end
@@ -1249,14 +1260,16 @@ function ClickEvent.ShowCalculate( ... )
 				end
 			end
 			for i,c in pairs(v.details) do
-				local fanName = nil
-				local fanNum = nil
+				local fanName = ""
+				local fanNum = 0
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+						if c.fan_type == b1.fan_type then
 							fanName = b1.name
 							fanNum = b1.multiple
-							allFanNumber = allFanNumber + fanNum
+							if c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+								allFanNumber = allFanNumber + fanNum
+							end
 							break
 						end
 					end
@@ -1337,14 +1350,16 @@ function ClickEvent.ShowCalculate( ... )
 				end
 			end
 			for i,c in pairs(v.details) do
-				local fanName = nil
-				local fanNum = nil
+				local fanName = ""
+				local fanNum = 0
 				for a,b in pairs(Player._calculate_table_loader) do
 					for a1,b1 in pairs(b.fans) do
-						if c.fan_type == b1.fan_type and c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+						if c.fan_type == b1.fan_type then
 							fanName = b1.name
 							fanNum = b1.multiple
-							allFanNumber = allFanNumber + fanNum
+							if c.fan_type ~= "FAN_TYPE_XUAN_FENG_GANG" then
+								allFanNumber = allFanNumber + fanNum
+							end
 							break
 						end
 					end

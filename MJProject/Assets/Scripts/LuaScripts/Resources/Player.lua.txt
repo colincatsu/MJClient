@@ -61,7 +61,7 @@ Player.startOperation = false
 Player.hasBeginned = false
 Player.isGangPaiing = false
 Player._tosence_name = "FairyMainUI"
-Player.huPaiPosition = 0
+Player.huPaiPosition = -1
 Player._string_id = nil
 Player.wechat_code = ""
 Player.wechat_nickname = ""
@@ -113,7 +113,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0806"
+Player.pc_version = "1.0.4.0806"
 
 Player.baopaiPosition = nil
 

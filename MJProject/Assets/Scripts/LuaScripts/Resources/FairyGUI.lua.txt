@@ -34,6 +34,7 @@ RelationType = CS.FairyGUI.RelationType
 UIConfig = CS.FairyGUI.UIConfig
 GoWrapper = CS.FairyGUI.GoWrapper
 NTexture = CS.FairyGUI.NTexture
+StageCamera = CS.FairyGUI.StageCamera
 
 --这里建立一个c# delegate到lua函数的映射，是为了支持self参数，和方便地进行remove操作
 local EventDelegates = {}
