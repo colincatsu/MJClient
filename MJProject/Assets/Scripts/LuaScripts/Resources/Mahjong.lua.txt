@@ -3308,10 +3308,6 @@ end
 
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
-	if isPlayDice then
-		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
-		_dice_red:SetActive(true)
-	end
 
 	if not Player.baopaiPosition then
 		Player.baopaiPosition = number
@@ -3348,6 +3344,10 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 			_modelPool[diceNumber]:SetActive(false)
 		end
 		ClickEvent.ShowBaoPai(baopai)
+		if isPlayDice == true and diceNumber%2 == 1 then
+			diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
+			_dice_red:SetActive(true)
+		end
 	end
 
 	if diceNumber and diceNumber%2 == 0 then
