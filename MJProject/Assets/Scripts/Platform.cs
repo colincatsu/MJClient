@@ -98,7 +98,7 @@ public class Platform : MonoBehaviour {
         }
     }
 
-    public Texture SetAsyncImage(string url,NTexture targetTexture)
+    public Texture SetAsyncImage(string url)
     {
         //开始下载图片前，将UITexture的主图片设置为占位图  
         if(url == null || url == "")
@@ -112,7 +112,7 @@ public class Platform : MonoBehaviour {
         }  
         else       //如果之前不存在缓存中  就用WWW类下载  
         {
-            if (spriteCnt >= 54)
+            if (spriteCnt >= 100)
             {
                 spriteCnt = 0;
                 myWXPic = null;
@@ -264,6 +264,11 @@ public class Platform : MonoBehaviour {
     [CSharpCallLua]
     public delegate void LDelegate();
     public LDelegate func = null;
+
+    public void SetFuncDelegate(LDelegate callBack)
+    {
+        func += callBack;
+    }
 
     public void LoginUserMsg()
     {

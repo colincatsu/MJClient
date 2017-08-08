@@ -201,7 +201,8 @@ function ClickEvent.CreateNewPanel(panelName)
 
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
-		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("n66"):GetChild("BaoPaiLoader")
+		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("PaiSingle"):GetChild("BaoPaiLoader")
+		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
@@ -267,13 +268,16 @@ function ClickEvent.CreateNewPanel(panelName)
 			ClickEvent._play_ui.avatarLoader.url = ""
 			WeChatPlatform.func = nil
 			local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
-			WeChatPlatform.func = function ()
+			WeChatPlatform:SetFuncDelegate(function ()
 				-- body
 				local delegateTex = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
 				if delegateTex then
 					ClickEvent._play_ui.avatarLoader.texture = NTexture(delegateTex)
 				end
-			end
+				WeChatPlatform.func = nil
+			end)
+			--[[
+			--]]
 			if tempTexture then
 				ClickEvent._play_ui.avatarLoader.texture = NTexture(tempTexture)
 			end
@@ -372,6 +376,7 @@ end
 
 function ClickEvent.ShowBaoPai(paiData)
 	-- body
+	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 1
 	ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
  end
 
@@ -472,7 +477,8 @@ function ClickEvent.RoomInformationUpdate( ... )
 	ClickEvent._play_ui.behindPlayerAvatarInfo.visible = false
 	ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = false
 	ClickEvent._play_ui.frontPlayerAvatarInfo.visible = false
-	WeChatPlatform.func = ClickEvent.UpdatePlayersHeadImg
+	WeChatPlatform.func = nil
+	WeChatPlatform:SetFuncDelegate(ClickEvent.UpdatePlayersHeadImg)
 	local countPlayerNumber = 0
 	for k,v in pairs(Player._all_players_data) do
 		countPlayerNumber = countPlayerNumber + 1
@@ -607,7 +613,6 @@ function ClickEvent.UpdatePlayersHeadImg( ... )
 			if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("AvatarLoader").url = ""
 				local tempTexture = WeChatPlatform:SetAsyncImage(v.wechat.headimgurl)
-				local headimgurl = v.wechat.headimgurl
 				if tempTexture then
 					ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
@@ -799,19 +804,19 @@ function ClickEvent.ErrorChangeTable(errorCode)
 	end
 end
 
-function ClickEvent.ShowToast(content,isNeedBack)
+function ClickEvent.ShowToast(content)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
+	if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui,true)
+	else
+		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
+	end
+	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.Close)
 	if ClickEvent.ErrorChangeTable(content) ~= -1 then
 		_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
 	else
 		_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
 	end
-	local co = coroutine.create(function()
-    yield_return(CS.UnityEngine.WaitForSeconds(3))
-    ClickEvent.Close()
-	end)
-	coroutine.resume(co)
 end
 
 function ClickEvent.ShowNotMoveToast(content,deleteTime)
@@ -840,16 +845,10 @@ function ClickEvent.PopPanelShowText(textName,content)
 	end
 end
 
-function ClickEvent.PopPanel( panelName )
+function ClickEvent.PopPanel( panelName , noBack)
 	-- body
 	if not ClickEvent._createObject["Bg"] then
 		ClickEvent._createObject["Bg"] = {}
-	end
-	if popBgIndex <= 0 or not ClickEvent._createObject["Bg"][popBgIndex] or ClickEvent._createObject["Bg"][popBgIndex].visible then
-		popBgIndex = popBgIndex + 1
-		if not ClickEvent._createObject["Bg"][popBgIndex] then
-			ClickEvent._createObject["Bg"][popBgIndex] = UIPackage.CreateObject("MXUI", "Bg").asCom
-		end
 	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
@@ -857,19 +856,27 @@ function ClickEvent.PopPanel( panelName )
 	--ClickEvent.Close()
 	popPanelIndex = popPanelIndex + 1
 	_popPanel[popPanelIndex] = {}
-	_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"][popBgIndex]
-	_popPanel[popPanelIndex].background:SetSize(GRoot.inst.width, GRoot.inst.height)
-	_popPanel[popPanelIndex].background:Center()
-	_popPanel[popPanelIndex].background:SetPosition(0,0,0)
-	_popPanel[popPanelIndex].background.onTouchBegin:Add(ClickEvent.registerButtonDown)
-	_popPanel[popPanelIndex].background.onTouchEnd:Add(ClickEvent.registerButtonUp)
+	if not noBack then
+		if popBgIndex <= 0 or not ClickEvent._createObject["Bg"][popBgIndex] or ClickEvent._createObject["Bg"][popBgIndex].visible == true then
+			popBgIndex = popBgIndex + 1
+			if not ClickEvent._createObject["Bg"][popBgIndex] then
+				ClickEvent._createObject["Bg"][popBgIndex] = UIPackage.CreateObject("MXUI", "Bg").asCom
+			end
+		end
+		_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"][popBgIndex]
+		_popPanel[popPanelIndex].background:SetSize(GRoot.inst.width, GRoot.inst.height)
+		_popPanel[popPanelIndex].background:Center()
+		_popPanel[popPanelIndex].background:SetPosition(0,0,0)
+		_popPanel[popPanelIndex].background.onTouchBegin:Add(ClickEvent.registerButtonDown)
+		_popPanel[popPanelIndex].background.onTouchEnd:Add(ClickEvent.registerButtonUp)
+		GRoot.inst:AddChild(_popPanel[popPanelIndex].background)
+	end
 
 	_popPanel[popPanelIndex].panel = ClickEvent._createObject[panelName]
 	_popPanel[popPanelIndex].panel.name = panelName
 	_popPanel[popPanelIndex].panel:SetSize(GRoot.inst.width, GRoot.inst.height)
 	_popPanel[popPanelIndex].panel:Center()
 	_popPanel[popPanelIndex].panel:SetPosition(0,0,0)
-	GRoot.inst:AddChild(_popPanel[popPanelIndex].background)
 	GRoot.inst:AddChild(_popPanel[popPanelIndex].panel)
 	--GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
 	--GRoot.inst:AddChild(_popPanel[popPanelIndex].panel)
@@ -1410,6 +1417,8 @@ function ClickEvent.ShowCalculate( ... )
 				if tempTexture then
 					_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
+			else
+				_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			end
 		elseif tempX == 2 then
 			if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -1418,6 +1427,8 @@ function ClickEvent.ShowCalculate( ... )
 				if tempTexture then
 					_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
+			else
+				_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			end
 		elseif tempX == 3 then
 			if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -1426,6 +1437,8 @@ function ClickEvent.ShowCalculate( ... )
 				if tempTexture then
 					_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
+			else
+				_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			end
 		else
 			if v.wechat and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -1434,6 +1447,8 @@ function ClickEvent.ShowCalculate( ... )
 				if tempTexture then
 					_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
+			else
+				_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			end
 		end
 	end
@@ -1980,11 +1995,13 @@ function ClickEvent.VipNoteList(gameObject)
 					countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
-					local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
-					if tempTexture then
-						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+					if roundData.headimgurl and roundData.headimgurl ~= "" then
+						local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
+						if tempTexture then
+							obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+						end
+						playerNumber = playerNumber + 1
 					end
-					playerNumber = playerNumber + 1
 				end
 			end
 			local historyShareList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
@@ -2015,9 +2032,11 @@ function ClickEvent.VipNoteList(gameObject)
 					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 				end
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
-				local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
-				if tempTexture then
-					obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+				if countScore[i].headimgurl and countScore[i].headimgurl ~= "" then
+					local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
+					if tempTexture then
+						obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+					end
 				end
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(roundCount)
 			end
@@ -2042,6 +2061,7 @@ function ClickEvent.GameSettingButton( ... )
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
+		--[[
 		WeChatPlatform.func = function ()
 			-- body
 			local delegateTex = WeChatPlatform:SetAsyncImage(headimgurl)
@@ -2049,6 +2069,7 @@ function ClickEvent.GameSettingButton( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
+		--]]
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 	end
 	_popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
@@ -2137,6 +2158,15 @@ function ClickEvent.VIPRecordButton( ... )
 				obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
 			end
 		end
+		WeChatPlatform:SetFuncDelegate(function ( ... )
+			-- body
+			for i=1,4 do
+				local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+				if tempTexture then
+					obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+				end
+			end
+		end)
 		if countScore > 0 then
 			obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
 		else
@@ -2248,6 +2278,7 @@ function ClickEvent.Setting( ... )
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
+		--[[
 		WeChatPlatform.func = function ()
 			-- body
 			local delegateTex = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
@@ -2255,6 +2286,7 @@ function ClickEvent.Setting( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
+		--]]
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 	end
 	_popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
@@ -2373,6 +2405,7 @@ function ClickEvent.Avatar( ... )
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
+		--[[
 		WeChatPlatform.func = function ()
 			-- body
 			local delegateTex = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
@@ -2380,6 +2413,7 @@ function ClickEvent.Avatar( ... )
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
+		--]]
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 	end
 	_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
@@ -2396,6 +2430,7 @@ end
 function ClickEvent.NextRoundButton( ... )
 	-- body
 	ClickEvent.Close()
+	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
 	Player.MahJong.ResetGameState()
 	ClickEvent.ShowRoomCalculate()
 	--if Player._calculate_table_number >= Player._room_information.options.open_rands then
@@ -2714,7 +2749,7 @@ function ClickEvent.WechatLogin(gameObject)
 	if not Player.coolDown then
 		Player.coolDown = CS.UnityEngine.Time.time
 	else
-		if Player.coolDown - CS.UnityEngine.Time.time <= Player.connectTimes then
+		if (CS.UnityEngine.Time.time - Player.coolDown) <= Player.connectTimes then
 			return
 		else
 			Player.coolDown = CS.UnityEngine.Time.time
@@ -2894,7 +2929,11 @@ function ClickEvent.Close( ... )
 		Player.CmdGameSetting(Player._player_data.game_setting.music, Player._player_data.game_setting.voice, Player._player_data.game_setting.audio, Player._player_data.game_setting.click_push)
 	end
 	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
-	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+	_popPanel[popPanelIndex].panel = nil
+	if _popPanel[popPanelIndex].background then
+		GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+		_popPanel[popPanelIndex].background = nil
+	end
 	popBgIndex = popBgIndex - 1
 	popPanelIndex = popPanelIndex - 1
 	if popPanelIndex < 0 then
@@ -2999,6 +3038,7 @@ function ClickEvent.CreateButton( )
 			end
 		end
 	end
+	ClickEvent.Close()
 	if cardActivity == true then
 		Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
 		Player.isFriendRoom = true
@@ -3006,13 +3046,15 @@ function ClickEvent.CreateButton( )
 		if Player._player_data.common_prop.room_card_count >= costCard then
 			Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
 			Player.isFriendRoom = true
+		else
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
 		end
 	end
 	--[[
 	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
 	Player.isFriendRoom = true
 	--]]
-	ClickEvent.Close()
 end
 
 function ClickEvent.JoinRoomId( gameObject )
@@ -3146,21 +3188,25 @@ function ClickEvent.GameBillButton(gameObject)
 		countScore[i].headimgurl = ""
 		countScore[i].allScore = 0
 	end
+	WeChatPlatform.func = nil
 	if Player._all_calculate_data then
-		for j,c in pairs(Player._all_calculate_data) do
+		for c=1,Player._calculate_table_number do
 			local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
 			obj.name = "VipNoteListInRound"
 			roundCount = roundCount + 1
 			obj:GetChild("RoundNum").text = tostring(roundCount)
 			local playerNumber = 1
-			for roundKey,roundData in pairs(c.list) do
+			for roundKey,roundData in pairs(Player._all_calculate_data[c].list) do
 				countScore[playerNumber].nickname = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
+				countScore[playerNumber].headimgurl = roundData.headimgurl
 				countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
-				local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
-				if tempTexture then
-					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+				if roundData.headimgurl and roundData.headimgurl ~= "" then
+					local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
+					if tempTexture then
+						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+					end
 				end
 				playerNumber = playerNumber + 1
 			end
@@ -3194,11 +3240,13 @@ function ClickEvent.GameBillButton(gameObject)
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 		end
 		obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
-		local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
-		if tempTexture then
-			obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+		if countScore[i].headimgurl ~= "" then
+			local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
+			if tempTexture then
+				obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+			end
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(roundCount)
 		end
-		obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(roundCount)
 	end
 end
 
@@ -3287,6 +3335,7 @@ end
 function ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3)--牌类型、牌组数、牌值、
 	-- body
 	ClickEvent._play_ui.chiPaiBar.visible = true
+	ClickEvent._play_ui.passButton.visible = true
 	local chiPaiGroupTemp = ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
 	chiPaiGroupTemp.name = tostring(paiGroup)
 	chiPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue1)
@@ -3299,6 +3348,7 @@ end
 function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 	-- body
 	ClickEvent._play_ui.gangPaiBar.visible = true
+	ClickEvent._play_ui.passButton.visible = true
 	if cardType == "CARD_TYPE_JIAN" then
 		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
@@ -3353,6 +3403,8 @@ end
 function ClickEvent.GamePassButton(gameObject)
 	-- body
 	ClickEvent.CloseOperationPanel()
+	ClickEvent.CloseChiPai()
+	ClickEvent.CloseGangPai()
 	Player.MahJong.GuoPai()
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end

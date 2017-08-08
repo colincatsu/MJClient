@@ -39,6 +39,7 @@ Effect._effect_name = {
 	ziMoShow = "Effect_status_display_zimo",
 	mainUI = "Effects_ZhuJieMian_01",
 	xuanfengGang = "Effect_Tornado_001",
+	dianpaoThunder = "Effect_thunder_01_Position",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
