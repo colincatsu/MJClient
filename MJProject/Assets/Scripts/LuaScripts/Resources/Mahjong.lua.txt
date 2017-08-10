@@ -1548,7 +1548,24 @@ function MahJong.ReturnRoomSync(paiData)
 				MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 			end
         end
-        --
+        --baopai
+        if playerData.baopai and playerData.baopai ~= {} then
+	        if playerPos == 0 then
+				ClickEvent._play_ui.playerTing.visible = true
+				ClickEvent.ShowBaoPai(baopai)
+			elseif playerPos == 1 then
+				ClickEvent._play_ui.behindPlayerTing.visible = true
+				_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
+			elseif playerPos == 2 then
+				ClickEvent._play_ui.oppositePlayerTing.visible = true
+				_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
+			elseif playerPos == 3 then
+				ClickEvent._play_ui.frontPlayerTing.visible = true
+				_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
+			else
+				Player.LogWarning("position nil")
+			end
+        end
 	end
 end
 

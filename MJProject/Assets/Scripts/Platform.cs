@@ -294,7 +294,7 @@ public class Platform : MonoBehaviour {
         return "";
     }
 
-    public void ShareTexture(Camera camera, Rect rect)
+    public void ShareTexture(Camera camera, Rect rect, int scene)
     {
         // 创建一个RenderTexture对象  
         RenderTexture rt = new RenderTexture((int)rect.width, (int)rect.height, 0);
@@ -323,7 +323,7 @@ public class Platform : MonoBehaviour {
         //System.IO.File.WriteAllBytes(filename, bytes);
         if (currentActivity != null)
         {
-            currentActivity.Call("wxShareTexture", bytes);
+            currentActivity.Call("wxShareTexture", bytes, scene);
         }
     }
 

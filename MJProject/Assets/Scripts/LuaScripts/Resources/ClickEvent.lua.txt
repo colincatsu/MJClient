@@ -30,6 +30,7 @@ ClickEvent.panelTable = {
 	_not_move_toast_ui = "NotMoveToast",
 	_room_calculate_ui = "FinishBalance",
 	_vote_ui = "Vote",
+	_share_calculate_ui = "Share"
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -203,6 +204,17 @@ function ClickEvent.CreateNewPanel(panelName)
 
 		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("PaiSingle"):GetChild("BaoPaiLoader")
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
+		local hasBaoPai = false
+		for k,v in pairs(Player._room_information.options.extend_type) do
+			if v == "ROOM_EXTEND_TYPE_BAOPAI" then
+				hasBaoPai = true
+			end
+		end
+		if hasBaoPai == true then
+			_currentPanel.panel:GetChild("BaoPai").visible = true
+		else
+			_currentPanel.panel:GetChild("BaoPai").visible = false
+		end
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
@@ -925,6 +937,22 @@ function ClickEvent.ShowRoomCalculate( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._room_calculate_ui)
+	local bigWinScore = nil
+	local superPaoCount = nil
+	for k,v in pairs(Player._room_calculate_data.record) do
+		if not bigWinScore then
+			bigWinScore = v.score
+		end
+		if not superPaoCount then
+			superPaoCount = v.dianpao_count
+		end
+		if bigWinScore and bigWinScore < v.score then
+			bigWinScore = v.score
+		end
+		if superPaoCount and superPaoCount < v.dianpao_count then
+			superPaoCount = v.dianpao_count
+		end
+	end
 	--_popPanel[popPanelIndex].panel:GetChild("ShareRank").visible = false
 	local listObj = _popPanel[popPanelIndex].panel:GetChild("FinishBalanceList")
 	listObj:RemoveChildrenToPool()
@@ -939,17 +967,91 @@ function ClickEvent.ShowRoomCalculate( ... )
 		obj:GetChild("PaoNum").text = tostring(v.dianpao_count)
 		obj:GetChild("TotalNum").text = tostring(v.score)
 		obj:GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
-		local delegateTex = WeChatPlatform:SetAsyncImage(v.headimgurl)
-		if delegateTex then
-			obj:GetChild("AvatarLoader").url = ""
-			obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
+		if v.headimgurl and v.headimgurl ~= "" then
+			local delegateTex = WeChatPlatform:SetAsyncImage(v.headimgurl)
+			if delegateTex then
+				obj:GetChild("AvatarLoader").url = ""
+				obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
+			end
+		end
+		if v.dianpao_count >= superPaoCount then
+			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
+		end
+		if v.score >= bigWinScore then
+			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_dayingjia")
 		end
 	end
 end
 
 function ClickEvent.ShareRank( ... )
 	-- body
-	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,CS.UnityEngine.Screen.width*0.5,CS.UnityEngine.Screen.height*0.5))
+	ClickEvent.PopPanel(ClickEvent.panelTable._share_calculate_ui)
+	local scoreList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
+	scoreList:RemoveChildrenToPool()
+	local countScore = {}
+	for i=1,4 do
+		countScore[i] = {}
+		countScore[i].nickname = ""
+		countScore[i].headimgurl = ""
+		countScore[i].allScore = 0
+		countScore[i].roundNumber = 0
+	end
+	local playerNumber = 1
+	for k,v in pairs(Player._room_calculate_data.record) do
+		local obj = listObj:AddItemFromPool(UIPackage.GetItemURL("MXUI","FinishBalanceUnit"))
+		obj.name = "FinishBalanceUnit"
+		countScore[playerNumber].nickname = gbk.toutf8(gbk.fromutf8(v.nickname))
+		countScore[playerNumber].headimgurl = v.headimgurl
+		countScore[playerNumber].allScore = v.score
+		countScore[i].roundNumber = v.pk_count
+		playerNumber = playerNumber + 1
+	end
+	for i=1,4 do
+		local tempTable = {}
+		for j=i,4 do
+			if countScore[i].allScore < countScore[j].allScore then
+				tempTable = countScore[i]
+				countScore[i] = countScore[j]
+				countScore[j] = tempTable
+			end
+		end
+	end
+	for i=1,4 do
+		local obj = scoreList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInTotal"))
+		obj.name = "VipNoteListInTotal"
+		obj:GetChild("Rank").text = tostring(i)
+		if countScore[i].allScore < 0 then
+			local loseFont = obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat
+			loseFont.font = UIPackage.GetItemURL("MXUI","LoseFont")
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = loseFont
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
+		else
+			local winFont = obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat
+			winFont.font = UIPackage.GetItemURL("MXUI","WinFont")
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat = winFont
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
+		end
+		obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
+		if countScore[i].headimgurl and countScore[i].headimgurl ~= "" then
+			local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
+			if tempTexture then
+				obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
+			end
+		end
+		obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(countScore[i].roundNumber)
+	end
+end
+
+function ClickEvent.ShareToWeChatFriends( ... )
+	-- body
+	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height 
+	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,240 * radio,240),2)
+end
+
+function ClickEvent.ShareToWeChat( ... )
+	-- body
+	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height 
+	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,240 * radio,240),1)
 end
 
 function ClickEvent.ExitRoomButton( ... )
@@ -1995,13 +2097,15 @@ function ClickEvent.VipNoteList(gameObject)
 					countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
+					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url  = UIPackage.GetItemURL("MXUI","Touxiang01")
 					if roundData.headimgurl and roundData.headimgurl ~= "" then
+						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = ""
 						local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
 						if tempTexture then
 							obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 						end
-						playerNumber = playerNumber + 1
 					end
+					playerNumber = playerNumber + 1
 				end
 			end
 			local historyShareList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
@@ -2032,7 +2136,9 @@ function ClickEvent.VipNoteList(gameObject)
 					obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 				end
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
+				obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").url  = UIPackage.GetItemURL("MXUI","Touxiang01")
 				if countScore[i].headimgurl and countScore[i].headimgurl ~= "" then
+					obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").url = ""
 					local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
 					if tempTexture then
 						obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
@@ -3202,7 +3308,9 @@ function ClickEvent.GameBillButton(gameObject)
 				countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
+				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 				if roundData.headimgurl and roundData.headimgurl ~= "" then
+					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = ""
 					local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
 					if tempTexture then
 						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
@@ -3240,13 +3348,15 @@ function ClickEvent.GameBillButton(gameObject)
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").text = tostring(countScore[i].allScore)
 		end
 		obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerName").text = tostring(countScore[i].nickname)
-		if countScore[i].headimgurl ~= "" then
+		obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").url  = UIPackage.GetItemURL("MXUI","Touxiang01")
+		if countScore[i].headimgurl and countScore[i].headimgurl ~= "" then
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").url = ""
 			local tempTexture = WeChatPlatform:SetAsyncImage(countScore[i].headimgurl)
 			if tempTexture then
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 			end
-			obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(roundCount)
 		end
+		obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(roundCount)
 	end
 end
 
@@ -3270,8 +3380,12 @@ end
 
 function ClickEvent.GameBackButton(gameObject)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+	if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
+		ClickEvent.Close()
+	else
+		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+	end
 end
 
 function ClickEvent.GameTingButton(gameObject)
