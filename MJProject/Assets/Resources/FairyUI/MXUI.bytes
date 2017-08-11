@@ -1,16 +1,6 @@
-10p14rz.xml|1227|<component size="1334,750">
+10p14rz.xml|417|<component size="1334,750">
   <displayList>
-    <image id="n0_10p14" name="n0" src="w61cii" xy="443,11" size="446,193">
-      <relation target="" sidePair="center-center,top-top"/>
-    </image>
-    <text id="n1_10p14" name="n1" xy="504,87" size="261,40" fontSize="24" color="#663300" align="center" vAlign="middle" ubb="true" autoSize="none" text="正在寻找对手中...">
-      <relation target="n0_10p14" sidePair="center-center,middle-middle"/>
-    </text>
-    <text id="n2_10p14" name="MatchTimer" xy="759,86" size="61,40" font="ui://krtoytc1ysjnog" fontSize="28" color="#ffffff" align="center" vAlign="middle" letterSpacing="-4" ubb="true" autoSize="none" bold="true" text="30">
-      <relation target="n0_10p14" sidePair="center-center,middle-middle"/>
-    </text>
-    <component id="n5_nri5" name="n5" src="w61cj0" xy="831,-16" group="n4_v7wh"/>
-    <group id="n4_v7wh" name="Btns" xy="831,-16" size="80,79" advanced="true"/>
+    <component id="n6_fkty" name="n0" src="fkty4uw" xy="443,-16"/>
   </displayList>
   <transition name="SlideIn">
     <item time="0" type="XY" tween="true" startValue="0,-190" endValue="0,0" duration="9"/>
@@ -65,6 +55,20 @@
     <item time="0" type="Shake" target="n0_doyw" value="5,0.5"/>
     <item time="48" type="Alpha" target="n0_doyw" tween="true" startValue="1" endValue="0" duration="24"/>
   </transition>
+</component>fkty4uw.xml|954|<component size="468,220">
+  <displayList>
+    <image id="n0_10p14" name="n0" src="w61cii" xy="0,27" size="446,193">
+      <relation target="" sidePair="center-center,top-top"/>
+    </image>
+    <text id="n1_10p14" name="n1" xy="61,103" size="261,40" fontSize="24" color="#663300" align="center" vAlign="middle" ubb="true" autoSize="none" text="正在寻找对手中...">
+      <relation target="n0_10p14" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n2_10p14" name="MatchTimer" xy="316,102" size="61,40" font="ui://krtoytc1ysjnog" fontSize="28" color="#ffffff" align="center" vAlign="middle" letterSpacing="-4" ubb="true" autoSize="none" bold="true" text="30">
+      <relation target="n0_10p14" sidePair="center-center,middle-middle"/>
+    </text>
+    <component id="n5_nri5" name="CloseWaiting" src="w61cj0" xy="388,0" group="n4_v7wh"/>
+    <group id="n4_v7wh" name="Btns" xy="388,0" size="80,79" advanced="true"/>
+  </displayList>
 </component>fze14s9.xml|495|<component size="190,64" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -644,7 +648,7 @@
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>lq2gq0.xml|2866|<component size="1334,750">
+</component>lq2gq0.xml|2940|<component size="1334,750">
   <displayList>
     <image id="n1_lq2g" name="n1" src="w61cii" xy="286,118" size="720,451" group="n23_fuyq"/>
     <image id="n3_lq2g" name="n3" src="w61cio" xy="356,239" size="114,114" group="n23_fuyq"/>
@@ -660,8 +664,10 @@
     <component id="n14_lq2g" name="YesOrNo3" src="lq2gq4" xy="697,356" group="n23_fuyq"/>
     <component id="n15_lq2g" name="YesOrNo4" src="lq2gq4" xy="850,356" group="n23_fuyq"/>
     <text id="n16_lq2g" name="VoteText" xy="305,420" size="688,41" group="n23_fuyq" font="幼圆" fontSize="22" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="四人同意才会解散，解散后会按照目前得分进行最终排名"/>
-    <text id="n18_lq2g" name="n18" xy="581,153" size="261,41" group="n23_fuyq" font="幼圆" fontSize="30" color="#5c2c16" vAlign="middle" autoSize="none" text="发起投票解散牌局"/>
-    <text id="n19_lq2g" name="Name" xy="319,153" size="261,41" group="n23_fuyq" font="幼圆" fontSize="30" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="林黛玉"/>
+    <text id="n18_lq2g" name="n18" xy="581,153" size="261,41" group="n23_fuyq" font="幼圆" fontSize="30" color="#5c2c16" vAlign="middle" autoSize="none" text="发起投票解散牌局">
+      <relation target="n19_lq2g" sidePair="right-left"/>
+    </text>
+    <text id="n19_lq2g" name="Name" xy="324,156" size="256,35" group="n23_fuyq" font="幼圆" fontSize="30" color="#5c2c16" align="right" vAlign="middle" autoSize="shrink" text="林黛玉林黛林"/>
     <component id="n20_lq2g" name="Agree" src="lq2gq5" xy="676,470" group="n22_lq2g"/>
     <component id="n21_lq2g" name="Disagree" src="lq2gq6" xy="432,474" group="n22_lq2g"/>
     <group id="n22_lq2g" name="Btns" xy="432,470" size="425,77" group="n23_fuyq" advanced="true"/>
@@ -848,7 +854,7 @@
       <gearDisplay controller="Emoji" pages="0"/>
       <item title="此情此景，我想吟诗一首" name="HelloText_1"/>
       <item title="你搁那儿干哈呢，你出牌咋那慢呐" name="HelloText_2"/>
-      <item title="赶紧的把，广场舞都开始拉" name="HelloText_3"/>
+      <item title="赶紧的吧，广场舞都开始啦" name="HelloText_3"/>
       <item title="这牌打的是真走心啊" name="HelloText_4"/>
       <item title="哎呀，这牌来的太尿性了" name="HelloText_5"/>
       <item title="这牌开门就是胜利啊" name="HelloText_6"/>
@@ -931,13 +937,14 @@
     <image id="n4_rg70" name="n4" src="rg704us" xy="0,0"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|45662|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|45746|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
     <component id="10p14s5" name="InviteWechatFriends" path="/UIPIC/游戏页面/" size="301,99"/>
     <component id="doyw4st" name="EmojiShowLeft" path="/UIPIC/表情框/" size="290,61"/>
     <component id="doyw4su" name="EmojiShowRight" path="/UIPIC/表情框/" size="290,61"/>
+    <component id="fkty4uw" name="WaitingPop" path="/UIPIC/匹配房结算/" size="468,220"/>
     <component id="fze14s9" name="ItemGemsButton1" path="/UIPIC/商城/" size="190,64"/>
     <component id="fze14sa" name="ItemGemsButton2" path="/UIPIC/商城/" size="190,64"/>
     <component id="fze14sb" name="ItemGemsButton3" path="/UIPIC/商城/" size="190,64"/>
@@ -1576,7 +1583,7 @@
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
-</component>t5cirr.xml|1660|<component size="1334,750">
+</component>t5cirr.xml|1581|<component size="1334,750">
   <displayList>
     <image id="n0_t5ci" name="n0" src="w61cbq" xy="0,0" group="n17_fuyq">
       <relation target="" sidePair="width-width,height-height"/>
@@ -1602,9 +1609,7 @@
       <relation target="" sidePair="left-left,top-top"/>
     </component>
     <group id="n16_t5ci" name="Btns" xy="0,0" size="995,741" group="n17_fuyq" advanced="true"/>
-    <group id="n17_fuyq" name="Share" xy="0,-3" size="1334,753" advanced="true">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </group>
+    <group id="n17_fuyq" name="Share" xy="0,-3" size="1334,753" advanced="true"/>
   </displayList>
 </component>t5cirs.xml|490|<component size="801,112">
   <displayList>
@@ -2925,7 +2930,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="0" endValue="1" duration="24"/>
     <item time="24" type="Alpha" tween="true" startValue="1"/>
   </transition>
-</component>w61cj9.xml|10686|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cj9.xml|11155|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_npla" name="Bg" src="w61cbq" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
@@ -2999,24 +3004,27 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n32_fze1" name="FreshHandRoomInfo" src="fze14sf" xy="1535,284" group="n35_fze1">
       <relation target="n24_nw08" sidePair="center-center,middle-middle"/>
     </component>
-    <group id="n35_fze1" name="FreshHandRoom" xy="1460,204" size="351,390" group="n27_fb5y" advanced="true"/>
+    <group id="n35_fze1" name="Btns" xy="1460,204" size="351,390" group="n27_fb5y" advanced="true"/>
     <component id="n26_nw08" name="MasterHandButton" src="w61ccb" xy="1764,205" size="351,390" group="n36_fze1">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <component id="n33_fze1" name="MasterHandRoomInfo" src="fze14sf" xy="1841,284" group="n36_fze1">
       <relation target="n26_nw08" sidePair="center-center,middle-middle"/>
     </component>
-    <group id="n36_fze1" name="MasterHandRoom" xy="1764,205" size="351,390" group="n27_fb5y" advanced="true"/>
+    <group id="n36_fze1" name="Btns" xy="1764,205" size="351,390" group="n27_fb5y" advanced="true"/>
     <component id="n25_nw08" name="GreatMasterHandButton" src="w61ccc" xy="2070,205" size="351,390" group="n37_fze1">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <component id="n34_fze1" name="GreatMasterHandRoomInfo" src="fze14sf" xy="2146,288" group="n37_fze1">
       <relation target="n25_nw08" sidePair="center-center,middle-middle"/>
     </component>
-    <group id="n37_fze1" name="GreatMasterHandRoom" xy="2070,205" size="351,390" group="n27_fb5y" advanced="true"/>
+    <group id="n37_fze1" name="Btns" xy="2070,205" size="351,390" group="n27_fb5y" advanced="true"/>
     <group id="n27_fb5y" name="Btns" xy="-1,7" size="2422,720" advanced="true"/>
     <component id="n29_cton" name="Inform" src="j3uokm" xy="133,105">
       <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n38_fkty" name="WaitingPop" src="fkty4uw" xy="428,-226">
+      <relation target="" sidePair="center-center,top-top"/>
     </component>
   </displayList>
   <transition name="HideFriendMode">
@@ -3074,6 +3082,12 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="14" type="Scale" target="n19_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="16" type="Scale" target="n17_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="18" type="Scale" target="n14_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
+  </transition>
+  <transition name="WaitingPopIn">
+    <item time="0" type="XY" target="n38_fkty" tween="true" startValue="428,-226" endValue="428,0" duration="9" ease="Circ.InOut"/>
+  </transition>
+  <transition name="WaitingPopOut">
+    <item time="0" type="XY" target="n38_fkty" tween="true" startValue="428,0" endValue="428,-226" duration="9"/>
   </transition>
 </component>w61cja.xml|2566|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>

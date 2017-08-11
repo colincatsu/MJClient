@@ -80,6 +80,8 @@ function ClickEvent.Start(loadUI)
 	ClickEvent.CreateNewPanel(loadUI)
 	if ClickEvent.uiPanel.ui.visible then
 	end
+	_popPanel = {}
+	popBgIndex = 0
 	popPanelIndex = 0
 end
 
@@ -109,7 +111,7 @@ function ClickEvent.CreateNewPanel(panelName)
 			if Player._tosence_name == "LoadingSence" or Player._tosence_name == "PlaySence" then
 				return
 			end
-		end 
+		end
 	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
@@ -269,6 +271,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
 		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
+		ClickEvent._play_ui.waitingPop = _currentPanel.panel:GetChild("WaitingPop")
+		ClickEvent._play_ui.waitingPop:GetChild("CloseWaiting").onClick:Add(ClickEvent.registerButtonClick)
+		ClickEvent._play_ui.waitingPopTime = ClickEvent._play_ui.waitingPop:GetChild("MatchTimer")
 
 		ClickEvent._play_ui.avatarLoader = _currentPanel.panel:GetChild("Avatar"):GetChild("AvatarLoader")
 		--_currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtFixed").text = "[Color=#70DB93,#B5A642]游戏严打外挂，一旦发现立即封号[/Color]"
@@ -998,12 +1003,10 @@ function ClickEvent.ShareRank( ... )
 	end
 	local playerNumber = 1
 	for k,v in pairs(Player._room_calculate_data.record) do
-		local obj = listObj:AddItemFromPool(UIPackage.GetItemURL("MXUI","FinishBalanceUnit"))
-		obj.name = "FinishBalanceUnit"
 		countScore[playerNumber].nickname = gbk.toutf8(gbk.fromutf8(v.nickname))
 		countScore[playerNumber].headimgurl = v.headimgurl
 		countScore[playerNumber].allScore = v.score
-		countScore[i].roundNumber = v.pk_count
+		countScore[playerNumber].roundNumber = v.pk_count
 		playerNumber = playerNumber + 1
 	end
 	for i=1,4 do
@@ -1044,14 +1047,26 @@ end
 
 function ClickEvent.ShareToWeChatFriends( ... )
 	-- body
-	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height 
+	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = false
 	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,240 * radio,240),2)
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = true
 end
 
 function ClickEvent.ShareToWeChat( ... )
 	-- body
-	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height 
+	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = false
 	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,240 * radio,240),1)
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = true
 end
 
 function ClickEvent.ExitRoomButton( ... )
@@ -1770,10 +1785,13 @@ function ClickEvent.ShowDissolvePanel(data)
 			end
 		end
 	end
-	--local countPlayer = 0
-	--local countDisagree = 0
+	local countPlayer = 0
+	local firstPlayer = "POSITION_TYPE_EAST"
 	for k,v in pairs(data) do
-		--countPlayer = countPlayer + 1
+		countPlayer = countPlayer + 1
+		if countPlayer == 1 then
+			firstPlayer = v.position
+		end
 		if v.position == "POSITION_TYPE_EAST" then
 			if v.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo1"):GetController("YesOrNo").selectedIndex = 0
@@ -1809,6 +1827,16 @@ function ClickEvent.ShowDissolvePanel(data)
 			Player.dismissIsShowing = false
 			ClickEvent.ShowToast(StringTable.Get(2011))
 			return
+		end
+	end
+
+	for k,v in pairs(Player._all_players_data) do
+		if v.position == firstPlayer then
+			if v.wechat.nickname and v.wechat.nickname ~= "" then
+				_popPanel[popPanelIndex].panel:GetChild("Name").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+			else
+				_popPanel[popPanelIndex].panel:GetChild("Name").text = tostring(v.common_prop.name)
+			end
 		end
 	end
 
@@ -1861,6 +1889,11 @@ function ClickEvent.GameDissolveButton(gameObject)
 		ClickEvent.PopPanel(ClickEvent.panelTable._vote_ui)
 		_popPanel[popPanelIndex].panel:GetChild("Agree").visible = true
 		_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = true
+		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
+			_popPanel[popPanelIndex].panel:GetChild("Name").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
+		else
+			_popPanel[popPanelIndex].panel:GetChild("Name").text = tostring(Player._player_data.common_prop.name)
+		end
 		Player.dismissIsShowing = true
 		for k,v in pairs(Player._all_players_data) do
 			if v.position == "POSITION_TYPE_EAST" then
@@ -2291,6 +2324,7 @@ function ClickEvent.OnReceiveHistory()
 		local dataCount = 0
 		for i=Player.history_start,Player.history_end do
 			local v = Player.history_data[i]
+			Player.LogWarning("currentDataIndex:"..i)
 			dataCount = dataCount + 1
 			local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
 			obj.name = "VipNoteList"
@@ -2333,7 +2367,7 @@ end
 
 function ClickEvent.OnPullUpRefresh()
 	-- body
-	Player.LogWarning("OnPullUpRefresh")
+	Player.LogWarning("OnPullUpRefresh:"..Player.history_start)
 	Player.history_end = Player.history_start
 	if Player.history_end <= Player.history_count then
 		if Player.history_end + 4 <= Player.history_count then
@@ -2344,6 +2378,7 @@ function ClickEvent.OnPullUpRefresh()
 			Player.CmdBattleHistory(Player.history_start,Player.history_end)
 		end
 	end
+	Player.LogWarning("refreshStart:"..Player.history_start.."refreshEnd:"..Player.history_end)
 end
 
 function ClickEvent.ChangeSecondToDate(t)
@@ -3013,16 +3048,34 @@ end
 function ClickEvent.FreshHandButton( ... )
 	-- body
 	Player.CmdEnterRoom("ROOM_TYPE_XINSHOU")
+	Player.isFriendRoom = false
+	Player.isWaitingList = true
+	Player.waitingTimestamp = CS.UnityEngine.Time.time
+	_currentPanel.panel:GetTransition("WaitingPopIn"):Play()
 end
 
 function ClickEvent.MasterHandButton( ... )
 	-- body
 	Player.CmdEnterRoom("ROOM_TYPE_GAOSHOU")
+	Player.isFriendRoom = false
+	Player.isWaitingList = true
+	Player.waitingTimestamp = CS.UnityEngine.Time.time
+	_currentPanel.panel:GetTransition("WaitingPopIn"):Play()
 end
 
 function ClickEvent.GreatNasterHandButton( ... )
 	-- body
 	Player.CmdEnterRoom("ROOM_TYPE_DASHI")
+	Player.isFriendRoom = false
+	Player.isWaitingList = true
+	Player.waitingTimestamp = CS.UnityEngine.Time.time
+	_currentPanel.panel:GetTransition("WaitingPopIn"):Play()
+end
+
+function ClickEvent.CloseWaiting( ... )
+	-- body
+	Player.isWaitingList = false
+	_currentPanel.panel:GetTransition("WaitingPopOut"):Play()
 end
 
 function ClickEvent.Close( ... )

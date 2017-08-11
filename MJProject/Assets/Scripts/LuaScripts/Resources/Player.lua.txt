@@ -48,6 +48,9 @@ Player.activityTable = {}
 Player._calculate_table_number = 0
 Player._room_information = {}--房间信息
 Player._room_calculate_data = nil--房间结算
+
+Player.isWaitingList = false
+Player.waitingTimestamp = 0
 local _banker_position = 0
 local _calculate_table_loader = {}--计算读表
 local _tosence_name = nil
@@ -113,7 +116,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0810"
+Player.pc_version = "1.0.1.0811"
 
 Player.baopaiPosition = nil
 
@@ -412,6 +415,9 @@ function Player.myUpdate( ... )
             end
         end
     end
+    if Player.isWaitingList == true then
+        ClickEvent._play_ui.waitingPopTime.text = math.modf(CS.UnityEngine.Time.time - Player.waitingTimestamp)
+    end
 end
 
 
@@ -628,6 +634,8 @@ function Player.OnBattleHistory(type_t,stuff)
     end
     Player.history_start = message.start_index
     Player.history_end = message.end_index
+    Player.LogWarning("battleHistoryCurrent:"..Player.current_history_index)
+    Player.LogWarning("battleHistoryStart:"..Player.history_start.."battleHistoryEnd:"..Player.history_end)
     ClickEvent.OnReceiveHistory()
 end
 
@@ -892,9 +900,11 @@ function Player.OnPlayerInformation(type_t,stuff)
     Player._player_data.game_setting.music = mMusic
     Player._player_data.game_setting.voice = mVoice
     Player._player_data.game_setting.audio = mAudio
+    Player.history_count = 0
     for k,v in pairs(Player._player_data.room_history) do
         Player.history_count = Player.history_count + 1
     end
+    Player.LogWarning("historyCount:"..Player.history_count)
     --[[
     if not Player._player_data.game_setting.music or Player._player_data.game_setting == {} then
     end
@@ -1057,6 +1067,17 @@ function Player.OnRoomAll(type_t,stuff)
     if playerPos == 0 then
         ClickEvent.notPushPassMsg = true
         Player.MahJong.SetCurrentState(operationState.DAPAI)
+    end
+    if message.current_rounds then
+        ClickEvent.UpdateRoundNumber(message.current_rounds,Player._room_information.options.open_rands)
+    end
+    ClickEvent.BankerStateUpdate(zhuang_position)
+    if message.list then
+        Player._calculate_table_number = 0
+        for k,v in pairs(message.list) do
+            Player._calculate_table_number = Player._calculate_table_number + 1
+            Player._all_calculate_data[Player._calculate_table_number] = v
+        end
     end
     Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     Player.MahJong.ReturnRoomSync(message.player_list)

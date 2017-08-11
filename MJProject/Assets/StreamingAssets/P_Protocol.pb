@@ -1,5 +1,5 @@
 
-è
+’ê
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -421,12 +421,14 @@ WeChatInfoH
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("˜
+	room_list ("‹
 RoomAll?
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
-room_id (1
-player_list (2.Adoter.Asset.RoomAll.Player;
-curr_operator_position (2.Adoter.Asset.POSITION_TYPE©
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
+current_rounds (1
+player_list (2.Adoter.Asset.RoomAll.Player4
+zhuang_position (2.Adoter.Asset.POSITION_TYPE;
+curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
+list (2.Adoter.Asset.GameRecord©
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE
