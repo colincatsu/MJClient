@@ -1,5 +1,5 @@
 
-’ê
+Çë
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -421,14 +421,16 @@ WeChatInfoH
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("‹
+	room_list ("â
 RoomAll?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
-current_rounds (1
-player_list (2.Adoter.Asset.RoomAll.Player4
-zhuang_position (2.Adoter.Asset.POSITION_TYPE;
-curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
-list (2.Adoter.Asset.GameRecord©
+current_rounds (
+remain_cards_count ((
+baopai (2.Adoter.Asset.PaiElement1
+player_list (2.Adoter.Asset.RoomAll.Player4
+zhuang_position (2.Adoter.Asset.POSITION_TYPE;
+curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
+list (2.Adoter.Asset.GameRecordê
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -441,8 +443,8 @@ pai_inhand (2.Adoter.Asset.MultiplePai.
 fenggang_count (
 jiangang_count	 (*
 pai_pool
- (2.Adoter.Asset.PaiElement(
-baopai (2.Adoter.Asset.PaiElement"ê
+ (2.Adoter.Asset.PaiElement
+tingpai ("ê
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE

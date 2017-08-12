@@ -116,7 +116,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0811"
+Player.pc_version = "1.0.1.0812"
 
 Player.baopaiPosition = nil
 
@@ -145,7 +145,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -1071,16 +1071,39 @@ function Player.OnRoomAll(type_t,stuff)
     if message.current_rounds then
         ClickEvent.UpdateRoundNumber(message.current_rounds,Player._room_information.options.open_rands)
     end
-    ClickEvent.BankerStateUpdate(zhuang_position)
     if message.list then
         Player._calculate_table_number = 0
         for k,v in pairs(message.list) do
             Player._calculate_table_number = Player._calculate_table_number + 1
             Player._all_calculate_data[Player._calculate_table_number] = v
+            for dataKey,data in pairs(v.list) do
+                local currentPositionData
+                for j,m in pairs(Player._all_players_data) do
+                    if data.player_id == m.common_prop.player_id then
+                        currentPositionData = m
+                        break
+                    end
+                end
+                local tempX = ClickEvent.PlayerPosition(currentPositionData.position)
+                Player.playerScore[tempX] = Player.playerScore[tempX] + data.score
+            end
         end
+        ClickEvent._play_ui.playerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[0])
+        ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[1])
+        ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[2])
+        ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[3])
     end
+    ClickEvent.BankerStateUpdate(message.zhuang_position)
     Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     Player.MahJong.ReturnRoomSync(message.player_list)
+    --baopai
+    if message.baopai and message.baopai ~= {} then
+        if message.baopai.card_value ~= 0 then
+            ClickEvent.ShowBaoPai(message.baopai)
+            Player.MahJong.TinePaiSync()
+            Player.MahJong.SetCurrentState(operationState.DAPAI)
+        end
+    end
 end
 
 function Player.OnPaiNotify(type_t,stuff)

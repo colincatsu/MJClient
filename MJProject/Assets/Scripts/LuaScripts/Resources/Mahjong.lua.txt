@@ -1189,6 +1189,7 @@ end
 function MahJong.ReturnRoomSync(paiData)
 	-- body
 	Player.hasBeginned = true
+	Player.isPlayerPaiShowing = true
 	for playerKey,playerData in pairs(paiData) do
 		local playerPos = ClickEvent.PlayerPosition(playerData.position)
 		--cardWall
@@ -1213,6 +1214,7 @@ function MahJong.ReturnRoomSync(paiData)
         --operationPai
         local operationCount = 0
         for operaKey,operaData in pairs(playerData.pai_outhand) do
+        	operaData.isAnGang = false
         	operationCount = operationCount + 1
         	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
@@ -1222,8 +1224,10 @@ function MahJong.ReturnRoomSync(paiData)
         end
         for i=1,playerData.fenggang_count do
         	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount] = {}
         	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_FENG"
         	playerData.pai_outhand[operationCount].cards = {}
+        	playerData.pai_outhand[operationCount].isAnGang = false
         	for j=1,4 do
         		playerData.pai_outhand[operationCount].cards[j] = j
         	end
@@ -1233,10 +1237,12 @@ function MahJong.ReturnRoomSync(paiData)
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
         end
-        for i=1,playerData.fenggang_count do
+        for i=1,playerData.jiangang_count do
         	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount] = {}
         	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_JIAN"
         	playerData.pai_outhand[operationCount].cards = {}
+        	playerData.pai_outhand[operationCount].isAnGang = false
         	for j=1,3 do
         		playerData.pai_outhand[operationCount].cards[j] = j
         	end
@@ -1248,8 +1254,10 @@ function MahJong.ReturnRoomSync(paiData)
         end
         for mingKey,mingData in pairs(playerData.minggang_list) do
         	operationCount = operationCount + 1
+        	playerData.pai_outhand[operationCount] = {}
         	playerData.pai_outhand.pai_outhand[operationCount].card_type = mingData.card_type
         	playerData.pai_outhand[operationCount].cards = {}
+        	playerData.pai_outhand[operationCount].isAnGang = false
         	for j=1,4 do
         		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
         	end
@@ -1267,6 +1275,7 @@ function MahJong.ReturnRoomSync(paiData)
 	    	end
 	    	anGangAngle = newVector3(-180,0,0)
 	    	operationCount = operationCount + 1
+	    	playerData.pai_outhand[operationCount] = {}
         	playerData.pai_outhand[operationCount].card_type = mingData.card_type
         	playerData.pai_outhand[operationCount].cards = {}
         	playerData.pai_outhand[operationCount].isAnGang = true
@@ -1549,10 +1558,9 @@ function MahJong.ReturnRoomSync(paiData)
 			end
         end
         --baopai
-        if playerData.baopai and playerData.baopai ~= {} then
+        if playerData.tingpai and playerData.tingpai == true then
 	        if playerPos == 0 then
 				ClickEvent._play_ui.playerTing.visible = true
-				ClickEvent.ShowBaoPai(baopai)
 			elseif playerPos == 1 then
 				ClickEvent._play_ui.behindPlayerTing.visible = true
 				_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
@@ -1724,6 +1732,17 @@ function MahJong.TingPaiUpdateState( ... )
 			end
 		end
 	end
+end
+
+function MahJong.TinePaiSync( ... )
+	-- body
+	for k,v in pairs(_player_father.cards) do
+		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
+	end
+	isTingPaied = false
+	Player.isTingPaied = true
+	Player.isTingPaiTuoGuan = true
+	Player.hasOperation = false
 end
 
 function MahJong.TingPaiCancelState( ... )
@@ -3347,7 +3366,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if diceNumber == 0 then
 		diceNumber = _model_all_pai_number
 	end
-	if not _modelPool[diceNumber].activeInHierarchy then
+	if _modelPool[diceNumber].activeInHierarchy == false then
 		diceNumber = diceNumber + 1
 	end
 	Player.LogWarning("dice:"..number)
@@ -3357,17 +3376,15 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
     	_baopai_model = nil
     end
     --MahJong.CreateBaoPai(baopai,diceNumber)
-    if not baopai then
-		Player.LogWarning("not ting")
-	else
-		if _modelPool[diceNumber] then
-			_modelPool[diceNumber]:SetActive(false)
-		end
+	if _modelPool[diceNumber] then
+		_modelPool[diceNumber]:SetActive(false)
+	end
+	if isPlayDice == true and diceNumber%2 == 1 then
+		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
+		_dice_red:SetActive(true)
+	end
+    if baopai then
 		ClickEvent.ShowBaoPai(baopai)
-		if isPlayDice == true and diceNumber%2 == 1 then
-			diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
-			_dice_red:SetActive(true)
-		end
 	end
 
 	if diceNumber and diceNumber%2 == 0 then

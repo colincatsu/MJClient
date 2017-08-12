@@ -43,7 +43,7 @@
 </component>doyw4su.xml|945|<component size="290,61">
   <displayList>
     <loader id="n0_doyw" name="icon" xy="187,-40" size="100,100" fill="scale"/>
-    <text id="n1_doyw" name="title" xy="-101,10" size="395,40" fontSize="30" color="#ffffff" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" text=""/>
+    <text id="n1_doyw" name="title" xy="-162,10" size="456,40" fontSize="30" color="#ffffff" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" text=""/>
   </displayList>
   <transition name="TextMove">
     <item time="0" type="Alpha" target="n1_doyw" value="1"/>
@@ -3121,11 +3121,11 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|7923|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|7565|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
-  <controller name="ChooseMultiple" pages="0,,1,,2," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <controller name="c1" pages="0,,1," selected="0"/>
+  <controller name="ChooseMultiple" pages="1,,2," selected="0"/>
   <displayList>
     <component id="n50_i0jk" name="Bg" src="i0jkoe" xy="195,43"/>
     <image id="n6_nw08" name="n6" src="w61ce2" xy="471,185" size="574,62"/>
@@ -3151,13 +3151,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n33_nw08" name="Tchoosefan05" xy="529,344" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="可断门">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n34_nw08" name="Tmultiple8" xy="531,425" size="43,29" fontSize="25" color="#ffe3bd" text="8倍">
+    <text id="n35_nw08" name="Tmultiple32" xy="529,425" size="56,29" fontSize="25" color="#ffe3bd" text="32倍">
       <relation target="n8_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n35_nw08" name="Tmultiple32" xy="658,425" size="56,29" fontSize="25" color="#ffe3bd" text="32倍">
-      <relation target="n8_nw08" sidePair="center-center,middle-middle"/>
-    </text>
-    <text id="n36_nw08" name="Tmultiplenolimit" xy="803,425" size="80,29" fontSize="25" color="#ffe3bd" text="不封顶">
+    <text id="n36_nw08" name="Tmultiplenolimit" xy="659,425" size="80,29" fontSize="25" color="#ffe3bd" text="不封顶">
       <relation target="n8_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n37_nw08" name="Tround4" xy="535,502" size="43,29" fontSize="25" color="#ffe3bd" text="8局">
@@ -3194,13 +3191,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n15_nw08" name="HighRiskMode" src="w61cea" xy="671,193" group="n45_fb5y">
       <Button controller="ChooseMode" page="1"/>
     </component>
-    <component id="n16_nw08" name="Multiple8" src="w61cea" xy="488,416" group="n45_fb5y">
-      <Button checked="true" controller="ChooseMultiple" page="0"/>
+    <component id="n17_nw08" name="Multiple32" src="w61cea" xy="488,416" group="n45_fb5y">
+      <Button checked="true" controller="ChooseMultiple" page="1"/>
     </component>
-    <component id="n17_nw08" name="Multiple32" src="w61cea" xy="619,416" group="n45_fb5y">
-      <Button controller="ChooseMultiple" page="1"/>
-    </component>
-    <component id="n18_nw08" name="MultipleNolimit" src="w61cea" xy="764,416" group="n45_fb5y">
+    <component id="n18_nw08" name="MultipleNolimit" src="w61cea" xy="619,416" group="n45_fb5y">
       <Button controller="ChooseMultiple" page="2"/>
     </component>
     <component id="n19_nw08" name="Round4" src="w61cea" xy="488,493" group="n45_fb5y">

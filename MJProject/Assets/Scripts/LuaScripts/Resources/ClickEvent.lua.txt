@@ -393,8 +393,11 @@ end
 
 function ClickEvent.ShowBaoPai(paiData)
 	-- body
-	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 1
-	ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
+	if paiData and paiData ~= {} then
+		Player.LogWarning("roomall"..paiData.card_type.."::::"..paiData.card_value)
+		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 1
+		ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
+	end
  end
 
 function ClickEvent.UpdateTime( ... )
@@ -464,6 +467,7 @@ end
 
 function ClickEvent.PlayerPosition(position)
 	-- body
+	Player.LogWarning(position)
 	if Player._my_player_data.position then
 		local tempX = _position_index[position] - _position_index[Player._my_player_data.position]
 		return tempX
@@ -2324,41 +2328,43 @@ function ClickEvent.OnReceiveHistory()
 		local dataCount = 0
 		for i=Player.history_start,Player.history_end do
 			local v = Player.history_data[i]
-			Player.LogWarning("currentDataIndex:"..i)
-			dataCount = dataCount + 1
-			local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
-			obj.name = "VipNoteList"
-			obj.gameObjectName = tostring(v.room_id)
-			obj.onClick:Add(ClickEvent.registerButtonClick)
-			local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
-			local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
-			obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
-			obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
-			local countScore = 0
-			local headimgurlTable = {}
-			local imgCount = 0
-			for j,c in pairs(v.list) do
-				imgCount = 0
-				for roundKey,roundData in pairs(c.list) do
-					imgCount = imgCount + 1
-					if not headimgurlTable[imgCount] then
-						headimgurlTable[imgCount] = roundData.headimgurl
-					end
-					if roundData.player_id == Player._player_data.common_prop.player_id then
-						countScore = countScore + roundData.score
+			if v and v.room_id then
+				Player.LogWarning("currentDataIndex:"..i)
+				dataCount = dataCount + 1
+				local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
+				obj.name = "VipNoteList"
+				obj.gameObjectName = tostring(v.room_id)
+				obj.onClick:Add(ClickEvent.registerButtonClick)
+				local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
+				local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
+				obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
+				obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
+				local countScore = 0
+				local headimgurlTable = {}
+				local imgCount = 0
+				for j,c in pairs(v.list) do
+					imgCount = 0
+					for roundKey,roundData in pairs(c.list) do
+						imgCount = imgCount + 1
+						if not headimgurlTable[imgCount] then
+							headimgurlTable[imgCount] = roundData.headimgurl
+						end
+						if roundData.player_id == Player._player_data.common_prop.player_id then
+							countScore = countScore + roundData.score
+						end
 					end
 				end
-			end
-			for i=1,4 do
-				local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-				if tempTexture then
-					obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+				for i=1,4 do
+					local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+					if tempTexture then
+						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+					end
 				end
-			end
-			if countScore > 0 then
-				obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
-			else
-				obj:GetChild("WinLoseNum").text = tostring(countScore)
+				if countScore > 0 then
+					obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
+				else
+					obj:GetChild("WinLoseNum").text = tostring(countScore)
+				end
 			end
 		end
 		Player.history_start = dataCount + Player.history_start
@@ -3114,7 +3120,7 @@ function ClickEvent.ClassicMode( ... )
 	for i=1,7 do
 		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = false
 	end
-	_popPanel[popPanelIndex].panel:GetChild("Multiple8").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("Multiple32").selected = true
 end
 
 function ClickEvent.HighRiskMode( ... )
@@ -3142,9 +3148,7 @@ function ClickEvent.CreateButton( )
 		model = "ROOM_MODEL_TYPE_MULTIPLE"
 	end
 
-	if _popPanel[popPanelIndex].panel:GetChild("Multiple8").selected then
-		top_mutiple = 8
-	elseif _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
 		top_mutiple = 32
 	elseif _popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected then
 		top_mutiple = 0
