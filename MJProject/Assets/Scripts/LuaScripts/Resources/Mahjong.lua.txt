@@ -1212,83 +1212,98 @@ function MahJong.ReturnRoomSync(paiData)
         	end
         end
         --operationPai
+        local chiPaiCount = 0
+        local tempPai_outhand = {}
         local operationCount = 0
         for operaKey,operaData in pairs(playerData.pai_outhand) do
-        	operaData.isAnGang = false
-        	operationCount = operationCount + 1
-        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_CHIPAI"
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = operaData.card_type
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = operaData.cards
+        	if operationCount == 0 then
+        		operationCount = 1
+        	end
+        	if not tempPai_outhand[operationCount] then
+        		tempPai_outhand[operationCount] = {}
+        		tempPai_outhand[operationCount].cards = {}
+        	end
+        	tempPai_outhand[operationCount].card_type = operaData.card_type
+        	chiPaiCount = chiPaiCount + 1
+        	tempPai_outhand[operationCount].cards[chiPaiCount] = operaData.card_value
+        	if chiPaiCount == 3 then
+        		chiPaiCount = 0
+	        	tempPai_outhand[operationCount].isAnGang = false
+	        	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
+				Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
+				Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_CHIPAI"
+				Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = tempPai_outhand[operationCount].card_type
+				Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = tempPai_outhand[operationCount].cards
+				operationCount = operationCount + 1
+        	end
         end
         for i=1,playerData.fenggang_count do
         	operationCount = operationCount + 1
-        	playerData.pai_outhand[operationCount] = {}
-        	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_FENG"
-        	playerData.pai_outhand[operationCount].cards = {}
-        	playerData.pai_outhand[operationCount].isAnGang = false
+        	tempPai_outhand[operationCount] = {}
+        	tempPai_outhand[operationCount].card_type = "CARD_TYPE_FENG"
+        	tempPai_outhand[operationCount].cards = {}
+        	tempPai_outhand[operationCount].isAnGang = false
         	for j=1,4 do
-        		playerData.pai_outhand[operationCount].cards[j] = j
+        		tempPai_outhand[operationCount].cards[j] = j
         	end
         	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_XUANFENG_FENG"
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = tempPai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = tempPai_outhand[operationCount].cards
         end
         for i=1,playerData.jiangang_count do
         	operationCount = operationCount + 1
-        	playerData.pai_outhand[operationCount] = {}
-        	playerData.pai_outhand[operationCount].card_type = "CARD_TYPE_JIAN"
-        	playerData.pai_outhand[operationCount].cards = {}
-        	playerData.pai_outhand[operationCount].isAnGang = false
+        	tempPai_outhand[operationCount] = {}
+        	tempPai_outhand[operationCount].card_type = "CARD_TYPE_JIAN"
+        	tempPai_outhand[operationCount].cards = {}
+        	tempPai_outhand[operationCount].isAnGang = false
         	for j=1,3 do
-        		playerData.pai_outhand[operationCount].cards[j] = j
+        		tempPai_outhand[operationCount].cards[j] = j
         	end
         	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_XUANFENG_JIAN"
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = tempPai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = tempPai_outhand[operationCount].cards
         end
         for mingKey,mingData in pairs(playerData.minggang_list) do
         	operationCount = operationCount + 1
-        	playerData.pai_outhand[operationCount] = {}
-        	playerData.pai_outhand.pai_outhand[operationCount].card_type = mingData.card_type
-        	playerData.pai_outhand[operationCount].cards = {}
-        	playerData.pai_outhand[operationCount].isAnGang = false
+        	tempPai_outhand[operationCount] = {}
+        	tempPai_outhand[operationCount].card_type = mingData.card_type
+        	tempPai_outhand[operationCount].cards = {}
+        	tempPai_outhand[operationCount].isAnGang = false
         	for j=1,4 do
-        		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
+        		tempPai_outhand[operationCount].cards[j] = mingData.card_value
         	end
         	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_GANGPAI"
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = tempPai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = tempPai_outhand[operationCount].cards
         end
-        local anGangAngle = newVector3.zero
+        local anGangAngle = newVector3(-180,0,0)
 		local myAnGangOpration = false
         for angangKey,angangData in pairs(playerData.angang_list) do
         	if playerData.position == _my_position then
 		    	myAnGangOpration = true
 	    	end
-	    	anGangAngle = newVector3(-180,0,0)
+	    	Player.LogWarning("angang:".._my_position)
 	    	operationCount = operationCount + 1
-	    	playerData.pai_outhand[operationCount] = {}
-        	playerData.pai_outhand[operationCount].card_type = mingData.card_type
-        	playerData.pai_outhand[operationCount].cards = {}
-        	playerData.pai_outhand[operationCount].isAnGang = true
+	    	tempPai_outhand[operationCount] = {}
+        	tempPai_outhand[operationCount].card_type = angangData.card_type
+        	tempPai_outhand[operationCount].cards = {}
+        	tempPai_outhand[operationCount].isAnGang = true
         	for j=1,4 do
-        		playerData.pai_outhand[operationCount].cards[j] = mingData.card_value
+        		tempPai_outhand[operationCount].cards[j] = angangData.card_value
         	end
         	Player.operation_calculate_data[playerPos].operationNumber = Player.operation_calculate_data[playerPos].operationNumber + 1
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber] = {}
 			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = "PAI_OPER_TYPE_GANGPAI"
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = playerData.pai_outhand[operationCount].card_type
-			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = playerData.pai_outhand[operationCount].cards
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = tempPai_outhand[operationCount].card_type
+			Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = tempPai_outhand[operationCount].cards
         end
-        for operationKey,operationData in pairs(playerData.pai_outhand) do
+        for operationKey,operationData in pairs(tempPai_outhand) do
         	local tempPaiPool = {}
 		    local modelName = {}
 		    for k, v in pairs(_mj_asset) do
@@ -3317,6 +3332,15 @@ function MahJong.AnimationPlay()
 	end
 end
 
+function MahJong.SynDoubleDices(number1,number2)
+	-- body
+	redDicePoints =	number1
+	whiteDicePoints = number2
+	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
+	modelPoolFrontPointer = zhuaPaiBeginPos*2
+	modelPoolBackPointer = modelPoolFrontPointer
+end
+
 function MahJong.PlayDoubleDices(number1,number2)
 	-- body
 	diceCountDown = 0
@@ -3379,7 +3403,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if _modelPool[diceNumber] then
 		_modelPool[diceNumber]:SetActive(false)
 	end
-	if isPlayDice == true and diceNumber%2 == 1 then
+	if isPlayDice and isPlayDice == true and diceNumber%2 == 1 then
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
 	end

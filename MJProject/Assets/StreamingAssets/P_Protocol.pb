@@ -1,5 +1,5 @@
 
-Çë
+Ωì
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -49,7 +49,7 @@ headimgurl (
 room_id (
 create_time (*
 options (2.Adoter.Asset.RoomOptions&
-list (2.Adoter.Asset.GameRecord"µ
+list (2.Adoter.Asset.GameRecord"ø
 
 CommonProp
 	player_id (
@@ -58,9 +58,9 @@ CommonProp
 iphoto (
 level (:1:
 gender (2.Adoter.Asset.GENDER_TYPE:GENDER_TYPE_MAN
-diamond (
-	huanledou (
-room_card_count	 (
+diamond (
+	huanledou (:10000
+room_card_count	 (:2
 total_rounds
  (
 total_win_rounds (
@@ -414,37 +414,43 @@ WeChatInfoH
 RoomElement
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE/
-	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"ê
 	RoomStateA
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_STATE/
-	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"d
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_STATE
+room_id (/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE"d
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("â
+	room_list ("•
 RoomAll?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
 current_rounds (
-remain_cards_count ((
-baopai (2.Adoter.Asset.PaiElement1
-player_list (2.Adoter.Asset.RoomAll.Player4
-zhuang_position (2.Adoter.Asset.POSITION_TYPE;
-curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
-list (2.Adoter.Asset.GameRecordê
+remain_cards_count (
+saizi_random_result ((
+baopai (2.Adoter.Asset.PaiElement1
+player_list (2.Adoter.Asset.RoomAll.Player4
+zhuang_position (2.Adoter.Asset.POSITION_TYPE;
+curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
+list	 (2.Adoter.Asset.GameRecordè
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE
 pai_count_inhand (-
 
-pai_inhand (2.Adoter.Asset.MultiplePai.
-pai_outhand (2.Adoter.Asset.MultiplePai/
+pai_inhand (2.Adoter.Asset.MultiplePai-
+pai_outhand (2.Adoter.Asset.PaiElement/
 minggang_list (2.Adoter.Asset.PaiElement-
 angang_list (2.Adoter.Asset.PaiElement
 fenggang_count (
 jiangang_count	 (*
 pai_pool
  (2.Adoter.Asset.PaiElement
-tingpai ("ê
+tingpai ("]
+
+RoomBeenIn>
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_IN
+room_id ("ê
 RegisterServer?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_REGISTER*
 	role_type (2.Adoter.Asset.ROLE_TYPE
@@ -467,11 +473,13 @@ inner_meta (*u
 DIAMOND_CHANGED_TYPE
 DIAMOND_CHANGED_TYPE_GMT
 DIAMOND_CHANGED_TYPE_MALL'
-#DIAMOND_CHANGED_TYPE_GENERAL_REWARD*Ñ
+#DIAMOND_CHANGED_TYPE_GENERAL_REWARD*Õ
 HUANLEDOU_CHANGED_TYPE
 HUANLEDOU_CHANGED_TYPE_GMT
 HUANLEDOU_CHANGED_TYPE_MALL)
-%HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD*
+%HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD&
+"HUANLEDOU_CHANGED_TYPE_ROOM_TICKET
+HUANLEDOU_CHANGED_TYPE_GAME*
 ROOM_CARD_CHANGED_TYPE
 ROOM_CARD_CHANGED_TYPE_GMT
 ROOM_CARD_CHANGED_TYPE_MALL$
@@ -524,7 +532,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*“
+ERROR_COMMON_REWARD_HAS_GOT3*Ó
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -581,7 +589,8 @@ ERROR_CODE
 META_TYPE_S2C_ROOM_DISMISSå
 META_TYPE_S2C_ROOM_STATEç
 META_TYPE_S2C_ROOM_HISTORYé
-META_TYPE_S2C_ROOM_ALLè
+META_TYPE_S2C_ROOM_ALLè
+META_TYPE_S2C_ROOM_INê
 META_TYPE_S2C_COUNTË
 META_TYPE_S2S_REGISTERÈ!
 META_TYPE_S2S_KICKOUT_PLAYERÍ!
@@ -608,14 +617,16 @@ ERROR_CODE
 PAI_OPER_TYPE_TINGPAI
 
 PAI_OPER_TYPE_BAOPAI
-PAI_OPER_TYPE_COUNT*¿
+PAI_OPER_TYPE_COUNT*ˇ
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
 GAME_OPER_TYPE_LEAVE
 GAME_OPER_TYPE_KICKOUT 
 GAME_OPER_TYPE_DISMISS_AGREE#
-GAME_OPER_TYPE_DISMISS_DISAGREE*y
+GAME_OPER_TYPE_DISMISS_DISAGREE!
+GAME_OPER_TYPE_HOSTER_DISMISS
+GAME_OPER_TYPE_OFFLINE*y
 CALCULATE_TYPE
 CALCULATE_TYPE_HUPAI
 CALCULATE_TYPE_LIUJU

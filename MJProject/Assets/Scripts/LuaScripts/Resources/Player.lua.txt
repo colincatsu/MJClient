@@ -116,7 +116,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0812"
+Player.pc_version = "1.0.1.0814"
 
 Player.baopaiPosition = nil
 
@@ -622,6 +622,22 @@ end
 ---------------------------------------------
 --
 
+function Player.OnRoomBeenIn(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.RoomBeenIn",stuff)
+    if message.room_id then
+        if message.room_id == 0 then
+            Player._player_data.room_id = message.room_id
+        else
+            Player._player_data.room_id = message.room_id
+            ClickEvent.ShowLeaveRoom(2036)
+        end
+    end
+end
+
 function Player.OnBattleHistory(type_t,stuff)
     -- body
     if not stuff then
@@ -645,7 +661,9 @@ function Player.OnRoomDisMiss(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomDisMiss",stuff)
-    ClickEvent.ShowDissolvePanel(message.list)
+    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        ClickEvent.ShowDissolvePanel(message.list)
+    end
 end
 
 function Player.OnRoomState(type_t,stuff)
@@ -654,12 +672,43 @@ function Player.OnRoomState(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomState",stuff)
+    if message.room_id then
+        if message.room_id == 0 then
+            Player._player_data.room_id = message.room_id
+        else
+            Player._player_data.room_id = message.room_id
+            ClickEvent.ShowLeaveRoom(2036)
+            return
+        end
+    end
     if message.oper_type == "GAME_OPER_TYPE_LEAVE" then
         if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
-            Player._player_data.room_id = nil
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
-            Player.LoadScene("FairyMainUI")
+            --Player.LoadScene("FairyMainUI")
+            ClickEvent.ShowLeaveRoom(2034)
+        end
+    elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            ClickEvent.Close()
+            Player.dismissIsShowing = false
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            ClickEvent.ShowLeaveRoom(2009)
+        end
+    elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            ClickEvent.Close()
+            Player.dismissIsShowing = false
+            ClickEvent.ShowToast(StringTable.Get(2011))
+        end
+    elseif message.oper_type == "GAME_OPER_TYPE_HOSTER_DISMISS" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            ClickEvent.Close()
+            Player.dismissIsShowing = false
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            ClickEvent.ShowLeaveRoom(2009)
         end
     end
 end
@@ -944,7 +993,7 @@ function Player.OnEnterRoom(type_t,stuff)
         this._roomId = message.room.room_id
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
-        Player._player_data.room_id = nil
+        Player._player_data.room_id = 0
         ClickEvent.ShowSmallWindow(2010)
         Player.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
@@ -1093,9 +1142,23 @@ function Player.OnRoomAll(type_t,stuff)
         ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[2])
         ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[3])
     end
+    local count = 0
+    local number1 = 1
+    local number2 = 1
+    for k,v in pairs(message.saizi_random_result) do
+        count = count + 1
+        if count == 1 then
+            number1 = v
+        elseif count == 2 then
+            number2 = v
+        end
+    end
+    Player.MahJong.SynDoubleDices(number1,number2)
     ClickEvent.BankerStateUpdate(message.zhuang_position)
+    ClickEvent.SetRemainNum(message.remain_cards_count)
     Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     Player.MahJong.ReturnRoomSync(message.player_list)
+    Player.MahJong.ModelPoolDelete(136 - message.remain_cards_count)
     --baopai
     if message.baopai and message.baopai ~= {} then
         if message.baopai.card_value ~= 0 then

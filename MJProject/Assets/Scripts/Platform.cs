@@ -327,6 +327,16 @@ public class Platform : MonoBehaviour {
         }
     }
 
+    [CSharpCallLua]
+    public delegate void paraIntDelegate(int para);
+    public paraIntDelegate onSignalLevel = null;
+
+    public void OnSignalStrengthListener(string level)
+    {
+        if (onSignalLevel != null)
+            onSignalLevel(int.Parse(level));
+    }
+
     // Use this for initialization
     void Start () {
 	

@@ -196,6 +196,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		--ClickEvent._play_ui.inviteWechatFriends.visible = false
 		ClickEvent._play_ui.copyRoomNum = _currentPanel.panel:GetChild("CopyRoomNum")
 		ClickEvent._play_ui.timeShow = _currentPanel.panel:GetChild("Wlan"):GetChild("Time")
+		ClickEvent._play_ui.wlanShow = _currentPanel.panel:GetChild("Wlan"):GetController("WLan")
+		WeChatPlatform.onSignalLevel = ClickEvent.OnSignalLevel
 		--ClickEvent._play_ui.copyRoomNum.visible = false
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
@@ -342,6 +344,19 @@ function ClickEvent.CreateNewPanel(panelName)
 	--]]
 end
 
+function ClickEvent.OnSignalLevel(signalLevel)
+	-- body
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+		if signalLevel == 3 then
+			ClickEvent._play_ui.wlanShow.selectedIndex = 0
+		elseif signalLevel == 2 then
+			ClickEvent._play_ui.wlanShow.selectedIndex = 1
+		else
+			ClickEvent._play_ui.wlanShow.selectedIndex = 2
+		end
+	end
+end
+
 function ClickEvent.CommonPropertyUpdate( ... )
 	-- body
 	if _currentPanel.panel.name == ClickEvent.panelTable._choose_ui then
@@ -393,7 +408,7 @@ end
 
 function ClickEvent.ShowBaoPai(paiData)
 	-- body
-	if paiData and paiData ~= {} then
+	if paiData and paiData ~= {} and paiData.card_value ~= 0 then
 		Player.LogWarning("roomall"..paiData.card_type.."::::"..paiData.card_value)
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 1
 		ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
@@ -402,7 +417,7 @@ function ClickEvent.ShowBaoPai(paiData)
 
 function ClickEvent.UpdateTime( ... )
 	-- body
-	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui then
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 		local hour = tostring(CS.System.DateTime.Now.Hour)
 		local minute = tostring(CS.System.DateTime.Now.Minute)
 		if CS.System.DateTime.Now.Hour < 10 then
@@ -872,7 +887,7 @@ function ClickEvent.PopPanel( panelName , noBack)
 		ClickEvent._createObject["Bg"] = {}
 	end
 	if not ClickEvent._createObject[panelName] then
-		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName).asCom
+		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
 	end
 	--ClickEvent.Close()
 	popPanelIndex = popPanelIndex + 1
@@ -881,7 +896,7 @@ function ClickEvent.PopPanel( panelName , noBack)
 		if popBgIndex <= 0 or not ClickEvent._createObject["Bg"][popBgIndex] or ClickEvent._createObject["Bg"][popBgIndex].visible == true then
 			popBgIndex = popBgIndex + 1
 			if not ClickEvent._createObject["Bg"][popBgIndex] then
-				ClickEvent._createObject["Bg"][popBgIndex] = UIPackage.CreateObject("MXUI", "Bg").asCom
+				ClickEvent._createObject["Bg"][popBgIndex] = UIPackage.CreateObject("MXUI", "Bg")
 			end
 		end
 		_popPanel[popPanelIndex].background = ClickEvent._createObject["Bg"][popBgIndex]
@@ -1055,7 +1070,7 @@ function ClickEvent.ShareToWeChatFriends( ... )
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = false
-	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,240 * radio,240),2)
+	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,300 * radio,300),2)
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = true
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = true
 	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = true
@@ -1077,6 +1092,7 @@ function ClickEvent.ExitRoomButton( ... )
 	-- body
 	--Player.returnMainUI = true
 	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+	ClickEvent.Close()
 	--Player.MahJong.QuitVoiceRoom()
 	--Player.LoadScene("FairyMainUI")
 end
@@ -1827,9 +1843,11 @@ function ClickEvent.ShowDissolvePanel(data)
 		end
 		if v.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
 			--countDisagree = countDisagree + 1
-			ClickEvent.Close()
-			Player.dismissIsShowing = false
-			ClickEvent.ShowToast(StringTable.Get(2011))
+			--[[
+				ClickEvent.Close()
+				Player.dismissIsShowing = false
+				ClickEvent.ShowToast(StringTable.Get(2011))
+			--]]
 			return
 		end
 	end
@@ -1843,7 +1861,7 @@ function ClickEvent.ShowDissolvePanel(data)
 			end
 		end
 	end
-
+	--[[
 	if _popPanel[popPanelIndex].panel:GetChild("YesOrNo1"):GetController("YesOrNo").selectedIndex == 0 and
 	_popPanel[popPanelIndex].panel:GetChild("YesOrNo2"):GetController("YesOrNo").selectedIndex == 0 and
 	_popPanel[popPanelIndex].panel:GetChild("YesOrNo3"):GetController("YesOrNo").selectedIndex == 0 and
@@ -1854,6 +1872,13 @@ function ClickEvent.ShowDissolvePanel(data)
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2009)
 	end
+	--]]
+end
+
+function ClickEvent.ShowLeaveRoom(contentId)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(contentId)
 end
 ---------------------------------------------------------------------------
 -------------点击功能函数
@@ -2587,7 +2612,11 @@ end
 function ClickEvent.NoButton( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
-		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+		Player.LoadScene("FairyMainUI")
+		return
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
+		Player.LoadScene("FairyMainUI")
+		return
 	end
 	ClickEvent.Close()
 end
@@ -2606,12 +2635,16 @@ function ClickEvent.YesButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
-		Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
+		Player.LoadScene("FairyMainUI")
+		return
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2036) then
 		Player._roomId = Player._player_data.room_id
 		Player.LogWarning(tonumber(Player._roomId))
 		Player.isFriendRoom = true
 		Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
+		Player.LoadScene("FairyMainUI")
+		return
 	end
 	ClickEvent.Close()
 end
@@ -3012,16 +3045,26 @@ end
 
 function ClickEvent.DouRoomButton( ... )
 	-- body
+	--[[
 	if _currentPanel.panel:GetTransition("HideFriendMode").playing then
 		return
 	end
 	_currentPanel.panel:GetTransition("HideFriendMode"):Play()
 	ClickEvent.isInDouRoom = true
+	--]]
+
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
 end
 
 function ClickEvent.GetintoRoomButton( ... )
 	-- body
 	Player.LogWarning("JoinRoom")
+	if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
+		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2036)
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 	Player._roomId = ""
 	_popPanel[popPanelIndex].panel:GetChild("InputText").text = ""
@@ -3030,6 +3073,11 @@ end
 function ClickEvent.CreateRoomButton( ... )
 	-- body
 	Player.LogWarning("CreateRoom")
+	if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
+		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2036)
+		return
+	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
 	local costCard = ""
 	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected then
@@ -3053,6 +3101,7 @@ end
 
 function ClickEvent.FreshHandButton( ... )
 	-- body
+	--[[--]]
 	Player.CmdEnterRoom("ROOM_TYPE_XINSHOU")
 	Player.isFriendRoom = false
 	Player.isWaitingList = true
@@ -3640,6 +3689,9 @@ end
 function ClickEvent.registerButtonDown(gameObject)
 	-- body
 	_popPanel[popPanelIndex].background:GetChild("Di").visible  = false
+	if not _popPanel[popPanelIndex] or not _popPanel[popPanelIndex].panel then
+		GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+	end
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._calculate_ui then
 		_popPanel[popPanelIndex].panel.visible = false
 	end
