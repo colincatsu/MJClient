@@ -1,5 +1,5 @@
 
-Ωì
+Éî
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -422,7 +422,7 @@ WeChatInfoH
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("•
+	room_list ("–
 RoomAll?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
 current_rounds (
@@ -432,7 +432,9 @@ BattleListC
 player_list (2.Adoter.Asset.RoomAll.Player4
 zhuang_position (2.Adoter.Asset.POSITION_TYPE;
 curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
-list	 (2.Adoter.Asset.GameRecordè
+list	 (2.Adoter.Asset.GameRecord)
+zhuapai
+ (2.Adoter.Asset.PaiElementè
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -617,7 +619,7 @@ ERROR_CODE
 PAI_OPER_TYPE_TINGPAI
 
 PAI_OPER_TYPE_BAOPAI
-PAI_OPER_TYPE_COUNT*ˇ
+PAI_OPER_TYPE_COUNT*ö
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START
@@ -626,7 +628,8 @@ ERROR_CODE
 GAME_OPER_TYPE_DISMISS_AGREE#
 GAME_OPER_TYPE_DISMISS_DISAGREE!
 GAME_OPER_TYPE_HOSTER_DISMISS
-GAME_OPER_TYPE_OFFLINE*y
+GAME_OPER_TYPE_OFFLINE
+GAME_OPER_TYPE_ONLINE	*y
 CALCULATE_TYPE
 CALCULATE_TYPE_HUPAI
 CALCULATE_TYPE_LIUJU

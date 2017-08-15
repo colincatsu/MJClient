@@ -168,6 +168,7 @@ function start()
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
 	ClickEvent._play_ui.baopaiLoader.url = ""
+	Player._all_players_data = {}
 
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
@@ -1666,7 +1667,7 @@ end
 
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
-	if MahJong._current_click_pai and not self:IsNull(MahJong._current_click_pai) then
+	if MahJong._current_click_pai and self:IsNull(MahJong._current_click_pai) == false then
 		if MahJong._current_click_pai == gameObject then
 			if currentOperationState ~= operationState.DAPAI and currentOperationState ~= operationState.TINGPAI then
 				return
@@ -1751,8 +1752,19 @@ end
 
 function MahJong.TinePaiSync( ... )
 	-- body
+	if not Player._ting_pai_cache then
+		return
+	end
+	local hasChanged = false
 	for k,v in pairs(_player_father.cards) do
-		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
+		--v.child
+		v.canTouch = false
+		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))-- = CS.UnityEngine.Color(0,0,0,1)
+		if v.paiType == Player._ting_pai_cache[0].card_type and v.paiValue == Player._ting_pai_cache[0].card_value and hasChanged == false then
+			v.canTouch = true
+			v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+			hasChanged = true
+		end
 	end
 	isTingPaied = false
 	Player.isTingPaied = true

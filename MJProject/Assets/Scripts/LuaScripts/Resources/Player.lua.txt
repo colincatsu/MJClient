@@ -12,7 +12,7 @@ local LogWarning = CS.UnityEngine.Debug.LogWarning
 local this = Player
 local _player_data = nil --玩家登录数据
 local _my_player_data = nil --房间内玩家数据
-local _all_players_data = nil
+Player._all_players_data = {}
 local _id = nil
 local _password = ""
 local _roomId = nil
@@ -116,7 +116,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0814"
+Player.pc_version = "1.0.1.0815"
 
 Player.baopaiPosition = nil
 
@@ -145,7 +145,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -890,13 +890,22 @@ function Player.OnRoomInformation(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.RoomInformation",stuff)
     if message.player_list then
-        Player._all_players_data = message.player_list
-        --if not Player._my_player_data then
-        for k,v in pairs(Player._all_players_data) do
-            if v.common_prop.player_id == Player._player_data.common_prop.player_id then
-                Player._my_player_data = v
-                --Player.ThreadFunction(
-                Player.MahJong.UpdateMyDataState()
+        for k,v in pairs(message.player_list) do
+            Player.LogWarning("playerState:"..v.oper_type)
+            if v.oper_type == "GAME_OPER_TYPE_NULL" or v.oper_type == "GAME_OPER_TYPE_ONLINE" or v.oper_type == "GAME_OPER_TYPE_START" then
+                Player._all_players_data[k] = v
+                if v.common_prop.player_id == Player._player_data.common_prop.player_id then
+                    Player._my_player_data = v
+                    --Player.ThreadFunction(
+                    Player.MahJong.UpdateMyDataState()
+                end
+            elseif v.oper_type == "GAME_OPER_TYPE_OFFLINE" then
+                for j,m in pairs(Player._all_players_data) do
+                    if m.position == v.position then
+                        m.oper_type = v.oper_type
+                        break
+                    end
+                end
             end
         end
         if Player._my_player_data then
@@ -1159,11 +1168,23 @@ function Player.OnRoomAll(type_t,stuff)
     Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     Player.MahJong.ReturnRoomSync(message.player_list)
     Player.MahJong.ModelPoolDelete(136 - message.remain_cards_count)
+    if message.zhuapai and message.zhuapai.card_value ~= 0 then
+        for k,v in pairs(message.player_list) do
+            if v.player_id == Player._my_player_data.common_prop.player_id then
+                if v.tingpai and v.tingpai == true then
+                    Player._ting_pai_cache = {}
+                    Player._ting_pai_cache[0] = {}
+                    Player._ting_pai_cache[0].card_type = message.zhuapai.card_type
+                    Player._ting_pai_cache[0].card_value = message.zhuapai.card_value
+                    Player.MahJong.TinePaiSync()
+                end
+            end
+        end
+    end
     --baopai
     if message.baopai and message.baopai ~= {} then
         if message.baopai.card_value ~= 0 then
             ClickEvent.ShowBaoPai(message.baopai)
-            Player.MahJong.TinePaiSync()
             Player.MahJong.SetCurrentState(operationState.DAPAI)
         end
     end
