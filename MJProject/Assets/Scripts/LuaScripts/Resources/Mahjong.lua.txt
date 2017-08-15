@@ -1760,7 +1760,7 @@ function MahJong.TinePaiSync( ... )
 		--v.child
 		v.canTouch = false
 		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))-- = CS.UnityEngine.Color(0,0,0,1)
-		if v.paiType == Player._ting_pai_cache[0].card_type and v.paiValue == Player._ting_pai_cache[0].card_value and hasChanged == false then
+		if Player._ting_pai_cache and Player._ting_pai_cache[0] and v.paiType == Player._ting_pai_cache[0].card_type and v.paiValue == Player._ting_pai_cache[0].card_value and hasChanged == false then
 			v.canTouch = true
 			v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
 			hasChanged = true
