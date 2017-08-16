@@ -212,7 +212,7 @@ end
 ---------------------------------------------------------------------------
 --异常断线
 ---------------------------------------------------------------------------
-function Network.OnException() 
+function Network.OnException()
     Player.LogWarning("OnException------->>>")
     if Player.isTimeOut then
         return

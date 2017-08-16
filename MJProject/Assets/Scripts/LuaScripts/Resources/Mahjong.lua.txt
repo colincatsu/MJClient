@@ -627,6 +627,7 @@ function MahJong.ModelPoolDelete(cardNumber,isBack)
 			else
 				_modelPool[modelPoolBackPointer]:SetActive(false)
 				diceNumber = nil
+				modelPoolBackPointer = modelPoolBackPointer - 2
 				if modelPoolBackPointer <= 0 then
 					modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
 				end
@@ -1633,7 +1634,7 @@ function MahJong.CreatePlayerPai(isRoomSync)
     end
 	MahJong.SortPlayerPai()
 	if not isRoomSync then
-		MahJong.OtherPlayerPaiInit()
+		--MahJong.OtherPlayerPaiInit()
 		MahJong.PlayerPaiSetActive(false)
 	end
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
@@ -1752,9 +1753,6 @@ end
 
 function MahJong.TinePaiSync( ... )
 	-- body
-	if not Player._ting_pai_cache then
-		return
-	end
 	local hasChanged = false
 	for k,v in pairs(_player_father.cards) do
 		--v.child
@@ -2968,7 +2966,7 @@ function MahJong.OperationPaiShow(message)
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].oper_type = operationPaiShowData.oper_type
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_type = paiType
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = paiValue
-
+		Player.isGangPaiing = true
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 		paiType = "CARD_TYPE_JIAN"
 		for i=1,3 do
@@ -3349,7 +3347,13 @@ function MahJong.SynDoubleDices(number1,number2)
 	redDicePoints =	number1
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
-	modelPoolFrontPointer = zhuaPaiBeginPos*2
+	local beginZhuaPaiPos = (Player._banker_position + 2)%4
+	if beginZhuaPaiPos == 1 then
+		beginZhuaPaiPos = 3
+	elseif beginZhuaPaiPos == 3 then
+		beginZhuaPaiPos = 1
+	end
+	modelPoolFrontPointer = zhuaPaiBeginPos * 2 + beginZhuaPaiPos * _modelPoolLineCount
 	modelPoolBackPointer = modelPoolFrontPointer
 end
 
@@ -3365,7 +3369,13 @@ function MahJong.PlayDoubleDices(number1,number2)
 	redDicePoints =	number1
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
-	modelPoolFrontPointer = zhuaPaiBeginPos*2
+	local beginZhuaPaiPos = (Player._banker_position + 2)%4
+	if beginZhuaPaiPos == 1 then
+		beginZhuaPaiPos = 3
+	elseif beginZhuaPaiPos == 3 then
+		beginZhuaPaiPos = 1
+	end
+	modelPoolFrontPointer = zhuaPaiBeginPos * 2 + beginZhuaPaiPos * _modelPoolLineCount
 	modelPoolBackPointer = modelPoolFrontPointer
 	local co = coroutine.create(function()
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
@@ -3375,6 +3385,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     	Player.startOperation = false
     end
     MahJong.PlayerPaiSetActive(true)
+    MahJong.OtherPlayerPaiInit()
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
 	end)

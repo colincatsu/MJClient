@@ -1,5 +1,5 @@
 
-ƒ”
+—”
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -330,16 +330,18 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("ï
+common_reward_id ("ƒ
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO9
-player_list (2$.Adoter.Asset.RoomInformation.PlayerÞ
+player_list (2$.Adoter.Asset.RoomInformation.Playerò
 Player-
 position (2.Adoter.Asset.POSITION_TYPE/
 	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
 common_prop (2.Adoter.Asset.CommonProp)
-wechat (2.Adoter.Asset.WechatUnionF
-dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
+wechat (2.Adoter.Asset.WechatUnion
+
+ip_address (F
+dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
 DistanceElement-
 position (2.Adoter.Asset.POSITION_TYPE
 distance ("Ë
