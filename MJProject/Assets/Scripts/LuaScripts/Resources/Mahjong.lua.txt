@@ -1679,7 +1679,7 @@ function MahJong.ClickPaiEvent(gameObject)
 				card_type = _player_father.cards[paiNumber].paiType,
 				card_value = _player_father.cards[paiNumber].paiValue,
 			}
-			if not _player_father.cards[paiNumber].canTouch then
+			if _player_father.cards[paiNumber].canTouch and _player_father.cards[paiNumber].canTouch == false then
 				return
 			end
 			MahJong._current_click_pai = nil
