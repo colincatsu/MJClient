@@ -117,7 +117,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0816"
+Player.pc_version = "1.0.1.0817"
 
 Player.sayHiTimestarmp = nil
 
@@ -371,7 +371,7 @@ function Player.myUpdate( ... )
             ClickEvent.PlayMoveTitle()
         end
     end
-
+    --[[
     if Player.sayHiTimestarmp and CS.UnityEngine.Application.loadedLevelName ~= "LoadingSence" then
         if CS.UnityEngine.Time.time - Player.sayHiTimestarmp > Player.sayHiTimeOut then
             Player.sayHiTimestarmp = CS.UnityEngine.Time.time
@@ -383,6 +383,7 @@ function Player.myUpdate( ... )
             Player.reConnect = true
         end
     end
+    --]]
 
     if Player.dismissIsShowing == true and Player.dismissHasClicked == false then
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._vote_ui) == true then

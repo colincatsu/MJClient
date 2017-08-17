@@ -902,6 +902,11 @@ function ClickEvent.PopPanel( panelName , noBack)
 	if not ClickEvent._createObject["Bg"] then
 		ClickEvent._createObject["Bg"] = {}
 	end
+	for i=1,popPanelIndex do
+		if _popPanel[popPanelIndex].panel.name == panelName then
+			return
+		end
+	end
 	if not ClickEvent._createObject[panelName] then
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
 	end
@@ -2487,6 +2492,7 @@ function ClickEvent.More( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
+
 end
 
 function ClickEvent.RoomCardNum( ... )

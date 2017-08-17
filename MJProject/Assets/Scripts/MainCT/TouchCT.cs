@@ -28,17 +28,17 @@ public class TouchCT : MonoBehaviour {
             if (Input.touchCount > 0)
             {
                 Touch touchPoint = Input.touches[0];
-                if (touchPoint.phase == TouchPhase.Canceled || touchPoint.phase == TouchPhase.Ended)
-                {
-                    movePos = touchPoint.position;
-                    movePos.z = CameraPosZ;
-                    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
-                    {
-                        if (onClick != null && TouchCT.currentTouchCT == this)
-                            onClick(gameObject);
-                    }
-                }
-                else if (touchPoint.phase == TouchPhase.Began)
+                //if (touchPoint.phase == TouchPhase.Canceled || touchPoint.phase == TouchPhase.Ended)
+                //{
+                //    movePos = touchPoint.position;
+                //    movePos.z = CameraPosZ;
+                //    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
+                //    {
+                //        if (onClick != null && TouchCT.currentTouchCT == this)
+                //            onClick(gameObject);
+                //    }
+                //}
+                if (touchPoint.phase == TouchPhase.Began)
                 {
                     movePos = touchPoint.position;
                     movePos.z = CameraPosZ;
@@ -46,13 +46,15 @@ public class TouchCT : MonoBehaviour {
                     if (inArea(Camera.main.ScreenToWorldPoint(movePos)))
                     {
                         TouchCT.currentTouchCT = this;
+                        if (onClick != null)
+                            onClick(gameObject);
                     }
                 }
-                else if (touchPoint.phase == TouchPhase.Moved)
-                {
-                    movePos = touchPoint.position;
-                    movePos.z = CameraPosZ;
-                }
+                //else if (touchPoint.phase == TouchPhase.Moved)
+                //{
+                //    movePos = touchPoint.position;
+                //    movePos.z = CameraPosZ;
+                //}
             }
         }
         else
@@ -65,23 +67,25 @@ public class TouchCT : MonoBehaviour {
                 if (inArea(Camera.main.ScreenToWorldPoint(movePos)))
                 {
                     TouchCT.currentTouchCT = this;
-                }
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                movePos = Input.mousePosition;
-                movePos.z = CameraPosZ;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                movePos = Input.mousePosition;
-                movePos.z = CameraPosZ;
-                if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
-                {
-                    if (onClick != null && TouchCT.currentTouchCT == this)
+                    if (onClick != null)
                         onClick(gameObject);
                 }
             }
+            //else if (Input.GetMouseButton(0))
+            //{
+            //    movePos = Input.mousePosition;
+            //    movePos.z = CameraPosZ;
+            //}
+            //else if (Input.GetMouseButtonUp(0))
+            //{
+            //    movePos = Input.mousePosition;
+            //    movePos.z = CameraPosZ;
+            //    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
+            //    {
+            //        if (onClick != null && TouchCT.currentTouchCT == this)
+            //            onClick(gameObject);
+            //    }
+            //}
         }
     }
 

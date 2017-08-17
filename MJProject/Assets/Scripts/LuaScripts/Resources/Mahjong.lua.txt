@@ -1679,9 +1679,13 @@ function MahJong.ClickPaiEvent(gameObject)
 				card_type = _player_father.cards[paiNumber].paiType,
 				card_value = _player_father.cards[paiNumber].paiValue,
 			}
-			if _player_father.cards[paiNumber].canTouch and _player_father.cards[paiNumber].canTouch == false then
+			Player.LogWarning("ClickPaiEvent.canTouch:")
+			Player.LogWarning(_player_father.cards[paiNumber].canTouch)
+			if _player_father.cards[paiNumber].canTouch == false then
 				return
 			end
+			Player.LogWarning("currentCanTouch:")
+			Player.LogWarning(_player_father.cards[paiNumber].canTouch)
 			MahJong._current_click_pai = nil
 			
 			ClickEvent.CloseOperationPanel()
@@ -1698,6 +1702,7 @@ function MahJong.ClickPaiEvent(gameObject)
 			else
 				Player.CmdPaiOperation("PAI_OPER_TYPE_TINGPAI",{},paiElement)
 				for k,v in pairs(_player_father.cards) do
+					v.canTouch = false
 					v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
 				end
 				isTingPaied = false
@@ -1720,7 +1725,7 @@ function MahJong.CheckClickPos(movePos)
 	-- body
 	if _player_father and _player_father.cards then
 		for cardKey,cardData in pairs(_player_father.cards) do
-			if not self:IsNull(cardData.child) and cardData.child.activeInHierarchy == true and cardData.touchCT:inArea(Camera.main:ScreenToWorldPoint(movePos)) == true then
+			if not self:IsNull(cardData.child) and cardData.child.activeInHierarchy == true and not self:IsNull(cardData.touchCT) and cardData.touchCT:inArea(Camera.main:ScreenToWorldPoint(movePos)) == true then
 				return
 			end
 		end
