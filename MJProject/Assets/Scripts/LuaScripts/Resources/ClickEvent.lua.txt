@@ -998,6 +998,16 @@ function ClickEvent.ShowRoomCalculate( ... )
 			superPaoCount = v.dianpao_count
 		end
 	end
+	local bigWinScoreNumber = 0
+	local superPaoCountNumber = 0
+	for k,v in pairs(Player._room_calculate_data.record) do
+		if v.score == bigWinScore and v.score ~= 0 then
+			bigWinScoreNumber = bigWinScoreNumber + 1
+		end
+		if v.dianpao_count == superPaoCount and v.dianpao_count ~= 0 then
+			superPaoCountNumber = superPaoCountNumber + 1
+		end
+	end
 	--_popPanel[popPanelIndex].panel:GetChild("ShareRank").visible = false
 	local listObj = _popPanel[popPanelIndex].panel:GetChild("FinishBalanceList")
 	listObj:RemoveChildrenToPool()
@@ -1019,10 +1029,10 @@ function ClickEvent.ShowRoomCalculate( ... )
 				obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
-		if v.dianpao_count >= superPaoCount then
+		if superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
 			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
 		end
-		if v.score >= bigWinScore then
+		if bigWinScoreNumber <= 2 and v.score >= bigWinScore then
 			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_dayingjia")
 		end
 	end
@@ -1864,10 +1874,13 @@ function ClickEvent.ShowDissolvePanel(data)
 		end
 		if v.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
 			--countDisagree = countDisagree + 1
-			--[[
+			---[[
+			if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 				ClickEvent.Close()
 				Player.dismissIsShowing = false
 				ClickEvent.ShowToast(StringTable.Get(2011))
+				return
+			end
 			--]]
 			return
 		end
