@@ -1029,10 +1029,10 @@ function ClickEvent.ShowRoomCalculate( ... )
 				obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
-		if superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
+		if superPaoCountNumber > 0 and superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
 			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
 		end
-		if bigWinScoreNumber <= 2 and v.score >= bigWinScore then
+		if bigWinScoreNumber > 0 and bigWinScoreNumber <= 2 and v.score >= bigWinScore then
 			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_dayingjia")
 		end
 	end
@@ -1050,13 +1050,48 @@ function ClickEvent.ShareRank( ... )
 		countScore[i].headimgurl = ""
 		countScore[i].allScore = 0
 		countScore[i].roundNumber = 0
+		countScore[i].bigWinShow = 0
 	end
+
+	local bigWinScore = nil
+	local superPaoCount = nil
+	for k,v in pairs(Player._room_calculate_data.record) do
+		if not bigWinScore then
+			bigWinScore = v.score
+		end
+		if not superPaoCount then
+			superPaoCount = v.dianpao_count
+		end
+		if bigWinScore and bigWinScore < v.score then
+			bigWinScore = v.score
+		end
+		if superPaoCount and superPaoCount < v.dianpao_count then
+			superPaoCount = v.dianpao_count
+		end
+	end
+	local bigWinScoreNumber = 0
+	local superPaoCountNumber = 0
+	for k,v in pairs(Player._room_calculate_data.record) do
+		if v.score == bigWinScore and v.score ~= 0 then
+			bigWinScoreNumber = bigWinScoreNumber + 1
+		end
+		if v.dianpao_count == superPaoCount and v.dianpao_count ~= 0 then
+			superPaoCountNumber = superPaoCountNumber + 1
+		end
+	end
+
 	local playerNumber = 1
 	for k,v in pairs(Player._room_calculate_data.record) do
 		countScore[playerNumber].nickname = gbk.toutf8(gbk.fromutf8(v.nickname))
 		countScore[playerNumber].headimgurl = v.headimgurl
 		countScore[playerNumber].allScore = v.score
 		countScore[playerNumber].roundNumber = v.pk_count
+		if superPaoCountNumber > 0 and superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
+			countScore[playerNumber].bigWinShow = 1
+		end
+		if bigWinScoreNumber > 0 and bigWinScoreNumber <= 2 and v.score >= bigWinScore then
+			countScore[playerNumber].bigWinShow = 2
+		end
 		playerNumber = playerNumber + 1
 	end
 	for i=1,4 do
@@ -1092,6 +1127,13 @@ function ClickEvent.ShareRank( ... )
 			end
 		end
 		obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(countScore[i].roundNumber)
+		if countScore[i].bigWinShow == 1 then
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
+		elseif countScore[i].bigWinShow == 2 then
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = UIPackage.GetItemURL("MXUI","tubiao_dayingjia")
+		else
+			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = ""
+		end
 	end
 end
 
@@ -2628,9 +2670,15 @@ function ClickEvent.Avatar( ... )
 	_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
 	_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(Player._player_data.common_prop.total_rounds)
 	if Player._player_data.common_prop.total_rounds == 0 then
-		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
+		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 	else
 		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds)).."%"
+	end
+	if Player._client_infomation ~= {} then
+		Player.LogWarning("hasIp")
+		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = Player._client_infomation.client_ip
+	else
+		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = ""
 	end
 end
 
@@ -2707,7 +2755,7 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -2718,6 +2766,7 @@ function ClickEvent.PlayerAvatarInfo( ... )
 					_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
 			end
+			_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = tostring(v.ip_address)
 			return
 		end
 	end
@@ -2747,7 +2796,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -2769,7 +2818,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 					_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
 			end
-			_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(v.ip_address)
+			_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = tostring(v.ip_address)
 			--[[
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			for gpsKey,gpsData in pairs(v.dis_list) do
@@ -2809,7 +2858,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -2831,7 +2880,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 					_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
 			end
-			_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(v.ip_address)
+			_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = tostring(v.ip_address)
 			--[[
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			for gpsKey,gpsData in pairs(v.dis_list) do
@@ -2871,7 +2920,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
 			if v.common_prop.total_rounds == 0 then
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "0"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
 			end
@@ -2893,7 +2942,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 					_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 				end
 			end
-			_popPanel[popPanelIndex].panel:GetChild("n64").text = tostring(v.ip_address)
+			_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = tostring(v.ip_address)
 			--[[
 			_popPanel[popPanelIndex].panel:GetChild("n64").text = "GPS未开启"
 			for gpsKey,gpsData in pairs(v.dis_list) do

@@ -13,6 +13,7 @@ local this = Player
 local _player_data = nil --玩家登录数据
 local _my_player_data = nil --房间内玩家数据
 Player._all_players_data = {}
+Player._client_infomation = {}
 local _id = nil
 local _password = ""
 local _roomId = nil
@@ -117,7 +118,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0817"
+Player.pc_version = "1.0.1.0818"
 
 Player.sayHiTimestarmp = nil
 
@@ -640,6 +641,15 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnUpdateClientData(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.UpdateClientData",stuff)
+    Player._client_infomation = message.client_info
+end
 
 function Player.OnRoomBeenIn(type_t,stuff)
     -- body

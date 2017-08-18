@@ -583,10 +583,10 @@
     <text id="n21_ldfs" name="n2" xy="11,3" size="25,24" fontSize="20" color="#5c2c16" align="center" vAlign="middle" text="第"/>
     <image id="n22_uejt" name="n22" src="w61ced" xy="125,150" size="663,7"/>
   </displayList>
-</component>ldfsql.xml|764|<component size="193,88">
+</component>ldfsql.xml|766|<component size="193,88">
   <displayList>
     <image id="n0_ldfs" name="AvatarBg" src="isedp2" xy="0,0" size="88,88"/>
-    <text id="n1_ldfs" name="WinLoseNum" xy="91,43" size="72,47" font="ui://krtoytc1ysjnog" fontSize="26" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="none" text="-59"/>
+    <text id="n1_ldfs" name="WinLoseNum" xy="91,43" size="72,47" font="ui://krtoytc1ysjnog" fontSize="26" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="shrink" text="-59"/>
     <text id="n2_ldfs" name="n2" xy="162,43" size="31,47" fontSize="26" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="分"/>
     <loader id="n3_ldfs" name="AvatarLoader" xy="4,3" size="81,81" url="ui://krtoytc1nnbzjw" fill="scale"/>
     <text id="n4_ldfs" name="PlayerName" xy="89,-2" size="103,47" fontSize="16" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="对方根本不想输入"/>
@@ -1618,17 +1618,19 @@
     <image id="n25_a9yc" name="No1" src="w61cdy" xy="20,38" size="77,48"/>
     <text id="n24_a9yc" name="Rank" xy="31,25" size="52,58" font="ui://krtoytc1ysjnog" fontSize="50" color="#ffffff" align="center" vAlign="middle" autoSize="none" bold="true" text="1"/>
   </displayList>
-</component>t5cirt.xml|1322|<component size="654,88">
+</component>t5cirt.xml|1406|<component size="654,88">
   <displayList>
     <image id="n0_ldfs" name="AvatarBg" src="isedp2" xy="0,0" size="88,88"/>
-    <text id="n1_ldfs" name="WinLoseNum" xy="464,21" size="72,47" font="ui://krtoytc1uejtrq" fontSize="36" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="none" text="+59"/>
+    <text id="n1_ldfs" name="WinLoseNum" xy="443,21" size="92,47" font="ui://krtoytc1uejtrq" fontSize="36" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="shrink" text="9999"/>
     <text id="n2_ldfs" name="n2" xy="535,21" size="31,47" fontSize="26" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="分"/>
     <loader id="n3_ldfs" name="AvatarLoader" xy="4,3" size="81,81" url="ui://krtoytc1nnbzjw" fill="scale"/>
     <text id="n4_ldfs" name="TotalRoundNum" xy="180,46" size="69,35" fontSize="20" color="#5c2c16" vAlign="middle" autoSize="none" text="999"/>
     <text id="n5_t5ci" name="PlayerName" xy="98,8" size="277,32" fontSize="28" color="#66ffff" vAlign="middle" autoSize="height" strokeColor="#5c2c16" text="对方根本不想输入"/>
     <text id="n6_t5ci" name="n10" xy="97,46" size="111,35" fontSize="20" color="#5c2c16" vAlign="middle" autoSize="none" text="对局数："/>
-    <text id="n8_t5ci" name="n8" xy="388,21" size="77,47" fontSize="26" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="累计"/>
-    <loader id="n10_t5ci" name="n10" xy="565,0" pivot="0.5,0.5" size="90,90" align="center" vAlign="middle" fill="scale"/>
+    <text id="n8_t5ci" name="n8" xy="375,21" size="78,47" fontSize="26" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="累计">
+      <relation target="n1_ldfs" sidePair="right-left"/>
+    </text>
+    <loader id="n10_t5ci" name="MedalLoaderSmall" xy="565,0" pivot="0.5,0.5" size="90,90" align="center" vAlign="middle" fill="scale"/>
   </displayList>
 </component>t5cirv.xml|287|<component size="302,95" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -3121,7 +3123,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|7565|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|7568|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <controller name="c1" pages="0,,1," selected="0"/>
@@ -3141,8 +3143,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <relation target="n6_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n29_nw08" name="Tchoosefan01" xy="657,283" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="站立胡"/>
-    <text id="n30_nw08" name="Tchoosefan02" xy="802,283" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="带夹胡"/>
-    <text id="n31_nw08" name="Tchoosefan03" xy="947,284" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="旋风杠">
+    <text id="n30_nw08" name="Tchoosefan02" xy="802,283" size="205,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="带夹胡（夹、边）"/>
+    <text id="n31_nw08" name="Tchoosefan03" xy="802,344" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="旋风杠">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n32_nw08" name="Tchoosefan04" xy="531,283" size="55,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="宝牌">
@@ -3163,7 +3165,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n38_nw08" name="Tround8" xy="803,502" size="56,29" fontSize="25" color="#ffe3bd" text="16局">
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n39_nw08" name="Tchoosefan06" xy="659,345" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="清一色">
+    <text id="n39_nw08" name="Tchoosefan06" xy="659,344" size="80,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="清一色">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n40_nw08" name="Troundcost4" xy="579,508" size="113,22" fontSize="18" color="#ffffff" text="(消耗房卡*1)">
@@ -3205,14 +3207,14 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </component>
     <component id="n21_nw08" name="ChooseFan01" src="w61ceb" xy="619,274" group="n45_fb5y"/>
     <component id="n22_nw08" name="ChooseFan02" src="w61ceb" xy="764,274" group="n45_fb5y"/>
-    <component id="n23_nw08" name="ChooseFan03" src="w61ceb" xy="905,274" group="n45_fb5y"/>
+    <component id="n23_nw08" name="ChooseFan03" src="w61ceb" xy="764,336" group="n45_fb5y"/>
     <component id="n24_nw08" name="ChooseFan04" src="w61ceb" xy="488,274" group="n45_fb5y"/>
     <component id="n25_nw08" name="ChooseFan05" src="w61ceb" xy="488,336" group="n45_fb5y"/>
     <component id="n26_nw08" name="ChooseFan06" src="w61ceb" xy="619,336" group="n45_fb5y"/>
-    <component id="n47_mc24" name="ChooseFan07" src="w61ceb" xy="764,336" group="n45_fb5y"/>
+    <component id="n47_mc24" name="ChooseFan07" src="w61ceb" xy="905,336" group="n45_fb5y"/>
     <component id="n52_lidq" name="ServiceTerm6" src="lidq4u0" xy="255,627" group="n45_fb5y"/>
     <group id="n45_fb5y" name="Btns" xy="255,95" size="904,582" advanced="true"/>
-    <text id="n48_mc24" name="Tchoosefan07" xy="803,345" size="130,29" fontSize="25" color="#ffe3bd" vAlign="middle" text="点炮包三家">
+    <text id="n48_mc24" name="Tchoosefan07" xy="946,344" size="80,30" fontSize="25" color="#ffe3bd" vAlign="middle" text="包三家">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <image id="n51_r8qd" name="n51" src="r8qd4sv" xy="277,64"/>
@@ -3684,11 +3686,11 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cji.xml|3347|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cji.xml|3610|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <component id="n47_i0jk" name="Bg" src="i0jkoe" xy="195,16" group="n46_s5h9"/>
-    <text id="n6_ac8t" name="Tdou" xy="465,306" size="118,30" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="height" text="欢乐豆:"/>
-    <text id="n7_ac8t" name="DouNum" xy="585,306" size="153,30" group="n46_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="height" text="999999999"/>
+    <text id="n6_ac8t" name="Tdou" xy="790,306" size="118,30" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="height" text="欢乐豆:"/>
+    <text id="n7_ac8t" name="DouNum" xy="910,306" size="153,30" group="n46_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="height" text="999999999"/>
     <text id="n25_ac8t" name="Twinstreak" xy="253,416" size="161,38" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="最高连胜:"/>
     <text id="n26_ac8t" name="TotalWin" xy="413,416" size="76,38" group="n46_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="none" text="9999"/>
     <text id="n27_ac8t" name="Ttotalplay" xy="556,416" size="113,38" group="n46_s5h9" fontSize="26" color="#663300" align="right" vAlign="middle" autoSize="none" text="总局数:"/>
@@ -3709,6 +3711,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <group id="n46_s5h9" name="PlayerInfo" xy="195,16" size="969,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
+    <text id="n51_9h6j" name="n51" xy="486,306" size="96,30" fontSize="26" color="#663300" text="IP地址:"/>
+    <text id="n52_9h6j" name="IPAddress" xy="585,306" size="216,30" fontSize="26" color="#ff0000" vAlign="middle" autoSize="height" text="210.103.211.125"/>
   </displayList>
   <transition name="Popup">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -3718,7 +3722,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjj.xml|3656|<component size="1334,750" pivot="0.5,0.5">
+</component>w61cjj.xml|3672|<component size="1334,750" pivot="0.5,0.5">
   <displayList>
     <component id="n49_i0jk" name="Bg" src="i0jkoe" xy="195,16" group="n48_s5h9"/>
     <component id="n47_jujv" name="PlayerInformation" src="w61cgl" xy="280,169" group="n45_fb5y"/>
@@ -3740,8 +3744,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n60_uejt" name="WinRate" xy="908,419" size="77,38" group="n48_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="none" text="99%"/>
     <image id="n61_uejt" name="n61" src="w61ced" xy="274,387" size="801,7" group="n48_s5h9"/>
     <image id="n62_r8qd" name="n62" src="r8qd4t8" xy="277,35" group="n48_s5h9"/>
-    <text id="n63_tb6z" name="n63" xy="483,305" size="70,30" group="n48_s5h9" fontSize="26" color="#663300" text="距离:"/>
-    <text id="n64_tb6z" name="n64" xy="553,305" size="227,30" group="n48_s5h9" fontSize="26" color="#663300" vAlign="middle" autoSize="height" text="999999m"/>
+    <text id="n63_tb6z" name="n63" xy="483,305" size="96,30" group="n48_s5h9" fontSize="26" color="#663300" text="IP地址:"/>
+    <text id="n64_tb6z" name="IPAddress" xy="579,305" size="220,30" group="n48_s5h9" fontSize="26" color="#ff0000" vAlign="middle" autoSize="height" text="210.103.211.125"/>
     <group id="n48_s5h9" name="OtherPlayerInfo" xy="195,16" size="969,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>

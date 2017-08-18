@@ -36,7 +36,7 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume)
 	if not Player._player_data then
 		return
 	end
-	if not Player._player_data.game_setting.audio then
+	if Player._player_data.game_setting.audio == false then
 		if soundName == AudioPlayer._audio_name.Dice or soundName == AudioPlayer._audio_name.FaPai or
 			soundName == AudioPlayer._audio_name.Down or soundName == AudioPlayer._audio_name.Dapai or
 			soundName == AudioPlayer._audio_name.CloseUI or soundName == AudioPlayer._audio_name.PushPai or
@@ -46,9 +46,13 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume)
 			soundName == AudioPlayer._audio_name.AnGang or soundName == AudioPlayer._audio_name.SelectUI then
 			return
 		else
-			if not Player._player_data.game_setting.voice and soundName ~= AudioPlayer._audio_name.Bgm then
+			if Player._player_data.game_setting.voice == false and soundName ~= AudioPlayer._audio_name.Bgm then
 				return
 			end
+		end
+	else
+		if Player._player_data.game_setting.voice == false and soundName ~= AudioPlayer._audio_name.Bgm then
+			return
 		end
 	end
 

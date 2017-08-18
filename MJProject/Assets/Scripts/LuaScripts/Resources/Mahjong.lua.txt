@@ -1343,12 +1343,12 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 					if k == 2 then
 						if myAnGangOpration == true then
-							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation-- + newVector3(0,-90,0)
 						else
 							if operationData.isAnGang and operationData.isAnGang == true then
-								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
 							else
-								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+								_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation-- + newVector3(0,-90,0)
 							end
 						end
 					else
@@ -1358,7 +1358,7 @@ function MahJong.ReturnRoomSync(paiData)
 							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation
 						end
 					end
-					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width),_modelSize.length/2,0)
 					if k == 4 then
 						_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k-1].transform.localPosition + 
 						newVector3(_modelSize.width,0,0)
@@ -1386,12 +1386,12 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 					if k == 2 then
 						if myAnGangOpration == true then
-							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation-- + newVector3(0,-90,0)
 						else
 							if operationData.isAnGang and operationData.isAnGang == true then
-								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
 							else
-								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+								_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation-- + newVector3(0,-90,0)
 							end
 						end
 					else
@@ -1401,7 +1401,7 @@ function MahJong.ReturnRoomSync(paiData)
 							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation
 						end
 					end
-					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width))
 					if k == 4 then
 						_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k-1].transform.localPosition + 
 						newVector3(0,0,_modelSize.width)
@@ -1429,12 +1429,12 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 					if k == 2 then
 						if myAnGangOpration == true then
-							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation-- + newVector3(0,-90,0)
 						else
 							if operationData.isAnGang and operationData.isAnGang == true then
-								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
 							else
-								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+								_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation-- + newVector3(0,-90,0)
 							end
 						end
 					else
@@ -1444,7 +1444,7 @@ function MahJong.ReturnRoomSync(paiData)
 							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
 						end
 					end
-					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width),_modelSize.length,0)
 					if k == 4 then
 						_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k-1].transform.localPosition + 
 						newVector3(-_modelSize.width,0,0)
@@ -1472,12 +1472,12 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 					if k == 2 then
 						if myAnGangOpration == true then
-							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation-- + newVector3(0,-90,0)
 						else
 							if operationData.isAnGang and operationData.isAnGang == true then
-								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
 							else
-								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+								_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation-- + newVector3(0,-90,0)
 							end
 						end
 					else
@@ -1487,7 +1487,7 @@ function MahJong.ReturnRoomSync(paiData)
 							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation
 						end
 					end
-					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width))
 					if k == 4 then
 						_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k-1].transform.localPosition + 
 						newVector3(0,0,-_modelSize.width)
@@ -1715,7 +1715,9 @@ function MahJong.ClickPaiEvent(gameObject)
 			MahJong._current_click_pai = gameObject
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
 		end
-	else	
+	else
+		Player.LogWarning("paiNumber:"..gameObject.transform.parent.name)
+		Player.LogWarning("paiNumber:"..gameObject.name)
 		MahJong._current_click_pai = gameObject
 		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
 	end
@@ -1872,6 +1874,7 @@ function MahJong.DaPai(paiNumber)
 		MahJong.SortPlayerPai()
 		AudioPlayer.PlaySound(AudioPlayer._audio_name.SortPai,false,1)
 		MahJong._current_click_pai = nil
+		Player.LogWarning("sortZhuapai")
 	end
 	currentOperationState = operationState.WAIT
 end
@@ -2741,10 +2744,10 @@ function MahJong.SortOperationPaiShow(direction)
 			elseif tonumber(v.father.name) > 1 then
 				if _operation_pai_show.point_d.group[tonumber(v.father.name)-1].showNumber == 4 then
 					v.father.transform.localPosition = _operation_pai_show.point_d.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3((_modelSize.height+_modelSize.width*3+_modelSize.length),0,0)
+					+ newVector3((_modelSize.width*4+_modelSize.length/2),0,0)
 				else
 					v.father.transform.localPosition = _operation_pai_show.point_d.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3((_modelSize.height+_modelSize.width*2+_modelSize.length),0,0)
+					+ newVector3((_modelSize.width*3+_modelSize.length/2),0,0)
 				end
 			end
 		end
@@ -2755,10 +2758,10 @@ function MahJong.SortOperationPaiShow(direction)
 			elseif tonumber(v.father.name) > 1 then
 				if _operation_pai_show.point_n.group[tonumber(v.father.name)-1].showNumber == 4 then
 					v.father.transform.localPosition = _operation_pai_show.point_n.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(0,0,(_modelSize.height+_modelSize.width*3+_modelSize.length))
+					+ newVector3(0,0,(_modelSize.width*4+_modelSize.length/2))
 				else
 					v.father.transform.localPosition = _operation_pai_show.point_n.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(0,0,(_modelSize.height+_modelSize.width*2+_modelSize.length))
+					+ newVector3(0,0,(_modelSize.width*3+_modelSize.length/2))
 				end
 			end
 		end
@@ -2769,10 +2772,10 @@ function MahJong.SortOperationPaiShow(direction)
 			elseif tonumber(v.father.name) > 1 then
 				if _operation_pai_show.point_x.group[tonumber(v.father.name)-1].showNumber == 4 then
 					v.father.transform.localPosition = _operation_pai_show.point_x.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(-(_modelSize.height+_modelSize.width*3+_modelSize.length),0,0)
+					+ newVector3(-(_modelSize.width*4+_modelSize.length/2),0,0)
 				else
 					v.father.transform.localPosition = _operation_pai_show.point_x.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(-(_modelSize.height+_modelSize.width*2+_modelSize.length),0,0)
+					+ newVector3(-(_modelSize.width*3+_modelSize.length/2),0,0)
 				end
 			end
 		end
@@ -2783,10 +2786,10 @@ function MahJong.SortOperationPaiShow(direction)
 			elseif tonumber(v.father.name) > 1 then
 				if _operation_pai_show.point_b.group[tonumber(v.father.name)-1].showNumber == 4 then
 					v.father.transform.localPosition = _operation_pai_show.point_b.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(0,0,-(_modelSize.height+_modelSize.width*3+_modelSize.length))
+					+ newVector3(0,0,-(_modelSize.width*4+_modelSize.length/2))
 				else
 					v.father.transform.localPosition = _operation_pai_show.point_b.group[tonumber(v.father.name)-1].father.transform.localPosition 
-					+ newVector3(0,0,-(_modelSize.height+_modelSize.width*2+_modelSize.length))
+					+ newVector3(0,0,-(_modelSize.width*3+_modelSize.length/2))
 				end
 			end
 		end
@@ -2814,41 +2817,45 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	end
 	if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
 		if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
-        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,2)
-	        if Player.huPaiPosition == 0 then
-	        else
-	            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
-	        end
+            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
-    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,2)
-	    	if Player.huPaiPosition == 0 then
-	        else
-		        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
-	        end
-	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
-	    	if Player.huPaiPosition == 0 then
-	        end
-    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,2)
-	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
-	    	if Player.huPaiPosition == 0 then
-	        end
-    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,2)
+	        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
 	        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
 	        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
-    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,2)
-	    	if Player.huPaiPosition == 0 then
-	        else
-		        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
-		    end
+	        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
 	    else
-	        Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
+			Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
 	    end
 	end
     local co = coroutine.create(function()
-        yield_return(CS.UnityEngine.WaitForSeconds(2))
+    	yield_return(CS.UnityEngine.WaitForSeconds(2))
+    	local bigEffectShowTime = 0
+		if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
+			if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
+				bigEffectShowTime = 5
+	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,bigEffectShowTime)
+		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
+		    	bigEffectShowTime = 2
+	    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,bigEffectShowTime)
+		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
+		    	bigEffectShowTime = 5
+	    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,bigEffectShowTime)
+		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
+		    	bigEffectShowTime = 3
+	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,bigEffectShowTime)
+		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
+		    	bigEffectShowTime = 5
+	    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,bigEffectShowTime)
+		    else
+		    	bigEffectShowTime = 0
+		    end
+		end
+		if bigEffectShowTime ~= 0 then
+	        yield_return(CS.UnityEngine.WaitForSeconds(bigEffectShowTime))
+		end
         Effect.AddNormalEffect(Effect._effect_name.roundEndShow,nil,nil,nil,nil)
         yield_return(CS.UnityEngine.WaitForSeconds(2))
         Effect.DeleteEffect(Effect._effect_name.roundEndShow)
@@ -3142,14 +3149,14 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 			if k == 2 then
 				if myAnGangOpration == true then
-					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0)
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation --+ newVector3(0,-90,0)
 				else
-					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + newVector3(0,-90,0) + anGangAngle
+					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
 				end
 			else
 				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation + anGangAngle
 			end
-			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = newVector3((k-2)*(_modelSize.width),_modelSize.length/2,0)
 			if k == 4 then
 				_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k-1].transform.localPosition + 
 				newVector3(_modelSize.width,0,0)
@@ -3186,14 +3193,14 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 			if k == 2 then
 				if myAnGangOpration == true then
-					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0)
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation-- + newVector3(0,-90,0)
 				else
-					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + newVector3(0,-90,0) + anGangAngle
+					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
 				end
 			else
 				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation + anGangAngle
 			end
-			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width+_modelSize.height)/2)
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,(k-2)*(_modelSize.width))
 			if k == 4 then
 				_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k-1].transform.localPosition + 
 				newVector3(0,0,_modelSize.width)
@@ -3230,14 +3237,14 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 			if k == 2 then
 				if myAnGangOpration == true then
-					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0)
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation-- + newVector3(0,-90,0)
 				else
-					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + newVector3(0,-90,0) + anGangAngle
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
 				end
 			else
 				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation + anGangAngle
 			end
-			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width+_modelSize.height)/2,_modelSize.length/2,0)
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width),_modelSize.length/2,0)
 			if k == 4 then
 				_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k-1].transform.localPosition + 
 				newVector3(-_modelSize.width,0,0)
@@ -3274,14 +3281,14 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 			if k == 2 then
 				if myAnGangOpration == true then
-					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0)
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation-- + newVector3(0,-90,0)
 				else
-					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + newVector3(0,-90,0) + anGangAngle
+					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
 				end
 			else
 				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation + anGangAngle
 			end
-			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width+_modelSize.height)/2)
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = newVector3(0,_modelSize.length/2,-(k-2)*(_modelSize.width))
 			if k == 4 then
 				_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k-1].transform.localPosition + 
 				newVector3(0,0,-_modelSize.width)
