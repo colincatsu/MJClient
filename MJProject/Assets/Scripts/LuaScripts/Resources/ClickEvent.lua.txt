@@ -2712,6 +2712,9 @@ function ClickEvent.NoButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
 		Player.LoadScene("FairyMainUI")
 		return
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2038) then
+		CS.UnityEngine.Application.Quit()
+		return
 	end
 	ClickEvent.Close()
 end
@@ -2740,6 +2743,11 @@ function ClickEvent.YesButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
 		Player.LoadScene("FairyMainUI")
 		return
+	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2038) then
+		Network.Start()
+        Network.ConnetServer()
+        Player.disConnetedTime = CS.UnityEngine.Time.time
+        Player.hasConnectTimes = Player.hasConnectTimes + 1
 	end
 	ClickEvent.Close()
 end

@@ -1059,6 +1059,7 @@ end
 
 function MahJong.ZhuaPai()
 	-- body
+	--MahJong.SortPlayerPai()
 	local paiCache = Player._fa_pai_cache
 	local tempPaiPool = {}
 	for k,v in pairs(_mj_asset) do
@@ -1071,6 +1072,7 @@ function MahJong.ZhuaPai()
 	--抓牌先放在边上
 	_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+	MahJong.SortZhuaPai()
 	--托管自动打牌
 	if Player.isTingPaied then
 		Player.isTingPaiTuoGuan = true
@@ -1446,7 +1448,7 @@ function MahJong.ReturnRoomSync(paiData)
 							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation
 						end
 					end
-					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width),_modelSize.length,0)
+					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = newVector3(-(k-2)*(_modelSize.width),_modelSize.length/2,0)
 					if k == 4 then
 						_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localPosition = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k-1].transform.localPosition + 
 						newVector3(-_modelSize.width,0,0)
@@ -1872,8 +1874,8 @@ function MahJong.DaPai(paiNumber)
 		CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
 		_player_father.cards[paiNumber] = {}
 		MahJong.SortPlayerPai(paiNumber)
-		MahJong.SortZhuaPai()
-		MahJong.SortPlayerPai()
+		--MahJong.SortZhuaPai()
+		--MahJong.SortPlayerPai()
 		AudioPlayer.PlaySound(AudioPlayer._audio_name.SortPai,false,1)
 		MahJong._current_click_pai = nil
 		Player.LogWarning("sortZhuapai")
