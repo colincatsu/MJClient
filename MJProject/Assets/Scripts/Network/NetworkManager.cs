@@ -57,6 +57,7 @@ namespace MX
         void OnDestroy()
         {
             LogicSocket.Close();
+            m_SuperSocket = null;
         }
 
         
@@ -106,6 +107,7 @@ namespace MX
         public void Close()
         {
             LogicSocket.Close();
+            m_SuperSocket = null;
         }
 
 		public int SendMessage(byte[] buffer)

@@ -63,6 +63,7 @@ local isTingPaiTuoGuan = false
 Player.hasOperation = false
 Player.startOperation = false
 Player.hasBeginned = false
+Player.roomHasBegin = false
 Player.isGangPaiing = false
 Player._tosence_name = "FairyMainUI"
 Player.huPaiPosition = -1
@@ -118,7 +119,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0818"
+Player.pc_version = "1.0.1.0819"
 
 Player.sayHiTimestarmp = nil
 
@@ -149,7 +150,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -677,6 +678,9 @@ function Player.OnBattleHistory(type_t,stuff)
         Player.current_history_index = Player.current_history_index + 1
         Player.history_data[Player.current_history_index] = v
     end
+
+    table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
+
     Player.history_start = message.start_index
     Player.history_end = message.end_index
     Player.LogWarning("battleHistoryCurrent:"..Player.current_history_index)
@@ -897,8 +901,8 @@ function Player.OnGameCalculate(type_t,stuff)
         Player._all_calculate_data[Player._calculate_table_number] = message.record
     end
     --Player.ThreadFunction()
+    Player.hasBeginned = false
     if Player._calculate_table_number >= Player._room_information.options.open_rands then
-        Player.hasBeginned = false
     end
     Player.isPlaying = false
     Player.MahJong.OnRoundEndShowEffect(Player._calculate_data)
@@ -951,6 +955,15 @@ function Player.OnRoomInformation(type_t,stuff)
         end
     else
         Player.LogWarning("list null")
+    end
+
+    for k,v in pairs(Player._all_players_data) do
+        for j,c in pairs(Player._all_players_data) do
+            if v.common_prop.player_id ~= v.common_prop.player_id and v.ip_address == c.ip_address then
+                ClickEvent.ShowSmallWindow(2037)
+                return
+            end
+        end
     end
 end
 
@@ -1236,6 +1249,7 @@ function Player.OnPaiNotify(type_t,stuff)
     Player.LogWarning(message.data_type)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         Player.hasBeginned = true
+        Player.roomHasBegin = true
         --[[
         Player._invoke_table_test = message
         Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)

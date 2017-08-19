@@ -70,6 +70,12 @@ Network.isConnecting = false
 function Network.Start()
     --_socketClient:OnRegister()
     --_socketClient:StartClient()
+    --[[
+    if _network_manager and Player.self:IsNull(_network_manager) == false then
+        CS.UnityEngine.Object.Destroy(_socketClientClass.Instance.gameObject)
+    else
+    end
+    --]]
     _network_manager = _socketClientClass.Instance
     this.AddEventListener()
 end
@@ -169,6 +175,7 @@ end
 
 function Network.OnClose()
 	Player.LogWarning("Server Close----->>>")
+    _network_manager:Close()
     this.DelEventListener()
 end
 

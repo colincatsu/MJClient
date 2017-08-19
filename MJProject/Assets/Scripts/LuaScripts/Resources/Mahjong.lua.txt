@@ -149,6 +149,7 @@ function start()
 	Player.dismissHasClicked = false
 	Player.dismissIsShowing = false
 	Player.hasBeginned = false
+	Player.roomHasBegin = false
 	Player.isGangPaiing = false
 	diceNumber = nil
 	_player_father = nil
@@ -861,7 +862,7 @@ end
 
 function MahJong.LiuJuPai(paisData)
 	-- body
-	ClickEvent._play_ui.uselessRound.visible = true
+	--ClickEvent._play_ui.uselessRound.visible = true
 	MahJong.ModelPoolDelete(4)
 	for k,v in pairs(paisData) do
 		for dataNum,playerData in pairs(Player._all_players_data) do
@@ -1191,6 +1192,7 @@ end
 function MahJong.ReturnRoomSync(paiData)
 	-- body
 	Player.hasBeginned = true
+	Player.roomHasBegin = true
 	Player.isPlayerPaiShowing = true
 	for playerKey,playerData in pairs(paiData) do
 		local playerPos = ClickEvent.PlayerPosition(playerData.position)
@@ -2829,6 +2831,8 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	    else
 			Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
 	    end
+	elseif operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_LIUJU" then
+		ClickEvent._play_ui.uselessRound.visible = true
 	end
     local co = coroutine.create(function()
     	yield_return(CS.UnityEngine.WaitForSeconds(2))
@@ -3411,13 +3415,19 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		Player.baopaiPosition = number
 	else
 		if diceNumber and diceNumber%2 == 1 then
-			diceNumber = diceNumber + 1
+			--diceNumber = diceNumber + 1
 		else
 			Player.baopaiPosition =	number
 		end
 	end
 	redDicePoints = Player.baopaiPosition
-	diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
+	if diceNumber and diceNumber%2 == 1 then
+		if isPlayDice and isPlayDice == true then
+			diceNumber = diceNumber + 1
+		end
+	else
+		diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
+	end
 	if diceNumber <= 0 then
 		diceNumber = diceNumber + _model_all_pai_number
 	end

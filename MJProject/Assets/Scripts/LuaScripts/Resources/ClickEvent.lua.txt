@@ -638,6 +638,7 @@ function ClickEvent.RoomInformationUpdate( ... )
 	end
 	if countPlayerNumber >= 4 and ClickEvent._play_ui.playerAlready.visible == false then
 		if Player.hasBeginned == true then
+			Player.LogWarning("buttonDisable")
 			ClickEvent._play_ui.gamePlayButton.visible = false
 		else
 			ClickEvent._play_ui.gamePlayButton.visible = true
@@ -1029,6 +1030,17 @@ function ClickEvent.ShowRoomCalculate( ... )
 				obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
+
+		for j,c in pairs(Player._all_players_data) do
+			if v.player_id == c.common_prop.player_id then
+				if c.position == "POSITION_TYPE_EAST" then
+					obj:GetChild("RoomLord").visible = true
+				else
+					obj:GetChild("RoomLord").visible = false
+				end
+			end
+		end
+
 		if superPaoCountNumber > 0 and superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
 			obj:GetChild("MedalLoader").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
 		end
@@ -2707,7 +2719,7 @@ end
 function ClickEvent.YesButton( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
-		if Player.hasBeginned == false then
+		if Player.roomHasBegin == false then
 			--Player.returnMainUI = true
 			--Player.MahJong.QuitVoiceRoom()
 			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
