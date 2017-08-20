@@ -119,7 +119,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0820"
+Player.pc_version = "1.0.1.0821"
 
 Player.sayHiTimestarmp = nil
 
@@ -203,8 +203,8 @@ end
 
 function Player.GetGpsInformation()
     -- body
-    WeChatPlatform.gpsGet = Player.GpsCallBack
-    WeChatPlatform:GetGps()
+    --WeChatPlatform.gpsGet = Player.GpsCallBack
+    --WeChatPlatform:GetGps()
 end
 function Player.GpsCallBack(latitude,longitude)
     -- body
@@ -656,7 +656,9 @@ function Player.OnUpdateClientData(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.UpdateClientData",stuff)
-    Player._client_infomation = message.client_info
+    if message.client_info.client_ip and message.client_info.client_ip ~= "" then
+        Player._client_infomation = message.client_info
+    end
 end
 
 function Player.OnRoomBeenIn(type_t,stuff)
@@ -1489,8 +1491,8 @@ function Player.OnCreateRoom(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.CreateRoom", stuff)
     this._roomId = message.room.room_id
     Player._room_information = message.room
-    --Player.CmdEnterRoom("ROOM_TYPE_FRIEND",this._roomId)
-    Player.LoadScene("PlaySence")
+    Player.CmdEnterRoom("ROOM_TYPE_FRIEND",this._roomId)
+    --Player.LoadScene("PlaySence")
     --this._roomType = message.room.room_type
 end
 

@@ -16,6 +16,7 @@ public class TouchCT : MonoBehaviour {
     private Vector3 movePos;
     private float CameraPosZ = 0.35f;
     public static TouchCT currentTouchCT;
+    public static bool hasTouchDown = false;
     // Use this for initialization
     void Start () {
         myRenderer = gameObject.GetComponent<Renderer>();
@@ -28,8 +29,6 @@ public class TouchCT : MonoBehaviour {
             if (Input.touchCount > 0)
             {
                 Touch touchPoint = Input.touches[0];
-                //if (touchPoint.phase == TouchPhase.Canceled || touchPoint.phase == TouchPhase.Ended)
-                //{
                 //    movePos = touchPoint.position;
                 //    movePos.z = CameraPosZ;
                 //    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
@@ -37,14 +36,18 @@ public class TouchCT : MonoBehaviour {
                 //        if (onClick != null && TouchCT.currentTouchCT == this)
                 //            onClick(gameObject);
                 //    }
-                //}
+                if (touchPoint.phase == TouchPhase.Canceled || touchPoint.phase == TouchPhase.Ended)
+                {
+                    hasTouchDown = false;
+                }
                 if (touchPoint.phase == TouchPhase.Began)
                 {
                     movePos = touchPoint.position;
                     movePos.z = CameraPosZ;
                     downPos = movePos;
-                    if (inArea(Camera.main.ScreenToWorldPoint(movePos)))
+                    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && !hasTouchDown)
                     {
+                        hasTouchDown = true;
                         TouchCT.currentTouchCT = this;
                         if (onClick != null)
                             onClick(gameObject);
@@ -64,8 +67,9 @@ public class TouchCT : MonoBehaviour {
                 movePos = Input.mousePosition;
                 movePos.z = CameraPosZ;
                 downPos = movePos;
-                if (inArea(Camera.main.ScreenToWorldPoint(movePos)))
+                if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && !hasTouchDown)
                 {
+                    hasTouchDown = true;
                     TouchCT.currentTouchCT = this;
                     if (onClick != null)
                         onClick(gameObject);
@@ -76,8 +80,6 @@ public class TouchCT : MonoBehaviour {
             //    movePos = Input.mousePosition;
             //    movePos.z = CameraPosZ;
             //}
-            //else if (Input.GetMouseButtonUp(0))
-            //{
             //    movePos = Input.mousePosition;
             //    movePos.z = CameraPosZ;
             //    if (inArea(Camera.main.ScreenToWorldPoint(movePos)) && downPos == movePos && TouchCT.currentTouchCT != null)
@@ -85,7 +87,10 @@ public class TouchCT : MonoBehaviour {
             //        if (onClick != null && TouchCT.currentTouchCT == this)
             //            onClick(gameObject);
             //    }
-            //}
+            else if (Input.GetMouseButtonUp(0))
+            {
+                hasTouchDown = false;
+            }
         }
     }
 

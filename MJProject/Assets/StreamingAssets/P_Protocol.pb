@@ -1,5 +1,5 @@
 
-—”
+±”
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -49,7 +49,7 @@ headimgurl (
 room_id (
 create_time (*
 options (2.Adoter.Asset.RoomOptions&
-list (2.Adoter.Asset.GameRecord"¿
+list (2.Adoter.Asset.GameRecord"Ù
 
 CommonProp
 	player_id (
@@ -63,9 +63,10 @@ CommonProp
 room_card_count	 (:2
 total_rounds
  (
-total_win_rounds (
-streak_wins (
-score ("•
+room_card_rounds (
+total_win_rounds (
+streak_wins (
+score ("•
 PlayerCommonLimit9
 elements (2'.Adoter.Asset.PlayerCommonLimit.ElementE
 Element

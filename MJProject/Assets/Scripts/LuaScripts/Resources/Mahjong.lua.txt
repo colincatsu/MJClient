@@ -221,6 +221,7 @@ function start()
 	}
 	MahJong.LiuJuPai(paisData)
 	MahJong.CreateGangPai({card_type = "CARD_TYPE_WANZI",card_value = 1)
+	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
 	--]]
 end
 
@@ -1072,10 +1073,11 @@ function MahJong.ZhuaPai()
 	--抓牌先放在边上
 	_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
-	MahJong.SortZhuaPai()
 	--托管自动打牌
 	if Player.isTingPaied then
 		Player.isTingPaiTuoGuan = true
+	else
+		MahJong.SortZhuaPai()
 	end
 	if Player.isTingPaiTuoGuan and Player.hasOperation == false then
 		local co = coroutine.create(function()
