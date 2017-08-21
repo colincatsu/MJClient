@@ -1823,11 +1823,15 @@ end
 
 function ClickEvent.IsPopPanel(name)
 	-- body
-	if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == name then
-		return true
+	if popPanelIndex > 0 then
+		for i=1,popPanelIndex do
+			if _popPanel[popPanelIndex].panel.name == name then
+				return true
+			end
+		end
 	else
-		return false
     end
+	return false
 end
 
 function ClickEvent.ShowDissolveTime(time)
@@ -1897,6 +1901,8 @@ function ClickEvent.ShowDissolvePanel(data)
 		if countPlayer == 1 then
 			firstPlayer = v.position
 		end
+		Player.LogWarning("Dissolve:"..v.position)
+		Player.LogWarning("Dissolve:"..v.oper_type)
 		if v.position == "POSITION_TYPE_EAST" then
 			if v.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo1"):GetController("YesOrNo").selectedIndex = 0
@@ -1929,6 +1935,7 @@ function ClickEvent.ShowDissolvePanel(data)
 		if v.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
 			--countDisagree = countDisagree + 1
 			---[[
+			Player.LogWarning("Dissolve:")
 			if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 				ClickEvent.Close()
 				Player.dismissIsShowing = false
@@ -2678,7 +2685,7 @@ function ClickEvent.Avatar( ... )
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 	end
 	_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
-	_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_count)
+	_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(Player._player_data.common_prop.room_card_rounds)
 	_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(Player._player_data.common_prop.streak_wins)
 	_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(Player._player_data.common_prop.total_rounds)
 	if Player._player_data.common_prop.total_rounds == 0 then
@@ -2773,7 +2780,7 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			--_popPanel[popPanelIndex].panel:GetChild("GemsNum").text = tostring(v.common_prop.diamond)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
@@ -2814,7 +2821,7 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
@@ -2876,7 +2883,7 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
@@ -2938,7 +2945,7 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
-			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_count)
+			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else

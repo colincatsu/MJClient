@@ -159,6 +159,7 @@ function start()
 	Player.isPlayerPaiShowing = false
 	Player._ting_pai_cache = nil
 	Player.huPaiPosition = -1
+	diceHasPlay = false
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -570,6 +571,7 @@ function MahJong.ResetGameState()
 	Player.hupai_calculate_data = {}
 	ClickEvent._play_ui.baopaiLoader.url = ""
 	Player.huPaiPosition = -1
+	diceHasPlay = false
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end
@@ -628,7 +630,9 @@ function MahJong.ModelPoolDelete(cardNumber,isBack)
 				_modelPool[modelPoolBackPointer-1]:SetActive(false)
 			else
 				_modelPool[modelPoolBackPointer]:SetActive(false)
-				diceNumber = nil
+				if modelPoolBackPointer == diceNumber + 1 then
+					diceNumber = nil
+				end
 				modelPoolBackPointer = modelPoolBackPointer - 2
 				if modelPoolBackPointer <= 0 then
 					modelPoolBackPointer = modelPoolBackPointer + _model_all_pai_number
@@ -3411,10 +3415,18 @@ function MahJong.PlayDoubleDices(number1,number2)
 	end)
 	coroutine.resume(co)
 end
-
+local diceHasPlay = false
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
-
+    if baopai then
+		ClickEvent.ShowBaoPai(baopai)
+		if diceHasPlay and diceHasPlay == true then
+			diceHasPlay = false
+			return
+		end
+	else
+		diceHasPlay = true
+	end
 	if not Player.baopaiPosition then
 		Player.baopaiPosition = number
 	else
@@ -3430,6 +3442,9 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 			diceNumber = diceNumber + 1
 		end
 	else
+		if diceNumber then
+			Player.LogWarning("resetDice:"..diceNumber)
+		end
 		diceNumber = modelPoolBackPointer - Player.baopaiPosition*2 + 1
 	end
 	if diceNumber <= 0 then
@@ -3455,9 +3470,6 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if isPlayDice and isPlayDice == true and diceNumber%2 == 1 then
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
-	end
-    if baopai then
-		ClickEvent.ShowBaoPai(baopai)
 	end
 
 	if diceNumber and diceNumber%2 == 0 then

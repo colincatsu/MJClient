@@ -119,7 +119,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0821"
+Player.pc_version = "1.0.1.0822"
 
 Player.sayHiTimestarmp = nil
 
@@ -656,6 +656,7 @@ function Player.OnUpdateClientData(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.UpdateClientData",stuff)
+    Player.LogWarning("ip_address:"..message.client_info.client_ip)
     if message.client_info.client_ip and message.client_info.client_ip ~= "" then
         Player._client_infomation = message.client_info
     end
@@ -711,7 +712,7 @@ function Player.OnRoomDisMiss(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomDisMiss",stuff)
-    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._vote_ui) == false then
+    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
         ClickEvent.ShowDissolvePanel(message.list)
     end
 end
@@ -1180,7 +1181,10 @@ function Player.OnRoomAll(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomAll",stuff)
-    local playerPos = ClickEvent.PlayerPosition(message.curr_operator_position)
+    local playerPos = -1
+    if message.curr_operator_position ~= "POSITION_TYPE_NULL" then
+        playerPos = ClickEvent.PlayerPosition(message.curr_operator_position)
+    end
     if playerPos == 0 then
         ClickEvent.notPushPassMsg = true
         Player.MahJong.SetCurrentState(operationState.DAPAI)
@@ -1224,9 +1228,15 @@ function Player.OnRoomAll(type_t,stuff)
     ClickEvent.BankerStateUpdate(message.zhuang_position)
     Player.MahJong.SynDoubleDices(number1,number2)
     ClickEvent.SetRemainNum(message.remain_cards_count)
-    Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
+    if message.curr_operator_position ~= "POSITION_TYPE_NULL" then
+        Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
+    end
     Player.MahJong.ReturnRoomSync(message.player_list)
-    Player.MahJong.ModelPoolDelete(136 - message.remain_cards_count)
+    if message.remain_cards_count and message.remain_cards_count ~= 0 then
+        Player.MahJong.ModelPoolDelete(136 - message.remain_cards_count)
+    else
+        Player.hasBeginned = false
+    end
     for k,v in pairs(message.player_list) do
         if v.player_id == Player._my_player_data.common_prop.player_id then
             if v.tingpai and v.tingpai == true then
