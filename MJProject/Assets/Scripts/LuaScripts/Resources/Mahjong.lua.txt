@@ -119,6 +119,7 @@ local GVoicePlatform = CS.Platform.Instance
 local _hand_cards = {}--分张
 
 local _my_position = ""
+local diceHasPlay = false
 
 function awake( ... )
 	-- body
@@ -159,6 +160,7 @@ function start()
 	Player.isPlayerPaiShowing = false
 	Player._ting_pai_cache = nil
 	Player.huPaiPosition = -1
+	ClickEvent.notPushPassMsg = false
 	diceHasPlay = false
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
@@ -572,6 +574,7 @@ function MahJong.ResetGameState()
 	ClickEvent._play_ui.baopaiLoader.url = ""
 	Player.huPaiPosition = -1
 	diceHasPlay = false
+	ClickEvent.notPushPassMsg = false
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
 end
@@ -2380,7 +2383,7 @@ end
 function MahJong.GuoPai()
 	-- body
 	--MahJong.DeleteShowModel()
-	if ClickEvent.notPushPassMsg then
+	if ClickEvent.notPushPassMsg and ClickEvent.notPushPassMsg == true then
 		ClickEvent.notPushPassMsg = false
 		currentOperationState = operationState.DAPAI
 	else
@@ -3415,11 +3418,13 @@ function MahJong.PlayDoubleDices(number1,number2)
 	end)
 	coroutine.resume(co)
 end
-local diceHasPlay = false
+
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
     if baopai then
 		ClickEvent.ShowBaoPai(baopai)
+		Player.LogWarning("jxyHasPlay:")
+		Player.LogWarning(diceHasPlay)
 		if diceHasPlay and diceHasPlay == true then
 			diceHasPlay = false
 			return
@@ -3467,7 +3472,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if _modelPool[diceNumber] then
 		_modelPool[diceNumber]:SetActive(false)
 	end
-	if isPlayDice and isPlayDice == true and diceNumber%2 == 1 then
+	if isPlayDice and isPlayDice == true then
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
 	end

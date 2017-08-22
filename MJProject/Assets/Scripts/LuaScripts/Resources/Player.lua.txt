@@ -119,7 +119,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0822"
+Player.pc_version = "1.0.1.0823"
 
 Player.sayHiTimestarmp = nil
 
@@ -366,7 +366,7 @@ function Player.myUpdate( ... )
     end
 
     if Player.reConnect == false and Player._connected == false then
-        if ClickEvent.IsPopPanel(ClickEvent.panelTable._window_small) == false and ClickEvent.IsPopPanel(ClickEvent.panelTable._not_move_toast_ui) == false then
+        if ClickEvent.IsPopPanel(ClickEvent.panelTable._window_small) == false and ClickEvent.IsPopPanel(ClickEvent.panelTable._not_move_toast_ui) == false and ClickEvent.IsMainUI(ClickEvent.panelTable._choose_ui) then
             ClickEvent.ShowSmallWindow(2038)
         end
     end

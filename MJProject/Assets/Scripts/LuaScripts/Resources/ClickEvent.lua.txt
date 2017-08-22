@@ -1821,6 +1821,14 @@ function ClickEvent.ShowEmoji(position,chat_type,index)
 	end
 end
 
+function ClickEvent.IsMainUI(name)
+	-- body
+	if _currentPanel.panel and _currentPanel.panel.name == name then
+		return true
+	end
+	return false
+end
+
 function ClickEvent.IsPopPanel(name)
 	-- body
 	if popPanelIndex > 0 then
