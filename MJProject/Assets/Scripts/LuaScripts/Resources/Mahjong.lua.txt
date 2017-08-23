@@ -1652,6 +1652,9 @@ function MahJong.CreatePlayerPai(isRoomSync)
 		MahJong.PlayerPaiSetActive(false)
 	end
 	AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
+	if paiCount ~= 1 and paiCount ~= 4 and paiCount ~= 7 and paiCount ~= 10 and paiCount ~= 13 then
+		MahJong.SetCurrentState(operationState.DAPAI)
+	end
 end
 
 function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
@@ -2572,8 +2575,8 @@ function MahJong.CreateGangPai(pai)
 	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
 
 	MahJong.SortGangPai()
-	Player.LogWarning("CreateGangPai:"..pai.card_type)
 	--]]
+	Player.LogWarning("CreateGangPai:"..pai.card_type)
 	if not _gang_pai_father or _gang_pai_father == {} then
 		_gang_pai_father = {}--杠牌父节点
 		_gang_pai_father.cards = {}
@@ -2585,9 +2588,10 @@ function MahJong.CreateGangPai(pai)
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber] = {}
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child = {}
 	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber)
+	Player.LogWarning("CreateGangPai:1")
     if pai.card_type == "CARD_TYPE_FENG" then
     	for i=1,4 do
-    		Player.LogWarning(pai.paiType)
+    		Player.LogWarning(pai.card_type)
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = i
@@ -2604,6 +2608,10 @@ function MahJong.CreateGangPai(pai)
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = pai.card_value
 		end
+	end
+	for k,v in pairs(_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child) do
+		Player.LogWarning(v.paiType)
+		Player.LogWarning(v.paiValue)
 	end
 end
 

@@ -2740,29 +2740,29 @@ end
 
 function ClickEvent.YesButton( ... )
 	-- body
-	if _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
+	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2003) then
 		if Player.roomHasBegin == false then
 			--Player.returnMainUI = true
 			--Player.MahJong.QuitVoiceRoom()
 			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 			--Player.LoadScene("FairyMainUI")
 		end
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
 		CS.UnityEngine.Application.Quit()
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
 		Player.LoadScene("FairyMainUI")
 		return
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2036) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2036) then
 		Player._roomId = Player._player_data.room_id
 		Player.LogWarning(tonumber(Player._roomId))
 		Player.isFriendRoom = true
 		Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2034) then
 		Player.LoadScene("FairyMainUI")
 		return
-	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2038) then
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2038) then
 		Network.Start()
         Network.ConnetServer()
         Player.disConnetedTime = CS.UnityEngine.Time.time
@@ -3733,7 +3733,9 @@ function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
 		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
 	end
+	Player.LogWarning("xuanfeng:1")
 	ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList").width = gangPaiGroupTemp.width * paiGroup
+	Player.LogWarning("xuanfeng:2")
 end
 
 function ClickEvent.CloseChiPai()
