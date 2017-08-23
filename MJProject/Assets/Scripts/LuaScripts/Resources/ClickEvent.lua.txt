@@ -777,7 +777,7 @@ function ClickEvent.PaiOperationState()
 				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
 				if xuanfengCount > 1 then
-					v.pai.card_type = "PAI_OPER_TYPE_XUANFENG_FENG"
+					v.pai.card_type = "CARD_TYPE_FENG"
 					v.pai.card_value = 1
 					Player.MahJong.CreateGangPai(v.pai)
 				else
@@ -787,7 +787,7 @@ function ClickEvent.PaiOperationState()
 				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGJIAN)
 				if xuanfengCount > 1 then
-					v.pai.card_type = "PAI_OPER_TYPE_XUANFENG_JIAN"
+					v.pai.card_type = "CARD_TYPE_JIAN"
 					v.pai.card_value = 1
 					Player.MahJong.CreateGangPai(v.pai)
 				else
