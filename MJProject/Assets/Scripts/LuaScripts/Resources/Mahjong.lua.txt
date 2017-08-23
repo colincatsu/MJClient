@@ -226,6 +226,7 @@ function start()
 	MahJong.CreateGangPai({card_type = "CARD_TYPE_WANZI",card_value = 1)
 	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
 	--]]
+
 end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
@@ -2571,7 +2572,12 @@ function MahJong.CreateGangPai(pai)
 	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
 
 	MahJong.SortGangPai()
+	Player.LogWarning("CreateGangPai:"..pai.card_type)
 	--]]
+	if not _gang_pai_father or _gang_pai_father == {} then
+		_gang_pai_father = {}--杠牌父节点
+		_gang_pai_father.cards = {}
+	end
 	if not _gang_pai_father.currentGroupNumber or _gang_pai_father.currentGroupNumber == 0 then
 		_gang_pai_father.currentGroupNumber = 0
 	end
@@ -2581,6 +2587,7 @@ function MahJong.CreateGangPai(pai)
 	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber)
     if pai.card_type == "CARD_TYPE_FENG" then
     	for i=1,4 do
+    		Player.LogWarning(pai.paiType)
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = i
@@ -3408,6 +3415,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     yield_return(CS.UnityEngine.WaitForSeconds(_play_dice_animation_time + 1))
     --MahJong.CreatePlayerPai()
     if Player.startOperation == true then
+    	Player.LogWarning("operationInvoke")
     	ClickEvent.PaiOperationState()
     	Player.startOperation = false
     end

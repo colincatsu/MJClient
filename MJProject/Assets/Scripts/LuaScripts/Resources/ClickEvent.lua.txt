@@ -5,6 +5,7 @@ ClickEvent = {}
 ClickEvent.panelTable = {
 	_main_ui = "Login",
 	_choose_ui = "MainMenu",
+	_choose_ui_ios = "MainMenuIOS",
 	_create_room_ui = "CreateRoom",
 	_join_room_ui = "GetintoRoom",
 	_other_message_ui = "OtherMessageUI",
@@ -200,6 +201,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		WeChatPlatform.onSignalLevel = ClickEvent.OnSignalLevel
 		--ClickEvent._play_ui.copyRoomNum.visible = false
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
+
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
 		_currentPanel.panel:GetChild("GameListenButton").selected = true
 		_currentPanel.panel:GetChild("GameVoiceButton").selected = true
@@ -300,6 +302,8 @@ function ClickEvent.CreateNewPanel(panelName)
 			if tempTexture then
 				ClickEvent._play_ui.avatarLoader.texture = NTexture(tempTexture)
 			end
+		else
+			ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang01")
 		end
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
@@ -2814,8 +2818,8 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
@@ -2876,8 +2880,8 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
@@ -2938,8 +2942,8 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._other_player_info)
+	_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	if Player._my_player_data.position ~= "POSITION_TYPE_EAST" then
-		_popPanel[popPanelIndex].panel:RemoveChild(_popPanel[popPanelIndex].panel:GetChild("KickOutRoomButton"))
 	end
 	for k,v in pairs(Player._all_players_data) do
 		local tempX = _position_index[v.position] - _position_index[Player._my_player_data.position]
@@ -3029,6 +3033,10 @@ function ClickEvent.GuestLogin( gameObject )
 	end
 	Player.CmdEnterGame(Player._id)
 	--]]
+	Player.wechat_nickname = ""
+    Player.wechat_sex = ""
+    Player.wechat_headimgurl = ""
+
 	if not Player.coolDown then
 		Player.coolDown = CS.UnityEngine.Time.time
 	else
@@ -3697,15 +3705,19 @@ function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 	-- body
 	ClickEvent._play_ui.gangPaiBar.visible = true
 	ClickEvent._play_ui.passButton.visible = true
+	Player.LogWarning("gangtype:"..cardType)
+	local gangPaiGroupTemp
 	if cardType == "CARD_TYPE_JIAN" then
-		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
+		Player.LogWarning("xuanfeng:CARD_TYPE_JIAN")
+		gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..1)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..2)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..3)
 		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
 	elseif cardType == "CARD_TYPE_FENG" then
-		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
+		Player.LogWarning("xuanfeng:CARD_TYPE_FENG")
+		gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..1)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..2)
@@ -3713,7 +3725,7 @@ function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader04").url = UIPackage.GetItemURL("MXUI",cardType.."_"..4)
 		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
 	else
-		local gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
+		gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..paiValue)

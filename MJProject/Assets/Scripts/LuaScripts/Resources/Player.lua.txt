@@ -119,7 +119,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0823"
+Player.pc_version = "1.0.1.0824"
 
 Player.sayHiTimestarmp = nil
 
@@ -150,7 +150,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -977,7 +977,7 @@ function Player.OnRoomInformation(type_t,stuff)
 
     for k,v in pairs(Player._all_players_data) do
         for j,c in pairs(Player._all_players_data) do
-            if v.common_prop.player_id ~= v.common_prop.player_id and v.ip_address == c.ip_address then
+            if v.common_prop.player_id ~= c.common_prop.player_id and v.ip_address == c.ip_address then
                 ClickEvent.ShowSmallWindow(2037)
                 return
             end
@@ -1099,6 +1099,8 @@ function Player.OnPlayerList(type_t,stuff)
     Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(message.wechat.nickname))
     Player.wechat_sex = message.wechat.sex
     Player.wechat_headimgurl = message.wechat.headimgurl
+
+    Player.LogWarning(Player.wechat_nickname)
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
