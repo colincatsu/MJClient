@@ -9,7 +9,7 @@ local isAndroid = CS.LuaCommon.isAndroid
 local isIos = CS.LuaCommon.isIos
 
 if not Player._connected then
-    if isAndroid then
+    if isAndroid and isAndroid == false then
         Player.LogWarning("android")
         _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb","rb")
         _buffer = _addr:read "*a"
