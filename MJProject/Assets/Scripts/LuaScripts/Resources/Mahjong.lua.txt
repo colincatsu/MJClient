@@ -162,6 +162,7 @@ function start()
 	Player.huPaiPosition = -1
 	ClickEvent.notPushPassMsg = false
 	diceHasPlay = false
+	Player.hasShowIPSame = false
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -634,7 +635,7 @@ function MahJong.ModelPoolDelete(cardNumber,isBack)
 				_modelPool[modelPoolBackPointer-1]:SetActive(false)
 			else
 				_modelPool[modelPoolBackPointer]:SetActive(false)
-				if modelPoolBackPointer == diceNumber + 1 then
+				if diceNumber and modelPoolBackPointer == diceNumber + 1 then
 					diceNumber = nil
 				end
 				modelPoolBackPointer = modelPoolBackPointer - 2
@@ -1087,6 +1088,8 @@ function MahJong.ZhuaPai()
 	else
 		MahJong.SortZhuaPai()
 	end
+	--[[
+	--]]
 	if Player.isTingPaiTuoGuan and Player.hasOperation == false then
 		local co = coroutine.create(function()
 		    yield_return(CS.UnityEngine.WaitForSeconds(0.5))
@@ -2511,34 +2514,43 @@ function MahJong.ClickGangPai( ... )
 	-- body
 	Player.LogWarning("GangPai")
 	local paiNumber = nil
+	local deletePaiNumber = 0
 	local tempPaiType = _gang_pai_father.cards.deleteCards[1].card_type
+	local tempPai = {}
+	tempPai.card_type = tempPaiType
+	tempPai.card_value = _gang_pai_father.cards.deleteCards[1].paiValue
 	for k,v in pairs(_gang_pai_father.cards.deleteCards) do
 		for m,n in pairs(_player_father.cards) do
 			if n.paiType == v.card_type and n.paiValue == v.paiValue then
 				paiNumber = m
 				Player.LogWarning(paiNumber)
+				if not paiNumber or paiNumber <= 0 then
+					Player.LogWarning("no value")
+					break
+				end
+				_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+				if MahJong._current_click_pai and _player_father.cards[paiNumber].child == MahJong._current_click_pai then
+					MahJong._current_click_pai = nil
+				end
+				CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
+				deletePaiNumber = deletePaiNumber + 1
+				MahJong._current_click_pai = nil
+				_player_father.cards[paiNumber] = {}
+				MahJong.SortPlayerPai(paiNumber)
 				break
 			end
 		end
-		if not paiNumber or paiNumber <= 0 then
-			Player.LogWarning("no value")
-			break
-		end
-		_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
-		if _player_father.cards[paiNumber].child == MahJong._current_click_pai then
-			MahJong._current_click_pai = nil
-		end
-		CS.UnityEngine.Object.Destroy(_player_father.cards[paiNumber].parent)
-		MahJong._current_click_pai = nil
-		_player_father.cards[paiNumber] = {}
-		MahJong.SortPlayerPai(paiNumber)
 	end
 	if tempPaiType == "CARD_TYPE_FENG" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
 	elseif tempPaiType == "CARD_TYPE_JIAN" then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
 	else
-		Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},_gang_pai_father.cards.deleteCards[1].paiValue)
+		if deletePaiNumber < 4 then
+			Player.CmdPaiOperation("PAI_OPER_TYPE_GANGPAI",{},tempPai)
+		else
+			Player.CmdPaiOperation("PAI_OPER_TYPE_ANGANGPAI",{},tempPai)
+		end
 	end
 
 	if _gang_pai_father then
@@ -3492,8 +3504,9 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		_dice_red:SetActive(true)
 	end
-
+	Player.LogWarning("playdice::"..tostring(diceNumber))
 	if diceNumber and diceNumber%2 == 0 then
+		Player.LogWarning("nuobao::"..tostring(diceNumber))
 		local tempDiceNumber = diceNumber
 		for i=1,Player.baopaiPosition-1 do
 			local forwardPoolNumber = math.fmod((tempDiceNumber + 1),_model_all_pai_number)

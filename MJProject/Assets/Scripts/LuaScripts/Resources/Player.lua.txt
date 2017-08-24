@@ -80,6 +80,7 @@ Player.longitude = -1.0
 Player.isPlaying = false
 Player.isPlayerPaiShowing = false
 Player.hasPlayedRoundEnd = false
+Player.hasShowIPSame = false
 Player.playerScore = {--游戏每家分数保存
     [0] = 0,
     [1] = 0,
@@ -119,7 +120,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0824"
+Player.pc_version = "1.0.1.0825"
 
 Player.sayHiTimestarmp = nil
 
@@ -150,7 +151,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -977,7 +978,8 @@ function Player.OnRoomInformation(type_t,stuff)
 
     for k,v in pairs(Player._all_players_data) do
         for j,c in pairs(Player._all_players_data) do
-            if v.common_prop.player_id ~= c.common_prop.player_id and v.ip_address == c.ip_address then
+            if v.common_prop.player_id ~= c.common_prop.player_id and v.ip_address == c.ip_address and Player.hasShowIPSame == false then
+                Player.hasShowIPSame = true
                 ClickEvent.ShowSmallWindow(2037)
                 return
             end

@@ -4,7 +4,7 @@ local StringTable = require "StringTable"
 ClickEvent = {}
 ClickEvent.panelTable = {
 	_main_ui = "Login",
-	_choose_ui = "MainMenu",
+	_choose_ui = "MainMenuAndroid",
 	_choose_ui_ios = "MainMenuIOS",
 	_create_room_ui = "CreateRoom",
 	_join_room_ui = "GetintoRoom",
@@ -738,7 +738,7 @@ function ClickEvent.PaiOperationState()
 	if Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
-				if m == "PAI_OPER_TYPE_ANGANGPAI" then
+				if m == "PAI_OPER_TYPE_ANGANGPAI" or m == "PAI_OPER_TYPE_GANGPAI" then
 					angangCount = angangCount + 1
 				elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" or m == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 					xuanfengCount = xuanfengCount + 1
@@ -3654,7 +3654,7 @@ function ClickEvent.GameGangButton(gameObject)
 	if Player._operation_alert_cache.pais then
 		for k,v in pairs(Player._operation_alert_cache.pais) do
 			for j,m in pairs(v.oper_list) do
-				if m == "PAI_OPER_TYPE_ANGANGPAI" then
+				if m == "PAI_OPER_TYPE_ANGANGPAI" or m == "PAI_OPER_TYPE_GANGPAI" then
 					angangCount = angangCount + 1
 				end
 			end
@@ -3664,7 +3664,7 @@ function ClickEvent.GameGangButton(gameObject)
 		if Player._operation_alert_cache.pais then
 			for k,v in pairs(Player._operation_alert_cache.pais) do
 				for j,m in pairs(v.oper_list) do
-					if m == "PAI_OPER_TYPE_ANGANGPAI" then
+					if m == "PAI_OPER_TYPE_ANGANGPAI" or m == "PAI_OPER_TYPE_GANGPAI" then
 						Player.MahJong.CreateGangPai(v.pai)
 					end
 				end
