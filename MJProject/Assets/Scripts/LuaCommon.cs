@@ -26,8 +26,8 @@ public class LuaEnvSingleton
 [LuaCallCSharp]
 public class LuaCommon
 {
-#if     UNITY_IOS || UNITY_IPHONE
-    public static string resultPath = Application.streamingAssetsPath + "/";
+#if UNITY_IOS || UNITY_IPHONE && !UNITY_EDITOR
+    public static string resultPath = Application.dataPath + "/Raw/";
     public static bool isAndroid = false;
     public static bool isIos = true;
 #elif   UNITY_ANDROID && !UNITY_EDITOR
