@@ -26,7 +26,14 @@ public class LuaEnvSingleton
 [LuaCallCSharp]
 public class LuaCommon
 {
-#if UNITY_IOS || UNITY_IPHONE && !UNITY_EDITOR
+#if   UNITY_EDITOR
+    public static string resultPath = Application.streamingAssetsPath + "/";
+    public static bool isAndroid = false;
+    public static bool isIos = false;
+    //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
+    //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
+    //public static bool android_platform = false;
+#elif UNITY_IOS || UNITY_IPHONE && !UNITY_EDITOR
     public static string resultPath = Application.dataPath + "/Raw/";
     public static bool isAndroid = false;
     public static bool isIos = true;
@@ -34,13 +41,6 @@ public class LuaCommon
     public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
     public static bool isAndroid = true;
     public static bool isIos = false;
-#elif   UNITY_EDITOR
-    public static string resultPath = Application.streamingAssetsPath + "/";
-    public static bool isAndroid = false;
-    public static bool isIos = false;
-    //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
-    //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
-    //public static bool android_platform = false;
 #elif   UNITY_STANDALONE_OSX
     public static string resultPath = Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
