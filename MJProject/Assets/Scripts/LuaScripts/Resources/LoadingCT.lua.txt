@@ -97,7 +97,7 @@ function LoadingCT.ToSence(senceName)
 	-- body
 	local co = coroutine.create(function()
 		--yield_return(CS.UnityEngine.WaitForSeconds(3))
-	    yield_return(CS.UnityEngine.Application.LoadLevelAsync(senceName))
+	    yield_return(CS.UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(senceName))
 	end)
 	coroutine.resume(co)
 end

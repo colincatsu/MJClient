@@ -3449,7 +3449,7 @@ end
 
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
-    if baopai then
+    if baopai and baopai.card_value ~= 0 then
 		ClickEvent.ShowBaoPai(baopai)
 		Player.LogWarning("jxyHasPlay:")
 		Player.LogWarning(diceHasPlay)
