@@ -134,6 +134,7 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(GCloudVoiceMode),
                 typeof(UnityEngine.Animation),
                 typeof(UnityEngine.AudioSource),
+                typeof(UnityEngine.Camera),
             };
         }
     }
