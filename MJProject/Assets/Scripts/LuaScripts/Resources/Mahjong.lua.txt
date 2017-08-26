@@ -1644,9 +1644,11 @@ function MahJong.CreatePlayerPai(isRoomSync)
         		tempPaiPool = n
         	end
         end
-        for i, m in pairs(v.cards) do
-        	paiCount = paiCount + 1
-			MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+        if tempPaiPool and tempPaiPool ~= {} then
+	        for i, m in pairs(v.cards) do
+	        	paiCount = paiCount + 1
+				MahJong.CreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+	        end
         end
     end
 	MahJong.SortPlayerPai()
