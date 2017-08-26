@@ -33,7 +33,7 @@ public class LuaCommon
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
     //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
     //public static bool android_platform = false;
-#elif UNITY_IOS || UNITY_IPHONE && !UNITY_EDITOR
+#elif UNITY_IOS || UNITY_IPHONE
     public static string resultPath = Application.dataPath + "/Raw/";
     public static bool isAndroid = false;
     public static bool isIos = true;
