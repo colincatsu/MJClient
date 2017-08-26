@@ -350,7 +350,7 @@ end
 
 function ClickEvent.OnSignalLevel(signalLevel)
 	-- body
-	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 		if signalLevel == 3 then
 			ClickEvent._play_ui.wlanShow.selectedIndex = 0
 		elseif signalLevel == 2 then
@@ -421,7 +421,7 @@ function ClickEvent.ShowBaoPai(paiData)
 
 function ClickEvent.UpdateTime( ... )
 	-- body
-	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 		local hour = tostring(CS.System.DateTime.Now.Hour)
 		local minute = tostring(CS.System.DateTime.Now.Minute)
 		if CS.System.DateTime.Now.Hour < 10 then
@@ -436,7 +436,7 @@ end
 
 function ClickEvent.PlayMoveTitle()
 	-- body
-	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "FairyMainUI" then
+	if CS.UnityEngine.Application.loadedLevelName ~= "PlaySence" and CS.UnityEngine.Application.loadedLevelName ~= "FairyMainUI" then
 		return
 	end
 	if not _currentPanel or not _currentPanel.panel or not ClickEvent._play_ui.titleFather then
@@ -863,7 +863,7 @@ end
 
 function ClickEvent.ShowToast(content)
 	-- body
-	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+	if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui,true)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
@@ -1948,7 +1948,7 @@ function ClickEvent.ShowDissolvePanel(data)
 			--countDisagree = countDisagree + 1
 			---[[
 			Player.LogWarning("Dissolve:")
-			if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+			if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
 				ClickEvent.Close()
 				Player.dismissIsShowing = false
 				ClickEvent.ShowToast(StringTable.Get(2011))

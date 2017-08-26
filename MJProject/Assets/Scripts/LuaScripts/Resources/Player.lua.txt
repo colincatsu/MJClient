@@ -151,7 +151,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -336,7 +336,7 @@ function Player.LoadScene(senceName, buffer)
     end
     Effect.DestroyObj()
     CS.UnityEngine.Resources.UnloadUnusedAssets()
-    CS.UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("LoadingSence")
+    CS.UnityEngine.Application.LoadLevelAsync("LoadingSence")
 end
 
 ---------------------------------------------------------------------------
@@ -417,17 +417,17 @@ function Player.myUpdate( ... )
             return
         end
         if ClickEvent.Close() == false then
-            if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+            if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
                 ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2003))
-            elseif CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FairyMainUI" then
+            elseif CS.UnityEngine.Application.loadedLevelName == "FairyMainUI" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
                 ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2002))
             end
         end
     end
 
-    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
         if CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.IPhonePlayer or CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.Android then
             if CS.UnityEngine.Input.touchCount > 0 then
                 local touchPoint = CS.UnityEngine.Input.touches[0]
@@ -713,7 +713,7 @@ function Player.OnRoomDisMiss(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomDisMiss",stuff)
-    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
+    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
         ClickEvent.ShowDissolvePanel(message.list)
     end
 end
@@ -734,14 +734,14 @@ function Player.OnRoomState(type_t,stuff)
         end
     end
     if message.oper_type == "GAME_OPER_TYPE_LEAVE" then
-        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             --Player.LoadScene("FairyMainUI")
             ClickEvent.ShowLeaveRoom(2034)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
-        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             Player.returnMainUI = true
@@ -749,13 +749,13 @@ function Player.OnRoomState(type_t,stuff)
             ClickEvent.ShowLeaveRoom(2009)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
-        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             ClickEvent.ShowToast(StringTable.Get(2011))
         end
     elseif message.oper_type == "GAME_OPER_TYPE_HOSTER_DISMISS" then
-        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             Player.returnMainUI = true
