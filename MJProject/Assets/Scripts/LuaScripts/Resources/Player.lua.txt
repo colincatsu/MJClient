@@ -336,7 +336,7 @@ function Player.LoadScene(senceName, buffer)
     end
     Effect.DestroyObj()
     CS.UnityEngine.Resources.UnloadUnusedAssets()
-    CS.UnityEngine.Application.LoadLevelAsync("LoadingSence")
+    CS.UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("LoadingSence")
 end
 
 ---------------------------------------------------------------------------

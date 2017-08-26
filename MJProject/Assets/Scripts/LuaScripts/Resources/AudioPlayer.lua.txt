@@ -62,11 +62,11 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume)
 		soundAudioSource[soundName].object = GameObject(soundName)
 		soundAudioSource[soundName].object.transform:SetParent(audioFather.transform)
 		soundAudioSource[soundName].audioSource = soundAudioSource[soundName].object:AddComponent(typeof(AudioSource))
-		soundAudioSource[soundName].audioSource.clip = Load("Audio/"..soundName)
 		--soundAudioSource[soundName].audioSource.playOnAwake = false
 		soundAudioSource[soundName].audioSource.loop = isLoop
+		soundAudioSource[soundName].audioSource.clip = Load("Audio/"..soundName)
 	end
-	soundAudioSource[soundName].object:GetComponent("AudioSource"):Play()
+	soundAudioSource[soundName].audioSource:Play()
 	soundAudioSource[soundName].audioSource.volume = volume
 end
 
@@ -80,7 +80,7 @@ end
 function AudioPlayer.StopSound(soundName)
 	-- body
 	if soundAudioSource[soundName] then
-		soundAudioSource[soundName].object:GetComponent("AudioSource"):Stop()
+		soundAudioSource[soundName].audioSource:Stop()
 	end
 end
 
