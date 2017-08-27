@@ -382,7 +382,7 @@ function Player.myUpdate( ... )
         end
     end
     --[[
-    if Player.sayHiTimestarmp and CS.UnityEngine.Application.loadedLevelName ~= "LoadingSence" then
+    if Player.sayHiTimestarmp and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" then
         if CS.UnityEngine.Time.time - Player.sayHiTimestarmp > Player.sayHiTimeOut then
             Player.sayHiTimestarmp = CS.UnityEngine.Time.time
             ClickEvent.ShowNotMoveToast(2028)
@@ -417,10 +417,10 @@ function Player.myUpdate( ... )
             return
         end
         if ClickEvent.Close() == false then
-            if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+            if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
                 ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2003))
-            elseif CS.UnityEngine.Application.loadedLevelName == "FairyMainUI" then
+            elseif CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FairyMainUI" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
                 ClickEvent.PopPanelShowText("PopWindowsSmallShowText",StringTable.Get(2002))
             end
@@ -713,7 +713,7 @@ function Player.OnRoomDisMiss(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.RoomDisMiss",stuff)
-    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" and ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
         ClickEvent.ShowDissolvePanel(message.list)
     end
 end
@@ -734,14 +734,14 @@ function Player.OnRoomState(type_t,stuff)
         end
     end
     if message.oper_type == "GAME_OPER_TYPE_LEAVE" then
-        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             --Player.LoadScene("FairyMainUI")
             ClickEvent.ShowLeaveRoom(2034)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
-        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             Player.returnMainUI = true
@@ -749,13 +749,13 @@ function Player.OnRoomState(type_t,stuff)
             ClickEvent.ShowLeaveRoom(2009)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
-        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             ClickEvent.ShowToast(StringTable.Get(2011))
         end
     elseif message.oper_type == "GAME_OPER_TYPE_HOSTER_DISMISS" then
-        if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
             ClickEvent.Close()
             Player.dismissIsShowing = false
             Player.returnMainUI = true

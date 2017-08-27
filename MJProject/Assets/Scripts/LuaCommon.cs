@@ -138,6 +138,7 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(TouchCT),
                 typeof(UnityEngine.Application),
                 typeof(UnityEngine.SceneManagement.SceneManager),
+                typeof(UnityEngine.SceneManagement.Scene),
             };
         }
     }
