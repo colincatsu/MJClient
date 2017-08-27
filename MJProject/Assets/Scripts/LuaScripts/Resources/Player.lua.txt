@@ -427,7 +427,7 @@ function Player.myUpdate( ... )
         end
     end
 
-    if CS.UnityEngine.Application.loadedLevelName == "PlaySence" then
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
         if CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.IPhonePlayer or CS.UnityEngine.Application.platform == CS.UnityEngine.RuntimePlatform.Android then
             if CS.UnityEngine.Input.touchCount > 0 then
                 local touchPoint = CS.UnityEngine.Input.touches[0]

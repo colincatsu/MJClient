@@ -135,10 +135,9 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(UnityEngine.Animation),
                 typeof(UnityEngine.AudioSource),
                 typeof(UnityEngine.Camera),
-                typeof(UnityEngine.Input),
                 typeof(TouchCT),
                 typeof(UnityEngine.Application),
-                typeof(UnityEngine.RuntimePlatform),
+                typeof(UnityEngine.SceneManagement.SceneManager),
             };
         }
     }
