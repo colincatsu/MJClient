@@ -151,7 +151,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()

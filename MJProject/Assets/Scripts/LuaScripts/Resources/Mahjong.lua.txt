@@ -29,7 +29,7 @@ local Camera = CS.UnityEngine.Camera
 local Instantiate = CS.UnityEngine.Object.Instantiate
 local Load = CS.UnityEngine.Resources.Load
 local Destroy = CS.UnityEngine.Object.Destroy
-local _mj_asset = {}
+_mj_asset = {}
 local _player_middle_pos--门前牌中心点
 local _player_third_pos
 local _player_base_pos
@@ -293,8 +293,8 @@ function MahJong.MjLoader()
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
 	message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
 	Player._calculate_table_loader = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.RoomFan")
-	--[[
 	AssetManager.PrintMessage(_mj_asset)
+	--[[
 	for k, v in pairs(message) do  
     	CS.UnityEngine.Debug.LogWarning(v)
 	end

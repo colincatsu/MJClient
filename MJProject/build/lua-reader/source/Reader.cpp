@@ -143,7 +143,11 @@ bool AssetManager::LoadAssets(fs::path& full_path)
 					return false;
 				}
 
-				int32_t found_pos = directory_string.find_last_of("\\");
+				#if defined(WIN32)
+	                int32_t found_pos = directory_string.find_last_of("\\");
+				#else
+	                int32_t found_pos = directory_string.find_last_of("//");
+				#endif
 				const std::string& message_name = directory_string.substr(found_pos + 1);	//MESSAGE名称即为文件夹名称
 				const pb::Descriptor* descriptor = this->_file_descriptor->FindMessageTypeByName(message_name);
 				if (!descriptor) 
