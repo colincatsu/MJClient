@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using XLua;
 using gcloud_voice;
@@ -14,6 +15,10 @@ public class Platform : MonoBehaviour {
     private Dictionary<int, int> code2PicID;
     private static int spriteCnt;
     public IGCloudVoice m_voiceengine = null;
+
+    [DllImport("__Internal")]
+    private static extern void wxLogin();
+
     public static Platform Instance
     {
         get
@@ -243,6 +248,8 @@ public class Platform : MonoBehaviour {
     {
         if (currentActivity != null)
             currentActivity.Call("wxLogin");
+        if (LuaCommon.isIos)
+            wxLogin();
     }
 
     public void WXShare(string title,string description)
