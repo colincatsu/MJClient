@@ -2127,7 +2127,7 @@ function ClickEvent.InviteWechatFriends(gameObject)
 		elseif v == "ROOM_EXTEND_TYPE_BAOSANJIA" then
 			fanxing = fanxing.."点炮包三家"
 		end
-		fanxing = fanxing.."、"
+		fanxing = fanxing.."  "
 	end
 	fanxing = string.sub(fanxing, 1, -2)
 	local description = "局数:"..tostring(Player._room_information.options.open_rands)..fanxing
@@ -3516,7 +3516,7 @@ function ClickEvent.GameBillButton(gameObject)
 		elseif v == "ROOM_EXTEND_TYPE_BAOSANJIA" then
 			fanxing = fanxing.."点炮包三家"
 		end
-		fanxing = fanxing.."、"
+		fanxing = fanxing.."  "
 	end
 	fanxing = string.sub(fanxing, 1, -2)
 	_popPanel[popPanelIndex].panel:GetChild("FanText").text = fanxing
