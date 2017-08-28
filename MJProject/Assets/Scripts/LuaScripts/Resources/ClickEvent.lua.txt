@@ -73,6 +73,9 @@ function ClickEvent.Awake( ... )
 	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
 	ClickEvent._createObject = {}
 	CS.UnityEngine.Application.targetFrameRate = 30
+	if CS.LuaCommon.isIos == true then
+		ClickEvent.panelTable._choose_ui = ClickEvent.panelTable._choose_ui_ios
+	end
 end
 function ClickEvent.Start(loadUI)
 	-- body
