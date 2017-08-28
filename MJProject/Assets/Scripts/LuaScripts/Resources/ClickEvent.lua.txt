@@ -2131,7 +2131,7 @@ function ClickEvent.InviteWechatFriends(gameObject)
 	end
 	fanxing = string.sub(fanxing, 1, -2)
 	local description = "局数:"..tostring(Player._room_information.options.open_rands)..fanxing
-	WeChatPlatform:WXShare(title,description)
+	WeChatPlatform:WXShare(title,description,"http://m.cloudbm.wang/download_app.html")
 end
 
 function ClickEvent.CopyRoomNum( ... )

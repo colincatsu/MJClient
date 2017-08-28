@@ -19,6 +19,15 @@ public class Platform : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern void wxLogin();
 
+    [DllImport("__Internal")]
+    private static extern void wxCopyRoom(string roomID);
+
+    [DllImport("__Internal")]
+    private static extern void wxShare(string title, string desc, string url);
+
+    [DllImport("__Internal")]
+    private static extern void wxShareTexture(byte[] bytes,int byteLength, int scene);
+
     public static Platform Instance
     {
         get
@@ -252,12 +261,14 @@ public class Platform : MonoBehaviour {
             wxLogin();
     }
 
-    public void WXShare(string title,string description)
+    public void WXShare(string title,string description,string url)
     {
         if(currentActivity != null)
         {
-            currentActivity.Call("wxShare",title,description);
+            currentActivity.Call("wxShare",title,description,url);
         }
+        if (LuaCommon.isIos)
+            wxShare(title, description, url);
     }
 
     public void CopyRoomID(string roomid)
@@ -266,6 +277,8 @@ public class Platform : MonoBehaviour {
         {
             currentActivity.Call("wxCopyRoom", roomid);
         }
+        if (LuaCommon.isIos)
+            wxCopyRoom(roomid);
     }
 
     [CSharpCallLua]
@@ -332,6 +345,8 @@ public class Platform : MonoBehaviour {
         {
             currentActivity.Call("wxShareTexture", bytes, scene);
         }
+        if (LuaCommon.isIos)
+            wxShareTexture(bytes, bytes.Length, scene);
     }
 
     [CSharpCallLua]
