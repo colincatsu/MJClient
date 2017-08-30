@@ -120,7 +120,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0829"
+Player.pc_version = "1.0.1.0830"
 
 Player.sayHiTimestarmp = nil
 
@@ -151,7 +151,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -453,6 +453,14 @@ end
 ---------------------------------------------------------------------------
 --数据封装
 ---------------------------------------------------------------------------
+
+function Player.CmdGetRoomData(roomID)
+    -- body
+    getRoomData = {
+        room_id = roomID,
+    }
+    this.SendProtocol("GetRoomData",getRoomData)
+end
 
 function Player.CmdBattleHistory(startIndex,endIndex)
     -- body
@@ -944,13 +952,22 @@ function Player.OnRoomInformation(type_t,stuff)
     if message.player_list then
         for k,v in pairs(message.player_list) do
             Player.LogWarning("playerState:"..v.oper_type)
-            if v.oper_type == "GAME_OPER_TYPE_NULL" or v.oper_type == "GAME_OPER_TYPE_ONLINE" or v.oper_type == "GAME_OPER_TYPE_START" then
+            if message.sync_type == "ROOM_SYNC_TYPE_NORMAL" then
                 Player._all_players_data[k] = v
                 if v.common_prop.player_id == Player._player_data.common_prop.player_id then
                     Player._my_player_data = v
                     --Player.ThreadFunction(
                     Player.MahJong.UpdateMyDataState()
                 end
+            else
+                for j,m in pairs(Player._all_players_data) do
+                    if m.position == v.position then
+                        m.oper_type = v.oper_type
+                    end
+                end
+            end
+            --[[
+            if v.oper_type == "GAME_OPER_TYPE_NULL" or v.oper_type == "GAME_OPER_TYPE_ONLINE" or v.oper_type == "GAME_OPER_TYPE_START" then
             elseif v.oper_type == "GAME_OPER_TYPE_OFFLINE" then
                 for j,m in pairs(Player._all_players_data) do
                     if m.position == v.position then
@@ -959,6 +976,7 @@ function Player.OnRoomInformation(type_t,stuff)
                     end
                 end
             end
+            --]]
         end
         if Player._my_player_data then
             --Player.ThreadFunction(

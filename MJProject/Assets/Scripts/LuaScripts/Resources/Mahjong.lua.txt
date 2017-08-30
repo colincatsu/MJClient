@@ -309,6 +309,12 @@ end
 
 function MahJong.PlayerModelCameraPos()
 	-- body
+	if string.format("%.1f", Camera.main.aspect) == "1.3" then
+		Camera.main.orthographicSize = 0.13
+		Camera.main.transform.parent:GetComponent("Camera").fieldOfView = 33
+		--Camera.main.aspect = 5/3--CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
+	end
+	Player.LogWarning("jxyCamera:"..Camera.main.aspect)
 	_player_middle_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth*13/28,Camera.main.pixelHeight/100,0.35))
 	_player_third_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth*2/5,Camera.main.pixelHeight/100,0.35))
 	_player_base_pos = _player_middle_pos
@@ -539,7 +545,9 @@ function MahJong.ResetGameState()
     end
 
     --玩家面前牌
-    CS.UnityEngine.Object.Destroy(_player_father.father)
+    if _player_father then
+	    CS.UnityEngine.Object.Destroy(_player_father.father)
+    end
     _player_father = nil
     if _baopai_model then
     	CS.UnityEngine.Object.Destroy(_baopai_model)

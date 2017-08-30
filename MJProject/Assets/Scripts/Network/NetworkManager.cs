@@ -112,7 +112,12 @@ namespace MX
 
 		public int SendMessage(byte[] buffer)
         {
-            return LogicSocket.Send(buffer);
+            if (IsConnected)
+            {
+                //Debug.LogWarning("sendMessage");
+                return LogicSocket.Send(buffer);
+            }
+            return 0;
         }
 
         public bool IsConnected

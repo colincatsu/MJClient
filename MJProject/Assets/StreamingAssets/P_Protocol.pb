@@ -1,5 +1,5 @@
 
-±”
+ß—
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -147,7 +147,10 @@ expires_in (
 SwitchAccountE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_SWITCH_ACCOUNT
 account_name (
-	player_id ("¥
+	player_id ("d
+GetRoomDataD
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_ROOM_DATA
+room_id ("¥
 WechatUnion
 openid (
 nickname (
@@ -331,10 +334,11 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("ƒ
+common_reward_id ("´
 RoomInformation@
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO9
-player_list (2$.Adoter.Asset.RoomInformation.Playerò
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO/
+	sync_type (2.Adoter.Asset.ROOM_SYNC_TYPE9
+player_list (2$.Adoter.Asset.RoomInformation.Playerò
 Player-
 position (2.Adoter.Asset.POSITION_TYPE/
 	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
@@ -467,7 +471,10 @@ RoomBeenIn>
 GmtInnerMetaE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_GMT_INNER_META
 
-inner_meta (*u
+inner_meta ("ƒ
+PlayerStateC
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2S_PLAYER_STATE/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE*u
 ERR_USE_ITEM_TYPE
 ERR_USE_ITEM_TYPE_SUCCESS !
 ERR_USE_ITEM_TYPE_LEVEL_BELOW
@@ -537,7 +544,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*î
+ERROR_COMMON_REWARD_HAS_GOT3*°
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -567,7 +574,8 @@ ERROR_CODE
 META_TYPE_C2S_LOAD_SCENE9
 META_TYPE_C2S_RECONNECT:
 META_TYPE_C2S_WECHAT_LOGIN; 
-META_TYPE_C2S_SWITCH_ACCOUNT<
+META_TYPE_C2S_SWITCH_ACCOUNT<
+META_TYPE_C2S_GET_ROOM_DATA=
 META_TYPE_C2S_COUNTÿ
 META_TYPE_S2C_BEGINõ
 META_TYPE_S2C_TICKETö
@@ -599,7 +607,8 @@ ERROR_CODE
 META_TYPE_S2C_COUNTè
 META_TYPE_S2S_REGISTERé!
 META_TYPE_S2S_KICKOUT_PLAYERê!
-META_TYPE_S2S_GMT_INNER_METAë*l
+META_TYPE_S2S_GMT_INNER_METAë
+META_TYPE_S2S_PLAYER_STATEì*l
 ACCOUNT_TYPE
 ACCOUNT_TYPE_8HERE
 ACCOUNT_TYPE_GUEST
@@ -632,7 +641,10 @@ ERROR_CODE
 GAME_OPER_TYPE_DISMISS_DISAGREE!
 GAME_OPER_TYPE_HOSTER_DISMISS
 GAME_OPER_TYPE_OFFLINE
-GAME_OPER_TYPE_ONLINE	*y
+GAME_OPER_TYPE_ONLINE	*M
+ROOM_SYNC_TYPE
+ROOM_SYNC_TYPE_NORMAL 
+ROOM_SYNC_TYPE_STATE_CHANGED*y
 CALCULATE_TYPE
 CALCULATE_TYPE_HUPAI
 CALCULATE_TYPE_LIUJU
