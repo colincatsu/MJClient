@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{0CA7E933-70C5-B6C2-B6EC-2BAD7DC9CC38}") = "MJProject", "Assembly-CSharp-firstpass.csproj", "{145409EB-214B-7D93-DB20-BA86E58A1F36}"
+EndProject
 Project("{0CA7E933-70C5-B6C2-B6EC-2BAD7DC9CC38}") = "MJProject", "Assembly-CSharp.csproj", "{BE078A9D-6D94-5FA2-DF4C-B7483C2FC9F2}"
 EndProject
 Project("{0CA7E933-70C5-B6C2-B6EC-2BAD7DC9CC38}") = "MJProject", "Assembly-CSharp-Editor.csproj", "{7C980B93-1D3B-0A43-95EB-F6EE44F6BFED}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{145409EB-214B-7D93-DB20-BA86E58A1F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{145409EB-214B-7D93-DB20-BA86E58A1F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{145409EB-214B-7D93-DB20-BA86E58A1F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{145409EB-214B-7D93-DB20-BA86E58A1F36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE078A9D-6D94-5FA2-DF4C-B7483C2FC9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE078A9D-6D94-5FA2-DF4C-B7483C2FC9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE078A9D-6D94-5FA2-DF4C-B7483C2FC9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
