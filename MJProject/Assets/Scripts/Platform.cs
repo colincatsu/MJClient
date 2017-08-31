@@ -57,6 +57,8 @@ public class Platform : MonoBehaviour {
     {
         this.products = products;
     }
+
+    public paraIntDelegate onPurchaseSuccess = null;
     private void TransactionPurchased(string productIdentifier)
     {
         for (int i = 0; i < GOODS_COUNT_PRICE; i++)
@@ -137,7 +139,10 @@ public class Platform : MonoBehaviour {
             return;
         }
         Init();
-
+        if (LuaCommon.isIos)
+        {
+            startBilling();
+        }
     }
 
     public static AndroidJavaClass jc;

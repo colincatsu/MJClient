@@ -234,12 +234,13 @@ function Network.OnException()
     ClickEvent.ShowNotMoveToast(2028)
     if not Player.disConnetedTime then
         Player.disConnetedTime = CS.UnityEngine.Time.time
-        --[[
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+            ClickEvent.CloseOperationPanel()
+        end
+        --[[
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             Player.LoadScene("FairyMainUI")
-        end
         --]]
     end
     Player.reConnect = true
@@ -247,7 +248,7 @@ end
 ---------------------------------------------------------------------------
 --连接中断，或者被踢掉
 ---------------------------------------------------------------------------
-function Network.OnDisconnect() 
+function Network.OnDisconnect()
     Player.LogWarning("OnDisconnect------->>>")
     if Player.isTimeOut then
         return
@@ -255,12 +256,13 @@ function Network.OnDisconnect()
     ClickEvent.ShowNotMoveToast(2028)
     if not Player.disConnetedTime then
         Player.disConnetedTime = CS.UnityEngine.Time.time
-        --[[
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+            ClickEvent.CloseOperationPanel()
+        end
+        --[[
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             Player.LoadScene("FairyMainUI")
-        end
         --]]
     end
     Player.reConnect = true
