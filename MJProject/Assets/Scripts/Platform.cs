@@ -116,6 +116,7 @@ public class Platform : MonoBehaviour {
                 if (_instance == null)
                 {
                     _instance = new GameObject("Platform").AddComponent<Platform>();
+                    _instance.gameObject.AddComponent<EasyStoreKit>();
                     _instance.Awake();
                     DontDestroyOnLoad(_instance.gameObject);
                 }
