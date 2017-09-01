@@ -146,10 +146,8 @@ function Player.LoadData( ... )
 
         message = AssetManager.GetMessagesByType("ASSET_TYPE_RECHARGE")
         Player.purchaseDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Recharge")
-        local index = 0
         for k,v in pairs(Player.purchaseDataTable) do
-            WeChatPlatform:AddProductData(v.product_id,v.price,index)
-            index = index + 1
+            WeChatPlatform:AddProductData(v.product_id,v.price,v.common_prop.global_id - 1310721)
         end
         WeChatPlatform:startBilling()
         message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
