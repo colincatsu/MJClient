@@ -68,6 +68,7 @@ public class Platform : MonoBehaviour {
     {
         this.products = products;
     }
+    [CSharpCallLua]
     public delegate void paraFloatDelegate(string paraStr, float paraFloat);
     public paraFloatDelegate onPurchaseSuccess = null;
 

@@ -75,7 +75,6 @@ Player.wechat_nickname = ""
 Player.wechat_sex = ""
 Player.wechat_headimgurl = ""
 local WeChatPlatform = CS.Platform.Instance
-WeChatPlatform.onPurchaseSuccess = Player.OnPurchaseSuccess
 Player.isFriendRoom = false
 Player.voiceRoomName = ""
 Player.latitude = -1.0
@@ -149,6 +148,7 @@ function Player.LoadData( ... )
         for k,v in pairs(Player.purchaseDataTable) do
             WeChatPlatform:AddProductData(v.product_id,v.price,v.common_prop.global_id - 1310721)
         end
+        WeChatPlatform.onPurchaseSuccess = Player.OnPurchaseSuccess
         WeChatPlatform:startBilling()
         message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
         Player.storeDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Mall")
