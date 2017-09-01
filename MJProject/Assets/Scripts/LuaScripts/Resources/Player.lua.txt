@@ -147,11 +147,12 @@ function Player.LoadData( ... )
         message = AssetManager.GetMessagesByType("ASSET_TYPE_RECHARGE")
         Player.purchaseDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Recharge")
         for k,v in pairs(Player.purchaseDataTable) do
-            --WeChatPlatform:AddProductData(v.product_id,v.price,v.common_prop.global_id - 1310721)
+            WeChatPlatform:AddProductData(v.product_id,v.price,v.common_prop.global_id - 1310721)
         end
         WeChatPlatform:startBilling()
         message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
         Player.storeDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Mall")
+        Player.CmdUpdateClientData(CS.SystemInfo.operatingSystem)
         --[[
         AssetManager.PrintMessage(Player.storeDataTable)
         message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
@@ -548,10 +549,11 @@ function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
     this.SendProtocol("GameSetting",gameSetting)
 end
 
-function Player.CmdUpdateClientData(latitudeInfo,longitudeInfo)
+function Player.CmdUpdateClientData(systemType,latitudeInfo,longitudeInfo)
     -- body
     updateClientData = {
         client_info = {
+            system = systemType,
             location = {
                 longitude = longitudeInfo,
                 latitude = latitudeInfo,
