@@ -17,12 +17,12 @@ public class Platform : MonoBehaviour {
     public IGCloudVoice m_voiceengine = null;
 
     public const int GOODS_COUNT_PRICE = 6;
-    //public static string[] productIdentifiers = new string[GOODS_COUNT_PRICE] { "xiangle_chaoyao_6yuan", "xiangle_chaoyao_30yuan",
-    //    "xiangle_chaoyao_68yuan", "xiangle_chaoyao_128yuan",
-    //    "xiangle_chaoyao_298yuan", "xiangle_chaoyao_618yuan"};
-    //public static float[] GOODS_PRICE = new float[GOODS_COUNT_PRICE] { 6f, 30f, 68f, 128f, 298f, 618f};
-    public static string[] productIdentifiers = new string[GOODS_COUNT_PRICE];
-    public static float[] GOODS_PRICE = new float[GOODS_COUNT_PRICE];
+    public static string[] productIdentifiers = new string[GOODS_COUNT_PRICE] { "xiangle_chaoyao_6yuan", "xiangle_chaoyao_30yuan",
+        "xiangle_chaoyao_68yuan", "xiangle_chaoyao_128yuan",
+        "xiangle_chaoyao_298yuan", "xiangle_chaoyao_618yuan"};
+    public static float[] GOODS_PRICE = new float[GOODS_COUNT_PRICE] { 6f, 30f, 68f, 128f, 298f, 618f };
+    //public static string[] productIdentifiers = new string[GOODS_COUNT_PRICE];
+    //public static float[] GOODS_PRICE = new float[GOODS_COUNT_PRICE];
     //public static string[] GOODS_MONEY = new string[GOODS_COUNT_PRICE] { "6", "30", "68", "128", "298", "618"};
     private StoreKitProduct[] products;
 
