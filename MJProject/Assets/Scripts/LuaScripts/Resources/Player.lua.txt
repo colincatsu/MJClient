@@ -46,6 +46,8 @@ local _calculate_data = {}--结算数据
 Player._all_calculate_data = {}--所有结算数据
 Player.activityDataTable = {}--活动数据
 Player.activityTable = {}
+Player.purchaseDataTable = {}--支付数据
+Player.storeDataTable = {}--商店数据
 Player._calculate_table_number = 0
 Player._room_information = {}--房间信息
 Player._room_calculate_data = nil--房间结算
@@ -73,6 +75,7 @@ Player.wechat_nickname = ""
 Player.wechat_sex = ""
 Player.wechat_headimgurl = ""
 local WeChatPlatform = CS.Platform.Instance
+WeChatPlatform.onPurchaseSuccess = Player.OnPurchaseSuccess
 Player.isFriendRoom = false
 Player.voiceRoomName = ""
 Player.latitude = -1.0
@@ -120,7 +123,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0831"
+Player.pc_version = "1.0.1.0901"
 
 Player.sayHiTimestarmp = nil
 
@@ -140,10 +143,21 @@ function Player.LoadData( ... )
         for k,v in pairs(data) do
             Player.activityDataTable =  v
         end
+
+        message = AssetManager.GetMessagesByType("ASSET_TYPE_RECHARGE")
+        Player.purchaseDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Recharge")
+        local index = 0
+        for k,v in pairs(Player.purchaseDataTable) do
+            WeChatPlatform:AddProductData(v.product_id,v.price,index)
+            index = index + 1
+        end
+        WeChatPlatform:startBilling()
+        message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
+        Player.storeDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Mall")
         --[[
+        AssetManager.PrintMessage(Player.storeDataTable)
         message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
         Player._calculate_table_loader = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.RoomFan")
-        AssetManager.PrintMessage(Player._calculate_table_loader)
         --]]
         --Player.LogWarning(Player.activityDataTable.room_card_limit_free_activity_id)
     end
@@ -220,6 +234,11 @@ function Player.GpsCallBack(latitude,longitude)
         --Player.CmdUpdateClientData(38.115556395496299,13.361389338970184)
         Player.CmdUpdateClientData(Player.latitude,Player.longitude)
     end
+end
+
+function Player.OnPurchaseSuccess(purchaseID,purchasePrice)
+    -- body
+    Player.CmdUserRecharge("RECHARGE_TYPE_IOS",purchaseID,productPrice)
 end
 ---------------------------------------------------------------------------
 --获取玩家ID
@@ -456,6 +475,24 @@ end
 ---------------------------------------------------------------------------
 --数据封装
 ---------------------------------------------------------------------------
+
+function Player.CmdBuySomething(mallID)
+    -- body
+    buySomething = {
+        mall_id = mallID,
+    }
+    this.SendProtocol("BuySomething",buySomething)
+end
+
+function Player.CmdUserRecharge(type,productID,productPrice)
+    -- body
+    userRecharge = {
+        recharge_type = type,
+        product_id = productID,
+        price = productPrice,
+    }
+    this.SendProtocol("UserRecharge",userRecharge)
+end
 
 function Player.CmdGetRoomData(roomID)
     -- body

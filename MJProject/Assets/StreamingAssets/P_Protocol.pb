@@ -1,5 +1,5 @@
 
-ß—
+ë™
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -232,7 +232,13 @@ click_push ("‡
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_ROOM_HISTORY
 start_index (
 	end_index (/
-history_list (2.Adoter.Asset.RoomHistory"û
+history_list (2.Adoter.Asset.RoomHistory"¨
+UserRechargeA
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_RECHARGE2
+recharge_type (2.Adoter.Asset.RECHARGE_TYPE
+
+product_id (
+price ("û
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON
@@ -544,7 +550,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*°
+ERROR_COMMON_REWARD_HAS_GOT3*Î
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -563,7 +569,8 @@ ERROR_CODE
 META_TYPE_SHARE_GAME_SETTING&
 "META_TYPE_SHARE_UPDATE_CLIENT_DATA
 META_TYPE_SHARE_SYSTEM_CHAT 
-META_TYPE_SHARE_ROOM_HISTORY
+META_TYPE_SHARE_ROOM_HISTORY
+META_TYPE_SHARE_RECHARGE
 META_TYPE_SHARE_COUNT2
 META_TYPE_C2S_BEGIN3
 META_TYPE_C2S_LOGIN4
@@ -613,7 +620,10 @@ ERROR_CODE
 ACCOUNT_TYPE_8HERE
 ACCOUNT_TYPE_GUEST
 ACCOUNT_TYPE_WECHAT
-ACCOUNT_TYPE_QQ*3
+ACCOUNT_TYPE_QQ*A
+RECHARGE_TYPE
+RECHARGE_TYPE_IOS
+RECHARGE_TYPE_ANDROID*3
 	CHAT_TYPE
 CHAT_TYPE_TEXT
 CHAT_TYPE_FACE*ñ
