@@ -85,14 +85,20 @@ public class Platform : MonoBehaviour {
         }
     }
 
-    public void callBilling(int id)
+    public void callBilling(string identifier)
     {
-        if (id < 0 || id >= productIdentifiers.Length || id >= products.Length)
+        bool hasString = false;
+        for(int i = 0; i < GOODS_COUNT_PRICE; i++)
+        {
+            if (products[i].identifier == identifier)
+                hasString = true;
+        }
+        if (!hasString)
         {
             Debug.LogError("callBilling error: wrong id");
             return;
         }
-        if (EasyStoreKit.BuyProductWithIdentifier(products[id].identifier, 1))
+        if (EasyStoreKit.BuyProductWithIdentifier(identifier, 1))
         {
             Debug.Log("identifier is right");
         }

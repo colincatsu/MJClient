@@ -2607,7 +2607,7 @@ end
 function ClickEvent.PriceButtonGems1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(0)
+		WeChatPlatform:callBilling("xiangle_chaoyao_6yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2616,7 +2616,7 @@ end
 function ClickEvent.PriceButtonGems2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(1)
+		WeChatPlatform:callBilling("xiangle_chaoyao_30yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2625,7 +2625,7 @@ end
 function ClickEvent.PriceButtonGems3( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(2)
+		WeChatPlatform:callBilling("xiangle_chaoyao_68yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2634,7 +2634,7 @@ end
 function ClickEvent.PriceButtonGems4( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(3)
+		WeChatPlatform:callBilling("xiangle_chaoyao_128yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2643,7 +2643,7 @@ end
 function ClickEvent.PriceButtonGems5( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(4)
+		WeChatPlatform:callBilling("xiangle_chaoyao_298yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2652,7 +2652,7 @@ end
 function ClickEvent.PriceButtonGems6( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling(5)
+		WeChatPlatform:callBilling("xiangle_chaoyao_618yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
