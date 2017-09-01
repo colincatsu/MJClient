@@ -237,6 +237,7 @@ end
 
 function Player.OnPurchaseSuccess(purchaseID,purchasePrice)
     -- body
+    print("jxyPurchase:"..purchaseID)
     Player.CmdUserRecharge("RECHARGE_TYPE_IOS",purchaseID,productPrice)
 end
 ---------------------------------------------------------------------------
