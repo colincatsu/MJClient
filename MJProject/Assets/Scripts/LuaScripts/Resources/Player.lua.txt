@@ -152,7 +152,7 @@ function Player.LoadData( ... )
         WeChatPlatform:startBilling()
         message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
         Player.storeDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Mall")
-        Player.CmdUpdateClientData(CS.SystemInfo.operatingSystem)
+        Player.CmdUpdateClientData(tostring(CS.UnityEngine.SystemInfo.operatingSystem),nil,nil)
         --[[
         AssetManager.PrintMessage(Player.storeDataTable)
         message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
