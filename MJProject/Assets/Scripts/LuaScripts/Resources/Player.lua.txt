@@ -122,11 +122,15 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0901"
+Player.pc_version = "1.0.2.0902"
 
 Player.sayHiTimestarmp = nil
 
 Player.baopaiPosition = nil
+
+Player.hasTestPauseServer = false
+Player.httpToken = ""
+Player.updateSignalTime = nil
 
 function Player.LoadData( ... )
     -- body
@@ -164,7 +168,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -415,6 +419,14 @@ function Player.myUpdate( ... )
                 ClickEvent.CloseOperationPanel()
             end
         end
+    end
+
+    if CS.LuaCommon.isIos == true and Player.updateSignalTime and CS.UnityEngine.Time.time - Player.updateSignalTime > 5 then
+        Player.updateSignalTime = CS.UnityEngine.Time.time
+        ClickEvent.UpdateSignalLevel(WeChatPlatform:SignalUpdate())
+    end
+    if not Player.updateSignalTime then
+        Player.updateSignalTime = CS.UnityEngine.Time.time
     end
 
     if Player.dismissIsShowing == true and Player.dismissHasClicked == false then
@@ -699,6 +711,10 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnBuySomething( ... )
+    -- body
+end
 
 function Player.OnUpdateClientData(type_t,stuff)
     -- body
@@ -1018,6 +1034,9 @@ function Player.OnRoomInformation(type_t,stuff)
                 end
             end
             --]]
+        end
+        if message.sync_type == "ROOM_SYNC_TYPE_NORMAL" then
+            Player._all_players_data = message.player_list
         end
         if Player._my_player_data then
             --Player.ThreadFunction(

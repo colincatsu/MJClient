@@ -1,5 +1,5 @@
 
-ßT
+¡T
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -130,7 +130,7 @@ LuckyPlate@
 DailyBonus@
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_DAILY_BONUS2
 common_prop (2.Adoter.Asset.AssetCommonProp
-common_reward_id ("Û
+common_reward_id ("ç
 Mall9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_MALL2
 common_prop (2.Adoter.Asset.AssetCommonProp1
@@ -143,11 +143,12 @@ goods_type (2.Adoter.Asset.Mall.GOODS_TYPE
 	huanledou (
 huanledou_show	 (
 activity_id
- ("B
+ ("\
 
 GOODS_TYPE
 GOODS_TYPE_HUANLEDOU
-GOODS_TYPE_NORMAL_ITEM"ú
+GOODS_TYPE_NORMAL_ITEM
+GOODS_TYPE_ROOM_CARD"ú
 RoomFan=
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM_FAN2
 common_prop (2.Adoter.Asset.AssetCommonProp

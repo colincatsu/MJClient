@@ -141,6 +141,9 @@ public class Platform : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern void wxShareTexture(byte[] bytes,int byteLength, int scene);
 
+    [DllImport("__Internal")]
+    private static extern int getSignalStrength();
+
     public static Platform Instance
     {
         get
@@ -376,6 +379,13 @@ public class Platform : MonoBehaviour {
             currentActivity.Call("wxLogin");
         if (LuaCommon.isIos)
             wxLogin();
+    }
+
+    public int SignalUpdate()
+    {
+        if (LuaCommon.isIos)
+            return getSignalStrength();
+        return 0;
     }
 
     public void WXShare(string title,string description,string url)

@@ -1,5 +1,5 @@
 
-Îô
+¢ö
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -270,11 +270,11 @@ product_id (
 source_player_id (
 destination_player_id (,
 
-error_code (2.Adoter.Asset.ERROR_CODE"w
+error_code (2.Adoter.Asset.ERROR_CODE"ë
 BuySomethingF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_BUY_SOMETHING
-mall_id (
-result ("í
+mall_id ((
+result (2.Adoter.Asset.ERROR_CODE"í
 	LoadSceneA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_LOAD_SCENE0
 	load_type (2.Adoter.Asset.LOAD_SCENE_TYPE
@@ -659,12 +659,13 @@ ERROR_CODE
 CALCULATE_TYPE_HUPAI
 CALCULATE_TYPE_LIUJU
 CALCULATE_TYPE_FULL
-CALCULATE_TYPE_DISMISS*ê
+CALCULATE_TYPE_DISMISS*¨
 KICK_OUT_REASON
 KICK_OUT_REASON_BEGIN 
 KICK_OUT_REASON_DISCONNECT
 KICK_OUT_REASON_OTHER_LOGIN!
-KICK_OUT_REASON_CHANGE_SERVER*<
+KICK_OUT_REASON_CHANGE_SERVER
+KICK_OUT_REASON_LOGOUT*<
 	ROLE_TYPE
 ROLE_TYPE_PLAYER
 ROLE_TYPE_GAME_SERVER

@@ -366,6 +366,20 @@ function ClickEvent.OnSignalLevel(signalLevel)
 	end
 end
 
+function ClickEvent.UpdateSignalLevel(signalLevel)
+	-- body
+	print("IOSsignalLevel:"..tostring(signalLevel))
+	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+		if signalLevel == 3 then
+			ClickEvent._play_ui.wlanShow.selectedIndex = 0
+		elseif signalLevel == 2 then
+			ClickEvent._play_ui.wlanShow.selectedIndex = 1
+		else
+			ClickEvent._play_ui.wlanShow.selectedIndex = 2
+		end
+	end
+end
+
 function ClickEvent.CommonPropertyUpdate( ... )
 	-- body
 	if _currentPanel.panel.name == ClickEvent.panelTable._choose_ui then
@@ -392,6 +406,12 @@ function ClickEvent.ShowSmallWindow(showContentNumber)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(showContentNumber)
+end
+
+function ClickEvent.ShowSmallWindowByContent(showContent)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = tostring(showContent)
 end
 
 function ClickEvent.ShowAlready(playerID)
@@ -2013,7 +2033,7 @@ end
 
 function ClickEvent.GameDissolveButton(gameObject)
 	-- body
-	if Player.hasBeginned == false then
+	if Player.roomHasBegin == false then
 		if Player._my_player_data.position == "POSITION_TYPE_EAST" then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2006)
@@ -2151,6 +2171,7 @@ function ClickEvent.ChangeAccount(gameObject)
 	ClickEvent.DeletePanel(_currentPanel.panel)
 	ClickEvent.CreateNewPanel(ClickEvent.panelTable._main_ui)
 	os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
+	Player.wechat_code = ""
 	Player.LogWarning(Player._string_id)
 	Player.LogWarning(Player._player_data.common_prop.player_id)
 	Player.CmdSwitchAccount(Player._string_id,Player._player_data.common_prop.player_id)
@@ -2338,6 +2359,7 @@ function ClickEvent.GameSettingButton( ... )
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
@@ -2559,6 +2581,7 @@ function ClickEvent.Setting( ... )
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
@@ -2743,6 +2766,7 @@ function ClickEvent.Avatar( ... )
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
 	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
+	_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 	if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
 		local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
