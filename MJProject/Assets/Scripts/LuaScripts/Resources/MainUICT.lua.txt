@@ -34,7 +34,9 @@ local _Creat_Room_UI
 function awake()
 	-- body
 	ClickEvent.Awake()
-	CS.UnityEngine.Screen.sleepTimeout = CS.UnityEngine.SleepTimeout.NeverSleep
+	if CS.LuaCommon.isIos == false then
+		CS.UnityEngine.Screen.sleepTimeout = CS.UnityEngine.SleepTimeout.NeverSleep
+	end
 end
 
 function start()
