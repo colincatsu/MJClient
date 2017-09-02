@@ -2662,11 +2662,7 @@ end
 function ClickEvent.PriceButtonDou1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655367 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+	 	Player.CmdBuySomething(655367)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2675,11 +2671,7 @@ end
 function ClickEvent.PriceButtonDou2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655368 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655368)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2688,11 +2680,7 @@ end
 function ClickEvent.PriceButtonDou3( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655369 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655369)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2701,11 +2689,7 @@ end
 function ClickEvent.PriceButtonDou4( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655370 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655370)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2714,11 +2698,7 @@ end
 function ClickEvent.PriceButtonDou5( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655371 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655371)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2727,11 +2707,7 @@ end
 function ClickEvent.PriceButtonDou6( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_HUANLEDOU" and v.common_prop.global_id == 655372 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655372)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2741,11 +2717,7 @@ end
 function ClickEvent.PriceButtonItem1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_NORMAL_ITEM" and v.common_prop.global_id == 655373 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655373)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2754,11 +2726,7 @@ end
 function ClickEvent.PriceButtonItem2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		for k,v in pairs(Player.storeDataTable) do
-			if v.goods_type == "GOODS_TYPE_NORMAL_ITEM" and v.common_prop.global_id == 655374 then
-			 	Player.CmdBuySomething(v.item_id)
-			end
-		end
+		Player.CmdBuySomething(655374)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
