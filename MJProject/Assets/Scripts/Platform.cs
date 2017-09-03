@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using XLua;
 using gcloud_voice;
 using FairyGUI;
@@ -485,6 +486,22 @@ public class Platform : MonoBehaviour {
     {
         if (onSignalLevel != null)
             onSignalLevel(int.Parse(level));
+    }
+
+    public string GetMd5String(string msg)
+    {
+        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        byte[] data = System.Text.Encoding.UTF8.GetBytes(msg);
+        byte[] md5Data = md5.ComputeHash(data, 0, data.Length);
+        md5.Clear();
+
+        string destString = "";
+        for (int i = 0; i < md5Data.Length; i++)
+        {
+            destString += System.Convert.ToString(md5Data[i], 16).PadLeft(2, '0');
+        }
+        destString = destString.PadLeft(32, '0');
+        return destString;
     }
 
     // Use this for initialization

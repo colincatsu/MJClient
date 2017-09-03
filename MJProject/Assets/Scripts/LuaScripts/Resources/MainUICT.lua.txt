@@ -20,8 +20,12 @@ local function AsyncYieldReturn(to_yield, cb)
     self:YieldAndCallback(to_yield, cb)
 end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
+
+local WeChatPlatform = CS.Platform.Instance
 local httpUrlToken = "http://api.cloudbm.wang/auth/jwt"
 local httpUrlServer = "http://api.cloudbm.wang/maintain/server"
+local httpAppID = "snve1zlao934hhh323"
+local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 --[[
 local isOn = false
 local _Main_UI 
@@ -103,12 +107,39 @@ function MainUICT.TestServerState()
 
 end
 
+function MainUICT.RandomString( ... )
+	-- body
+	math.randomseed(os.time())
+	local outPut = ""
+	for i=1,7 do
+		local index = math.random(0,61)
+		if index < 10 then
+			outPut = outPut..tostring(index)
+		elseif index >= 10 and index <= 35 then
+			outPut = outPut..string.char(index + 55)
+		elseif index >= 36 and index <= 61 then
+			outPut = outPut..string.char(index + 61)
+		end
+	end
+	return outPut
+end
+
 function MainUICT.GetHttpToken( ... )
 	-- body
+	local time = os.time()
+	local nonce = MainUICT.RandomString()
+	Player.LogWarning("app_id="..httpAppID.."&nonce="..nonce.."&time="..tostring(time)..httpAppSecret)
+	local sign = WeChatPlatform:GetMd5String("app_id="..httpAppID.."&nonce="..nonce.."&time="..tostring(time).."&"..httpAppSecret)
+	local header = {}
+	header["User-Agent"] = "BH-MJProject"..Player.pc_version
+	--Player.LogWarning("time:"..tostring(time))
+	--Player.LogWarning("nonce:"..nonce)
+	--Player.LogWarning(sign)
 	local co = coroutine.create(function()
-		local www = CS.UnityEngine.WWW(httpUrlToken)
+		local www = CS.UnityEngine.WWW(httpUrlToken.."?app_id="..httpAppID.."&time="..tostring(time).."&nonce="..nonce.."&sign="..sign,rapidjson.encode(header["User-Agent"]),header)
 		yield_return(www)
 		if not www.error then
+			--Player.LogWarning(www.text)
 			local jsonData = rapidjson.decode(www.text)
 			if jsonData.code == 0 then
 				Player.httpToken = jsonData.data.jwt
@@ -138,6 +169,7 @@ function MainUICT.RequestServerState( ... )
 		yield_return(www)
 		if not www.error then
 			local jsonData = rapidjson.decode(www.text)
+			Player.LogWarning(jsonData.code)
 			if jsonData.code == 0 then
 				if jsonData.data.is_running == false then
 					Player.LogWarning(jsonData.data.tips)
@@ -145,6 +177,7 @@ function MainUICT.RequestServerState( ... )
 				end
 				Player.hasTestPauseServer = true
 			elseif jsonData.code == 200101 then
+				Player.LogWarning("reset")
 				MainUICT.GetHttpToken()
 			else
 				Player.LogWarning("httpException")
