@@ -212,12 +212,13 @@ public class Platform : MonoBehaviour {
         Debug.Log("**************Platform Unity InitX:" + currentActivity);
     }
 
-    public void InitGVoice(string appID, string appKey, string openID)
+    public void InitGVoice(string appID, string appKey, string openID, string udpUrl)
     {
         if (m_voiceengine == null)
         {
             m_voiceengine = GCloudVoice.GetEngine();
             m_voiceengine.SetAppInfo(appID, appKey, openID);
+            m_voiceengine.SetServerInfo(udpUrl);
             m_voiceengine.Init();
         }
     }

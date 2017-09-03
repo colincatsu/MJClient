@@ -57,7 +57,7 @@ function start()
 	end
 	Player.LoadData()
 	if Player.hasTestPauseServer == false then
-		--MainUICT.TestServerState()
+		MainUICT.TestServerState()
 	end
 	--[[
 	_Main_UI = self.transform:Find("MainUI").gameObject
