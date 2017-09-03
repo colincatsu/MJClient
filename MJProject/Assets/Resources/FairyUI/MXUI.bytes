@@ -2289,11 +2289,11 @@ ldfsqh.xml|446|<component size="50,31">
     </text>
   </displayList>
   <Button mode="Radio"/>
-</component>uejtqo.xml|1024|<component size="795,454" overflow="scroll">
+</component>uejtqo.xml|1074|<component size="795,454" overflow="scroll">
   <displayList>
     <loader id="n1_kew4" name="n1" xy="16,11" size="768,440" fill="scaleMatchWidth"/>
-    <text id="n2_tb6z" name="AgentInfo" xy="233,108" size="445,40" fontSize="36" color="#663300" autoSize="height" text="购买房卡请联系所在群主"/>
-    <text id="n3_lidq" name="AgentInfo" xy="234,232" size="540,118" fontSize="36" color="#663300" autoSize="height" text="免费代理咨询请联系微信客服:&#xA;微信号：xlcyqp001&#xA;微信号：xlcyqp002"/>
+    <text id="n2_tb6z" name="AgentInfo1" xy="233,108" size="445,28" fontSize="24" color="#663300" autoSize="height" text="本游戏仅供休闲娱乐使用"/>
+    <text id="n3_lidq" name="AgentInfo2" xy="234,232" size="484,136" fontSize="24" color="#663300" autoSize="height" text="欢迎您给乡乐朝阳麻将提出任何意见或建议，我们将非常重视!若您的意见获得采纳，将会获得5-100张（房卡）不等的奖励，谢谢您！&#xA;微信号：xlcyqp001&#xA;微信号：xlcyqp002"/>
     <image id="n4_lidq" name="n4" src="w61cfb" xy="142,86"/>
     <image id="n5_lidq" name="n5" src="r8qd4te" xy="144,211"/>
     <image id="n6_lidq" name="n6" src="w61ced" xy="112,187"/>
@@ -4011,7 +4011,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
   </transition>
 </component>w61cjd.xml|11390|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
-  <controller name="MallFunctionSelect" pages="0,,1,,2," selected="2"/>
+  <controller name="MallFunctionSelect" pages="0,,1,,2," selected="1"/>
   <displayList>
     <component id="n58_i0jk" name="Bg" src="i0jkod" xy="62,57" group="n51_s5h9"/>
     <image id="n5_algd" name="ItemBigBg" src="w61ce2" xy="378,195" size="837,466" group="n51_s5h9"/>
@@ -4075,27 +4075,27 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <Button controller="MallFunctionSelect" page="0"/>
     </component>
     <component id="n3_algd" name="MallGemsButton" src="w61cdp" xy="103,297" group="n49_fb5y">
-      <Button controller="MallFunctionSelect" page="1"/>
+      <Button checked="true" controller="MallFunctionSelect" page="1"/>
     </component>
     <component id="n4_algd" name="MallItemButton" src="w61cdq" xy="102,405" group="n49_fb5y">
-      <Button checked="true" controller="MallFunctionSelect" page="2"/>
+      <Button controller="MallFunctionSelect" page="2"/>
     </component>
     <component id="n39_algd" name="PriceButtonGems1" src="w61cds" xy="437,366" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
-    <component id="n40_algd" name="PriceButtonGems2" src="w61cdt" xy="708,366" group="n49_fb5y">
+    <component id="n40_algd" name="PriceButtonGems2" src="w61cdt" xy="704,366" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
-    <component id="n41_algd" name="PriceButtonGems3" src="w61cdu" xy="987,366" group="n49_fb5y">
+    <component id="n41_algd" name="PriceButtonGems3" src="w61cdu" xy="978,366" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
     <component id="n42_algd" name="PriceButtonGems4" src="w61cdv" xy="437,588" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
-    <component id="n43_algd" name="PriceButtonGems5" src="w61cdw" xy="708,587" group="n49_fb5y">
+    <component id="n43_algd" name="PriceButtonGems5" src="w61cdw" xy="704,587" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
-    <component id="n44_algd" name="PriceButtonGems6" src="w61cdx" xy="987,588" group="n49_fb5y">
+    <component id="n44_algd" name="PriceButtonGems6" src="w61cdx" xy="978,588" group="n49_fb5y">
       <gearDisplay controller="MallFunctionSelect" pages="1"/>
     </component>
     <component id="n47_algd" name="Close" src="w61cj0" xy="1211,112" group="n49_fb5y"/>
