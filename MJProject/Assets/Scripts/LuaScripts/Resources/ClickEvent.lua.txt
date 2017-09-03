@@ -2759,9 +2759,9 @@ end
 function ClickEvent.Avatar( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._player_info)
+	_popPanel[popPanelIndex].panel:GetChild("BoundAccount").visible = false
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = gbk.toutf8(gbk.fromutf8(Player.wechat_nickname))
-		_popPanel[popPanelIndex].panel:GetChild("BoundAccount").visible = false
 	else
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = Player._player_data.common_prop.name
 	end
