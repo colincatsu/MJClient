@@ -1700,7 +1700,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="l2po4vo" name="x026" path="/UIPIC/0821/" size="169,48"/>
     <image id="l2po4vp" name="x027" path="/UIPIC/0821/" size="169,48"/>
     <image id="l2po4vq" name="x028" path="/UIPIC/0821/" size="170,50"/>
-    <image id="l2po4vr" name="x029" path="/UIPIC/0821/" size="108,37"/>
+    <image id="l2po4vr" name="x029" path="/UIPIC/0821/" size="100,39"/>
     <image id="l2po4vs" name="x030" path="/UIPIC/0821/" size="69,34"/>
     <image id="l2po4vt" name="x031" path="/UIPIC/0821/" size="71,38"/>
     <image id="l2po4vu" name="x032" path="/UIPIC/0821/" size="143,37"/>
@@ -1710,7 +1710,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="l2po4vy" name="x036" path="/UIPIC/0821/" size="144,37"/>
     <image id="l2po4vz" name="x037" path="/UIPIC/0821/" size="69,39"/>
     <image id="l2po4w0" name="x038" path="/UIPIC/0821/" size="69,39"/>
-    <image id="l2po4w1" name="x039" path="/UIPIC/0821/" size="109,38"/>
+    <image id="l2po4w1" name="x039" path="/UIPIC/0821/" size="100,39"/>
     <image id="l2po4w2" name="x040" path="/UIPIC/0821/" size="69,34"/>
     <image id="l2po4w3" name="x041" path="/UIPIC/0821/" size="70,39"/>
     <image id="l2po4w4" name="x042" path="/UIPIC/0821/" size="143,38"/>
@@ -4010,8 +4010,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
   </transition>
-</component>w61cjd.xml|11390|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
-  <controller name="MallFunctionSelect" pages="0,,1,,2," selected="1"/>
+</component>w61cjd.xml|11391|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+  <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n58_i0jk" name="Bg" src="i0jkod" xy="62,57" group="n51_s5h9"/>
     <image id="n5_algd" name="ItemBigBg" src="w61ce2" xy="378,195" size="837,466" group="n51_s5h9"/>
@@ -4072,10 +4072,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="MallFunctionSelect" pages="2"/>
     </image>
     <component id="n2_algd" name="MallDouButton" src="w61cdo" xy="103,189" group="n49_fb5y">
-      <Button controller="MallFunctionSelect" page="0"/>
+      <Button checked="true" controller="MallFunctionSelect" page="0"/>
     </component>
     <component id="n3_algd" name="MallGemsButton" src="w61cdp" xy="103,297" group="n49_fb5y">
-      <Button checked="true" controller="MallFunctionSelect" page="1"/>
+      <Button controller="MallFunctionSelect" page="1"/>
     </component>
     <component id="n4_algd" name="MallItemButton" src="w61cdq" xy="102,405" group="n49_fb5y">
       <Button controller="MallFunctionSelect" page="2"/>
@@ -4144,10 +4144,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n55_qevz" name="MallDouNum4" xy="483,553" size="91,31" group="n51_s5h9" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#666666" text="325000">
       <gearDisplay controller="MallFunctionSelect" pages="0"/>
     </text>
-    <text id="n56_qevz" name="MallDouNum5" xy="752,552" size="91,31" group="n51_s5h9" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#666666" text="2020000">
+    <text id="n56_qevz" name="MallDouNum5" xy="704,552" size="186,31" group="n51_s5h9" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#666666" text="2020000">
       <gearDisplay controller="MallFunctionSelect" pages="0"/>
     </text>
-    <text id="n57_qevz" name="MallDouNum6" xy="1024,552" size="91,31" group="n51_s5h9" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#666666" text="3500000">
+    <text id="n57_qevz" name="MallDouNum6" xy="976,552" size="179,31" group="n51_s5h9" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" strokeColor="#666666" text="3500000">
       <gearDisplay controller="MallFunctionSelect" pages="0"/>
     </text>
     <image id="n67_r8qd" name="n67" src="r8qd4t7" xy="185,82" group="n51_s5h9"/>
