@@ -2630,7 +2630,7 @@ end
 function ClickEvent.PriceButtonGems1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_6yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_6yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2639,7 +2639,7 @@ end
 function ClickEvent.PriceButtonGems2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_30yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_30yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2648,7 +2648,7 @@ end
 function ClickEvent.PriceButtonGems3( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_68yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_68yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2657,7 +2657,7 @@ end
 function ClickEvent.PriceButtonGems4( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_128yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_128yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2666,7 +2666,7 @@ end
 function ClickEvent.PriceButtonGems5( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_298yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_298yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
@@ -2675,7 +2675,7 @@ end
 function ClickEvent.PriceButtonGems6( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
-		WeChatPlatform:callBilling("xiangle_chaoyao_618yuan")
+		WeChatPlatform:callBilling("xiangle_chaoyan_618yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
