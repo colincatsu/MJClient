@@ -132,6 +132,9 @@ Player.hasTestPauseServer = false
 Player.httpToken = ""
 Player.updateSignalTime = nil
 
+Player.allPaisShow = {}
+Player.allPaisShowIndex = 0
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then

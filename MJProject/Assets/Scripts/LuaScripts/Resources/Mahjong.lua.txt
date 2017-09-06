@@ -174,6 +174,8 @@ function start()
 	Player.hupai_calculate_data = {}
 	ClickEvent._play_ui.baopaiLoader.url = ""
 	Player._all_players_data = {}
+	Player.allPaisShow = {}
+	Player.allPaisShowIndex = 0
 
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	if Player.isFriendRoom then
@@ -279,6 +281,42 @@ end
 function MahJong.GetCurrentState( ... )
 	-- body
 	return currentOperationState
+end
+
+function MahJong.SetAllPaiShow(gameObject)
+	-- body
+	if not Player.allPaisShow then
+		Player.allPaisShow = {}
+	end
+	Player.allPaisShowIndex = Player.allPaisShowIndex + 1
+	Player.allPaisShow[Player.allPaisShowIndex] = {}
+	Player.allPaisShow[Player.allPaisShowIndex].pai = gameObject
+	Player.allPaisShow[Player.allPaisShowIndex].isChanged = false
+end
+
+function MahJong.SetChoosePaiColor(modelName)
+	-- body
+	if not Player.allPaisShow then
+		return
+	end
+	for k,v in pairs(Player.allPaisShow) do
+		if self:IsNull(v.pai) == false and v.pai.name == modelName then
+			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
+			v.isChanged = true
+		end
+	end
+end
+
+function MahJong.ResetChoosePaiColor( ... )
+	-- body
+	if not Player.allPaisShow then
+		return
+	end
+	for k,v in pairs(Player.allPaisShow) do
+		if v.isChanged == true and self:IsNull(v.pai) == false then
+			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+		end
+	end
 end
 
 function MahJong.MjLoader()
@@ -583,6 +621,8 @@ function MahJong.ResetGameState()
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
 	ClickEvent._play_ui.baopaiLoader.url = ""
+	Player.allPaisShow = {}
+	Player.allPaisShowIndex = 0
 	Player.huPaiPosition = -1
 	diceHasPlay = false
 	ClickEvent.notPushPassMsg = false
@@ -1741,16 +1781,21 @@ function MahJong.ClickPaiEvent(gameObject)
 				Player.isTingPaiTuoGuan = true
 				Player.hasOperation = false
 			end
+			MahJong.ResetChoosePaiColor()
 		else
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 			MahJong._current_click_pai = gameObject
 			MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+			MahJong.ResetChoosePaiColor()
+			MahJong.SetChoosePaiColor(gameObject.name)
 		end
 	else
 		Player.LogWarning("paiNumber:"..gameObject.transform.parent.name)
 		Player.LogWarning("paiNumber:"..gameObject.name)
 		MahJong._current_click_pai = gameObject
 		MahJong._current_click_pai.transform.localPosition = newVector3(0,_modelSize.height,0)
+		MahJong.ResetChoosePaiColor()
+		MahJong.SetChoosePaiColor(gameObject.name)
 	end
 end
 
@@ -1973,6 +2018,7 @@ function MahJong.DaPaiPoolShow(message)
 			0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 		MahJong.AddModelShadow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 		_current_dapai.object = _pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber]
+		MahJong.SetAllPaiShow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
 	elseif whichPlayer == "POSITION_TYPE_SOUTH" then
 		_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
 		if not _pai_pool_show.point_n.cards then
@@ -1988,6 +2034,7 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 		MahJong.AddModelShadow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 		_current_dapai.object = _pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber]
+		MahJong.SetAllPaiShow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
 	elseif whichPlayer == "POSITION_TYPE_WEST" then
 		_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
 		if not _pai_pool_show.point_x.cards then
@@ -2003,6 +2050,7 @@ function MahJong.DaPaiPoolShow(message)
 			0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 		MahJong.AddModelShadow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 		_current_dapai.object = _pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber]
+		MahJong.SetAllPaiShow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
 	elseif whichPlayer == "POSITION_TYPE_NORTH" then
 		_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
 		if not _pai_pool_show.point_b.cards then
@@ -2018,6 +2066,7 @@ function MahJong.DaPaiPoolShow(message)
 			0,math.fmod(_pai_pool_show.point_b.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 		MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 		_current_dapai.object = _pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber]
+		MahJong.SetAllPaiShow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
 	end
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,_current_dapai.object,Effect.currentDapaiPointOffset)
@@ -3087,6 +3136,7 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("east")
 						MahJong.DeleteOtherPai("POSITION_TYPE_EAST",1)
+						MahJong.SetAllPaiShow(v.cards[v.showNumber])
 						--[[
 						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
 						local co = coroutine.create(function()
@@ -3114,6 +3164,7 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("south")
 						MahJong.DeleteOtherPai("POSITION_TYPE_SOUTH",1)
+						MahJong.SetAllPaiShow(v.cards[v.showNumber])
 						--[[
 						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
 						local co = coroutine.create(function()
@@ -3141,6 +3192,7 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("west")
 						MahJong.DeleteOtherPai("POSITION_TYPE_WEST",1)
+						MahJong.SetAllPaiShow(v.cards[v.showNumber])
 						--[[
 						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
 						local co = coroutine.create(function()
@@ -3168,6 +3220,7 @@ function MahJong.OperationPaiShow(message)
 	    				MahJong.AddModelShadow(v.cards[v.showNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
 	    				MahJong.SortOperationPaiShow("north")
 						MahJong.DeleteOtherPai("POSITION_TYPE_NORTH",1)
+						MahJong.SetAllPaiShow(v.cards[v.showNumber])
 						--[[
 						Effect.AddNormalEffect(Effect._effect_name.operationShowSmoke,nil,v.cards[v.showNumber],Effect.operationShowSmokeOffset)
 						local co = coroutine.create(function()
@@ -3200,6 +3253,7 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
+			MahJong.SetAllPaiShow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k])
 			if k == 2 then
 				if myAnGangOpration == true then
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation --+ newVector3(0,-90,0)
@@ -3244,6 +3298,7 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
+			MahJong.SetAllPaiShow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k])
 			if k == 2 then
 				if myAnGangOpration == true then
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation-- + newVector3(0,-90,0)
@@ -3288,6 +3343,7 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
+			MahJong.SetAllPaiShow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k])
 			if k == 2 then
 				if myAnGangOpration == true then
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation-- + newVector3(0,-90,0)
@@ -3332,6 +3388,7 @@ function MahJong.OperationPaiShow(message)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
+			MahJong.SetAllPaiShow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k])
 			if k == 2 then
 				if myAnGangOpration == true then
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation-- + newVector3(0,-90,0)
