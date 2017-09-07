@@ -301,7 +301,7 @@ function MahJong.SetChoosePaiColor(modelName)
 	end
 	for k,v in pairs(Player.allPaisShow) do
 		if self:IsNull(v.pai) == false and v.pai.name == modelName then
-			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.5,0.5,0.5,1))
+			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
 			v.isChanged = true
 		end
 	end
@@ -315,6 +315,7 @@ function MahJong.ResetChoosePaiColor( ... )
 	for k,v in pairs(Player.allPaisShow) do
 		if v.isChanged == true and self:IsNull(v.pai) == false then
 			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+			v.isChanged = false
 		end
 	end
 end
@@ -460,13 +461,15 @@ function MahJong.Init()
 end
 
 --重置游戏
-function MahJong.ResetGameState()
+function MahJong.ResetGameState(resetPlayButton)
     -- 按钮
     ClickEvent._play_ui.oppositePlayerTing.visible = false
     ClickEvent._play_ui.frontPlayerTing.visible = false
     ClickEvent._play_ui.behindPlayerTing.visible = false
     ClickEvent._play_ui.playerTing.visible = false
-    ClickEvent._play_ui.gamePlayButton.visible = true
+    if Player.room_current_round < Player._room_information.options.open_rands and not resetPlayButton then
+	    ClickEvent._play_ui.gamePlayButton.visible = true
+    end
     --玩家打牌池
     local dapaiFatherTemp = _pai_pool_show.point_d.father.transform.parent
     CS.UnityEngine.Object.Destroy(_pai_pool_show.point_d.father)
@@ -1407,6 +1410,7 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
+					MahJong.SetAllPaiShow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k])
 					if k == 2 then
 						if myAnGangOpration == true then
 							_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_d.startRotation-- + newVector3(0,-90,0)
@@ -1450,6 +1454,7 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
+					MahJong.SetAllPaiShow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k])
 					if k == 2 then
 						if myAnGangOpration == true then
 							_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_n.startRotation-- + newVector3(0,-90,0)
@@ -1493,6 +1498,7 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
+					MahJong.SetAllPaiShow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k])
 					if k == 2 then
 						if myAnGangOpration == true then
 							_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_x.startRotation-- + newVector3(0,-90,0)
@@ -1536,6 +1542,7 @@ function MahJong.ReturnRoomSync(paiData)
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
+					MahJong.SetAllPaiShow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k])
 					if k == 2 then
 						if myAnGangOpration == true then
 							_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].transform.localEulerAngles = _operation_pai_show.point_b.startRotation-- + newVector3(0,-90,0)
@@ -1596,6 +1603,7 @@ function MahJong.ReturnRoomSync(paiData)
 				+ newVector3(-math.fmod(_pai_pool_show.point_d.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
 					0,math.modf((_pai_pool_show.point_d.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 				MahJong.AddModelShadow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+				MahJong.SetAllPaiShow(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
 			elseif playerData.position == "POSITION_TYPE_SOUTH" then
 				_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber + 1
 				if not _pai_pool_show.point_n.cards then
@@ -1610,6 +1618,7 @@ function MahJong.ReturnRoomSync(paiData)
 				+ newVector3(-math.modf((_pai_pool_show.point_n.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
 					0,-math.fmod(_pai_pool_show.point_n.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 				MahJong.AddModelShadow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+				MahJong.SetAllPaiShow(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
 			elseif playerData.position == "POSITION_TYPE_WEST" then
 				_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber + 1
 				if not _pai_pool_show.point_x.cards then
@@ -1624,6 +1633,7 @@ function MahJong.ReturnRoomSync(paiData)
 				+ newVector3(math.fmod(_pai_pool_show.point_x.paiNumber-1,_pai_pool_show_line)*_modelSize.width,
 					0,-math.modf((_pai_pool_show.point_x.paiNumber-1)/_pai_pool_show_line)*_modelSize.height)
 				MahJong.AddModelShadow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+				MahJong.SetAllPaiShow(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
 			elseif playerData.position == "POSITION_TYPE_NORTH" then
 				_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber + 1
 				if not _pai_pool_show.point_b.cards then
@@ -1638,6 +1648,7 @@ function MahJong.ReturnRoomSync(paiData)
 				+ newVector3(math.modf((_pai_pool_show.point_b.paiNumber-1)/_pai_pool_show_line)*_modelSize.height,
 					0,math.fmod(_pai_pool_show.point_b.paiNumber-1,_pai_pool_show_line)*_modelSize.width)
 				MahJong.AddModelShadow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],-_modelSize.length/2+_modelSize.shadowShift,1)
+				MahJong.SetAllPaiShow(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
 			end
         end
         --baopai
@@ -1811,6 +1822,7 @@ function MahJong.CheckClickPos(movePos)
 			cardData.child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
 		end
 		MahJong._current_click_pai = nil
+		MahJong.ResetChoosePaiColor()
 	end
 end
 
@@ -2941,12 +2953,15 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
 		    	bigEffectShowTime = 2
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.Dragon,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
 		    	bigEffectShowTime = 5
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.YuanBao,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
 		    	bigEffectShowTime = 3
+	    		AudioPlayer.PlaySound(AudioPlayer._audio_name.FallingGold,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
 		    	bigEffectShowTime = 5

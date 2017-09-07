@@ -490,6 +490,7 @@ end
 
 function ClickEvent.UpdateRoundNumber(CurrentRoundNum,TotalRoundNum)
 	-- body
+	Player.room_current_round = CurrentRoundNum
 	_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = tostring(CurrentRoundNum)
 	_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(TotalRoundNum)
 end

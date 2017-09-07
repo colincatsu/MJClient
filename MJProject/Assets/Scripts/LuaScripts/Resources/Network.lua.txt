@@ -127,8 +127,9 @@ function Network.ConnetServer()
     --_socketClient:SendConnect()
     --_network_manager:ConnectTo("111.230.140.74",50013)
     --_network_manager:ConnectTo("182.92.87.147",50000)
-    --_network_manager:ConnectTo("111.230.140.74",50000)
-    _network_manager:ConnectTo("123.206.24.228",60032)
+    --_network_manager:ConnectTo("::ffff:6de6:8c4a",50000)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("123.206.24.228",60032)
     Network.isConnecting = true
     Player._connected = false
     Player.LogWarning("Server Connect----->>>")
@@ -165,7 +166,7 @@ function Network.OnConnect()
         if Player._player_data and Player._player_data.common_prop and Player._player_data.common_prop.player_id then
             Player.CmdReConnect()
             if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
-                Player.MahJong.ResetGameState()
+                Player.MahJong.ResetGameState(true)
                 Player.CmdGetRoomData(Player._roomId)
             end
         end

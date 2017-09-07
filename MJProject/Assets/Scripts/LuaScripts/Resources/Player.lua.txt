@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.3.0903"
+Player.pc_version = "1.0.1.0907"
 
 Player.sayHiTimestarmp = nil
 
@@ -134,6 +134,8 @@ Player.updateSignalTime = nil
 
 Player.allPaisShow = {}
 Player.allPaisShowIndex = 0
+
+Player.room_current_round = 0
 
 function Player.LoadData( ... )
     -- body
@@ -171,7 +173,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    ---CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()

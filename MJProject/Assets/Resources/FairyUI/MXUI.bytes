@@ -1431,7 +1431,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="117,44"/>
     <component id="w61cga" name="GameInstructionButton" path="/UIPIC/游戏页面/" size="70,69"/>
     <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="70,69"/>
-    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="90,73"/>
     <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgf" name="GameHintBar" path="/UIPIC/游戏页面/" size="367,63"/>
@@ -1869,7 +1869,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="w61cfs" name="ui_Youxijiemian_11" path="/UIPIC/游戏页面/" size="47,51"/>
     <image id="w61cft" name="ui_Youxijiemian_12" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfu" name="ui_Youxijiemian_13" path="/UIPIC/游戏页面/" size="70,69"/>
-    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="70,69"/>
+    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="90,73"/>
     <image id="w61cfw" name="ui_Youxijiemian_15" path="/UIPIC/游戏页面/" size="72,73"/>
     <image id="w61cfx" name="ui_Youxijiemian_16" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfz" name="ui_Youxijiemian_18" path="/UIPIC/游戏页面/" size="367,63" scale="9grid" scale9grid="24,26,324,11"/>
@@ -3331,10 +3331,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgc.xml|370|<component size="76,74" extention="Button">
+</component>w61cgc.xml|372|<component size="90,73" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfv" xy="0,0" size="76,74">
+    <image id="n1" name="n1" src="w61cfv" xy="-4,-3" size="98,79">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -3410,9 +3410,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgl.xml|617|<component size="367,166">
+</component>w61cgl.xml|605|<component size="367,166">
   <displayList>
-    <text id="n17_jujv" name="PlayerID" xy="259,77" size="108,34" fontSize="27" color="#5c2c16" vAlign="middle" autoSize="none" text="9999999"/>
+    <text id="n17_jujv" name="PlayerID" xy="259,78" size="159,31" fontSize="27" color="#5c2c16" vAlign="middle" text="99999999999"/>
     <text id="n18_jujv" name="Tid" xy="204,77" size="56,34" fontSize="27" color="#5c2c16" vAlign="middle" autoSize="none" text="ID:"/>
     <loader id="n16_jujv" name="AvatarLoader" xy="7,6" size="160,160" url="ui://krtoytc1nnbzjv" fill="scale"/>
     <text id="n15_jujv" name="PlayerName" xy="202,22" size="261,37" fontSize="32" color="#66ffff" vAlign="middle" strokeColor="#0a353b" text="对方根本不想输入"/>
@@ -3922,14 +3922,14 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="10,10" group="n25_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
     </component>
-    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1251,412" group="n25_fb5y">
+    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1243,412" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1251,492" group="n25_fb5y">
+    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1250,492" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button controller="Emoji" page="1"/>
     </component>
-    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1251,652" group="n25_fb5y">
+    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1250,652" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
     <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1013,398" group="n25_fb5y">
@@ -3964,23 +3964,23 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="Menu" pages="1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="516,505" group="n25_fb5y">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </component>
     <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" group="n25_fb5y" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
       <relation target="" sidePair="center-center%,bottom-bottom"/>
     </list>
-    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="548,504" group="n25_fb5y">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </component>
-    <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="536,512" group="n25_fb5y">
-      <relation target="" sidePair="center-center,bottom-bottom"/>
-    </component>
     <component id="n53_ngmx" name="GangPaiBg" src="ngmx4si" xy="492,501" size="353,122" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1251,572" group="n25_fb5y">
+    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="548,504" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="516,505" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1250,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
+    </component>
+    <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="536,512" group="n25_fb5y">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <group id="n25_fb5y" name="Btns" xy="0,0" size="1334,750" advanced="true"/>
     <component id="n62_febl" name="Emoji" src="nxeh4sm" xy="736,183">
