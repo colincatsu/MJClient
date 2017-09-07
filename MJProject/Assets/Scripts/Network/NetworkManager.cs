@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using XLua;
+using System.Net.Sockets;
 
 namespace MX
 {
@@ -101,6 +103,13 @@ namespace MX
 
         public void ConnectTo(string host, int port)
         {
+            if (LuaCommon.isIos)
+            {
+                String newServerIp = "";
+                AddressFamily newAddressFamily = AddressFamily.InterNetwork;
+                getIPType(host, port.ToString(), out newServerIp, out newAddressFamily);
+                if (!string.IsNullOrEmpty(newServerIp)) { host = newServerIp; }
+            }
             LogicSocket.ConnectTo(host, port);
         }
 
@@ -127,6 +136,58 @@ namespace MX
                 return LogicSocket.IsConnected;
             }
         }
+
+        [DllImport("__Internal")]
+        private static extern string getIPv6(string mHost, string mPort);
+
+        //"192.168.1.1&&ipv4"
+        public static string GetIPv6(string mHost, string mPort)
+        {
+#if UNITY_IOS || UNITY_IPHONE
+		string mIPv6 = getIPv6(mHost, mPort);
+		return mIPv6;
+#else
+            return mHost + "&&ipv4";
+#endif
+        }
+
+        void getIPType(String serverIp, String serverPorts, out String newServerIp, out AddressFamily mIPType)
+        {
+            mIPType = AddressFamily.InterNetwork;
+            newServerIp = serverIp;
+            try
+            {
+                string mIPv6 = GetIPv6(serverIp, serverPorts);
+                if (!string.IsNullOrEmpty(mIPv6))
+                {
+                    string[] m_StrTemp = System.Text.RegularExpressions.Regex.Split(mIPv6, "&&");
+                    if (m_StrTemp != null && m_StrTemp.Length >= 2)
+                    {
+                        string IPType = m_StrTemp[1];
+                        if (IPType == "ipv6")
+                        {
+                            newServerIp = m_StrTemp[0];
+                            mIPType = AddressFamily.InterNetworkV6;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("GetIPv6 error:" + e);
+            }
+
+        }
+
+        //public SocketClient(String serverIp, String serverPorts)
+        //{
+        //    String newServerIp = "";
+        //    AddressFamily newAddressFamily = AddressFamily.InterNetwork;
+        //    getIPType(serverIp, serverPorts, out newServerIp, out newAddressFamily);
+        //    if (!string.IsNullOrEmpty(newServerIp)) { serverIp = newServerIp; }
+        //    socketClient = new Socket(newAddressFamily, SocketType.Stream, ProtocolType.Tcp);
+        //    ClientLog.Instance.Log("Socket AddressFamily :" + newAddressFamily.ToString() + "ServerIp:" + serverIp);
+        //}
 
         public void Ping(string ip)
         {
