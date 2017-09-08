@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.2.0907"
+Player.pc_version = "1.0.1.0908"
 
 Player.sayHiTimestarmp = nil
 

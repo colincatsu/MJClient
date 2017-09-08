@@ -810,6 +810,16 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007,-" endValue="-1255,-" duration="240" label2="Time" ease="Linear"/>
     <item time="240" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1255,-" ease="Linear"/>
   </transition>
+</component>j7vri537.xml|370|<component size="22,22">
+  <controller name="State" pages="0,,1," selected="1"/>
+  <displayList>
+    <image id="n0_j7vr" name="n0" src="j7vri535" xy="0,0">
+      <gearDisplay controller="State" pages="1"/>
+    </image>
+    <image id="n1_j7vr" name="n1" src="j7vri536" xy="0,0">
+      <gearDisplay controller="State" pages="0"/>
+    </image>
+  </displayList>
 </component>jde84tn.xml|597|<component size="106,45" extention="Button">
   <controller name="Useable" pages="0,,1,,2," selected="0"/>
   <displayList>
@@ -1287,7 +1297,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n4_rg70" name="n4" src="rg704us" xy="0,0"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|64311|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|63961|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1317,6 +1327,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="isedpw" name="ExitRoomButton" path="/UIPIC/战绩记录/" size="229,84"/>
     <component id="j3uokk" name="Draw" path="/UIPIC/游戏页面/" size="250,95"/>
     <component id="j3uokm" name="Inform" path="/UIPIC/功能界面/" size="1068,69"/>
+    <component id="j7vri537" name="VoiceState" path="/UIPIC/游戏页面/" size="22,22"/>
     <component id="jde84tn" name="GetMailRewardButton" path="/UIPIC/邮件/" size="106,45"/>
     <component id="jde84to" name="GetMailReardButtonDelete" path="/UIPIC/邮件/" size="106,45"/>
     <component id="jde84ts" name="GetMailRewardButtonGet" path="/UIPIC/邮件/" size="106,45"/>
@@ -1350,9 +1361,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="t5cirx" name="ShareToWeChat" path="/UIPIC/Share/" size="302,95"/>
     <component id="uejtqm" name="NoticeButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqn" name="UnlimitedRoomCardButton" path="/UIPIC/游戏公告/" size="265,107"/>
-    <component id="uejtqs" name="GameMenuButton" path="/UIPIC/游戏页面/" size="70,69"/>
     <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="94,69"/>
-    <component id="uejtqu" name="GameTrusteeshipButton" path="/UIPIC/游戏页面/" size="70,69"/>
     <component id="uejtqw" name="HowToPlayButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqx" name="HowToPlayText" path="/UIPIC/xinzeng/" size="795,454"/>
     <component id="v7wh4sh" name="ShowTable" path="/UIPIC/匹配房结算/" size="176,82"/>
@@ -1429,7 +1438,6 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="w61cg7" name="GamePlayerAvatarInfo" path="/UIPIC/游戏页面/" size="81,105"/>
     <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="117,44"/>
-    <component id="w61cga" name="GameInstructionButton" path="/UIPIC/游戏页面/" size="70,69"/>
     <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="70,69"/>
     <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="90,73"/>
     <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="76,74"/>
@@ -1664,6 +1672,8 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="isedp4" name="tanchuang_6" path="/UIPIC/弹窗/" size="102,108" scale="9grid" scale9grid="26,27,52,54"/>
     <image id="isedp8" name="fangzhu" path="/UIPIC/战绩记录/" size="40,21"/>
     <image id="isedpm" name="ui_Zhujiemian_03" path="/UIPIC/功能界面/" size="1035,317"/>
+    <image id="j7vri535" name="music01" path="/UIPIC/游戏页面/" size="22,22"/>
+    <image id="j7vri536" name="music02" path="/UIPIC/游戏页面/" size="22,22"/>
     <image id="jde84tj" name="ui_Fuli_01" path="/UIPIC/福利/" size="154,99"/>
     <image id="jde84tl" name="ui_Zhanji_06" path="/UIPIC/战绩记录/" size="319,250" scale="9grid" scale9grid="111,136,63,23"/>
     <image id="jde84tu" name="ui_Youjian_02" path="/UIPIC/邮件/" size="128,65"/>
@@ -1705,7 +1715,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="l2po4vt" name="x031" path="/UIPIC/0821/" size="71,38"/>
     <image id="l2po4vu" name="x032" path="/UIPIC/0821/" size="143,37"/>
     <image id="l2po4vv" name="x033" path="/UIPIC/0821/" size="143,39"/>
-    <image id="l2po4vw" name="x034" path="/UIPIC/0821/" size="142,38"/>
+    <image id="l2po4vw" name="x034" path="/UIPIC/0821/" size="145,37"/>
     <image id="l2po4vx" name="x035" path="/UIPIC/0821/" size="196,38"/>
     <image id="l2po4vy" name="x036" path="/UIPIC/0821/" size="144,37"/>
     <image id="l2po4vz" name="x037" path="/UIPIC/0821/" size="69,39"/>
@@ -1715,7 +1725,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="l2po4w3" name="x041" path="/UIPIC/0821/" size="70,39"/>
     <image id="l2po4w4" name="x042" path="/UIPIC/0821/" size="143,38"/>
     <image id="l2po4w5" name="x043" path="/UIPIC/0821/" size="142,39"/>
-    <image id="l2po4w6" name="x044" path="/UIPIC/0821/" size="143,38"/>
+    <image id="l2po4w6" name="x044" path="/UIPIC/0821/" size="145,38"/>
     <image id="l2po4w9" name="x047" path="/UIPIC/0821/" size="120,76" scale="9grid" scale9grid="19,19,58,38"/>
     <image id="l2po4wa" name="x048" path="/UIPIC/0821/" size="110,102" scale="9grid" scale9grid="68,26,28,19"/>
     <image id="l2po4wc" name="x050" path="/UIPIC/0821/" size="81,77" scale="9grid" scale9grid="21,20,42,40"/>
@@ -1727,7 +1737,6 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="ldfsqj" name="LeaveState" path="/UIPIC/游戏页面/" size="50,31"/>
     <image id="lq2gq7" name="button_5" path="/UIPIC/投票/" size="181,73"/>
     <image id="ngmx4sj" name="gang" path="/UIPIC/xinzeng/" size="42,36"/>
-    <image id="ngmx4sl" name="tuoguan2" path="/UIPIC/游戏页面/" size="94,69"/>
     <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
     <image id="oc2llr" name="pai" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
@@ -1756,8 +1765,6 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="rg704uv" name="tuichufangjian" path="/UIPIC/xinzeng/" size="229,84"/>
     <image id="soml4u4" name="hua_01" path="/UIPIC/xinzeng/" size="304,224"/>
     <image id="uejtqp" name="yxnei_jiesan" path="/UIPIC/游戏页面/" size="94,69"/>
-    <image id="uejtqq" name="yxnei_shezhi" path="/UIPIC/游戏页面/" size="70,69"/>
-    <image id="uejtqr" name="yxnei_tuoguan" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="uejtqy" name="FX_biaoti" path="/UIPIC/Share/" size="302,87"/>
     <image id="uejtqz" name="FX_huangguan" path="/UIPIC/Share/" size="144,85"/>
     <image id="uejtr3" name="FX_piaodai" path="/UIPIC/Share/" size="644,140"/>
@@ -1867,7 +1874,6 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="w61cfq" name="ui_Youxijiemian_09" path="/UIPIC/游戏页面/" size="50,42"/>
     <image id="w61cfr" name="ui_Youxijiemian_10" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfs" name="ui_Youxijiemian_11" path="/UIPIC/游戏页面/" size="47,51"/>
-    <image id="w61cft" name="ui_Youxijiemian_12" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfu" name="ui_Youxijiemian_13" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="90,73"/>
     <image id="w61cfw" name="ui_Youxijiemian_15" path="/UIPIC/游戏页面/" size="72,73"/>
@@ -2302,14 +2308,6 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n9_lidq" name="n9" src="i0jkoc" xy="795,453" scale="1.6,1.6" rotation="180"/>
     <image id="n10_lidq" name="n10" src="i0jkoc" xy="0,454" scale="1.6,1.6" rotation="-90"/>
   </displayList>
-</component>uejtqs.xml|370|<component size="70,69" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-  <displayList>
-    <image id="n1" name="n1" src="uejtqq" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-  </displayList>
-  <Button mode="Check" downEffect="dark" downEffectValue="0.80"/>
 </component>uejtqt.xml|357|<component size="94,69" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -2318,19 +2316,6 @@ ldfsqh.xml|446|<component size="50,31">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>uejtqu.xml|614|<component size="70,69" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-  <displayList>
-    <image id="n1" name="n1" src="uejtqr" xy="0,0">
-      <gearDisplay controller="button" pages="0,2"/>
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <image id="n2_ngmx" name="n2" src="ngmx4sl" xy="-12,0">
-      <gearDisplay controller="button" pages="1,3"/>
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-  </displayList>
-  <Button mode="Check" downEffect="dark" downEffectValue="0.80"/>
 </component>uejtqv.xml|1732|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="c1" pages="0,,1," selected="0"/>
   <displayList>
@@ -3273,13 +3258,13 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <Button downEffect="scale" downEffectValue="1.10"/>
-</component>w61cg7.xml|1286|<component size="81,105" extention="Button">
+</component>w61cg7.xml|1360|<component size="81,105" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_algd" name="AvatarBg" src="w61cfl" xy="0,0" size="81,105">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <text id="n5_algd" name="DouNum" xy="0,83" size="81,20" fontSize="16" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="99万999">
+    <text id="n5_algd" name="DouNum" xy="13,83" size="81,20" fontSize="16" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="99999">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
     <loader id="n6_algd" name="AvatarLoader" xy="5,4" size="71,73" align="center" vAlign="middle" fill="scale">
@@ -3291,6 +3276,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n11_raum" name="PlayerName" xy="2,61" size="78,18" fontSize="14" color="#ffffff" align="center" vAlign="middle" autoSize="height" shadowColor="#000000" shadowOffset="1,1" singleLine="true" text="对方根本不想输入...">
       <relation target="" sidePair="left-left"/>
     </text>
+    <component id="n12_j7vr" name="VoiceState" src="j7vri537" xy="3,81"/>
   </displayList>
   <Button/>
 </component>w61cg8.xml|370|<component size="76,74" extention="Button">
@@ -3304,25 +3290,17 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
 </component>w61cg9.xml|606|<component size="117,44">
   <controller name="WLan" pages="0,,1,,2," selected="0"/>
   <displayList>
-    <image id="n0_algd" name="n0" src="w61cfo" xy="0,0">
+    <image id="n0_algd" name="n0" src="w61cfo" xy="1,1">
       <gearDisplay controller="WLan" pages="0"/>
     </image>
-    <image id="n1_algd" name="n1" src="w61cfp" xy="0,0">
+    <image id="n1_algd" name="n1" src="w61cfp" xy="1,1">
       <gearDisplay controller="WLan" pages="1"/>
     </image>
-    <image id="n2_algd" name="n2" src="w61cfq" xy="0,0">
+    <image id="n2_algd" name="n2" src="w61cfq" xy="1,1">
       <gearDisplay controller="WLan" pages="2"/>
     </image>
-    <text id="n3_algd" name="Time" xy="43,13" size="73,29" fontSize="20" color="#ffffff" autoSize="none" text="24:00"/>
+    <text id="n3_algd" name="Time" xy="49,13" size="73,29" fontSize="20" color="#ffffff" autoSize="none" text="24:00"/>
   </displayList>
-</component>w61cga.xml|357|<component size="70,69" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
-  <displayList>
-    <image id="n1" name="n1" src="w61cft" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-  </displayList>
-  <Button downEffect="dark" downEffectValue="0.80"/>
 </component>w61cgb.xml|357|<component size="70,69" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
@@ -3842,32 +3820,32 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|9933|<component size="1334,750" adaptationTest="FitSize">
-  <controller name="Menu" pages="0,,1," selected="0"/>
+</component>w61cjc.xml|8543|<component size="1334,750" adaptationTest="FitSize">
+  <controller name="Menu" pages="0,,1," selected="1"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
-    <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1016,66">
+    <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1015,66">
       <relation target="n3_algd" sidePair="right-left"/>
     </image>
-    <image id="n8_algd" name="FrontPlayerTing" src="w61cfm" xy="80,308">
+    <image id="n8_algd" name="FrontPlayerTing" src="w61cfm" xy="79,308">
       <relation target="n4_algd" sidePair="right-left"/>
     </image>
     <image id="n9_algd" name="BehindPlayerTing" src="w61cfm" xy="1215,352">
       <relation target="" sidePair="right-right,top-top"/>
     </image>
-    <image id="n10_algd" name="PlayerTing" src="w61cfm" xy="85,584">
+    <image id="n10_algd" name="PlayerTing" src="w61cfm" xy="83,584">
       <relation target="n5_algd" sidePair="right-left,bottom-bottom"/>
     </image>
-    <image id="n11_algd" name="Remain" src="w61cfn" xy="207,23" size="123,44">
+    <image id="n11_algd" name="Remain" src="w61cfn" xy="202,26" size="123,44">
       <relation target="" sidePair="left-left,top-top"/>
     </image>
-    <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="1119,26">
+    <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="1133,26">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <text id="n12_algd" name="RemainNum" xy="280,32" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
+    <text id="n12_algd" name="RemainNum" xy="275,35" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
-    <component id="n14_algd" name="Wlan" src="w61cg9" xy="103,25">
+    <component id="n14_algd" name="Wlan" src="w61cg9" xy="88,26">
       <relation target="" sidePair="top-top,left-left"/>
     </component>
     <component id="n21_algd" name="GameHintBar" src="w61cgf" xy="486,558" touchable="false">
@@ -3880,11 +3858,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n35_oc2l" name="BehindPaiShow" src="i5kclq" xy="974,232">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n36_oc2l" name="OppositePaiShow" src="i5kclq" xy="602,45">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </component>
     <image id="n38_ldfs" name="FrontAlready" src="ldfsqg" xy="240,277"/>
-    <image id="n39_ldfs" name="OppositeAlready" src="ldfsqg" xy="604,91"/>
     <image id="n40_ldfs" name="BehindAlready" src="ldfsqg" xy="977,277"/>
     <image id="n42_ldfs" name="PlayerAlready" src="ldfsqg" xy="604,530">
       <relation target="" sidePair="center-center,bottom-bottom"/>
@@ -3901,93 +3875,83 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n59_doyw" name="BehindEmojiShow" src="doyw4su" xy="916,307">
       <relation target="" sidePair="right-right"/>
     </component>
-    <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,82"/>
     <component id="n67_qnb5" name="BigButton" src="qnb54uq" xy="0,0" group="n25_fb5y"/>
-    <component id="n3_algd" name="OppositePlayerAvatarInfo" src="w61cg7" xy="937,11" group="n25_fb5y">
+    <component id="n3_algd" name="OppositePlayerAvatarInfo" src="w61cg7" xy="936,11" group="n25_fb5y">
       <relation target="" sidePair="top-top"/>
     </component>
-    <component id="n4_algd" name="FrontPlayerAvatarInfo" src="w61cg7" xy="2,249" group="n25_fb5y">
+    <component id="n4_algd" name="FrontPlayerAvatarInfo" src="w61cg7" xy="1,249" group="n25_fb5y">
       <relation target="" sidePair="left-left"/>
     </component>
-    <component id="n5_algd" name="PlayerAvatarInfo" src="w61cg7" xy="4,526" group="n25_fb5y">
+    <component id="n5_algd" name="PlayerAvatarInfo" src="w61cg7" xy="3,526" group="n25_fb5y">
       <relation target="" sidePair="left-left,bottom-bottom"/>
     </component>
-    <component id="n6_algd" name="BehindPlayerAvatarInfo" src="w61cg7" xy="1240,248" group="n25_fb5y">
+    <component id="n6_algd" name="BehindPlayerAvatarInfo" src="w61cg7" xy="1239,248" group="n25_fb5y">
       <relation target="" sidePair="right-right"/>
     </component>
-    <image id="n63_febl" name="n63" src="febl4ul" xy="1119,84" size="208,206" group="n25_fb5y">
-      <gearDisplay controller="Menu" pages="1"/>
-      <relation target="" sidePair="top-top,right-right"/>
-    </image>
-    <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="10,10" group="n25_fb5y">
+    <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="9,10" group="n25_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
     </component>
-    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1243,412" group="n25_fb5y">
+    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1242,412" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1250,492" group="n25_fb5y">
+    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1249,492" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button controller="Emoji" page="1"/>
     </component>
-    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1250,652" group="n25_fb5y">
+    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1249,652" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1013,398" group="n25_fb5y">
+    <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1012,398" group="n25_fb5y">
       <relation target="" sidePair="center-center%,bottom-bottom"/>
     </component>
-    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1013,398" group="n25_fb5y">
+    <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1012,398" group="n25_fb5y">
       <relation target="" sidePair="center-center%,bottom-bottom"/>
     </component>
-    <component id="n43_uejt" name="GameMenuButton" src="uejtqs" xy="1256,14" group="n25_fb5y">
-      <relation target="" sidePair="top-top,right-right"/>
-      <Button controller="Menu" page="1"/>
-    </component>
-    <component id="n45_uejt" name="GameTrusteeshipButton" src="uejtqu" xy="1234,196" pivot="1,0.5" group="n25_fb5y">
-      <gearDisplay controller="Menu" pages="1"/>
+    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1250,15" pivot="1,0.5" group="n25_fb5y">
+      <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n24_l3ub" name="GameInstructionButton" src="w61cga" xy="1146,110" pivot="1,0.5" group="n25_fb5y">
-      <gearDisplay controller="Menu" pages="1"/>
-      <relation target="" sidePair="top-top,right-right"/>
-    </component>
-    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1233,110" pivot="1,0.5" group="n25_fb5y">
-      <gearDisplay controller="Menu" pages="1"/>
-      <relation target="" sidePair="top-top,right-right"/>
-    </component>
-    <component id="n47_10p14" name="CopyRoomNum" src="10p14s4" xy="343,565" group="n25_fb5y">
+    <component id="n47_10p14" name="CopyRoomNum" src="10p14s4" xy="342,565" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n48_10p14" name="InviteWechatFriends" src="10p14s5" xy="692,564" group="n25_fb5y">
+    <component id="n48_10p14" name="InviteWechatFriends" src="10p14s5" xy="691,564" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1134,196" pivot="1,0.5" group="n25_fb5y">
-      <gearDisplay controller="Menu" pages="1"/>
+    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1238,95" pivot="1,0.5" group="n25_fb5y">
+      <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <list id="n22_algd" name="GameOperationBar" xy="131,398" size="795,156" group="n25_fb5y" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
+    <list id="n22_algd" name="GameOperationBar" xy="130,398" size="795,156" group="n25_fb5y" layout="row" colGap="4" autoItemSize="false" align="right" vAlign="middle">
       <relation target="" sidePair="center-center%,bottom-bottom"/>
     </list>
-    <component id="n53_ngmx" name="GangPaiBg" src="ngmx4si" xy="492,501" size="353,122" group="n25_fb5y">
+    <component id="n53_ngmx" name="GangPaiBg" src="ngmx4si" xy="491,501" size="353,122" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="548,504" group="n25_fb5y">
+    <component id="n51_v7wh" name="HuPaiBg" src="w61caa" xy="547,504" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="516,505" group="n25_fb5y">
+    <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="515,505" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1250,572" group="n25_fb5y">
+    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1249,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="536,512" group="n25_fb5y">
+    <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="535,512" group="n25_fb5y">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <group id="n25_fb5y" name="Btns" xy="0,0" size="1334,750" advanced="true"/>
+    <group id="n25_fb5y" name="Btns" xy="0,0" size="1333,750" advanced="true"/>
     <component id="n62_febl" name="Emoji" src="nxeh4sm" xy="736,183">
       <gearDisplay controller="Emoji" pages="1"/>
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n66_r8my" name="BaoPai" src="r8my4uo" xy="4,96"/>
+    <component id="n66_r8my" name="BaoPai" src="r8my4uo" xy="9,97">
+      <relation target="" sidePair="left-left,top-top"/>
+    </component>
+    <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,82"/>
+    <component id="n36_oc2l" name="OppositePaiShow" src="i5kclq" xy="602,45">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <image id="n39_ldfs" name="OppositeAlready" src="ldfsqg" xy="604,91"/>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
@@ -3995,20 +3959,14 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="7" type="Scale" target="n32_j3uo" tween="true" startValue="1,1"/>
   </transition>
   <transition name="SlideIn">
-    <item time="0" type="Alpha" target="n17_algd" value="0"/>
-    <item time="0" type="Alpha" target="n24_l3ub" value="0"/>
-    <item time="0" type="Alpha" target="n45_uejt" value="0"/>
     <item time="0" type="Alpha" target="n46_uejt" value="0"/>
+    <item time="0" type="Alpha" target="n17_algd" value="0"/>
     <item time="4" type="Alpha" target="n17_algd" tween="true" startValue="0" endValue="1" duration="4"/>
-    <item time="4" type="Alpha" target="n24_l3ub" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="4" type="Alpha" target="n46_uejt" tween="true" startValue="0" endValue="1" duration="4"/>
-    <item time="4" type="Alpha" target="n45_uejt" tween="true" startValue="0" endValue="1" duration="4"/>
   </transition>
   <transition name="SlideOut" options="1">
-    <item time="0" type="Alpha" target="n45_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
     <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
-    <item time="0" type="Alpha" target="n24_l3ub" tween="true" startValue="1" endValue="0" duration="2"/>
+    <item time="0" type="Alpha" target="n46_uejt" tween="true" startValue="1" endValue="0" duration="2"/>
   </transition>
 </component>w61cjd.xml|11391|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="0"/>
@@ -4425,30 +4383,30 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="4" type="Scale" target="n11_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
   </transition>
 </component>w61cjm.xml|5096|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
-  <controller name="HistorySecenSelect" pages="0,,1,,2," selected="2"/>
+  <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n17_i0jk" name="Bg" src="i0jkod" xy="70,53" group="n16_s5h9"/>
     <image id="n18_tbm9" name="n18" src="isedp4" xy="374,172" size="858,505" group="n16_s5h9"/>
     <list id="n8_l3ub" name="HistoryList" xy="403,194" size="804,444" group="n16_s5h9" overflow="scroll" defaultItem="ui://krtoytc1ldfsqk">
-      <gearDisplay controller="HistorySecenSelect" pages="0"/>
+      <gearDisplay controller="HistorySecenSelect" pages="1"/>
       <item/>
     </list>
     <component id="n13_l3ub" name="InstructionText" src="w61ces" xy="324,211" group="n16_s5h9">
       <gearDisplay controller="HistorySecenSelect" pages="2"/>
     </component>
-    <component id="n2_l3ub" name="HistoryBotton" src="w61cek" xy="110,180" group="n14_fb5y">
-      <Button controller="HistorySecenSelect" page="0"/>
-    </component>
-    <component id="n3_l3ub" name="RankBillButton" src="w61cel" xy="110,282" group="n14_fb5y">
+    <component id="n2_l3ub" name="HistoryBotton" src="w61cek" xy="110,289" group="n14_fb5y">
       <Button controller="HistorySecenSelect" page="1"/>
     </component>
-    <component id="n4_l3ub" name="InstructionButton" src="w61cem" xy="110,384" group="n14_fb5y">
-      <Button checked="true" controller="HistorySecenSelect" page="2"/>
+    <component id="n3_l3ub" name="RankBillButton" src="w61cel" xy="110,391" group="n14_fb5y">
+      <Button controller="HistorySecenSelect" page="2"/>
+    </component>
+    <component id="n4_l3ub" name="InstructionButton" src="w61cem" xy="110,187" group="n14_fb5y">
+      <Button checked="true" controller="HistorySecenSelect" page="0"/>
     </component>
     <component id="n12_l3ub" name="Close" src="w61cj0" xy="1218,110" group="n14_fb5y"/>
-    <group id="n14_fb5y" name="Btns" xy="110,110" size="1188,382" group="n16_s5h9" advanced="true"/>
+    <group id="n14_fb5y" name="Btns" xy="110,110" size="1188,389" group="n16_s5h9" advanced="true"/>
     <list id="n29_t5ci" name="HistoryShareList" xy="403,200" size="804,444" group="n16_s5h9" overflow="scroll" defaultItem="ui://krtoytc1t5cirs">
-      <gearDisplay controller="HistorySecenSelect" pages="1"/>
+      <gearDisplay controller="HistorySecenSelect" pages="2"/>
       <item/>
       <item/>
       <item/>
@@ -4458,39 +4416,39 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
     <text id="n21_uejt" name="n21" xy="423,222" size="155,34" fontSize="30" color="#ffffff" strokeColor="#5c2c16" strokeSize="2" text="模    式：">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n22_uejt" name="n22" xy="423,358" size="155,34" fontSize="30" color="#ffffff" strokeColor="#5c2c16" strokeSize="2" text="额外番型：">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n23_uejt" name="n23" xy="423,510" size="155,34" fontSize="30" color="#ffffff" strokeColor="#5c2c16" strokeSize="2" text="玩    法：">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n25_uejt" name="ModeText" xy="490,284" size="633,38" fontSize="34" color="#5c2c16" vAlign="middle" autoSize="height" text="普通模式、高番模式、自选模式">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n26_uejt" name="FanText" xy="490,409" size="636,75" fontSize="34" color="#5c2c16" vAlign="middle" autoSize="height" text="清一色、门前清、站立胡、夹胡、宝牌、旋风杠、点炮包三家">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n27_uejt" name="RoundText" xy="490,566" size="279,38" fontSize="34" color="#5c2c16" vAlign="middle" autoSize="height" text="16局">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n28_uejt" name="MultipleText" xy="799,566" size="279,38" fontSize="34" color="#5c2c16" vAlign="middle" autoSize="height" text="不封顶">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <image id="n30_t5ci" name="n30" src="w61ced" xy="419,339" size="767,7">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </image>
     <image id="n31_t5ci" name="n31" src="w61ced" xy="419,496" size="767,7">
-      <gearDisplay controller="HistorySecenSelect" pages="2"/>
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </image>
     <image id="n32_r8qd" name="n32" src="r8qd4td" xy="151,76">

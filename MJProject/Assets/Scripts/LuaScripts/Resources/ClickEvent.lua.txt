@@ -261,8 +261,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.oppositeEmoji = _currentPanel.panel:GetChild("OppositeEmojiShow")
 		ClickEvent._play_ui.FrontEmoji = _currentPanel.panel:GetChild("FrontEmojiShow")
 
+		ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("VoiceState").visible = false
+		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("VoiceState").visible = false
+		ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("VoiceState").visible = false
+		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState").visible = false
+
 		if Player.isFriendRoom == true then
-			_currentPanel.panel:GetChild("GameTrusteeshipButton").visible = false
+			--_currentPanel.panel:GetChild("GameTrusteeshipButton").visible = false
 		end
 		--[[
 		effectPlayer.transform.position = Camera.main:ScreenToWorldPoint(ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).x,
@@ -3693,6 +3698,12 @@ function ClickEvent.GameListenButton(gameObject)
 	if _currentPanel.panel:GetChild("GameListenButton").selected then
 		WeChatPlatform.m_voiceengine:CloseSpeaker()
 	else
+		if CS.LuaCommon.isAndroid then
+			Player._player_data.game_setting.music = false
+			Player._player_data.game_setting.audio = false
+			Player._player_data.game_setting.voice = false
+			AudioPlayer.StopSound(AudioPlayer._audio_name.Bgm)
+		end
 		WeChatPlatform.m_voiceengine:OpenSpeaker()
 	end
 end
@@ -3703,6 +3714,28 @@ function ClickEvent.GameVoiceButton(gameObject)
 		WeChatPlatform.m_voiceengine:CloseMic()
 	else
 		WeChatPlatform.m_voiceengine:OpenMic()
+	end
+end
+
+function ClickEvent.TalkingState(position,state)
+	-- body
+	local tempPos = ClickEvent.PlayerPosition(position)
+	if not tempPos then
+		return
+	end
+	local talkState = 0
+	if state and state == true then
+		talkState = 1
+	end
+
+	if tempPos == 1 then
+		ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = talkState
+	elseif tempPos == 2 then
+		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = talkState
+	elseif tempPos == 3 then
+		ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = talkState
+	else
+		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = talkState
 	end
 end
 
