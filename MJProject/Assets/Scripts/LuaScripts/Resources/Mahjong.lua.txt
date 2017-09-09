@@ -235,6 +235,7 @@ end
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
 	-- body
 	Player.voiceRoomName = roomName
+	Player.LogWarning("jxyjxyMemberID::"..memberID)
 	--GVoicePlatform.m_voiceengine:OpenMic()
 	--GVoicePlatform.m_voiceengine:OpenSpeaker()
 end
@@ -243,8 +244,28 @@ function MahJong.OnQuitRoomComplete(code,roomName, memberID)
 	-- body
 end
 
-function MahJong.OnMemberVoice(code,roomName, memberID)
+function MahJong.OnMemberVoice(members, count)
 	-- body
+	Player.LogWarning("jxyjxyCount::"..count)
+	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" then
+		return
+	end
+	for i=0,count*2-1,2 do
+		if members[i] and members[i+1] then
+			Player.LogWarning("jxyjxyVoice:::"..tostring(members[i]))
+			local position = ""
+			if members[i] == 2 then
+				position = "POSITION_TYPE_SOUTH"
+			elseif members[i] == 3 then
+				position = "POSITION_TYPE_WEST"
+			elseif members[i] == 4 then
+				position = "POSITION_TYPE_NORTH"
+			else
+				position = "POSITION_TYPE_EAST"
+			end
+			ClickEvent.TalkingState(position,members[i+1])
+		end
+	end
 end
 
 function MahJong.QuitVoiceRoom()
@@ -1722,6 +1743,22 @@ function MahJong.CreatePlayerPai(isRoomSync)
 	end
 end
 
+function MahJong.ReSortPlayerPai(paiData)
+	-- body
+	local paiNumber = 1
+	for k,v in pairs(_player_father.cards) do
+		if v.paiType == paiData.card_type and v.paiValue == paiData.card_value then
+			local endPosition = _player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition
+			for i=_player_father.currentPaiNumber, paiNumber+1, -1 do
+				_player_father.cards[i].parent.transform.localPosition = _player_father.cards[i-1].parent.transform.localPosition
+			end
+			v.parent.transform.localPosition = endPosition
+			return
+		end
+		paiNumber = paiNumber + 1
+	end
+end
+
 function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 	-- body
 	if type(modelName) == "string" then
@@ -2796,6 +2833,7 @@ end
 
 function MahJong.SortPlayerPai(deleteNumber)
 	-- body
+
 	if deleteNumber then
 		for i=deleteNumber,_player_father.currentPaiNumber do
 			_player_father.cards[i] = _player_father.cards[i+1]
@@ -2823,16 +2861,20 @@ function MahJong.SortPlayerPai(deleteNumber)
 	end
 
 	local paiAllNumber = _player_father.currentPaiNumber
-	if paiAllNumber == 14 then
-		paiAllNumber = 13
+	if paiAllNumber ~= 1 and paiAllNumber ~= 4 and paiAllNumber ~= 7 and paiAllNumber ~= 10 and paiAllNumber ~= 13 then
+		paiAllNumber = paiAllNumber - 1
 	end
-
+	--[[
+	if paiAllNumber == 14 then
+	end
+	Player.LogWarning("jxyjxy:::::"..paiAllNumber)
+	--]]
 	for k,v in pairs(_player_father.cards) do
 		v.parent.transform.localPosition = _player_base_pos +
 		_pai_bigger*newVector3((paiAllNumber-1)*_modelSize.width*_pai_gap/2 - _modelSize.width*_pai_gap*(k-1),0,0)
 	end
 
-	if _player_father.currentPaiNumber == 14 then
+	if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
 		_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
 	end
@@ -2950,6 +2992,7 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 		if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
 			if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
 				bigEffectShowTime = 5
+				AudioPlayer.PlaySound(AudioPlayer._audio_name.YuanBao,false,1)
 	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
 		    	bigEffectShowTime = 2
@@ -2965,6 +3008,7 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
 		    	bigEffectShowTime = 5
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.LaoYue,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,bigEffectShowTime)
 		    else
 		    	bigEffectShowTime = 0

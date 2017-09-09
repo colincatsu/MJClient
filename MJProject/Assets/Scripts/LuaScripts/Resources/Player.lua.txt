@@ -121,8 +121,8 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
-Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0908"
+Player.sayHiTimeOut = 10
+Player.pc_version = "1.0.1.0909"
 
 Player.sayHiTimestarmp = nil
 
@@ -136,6 +136,14 @@ Player.allPaisShow = {}
 Player.allPaisShowIndex = 0
 
 Player.room_current_round = 0
+
+Player.voiceCount = 0
+Player.voiceNumber = {
+    [0] = 0,
+    [1] = 0,
+    [2] = 0,
+    [3] = 0,
+}
 
 function Player.LoadData( ... )
     -- body
@@ -173,7 +181,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -374,12 +382,12 @@ local movePos = CS.UnityEngine.Vector3(0,0,0)
 function Player.myUpdate( ... )
     -- body
     ClickEvent.UpdateTime()
-    if Player.reConnect and Player.disConnetedTime then
+    if Player.reConnect and Player.reConnect == true and Player.disConnetedTime then
         if (CS.UnityEngine.Time.time - Player.disConnetedTime) >= Player.connectCountDownTime then
             Network.Start()
             Network.ConnetServer()
             Player.disConnetedTime = CS.UnityEngine.Time.time
-            Player.hasConnectTimes = Player.hasConnectTimes + 1
+            --Player.hasConnectTimes = Player.hasConnectTimes + 1
         end
         if Player.hasConnectTimes >= Player.connectTimes then
             Player.hasConnectTimes = 0
@@ -412,8 +420,8 @@ function Player.myUpdate( ... )
     --[[
     --]]
     if Player.sayHiTimestarmp and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" then
-        if CS.UnityEngine.Time.time - Player.sayHiTimestarmp > Player.sayHiTimeOut then
-            Player.sayHiTimestarmp = CS.UnityEngine.Time.time
+        if CS.UnityEngine.Time.realtimeSinceStartup - Player.sayHiTimestarmp > Player.sayHiTimeOut then
+            Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
             ClickEvent.ShowNotMoveToast(2028)
             if not Player.disConnetedTime then
                 Network.OnClose()
@@ -1322,7 +1330,13 @@ function Player.OnRoomAll(type_t,stuff)
     if message.curr_operator_position ~= "POSITION_TYPE_NULL" then
         Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     end
+
     Player.MahJong.ReturnRoomSync(message.player_list)
+    --重排序
+    if message.zhuapai and message.zhuapai.card_value ~= 0 then
+        Player.MahJong.ReSortPlayerPai(message.zhuapai)
+    end
+
     if message.remain_cards_count and message.remain_cards_count ~= 0 then
         Player.MahJong.ModelPoolDelete(136 - message.remain_cards_count)
     else
@@ -1642,7 +1656,7 @@ function Player.OnSayHi( type_t,stuff )
     Player.CmdSayHi(tempHertCount)
     --[[
     --]]
-    Player.sayHiTimestarmp = CS.UnityEngine.Time.time
+    
 end
 
 function Player.CmdSayHi( heart_count_client )

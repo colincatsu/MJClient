@@ -3820,8 +3820,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|8543|<component size="1334,750" adaptationTest="FitSize">
-  <controller name="Menu" pages="0,,1," selected="1"/>
+</component>w61cjc.xml|8544|<component size="1334,750" adaptationTest="FitSize">
+  <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1015,66">
@@ -3839,7 +3839,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n11_algd" name="Remain" src="w61cfn" xy="202,26" size="123,44">
       <relation target="" sidePair="left-left,top-top"/>
     </image>
-    <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="1133,26">
+    <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="1118,26">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
     <text id="n12_algd" name="RemainNum" xy="275,35" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
@@ -3917,7 +3917,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n48_10p14" name="InviteWechatFriends" src="10p14s5" xy="691,564" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1238,95" pivot="1,0.5" group="n25_fb5y">
+    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1238,114" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
@@ -3939,7 +3939,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="535,512" group="n25_fb5y">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
-    <group id="n25_fb5y" name="Btns" xy="0,0" size="1333,750" advanced="true"/>
+    <group id="n25_fb5y" name="Btns" xy="0,0" size="1334,750" advanced="true"/>
     <component id="n62_febl" name="Emoji" src="nxeh4sm" xy="736,183">
       <gearDisplay controller="Emoji" pages="1"/>
       <relation target="" sidePair="right-right,bottom-bottom"/>

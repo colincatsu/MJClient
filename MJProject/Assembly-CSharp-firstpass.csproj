@@ -72,6 +72,7 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\Network.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\Main.lua.txt" />
      <None Include="Assets\XLua\Resources\xlua\util.lua.txt" />
+     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\XLua\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Image.shader" />
      <None Include="Assets\Plugins\Android\GCloudVoice\AndroidManifest.xml" />
@@ -96,7 +97,6 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\protobuf.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\PackUnpack.tpl.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\FLibEvent.lua.txt" />
-     <None Include="Assets\XLua\Gen\link.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/Unity5.4.2/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

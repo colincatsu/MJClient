@@ -197,7 +197,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindAlready.visible = false
 		ClickEvent._play_ui.playerAlready.visible = false
 		ClickEvent._play_ui.inviteWechatFriends = _currentPanel.panel:GetChild("InviteWechatFriends")
-		--ClickEvent._play_ui.inviteWechatFriends.visible = false
+		if WeChatPlatform:isInstalledWX() == false then
+			ClickEvent._play_ui.inviteWechatFriends.visible = false
+		end
 		ClickEvent._play_ui.copyRoomNum = _currentPanel.panel:GetChild("CopyRoomNum")
 		ClickEvent._play_ui.timeShow = _currentPanel.panel:GetChild("Wlan"):GetChild("Time")
 		ClickEvent._play_ui.wlanShow = _currentPanel.panel:GetChild("Wlan"):GetController("WLan")
@@ -261,10 +263,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.oppositeEmoji = _currentPanel.panel:GetChild("OppositeEmojiShow")
 		ClickEvent._play_ui.FrontEmoji = _currentPanel.panel:GetChild("FrontEmojiShow")
 
+		--[[
 		ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("VoiceState").visible = false
 		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("VoiceState").visible = false
 		ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("VoiceState").visible = false
 		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState").visible = false
+		--]]
 
 		if Player.isFriendRoom == true then
 			--_currentPanel.panel:GetChild("GameTrusteeshipButton").visible = false
@@ -340,6 +344,10 @@ function ClickEvent.CreateNewPanel(panelName)
 		end
 		--]]
 		elseif panelName == ClickEvent.panelTable._main_ui then
+			if WeChatPlatform:isInstalledWX() == false then
+				_currentPanel.panel:GetChild("WechatLogin").visible = false
+			end
+
 			if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
 				_currentPanel.panel:GetChild("Title").visible = false
 				_currentPanel.panel:GetChild("Account").visible = false
@@ -502,6 +510,9 @@ end
 
 function ClickEvent.CloseAlready( ... )
 	-- body
+	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" then
+		return
+	end
 	ClickEvent._play_ui.frontAlready.visible = false
 	ClickEvent._play_ui.oppositeAlready.visible = false
 	ClickEvent._play_ui.behindAlready.visible = false
@@ -1018,6 +1029,9 @@ function ClickEvent.ShowRoomCalculate( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._room_calculate_ui)
+	if WeChatPlatform:isInstalledWX() == false then
+		_popPanel[popPanelIndex].panel:GetChild("ShareRank").visible = false
+	end
 	local bigWinScore = nil
 	local superPaoCount = nil
 	for k,v in pairs(Player._room_calculate_data.record) do
@@ -2359,6 +2373,9 @@ function ClickEvent.GameSettingButton( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
 	Player.LogWarning("Music:")
 	Player.LogWarning(Player._player_data.game_setting.music)
+	if CS.LuaCommon.isIos == true then
+		_popPanel[popPanelIndex].panel:GetChild("UpdateButton").visible = false
+	end
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
 	else
@@ -2580,6 +2597,9 @@ function ClickEvent.Setting( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
 	Player.LogWarning("Music:")
 	Player.LogWarning(Player._player_data.game_setting.music)
+	if CS.LuaCommon.isIos == true then
+		_popPanel[popPanelIndex].panel:GetChild("UpdateButton").visible = false
+	end
 	_popPanel[popPanelIndex].panel:GetChild("Version").text = Player.pc_version
 	if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 		_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = gbk.toutf8(gbk.fromutf8(Player.wechat_nickname))
@@ -3719,12 +3739,16 @@ end
 
 function ClickEvent.TalkingState(position,state)
 	-- body
+	--[[
+	--]]
 	local tempPos = ClickEvent.PlayerPosition(position)
 	if not tempPos then
 		return
 	end
 	local talkState = 0
-	if state and state == true then
+	if state and state == 0 then
+		talkState = 0
+	else
 		talkState = 1
 	end
 

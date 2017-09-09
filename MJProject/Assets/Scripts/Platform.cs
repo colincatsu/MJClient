@@ -145,6 +145,9 @@ public class Platform : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern int getSignalStrength();
 
+    [DllImport("__Internal")]
+    private static extern bool isWXAppInstalled();
+
     public static Platform Instance
     {
         get
@@ -408,6 +411,15 @@ public class Platform : MonoBehaviour {
         }
         if (LuaCommon.isIos)
             wxCopyRoom(roomid);
+    }
+
+    public bool isInstalledWX()
+    {
+        if (LuaCommon.isIos)
+        {
+            return isWXAppInstalled();
+        }
+        return true;
     }
 
     [CSharpCallLua]

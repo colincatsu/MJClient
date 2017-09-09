@@ -25,6 +25,7 @@ AudioPlayer._audio_name = {
 	FallingGold = "FallingGoldCoins",
 	Dragon = "Dragon",
 	YuanBao = "yuanbao",
+	LaoYue = "laoyue",
 }
 local AudioClip = CS.UnityEngine.AudioClip
 local AudioSource = CS.UnityEngine.AudioSource
