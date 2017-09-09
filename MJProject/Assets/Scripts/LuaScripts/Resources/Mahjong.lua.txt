@@ -235,6 +235,7 @@ end
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
 	-- body
 	Player.voiceRoomName = roomName
+	Player.CmdUpdateRoom(memberID)
 	Player.LogWarning("jxyjxyMemberID::"..memberID)
 	--GVoicePlatform.m_voiceengine:OpenMic()
 	--GVoicePlatform.m_voiceengine:OpenSpeaker()
@@ -253,17 +254,11 @@ function MahJong.OnMemberVoice(members, count)
 	for i=0,count*2-1,2 do
 		if members[i] and members[i+1] then
 			Player.LogWarning("jxyjxyVoice:::"..tostring(members[i]))
-			local position = ""
-			if members[i] == 2 then
-				position = "POSITION_TYPE_SOUTH"
-			elseif members[i] == 3 then
-				position = "POSITION_TYPE_WEST"
-			elseif members[i] == 4 then
-				position = "POSITION_TYPE_NORTH"
-			else
-				position = "POSITION_TYPE_EAST"
+			--[[
+			--]]
+			if Player.voiceNumber and Player.voiceNumber[(members[i])] then
+				ClickEvent.TalkingState(Player.voiceNumber[(members[i])],members[i+1])
 			end
-			ClickEvent.TalkingState(position,members[i+1])
 		end
 	end
 end

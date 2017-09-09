@@ -3731,8 +3731,10 @@ end
 function ClickEvent.GameVoiceButton(gameObject)
 	-- body
 	if _currentPanel.panel:GetChild("GameVoiceButton").selected then
+		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 0
 		WeChatPlatform.m_voiceengine:CloseMic()
 	else
+		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 1
 		WeChatPlatform.m_voiceengine:OpenMic()
 	end
 end

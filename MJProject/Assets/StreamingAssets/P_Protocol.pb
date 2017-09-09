@@ -1,5 +1,5 @@
 
-¢š
+Ù›
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -150,7 +150,11 @@ expires_in (
 	player_id ("d
 GetRoomDataD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_ROOM_DATA
-room_id ("¥
+room_id ("i
+
+UpdateRoomB
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_UPDATE_ROOM
+voice_member_id ("¥
 WechatUnion
 openid (
 nickname (
@@ -340,11 +344,11 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("´
+common_reward_id ("Í
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO/
 	sync_type (2.Adoter.Asset.ROOM_SYNC_TYPE9
-player_list (2$.Adoter.Asset.RoomInformation.Playerò
+player_list (2$.Adoter.Asset.RoomInformation.Player‹
 Player-
 position (2.Adoter.Asset.POSITION_TYPE/
 	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
@@ -352,7 +356,8 @@ card_value ("a
 wechat (2.Adoter.Asset.WechatUnion
 
 ip_address (F
-dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElementR
+dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElement
+voice_member_id (R
 DistanceElement-
 position (2.Adoter.Asset.POSITION_TYPE
 distance ("Ë
@@ -550,7 +555,7 @@ ERROR_CODE
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
-ERROR_COMMON_REWARD_HAS_GOT3*Î
+ERROR_COMMON_REWARD_HAS_GOT3*í
 	META_TYPE
 META_TYPE_SHARE_BEGIN!
 META_TYPE_SHARE_CREATE_PLAYER
@@ -582,7 +587,8 @@ ERROR_CODE
 META_TYPE_C2S_RECONNECT:
 META_TYPE_C2S_WECHAT_LOGIN; 
 META_TYPE_C2S_SWITCH_ACCOUNT<
-META_TYPE_C2S_GET_ROOM_DATA=
+META_TYPE_C2S_GET_ROOM_DATA=
+META_TYPE_C2S_UPDATE_ROOM>
 META_TYPE_C2S_COUNTÿ
 META_TYPE_S2C_BEGINõ
 META_TYPE_S2C_TICKETö
@@ -665,7 +671,8 @@ ERROR_CODE
 KICK_OUT_REASON_DISCONNECT
 KICK_OUT_REASON_OTHER_LOGIN!
 KICK_OUT_REASON_CHANGE_SERVER
-KICK_OUT_REASON_LOGOUT*<
-	ROLE_TYPE
+KICK_OUT_REASON_LOGOUT*P
+	ROLE_TYPE
+ROLE_TYPE_NULL 
 ROLE_TYPE_PLAYER
 ROLE_TYPE_GAME_SERVER

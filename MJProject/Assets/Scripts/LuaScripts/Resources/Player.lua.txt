@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 10
-Player.pc_version = "1.0.1.0909"
+Player.pc_version = "1.0.2.0909"
 
 Player.sayHiTimestarmp = nil
 
@@ -138,12 +138,7 @@ Player.allPaisShowIndex = 0
 Player.room_current_round = 0
 
 Player.voiceCount = 0
-Player.voiceNumber = {
-    [0] = 0,
-    [1] = 0,
-    [2] = 0,
-    [3] = 0,
-}
+Player.voiceNumber = {}
 
 function Player.LoadData( ... )
     -- body
@@ -181,7 +176,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -500,6 +495,14 @@ end
 ---------------------------------------------------------------------------
 --数据封装
 ---------------------------------------------------------------------------
+
+function Player.CmdUpdateRoom(memberID)
+    -- body
+    updateRoom = {
+        voice_member_id = memberID
+    }
+    this.SendProtocol("UpdateRoom",updateRoom)
+end
 
 function Player.CmdBuySomething(mallID)
     -- body
@@ -1050,6 +1053,13 @@ function Player.OnRoomInformation(type_t,stuff)
         end
         if message.sync_type == "ROOM_SYNC_TYPE_NORMAL" then
             Player._all_players_data = message.player_list
+            --[[--]]
+            for k,v in pairs(message.player_list) do
+                if not Player.voiceNumber then
+                    Player.voiceNumber = {}
+                end
+                Player.voiceNumber[v.voice_member_id] = v.position
+            end
         end
         if Player._my_player_data then
             --Player.ThreadFunction(
