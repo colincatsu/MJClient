@@ -2254,20 +2254,17 @@ end
 
 function ClickEvent.FeedBackButton(gameObject)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3009)
+	ClickEvent.ShowSingleYesWindow(3009)
 end
 
 function ClickEvent.UpdateButton(gameObject)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3008)
+	ClickEvent.ShowSingleYesWindow(3008)
 end
 
 function ClickEvent.CustomServiceButton(gameObject)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3007)
+	ClickEvent.ShowSingleYesWindow(3007)
 end
 
 function ClickEvent.VipNoteList(gameObject)
@@ -2392,6 +2389,7 @@ function ClickEvent.GameSettingButton( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._setting_ui)
 	Player.LogWarning("Music:")
 	Player.LogWarning(Player._player_data.game_setting.music)
+	_popPanel[popPanelIndex].panel:GetChild("Version").text = ""
 	if CS.LuaCommon.isIos == true then
 		_popPanel[popPanelIndex].panel:GetChild("UpdateButton").visible = false
 	end

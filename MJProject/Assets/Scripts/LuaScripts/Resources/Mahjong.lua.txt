@@ -2860,15 +2860,16 @@ function MahJong.SortPlayerPai(deleteNumber,isZhuaPai)
 	end
 
 	local paiAllNumber = _player_father.currentPaiNumber
-
 	if isZhuaPai and isZhuaPai == true then
 		if paiAllNumber ~= 1 and paiAllNumber ~= 4 and paiAllNumber ~= 7 and paiAllNumber ~= 10 and paiAllNumber ~= 13 then
 			paiAllNumber = paiAllNumber - 1
 		end
+	else
+		if paiAllNumber == 14 then
+			paiAllNumber = paiAllNumber - 1
+		end
 	end
 	--[[
-	if paiAllNumber == 14 then
-	end
 	Player.LogWarning("jxyjxy:::::"..paiAllNumber)
 	--]]
 	for k,v in pairs(_player_father.cards) do
@@ -2879,6 +2880,13 @@ function MahJong.SortPlayerPai(deleteNumber,isZhuaPai)
 		if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
 			_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 			- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+		end
+	else
+		if _player_father.currentPaiNumber == 14 then
+			if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
+				_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
+				- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+			end
 		end
 	end
 end
