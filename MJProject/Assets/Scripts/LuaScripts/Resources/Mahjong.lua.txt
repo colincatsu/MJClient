@@ -265,7 +265,9 @@ end
 
 function MahJong.QuitVoiceRoom()
 	-- body
-	GVoicePlatform.m_voiceengine:QuitRoom(Player.voiceRoomName,15000)
+	if Player._room_information.options.voice_open and Player._room_information.options.voice_open == true then
+		GVoicePlatform.m_voiceengine:QuitRoom(Player.voiceRoomName,15000)
+	end
 end
 
 function MahJong.SetModelPoolFrontPointer( pointer )
