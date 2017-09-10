@@ -1219,11 +1219,11 @@ function ClickEvent.ShareToWeChatFriends( ... )
 	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
-	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButtonShare").visible = false
 	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,600 * radio,600),2)
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = true
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = true
-	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButtonShare").visible = true
 end
 
 function ClickEvent.ShareToWeChat( ... )
@@ -1231,11 +1231,11 @@ function ClickEvent.ShareToWeChat( ... )
 	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
-	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = false
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButtonShare").visible = false
 	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,600 * radio,600),1)
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = true
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = true
-	_popPanel[popPanelIndex].panel:GetChild("GameBackButton").visible = true
+	_popPanel[popPanelIndex].panel:GetChild("GameBackButtonShare").visible = true
 end
 
 function ClickEvent.ExitRoomButton( ... )
