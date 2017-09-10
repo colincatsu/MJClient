@@ -31,7 +31,8 @@ ClickEvent.panelTable = {
 	_not_move_toast_ui = "NotMoveToast",
 	_room_calculate_ui = "FinishBalance",
 	_vote_ui = "Vote",
-	_share_calculate_ui = "Share"
+	_share_calculate_ui = "Share",
+	_only_yes_ui = "RoomClosedPop",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -208,8 +209,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
 
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
-		_currentPanel.panel:GetChild("GameListenButton").selected = true
-		_currentPanel.panel:GetChild("GameVoiceButton").selected = true
+		if Player._room_information.options.voice_open and Player._room_information.options.voice_open == true then
+			_currentPanel.panel:GetChild("GameListenButton").selected = false
+			_currentPanel.panel:GetChild("GameVoiceButton").selected = true
+		else
+			_currentPanel.panel:GetChild("GameListenButton").visible = false
+			_currentPanel.panel:GetChild("GameVoiceButton").visible = false
+		end
 
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
@@ -413,6 +419,12 @@ function ClickEvent.CreateOperationButton( ... )
 	_currentPanel.buttonList["GameTingButton"] = UIPackage.GetItemURL("MXUI","GameTingButton")
 	_currentPanel.buttonList["XuanFengButton"] = UIPackage.GetItemURL("MXUI","XuanFengButton")
 	_currentPanel.buttonList["ClearShowFan"] = UIPackage.GetItemURL("MXUI","ClearShowFan")
+end
+
+function ClickEvent.ShowSingleYesWindow( showContentNumber )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
+	_popPanel[popPanelIndex].panel:GetChild("TPopText").text = StringTable.Get(showContentNumber)
 end
 
 function ClickEvent.ShowSmallWindow(showContentNumber)
@@ -912,9 +924,13 @@ function ClickEvent.ShowToast(content)
 	end
 	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.Close)
 	if ClickEvent.ErrorChangeTable(content) ~= -1 then
-		_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
+		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
+			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
+		end
 	else
-		_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
+		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
+			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
+		end
 	end
 end
 
@@ -2123,6 +2139,9 @@ function ClickEvent.GameDissolveButton(gameObject)
 		--_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = false
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
 		--Player.dismissHasClicked = true
+	else
+		ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
+		_popPanel[popPanelIndex].panel:GetChild("TPopText").text = string.format(StringTable.Get(2039),math.ceil(Player.activityDataTable.room_dismiss_cooldown - CS.UnityEngine.Time.time + Player.dismissTimestarmp))
 	end
 
 end
@@ -2588,8 +2607,7 @@ end
 function ClickEvent.Welfare( ... )
 	-- body
 	--ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
+	ClickEvent.ShowSingleYesWindow(3000)
 end
 
 function ClickEvent.Setting( ... )
@@ -2630,9 +2648,7 @@ end
 
 function ClickEvent.More( ... )
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
-
+	ClickEvent.ShowSingleYesWindow(3000)
 end
 
 function ClickEvent.RoomCardNum( ... )
@@ -2844,6 +2860,18 @@ function ClickEvent.NoButton( ... )
 		return
 	elseif _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2038) then
 		CS.UnityEngine.Application.Quit()
+		return
+	end
+	ClickEvent.Close()
+end
+
+function ClickEvent.YesButtonSingle( ... )
+	-- body
+	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("TPopText") and _popPanel[popPanelIndex].panel:GetChild("TPopText").text == StringTable.Get(2034) then
+		Player.LoadScene("FairyMainUI")
+		return
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("TPopText") and _popPanel[popPanelIndex].panel:GetChild("TPopText").text == StringTable.Get(2009) then
+		Player.LoadScene("FairyMainUI")
 		return
 	end
 	ClickEvent.Close()
@@ -3300,8 +3328,7 @@ function ClickEvent.DouRoomButton( ... )
 	ClickEvent.isInDouRoom = true
 	--]]
 
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(3000)
+	ClickEvent.ShowSingleYesWindow(3000)
 end
 
 function ClickEvent.GetintoRoomButton( ... )
@@ -3332,6 +3359,7 @@ function ClickEvent.CreateRoomButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
 		costCard = "2/"
 	end
+	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = true
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
@@ -3458,6 +3486,11 @@ function ClickEvent.CreateButton( )
 		open_rands = 16
 	end
 
+	local voice_open = false
+	if _popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected then
+		voice_open = true
+	end
+
 	local extend_type_count = 1
 	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan01").selected then
 		extend_type[extend_type_count] = "ROOM_EXTEND_TYPE_ZHANLIHU"
@@ -3499,11 +3532,11 @@ function ClickEvent.CreateButton( )
 	end
 	ClickEvent.Close()
 	if cardActivity == true then
-		Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
+		Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open)
 		Player.isFriendRoom = true
 	else
 		if Player._player_data.common_prop.room_card_count >= costCard then
-			Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
+			Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open)
 			Player.isFriendRoom = true
 		else
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -3718,12 +3751,6 @@ function ClickEvent.GameListenButton(gameObject)
 	if _currentPanel.panel:GetChild("GameListenButton").selected then
 		WeChatPlatform.m_voiceengine:CloseSpeaker()
 	else
-		if CS.LuaCommon.isAndroid then
-			Player._player_data.game_setting.music = false
-			Player._player_data.game_setting.audio = false
-			Player._player_data.game_setting.voice = false
-			AudioPlayer.StopSound(AudioPlayer._audio_name.Bgm)
-		end
 		WeChatPlatform.m_voiceengine:OpenSpeaker()
 	end
 end
@@ -3734,6 +3761,12 @@ function ClickEvent.GameVoiceButton(gameObject)
 		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 0
 		WeChatPlatform.m_voiceengine:CloseMic()
 	else
+		if CS.LuaCommon.isAndroid then
+			Player._player_data.game_setting.music = false
+			Player._player_data.game_setting.audio = false
+			Player._player_data.game_setting.voice = false
+			AudioPlayer.StopSound(AudioPlayer._audio_name.Bgm)
+		end
 		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 1
 		WeChatPlatform.m_voiceengine:OpenMic()
 	end
@@ -3770,9 +3803,18 @@ function ClickEvent.GameBackButton(gameObject)
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
 		ClickEvent.Close()
 	else
-		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+		if Player.roomHasBegin == false then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+		else
+			ClickEvent.ShowSingleYesWindow(2003)
+		end
 	end
+end
+
+function ClickEvent.GameBackButtonShare(gameObject)
+	-- body
+	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 end
 
 function ClickEvent.GameTingButton(gameObject)

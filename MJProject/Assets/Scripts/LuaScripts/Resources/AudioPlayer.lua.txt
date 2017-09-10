@@ -46,7 +46,9 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume)
 		soundName == AudioPlayer._audio_name.Reward or soundName == AudioPlayer._audio_name.Bean or
 		soundName == AudioPlayer._audio_name.NoTime or soundName == AudioPlayer._audio_name.SortPai or
 		soundName == AudioPlayer._audio_name.ClickUI or soundName == AudioPlayer._audio_name.MingGang or
-		soundName == AudioPlayer._audio_name.AnGang or soundName == AudioPlayer._audio_name.SelectUI then
+		soundName == AudioPlayer._audio_name.AnGang or soundName == AudioPlayer._audio_name.SelectUI or
+		soundName == AudioPlayer._audio_name.FallingGold or soundName == AudioPlayer._audio_name.Dragon or
+		soundName == AudioPlayer._audio_name.YuanBao or soundName == AudioPlayer._audio_name.LaoYue then
 
 		if Player._player_data.game_setting.audio == false then
 			return

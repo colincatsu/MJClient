@@ -1,5 +1,5 @@
 
-Ù›
+ò›
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -21,7 +21,7 @@ card_index ("e
 player_list (5
 wechat_token (2.Adoter.Asset.WechatAccessToken)
 wechat (2.Adoter.Asset.WechatUnion3
-client_info (2.Adoter.Asset.ClientInfomation"ò
+client_info (2.Adoter.Asset.ClientInfomation"‹
 
 PlayerProp-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -31,7 +31,8 @@ PlayerProp-
 pai_oper_count (
 
 has_tinged (
-offline ("§
+offline (
+voice_member_id ("§
 
 GameRecord2
 list (2$.Adoter.Asset.GameRecord.GameElementä

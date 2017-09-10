@@ -238,7 +238,7 @@ function MahJong.OnJoinRoomComplete(code,roomName, memberID)
 	Player.CmdUpdateRoom(memberID)
 	Player.LogWarning("jxyjxyMemberID::"..memberID)
 	--GVoicePlatform.m_voiceengine:OpenMic()
-	--GVoicePlatform.m_voiceengine:OpenSpeaker()
+	GVoicePlatform.m_voiceengine:OpenSpeaker()
 end
 
 function MahJong.OnQuitRoomComplete(code,roomName, memberID)
@@ -1727,7 +1727,11 @@ function MahJong.CreatePlayerPai(isRoomSync)
 	        end
         end
     end
-	MahJong.SortPlayerPai()
+    if isRoomSync and isRoomSync == true then
+		MahJong.SortPlayerPai(nil,true)
+	else
+		MahJong.SortPlayerPai()
+    end
 	if not isRoomSync then
 		--MahJong.OtherPlayerPaiInit()
 		MahJong.PlayerPaiSetActive(false)
@@ -2826,7 +2830,7 @@ function MahJong.TingPai(message)
 	Effect.AddNormalEffect(Effect._effect_name.tingShow,nil,nil,tempPosition,2)
 end
 
-function MahJong.SortPlayerPai(deleteNumber)
+function MahJong.SortPlayerPai(deleteNumber,isZhuaPai)
 	-- body
 
 	if deleteNumber then
@@ -2856,8 +2860,11 @@ function MahJong.SortPlayerPai(deleteNumber)
 	end
 
 	local paiAllNumber = _player_father.currentPaiNumber
-	if paiAllNumber ~= 1 and paiAllNumber ~= 4 and paiAllNumber ~= 7 and paiAllNumber ~= 10 and paiAllNumber ~= 13 then
-		paiAllNumber = paiAllNumber - 1
+
+	if isZhuaPai and isZhuaPai == true then
+		if paiAllNumber ~= 1 and paiAllNumber ~= 4 and paiAllNumber ~= 7 and paiAllNumber ~= 10 and paiAllNumber ~= 13 then
+			paiAllNumber = paiAllNumber - 1
+		end
 	end
 	--[[
 	if paiAllNumber == 14 then
@@ -2868,10 +2875,11 @@ function MahJong.SortPlayerPai(deleteNumber)
 		v.parent.transform.localPosition = _player_base_pos +
 		_pai_bigger*newVector3((paiAllNumber-1)*_modelSize.width*_pai_gap/2 - _modelSize.width*_pai_gap*(k-1),0,0)
 	end
-
-	if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
-		_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
-		- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+	if isZhuaPai and isZhuaPai == true then
+		if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
+			_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
+			- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+		end
 	end
 end
 

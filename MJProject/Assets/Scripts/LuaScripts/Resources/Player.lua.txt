@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 5
 Player.isTimeOut = false
 Player.sayHiTimeOut = 10
-Player.pc_version = "1.0.2.0909"
+Player.pc_version = "1.0.1.0910"
 
 Player.sayHiTimestarmp = nil
 
@@ -634,7 +634,7 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",enterGame)
 end
 
-function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_open_rands)
+function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_open_rands, voiceOpen)
     -- body
     local createRoom ={
         room = {
@@ -643,6 +643,7 @@ function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_
                 extend_type = room_extend_type,
                 top_mutiple = room_top_mutiple,
                 open_rands = room_open_rands,
+                voice_open = voiceOpen,
             },
             --room_id = roomId,--1,
             --room_name = name,--"123",
@@ -819,7 +820,7 @@ function Player.OnRoomState(type_t,stuff)
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             --Player.LoadScene("FairyMainUI")
-            ClickEvent.ShowLeaveRoom(2034)
+            ClickEvent.ShowSingleYesWindow(2034)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
@@ -827,7 +828,7 @@ function Player.OnRoomState(type_t,stuff)
             Player.dismissIsShowing = false
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
-            ClickEvent.ShowLeaveRoom(2009)
+            ClickEvent.ShowSingleYesWindow(2009)
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
@@ -841,7 +842,7 @@ function Player.OnRoomState(type_t,stuff)
             Player.dismissIsShowing = false
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
-            ClickEvent.ShowLeaveRoom(2009)
+            ClickEvent.ShowSingleYesWindow(2009)
         end
     end
 end
@@ -1081,7 +1082,7 @@ function Player.OnRoomInformation(type_t,stuff)
         for j,c in pairs(Player._all_players_data) do
             if v.common_prop.player_id ~= c.common_prop.player_id and v.ip_address == c.ip_address and Player.hasShowIPSame == false then
                 Player.hasShowIPSame = true
-                ClickEvent.ShowSmallWindow(2037)
+                ClickEvent.ShowSingleYesWindow(2037)
                 return
             end
         end
@@ -1166,10 +1167,10 @@ function Player.OnEnterRoom(type_t,stuff)
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         Player._player_data.room_id = 0
-        ClickEvent.ShowSmallWindow(2010)
+        ClickEvent.ShowSingleYesWindow(2010)
         Player.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
-        ClickEvent.ShowSmallWindow(2008)
+        ClickEvent.ShowSingleYesWindow(2008)
         Player.LogWarning("is full")
     end
     Player.LogWarning(message.error_code)
