@@ -1134,15 +1134,15 @@ ldfsqh.xml|446|<component size="50,31">
   <Button downEffect="dark" downEffectValue="0.80"/>
 </component>lt1cmx.xml|1378|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
-    <image id="n0_lt1c" name="Bg" src="w61cii" xy="321,243" size="691,254" group="n5_kdw5">
+    <image id="n0_lt1c" name="Bg" src="w61cii" xy="321,158" size="691,254" group="n5_kdw5">
       <relation target="n1_lt1c" sidePair="height-height"/>
     </image>
-    <text id="n1_lt1c" name="TPopText" xy="374,320" size="589,28" group="n5_kdw5" fontSize="24" color="#5c2c16" align="center" vAlign="middle" ubb="true" autoSize="height" text="牌局结束后才可退出房间哦"/>
-    <component id="n2_lt1c" name="YesButtonSingle" src="w61cik" xy="578,383" group="n3_v7wh"/>
-    <group id="n3_v7wh" name="Btns" xy="578,383" size="177,73" group="n5_kdw5" advanced="true">
+    <text id="n1_lt1c" name="TPopText" xy="374,235" size="589,28" group="n5_kdw5" fontSize="24" color="#5c2c16" align="center" vAlign="middle" ubb="true" autoSize="height" text="牌局结束后才可退出房间哦"/>
+    <component id="n2_lt1c" name="YesButtonSingle" src="w61cik" xy="578,298" group="n3_v7wh"/>
+    <group id="n3_v7wh" name="Btns" xy="578,298" size="177,73" group="n5_kdw5" advanced="true">
       <relation target="n0_lt1c" sidePair="bottom-bottom"/>
     </group>
-    <group id="n5_kdw5" name="n5" xy="321,243" size="691,254" advanced="true">
+    <group id="n5_kdw5" name="n5" xy="321,158" size="691,254" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>
@@ -4517,9 +4517,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n10_qb9a" name="EffectSlideButton" src="w61cfd" xy="460,473" group="n25_jujv"/>
     <component id="n11_qb9a" name="GameVoiceSlideButton" src="w61cfd" xy="847,385" group="n25_jujv"/>
     <component id="n20_jujv" name="ChangeAccount" src="w61cfe" xy="810,212" group="n25_jujv"/>
-    <component id="n21_jujv" name="FeedBackButton" src="w61cff" xy="355,588" group="n25_jujv"/>
-    <component id="n23_jujv" name="UpdateButton" src="w61cfh" xy="472,588" group="n25_jujv"/>
-    <component id="n24_jujv" name="CustomServiceButton" src="w61cfi" xy="596,588" group="n25_jujv"/>
+    <component id="n21_jujv" name="FeedBackButton" src="w61cff" xy="329,588" group="n25_jujv"/>
+    <component id="n23_jujv" name="UpdateButton" src="w61cfh" xy="583,588" group="n25_jujv"/>
+    <component id="n24_jujv" name="CustomServiceButton" src="w61cfi" xy="456,588" group="n25_jujv"/>
     <component id="n30_lidq" name="ServiveTerm4" src="lidq4ty" xy="785,585" size="122,50" group="n25_jujv"/>
     <component id="n31_lidq" name="ServiveTerm5" src="lidq4tz" xy="912,585" size="117,50" group="n25_jujv"/>
     <group id="n25_jujv" name="Btns" xy="308,94" size="863,541" group="n27_s5h9" advanced="true"/>
