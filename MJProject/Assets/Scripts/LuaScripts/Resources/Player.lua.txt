@@ -121,8 +121,8 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.sayHiTimeOut = 10
-Player.pc_version = "1.0.4.0910"
+Player.sayHiTimeOut = 15
+Player.pc_version = "1.0.1.0912"
 
 Player.sayHiTimestarmp = nil
 

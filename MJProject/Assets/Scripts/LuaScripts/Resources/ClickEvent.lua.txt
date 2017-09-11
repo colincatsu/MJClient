@@ -3234,6 +3234,7 @@ function ClickEvent.WechatLogin(gameObject)
 		if not Player.wechat_code or Player.wechat_code == "" then
 			WeChatPlatform.onWeChatCallBack = function(paraCode)
 				-- body
+				Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
 				Player.wechat_code = paraCode--WeChatPlatform:GetData("getWXCode")
 				Player.CmdWechatLogin(Player.wechat_code)
 				WeChatPlatform.onWeChatCallBack = nil
