@@ -936,7 +936,7 @@ end
 
 function ClickEvent.ShowNotMoveToast(content,deleteTime)
 	-- body
-	ClickEvent.Close()
+	--ClickEvent.Close()
 	ClickEvent.PopPanel(ClickEvent.panelTable._not_move_toast_ui)
 	_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(content)
 	if deleteTime then

@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.2.0912"
+Player.pc_version = "1.0.1.0913"
 
 Player.sayHiTimestarmp = nil
 
@@ -176,7 +176,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -1136,7 +1136,7 @@ function Player.OnPlayerInformation(type_t,stuff)
     if not Player._player_data.game_setting.audio or Player._player_data.game_setting == {} then
     end
     --]]
-    if Player._tosence_name ~= "PlaySence" then
+    if Player._tosence_name ~= "PlaySence" and ClickEvent.IsMainUI(ClickEvent.panelTable._choose_ui) == false then
         ClickEvent.ThreadToMainMenu()
     end
 end

@@ -2898,10 +2898,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <text id="n17_ics6" name="n17" xy="871,12" size="23,22" fontSize="18" color="#ffffff" text="番"/>
     <text id="n18_ics6" name="TotalFanNum" xy="838,12" size="32,22" fontSize="18" color="#ffffff" align="center" vAlign="middle" text="999"/>
     <text id="n19_ics6" name="n19" xy="1066,13" size="63,33" fontSize="29" color="#663300" text="合计"/>
-    <list id="n23_ics6" name="PaiList" xy="129,57" size="519,70" layout="row" overflow="scroll" scroll="horizontal"/>
-    <component id="n24_ics6" name="HuZhang" src="ics64ud" xy="657,54" size="54,71"/>
+    <list id="n23_ics6" name="PaiList" xy="129,57" size="549,70" layout="row" overflow="scroll" scroll="horizontal"/>
+    <component id="n24_ics6" name="HuZhang" src="ics64ud" xy="674,54" size="54,71"/>
   </displayList>
-</component>w61cd0.xml|2393|<component size="1246,132">
+</component>w61cd0.xml|2405|<component size="1246,132">
   <displayList>
     <image id="n13_ics6" name="Bg" src="ics64u8" xy="-3,-7" size="1249,140"/>
     <image id="n17_ics6" name="Cbg" src="w61ce2" xy="725,7" size="306,108"/>
@@ -2929,8 +2929,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n19_ics6" name="Cbg1" src="w61ce2" xy="1145,7" size="83,108"/>
     <text id="n20_ics6" name="n20" xy="1167,8" size="41,22" fontSize="18" color="#ffffff" text="宝牌"/>
     <component id="n25_ics6" name="BaoPai" src="ics64uc" xy="1145,18"/>
-    <list id="n24_ics6" name="PaiList" xy="127,58" size="539,70" layout="row" overflow="scroll" scroll="horizontal"/>
-    <component id="n26_ics6" name="HuZhang" src="ics64ud" xy="659,55" size="54,71"/>
+    <list id="n24_ics6" name="PaiList" xy="127,58" size="549,70" layout="row" overflow="scroll" scroll="horizontal" colGap="-1"/>
+    <component id="n26_ics6" name="HuZhang" src="ics64ud" xy="674,55" size="54,71"/>
   </displayList>
 </component>w61cd1.xml|356|<component size="134,24">
   <displayList>
@@ -4388,10 +4388,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
+    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n20_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="0" type="Scale" target="n10_w3hs" value="0,0"/>
-    <item time="0" type="Scale" target="n3_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
+    <item time="0" type="Scale" target="n12_w3hs" value="0,0"/>
     <item time="0" type="Scale" target="n11_w3hs" value="0,0"/>
     <item time="2" type="Scale" target="n12_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
     <item time="3" type="Scale" target="n10_w3hs" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
