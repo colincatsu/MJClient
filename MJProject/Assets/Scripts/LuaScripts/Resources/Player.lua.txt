@@ -122,7 +122,7 @@ Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
 Player.sayHiTimeOut = 15
-Player.pc_version = "1.0.1.0912"
+Player.pc_version = "1.0.2.0912"
 
 Player.sayHiTimestarmp = nil
 
@@ -176,7 +176,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -415,7 +415,7 @@ function Player.myUpdate( ... )
     end
     --[[
     --]]
-    if Player.sayHiTimestarmp and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" then
+    if Player.sayHiTimestarmp and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" and ClickEvent.IsMainUI(ClickEvent.panelTable._main_ui) == false then
         if CS.UnityEngine.Time.realtimeSinceStartup - Player.sayHiTimestarmp > Player.sayHiTimeOut then
             Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
             ClickEvent.ShowNotMoveToast(2028)
