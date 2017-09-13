@@ -59,7 +59,31 @@ public class LuaBehaviour : MonoBehaviour {
         //    scriptEnv.Set(injection.name, injection.value);
         //}
 
+        LuaEnvSingleton.Instance.AddLoader((ref string filename) => {
+            if (FileInfo(Application.persistentDataPath + "//" + filename + ".lua.txt"))
+            {
+                StreamReader sr = null;
+                sr = File.OpenText(Application.persistentDataPath + "//" + filename + ".lua.txt");
 
+                string script = "";
+
+                if ((script = sr.ReadLine()) != null)
+                {
+
+                    //do some thing with t_sLine
+
+                }
+                else
+                {
+                    print("Null!");
+                }
+
+                sr.Close();
+                sr.Dispose();
+                return System.Text.Encoding.UTF8.GetBytes(script);
+            }
+            return null;
+        });
         LuaEnvSingleton.Instance.DoString(luaScript.text, luaChunkName, scriptEnv);
         
         luaAwake = scriptEnv.Get<Action>("awake");
