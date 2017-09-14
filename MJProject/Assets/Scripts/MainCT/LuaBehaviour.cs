@@ -60,24 +60,15 @@ public class LuaBehaviour : MonoBehaviour {
         //}
 
         LuaEnvSingleton.Instance.AddLoader((ref string filename) => {
-            if (FileInfo(Application.persistentDataPath + "//" + filename + ".lua.txt"))
+            string path = Application.persistentDataPath + "/Resources/" + filename + ".lua.txt";
+            FileInfo fInfo0 = new FileInfo(path);
+            if (fInfo0.Exists)
             {
-                StreamReader sr = null;
-                sr = File.OpenText(Application.persistentDataPath + "//" + filename + ".lua.txt");
+                StreamReader sr = new StreamReader(path);
 
                 string script = "";
-
-                if ((script = sr.ReadLine()) != null)
-                {
-
-                    //do some thing with t_sLine
-
-                }
-                else
-                {
-                    print("Null!");
-                }
-
+                script = sr.ReadToEnd();
+                 
                 sr.Close();
                 sr.Dispose();
                 return System.Text.Encoding.UTF8.GetBytes(script);

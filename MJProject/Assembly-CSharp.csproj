@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -118,106 +118,6 @@
      <Compile Include="Assets\XLua\Examples\08_Hotfix\HotfixTest2.cs" />
      <Compile Include="Assets\XLua\Examples\08_Hotfix\StatefullTest.cs" />
      <Compile Include="Assets\XLua\Examples\ExampleGenConfig.cs" />
-     <Compile Include="Assets\XLua\Gen\AnimationRegisterWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\AssetsHandleWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\CSCallLuaItfDBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\Coroutine_RunnerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\DelegatesGensBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\EnumWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\EventTriggerListenerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIContainerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIControllerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIDisplayObjectWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIEventContextWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIEventDispatcherWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIEventListenerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGButtonWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGComboBoxWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGComponentWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGGraphWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGGroupWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGImageWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGLabelWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGListWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGLoaderWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGMovieClipWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGObjectPoolWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGObjectWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGProgressBarWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGRichTextFieldWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGRootWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGSliderWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGTextFieldWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGTextInputWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIGoWrapperWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIInputEventWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUINTextureWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIPlayStateWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIPopupMenuWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIRelationsWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIScrollPaneWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIStageWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUITextFormatWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUITransitionWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIUIConfigWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIUIPackageWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIUIPanelWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\FairyGUIWindowWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\InvokeLuaICalcBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\LuaBehaviourWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\LuaCommonWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\MXByteBufferWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\MXNetworkManagerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\MXSocketClientWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\PackUnpack.cs" />
-     <Compile Include="Assets\XLua\Gen\PlatformWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\SystemCollectionsGenericList1SystemInt32Wrap.cs" />
-     <Compile Include="Assets\XLua\Gen\SystemObjectWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\TouchCTWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\TutorialBaseClassWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\TutorialCalcWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\TutorialDrivenClassExtensionsWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\TutorialDrivenClassWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineAnimationClipWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineAnimationCurveWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineAnimationWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineApplicationWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineAudioSourceWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineBehaviourWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineBoundsWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineCameraWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineColorWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineComponentWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineDebugWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineGameObjectWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineKeyframeWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineMonoBehaviourWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineObjectWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineParticleSystemWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineQuaternionWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineRay2DWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineRayWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineRendererWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineResourcesWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineSceneManagementSceneManagerWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineSceneManagementSceneWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineSkinnedMeshRendererWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineTextAssetWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineTimeWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineTransformWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineVector2Wrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineVector3Wrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineVector4Wrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineWWWWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\UnityEngineWaitForSecondsWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\WrapPusher.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaGenAutoRegister.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaTestIExchangerBridge.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaTestMyStructWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaTestNoGcWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\XLuaTestPeddingWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\gcloud_voiceGCloudVoiceWrap.cs" />
-     <Compile Include="Assets\XLua\Gen\gcloud_voiceIGCloudVoiceWrap.cs" />
      <Compile Include="Assets\XLua\Src\CodeEmit.cs" />
      <Compile Include="Assets\XLua\Src\CopyByValue.cs" />
      <Compile Include="Assets\XLua\Src\DelegateBridge.cs" />
@@ -244,6 +144,7 @@
      <Compile Include="Assets\XLua\Tutorial\LuaCallCSharp\LuaCallCs.cs" />
      <None Include="Assets\Shader\AlphaTest-Diffuse 1.shader" />
      <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\message_box.lua.txt" />
+     <None Include="Assets\Scripts\LuaScripts\Resources\PlaySence.lua.txt" />
      <None Include="Assets\XLua\Examples\06_Coroutine\Resources\cs_coroutine.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\StringTable.lua.txt" />
      <None Include="Assets\Resources\FairyUI\MXText.xml" />
@@ -258,7 +159,6 @@
      <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\Mahjong.lua.txt" />
      <None Include="Assets\XLua\Tutorial\LoadLuaScript\ByFile\Resources\byfile.lua.txt" />
-     <None Include="Assets\Scripts\LuaScripts\Resources\Player.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\TouchCT.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\AssetManager.lua.txt" />
      <None Include="Assets\XLua\Examples\06_Coroutine\Resources\coruntine_test.lua.txt" />
@@ -268,7 +168,6 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\Network.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\Main.lua.txt" />
      <None Include="Assets\XLua\Resources\xlua\util.lua.txt" />
-     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\XLua\Examples\03_UIEvent\ButtonInteraction.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Image.shader" />
      <None Include="Assets\Plugins\Android\GCloudVoice\AndroidManifest.xml" />
@@ -278,6 +177,7 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\AudioPlayer.lua.txt" />
      <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaDelegateWrap.tpl.txt" />
+     <None Include="Assets\Scripts\LuaScripts\Resources\Player.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\FairyGUI.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\MainUICT.lua.txt" />
      <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />

@@ -3258,6 +3258,11 @@ function ClickEvent.WechatLogin(gameObject)
 	end
 end
 
+function ClickEvent.GetWeChatByHttp(paraCode)
+	-- body
+	
+end
+
 function ClickEvent.OnReceivedWeChatMsg(nickname, sex, headimgurl)
 	-- body
 	Player.wechat_nickname = nickname

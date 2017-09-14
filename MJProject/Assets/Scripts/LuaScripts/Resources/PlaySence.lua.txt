@@ -1,0 +1,19 @@
+PlaySence = {}
+local MahJong = require "MahJong"
+
+function awake( ... ) 
+	-- body
+	MahJong.self = self
+	MahJong.Awake()
+end
+
+function start()
+	MahJong.Start()
+end
+
+function update( ... )
+	-- body
+	MahJong.Update()
+end
+
+return PlaySence

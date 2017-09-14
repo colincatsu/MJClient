@@ -1,9 +1,9 @@
 MahJong = {}
 local Enum = require "Enum"
 local Player = require "Player"
-Player.self = self
+Player.self = MahJong.self
 local ClickEvent = require "ClickEvent"
-ClickEvent.self = self
+ClickEvent.self = MahJong.self
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
@@ -12,7 +12,7 @@ local FairyGUI = require "FairyGUI"
 local Effect = require "Effect"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
-    self:YieldAndCallback(to_yield, cb)
+    MahJong.self:YieldAndCallback(to_yield, cb)
 end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 
@@ -121,12 +121,12 @@ local _hand_cards = {}--分张
 local _my_position = ""
 local diceHasPlay = false
 
-function awake( ... )
+function MahJong.Awake( ... )
 	-- body
 	ClickEvent.Awake()
 end
 
-function start()
+function MahJong.Start()
 
 	MahJong.Init()
 	Player._calculate_data = {}
@@ -318,7 +318,7 @@ function MahJong.SetChoosePaiColor(modelName)
 		return
 	end
 	for k,v in pairs(Player.allPaisShow) do
-		if self:IsNull(v.pai) == false and v.pai.name == modelName then
+		if MahJong.self:IsNull(v.pai) == false and v.pai.name == modelName then
 			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
 			v.isChanged = true
 		end
@@ -331,7 +331,7 @@ function MahJong.ResetChoosePaiColor( ... )
 		return
 	end
 	for k,v in pairs(Player.allPaisShow) do
-		if v.isChanged == true and self:IsNull(v.pai) == false then
+		if v.isChanged == true and MahJong.self:IsNull(v.pai) == false then
 			v.pai:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
 			v.isChanged = false
 		end
@@ -380,14 +380,14 @@ end
 
 function MahJong.Init()
 	-- body
-	_room_father = self.transform:Find("RoomID").gameObject
+	_room_father = MahJong.self.transform:Find("RoomID").gameObject
 	_room_number = _room_father.transform:Find("Number").gameObject
-	_dice_obj = self.transform:Find("Dice").gameObject
-	_red_dice_animation = self.transform:Find("Dice/Red/Dice").gameObject:GetComponent("Animation")
-	_white_dice_animation = self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
-	_dice_red = self.transform:Find("Dice/Red").gameObject
-	_dice_white = self.transform:Find("Dice/White").gameObject
-	_gai_obj = self.transform:Find("Gai").gameObject
+	_dice_obj = MahJong.self.transform:Find("Dice").gameObject
+	_red_dice_animation = MahJong.self.transform:Find("Dice/Red/Dice").gameObject:GetComponent("Animation")
+	_white_dice_animation = MahJong.self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
+	_dice_red = MahJong.self.transform:Find("Dice/Red").gameObject
+	_dice_white = MahJong.self.transform:Find("Dice/White").gameObject
+	_gai_obj = MahJong.self.transform:Find("Gai").gameObject
 	_pointFather.D = _gai_obj.transform:Find("Point_D/Father").gameObject
 	_startPosition.D = newVector3(_modelSize.width/2 - _modelPoolLineCount*_modelSize.width/4,_modelSize.length/2,0)
 	_startRotation.D = newVector3.zero
@@ -400,33 +400,33 @@ function MahJong.Init()
 	_pointFather.B = _gai_obj.transform:Find("Point_B/Father").gameObject
 	_startPosition.B = newVector3(0,_modelSize.length/2,-_modelSize.width/2 + _modelPoolLineCount*_modelSize.width/4)
 	_startRotation.B = newVector3(0,-270,0)
-	_player_direction.father = self.transform:Find("FangXiang").gameObject
+	_player_direction.father = MahJong.self.transform:Find("FangXiang").gameObject
 	_player_direction.east = _player_direction.father.transform:Find("DirectionD").gameObject
 	_player_direction.south = _player_direction.father.transform:Find("DirectionN").gameObject
 	_player_direction.west = _player_direction.father.transform:Find("DirectionX").gameObject
 	_player_direction.north = _player_direction.father.transform:Find("DirectionB").gameObject
-	_myAnimation = self:GetComponent("Animation")
-	self:GetComponent("AnimationRegister").animationEvent = MahJong.AnimationPlay
+	_myAnimation = MahJong.self:GetComponent("Animation")
+	MahJong.self:GetComponent("AnimationRegister").animationEvent = MahJong.AnimationPlay
 	--------------------------------------------------
 	--打牌牌池初始化
 	_pai_pool_show.point_d = {}
 	_pai_pool_show.point_d.paiNumber = 0
-	_pai_pool_show.point_d.father = self.transform:Find("PaiPoolShow/Point_D/Father").gameObject
+	_pai_pool_show.point_d.father = MahJong.self.transform:Find("PaiPoolShow/Point_D/Father").gameObject
 	_pai_pool_show.point_d.startPosition = newVector3(_pai_pool_show_line*_modelSize.width/2 - _modelSize.width/2 ,_modelSize.length/2,0)
 	_pai_pool_show.point_d.startRotation = newVector3(180,0,0)
 	_pai_pool_show.point_n = {}
 	_pai_pool_show.point_n.paiNumber = 0
-	_pai_pool_show.point_n.father = self.transform:Find("PaiPoolShow/Point_N/Father").gameObject
+	_pai_pool_show.point_n.father = MahJong.self.transform:Find("PaiPoolShow/Point_N/Father").gameObject
 	_pai_pool_show.point_n.startPosition = newVector3(0,_modelSize.length/2,_pai_pool_show_line*_modelSize.width/2 - _modelSize.width/2)
 	_pai_pool_show.point_n.startRotation = newVector3(180,-90,0)
 	_pai_pool_show.point_x = {}
 	_pai_pool_show.point_x.paiNumber = 0
-	_pai_pool_show.point_x.father = self.transform:Find("PaiPoolShow/Point_X/Father").gameObject
+	_pai_pool_show.point_x.father = MahJong.self.transform:Find("PaiPoolShow/Point_X/Father").gameObject
 	_pai_pool_show.point_x.startPosition = newVector3(_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/2,_modelSize.length/2,0)
 	_pai_pool_show.point_x.startRotation = newVector3(180,-180,0)
 	_pai_pool_show.point_b = {}
 	_pai_pool_show.point_b.paiNumber = 0
-	_pai_pool_show.point_b.father = self.transform:Find("PaiPoolShow/Point_B/Father").gameObject
+	_pai_pool_show.point_b.father = MahJong.self.transform:Find("PaiPoolShow/Point_B/Father").gameObject
 	_pai_pool_show.point_b.startPosition = newVector3(0,_modelSize.length/2,_modelSize.width/2 - _pai_pool_show_line*_modelSize.width/2)
 	_pai_pool_show.point_b.startRotation = newVector3(180,-270,0)
 	--碰牌池初始化
@@ -434,28 +434,28 @@ function MahJong.Init()
 	--]]
 	_operation_pai_show.point_d = {}
 	_operation_pai_show.point_d.paiNumber = 0
-	_operation_pai_show.point_d.father = self.transform:Find("OperationPoolShow/Point_D/Father").gameObject
+	_operation_pai_show.point_d.father = MahJong.self.transform:Find("OperationPoolShow/Point_D/Father").gameObject
 	_operation_pai_show.point_d.startPosition = newVector3(_operation_pai_show.point_d.father.transform.parent.position.x ,
 		_modelSize.length/2,
 		_operation_pai_show.point_d.father.transform.parent.position.z)
 	_operation_pai_show.point_d.startRotation = newVector3(180,0,0)
 	_operation_pai_show.point_n = {}
 	_operation_pai_show.point_n.paiNumber = 0
-	_operation_pai_show.point_n.father = self.transform:Find("OperationPoolShow/Point_N/Father").gameObject
+	_operation_pai_show.point_n.father = MahJong.self.transform:Find("OperationPoolShow/Point_N/Father").gameObject
 	_operation_pai_show.point_n.startPosition = newVector3(_operation_pai_show.point_n.father.transform.parent.position.x ,
 		_modelSize.length/2,
 		_operation_pai_show.point_n.father.transform.parent.position.z)
 	_operation_pai_show.point_n.startRotation = newVector3(180,-90,0)
 	_operation_pai_show.point_x = {}
 	_operation_pai_show.point_x.paiNumber = 0
-	_operation_pai_show.point_x.father = self.transform:Find("OperationPoolShow/Point_X/Father").gameObject
+	_operation_pai_show.point_x.father = MahJong.self.transform:Find("OperationPoolShow/Point_X/Father").gameObject
 	_operation_pai_show.point_x.startPosition = newVector3(_operation_pai_show.point_x.father.transform.parent.position.x ,
 		_modelSize.length/2,
 		_operation_pai_show.point_x.father.transform.parent.position.z)
 	_operation_pai_show.point_x.startRotation = newVector3(180,-180,0)
 	_operation_pai_show.point_b = {}
 	_operation_pai_show.point_b.paiNumber = 0
-	_operation_pai_show.point_b.father = self.transform:Find("OperationPoolShow/Point_B/Father").gameObject
+	_operation_pai_show.point_b.father = MahJong.self.transform:Find("OperationPoolShow/Point_B/Father").gameObject
 	_operation_pai_show.point_b.startPosition = newVector3(_operation_pai_show.point_b.father.transform.parent.position.x ,
 		_modelSize.length/2,
 		_operation_pai_show.point_b.father.transform.parent.position.z)
@@ -463,17 +463,17 @@ function MahJong.Init()
 	--玩家手牌
 	--[[
 	--]]
-	_player_pai_pool.father = self.transform:Find("PlayerPaiPool").gameObject
-	_player_pai_pool._next_player = self.transform:Find("PlayerPaiPool/next").gameObject
-	_player_pai_pool._next_player_father = self.transform:Find("PlayerPaiPool/next/Father").gameObject
+	_player_pai_pool.father = MahJong.self.transform:Find("PlayerPaiPool").gameObject
+	_player_pai_pool._next_player = MahJong.self.transform:Find("PlayerPaiPool/next").gameObject
+	_player_pai_pool._next_player_father = MahJong.self.transform:Find("PlayerPaiPool/next/Father").gameObject
 	_player_pai_pool._next_pai_number = 0
 	_player_pai_pool._next_card = {}
-	_player_pai_pool._opposite_player = self.transform:Find("PlayerPaiPool/opposite").gameObject
-	_player_pai_pool._opposite_player_father = self.transform:Find("PlayerPaiPool/opposite/Father").gameObject
+	_player_pai_pool._opposite_player = MahJong.self.transform:Find("PlayerPaiPool/opposite").gameObject
+	_player_pai_pool._opposite_player_father = MahJong.self.transform:Find("PlayerPaiPool/opposite/Father").gameObject
 	_player_pai_pool._opposite_pai_number = 0
 	_player_pai_pool._opposite_card = {}
-	_player_pai_pool._forward_player = self.transform:Find("PlayerPaiPool/forward").gameObject
-	_player_pai_pool._forward_player_father = self.transform:Find("PlayerPaiPool/forward/Father").gameObject
+	_player_pai_pool._forward_player = MahJong.self.transform:Find("PlayerPaiPool/forward").gameObject
+	_player_pai_pool._forward_player_father = MahJong.self.transform:Find("PlayerPaiPool/forward/Father").gameObject
 	_player_pai_pool._forward_pai_number = 0
 	_player_pai_pool._forward_card = {}
 end
@@ -753,12 +753,12 @@ function MahJong.UpdateMyDataState()
 	-- body
 	local myPosition = Player._my_player_data.position
 	_my_position = Player._my_player_data.position
-	local _east = self.transform:Find("OperationPoolShow/Point_D").gameObject
-	local _south = self.transform:Find("OperationPoolShow/Point_N").gameObject
-	local _west = self.transform:Find("OperationPoolShow/Point_X").gameObject
-	local _north = self.transform:Find("OperationPoolShow/Point_B").gameObject
-	local _pai_pool_show_obj = self.transform:Find("PaiPoolShow").gameObject
-	local _operation_pool_show = self.transform:Find("OperationPoolShow").gameObject
+	local _east = MahJong.self.transform:Find("OperationPoolShow/Point_D").gameObject
+	local _south = MahJong.self.transform:Find("OperationPoolShow/Point_N").gameObject
+	local _west = MahJong.self.transform:Find("OperationPoolShow/Point_X").gameObject
+	local _north = MahJong.self.transform:Find("OperationPoolShow/Point_B").gameObject
+	local _pai_pool_show_obj = MahJong.self.transform:Find("PaiPoolShow").gameObject
+	local _operation_pool_show = MahJong.self.transform:Find("OperationPoolShow").gameObject
 	if myPosition == "POSITION_TYPE_SOUTH" then
 		_player_direction.father.transform.localEulerAngles = newVector3(0,90,0)
 		_pai_pool_show_obj.transform.localEulerAngles = newVector3(0,90,0)
@@ -1234,7 +1234,7 @@ function MahJong.CreatePlayerPaiTest()
 		_player_father_test = {}
 		_player_father_test.cards = {}
 		_player_father_test.father = CS.UnityEngine.GameObject("PlayerFatherTest")
-		_player_father_test.father.transform:SetParent(self.transform)
+		_player_father_test.father.transform:SetParent(MahJong.self.transform)
 	end
 	local paiCount = 0
 	for k, v in pairs(Player._invoke_table_test.pais)do
@@ -1703,7 +1703,7 @@ function MahJong.CreatePlayerPai(isRoomSync)
 		_player_father = {}
 		_player_father.cards = {}
 		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
-		_player_father.father.transform:SetParent(self.transform)
+		_player_father.father.transform:SetParent(MahJong.self.transform)
 	end
 	local paiCount = 0
 	--[[
@@ -1788,7 +1788,7 @@ end
 
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
-	if MahJong._current_click_pai and self:IsNull(MahJong._current_click_pai) == false then
+	if MahJong._current_click_pai and MahJong.self:IsNull(MahJong._current_click_pai) == false then
 		if MahJong._current_click_pai == gameObject then
 			if currentOperationState ~= operationState.DAPAI and currentOperationState ~= operationState.TINGPAI then
 				return
@@ -1852,7 +1852,7 @@ function MahJong.CheckClickPos(movePos)
 	-- body
 	if _player_father and _player_father.cards then
 		for cardKey,cardData in pairs(_player_father.cards) do
-			if not self:IsNull(cardData.child) and cardData.child.activeInHierarchy == true and not self:IsNull(cardData.touchCT) and cardData.touchCT:inArea(Camera.main:ScreenToWorldPoint(movePos)) == true then
+			if not MahJong.self:IsNull(cardData.child) and cardData.child.activeInHierarchy == true and not MahJong.self:IsNull(cardData.touchCT) and cardData.touchCT:inArea(Camera.main:ScreenToWorldPoint(movePos)) == true then
 				return
 			end
 		end
@@ -2228,7 +2228,7 @@ function MahJong.CreateChiPaiModel(paiGroup,modelName,paiType,paiValue,sortValue
 	if not _chi_pai_father.father then
 		
 		_chi_pai_father.father = CS.UnityEngine.GameObject("ChiPaiFather")
-		_chi_pai_father.father.transform:SetParent(self.transform)
+		_chi_pai_father.father.transform:SetParent(MahJong.self.transform)
 	end
 	if type(modelName) == "string" then
 		local modelTemp = Load("MJModel/"..modelName)
@@ -2691,7 +2691,7 @@ function MahJong.CreateGangPai(pai)
 
 	if not _gang_pai_father.father then
 		_gang_pai_father.father = CS.UnityEngine.GameObject("GangPaiFather")
-		_gang_pai_father.father.transform:SetParent(self.transform)
+		_gang_pai_father.father.transform:SetParent(MahJong.self.transform)
 		_gang_pai_father.currentGroupNumber = 0
 	end
 	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
@@ -3675,7 +3675,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	end
 end
 
-function update()
+function MahJong.Update()
 	-- body
 	if diceCountDown < _play_dice_animation_time then
 		diceCountDown = diceCountDown + CS.UnityEngine.Time.deltaTime
