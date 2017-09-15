@@ -557,6 +557,11 @@ function ClickEvent.SetRemainNum( paiRemainNum )
 
 function ClickEvent.RoomInformationUpdate( ... )
 	-- body
+	--0915 fixed
+	if not Player._my_player_data.position or Player._my_player_data.position == "POSITION_TYPE_NULL" then
+		return
+	end
+
 	Player.LogWarning(Player._my_player_data.position)
 	local x = _position_index[Player._my_player_data.position]
 	for k,v in pairs(_position_index) do
@@ -3307,8 +3312,21 @@ function ClickEvent.GetUserInfoByCode(wechatCode,openId)
 			Player.LogWarning("wechatData:"..jsonData.code)
 			if jsonData.code == 0 then
 				Player.LogWarning(jsonData.userinfo)
+				Player._string_id = jsonData.openid
+				if openId then
+					local path = CS.UnityEngine.Application.persistentDataPath.."/"
+			        local mFile = io.open(path.."openID.txt" ,"w")
+			        mFile:write(Player._string_id)  
+			        mFile:close()
+				end
+		        Player.wechat_nickname = jsonData.nickname
+		        Player.wechat_sex = jsonData.sex
+		        Player.wechat_headimgurl = jsonData.headimgurl
+		        Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
+
 			elseif jsonData.code == 200201 then
 				Player.LogWarning("resetWechat")
+				os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
 				WeChatPlatform.onWeChatCallBack = function(paraCode)
 				-- body
 					Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup

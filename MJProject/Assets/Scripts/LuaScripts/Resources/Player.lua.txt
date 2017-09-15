@@ -1200,12 +1200,12 @@ function Player.OnPlayerList(type_t,stuff)
     Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(jsonData.nickname))
     local tempData = rapidjson.encode(message.wechat.json_wechat)
     print(jsonData.nickname)
-    --]]
     Player.wechat_nickname = gbk.toutf8(gbk.fromutf8(message.wechat.nickname))
     Player.wechat_sex = message.wechat.sex
     Player.wechat_headimgurl = message.wechat.headimgurl
-
     Player.LogWarning(Player.wechat_nickname)
+    --]]
+
     --Player.ThreadFunction(ClickEvent.CreateNewPanel,ClickEvent.panelTable._choose_ui)
     --Player.CmdEnterGame(12)
 end
