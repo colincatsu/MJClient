@@ -181,6 +181,11 @@ function Network.OnConnect()
     --ClickEvent.WeChatGetMessage()
 end
 
+function Network.IsConnected( ... )
+    -- body
+    return _network_manager.IsConnected
+end
+
 function Network.OnClose()
 	Player.LogWarning("Server Close----->>>")
     _network_manager:Close()
@@ -273,6 +278,10 @@ end
 
 function Network.OnReceived(buffer)
 	Player.LogWarning("OnReceived------>>>")
+
+    Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+    Player.LogWarning(CS.UnityEngine.Time.realtimeSinceStartup)
+
     if not buffer then return 1 end
     local data = buffer:ReadBytes()
     --buffer:Close()
@@ -299,7 +308,6 @@ function Network.OnReceived(buffer)
 
     Player.LogWarning("ddddddddddd"..meta.stuff)
 
-    Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
     ----------------------------------------------------
     if meta then
         FLibEvent.Fire(meta.type_t, meta.stuff)

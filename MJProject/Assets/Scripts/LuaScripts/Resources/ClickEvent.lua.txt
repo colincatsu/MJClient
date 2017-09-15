@@ -66,6 +66,8 @@ local function AsyncYieldReturn(to_yield, cb)
 end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 
+local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
+
 function ClickEvent.Awake( ... )
 	-- body
 	UIPackage.AddPackage("FairyUI/MXUI")
@@ -3236,7 +3238,10 @@ function ClickEvent.WechatLogin(gameObject)
 				-- body
 				Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
 				Player.wechat_code = paraCode--WeChatPlatform:GetData("getWXCode")
-				Player.CmdWechatLogin(Player.wechat_code)
+
+				ClickEvent.GetWeChatByHttp(Player.wechat_code,nil)
+				--Player.CmdWechatLogin(Player.wechat_code)
+
 				WeChatPlatform.onWeChatCallBack = nil
 				if not Player.coolDown then
 					Player.coolDown = CS.UnityEngine.Time.time
@@ -3251,16 +3256,88 @@ function ClickEvent.WechatLogin(gameObject)
 			WeChatPlatform:LoginWeChat()
 		else
 			Player.LogWarning("getWXMsg")
-			Player.CmdWechatLogin(Player.wechat_code)
+			ClickEvent.GetWeChatByHttp(Player.wechat_code,nil)
+			--Player.CmdWechatLogin(Player.wechat_code)
 		end
 	else
-		Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
+		ClickEvent.GetWeChatByHttp(nil,Player._string_id)
+		--Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
 	end
 end
 
-function ClickEvent.GetWeChatByHttp(paraCode)
+function ClickEvent.GetWeChatByHttp(paraCode,openId)
 	-- body
-	
+	local path = CS.UnityEngine.Application.persistentDataPath.."/"
+	local httpTokenFile = io.open(path.."httpToken.txt")
+	if not httpTokenFile then
+		MainUICT.GetHttpToken(2,paraCode,openId)
+	else
+		Player.httpToken = httpTokenFile:read "*a"
+		if Player.httpToken ~= "" then
+	        httpTokenFile:close()
+	        ClickEvent.GetUserInfoByCode(paraCode,openId)
+	    else
+	    	MainUICT.GetHttpToken(2,paraCode,openId)
+		end
+	end
+end
+
+function ClickEvent.GetUserInfoByCode(wechatCode,openId)
+	-- body
+	Player.LogWarning("GetUserInfoByCode")
+	local co = coroutine.create(function()
+		local header = {}
+		header.jwt = Player.httpToken
+		header["User-Agent"] = "BH-MJProject"..Player.pc_version
+		local userUrl = wechatHttpUrl
+		userUrl = userUrl.."code="
+		if wechatCode then
+			userUrl = userUrl..wechatCode
+		end
+		userUrl = userUrl.."&open_id="
+		if openId then
+			userUrl = userUrl..openId
+		end
+		Player.LogWarning("wechatData:"..userUrl)
+		local www = CS.UnityEngine.WWW(userUrl, rapidjson.encode(header.jwt), header)
+		yield_return(www)
+		if not www.error then
+			Player.LogWarning("wechatData:"..www.text)
+			local jsonData = rapidjson.decode(www.text)
+			Player.LogWarning("wechatData:"..jsonData.code)
+			if jsonData.code == 0 then
+				Player.LogWarning(jsonData.userinfo)
+			elseif jsonData.code == 200201 then
+				Player.LogWarning("resetWechat")
+				WeChatPlatform.onWeChatCallBack = function(paraCode)
+				-- body
+					Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+					Player.wechat_code = paraCode--WeChatPlatform:GetData("getWXCode")
+
+					ClickEvent.GetWeChatByHttp(Player.wechat_code,nil)
+					--Player.CmdWechatLogin(Player.wechat_code)
+
+					WeChatPlatform.onWeChatCallBack = nil
+					if not Player.coolDown then
+						Player.coolDown = CS.UnityEngine.Time.time
+					else
+						if Player.coolDown - CS.UnityEngine.Time.time <= Player.connectTimes then
+							return
+						else
+							Player.coolDown = CS.UnityEngine.Time.time
+						end
+					end
+				end
+				WeChatPlatform:LoginWeChat()
+			else
+				Player.LogWarning("httpException")
+			end
+			
+		else
+			CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+		end
+    end)
+    coroutine.resume(co)
 end
 
 function ClickEvent.OnReceivedWeChatMsg(nickname, sex, headimgurl)

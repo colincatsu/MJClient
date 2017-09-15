@@ -1,9 +1,9 @@
 MahJong = {}
 local Enum = require "Enum"
 local Player = require "Player"
-Player.self = MahJong.self
+--Player.self = MahJong.self
 local ClickEvent = require "ClickEvent"
-ClickEvent.self = MahJong.self
+--ClickEvent.self = MahJong.self
 local PlayUICT = require "PlayUICT"
 local FLibEvent = require "FLibEvent"
 local Network = require "Network"
@@ -123,6 +123,8 @@ local diceHasPlay = false
 
 function MahJong.Awake( ... )
 	-- body
+	Player.self = MahJong.self
+	ClickEvent.self = MahJong.self
 	ClickEvent.Awake()
 end
 

@@ -1,9 +1,7 @@
 MainUICT = {}
 local Enum = require "Enum"
 local Player = require "Player"
-Player.self = self
 local ClickEvent = require "ClickEvent"
-ClickEvent.self = self
 local Network = require "Network"
 local FLibEvent = require "FLibEvent"
 local FairyGUI = require "FairyGUI"
@@ -17,7 +15,7 @@ local _play_sence = "PlaySence"
 local rapidjson = require "rapidjson"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
-    self:YieldAndCallback(to_yield, cb)
+    MainUICT.self:YieldAndCallback(to_yield, cb)
 end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 
@@ -35,15 +33,17 @@ local _Other_Message_UI
 local _Store_UI 
 local _Creat_Room_UI 
 --]]
-function awake()
+function MainUICT.Awake()
 	-- body
+	Player.self = MainUICT.self
+	ClickEvent.self = MainUICT.self
 	ClickEvent.Awake()
 	if CS.LuaCommon.isIos == false then
 		CS.UnityEngine.Screen.sleepTimeout = CS.UnityEngine.SleepTimeout.NeverSleep
 	end
 end
 
-function start()
+function MainUICT.Start()
 	-- body
 	if not Player._connected then
 		Network.Start()
@@ -80,7 +80,7 @@ function start()
 	--AudioPlayer.PlaySound(AudioPlayer._audio_name.Bgm,true,0.5)
 end
 
-function update( ... )
+function MainUICT.Update( ... )
 	-- body
 	Player.myUpdate()
 	--[[
@@ -98,11 +98,15 @@ function MainUICT.TestServerState()
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	local httpTokenFile = io.open(path.."httpToken.txt")
 	if not httpTokenFile then
-		MainUICT.GetHttpToken()
+		MainUICT.GetHttpToken(1)
 	else
 		Player.httpToken = httpTokenFile:read "*a"
         httpTokenFile:close()
-        MainUICT.RequestServerState()
+		if Player.httpToken ~= "" then
+	        MainUICT.RequestServerState()
+	    else
+	    	MainUICT.GetHttpToken(1)
+		end
 	end
 
 end
@@ -124,7 +128,7 @@ function MainUICT.RandomString( ... )
 	return outPut
 end
 
-function MainUICT.GetHttpToken( ... )
+function MainUICT.GetHttpToken(whichFun,paraCode,openId)
 	-- body
 	local time = os.time()
 	local nonce = MainUICT.RandomString()
@@ -148,7 +152,13 @@ function MainUICT.GetHttpToken( ... )
 				local mFile = io.open(path.."httpToken.txt" ,"w")
 		        mFile:write(Player.httpToken)
 		        mFile:close()
-		        MainUICT.RequestServerState()
+		        if whichFun then
+		        	if whichFun == 1 then
+			        	MainUICT.RequestServerState()
+		        	elseif whichFun == 2 then
+		        		ClickEvent.GetUserInfoByCode(paraCode,openId)
+		        	end
+		        end
 			else
 				Player.LogWarning("httpException")
 			end
@@ -161,6 +171,7 @@ end
 
 function MainUICT.RequestServerState( ... )
 	-- body
+	Player.LogWarning("RequestServerState")
 	local co = coroutine.create(function()
 		local header = {}
 		header.jwt = Player.httpToken

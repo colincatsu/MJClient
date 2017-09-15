@@ -1,0 +1,19 @@
+LoadingSence = {}
+local LoadingCT = require "LoadingCT"
+
+function awake()
+	-- body
+	LoadingCT.self = self
+	LoadingCT.Awake()
+end
+
+function start()
+	-- body
+	LoadingCT.Start()
+end
+
+function update( ... )
+	-- body
+	LoadingCT.Update()
+end
+return LoadingSence

@@ -1,0 +1,19 @@
+MainSence = {}
+local MainUICT = require "MainUICT"
+
+function awake()
+	-- body
+	MainUICT.self = self
+	MainUICT.Awake()
+end
+
+function start()
+	-- body
+	MainUICT.Start()
+end
+
+function update( ... )
+	-- body
+	MainUICT.Update()
+end
+return MainSence
