@@ -1,19 +1,243 @@
 LoadingSence = {}
-local LoadingCT = require "LoadingCT"
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
+local WeChatPlatform = CS.Platform.Instance
+local rapidjson = require "rapidjson"
+
+local dataPath = ""
+local HotFixUrl = "http://api.cloudbm.wang/game/download"
+local Md5Url = "http://api.cloudbm.wang/game/hotupdate"
+
+local httpUrlToken = "http://api.cloudbm.wang/auth/jwt"
+local httpAppID = "snve1zlao934hhh323"
+local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
+
+local httpToken = ""
+
+local currentMd5 = "d4b9992c4d8652928fa3d03509609a58"--版本md5
+local isReloadData = false
+
+local localMd5 = ""
+local serveMd5 = ""
 
 function awake()
 	-- body
-	LoadingCT.self = self
-	LoadingCT.Awake()
 end
 
 function start()
 	-- body
-	LoadingCT.Start()
+	dataPath = CS.UnityEngine.Application.persistentDataPath.."/"
+	if not Player then
+		--local md5
+		local hotfixMd5 = io.open(dataPath.."hotfixMd5.txt")
+		if not hotfixMd5 then
+			--localMd5，数据里没有md5
+			local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
+	        mFile:write(currentMd5)
+	        mFile:close()
+	        localMd5 = currentMd5
+		else
+			localMd5 = hotfixMd5:read "*a"
+	        hotfixMd5:close()
+		end
+		--server md5
+		LoadingSence.GetServerMd5()
+	else
+		LoadingSence.BeginGame()
+	end
 end
 
 function update( ... )
 	-- body
-	LoadingCT.Update()
+	if isReloadData and isReloadData == true then
+		LoadingSence.BeginGame()
+		isReloadData = false
+	end
 end
+
+function LoadingSence.DownloadData( ... )
+	-- body
+	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
+	if not folder.Exists then
+		local co = coroutine.create(function()
+			local header = {}
+			header.jwt = httpToken
+			header["User-Agent"] = "BH-MJProject1.0.2.0916"
+			local www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
+			yield_return(www)
+			if not www.error then
+				local path = CS.UnityEngine.Application.persistentDataPath
+				if not CS.System.IO.Directory:Exists(path)then
+					CS.System.IO.Directory.CreateDirectory(path)
+				end
+				CS.AssetsHandle.dataFinish = function ( ... )
+					-- body
+					CS.AssetsHandle.dataFinish = nil
+					isReloadData = true
+				end
+				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
+			else
+				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+			end
+	    end)
+	    coroutine.resume(co)
+	else
+		CS.UnityEngine.Debug.LogWarning("path error")
+		os.remove(dataPath.."MyAssets.upk")
+	end
+end
+
+function LoadingSence.CopyAndroidRes()
+	-- body
+	--android load
+	local needCopy = true
+	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
+	if not folder.Exists then
+		local co = coroutine.create(function()
+			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."MyAssets.upk")
+			yield_return(www)
+			if not www.error then
+				local path = CS.UnityEngine.Application.persistentDataPath
+				if not CS.System.IO.Directory:Exists(path)then
+					CS.System.IO.Directory.CreateDirectory(path)
+				end
+				CS.AssetsHandle.dataFinish = function ( ... )
+					-- body
+					CS.AssetsHandle.dataFinish = nil
+					isReloadData = true
+				end
+				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
+		        --[[
+				local fs = CS.System.IO.FileStream(path.."/Asset.upk", CS.System.IO.FileMode.Create)
+				fs:Write(www.bytes,0,1024)
+				fs:Flush()
+		        fs:Close()
+		        fs:Dispose()
+		        --]]
+			else
+				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+			end
+	    end)
+	    coroutine.resume(co)
+	else
+		CS.UnityEngine.Debug.LogWarning("path error")
+		needCopy = false
+	end
+    return needCopy
+end
+
+function LoadingSence.BeginGame( ... )
+	-- body
+	local LoadingCT = require "LoadingCT"
+	LoadingCT.self = self
+	LoadingCT.Awake()
+	LoadingCT.Start()
+end
+
+function LoadingSence.GetServerMd5( ... )
+	-- body
+	local httpTokenFile = io.open(dataPath.."httpToken.txt")
+	httpToken = ""
+	if not httpTokenFile then
+		LoadingSence.GetHttpToken()
+	else
+		httpToken = httpTokenFile:read "*a"
+        httpTokenFile:close()
+		if httpToken ~= "" then
+	        LoadingSence.RequestServerMd5()
+	    else
+	    	LoadingSence.GetHttpToken()
+		end
+	end
+end
+
+function LoadingSence.RandomString( ... )
+	-- body
+	math.randomseed(os.time())
+	local outPut = ""
+	for i=1,7 do
+		local index = math.random(0,61)
+		if index < 10 then
+			outPut = outPut..tostring(index)
+		elseif index >= 10 and index <= 35 then
+			outPut = outPut..string.char(index + 55)
+		elseif index >= 36 and index <= 61 then
+			outPut = outPut..string.char(index + 61)
+		end
+	end
+	return outPut
+end
+
+function LoadingSence.GetHttpToken()
+	-- body
+	local time = os.time()
+	local nonce = LoadingSence.RandomString()
+	local sign = WeChatPlatform:GetMd5String("app_id="..httpAppID.."&nonce="..nonce.."&time="..tostring(time).."&"..httpAppSecret)
+	local header = {}
+	header["User-Agent"] = "BH-MJProject1.0.2.0916"
+
+	local co = coroutine.create(function()
+		local www = CS.UnityEngine.WWW(httpUrlToken.."?app_id="..httpAppID.."&time="..tostring(time).."&nonce="..nonce.."&sign="..sign,rapidjson.encode(header["User-Agent"]),header)
+		yield_return(www)
+		if not www.error then
+			local jsonData = rapidjson.decode(www.text)
+			if jsonData.code == 0 then
+				httpToken = jsonData.data.jwt
+				local path = CS.UnityEngine.Application.persistentDataPath.."/"
+				local mFile = io.open(path.."httpToken.txt" ,"w")
+		        mFile:write(httpToken)
+		        mFile:close()
+		        LoadingSence.RequestServerMd5()
+			else
+				print("httpException")
+			end
+		else
+			CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+		end
+    end)
+    coroutine.resume(co)
+end
+
+function LoadingSence.RequestServerMd5( ... )
+	-- body
+	local co = coroutine.create(function()
+		local header = {}
+		header.jwt = httpToken
+		header["User-Agent"] = "BH-MJProject1.0.2.0916"
+		local www = CS.UnityEngine.WWW(Md5Url, rapidjson.encode(header.jwt), header)
+		yield_return(www)
+		if not www.error then
+			print(www.text)
+			local jsonData = rapidjson.decode(www.text)
+			if jsonData.code == 0 then
+				serveMd5 = jsonData.data.md5
+				if serveMd5 == localMd5 then
+					if LoadingSence.CopyAndroidRes() == false then
+						LoadingSence.BeginGame()
+					end
+				else
+					print("jxydelete")
+					os.remove(dataPath.."hotfixMd5.txt")
+					local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
+			        mFile:write(serveMd5)
+			        mFile:close()
+			        os.remove(dataPath.."MyAssets.upk")
+			        LoadingSence.DownloadData()
+				end
+			elseif jsonData.code == 200101 then
+				LoadingSence.GetHttpToken()
+			else
+			end
+		else
+			CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+		end
+    end)
+    coroutine.resume(co)
+end
+
 return LoadingSence

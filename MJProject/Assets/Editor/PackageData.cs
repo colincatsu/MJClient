@@ -10,7 +10,7 @@ class PackageData {
     [UnityEditor.MenuItem("Tools/PackageData")]
     public static void PackageAssets()
 	{
-        UPKFolder.PackFolderAsync(LuaCommon.resultPath + "MyAssets", LuaCommon.resultPath + "MyAssets.upk", ShowProgress);
+        UPKFolder.PackFolderAsync(Application.streamingAssetsPath + "/" + "MyAssets", Application.streamingAssetsPath + "/" + "MyAssets.upk", ShowProgress);
         AssetDatabase.Refresh();
     }
     static void ShowProgress(long all, long now)

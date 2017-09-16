@@ -60,7 +60,7 @@ public class LuaBehaviour : MonoBehaviour {
         //}
 
         LuaEnvSingleton.Instance.AddLoader((ref string filename) => {
-            string path = Application.persistentDataPath + "/Resources/" + filename + ".lua.txt";
+            string path = Application.persistentDataPath + "/MyAssets/MXText/" + filename + ".lua.txt";
             FileInfo fInfo0 = new FileInfo(path);
             if (fInfo0.Exists)
             {

@@ -1,0 +1,11 @@
+TouchCT = {}
+
+function TouchCT.inArea( positionVec2 )
+	-- body
+end
+
+
+
+
+
+return TouchCT

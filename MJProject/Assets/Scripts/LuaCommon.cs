@@ -27,7 +27,7 @@ public class LuaEnvSingleton
 public class LuaCommon
 {
 #if   UNITY_EDITOR
-    public static string resultPath = Application.streamingAssetsPath + "/";
+    public static string resultPath = "file://" + Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
     public static bool isIos = false;
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";

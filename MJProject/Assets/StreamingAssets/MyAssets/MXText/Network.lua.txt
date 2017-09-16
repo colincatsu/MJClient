@@ -1,0 +1,320 @@
+local protobuf = require "protobuf"
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    Player.self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
+local resultPath = CS.LuaCommon.resultPath
+local isAndroid = CS.LuaCommon.isAndroid
+local isIos = CS.LuaCommon.isIos
+
+if not Player._connected then
+    Player.LogWarning("android")
+    _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Asset.pb","rb")
+    _buffer = _addr:read "*a"
+    _addr:close()
+    protobuf.register(_buffer)
+    ---[[
+    _addr = io.open(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/".."P_Protocol.pb","rb")
+    _buffer = _addr:read "*a"
+    _addr:close()
+    protobuf.register(_buffer)
+        --[[
+    if isAndroid and isAndroid == true then
+        
+    else
+        Player.LogWarning("editor")
+        _addr = io.open(resultPath.."P_Asset.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)
+        ---[[
+        _addr = io.open(resultPath.."P_Protocol.pb","rb")
+        _buffer = _addr:read "*a"
+        _addr:close()
+        protobuf.register(_buffer)
+    end
+        --]]
+end
+
+
+Network = {}
+local this = Network
+local _network_manager = nil
+local _socketClientClass = CS.MX.NetworkManager-- CS.MX.SocketClient
+local _network_protocal = CS.MX.Protocal
+Network.isConnecting = false
+--Network.reConnect = false
+--local _byteBufferClass = CS.MX.ByteBuffer
+--local _socketClient = _socketClientClass()
+
+---------------------------------------------------------------------------
+--初始化
+---------------------------------------------------------------------------
+function Network.Start()
+    --_socketClient:OnRegister()
+    --_socketClient:StartClient()
+    --[[
+    if _network_manager and Player.self:IsNull(_network_manager) == false then
+        CS.UnityEngine.Object.Destroy(_socketClientClass.Instance.gameObject)
+    else
+    end
+    --]]
+    _network_manager = _socketClientClass.Instance
+    this.AddEventListener()
+end
+
+function Network.AddEventListener()
+    --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    --FLibEvent.AddEvent(Player.LoadScene,"META_TYPE_C2S_BEGIN")
+    FLibEvent.AddEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
+    FLibEvent.AddEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
+    FLibEvent.AddEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.AddEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
+    FLibEvent.AddEvent(Player.OnPaiOperation,"META_TYPE_SHARE_PAI_OPERATION")
+    FLibEvent.AddEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
+    FLibEvent.AddEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
+    FLibEvent.AddEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
+    FLibEvent.AddEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
+    FLibEvent.AddEvent(Player.OnSystemChat,"META_TYPE_SHARE_SYSTEM_CHAT")
+    FLibEvent.AddEvent(Player.OnBattleHistory,"META_TYPE_SHARE_ROOM_HISTORY")
+    FLibEvent.AddEvent(Player.OnUpdateClientData,"META_TYPE_SHARE_UPDATE_CLIENT_DATA")
+    
+    FLibEvent.AddEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
+    FLibEvent.AddEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
+    FLibEvent.AddEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
+    FLibEvent.AddEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
+    FLibEvent.AddEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+    FLibEvent.AddEvent(Player.OnPlayerInformation,"META_TYPE_S2C_PLAYER_INFO")
+    FLibEvent.AddEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
+    FLibEvent.AddEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
+    FLibEvent.AddEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
+    FLibEvent.AddEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.AddEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
+    FLibEvent.AddEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
+    FLibEvent.AddEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
+    FLibEvent.AddEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
+    FLibEvent.AddEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
+    FLibEvent.AddEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
+    FLibEvent.AddEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
+    FLibEvent.AddEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
+    FLibEvent.AddEvent(Player.OnRoomState,"META_TYPE_S2C_ROOM_STATE")
+    FLibEvent.AddEvent(Player.OnRoomDisMiss,"META_TYPE_S2C_ROOM_DISMISS")
+    FLibEvent.AddEvent(Player.OnRoomAll,"META_TYPE_S2C_ROOM_ALL")
+    FLibEvent.AddEvent(Player.OnRoomBeenIn,"META_TYPE_S2C_ROOM_IN")
+end
+
+---------------------------------------------------------------------------
+--连接服务器
+---------------------------------------------------------------------------
+function Network.ConnetServer()
+    --_socketClient:SendConnect()
+    --_network_manager:ConnectTo("111.230.140.74",50013)
+    --_network_manager:ConnectTo("182.92.87.147",50000)
+    --_network_manager:ConnectTo("::ffff:6de6:8c4a",50000)
+    --_network_manager:ConnectTo("fe80::5054:ff:fed3:f1be",50000)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("123.206.24.228",60032)
+    Network.isConnecting = true
+    Player._connected = false
+    Player.LogWarning("Server Connect----->>>")
+end
+
+---------------------------------------------------------------------------
+--发送协议
+---------------------------------------------------------------------------
+function Network.SendProtocol(messageName, message)
+    local meta = {}
+
+    local message_stuff = protobuf.encode("Adoter.Asset." .. messageName, message)
+    meta.stuff = message_stuff
+
+    local type_key = protobuf.decode("Adoter.Asset." .. messageName, message_stuff)
+    meta.type_t = type_key.type_t
+    
+    ---------------------------------------------
+    local msg = protobuf.encode("Adoter.Asset.Meta",meta)
+
+    --_socketClient:SendProtocol(msg)
+    _network_manager:SendMessage(msg)
+end
+
+---------------------------------------------------------------------------
+function Network.OnConnect()
+	Player.LogWarning("ConnetServer Success----->>>")
+    Player._connected = true
+    Network.isConnecting = false
+    Player.disConnetedTime = nil
+    Player.hasConnectTimes = 0
+    Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+    if Player.reConnect then
+        ClickEvent.ShowNotMoveToast(2030,3)
+        if Player._player_data and Player._player_data.common_prop and Player._player_data.common_prop.player_id then
+            Player.CmdReConnect()
+            if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+                Player.MahJong.ResetGameState(true)
+                Player.CmdGetRoomData(Player._roomId)
+            end
+        end
+        Player.reConnect = false
+        return
+    end
+    if ClickEvent.uiPanel.ui.visible then
+        ClickEvent.Start(ClickEvent.panelTable._main_ui)
+    end
+    --ClickEvent.WeChatGetMessage()
+end
+
+function Network.IsConnected( ... )
+    -- body
+    return _network_manager.IsConnected
+end
+
+function Network.OnClose()
+	Player.LogWarning("Server Close----->>>")
+    _network_manager:Close()
+    this.DelEventListener()
+end
+
+function Network.DelEventListener()
+    --FLibEvent.DelEvent(Player.LoadScene,"META_TYPE_C2S_ENTER_GAME")
+    FLibEvent.DelEvent(Player.OnCreatePlayer,"META_TYPE_SHARE_CREATE_PLAYER")
+    FLibEvent.DelEvent(Player.OnCreateRoom,"META_TYPE_SHARE_CREATE_ROOM")
+    FLibEvent.DelEvent(Player.OnGameOperation,"META_TYPE_SHARE_GAME_OPERATION")
+    FLibEvent.DelEvent(Player.OnEnterRoom,"META_TYPE_SHARE_ENTER_ROOM")
+    FLibEvent.DelEvent(Player.OnPaiOperation,"META_TYPE_SHARE_PAI_OPERATION")
+    FLibEvent.DelEvent(Player.OnSayHi,"META_TYPE_SHARE_SAY_HI")
+    FLibEvent.DelEvent(Player.OnRandomSaizi,"META_TYPE_SHARE_RANDOM_SAIZI")
+    FLibEvent.DelEvent(Player.OnSyncCommonProperty,"META_TYPE_SHARE_COMMON_PROPERTY")
+    FLibEvent.DelEvent(Player.OnGuestLogin,"META_TYPE_SHARE_GUEST_LOGIN")
+    FLibEvent.DelEvent(Player.OnSystemChat,"META_TYPE_SHARE_SYSTEM_CHAT")
+    FLibEvent.DelEvent(Player.OnBattleHistory,"META_TYPE_SHARE_ROOM_HISTORY")
+    FLibEvent.DelEvent(Player.OnUpdateClientData,"META_TYPE_SHARE_UPDATE_CLIENT_DATA")
+
+    FLibEvent.DelEvent(Player.OnPaiNotify, "META_TYPE_S2C_PAI_NOTIFY")
+    FLibEvent.DelEvent(Player.OnCommonOperation,"META_TYPE_S2C_COMMON_OPERATION_RESPONSE")
+    FLibEvent.DelEvent(Player.OnAlterError,"META_TYPE_S2C_ALTER_ERROR")
+    FLibEvent.DelEvent(Player.OnPaiOperationAlert,"META_TYPE_S2C_PAI_OPERATION_ALERT")
+    FLibEvent.DelEvent(Player.OnPlayerList,"META_TYPE_S2C_PLAYERS")
+    FLibEvent.DelEvent(Player.OnPlayerInformation,"META_TYPE_S2C_PLAYER_INFO")
+    FLibEvent.DelEvent(Player.OnRoomInformation,"META_TYPE_S2C_ROOM_INFO")
+    FLibEvent.DelEvent(Player.OnAlertMessage,"META_TYPE_S2C_ALERT_ERROR")
+    FLibEvent.DelEvent(Player.OnSyncCommonReward,"META_TYPE_S2C_COMMON_REWARD")
+    FLibEvent.DelEvent(Player.OnGameCalculate,"META_TYPE_S2C_GAME_CALCULATE")
+    FLibEvent.DelEvent(Player.OnGameInformation,"META_TYPE_S2C_GAME_INFO")
+    FLibEvent.DelEvent(Player.OnKillOut,"META_TYPE_S2C_KILL_OUT")
+    FLibEvent.DelEvent(Player.OnLiuJu,"META_TYPE_S2C_LIUJU")
+    FLibEvent.DelEvent(Player.OnPaiPushDown,"META_TYPE_S2C_PAI_PUSH_DOWN")
+    FLibEvent.DelEvent(Player.OnWeChatInfo,"META_TYPE_S2C_WECHAT_INFOMATION")
+    FLibEvent.DelEvent(Player.OnGameStart,"META_TYPE_S2C_GAME_START")
+    FLibEvent.DelEvent(Player.OnRoomCalculate,"META_TYPE_S2C_ROOM_CALCULATE")
+    FLibEvent.DelEvent(Player.OnSyncActivity,"META_TYPE_S2C_ACTIVITY")
+    FLibEvent.DelEvent(Player.OnRoomState,"META_TYPE_S2C_ROOM_STATE")
+    FLibEvent.DelEvent(Player.OnRoomDisMiss,"META_TYPE_S2C_ROOM_DISMISS")
+    FLibEvent.DelEvent(Player.OnRoomAll,"META_TYPE_S2C_ROOM_ALL")
+    FLibEvent.DelEvent(Player.OnRoomBeenIn,"META_TYPE_S2C_ROOM_IN")
+end
+
+---------------------------------------------------------------------------
+--异常断线
+---------------------------------------------------------------------------
+function Network.OnException()
+    Player.LogWarning("OnException------->>>")
+    if Player.isTimeOut then
+        return
+    end
+    ClickEvent.ShowNotMoveToast(2028)
+    if not Player.disConnetedTime then
+        Player.disConnetedTime = CS.UnityEngine.Time.time
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+            ClickEvent.CloseOperationPanel()
+        end
+        --[[
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            Player.LoadScene("FairyMainUI")
+        --]]
+    end
+    Player.reConnect = true
+end
+---------------------------------------------------------------------------
+--连接中断，或者被踢掉
+---------------------------------------------------------------------------
+function Network.OnDisconnect()
+    Player.LogWarning("OnDisconnect------->>>")
+    if Player.isTimeOut then
+        return
+    end
+    ClickEvent.ShowNotMoveToast(2028)
+    if not Player.disConnetedTime then
+        Player.disConnetedTime = CS.UnityEngine.Time.time
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+            ClickEvent.CloseOperationPanel()
+        end
+        --[[
+            Player.returnMainUI = true
+            Player.MahJong.QuitVoiceRoom()
+            Player.LoadScene("FairyMainUI")
+        --]]
+    end
+    Player.reConnect = true
+end
+
+function Network.OnReceived(buffer)
+	Player.LogWarning("OnReceived------>>>")
+
+    Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+    Player._pings_count = 0
+    --Player.LogWarning(CS.UnityEngine.Time.realtimeSinceStartup)
+
+    if not buffer then return 1 end
+    local data = buffer:ReadBytes()
+    --buffer:Close()
+    --local meta = P_Protocol.Meta()
+    --meta:ParseFromString(data)
+    --print(data)
+    ----------------------------------------------------
+    local meta = nil
+    if data then
+        meta = protobuf.decode("Adoter.Asset.Meta" , data)
+    end
+    ---[[
+    if type(meta) ~= "table" then
+        Player.LogWarning(type(meta))
+        return 0
+    end
+    if not meta.type_t then
+        Player.LogWarning("148,type is nil")
+        return 0
+    end
+    --]]
+    Player.LogWarning(type(meta))
+    Player.LogWarning('OnSocket:type_t:>'..(meta.type_t))
+
+    Player.LogWarning("ddddddddddd"..meta.stuff)
+
+    ----------------------------------------------------
+    if meta then
+        FLibEvent.Fire(meta.type_t, meta.stuff)
+        --Player.LogWarning("Fire Success")
+    end
+    return 0
+end
+
+function Network.OnReceiveMessageQueue(protocal,buffer)
+    -- body
+    Player.LogWarning(protocal)
+    if protocal == _network_protocal.Connect then
+        Network.OnConnect()
+    elseif protocal == _network_protocal.Exception then
+        Network.OnClose()
+        Network.OnException()
+    elseif protocal == _network_protocal.Disconnect then
+        Network.OnClose()
+        Network.OnDisconnect()
+    elseif protocal == _network_protocal.Receive then
+        Network.OnReceived(buffer)
+    end
+end
+
+return Network

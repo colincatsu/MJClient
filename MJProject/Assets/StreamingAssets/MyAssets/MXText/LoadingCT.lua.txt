@@ -27,12 +27,12 @@ function LoadingCT.Start()
 	-- body
 	--UIConfig.defaultFont = "MJFont"
 	if CS.LuaCommon.isAndroid and CS.LuaCommon.isAndroid == true then
-		LoadingCT.CopyAndroidRes()
+		--LoadingCT.CopyAndroidRes()
 	end
+	--[[
 	if not LoadingCT._copyed and CS.LuaCommon.isAndroid then
 		return
 	end
-	--[[
 	if not LoadingCT._copyed and CS.LuaCommon.isIos then
 		return
 	end

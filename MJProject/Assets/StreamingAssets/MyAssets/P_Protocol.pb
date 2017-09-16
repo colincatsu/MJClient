@@ -1,5 +1,5 @@
 
-ò›
+ˆœ
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -141,10 +141,10 @@ expires_in (
 unionid (".
 WechatError
 errcode (
-errmsg ("g
+errmsg ("}
 WechatLoginC
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGIN
-access_code ("
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_WECHAT_LOGIN)
+wechat (2.Adoter.Asset.WechatUnion"
 SwitchAccountE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_SWITCH_ACCOUNT
 account_name (
