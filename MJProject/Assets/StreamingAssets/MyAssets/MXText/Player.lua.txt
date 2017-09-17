@@ -90,6 +90,8 @@ Player.playerScore = {--游戏每家分数保存
     [3] = 0,
 }
 
+Player.roomall_player_brief = nil
+
 Player.operation_calculate_data = {
     [0] = {operationNumber = 0,},
     [1] = {operationNumber = 0,},
@@ -121,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0917"
+Player.pc_version = "1.0.2.0917"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -147,10 +149,7 @@ function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then
         local AssetManager = require "AssetManager"
-        local resultPath = CS.LuaCommon.resultPath
-        if CS.LuaCommon.isAndroid and CS.LuaCommon.isAndroid == true then
-            resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
-        end
+        local resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
         local loader = AssetManager.Load(resultPath.."Asset/Asset/")
         local message = AssetManager.GetMessagesByType("ASSET_TYPE_COMMON_CONST")
         local data = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonConst")
@@ -1344,6 +1343,7 @@ function Player.OnRoomAll(type_t,stuff)
     if message.current_rounds then
         ClickEvent.UpdateRoundNumber(message.current_rounds,Player._room_information.options.open_rands)
     end
+    Player.roomall_player_brief = message.player_brief_list
     if message.list then
         Player._calculate_table_number = 0
         for i=0,3 do

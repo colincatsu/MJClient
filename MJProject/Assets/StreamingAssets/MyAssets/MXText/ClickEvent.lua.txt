@@ -982,6 +982,9 @@ function ClickEvent.PopPanel( panelName , noBack)
 		ClickEvent._createObject[panelName] = UIPackage.CreateObject("MXUI", panelName)
 	end
 	--ClickEvent.Close()
+	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and panelName == _popPanel[popPanelIndex].panel.name then
+		return
+	end
 	popPanelIndex = popPanelIndex + 1
 	_popPanel[popPanelIndex] = {}
 	if not noBack then
@@ -3793,15 +3796,36 @@ function ClickEvent.GameBillButton(gameObject)
 			obj:GetChild("RoundNum").text = tostring(roundCount)
 			local playerNumber = 1
 			for roundKey,roundData in pairs(Player._all_calculate_data[c].list) do
-				countScore[playerNumber].nickname = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
-				countScore[playerNumber].headimgurl = roundData.headimgurl
+				if not roundData.nickname or roundData.nickname == "" then
+					if Player.roomall_player_brief then
+						for playerKey,playerData in pairs(Player.roomall_player_brief) do
+							if playerData.player_id == roundData.player_id then
+								countScore[playerNumber].nickname = playerData.nickname
+							end
+						end
+					end
+				else
+					countScore[playerNumber].nickname = roundData.nickname
+				end
+				if not roundData.headimgurl or roundData.headimgurl == "" then
+					if Player.roomall_player_brief then
+						for playerKey,playerData in pairs(Player.roomall_player_brief) do
+							if playerData.player_id == roundData.player_id then
+								countScore[playerNumber].headimgurl = playerData.headimgurl
+							end
+						end
+					end
+				else
+					countScore[playerNumber].headimgurl = roundData.headimgurl
+				end
+
 				countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
-				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
+				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = countScore[playerNumber].nickname
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
 				obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
-				if roundData.headimgurl and roundData.headimgurl ~= "" then
+				if countScore[playerNumber].headimgurl and countScore[playerNumber].headimgurl ~= "" then
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = ""
-					local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
+					local tempTexture = WeChatPlatform:SetAsyncImage(countScore[playerNumber].headimgurl)
 					if tempTexture then
 						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 					end

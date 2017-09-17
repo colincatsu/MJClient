@@ -165,6 +165,7 @@ function MahJong.Start()
 	ClickEvent.notPushPassMsg = false
 	diceHasPlay = false
 	Player.hasShowIPSame = false
+	Player.roomall_player_brief = nil
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -343,10 +344,7 @@ end
 function MahJong.MjLoader()
 	-- body
 	local AssetManager = require "AssetManager"
-	local resultPath = CS.LuaCommon.resultPath
-	if CS.LuaCommon.isAndroid and CS.LuaCommon.isAndroid == true then
-		resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
-	end
+	local resultPath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/"
 	local loader = AssetManager.Load(resultPath.."Asset/Asset/")
 	local message = AssetManager.GetMessagesByType("ASSET_TYPE_MJ_CARD")
 	_mj_asset =  AssetManager.PrintDecodeMessage(message,"Adoter.Asset.MJCard")
@@ -1288,7 +1286,8 @@ function MahJong.ReturnRoomSync(paiData)
 			Player.isPlaying = true
 			Player._invoke_table = {}
 			Player._invoke_table.pais = playerData.pai_inhand
-			Player.MahJong.CreatePlayerPai(true)
+			Player.LogWarning("CreatePlayerPai")
+			MahJong.CreatePlayerPai(true)
 			ClickEvent._play_ui.gamePlayButton.visible = false
 		    _dice_red:SetActive(false)
 		    _dice_white:SetActive(false)

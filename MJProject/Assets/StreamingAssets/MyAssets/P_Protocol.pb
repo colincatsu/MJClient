@@ -1,5 +1,5 @@
 
-àú
+œú
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -15,13 +15,12 @@ card_index ("e
 ItemElement4
 inventory_type (2.Adoter.Asset.INVENTORY_TYPE
 index (
-	global_id ("⁄
+	global_id ("£
 User&
 account (2.Adoter.Asset.Account
-player_list (5
-wechat_token (2.Adoter.Asset.WechatAccessToken)
-wechat (2.Adoter.Asset.WechatUnion3
-client_info (2.Adoter.Asset.ClientInfomation"ã
+player_list ()
+wechat (2.Adoter.Asset.WechatUnion3
+client_info (2.Adoter.Asset.ClientInfomation"ã
 
 PlayerProp-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -32,7 +31,12 @@ PlayerProp-
 
 has_tinged (
 offline (
-voice_member_id ("ß
+voice_member_id ("F
+PlayerBrief
+	player_id (
+nickname (
+
+headimgurl ("ß
 
 GameRecord2
 list (2$.Adoter.Asset.GameRecord.GameElement‰
@@ -441,19 +445,20 @@ WeChatInfoH
 
 BattleListC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_HISTORY
-	room_list ("–
+	room_list ("Ü
 RoomAll?
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_ALL
 current_rounds (
 remain_cards_count (
 saizi_random_result ((
-baopai (2.Adoter.Asset.PaiElement1
-player_list (2.Adoter.Asset.RoomAll.Player4
-zhuang_position (2.Adoter.Asset.POSITION_TYPE;
-curr_operator_position (2.Adoter.Asset.POSITION_TYPE&
-list	 (2.Adoter.Asset.GameRecord)
-zhuapai
- (2.Adoter.Asset.PaiElementè
+baopai (2.Adoter.Asset.PaiElement4
+player_brief_list (2.Adoter.Asset.PlayerBrief1
+player_list (2.Adoter.Asset.RoomAll.Player4
+zhuang_position (2.Adoter.Asset.POSITION_TYPE;
+curr_operator_position	 (2.Adoter.Asset.POSITION_TYPE&
+list
+ (2.Adoter.Asset.GameRecord)
+zhuapai (2.Adoter.Asset.PaiElementè
 Player
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE

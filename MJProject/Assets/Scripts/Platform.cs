@@ -13,6 +13,7 @@ using FairyGUI;
 public class Platform : MonoBehaviour {
     private static Platform _instance;
     private Texture[] myWXPic;
+    private const int textureNum = 100;
     private Dictionary<int, int> code2PicID;
     private static int spriteCnt;
     public IGCloudVoice m_voiceengine = null;
@@ -197,7 +198,7 @@ public class Platform : MonoBehaviour {
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/ImageCache/");
         }
-        myWXPic = new Texture[55];
+        myWXPic = new Texture[textureNum];
         spriteCnt = 0;
         code2PicID = new Dictionary<int, int>();
         if (!LuaCommon.isAndroid)
@@ -251,7 +252,7 @@ public class Platform : MonoBehaviour {
         }  
         else       //如果之前不存在缓存中  就用WWW类下载  
         {
-            if (spriteCnt >= 100)
+            if (spriteCnt >= textureNum)
             {
                 spriteCnt = 0;
                 myWXPic = null;
