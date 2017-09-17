@@ -98,9 +98,34 @@ function LoadingSence.CopyAndroidRes()
 	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 	if not folder.Exists then
 		local co = coroutine.create(function()
-			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."MyAssets.upk")
-			yield_return(www)
-			if not www.error then
+			if CS.LuaCommon.isAndroid then
+				local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."MyAssets.upk")
+				yield_return(www)
+				if not www.error then
+					local path = CS.UnityEngine.Application.persistentDataPath
+					if not CS.System.IO.Directory:Exists(path)then
+						CS.System.IO.Directory.CreateDirectory(path)
+					end
+					CS.AssetsHandle.dataFinish = function ( ... )
+						-- body
+						CS.AssetsHandle.dataFinish = nil
+						isReloadData = true
+					end
+					CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+			        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
+			        --[[
+					local fs = CS.System.IO.FileStream(path.."/Asset.upk", CS.System.IO.FileMode.Create)
+					fs:Write(www.bytes,0,1024)
+					fs:Flush()
+			        fs:Close()
+			        fs:Dispose()
+			        --]]
+				else
+					CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+				end
+			else
+				print(CS.LuaCommon.resultPath.."MyAssets.upk")
+				local www = CS.System.IO.File.ReadAllBytes(CS.LuaCommon.resultPath.."MyAssets.upk")
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
@@ -110,17 +135,8 @@ function LoadingSence.CopyAndroidRes()
 					CS.AssetsHandle.dataFinish = nil
 					isReloadData = true
 				end
-				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+				CS.AssetsHandle.CreateNewAsset(www,path.."/MyAssets.upk")
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
-		        --[[
-				local fs = CS.System.IO.FileStream(path.."/Asset.upk", CS.System.IO.FileMode.Create)
-				fs:Write(www.bytes,0,1024)
-				fs:Flush()
-		        fs:Close()
-		        fs:Dispose()
-		        --]]
-			else
-				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
 			end
 	    end)
 	    coroutine.resume(co)
