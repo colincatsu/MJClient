@@ -232,7 +232,6 @@ function MahJong.Start()
 	MahJong.CreateGangPai({card_type = "CARD_TYPE_WANZI",card_value = 1)
 	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
 	--]]
-
 end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)
