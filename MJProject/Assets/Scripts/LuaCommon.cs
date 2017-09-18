@@ -27,14 +27,14 @@ public class LuaEnvSingleton
 public class LuaCommon
 {
 #if   UNITY_EDITOR
-    public static string resultPath =  Application.streamingAssetsPath + "/";
+    public static string resultPath = "file://" + Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
     public static bool isIos = false;
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
     //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
     //public static bool android_platform = false;
 #elif UNITY_IOS || UNITY_IPHONE
-    public static string resultPath = Application.dataPath + "/Raw/";
+    public static string resultPath = "file://" + Application.dataPath + "/Raw/";
     public static bool isAndroid = false;
     public static bool isIos = true;
 #elif   UNITY_ANDROID && !UNITY_EDITOR

@@ -296,7 +296,6 @@ public class Platform : MonoBehaviour {
     IEnumerator LoadLocalImage(string url)
     {
         string filePath = "file:///" + path + url.GetHashCode();
-
         Debug.Log("getting local image:" + filePath);
         WWW www = new WWW(filePath);
         yield return www;
