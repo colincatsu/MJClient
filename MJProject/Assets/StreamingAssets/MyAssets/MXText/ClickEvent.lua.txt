@@ -3515,11 +3515,18 @@ function ClickEvent.CloseWaiting( ... )
 	_currentPanel.panel:GetTransition("WaitingPopOut"):Play()
 end
 
-function ClickEvent.Close( ... )
+function ClickEvent.Close(deleteNumber)
 	-- body
 	Player.LogWarning("ClosePanel")
 	if popPanelIndex <= 0 then
 		return false
+	end
+	if deleteNumber and deleteNumber < popPanelIndex and deleteNumber > 0 then
+		local tempPanel = _popPanel[deleteNumber]
+		for i=deleteNumber,popPanelIndex-1 do
+			_popPanel[i] = _popPanel[i+1]
+		end
+		_popPanel[popPanelIndex] = tempPanel
 	end
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._setting_ui then
 		Player.CmdGameSetting(Player._player_data.game_setting.music, Player._player_data.game_setting.voice, Player._player_data.game_setting.audio, Player._player_data.game_setting.click_push)

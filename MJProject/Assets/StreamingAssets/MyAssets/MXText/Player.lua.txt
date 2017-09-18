@@ -123,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.2.0917"
+Player.pc_version = "1.0.1.0919"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1059,6 +1059,10 @@ end
 
 function Player.OnRoomInformation(type_t,stuff)
     -- body
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" then
+        return
+    end
+
     if not stuff then
         return
     end
