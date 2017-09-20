@@ -2162,9 +2162,10 @@ function MahJong.PengPai(paiTable)
 		end
 	end
 	MahJong._current_click_pai = nil
+	ClickEvent.notPushPassMsg = true
+	currentOperationState = operationState.DAPAI
 	Player.CmdPaiOperation("PAI_OPER_TYPE_PENGPAI",{},tempPai)
 	MahJong.DeleteShowModel()
-	currentOperationState = operationState.DAPAI
 end
 
 function MahJong.ClickChiPaiEvent( gameObject )
@@ -2309,6 +2310,7 @@ function MahJong.ChiPai(paiTable)
 			MahJong._current_click_pai = nil
 		end
 	end
+	ClickEvent.notPushPassMsg = true
 	Player.CmdPaiOperation("PAI_OPER_TYPE_CHIPAI",paiElement,operationPai)
 	currentOperationState = operationState.DAPAI
 end

@@ -1,4 +1,5 @@
 LoadingSence = {}
+local FairyGUI = require "FairyGUI"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
     self:YieldAndCallback(to_yield, cb)
@@ -23,8 +24,23 @@ local isReloadData = false
 local localMd5 = ""
 local serveMd5 = ""
 
+local loadingUI = nil
+local loadingBar = nil
+local downloadProgress = nil
+local downloadSize = 0
+local currentWWW = nil
+
 function awake()
 	-- body
+	UIConfig.defaultFont = "MJFont"
+	loadingUI = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel").ui
+	loadingUI:GetChild("InformNoHorn").visible = false
+	loadingBar = loadingUI:GetChild("LoadingBar")
+	loadingBar.value = 0
+	loadingBar:GetChild("DownloadSpeed").visible = false
+	loadingBar:GetChild("n5").visible = false
+	downloadProgress = loadingBar:GetChild("Schedule")
+	CS.UnityEngine.Application.targetFrameRate = 30
 end
 
 function start()
@@ -56,6 +72,16 @@ function update( ... )
 		LoadingSence.BeginGame()
 		isReloadData = false
 	end
+	if currentWWW and currentWWW.isDone == false then
+		downloadProgress.text = string.format("%.1f", downloadSize * currentWWW.progress /1024).."kb/"..string.format("%.1f",downloadSize/1024).."kb"
+	end
+end
+
+function LoadingSence.SetLoadingBar(progress)
+	-- body
+	--downloadProgress.text = tostring(downloadSize * progress /1024).."kb/"..tostring(downloadSize/1024).."kb"
+	local progessInt = math.ceil(progress)
+	loadingBar:TweenValue(progessInt, 0.5)
 end
 
 function LoadingSence.DownloadData( ... )
@@ -66,22 +92,29 @@ function LoadingSence.DownloadData( ... )
 			local header = {}
 			header.jwt = httpToken
 			header["User-Agent"] = "BH-MJProject1.0.2.0916"
-			local www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
-			yield_return(www)
-			if not www.error then
+			currentWWW = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
+			downloadSize = currentWWW.bytesDownloaded
+			yield_return(currentWWW)
+			if not currentWWW.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
-				CS.AssetsHandle.dataFinish = function ( ... )
+				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
-					CS.AssetsHandle.dataFinish = nil
-					isReloadData = true
+					LoadingSence.SetLoadingBar(progress * 100)
+					if progress == 1 then
+						CS.AssetsHandle.dataFinish = nil
+						currentWWW = nil
+						isReloadData = true
+					end
 				end
-				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+				CS.AssetsHandle.CreateNewAsset(currentWWW.bytes,path.."/MyAssets.upk")
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
+		        --currentWWW = nil
+		        loadingBar.value = 0
 			else
-				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+				CS.UnityEngine.Debug.LogWarning('error:'..currentWWW.error)
 			end
 	    end)
 	    coroutine.resume(co)
@@ -105,10 +138,13 @@ function LoadingSence.CopyAndroidRes()
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
-				CS.AssetsHandle.dataFinish = function ( ... )
+				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
-					CS.AssetsHandle.dataFinish = nil
-					isReloadData = true
+					LoadingSence.SetLoadingBar(progress * 100)
+					if progress == 1 then
+						CS.AssetsHandle.dataFinish = nil
+						isReloadData = true
+					end
 				end
 				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")

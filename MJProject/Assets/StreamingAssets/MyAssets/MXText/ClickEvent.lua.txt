@@ -426,20 +426,26 @@ end
 
 function ClickEvent.ShowSingleYesWindow( showContentNumber )
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
+	if ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui) == false then
+		return
+	end
 	_popPanel[popPanelIndex].panel:GetChild("TPopText").text = StringTable.Get(showContentNumber)
 end
 
 function ClickEvent.ShowSmallWindow(showContentNumber)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	if ClickEvent.PopPanel(ClickEvent.panelTable._window_small) == false then
+		return
+	end
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(showContentNumber)
 end
 
 function ClickEvent.ShowSmallWindowByContent(showContent)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = tostring(showContent)
+	if ClickEvent.PopPanel(ClickEvent.panelTable._window_small) == false then
+		return
+	end
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = tostring(showContent)
 end
 
 function ClickEvent.ShowAlready(playerID)
@@ -536,6 +542,12 @@ end
 
 function ClickEvent.AddOperationButton( buttonName )
 	-- body
+	for i=0,ClickEvent._play_ui.operationBar.numChildren-1 do
+		local obj = ClickEvent._play_ui.operationBar:GetChildAt(i)
+		if obj.name == buttonName then
+			return
+		end
+	end
 	local operationButtonTemp = ClickEvent._play_ui.operationBar:AddItemFromPool(_currentPanel.buttonList[buttonName])
 	operationButtonTemp.name = buttonName
 	operationButtonTemp.onClick:Add(ClickEvent.registerButtonClick)
@@ -974,8 +986,8 @@ function ClickEvent.PopPanel( panelName , noBack)
 		ClickEvent._createObject["Bg"] = {}
 	end
 	for i=1,popPanelIndex do
-		if _popPanel[popPanelIndex].panel.name == panelName then
-			return
+		if _popPanel[i].panel.name == panelName then
+			return false
 		end
 	end
 	if not ClickEvent._createObject[panelName] then
@@ -983,7 +995,7 @@ function ClickEvent.PopPanel( panelName , noBack)
 	end
 	--ClickEvent.Close()
 	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and panelName == _popPanel[popPanelIndex].panel.name then
-		return
+		return true
 	end
 	popPanelIndex = popPanelIndex + 1
 	_popPanel[popPanelIndex] = {}
@@ -1022,6 +1034,7 @@ function ClickEvent.PopPanel( panelName , noBack)
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.button_ui,CS.UnityEngine.Vector3(100,100,100),_popPanel[popPanelIndex].panel:GetChild("CreateButton"),_popPanel[popPanelIndex].panel:GetChild("CreateButton").size/2)
 	end
+	return true
 	--[[
 	local image = _popPanel[popPanelIndex].background:GetChild("Di")
 	LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
@@ -3187,7 +3200,7 @@ function ClickEvent.GuestLogin( gameObject )
 	Player.wechat_nickname = ""
     Player.wechat_sex = ""
     Player.wechat_headimgurl = ""
-
+    --[[
 	if not Player.coolDown then
 		Player.coolDown = CS.UnityEngine.Time.time
 	else
@@ -3197,6 +3210,7 @@ function ClickEvent.GuestLogin( gameObject )
 			Player.coolDown = CS.UnityEngine.Time.time
 		end
 	end
+    --]]
 
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
 	local openIdFile = io.open(path.."guestID.txt")
@@ -3213,6 +3227,7 @@ end
 
 function ClickEvent.WechatLogin(gameObject)
 	-- body
+	--[[
 	if not Player.coolDown then
 		Player.coolDown = CS.UnityEngine.Time.time
 	else
@@ -3222,6 +3237,7 @@ function ClickEvent.WechatLogin(gameObject)
 			Player.coolDown = CS.UnityEngine.Time.time
 		end
 	end
+	--]]
 
 	Player.LogWarning("ClickEvent.WechatLogin")
 	local path = CS.UnityEngine.Application.persistentDataPath.."/"
@@ -3515,12 +3531,13 @@ function ClickEvent.CloseWaiting( ... )
 	_currentPanel.panel:GetTransition("WaitingPopOut"):Play()
 end
 
-function ClickEvent.Close(deleteNumber)
+function ClickEvent.Close()
 	-- body
 	Player.LogWarning("ClosePanel")
 	if popPanelIndex <= 0 then
 		return false
 	end
+	--[[
 	if deleteNumber and deleteNumber < popPanelIndex and deleteNumber > 0 then
 		local tempPanel = _popPanel[deleteNumber]
 		for i=deleteNumber,popPanelIndex-1 do
@@ -3528,6 +3545,7 @@ function ClickEvent.Close(deleteNumber)
 		end
 		_popPanel[popPanelIndex] = tempPanel
 	end
+	--]]
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._setting_ui then
 		Player.CmdGameSetting(Player._player_data.game_setting.music, Player._player_data.game_setting.voice, Player._player_data.game_setting.audio, Player._player_data.game_setting.click_push)
 	end

@@ -9,7 +9,7 @@ using YZL.Compress.Info;
 public class AssetsHandle : MonoBehaviour {
     public static double progress = 0;
     [CSharpCallLua]
-    public delegate void OnFinish();
+    public delegate void OnFinish(double progress);
     public static OnFinish dataFinish;
     public static void UnPackAssetFolder(string inpath ,string outpath)
     {
@@ -19,12 +19,9 @@ public class AssetsHandle : MonoBehaviour {
     {
         progress = (double)now / all;
         Debug.Log("当前进度为: " + progress);
-        if(now == all)
+        if(dataFinish != null)
         {
-            if(dataFinish != null)
-            {
-                dataFinish();
-            }
+            dataFinish(progress);
         }
     }
     public static void CreateNewAsset(byte[] stream,string path)
