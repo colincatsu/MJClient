@@ -45,6 +45,7 @@ function awake()
 	loadingBar:GetChild("DownloadSpeed").visible = false
 	loadingBar:GetChild("n5").visible = false
 	downloadProgress = loadingBar:GetChild("Schedule")
+	--downloadProgress.visible = false
 	CS.UnityEngine.Application.targetFrameRate = 30
 	loadingBarProgress = 0
 end

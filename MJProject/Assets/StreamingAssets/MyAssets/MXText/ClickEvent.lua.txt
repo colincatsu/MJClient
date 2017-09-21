@@ -3482,7 +3482,7 @@ function ClickEvent.CreateRoomButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
 		costCard = "2/"
 	end
-	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
