@@ -3335,8 +3335,8 @@ function ClickEvent.GetUserInfoByCode(wechatCode,openId)
 			local jsonData = rapidjson.decode(www.text)
 			Player.LogWarning("wechatData:"..jsonData.code)
 			if jsonData.code == 0 then
-				Player._string_id = jsonData.data.openid
 				if not openId then
+					Player._string_id = jsonData.data.openid
 					local path = CS.UnityEngine.Application.persistentDataPath.."/"
 			        local mFile = io.open(path.."openID.txt" ,"w")
 			        mFile:write(Player._string_id)  
@@ -3347,7 +3347,6 @@ function ClickEvent.GetUserInfoByCode(wechatCode,openId)
 		        Player.wechat_headimgurl = jsonData.data.headimgurl
 		        Player.CmdWechatLogin(Player._string_id,Player.wechat_nickname,Player.wechat_sex,Player.wechat_headimgurl)
 		        Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
-
 			elseif jsonData.code == 200201 or jsonData.code == 200200 then
 				Player.LogWarning("resetWechat")
 				os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
