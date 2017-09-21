@@ -2681,7 +2681,7 @@ function MahJong.SortGangPai( ... )
 	end
 end
 
-function MahJong.CreateGangPai(pai)
+function MahJong.CreateGangPai(pai,isXuanFeng)
 	-- body
 	--[[
 	local tempPaiPool = {}
@@ -2711,16 +2711,16 @@ function MahJong.CreateGangPai(pai)
 	_gang_pai_father.currentGroupNumber = _gang_pai_father.currentGroupNumber + 1
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber] = {}
 	_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child = {}
-	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber)
+	ClickEvent.CreateGangPai(pai.card_type,pai.card_value,_gang_pai_father.currentGroupNumber,isXuanFeng)
 	Player.LogWarning("CreateGangPai:1")
-    if pai.card_type == "CARD_TYPE_FENG" then
+    if pai.card_type == "CARD_TYPE_FENG" and isXuanFeng and isXuanFeng == true then
     	for i=1,4 do
     		Player.LogWarning(pai.card_type)
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiValue = i
 		end
-	elseif pai.card_type == "CARD_TYPE_JIAN" then
+	elseif pai.card_type == "CARD_TYPE_JIAN" and isXuanFeng and isXuanFeng == true then
     	for i=1,3 do
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i] = {}
 			_gang_pai_father.cards[_gang_pai_father.currentGroupNumber].child[i].paiType = pai.card_type

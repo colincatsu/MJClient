@@ -857,7 +857,7 @@ function ClickEvent.PaiOperationState()
 				if xuanfengCount > 1 then
 					v.pai.card_type = "CARD_TYPE_FENG"
 					v.pai.card_value = 1
-					Player.MahJong.CreateGangPai(v.pai)
+					Player.MahJong.CreateGangPai(v.pai,true)
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
@@ -867,7 +867,7 @@ function ClickEvent.PaiOperationState()
 				if xuanfengCount > 1 then
 					v.pai.card_type = "CARD_TYPE_JIAN"
 					v.pai.card_value = 1
-					Player.MahJong.CreateGangPai(v.pai)
+					Player.MahJong.CreateGangPai(v.pai,true)
 				else
 					ClickEvent.AddOperationButton("XuanFengButton")
 				end
@@ -962,7 +962,7 @@ function ClickEvent.ShowNotMoveToast(content,deleteTime)
 	if deleteTime then
 		local co = coroutine.create(function()
 	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
-	    ClickEvent.Close()
+	    ClickEvent.CloseByName( ClickEvent.panelTable._not_move_toast_ui )
 		end)
 		coroutine.resume(co)
 	end
@@ -4046,7 +4046,7 @@ function ClickEvent.GameGangButton(gameObject)
 			for k,v in pairs(Player._operation_alert_cache.pais) do
 				for j,m in pairs(v.oper_list) do
 					if m == "PAI_OPER_TYPE_ANGANGPAI" or m == "PAI_OPER_TYPE_GANGPAI" then
-						Player.MahJong.CreateGangPai(v.pai)
+						Player.MahJong.CreateGangPai(v.pai,false)
 					end
 				end
 			end
@@ -4082,13 +4082,13 @@ function ClickEvent.CreateChiPai(cardType,paiGroup,paiValue1,paiValue2,paiValue3
 	ClickEvent._play_ui.chiPaiBar:GetChild("ChiPaiList").width = chiPaiGroupTemp.width * paiGroup
 end
 
-function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
+function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup,isXuanFeng)
 	-- body
 	ClickEvent._play_ui.gangPaiBar.visible = true
 	ClickEvent._play_ui.passButton.visible = true
 	Player.LogWarning("gangtype:"..cardType)
 	local gangPaiGroupTemp
-	if cardType == "CARD_TYPE_JIAN" then
+	if cardType == "CARD_TYPE_JIAN" and isXuanFeng == true then
 		Player.LogWarning("xuanfeng:CARD_TYPE_JIAN")
 		gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","ChiPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
@@ -4096,7 +4096,7 @@ function ClickEvent.CreateGangPai(cardType,paiValue,paiGroup)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader02").url = UIPackage.GetItemURL("MXUI",cardType.."_"..2)
 		gangPaiGroupTemp:GetChild("ChiPaiLoader03").url = UIPackage.GetItemURL("MXUI",cardType.."_"..3)
 		gangPaiGroupTemp.onClick:Add(Player.MahJong.ClickGangPaiEvent)
-	elseif cardType == "CARD_TYPE_FENG" then
+	elseif cardType == "CARD_TYPE_FENG" and isXuanFeng == true then
 		Player.LogWarning("xuanfeng:CARD_TYPE_FENG")
 		gangPaiGroupTemp = ClickEvent._play_ui.gangPaiBar:GetChild("ChiPaiList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","GangPai"))
 		gangPaiGroupTemp.name = tostring(paiGroup)
