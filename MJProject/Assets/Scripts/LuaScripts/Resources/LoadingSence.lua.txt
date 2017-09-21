@@ -22,7 +22,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentMd5 = "5aa56fcc6d39bea5d568aff1548e1f62"--版本md5
+local currentMd5 = "489e979649c6292c98f9c7c093b2e3bb"--版本md5
 local isReloadData = false
 
 local localMd5 = ""
@@ -91,7 +91,7 @@ end
 function LoadingSence.SetLoadingBar(progress)
 	-- body
 	local progessInt = math.ceil(progress * 100)
-	loadingBar:TweenValue(progessInt, 0.5)
+	loadingBar.value = progessInt
 end
 
 function LoadingSence.DownloadData( ... )
@@ -124,7 +124,6 @@ function LoadingSence.DownloadData( ... )
 					loadingBarProgress = progress
 					if progress == 1 then
 						CS.AssetsHandle.dataFinish = nil
-						www = nil
 						isReloadData = true
 					end
 				end
