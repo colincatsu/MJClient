@@ -9,8 +9,12 @@ local WeChatPlatform = CS.Platform.Instance
 local rapidjson = require "rapidjson"
 
 local dataPath = ""
+--[[
 local HotFixUrl = "http://api.cloudbm.wang/game/download"
 local Md5Url = "http://api.cloudbm.wang/game/hotupdate"
+--]]
+local HotFixUrl = "http://testapi.cloudbm.wang/game/download"
+local Md5Url = "http://testapi.cloudbm.wang/game/hotupdate"
 
 local httpUrlToken = "http://api.cloudbm.wang/auth/jwt"
 local httpAppID = "snve1zlao934hhh323"
@@ -18,7 +22,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentMd5 = "4fe64f46ae11062aa5b791d8cc9f3835"--版本md5
+local currentMd5 = "5aa56fcc6d39bea5d568aff1548e1f62"--版本md5
 local isReloadData = false
 
 local localMd5 = ""
@@ -29,6 +33,7 @@ local loadingBar = nil
 local downloadProgress = nil
 local downloadSize = 0
 local currentWWW = nil
+local loadingBarProgress = 0
 
 function awake()
 	-- body
@@ -41,6 +46,7 @@ function awake()
 	loadingBar:GetChild("n5").visible = false
 	downloadProgress = loadingBar:GetChild("Schedule")
 	CS.UnityEngine.Application.targetFrameRate = 30
+	loadingBarProgress = 0
 end
 
 function start()
@@ -71,16 +77,20 @@ function update( ... )
 	if isReloadData and isReloadData == true then
 		LoadingSence.BeginGame()
 		isReloadData = false
+	else
+		LoadingSence.SetLoadingBar(loadingBarProgress)
 	end
+	--[[
 	if currentWWW and currentWWW.isDone == false then
-		downloadProgress.text = string.format("%.1f", downloadSize * currentWWW.progress /1024).."kb/"..string.format("%.1f",downloadSize/1024).."kb"
+		LoadingSence.SetLoadingBar(loadingBarProgress * 100)
+		--downloadProgress.text = string.format("%.1f", downloadSize * currentWWW.progress /1024).."kb/"..string.format("%.1f",downloadSize/1024).."kb"
 	end
+	--]]
 end
 
 function LoadingSence.SetLoadingBar(progress)
 	-- body
-	--downloadProgress.text = tostring(downloadSize * progress /1024).."kb/"..tostring(downloadSize/1024).."kb"
-	local progessInt = math.ceil(progress)
+	local progessInt = math.ceil(progress * 100)
 	loadingBar:TweenValue(progessInt, 0.5)
 end
 
@@ -92,29 +102,38 @@ function LoadingSence.DownloadData( ... )
 			local header = {}
 			header.jwt = httpToken
 			header["User-Agent"] = "BH-MJProject1.0.2.0916"
-			currentWWW = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
-			downloadSize = currentWWW.bytesDownloaded
-			yield_return(currentWWW)
-			if not currentWWW.error then
+			local www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
+			--[[
+			while currentWWW.isDone == false do
+				loadingBarProgress = currentWWW.progress
+				--LoadingSence.SetLoadingBar(currentWWW.progress * 100)
+				yield_return(1)
+			end
+			--]]
+			--downloadSize = www.bytesDownloaded
+			yield_return(www)
+			downloadProgress.text = math.ceil(www.bytesDownloaded/1024).."kb/"..math.ceil(www.bytesDownloaded/1024).."kb"
+			if not www.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
 				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
-					LoadingSence.SetLoadingBar(progress * 100)
+					--LoadingSence.SetLoadingBar(progress * 100)
+					loadingBarProgress = progress
 					if progress == 1 then
 						CS.AssetsHandle.dataFinish = nil
-						currentWWW = nil
+						www = nil
 						isReloadData = true
 					end
 				end
-				CS.AssetsHandle.CreateNewAsset(currentWWW.bytes,path.."/MyAssets.upk")
+				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
 		        --currentWWW = nil
-		        loadingBar.value = 0
+		        --loadingBar.value = 0
 			else
-				CS.UnityEngine.Debug.LogWarning('error:'..currentWWW.error)
+				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
 			end
 	    end)
 	    coroutine.resume(co)
@@ -140,7 +159,8 @@ function LoadingSence.CopyAndroidRes()
 				end
 				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
-					LoadingSence.SetLoadingBar(progress * 100)
+					--LoadingSence.SetLoadingBar(progress * 100)
+					loadingBarProgress = progress
 					if progress == 1 then
 						CS.AssetsHandle.dataFinish = nil
 						isReloadData = true

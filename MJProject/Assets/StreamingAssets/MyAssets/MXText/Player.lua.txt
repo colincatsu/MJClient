@@ -123,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0920"
+Player.pc_version = "1.0.1.0921"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -178,7 +178,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    CS.UnityEngine.Debug.LogWarning(para)
+    --CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()

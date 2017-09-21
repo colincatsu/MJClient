@@ -3531,6 +3531,47 @@ function ClickEvent.CloseWaiting( ... )
 	_currentPanel.panel:GetTransition("WaitingPopOut"):Play()
 end
 
+function ClickEvent.CloseByName( deleteName )
+	-- body
+	Player.LogWarning("CloseByName")
+	if popPanelIndex <= 0 then
+		return false
+	end
+	if deleteName then
+		local deleteNumber = 0
+		local tempPanel = nil
+		for i=1,popPanelIndex do
+			if _popPanel[i].panel.name == deleteName then
+				deleteNumber = i
+				tempPanel = _popPanel[deleteNumber]
+			end
+		end
+		if deleteNumber == 0 then
+			return
+		end
+		for i=deleteNumber,popPanelIndex-1 do
+			_popPanel[i] = _popPanel[i+1]
+		end
+		_popPanel[popPanelIndex] = tempPanel
+	end
+	--[[
+	--]]
+	GRoot.inst:RemoveChild(_popPanel[popPanelIndex].panel)
+	_popPanel[popPanelIndex].panel = nil
+	if _popPanel[popPanelIndex].background then
+		GRoot.inst:RemoveChild(_popPanel[popPanelIndex].background)
+		_popPanel[popPanelIndex].background = nil
+	end
+	popBgIndex = popBgIndex - 1
+	popPanelIndex = popPanelIndex - 1
+	if popPanelIndex < 0 then
+		popPanelIndex = 0
+	end
+	if popBgIndex < 0 then
+		popBgIndex = 0
+	end
+end
+
 function ClickEvent.Close()
 	-- body
 	Player.LogWarning("ClosePanel")
