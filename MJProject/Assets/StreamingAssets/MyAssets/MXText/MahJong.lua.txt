@@ -2631,6 +2631,10 @@ function MahJong.ClickGangPai( ... )
 	local tempPai = {}
 	tempPai.card_type = tempPaiType
 	tempPai.card_value = _gang_pai_father.cards.deleteCards[1].paiValue
+	local isXuanFeng = false
+	if _gang_pai_father.cards.deleteCards[1].paiValue ~= _gang_pai_father.cards.deleteCards[2].paiValue then
+		isXuanFeng = true
+	end
 	for k,v in pairs(_gang_pai_father.cards.deleteCards) do
 		for m,n in pairs(_player_father.cards) do
 			if n.paiType == v.card_type and n.paiValue == v.paiValue then
@@ -2653,9 +2657,9 @@ function MahJong.ClickGangPai( ... )
 			end
 		end
 	end
-	if tempPaiType == "CARD_TYPE_FENG" then
+	if tempPaiType == "CARD_TYPE_FENG" and isXuanFeng == true then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_FENG",{},{})
-	elseif tempPaiType == "CARD_TYPE_JIAN" then
+	elseif tempPaiType == "CARD_TYPE_JIAN" and isXuanFeng == true then
 		Player.CmdPaiOperation("PAI_OPER_TYPE_XUANFENG_JIAN",{},{})
 	else
 		if deletePaiNumber < 4 then

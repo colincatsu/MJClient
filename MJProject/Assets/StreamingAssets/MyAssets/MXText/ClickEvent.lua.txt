@@ -1934,6 +1934,7 @@ end
 function ClickEvent.ShowDissolveTime(time)
 	-- body
 	_popPanel[popPanelIndex].panel:GetChild("Agree"):GetChild("count").text = tostring(time)--
+	_popPanel[popPanelIndex].panel:GetChild("AgreeText").text = string.format(StringTable.Get(2040),math.ceil(time))
 end
 
 function ClickEvent.ShowDissolvePanel(data)
@@ -1944,8 +1945,10 @@ function ClickEvent.ShowDissolvePanel(data)
 		Player.dismissHasClicked = false
 		Player.dismissTimestarmp = CS.UnityEngine.Time.time
 		ClickEvent.PopPanel(ClickEvent.panelTable._vote_ui)
+
 		_popPanel[popPanelIndex].panel:GetChild("Agree").visible = true
 		_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = true
+		_popPanel[popPanelIndex].panel:GetChild("AgreeText").visible = false
 		Player.dismissIsShowing = true
 		for k,v in pairs(Player._all_players_data) do
 			if v.position == "POSITION_TYPE_EAST" then
@@ -2026,6 +2029,7 @@ function ClickEvent.ShowDissolvePanel(data)
 			end
 		end
 		if v.position == Player._my_player_data.position then
+			_popPanel[popPanelIndex].panel:GetChild("AgreeText").visible = true
 			_popPanel[popPanelIndex].panel:GetChild("Agree").visible = false
 			_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = false
 		end
@@ -2108,6 +2112,7 @@ function ClickEvent.GameDissolveButton(gameObject)
 		Player.dismissHasClicked = false
 		Player.dismissTimestarmp = CS.UnityEngine.Time.time
 		ClickEvent.PopPanel(ClickEvent.panelTable._vote_ui)
+		_popPanel[popPanelIndex].panel:GetChild("AgreeText").visible = false
 		_popPanel[popPanelIndex].panel:GetChild("Agree").visible = true
 		_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = true
 		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
@@ -3483,6 +3488,11 @@ function ClickEvent.CreateRoomButton( ... )
 	end
 	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
+	for i=1,7 do
+		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
+	end
+	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
+	_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 

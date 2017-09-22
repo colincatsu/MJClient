@@ -9,12 +9,12 @@ local WeChatPlatform = CS.Platform.Instance
 local rapidjson = require "rapidjson"
 
 local dataPath = ""
---[[
 local HotFixUrl = "http://api.cloudbm.wang/game/download"
 local Md5Url = "http://api.cloudbm.wang/game/hotupdate"
---]]
+--[[
 local HotFixUrl = "http://testapi.cloudbm.wang/game/download"
 local Md5Url = "http://testapi.cloudbm.wang/game/hotupdate"
+--]]
 
 local httpUrlToken = "http://api.cloudbm.wang/auth/jwt"
 local httpAppID = "snve1zlao934hhh323"
@@ -22,7 +22,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentMd5 = "489e979649c6292c98f9c7c093b2e3bb"--版本md5
+local currentMd5 = "43f0445ecfc397c69f9861570fcc55cd"--版本md5
 local isReloadData = false
 
 local localMd5 = ""
