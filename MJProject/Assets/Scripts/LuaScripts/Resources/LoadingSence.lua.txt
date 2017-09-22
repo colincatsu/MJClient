@@ -22,7 +22,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentMd5 = "43f0445ecfc397c69f9861570fcc55cd"--版本md5
+local currentMd5 = "06e5837d2edce3cdf82cb72129e7c821"--版本md5
 local isReloadData = false
 
 local localMd5 = ""
