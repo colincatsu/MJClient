@@ -123,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.2.0923"
+Player.pc_version = "1.0.3.0924"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -144,6 +144,7 @@ Player.room_current_round = 0
 
 Player.voiceCount = 0
 Player.voiceNumber = {}
+Player.isGameStop = false
 
 function Player.LoadData( ... )
     -- body
@@ -178,7 +179,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -1116,6 +1117,8 @@ function Player.OnRoomInformation(type_t,stuff)
                 if not Player.isPlaying and Player._my_player_data then
                     ClickEvent.ShowAlready(v.common_prop.player_id)
                 end
+            elseif v.oper_type == "GAME_OPER_TYPE_ONLINE" then
+                onlineCount = onlineCount + 1
             end
         end
     else

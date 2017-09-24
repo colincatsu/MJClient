@@ -67,7 +67,9 @@ end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 local rapidjson = require "rapidjson"
+
 local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
+--local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -212,7 +214,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
 
 		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
-		if Player._room_information.options.voice_open and Player._room_information.options.voice_open == true then
+		if Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
 			_currentPanel.panel:GetChild("GameListenButton").selected = false
 			_currentPanel.panel:GetChild("GameVoiceButton").selected = true
 		else
@@ -2702,6 +2704,11 @@ end
 function ClickEvent.PriceButtonGems1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_6yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2711,6 +2718,11 @@ end
 function ClickEvent.PriceButtonGems2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_30yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2720,6 +2732,11 @@ end
 function ClickEvent.PriceButtonGems3( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_68yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2729,6 +2746,11 @@ end
 function ClickEvent.PriceButtonGems4( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_128yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2738,6 +2760,11 @@ end
 function ClickEvent.PriceButtonGems5( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_298yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2747,6 +2774,11 @@ end
 function ClickEvent.PriceButtonGems6( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		WeChatPlatform:callBilling("xiangle_chaoyan_618yuan")
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2757,6 +2789,11 @@ end
 function ClickEvent.PriceButtonDou1( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 	 	Player.CmdBuySomething(655367)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -2766,6 +2803,11 @@ end
 function ClickEvent.PriceButtonDou2( ... )
 	-- body
 	if CS.LuaCommon.isIos == true then
+		if CS.LuaCommon.isCompany == true then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+			return
+		end
 		Player.CmdBuySomething(655368)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -3668,9 +3710,9 @@ function ClickEvent.CreateButton( )
 		open_rands = 16
 	end
 
-	local voice_open = false
+	local voice_open = 0
 	if _popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected then
-		voice_open = true
+		voice_open = 1
 	end
 
 	local extend_type_count = 1
@@ -4142,18 +4184,21 @@ end
 
 function ClickEvent.GamePengButton(gameObject)
 	-- body
+
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.PengPai()
 end
 
 function ClickEvent.GameHuButton(gameObject)
 	-- body
+
 	ClickEvent.CloseOperationPanel()
     Player.MahJong.HuPai()
 end
 
 function ClickEvent.GamePassButton(gameObject)
 	-- body
+
 	ClickEvent.CloseOperationPanel()
 	ClickEvent.CloseChiPai()
 	ClickEvent.CloseGangPai()
@@ -4163,6 +4208,7 @@ end
 
 function ClickEvent.GameCancelButton(gameObject)
 	-- body
+
 	Player._ting_pai_cache = nil
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.SetCurrentState(operationState.DAPAI)

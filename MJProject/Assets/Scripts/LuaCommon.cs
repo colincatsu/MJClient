@@ -30,6 +30,7 @@ public class LuaCommon
     public static string resultPath = "file://" + Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
     public static bool isIos = false;
+    public static bool isCompany = false;
     //public static string xxxtdrfilepath = Application.dataPath + "/StreamingAssets" + "/testxxx.tdr";
     //public static string xxxtdr2filepath = Application.dataPath + "/StreamingAssets" + "/testxxx2.tdr";
     //public static bool android_platform = false;
@@ -37,16 +38,20 @@ public class LuaCommon
     public static string resultPath = "file://" + Application.dataPath + "/Raw/";
     public static bool isAndroid = false;
     public static bool isIos = true;
+    public static bool isCompany = true;
 #elif   UNITY_ANDROID && !UNITY_EDITOR
     public static string resultPath = "jar:file://" + Application.dataPath + "!/assets/";
     public static bool isAndroid = true;
     public static bool isIos = false;
+    public static bool isCompany = false;
 #elif   UNITY_STANDALONE_OSX
     public static string resultPath = Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
+    public static bool isCompany = false;
 #else
     public static string resultPath = Application.streamingAssetsPath + "/";
     public static bool isAndroid = false;
+    public static bool isCompany = false;
 #endif
 
     public static bool IsMacPlatform()
