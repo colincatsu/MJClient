@@ -113,8 +113,8 @@ function Network.ConnetServer()
     --_network_manager:ConnectTo("182.92.87.147",50000)
     --_network_manager:ConnectTo("::ffff:6de6:8c4a",50000)
     --_network_manager:ConnectTo("fe80::5054:ff:fed3:f1be",50000)
-    --_network_manager:ConnectTo("111.230.140.74",50000)
-    _network_manager:ConnectTo("123.206.24.228",60032)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("123.206.24.228",60032)
     Network.isConnecting = true
     Player._connected = false
     Player.LogWarning("Server Connect----->>>")

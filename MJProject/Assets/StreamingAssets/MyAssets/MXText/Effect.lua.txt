@@ -154,7 +154,7 @@ function Effect.AddNormalEffect(effectName,effectScale,effectFather,offsetPos,de
 		objectTable[effectName].rear = objectTable[effectName].rear + 1
 		objectTable[effectName][objectTable[effectName].rear] = Instantiate(prefabTable[effectName])
 	end
-	if effectFather and offsetPos then
+	if effectFather and Player.self:IsNull(effectFather) == false and offsetPos then
 		objectTable[effectName][objectTable[effectName].rear].transform.position = effectFather.transform.position + offsetPos
 	elseif offsetPos then
 		objectTable[effectName][objectTable[effectName].rear].transform.position = offsetPos

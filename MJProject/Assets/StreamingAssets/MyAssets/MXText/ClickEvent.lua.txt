@@ -68,8 +68,8 @@ local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 local rapidjson = require "rapidjson"
 
-local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
---local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
+--local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
+local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -452,6 +452,9 @@ end
 
 function ClickEvent.ShowAlready(playerID)
 	-- body
+	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" then
+		return
+	end
 	local currentPositionData
 	for j,m in pairs(Player._all_players_data) do
 		if playerID == m.common_prop.player_id then

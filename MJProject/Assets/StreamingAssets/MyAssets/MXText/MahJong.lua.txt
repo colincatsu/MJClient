@@ -1279,8 +1279,30 @@ function MahJong.ReturnRoomSync(paiData)
 	Player.hasBeginned = true
 	Player.roomHasBegin = true
 	Player.isPlayerPaiShowing = true
+	Player.LogWarning("ReturnRoomSync")
+	Player.LogWarning(paiData)
+	if paiData == {} then
+		Player.LogWarning("paiData nil")
+		if Player.room_current_round and Player.room_current_round > 0 and Player.room_current_round < Player._room_information.options.open_rands then
+			Player.LogWarning("showBeginButton")
+			ClickEvent._play_ui.gamePlayButton.visible = true
+		end
+	else
+		local isNil = 0
+		for k,v in pairs(paiData) do
+			isNil = isNil + 1
+		end
+		if isNil == 0 then
+			Player.LogWarning("paiData nil")
+			if Player.room_current_round and Player.room_current_round > 0 and Player.room_current_round < Player._room_information.options.open_rands then
+				Player.LogWarning("showBeginButton")
+				ClickEvent._play_ui.gamePlayButton.visible = true
+			end
+		end
+	end
 	for playerKey,playerData in pairs(paiData) do
 		local playerPos = ClickEvent.PlayerPosition(playerData.position)
+		Player.LogWarning("jxyjxy")
 		--cardWall
 		if Player._my_player_data.common_prop.player_id == playerData.player_id then
 			Player.isPlaying = true
@@ -1288,7 +1310,13 @@ function MahJong.ReturnRoomSync(paiData)
 			Player._invoke_table.pais = playerData.pai_inhand
 			Player.LogWarning("CreatePlayerPai")
 			MahJong.CreatePlayerPai(true)
-			ClickEvent._play_ui.gamePlayButton.visible = false
+			if playerData.pai_inhand and playerData.pai_inhand ~= {} then
+				ClickEvent._play_ui.gamePlayButton.visible = false
+			else
+				if Player.room_current_round > 0 and Player.room_current_round < Player._room_information.options.open_rands then
+					ClickEvent._play_ui.gamePlayButton.visible = true
+				end
+			end
 		    _dice_red:SetActive(false)
 		    _dice_white:SetActive(false)
         else
