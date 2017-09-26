@@ -123,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0926"
+Player.pc_version = "1.0.2.0926"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1109,7 +1109,7 @@ function Player.OnRoomInformation(type_t,stuff)
         end
         if Player._my_player_data then
             --Player.ThreadFunction(
-            ClickEvent.RoomInformationUpdate()
+            ClickEvent.RoomInformationUpdate(message.sync_type)
         end
         ClickEvent.CloseAlready()
         for k,v in pairs(Player._all_players_data) do

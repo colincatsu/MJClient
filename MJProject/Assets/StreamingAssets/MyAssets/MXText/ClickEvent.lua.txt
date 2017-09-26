@@ -573,7 +573,7 @@ function ClickEvent.SetRemainNum( paiRemainNum )
  	ClickEvent._play_ui.remainNum.text = tostring(paiRemainNum)
  end 
 
-function ClickEvent.RoomInformationUpdate( ... )
+function ClickEvent.RoomInformationUpdate(sync_type)
 	-- body
 	--0915 fixed
 	if not Player._my_player_data.position or Player._my_player_data.position == "POSITION_TYPE_NULL" then
@@ -724,7 +724,9 @@ function ClickEvent.RoomInformationUpdate( ... )
 			Player.LogWarning("buttonDisable")
 			ClickEvent._play_ui.gamePlayButton.visible = false
 		else
-			ClickEvent._play_ui.gamePlayButton.visible = true
+			if sync_type ~= ROOM_SYNC_TYPE_STATE_CHANGED then
+				ClickEvent._play_ui.gamePlayButton.visible = true
+			end
 		end
 		ClickEvent._play_ui.inviteWechatFriends.visible = false
 		ClickEvent._play_ui.copyRoomNum.visible = false
