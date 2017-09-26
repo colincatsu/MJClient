@@ -181,7 +181,7 @@ function MahJong.Start()
 	Player.allPaisShowIndex = 0
 
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
-	if Player.isFriendRoom and Player._room_information.options.voice_open and Player._room_information.options.voice_open == true then
+	if Player.isFriendRoom and Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
 		GVoicePlatform:InitGVoice("1411132483","272fe31b387d1cb6327f525977619d64",tostring(Player._player_data.common_prop.player_id),"udp://cn.voice.gcloudcs.com:10001")
 		GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
 		GVoicePlatform:SetCallBack(MahJong.OnJoinRoomComplete,MahJong.OnQuitRoomComplete,MahJong.OnMemberVoice)
@@ -267,7 +267,7 @@ end
 
 function MahJong.QuitVoiceRoom()
 	-- body
-	if Player._room_information.options.voice_open and Player._room_information.options.voice_open == true then
+	if Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
 		GVoicePlatform.m_voiceengine:QuitRoom(Player.voiceRoomName,15000)
 	end
 end
