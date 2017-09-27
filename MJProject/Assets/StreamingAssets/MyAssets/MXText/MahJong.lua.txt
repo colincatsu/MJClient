@@ -2541,6 +2541,9 @@ function MahJong.GuoPai()
 	else
 		Player.CmdPaiOperation("PAI_OPER_TYPE_GIVEUP")
 	end
+	if _player_father.currentPaiNumber ~= 1 and _player_father.currentPaiNumber ~= 4 and _player_father.currentPaiNumber ~= 7 and _player_father.currentPaiNumber ~= 10 and _player_father.currentPaiNumber ~= 13 then
+		MahJong.SetCurrentState(operationState.DAPAI)
+	end
 	Player.hasOperation = false
 end
 
@@ -2611,10 +2614,14 @@ end
 
 function MahJong.GangPai(paiTable)
 	-- body
+	Player.LogWarning("GangPai")
 	local tempPai = nil
 	local tempOperation = nil
 	for k,v in pairs(Player._operation_alert_cache.pais) do
 		for j,m in pairs(v.oper_list) do
+			Player.LogWarning(m)
+			Player.LogWarning(v.pai.card_type)
+			Player.LogWarning(v.pai.card_value)
 			if m == "PAI_OPER_TYPE_GANGPAI" or m == "PAI_OPER_TYPE_ANGANGPAI" then
 				tempOperation = m
 				tempPai = v.pai

@@ -1,5 +1,5 @@
 
-Ïœ
+¦›
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -255,13 +255,7 @@ product_id (
 GET_REWARD_REASON!
 GET_REWARD_REASON_DAILY_BONUS%
 !GET_REWARD_REASON_DAILY_ALLOWANCE"§
-PaiOperationLimit
-	player_id (
-from_player_id (
-time_out (%
-pai (2.Adoter.Asset.PaiElement.
-	oper_type (2.Adoter.Asset.PAI_OPER_TYPE"¦
-PaiOperationList
+PaiOperationCache
 	player_id (
 from_player_id (
 time_out (%

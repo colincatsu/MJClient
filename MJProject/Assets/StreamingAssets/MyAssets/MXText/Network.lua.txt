@@ -146,10 +146,12 @@ function Network.OnConnect()
     Network.isConnecting = false
     Player.disConnetedTime = nil
     Player.hasConnectTimes = 0
+    Player._pings_count = 0
     Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
     if Player.reConnect then
         ClickEvent.ShowNotMoveToast(2030,3)
         if Player._player_data and Player._player_data.common_prop and Player._player_data.common_prop.player_id then
+            Player.LogWarning("JXYreConnect")
             Player.CmdReConnect()
             if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
                 Player.MahJong.ResetGameState(true)
