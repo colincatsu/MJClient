@@ -123,7 +123,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.0927"
+Player.pc_version = "1.0.5.0928"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -145,6 +145,7 @@ Player.room_current_round = 0
 Player.voiceCount = 0
 Player.voiceNumber = {}
 Player.isGameStop = false
+Player.canShowPlayButton = false
 
 function Player.LoadData( ... )
     -- body
@@ -179,7 +180,7 @@ end
 
 function Player.LogWarning(para)
     -- body
-    --CS.UnityEngine.Debug.LogWarning(para)
+    CS.UnityEngine.Debug.LogWarning(para)
 end
 
 function Player.GetinvokeFunctionCache()
@@ -861,7 +862,11 @@ function Player.OnRoomState(type_t,stuff)
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             --Player.LoadScene("FairyMainUI")
-            ClickEvent.ShowSingleYesWindow(2034)
+            Player.LogWarning(ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui))
+            if ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
+                Player.LogWarning(ClickEvent.panelTable._room_calculate_ui)
+                ClickEvent.ShowSingleYesWindow(2034)
+            end
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_AGREE" then
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
@@ -1027,7 +1032,7 @@ function Player.OnRoomCalculate(type_t,stuff)
         --ClickEvent.ShowRoomCalculate()
     end
     if message.calculte_type == "CALCULATE_TYPE_DISMISS" then
-       ClickEvent.ShowRoomCalculate() 
+       ClickEvent.ShowRoomCalculate()
     end
 end
 
@@ -1469,6 +1474,7 @@ function Player.OnPaiNotify(type_t,stuff)
         end
         Player.isPlaying = true
         ClickEvent.CloseAlready()
+        Player.canShowPlayButton = false
         Player.MahJong.CreatePlayerPai()
     elseif message.data_type == "CARDS_DATA_TYPE_FAPAI" then
         if Player.isGangPaiing == true then
@@ -1478,6 +1484,7 @@ function Player.OnPaiNotify(type_t,stuff)
             Player.MahJong.ModelPoolDelete(1)
         end
         if message.pai and Player._my_player_data.common_prop.player_id == message.player_id then
+            Player.canShowPlayButton = false
             Player.MahJong.SetCurrentState(operationState.DAPAI)
             Player._fa_pai_cache = message.pai
             ClickEvent.notPushPassMsg = true

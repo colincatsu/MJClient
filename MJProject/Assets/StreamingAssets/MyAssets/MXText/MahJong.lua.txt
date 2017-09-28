@@ -166,6 +166,7 @@ function MahJong.Start()
 	diceHasPlay = false
 	Player.hasShowIPSame = false
 	Player.roomall_player_brief = nil
+	Player.canShowPlayButton = true
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -179,6 +180,7 @@ function MahJong.Start()
 	Player._all_players_data = {}
 	Player.allPaisShow = {}
 	Player.allPaisShowIndex = 0
+	Player.room_current_round = 0
 
 	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 	Player.LogWarning("voice")

@@ -719,12 +719,17 @@ function ClickEvent.RoomInformationUpdate(sync_type)
 			end
 		end
 	end
+	Player.LogWarning(sync_type)
 	if countPlayerNumber >= 4 and ClickEvent._play_ui.playerAlready.visible == false then
 		if Player.hasBeginned == true then
 			Player.LogWarning("buttonDisable")
 			ClickEvent._play_ui.gamePlayButton.visible = false
 		else
-			if sync_type ~= ROOM_SYNC_TYPE_STATE_CHANGED then
+			Player.LogWarning(Player.canShowPlayButton)
+			Player.LogWarning(Player.room_current_round)
+			Player.LogWarning(Player._room_information.options.open_rands)
+			if Player.canShowPlayButton and Player.canShowPlayButton == true and Player.room_current_round < Player._room_information.options.open_rands then
+				Player.LogWarning("showButton")
 				ClickEvent._play_ui.gamePlayButton.visible = true
 			end
 		end
@@ -927,6 +932,9 @@ function ClickEvent.ErrorChangeTable(errorCode)
 		ERROR_ROOM_HAS_BEEN_IN = 28,
 		ERROR_ROOM_GUEST_FORBID_ENTER = 29,
 		ERROR_ROOM_CARD_GAMES_FULL = 30,
+		ERROR_ROOM_DISMISS_COOLDOWN = 31,
+		ERROR_ROOM_BEEN_OVER = 32,
+		ERROR_ROOM_BEEN_DISMISS = 33,
 		
 		ERROR_GAME_NO_PERMISSION = 40,
 		ERROR_GAME_PAI_UNSATISFIED = 41,
@@ -992,9 +1000,10 @@ function ClickEvent.PopPanel( panelName , noBack)
 	if not ClickEvent._createObject["Bg"] then
 		ClickEvent._createObject["Bg"] = {}
 	end
+	local hasUIIndex = 0
 	for i=1,popPanelIndex do
 		if _popPanel[i].panel.name == panelName then
-			return false
+			hasUIIndex = i
 		end
 	end
 	if not ClickEvent._createObject[panelName] then
@@ -1004,6 +1013,19 @@ function ClickEvent.PopPanel( panelName , noBack)
 	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and panelName == _popPanel[popPanelIndex].panel.name then
 		return true
 	end
+	if hasUIIndex > 0 then
+		local tempUI = _popPanel[hasUIIndex]
+		for i=hasUIIndex,popPanelIndex-1 do
+			_popPanel[i] = _popPanel[i+1]
+		end
+		_popPanel[popPanelIndex] = tempUI
+		if _popPanel[popPanelIndex].background and ClickEvent.self:IsNull(_popPanel[popPanelIndex].background) == false then
+			GRoot.inst:AddChild(_popPanel[popPanelIndex].background)
+		end
+		GRoot.inst:AddChild(_popPanel[popPanelIndex].panel)
+		return
+	end
+
 	popPanelIndex = popPanelIndex + 1
 	_popPanel[popPanelIndex] = {}
 	if not noBack then
@@ -1017,8 +1039,11 @@ function ClickEvent.PopPanel( panelName , noBack)
 		_popPanel[popPanelIndex].background:SetSize(GRoot.inst.width, GRoot.inst.height)
 		_popPanel[popPanelIndex].background:Center()
 		_popPanel[popPanelIndex].background:SetPosition(0,0,0)
-		_popPanel[popPanelIndex].background.onTouchBegin:Add(ClickEvent.registerButtonDown)
-		_popPanel[popPanelIndex].background.onTouchEnd:Add(ClickEvent.registerButtonUp)
+		if panelName == ClickEvent.panelTable._calculate_ui then
+			_popPanel[popPanelIndex].background.onTouchBegin:Add(ClickEvent.registerButtonDown)
+			_popPanel[popPanelIndex].background.onTouchEnd:Add(ClickEvent.registerButtonUp)
+		end
+		_popPanel[popPanelIndex].background:GetChild("Di").visible  = true
 		GRoot.inst:AddChild(_popPanel[popPanelIndex].background)
 	end
 
@@ -1286,6 +1311,8 @@ function ClickEvent.ShowCalculate( ... )
 	local myPosition = Player._my_player_data.position
 	local currentPositionData
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
+	Player.LogWarning("setTrue")
+	Player.canShowPlayButton = true
 	if Player._banker_position then
 		_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("Zhuang").visible = false
 		_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("Zhuang").visible = false
@@ -1929,7 +1956,7 @@ function ClickEvent.IsPopPanel(name)
 	-- body
 	if popPanelIndex > 0 then
 		for i=1,popPanelIndex do
-			if _popPanel[popPanelIndex].panel.name == name then
+			if _popPanel[i].panel.name == name then
 				return true
 			end
 		end
@@ -1940,13 +1967,14 @@ end
 
 function ClickEvent.ShowDissolveTime(time)
 	-- body
-	_popPanel[popPanelIndex].panel:GetChild("Agree"):GetChild("count").text = tostring(time)--
-	_popPanel[popPanelIndex].panel:GetChild("AgreeText").text = string.format(StringTable.Get(2040),math.ceil(time))
+	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
+		_popPanel[popPanelIndex].panel:GetChild("Agree"):GetChild("count").text = tostring(time)--
+		_popPanel[popPanelIndex].panel:GetChild("AgreeText").text = string.format(StringTable.Get(2040),math.ceil(time))
+	end
 end
 
 function ClickEvent.ShowDissolvePanel(data)
 	-- body
-
 	if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
 	else
 		Player.dismissHasClicked = false
@@ -2054,7 +2082,6 @@ function ClickEvent.ShowDissolvePanel(data)
 			return
 		end
 	end
-
 	for k,v in pairs(Player._all_players_data) do
 		if v.position == firstPlayer then
 			if v.wechat.nickname and v.wechat.nickname ~= "" then
@@ -2362,15 +2389,19 @@ function ClickEvent.VipNoteList(gameObject)
 				roundCount = roundCount + 1
 				local playerNumber = 1
 				for roundKey,roundData in pairs(c.list) do
-					countScore[playerNumber].nickname = gbk.toutf8(gbk.fromutf8(roundData.nickname))
-					countScore[playerNumber].headimgurl = roundData.headimgurl
+					for playerKey,playerData in pairs(v.player_brief_list) do
+						if playerData.player_id == roundData.player_id then
+							countScore[playerNumber].headimgurl = playerData.headimgurl
+							countScore[playerNumber].nickname = playerData.nickname
+						end
+					end
 					countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
-					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(roundData.nickname)))
+					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(countScore[playerNumber].nickname)
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url  = UIPackage.GetItemURL("MXUI","Touxiang01")
-					if roundData.headimgurl and roundData.headimgurl ~= "" then
+					if countScore[playerNumber].headimgurl and countScore[playerNumber].headimgurl ~= "" then
 						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = ""
-						local tempTexture = WeChatPlatform:SetAsyncImage(roundData.headimgurl)
+						local tempTexture = WeChatPlatform:SetAsyncImage(countScore[playerNumber].headimgurl)
 						if tempTexture then
 							obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 						end
@@ -2504,6 +2535,7 @@ end
 
 function ClickEvent.VIPRecordButton( ... )
 	-- body
+	WeChatPlatform.func = nil
 	ClickEvent.PopPanel(ClickEvent.panelTable._vip_note_ui)
 	_popPanel[popPanelIndex].panel:GetChild("NoteList"):RemoveChildrenToPool()
 	_popPanel[popPanelIndex].panel:GetChild("NoteList").scrollPane.onPullUpRelease:Add(ClickEvent.OnPullUpRefresh)
@@ -2526,7 +2558,11 @@ function ClickEvent.VIPRecordButton( ... )
 			for roundKey,roundData in pairs(c.list) do
 				imgCount = imgCount + 1
 				if not headimgurlTable[imgCount] then
-					headimgurlTable[imgCount] = roundData.headimgurl
+					for playerKey,playerData in pairs(v.player_brief_list) do
+						if playerData.player_id == roundData.player_id then
+							headimgurlTable[imgCount] = playerData.headimgurl
+						end
+					end
 				end
 				if roundData.player_id == Player._player_data.common_prop.player_id then
 					countScore = countScore + roundData.score
@@ -2562,6 +2598,7 @@ end
 
 function ClickEvent.OnReceiveHistory()
 	-- body
+	WeChatPlatform.func = nil
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._vip_note_ui) == true then
 		local dataCount = 0
 		for i=Player.history_start,Player.history_end do
@@ -2585,7 +2622,11 @@ function ClickEvent.OnReceiveHistory()
 					for roundKey,roundData in pairs(c.list) do
 						imgCount = imgCount + 1
 						if not headimgurlTable[imgCount] then
-							headimgurlTable[imgCount] = roundData.headimgurl
+							for playerKey,playerData in pairs(v.player_brief_list) do
+								if playerData.player_id == roundData.player_id then
+									headimgurlTable[imgCount] = playerData.headimgurl
+								end
+							end
 						end
 						if roundData.player_id == Player._player_data.common_prop.player_id then
 							countScore = countScore + roundData.score
@@ -2598,6 +2639,15 @@ function ClickEvent.OnReceiveHistory()
 						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
 					end
 				end
+				WeChatPlatform:SetFuncDelegate(function ( ... )
+					-- body
+					for i=1,4 do
+						local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+						if tempTexture then
+							obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+						end
+					end
+				end)
 				if countScore > 0 then
 					obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
 				else
@@ -4079,6 +4129,7 @@ end
 function ClickEvent.GamePlayButton( gameObject )
 	-- body
 	gameObject.visible = false
+	Player.canShowPlayButton = false
 	--Player.MahJong.PlayDoubleDices()
 	Player.CmdGameOperation("GAME_OPER_TYPE_START")
 end

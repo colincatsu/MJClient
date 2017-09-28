@@ -1,5 +1,5 @@
 
-¦›
+Àœ
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -49,12 +49,13 @@ headimgurl (
 details (22.Adoter.Asset.GameRecord.GameElement.DetailElementH
 DetailElement
 score ((
-fan_type (2.Adoter.Asset.FAN_TYPE"‡
+fan_type (2.Adoter.Asset.FAN_TYPE"½
 RoomHistory
 room_id (
 create_time (*
 options (2.Adoter.Asset.RoomOptions&
-list (2.Adoter.Asset.GameRecord"Ù
+list (2.Adoter.Asset.GameRecord4
+player_brief_list (2.Adoter.Asset.PlayerBrief"Ù
 
 CommonProp
 	player_id (
@@ -254,13 +255,14 @@ product_id (
 	reward_id ("]
 GET_REWARD_REASON!
 GET_REWARD_REASON_DAILY_BONUS%
-!GET_REWARD_REASON_DAILY_ALLOWANCE"§
+!GET_REWARD_REASON_DAILY_ALLOWANCE"Ô
 PaiOperationCache
 	player_id (
 from_player_id (
 time_out (%
 pai (2.Adoter.Asset.PaiElement.
-	oper_list (2.Adoter.Asset.PAI_OPER_TYPE"„
+	oper_list (2.Adoter.Asset.PAI_OPER_TYPE+
+	ting_pais (2.Adoter.Asset.PaiElement"„
 PaiOperationF
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_PAI_OPERATION.
 	oper_type (2.Adoter.Asset.PAI_OPER_TYPE-
@@ -523,7 +525,7 @@ ERROR_TYPE
 ERROR_TYPE_NORMAL
 ERROR_TYPE_INVENTORY_FULL*+
 ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*»
+ERROR_SHOW_TYPE_CHAT*ò
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -551,7 +553,9 @@ ERROR_CODE
 ERROR_ROOM_HAS_BEEN_IN!
 ERROR_ROOM_GUEST_FORBID_ENTER
 ERROR_ROOM_CARD_GAMES_FULL
-ERROR_ROOM_DISMISS_COOLDOWN
+ERROR_ROOM_DISMISS_COOLDOWN
+ERROR_ROOM_BEEN_OVER 
+ERROR_ROOM_BEEN_DISMISS!
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2
