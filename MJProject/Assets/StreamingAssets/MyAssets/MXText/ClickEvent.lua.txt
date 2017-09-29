@@ -311,17 +311,17 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
 		ClickEvent._play_ui.titleFather.visible = false
 		if Player.wechat_headimgurl and Player.wechat_headimgurl ~= "" then
-			ClickEvent._play_ui.avatarLoader.url = ""
+			ClickEvent._play_ui.avatarLoader.url = ""--UIPackage.GetItemURL("MXUI","Touxiang01")
 			WeChatPlatform.func = nil
-			local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
-			WeChatPlatform:SetFuncDelegate(function ()
+			WeChatPlatform:SetFuncDelegate(function (...)
 				-- body
-				local delegateTex = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
-				if delegateTex then
-					ClickEvent._play_ui.avatarLoader.texture = NTexture(delegateTex)
+				local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
+				if tempTexture then
+					ClickEvent._play_ui.avatarLoader.texture = NTexture(tempTexture)
 				end
 				WeChatPlatform.func = nil
 			end)
+			local tempTexture = WeChatPlatform:SetAsyncImage(Player.wechat_headimgurl)
 			--[[
 			--]]
 			if tempTexture then
@@ -958,13 +958,15 @@ function ClickEvent.ShowToast(content)
 		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
 	end
 	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.Close)
-	if ClickEvent.ErrorChangeTable(content) ~= -1 then
-		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
-			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
-		end
-	else
-		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
-			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
+	if popPanelIndex > 0 and _popPanel[popPanelIndex] then
+		if ClickEvent.ErrorChangeTable(content) ~= -1 then
+			if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
+				_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
+			end
+		else
+			if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
+				_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
+			end
 		end
 	end
 end
@@ -1173,6 +1175,7 @@ end
 
 function ClickEvent.ShareRank( ... )
 	-- body
+	ClickEvent.Close()
 	ClickEvent.PopPanel(ClickEvent.panelTable._share_calculate_ui)
 	local scoreList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")
 	scoreList:RemoveChildrenToPool()
@@ -2129,15 +2132,8 @@ function ClickEvent.Disagree( ... )
 	Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_DISAGREE")
 end
 
-function ClickEvent.GameDissolveButton(gameObject)
+function ClickEvent.ShowDissmiss( ... )
 	-- body
-	if Player.roomHasBegin == false then
-		if Player._my_player_data.position == "POSITION_TYPE_EAST" then
-			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2006)
-		end
-		return
-	end
 	if not Player.dismissTimestarmp or CS.UnityEngine.Time.time - Player.dismissTimestarmp > Player.activityDataTable.room_dismiss_cooldown then
 		if popPanelIndex > 0 and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
 			Player.LogWarning("panelnil")
@@ -2206,7 +2202,19 @@ function ClickEvent.GameDissolveButton(gameObject)
 		ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
 		_popPanel[popPanelIndex].panel:GetChild("TPopText").text = string.format(StringTable.Get(2039),math.ceil(Player.activityDataTable.room_dismiss_cooldown - CS.UnityEngine.Time.time + Player.dismissTimestarmp))
 	end
+end
 
+function ClickEvent.GameDissolveButton(gameObject)
+	-- body
+	if Player.roomHasBegin == false then
+		if Player._my_player_data.position == "POSITION_TYPE_EAST" then
+			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2006)
+		end
+		return
+	end
+	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2041)
 end
 
 function ClickEvent.GameInstructionButton(gameObject)
@@ -2598,7 +2606,6 @@ end
 
 function ClickEvent.OnReceiveHistory()
 	-- body
-	WeChatPlatform.func = nil
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._vip_note_ui) == true then
 		local dataCount = 0
 		for i=Player.history_start,Player.history_end do
@@ -3017,6 +3024,10 @@ function ClickEvent.YesButton( ... )
 		CS.UnityEngine.Application.Quit()
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2041) then
+		ClickEvent.Close()
+		ClickEvent.ShowDissmiss()
+		return
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
 		Player.LoadScene("FairyMainUI")
 		return

@@ -23,7 +23,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentMd5 = "06e5837d2edce3cdf82cb72129e7c821"--版本md5
+local currentMd5 = "9af6ad141df0f43fa4222acfa69e9dcb"--版本md5
 local isReloadData = false
 
 local localMd5 = ""
@@ -125,6 +125,10 @@ function LoadingSence.DownloadData( ... )
 					--LoadingSence.SetLoadingBar(progress * 100)
 					loadingBarProgress = progress
 					if progress == 1 then
+						local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
+				        mFile:write(serveMd5)
+				        mFile:close()
+				        os.remove(dataPath.."MyAssets.upk")
 						CS.AssetsHandle.dataFinish = nil
 						isReloadData = true
 					end
@@ -280,10 +284,6 @@ function LoadingSence.RequestServerMd5( ... )
 				else
 					print("jxydelete")
 					os.remove(dataPath.."hotfixMd5.txt")
-					local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
-			        mFile:write(serveMd5)
-			        mFile:close()
-			        os.remove(dataPath.."MyAssets.upk")
 			        LoadingSence.DownloadData()
 				end
 			elseif jsonData.code == 200101 then

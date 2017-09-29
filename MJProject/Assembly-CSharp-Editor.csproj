@@ -90,6 +90,7 @@
      <None Include="Assets\StreamingAssets\MyAssets\MXText\AudioPlayer.lua.txt" />
      <None Include="Assets\XLua\Resources\perf\profiler.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaDelegateWrap.tpl.txt" />
+     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\Player.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\MainSence.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\FairyGUI.lua.txt" />
