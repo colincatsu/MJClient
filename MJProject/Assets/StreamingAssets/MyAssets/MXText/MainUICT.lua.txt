@@ -20,12 +20,12 @@ end
 local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 local WeChatPlatform = CS.Platform.Instance
+--[[
 local httpUrlToken = "http://api.cloudbm.wang/auth/jwt"
 local httpUrlServer = "http://api.cloudbm.wang/maintain/server"
---[[
+--]]
 local httpUrlToken = "http://testapi.cloudbm.wang/auth/jwt"
 local httpUrlServer = "http://testapi.cloudbm.wang/maintain/server"
---]]
 
 local httpAppID = "snve1zlao934hhh323"
 local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
