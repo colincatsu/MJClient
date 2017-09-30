@@ -68,8 +68,8 @@ local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 local rapidjson = require "rapidjson"
 
---local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
-local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
+local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
+--local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -359,6 +359,9 @@ function ClickEvent.CreateNewPanel(panelName)
 				_currentPanel.panel:GetChild("WechatLogin").visible = false
 			end
 
+			if _currentPanel.panel:GetChild("Version") then
+				_currentPanel.panel:GetChild("Version").text = Player.pc_version
+			end
 			if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
 				_currentPanel.panel:GetChild("Title").visible = false
 				_currentPanel.panel:GetChild("Account").visible = false
@@ -1269,6 +1272,11 @@ function ClickEvent.ShareRank( ... )
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = UIPackage.GetItemURL("MXUI","tubiao_dayingjia")
 		else
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = ""
+		end
+		if i == 1 then
+			obj:GetChild("No1").visible = true
+		else
+			obj:GetChild("No1").visible = false
 		end
 	end
 end

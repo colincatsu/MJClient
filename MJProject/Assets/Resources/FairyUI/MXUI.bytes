@@ -462,20 +462,20 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
       <gearDisplay controller="WinPaoNone" pages="0"/>
     </image>
   </displayList>
-</component>ghpfqf.xml|1096|<component size="1251,114" extention="ProgressBar">
+</component>ghpfqf.xml|1138|<component size="1251,114" extention="ProgressBar">
   <displayList>
     <image id="n1" name="Bg" src="ghpfqd" xy="-41,1" size="1334,114">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
     <image id="n2" name="bar" src="ghpfqc" xy="0,41" size="1249,31"/>
-    <text id="n3" name="title" xy="1161,0" size="83,25" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="height" text="50%">
+    <text id="n3" name="title" xy="1161,0" size="83,24" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="height" text="50%">
       <relation target="" sidePair="width-width,height-height"/>
     </text>
     <text id="n4_ghpf" name="n4" xy="914,0" size="145,24" fontSize="20" color="#ffffff" text="当前更新进度："/>
     <text id="n5_ghpf" name="n5" xy="0,0" size="105,24" fontSize="20" color="#ffffff" text="下载速度："/>
     <text id="n6_ghpf" name="DownloadSpeed" xy="93,0" size="75,24" fontSize="20" color="#ffffff" text="00.00kb"/>
     <text id="n9_ghpf" name="Schedule" xy="1056,0" size="75,24" fontSize="20" color="#ffffff" text="0.0/0.0"/>
-    <text id="n10_ghpf" name="n10" xy="543,86" size="165,24" fontSize="20" color="#ffffff" text="正在下载最新文件"/>
+    <text id="n10_ghpf" name="n10" xy="438,86" size="375,24" fontSize="20" color="#ffffff" align="center" vAlign="middle" text="正在下载最新文件,下载中请不要退出游戏"/>
   </displayList>
   <ProgressBar/>
 </component>i0jkod.xml|595|<component size="1207,660">
@@ -993,7 +993,7 @@ ldfsqh.xml|446|<component size="50,31">
       <Button controller="c1" page="1"/>
     </component>
     <group id="n11_v7wh" name="Btns" xy="101,110" size="1185,306" group="n4_s5h9" advanced="true"/>
-    <image id="n12_r8qd" name="n12" src="r8qd4tb" xy="135,83" group="n4_s5h9"/>
+    <image id="n12_r8qd" name="n12" src="r8qd4tb" xy="176,83" group="n4_s5h9"/>
     <group id="n4_s5h9" name="PopWindowsBig" xy="54,58" size="1232,660" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
@@ -1377,7 +1377,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="t5cirx" name="ShareToWeChat" path="/UIPIC/Share/" size="302,95"/>
     <component id="uejtqm" name="NoticeButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqn" name="UnlimitedRoomCardButton" path="/UIPIC/游戏公告/" size="265,107"/>
-    <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="94,69"/>
+    <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="72,71"/>
     <component id="uejtqw" name="HowToPlayButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqx" name="HowToPlayText" path="/UIPIC/xinzeng/" size="795,454"/>
     <component id="v7wh4sh" name="ShowTable" path="/UIPIC/匹配房结算/" size="176,82"/>
@@ -1455,7 +1455,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="117,44"/>
     <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="70,69"/>
-    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="90,73"/>
+    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgf" name="GameHintBar" path="/UIPIC/游戏页面/" size="367,63"/>
@@ -1733,7 +1733,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="l2po4vv" name="x033" path="/UIPIC/0821/" size="143,39"/>
     <image id="l2po4vw" name="x034" path="/UIPIC/0821/" size="145,37"/>
     <image id="l2po4vx" name="x035" path="/UIPIC/0821/" size="196,38"/>
-    <image id="l2po4vy" name="x036" path="/UIPIC/0821/" size="144,37"/>
+    <image id="l2po4vy" name="x036" path="/UIPIC/0821/" size="144,39"/>
     <image id="l2po4vz" name="x037" path="/UIPIC/0821/" size="69,39"/>
     <image id="l2po4w0" name="x038" path="/UIPIC/0821/" size="69,39"/>
     <image id="l2po4w1" name="x039" path="/UIPIC/0821/" size="100,39"/>
@@ -1769,7 +1769,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="r8qd4t8" name="4" path="/UIPIC/11/" size="300,75"/>
     <image id="r8qd4t9" name="5" path="/UIPIC/11/" size="300,76"/>
     <image id="r8qd4ta" name="6" path="/UIPIC/11/" size="300,72"/>
-    <image id="r8qd4tb" name="7" path="/UIPIC/11/" size="300,73"/>
+    <image id="r8qd4tb" name="7" path="/UIPIC/11/" size="220,77"/>
     <image id="r8qd4tc" name="8" path="/UIPIC/11/" size="300,73"/>
     <image id="r8qd4td" name="9" path="/UIPIC/11/" size="300,76"/>
     <image id="r8qd4te" name="ui_Shezhi_04_2" path="/UIPIC/游戏设置/" size="89,89"/>
@@ -1780,7 +1780,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="rg704uu" name="fenxiangweixin" path="/UIPIC/xinzeng/" size="292,87"/>
     <image id="rg704uv" name="tuichufangjian" path="/UIPIC/xinzeng/" size="229,84"/>
     <image id="soml4u4" name="hua_01" path="/UIPIC/xinzeng/" size="304,224"/>
-    <image id="uejtqp" name="yxnei_jiesan" path="/UIPIC/游戏页面/" size="94,69"/>
+    <image id="uejtqp" name="yxnei_jiesan" path="/UIPIC/游戏页面/" size="72,71"/>
     <image id="uejtqy" name="FX_biaoti" path="/UIPIC/Share/" size="302,87"/>
     <image id="uejtqz" name="FX_huangguan" path="/UIPIC/Share/" size="144,85"/>
     <image id="uejtr3" name="FX_piaodai" path="/UIPIC/Share/" size="644,140"/>
@@ -1839,7 +1839,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="w61cbg" name="ui_GongNeng_17" path="/UIPIC/功能界面/" size="59,84"/>
     <image id="w61cbh" name="ui_GongNeng_18" path="/UIPIC/功能界面/" size="72,75"/>
     <image id="w61cbi" name="ui_GongNeng_19" path="/UIPIC/功能界面/" size="90,87"/>
-    <image id="w61cbj" name="ui_GongNeng_20" path="/UIPIC/功能界面/" size="68,84"/>
+    <image id="w61cbj" name="ui_GongNeng_20" path="/UIPIC/功能界面/" size="74,85"/>
     <image id="w61cbk" name="ui_GongNeng_21" path="/UIPIC/功能界面/" size="67,85"/>
     <image id="w61cbl" name="ui_GongNeng_22" path="/UIPIC/功能界面/" size="57,85"/>
     <image id="w61cbm" name="ui_GongNeng_23" path="/UIPIC/功能界面/" size="58,82"/>
@@ -1891,7 +1891,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="w61cfr" name="ui_Youxijiemian_10" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfs" name="ui_Youxijiemian_11" path="/UIPIC/游戏页面/" size="47,51"/>
     <image id="w61cfu" name="ui_Youxijiemian_13" path="/UIPIC/游戏页面/" size="70,69"/>
-    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="90,73"/>
+    <image id="w61cfv" name="ui_Youxijiemian_14" path="/UIPIC/游戏页面/" size="72,71"/>
     <image id="w61cfw" name="ui_Youxijiemian_15" path="/UIPIC/游戏页面/" size="72,73"/>
     <image id="w61cfx" name="ui_Youxijiemian_16" path="/UIPIC/游戏页面/" size="70,69"/>
     <image id="w61cfz" name="ui_Youxijiemian_18" path="/UIPIC/游戏页面/" size="367,63" scale="9grid" scale9grid="24,26,324,11"/>
@@ -2324,7 +2324,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n9_lidq" name="n9" src="i0jkoc" xy="795,453" scale="1.6,1.6" rotation="180"/>
     <image id="n10_lidq" name="n10" src="i0jkoc" xy="0,454" scale="1.6,1.6" rotation="-90"/>
   </displayList>
-</component>uejtqt.xml|357|<component size="94,69" extention="Button">
+</component>uejtqt.xml|357|<component size="72,71" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n1" name="n1" src="uejtqp" xy="0,0">
@@ -3330,10 +3330,10 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgc.xml|372|<component size="90,73" extention="Button">
+</component>w61cgc.xml|371|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfv" xy="-4,-3" size="98,79">
+    <image id="n1" name="n1" src="w61cfv" xy="-1,0" size="78,75">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -3502,7 +3502,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n10_jde8" name="GetMailRewardButton" src="jde84tn" xy="330,19"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cj8.xml|1809|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cj8.xml|2002|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Server" pages="0,,1,,2,,3," selected="0"/>
   <displayList>
     <image id="n19_ised" name="n19" src="w61cbq" xy="0,0">
@@ -3531,6 +3531,9 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <image id="n21_soml" name="n21" src="soml4u4" xy="0,0">
       <relation target="" sidePair="top-top,left-left"/>
     </image>
+    <text id="n22_i6sl" name="Version" xy="1196,713" size="115,25" fontSize="20" color="#e5ded9" text="1.0.1.0930">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+    </text>
   </displayList>
   <transition name="t0" autoPlay="true">
     <item time="0" type="Alpha" tween="true" startValue="0" endValue="1" duration="24"/>
@@ -3912,14 +3915,14 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n13_algd" name="GameBackButton" src="w61cg8" xy="9,10" group="n25_fb5y">
       <relation target="" sidePair="left-left,top-top"/>
     </component>
-    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1242,412" group="n25_fb5y">
+    <component id="n18_algd" name="GameBillButton" src="w61cgc" xy="1244,411" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
-    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1249,492" group="n25_fb5y">
+    <component id="n19_algd" name="GameEmojiButton" src="w61cgd" xy="1244,492" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button controller="Emoji" page="1"/>
     </component>
-    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1249,652" group="n25_fb5y">
+    <component id="n20_algd" name="GameVoiceButton" src="w61cge" xy="1244,652" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
     <component id="n23_algd" name="GamePassButton" src="w61cgk" xy="1012,398" group="n25_fb5y">
@@ -3928,7 +3931,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n31_qpkk" name="GameCancelButton" src="qpkkjt" xy="1012,398" group="n25_fb5y">
       <relation target="" sidePair="center-center%,bottom-bottom"/>
     </component>
-    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1250,15" pivot="1,0.5" group="n25_fb5y">
+    <component id="n17_algd" name="GameSettingButton" src="w61cgb" xy="1248,15" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
@@ -3938,7 +3941,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n48_10p14" name="InviteWechatFriends" src="10p14s5" xy="691,564" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1238,114" pivot="1,0.5" group="n25_fb5y">
+    <component id="n46_uejt" name="GameDissolveButton" src="uejtqt" xy="1247,114" pivot="1,0.5" group="n25_fb5y">
       <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
@@ -3954,7 +3957,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <component id="n50_v7wh" name="ChiPaiBg" src="w61cac" xy="515,505" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
-    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1249,572" group="n25_fb5y">
+    <component id="n60_r8qd" name="GameListenButton" src="r8qd4ti" xy="1244,572" group="n25_fb5y">
       <relation target="" sidePair="right-right,bottom-bottom"/>
     </component>
     <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="535,512" group="n25_fb5y">
