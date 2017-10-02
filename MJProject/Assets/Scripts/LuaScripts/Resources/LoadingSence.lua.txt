@@ -128,7 +128,6 @@ function LoadingSence.DownloadData( ... )
 						local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
 				        mFile:write(serveMd5)
 				        mFile:close()
-				        os.remove(dataPath.."MyAssets.upk")
 						CS.AssetsHandle.dataFinish = nil
 						isReloadData = true
 					end
@@ -284,6 +283,7 @@ function LoadingSence.RequestServerMd5( ... )
 				else
 					print("jxydelete")
 					os.remove(dataPath.."hotfixMd5.txt")
+					os.remove(dataPath.."MyAssets.upk")
 			        LoadingSence.DownloadData()
 				end
 			elseif jsonData.code == 200101 then
