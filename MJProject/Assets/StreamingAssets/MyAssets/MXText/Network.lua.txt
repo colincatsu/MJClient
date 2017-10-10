@@ -109,8 +109,8 @@ end
 ---------------------------------------------------------------------------
 function Network.ConnetServer()
     --_socketClient:SendConnect()
-    --_network_manager:ConnectTo("111.230.140.74",50000)
-    _network_manager:ConnectTo("123.206.24.228",60032)
+    _network_manager:ConnectTo("111.230.140.74",50000)
+    --_network_manager:ConnectTo("123.206.24.228",60032)
     Network.isConnecting = true
     Player._connected = false
     Player.LogWarning("Server Connect----->>>")

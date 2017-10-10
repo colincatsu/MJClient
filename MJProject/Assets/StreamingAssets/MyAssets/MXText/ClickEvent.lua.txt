@@ -68,8 +68,8 @@ local yield_return = util.async_to_sync(AsyncYieldReturn)
 
 local rapidjson = require "rapidjson"
 
-local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
---local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
+--local wechatHttpUrl = "http://api.cloudbm.wang/wechat/userinfo?"
+local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
@@ -4283,7 +4283,6 @@ end
 
 function ClickEvent.GameCancelButton(gameObject)
 	-- body
-
 	Player._ting_pai_cache = nil
 	ClickEvent.CloseOperationPanel()
 	Player.MahJong.SetCurrentState(operationState.DAPAI)
