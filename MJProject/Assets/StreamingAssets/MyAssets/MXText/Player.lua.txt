@@ -728,6 +728,14 @@ function Player.CmdPaiOperation(paiOperType,paiChiTable,paiDaTable)
     this.SendProtocol("PaiOperation",paiOperation)
 end
 
+function Player.CmdPlayBack(roomID,gameIndex)
+    -- body
+    local playBack = {
+        room_id = roomID,
+        game_index = gameIndex,
+    }
+end
+
 ---------------------------------------------------------------------------
 --进入场景
 ---------------------------------------------------------------------------
@@ -770,6 +778,15 @@ end
 --------------type_t!!!!!!!!!!!!
 ---------------------------------------------
 --
+
+function Player.OnPlayBack(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.PlayBack",stuff)
+    Player.MahJong.PlayBackPlayerPai(message.player_list)
+end
 
 function Player.OnBuySomething( ... )
     -- body

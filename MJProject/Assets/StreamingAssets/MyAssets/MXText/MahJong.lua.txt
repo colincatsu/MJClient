@@ -1819,6 +1819,17 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 	end
 end
 
+---------------------------------------------------------------------------
+--回放
+---------------------------------------------------------------------------
+function MahJong.PlayBackPlayerPai(player_list)
+	-- body
+	for paisKey,paisData in pairs(player_list) do
+		local whichPlayer = ClickEvent.PlayerPosition(paisData.position)
+	end
+end
+---------------------------------------------------------------------------
+
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
 
