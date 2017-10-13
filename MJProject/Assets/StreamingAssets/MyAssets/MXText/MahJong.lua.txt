@@ -1847,84 +1847,81 @@ end
 
 function MahJong.PlayBackCreateOtherPai(paisData,position)
 	-- body
-	for k, v in pairs(paisData)do
-		local playerPos = ClickEvent.PlayerPosition(v.position)
-		if playerPos == 1 then
-			_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3.zero
-			local paiCount = 0
-			for index,card in pairs(v.pai_list) do
-		        local tempPaiPool = {}
-		        for j,n in pairs(_mj_asset) do
-		        	if n.card_type == card.card_type then
-		        		tempPaiPool = n
-		        	end
-		        end
-		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._next_card[paiCount] then
-		        		Destroy(_player_pai_pool._next_card[paiCount])
-		        	end
-		        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
-		        	_player_pai_pool._next_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
-		        end
-			end
-			_player_pai_pool._next_pai_number = paiCount
-		elseif playerPos == 2 then
-			_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3.zero
-			local paiCount = 0
-			for index,card in pairs(v.pai_list) do
-		        local tempPaiPool = {}
-		        for j,n in pairs(_mj_asset) do
-		        	if n.card_type == card.card_type then
-		        		tempPaiPool = n
-		        	end
-		        end
-		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._opposite_card[paiCount] then
-		        		Destroy(_player_pai_pool._opposite_card[paiCount])
-		        	end
-		        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
-		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
-		        	_player_pai_pool._opposite_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
-		        end
-			end
-			_player_pai_pool._opposite_pai_number = paiCount
-		elseif playerPos == 3 then
-			_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3.zero
-			local paiCount = 0
-			for index,card in pairs(v.pai_list) do
-		        local tempPaiPool = {}
-		        for j,n in pairs(_mj_asset) do
-		        	if n.card_type == card.card_type then
-		        		tempPaiPool = n
-		        	end
-		        end
-		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._forward_card[paiCount] then
-		        		Destroy(_player_pai_pool._forward_card[paiCount])
-		        	end
-		        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
-		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
-		        	_player_pai_pool._forward_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
-		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
-		        end
-			end
-			_player_pai_pool._forward_pai_number = paiCount
+	local playerPos = ClickEvent.PlayerPosition(position)
+	if playerPos == 1 then
+		_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3.zero
+		local paiCount = 0
+		for index,card in pairs(paisData) do
+	        local tempPaiPool = {}
+	        for j,n in pairs(_mj_asset) do
+	        	if n.card_type == card.card_type then
+	        		tempPaiPool = n
+	        	end
+	        end
+	        for i, m in pairs(card.cards) do
+	        	paiCount = paiCount + 1
+	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+	        	if _player_pai_pool._next_card[paiCount] then
+	        		Destroy(_player_pai_pool._next_card[paiCount])
+	        	end
+	        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+	        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
+	        	_player_pai_pool._next_card[paiCount].layer = 0
+	        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+	        end
 		end
-    end
+		_player_pai_pool._next_pai_number = paiCount
+	elseif playerPos == 2 then
+		_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3.zero
+		local paiCount = 0
+		for index,card in pairs(paisData) do
+	        local tempPaiPool = {}
+	        for j,n in pairs(_mj_asset) do
+	        	if n.card_type == card.card_type then
+	        		tempPaiPool = n
+	        	end
+	        end
+	        for i, m in pairs(card.cards) do
+	        	paiCount = paiCount + 1
+	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+	        	if _player_pai_pool._opposite_card[paiCount] then
+	        		Destroy(_player_pai_pool._opposite_card[paiCount])
+	        	end
+	        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+	        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
+	        	_player_pai_pool._opposite_card[paiCount].layer = 0
+	        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+	        end
+		end
+		_player_pai_pool._opposite_pai_number = paiCount
+	elseif playerPos == 3 then
+		_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3.zero
+		local paiCount = 0
+		for index,card in pairs(paisData) do
+	        local tempPaiPool = {}
+	        for j,n in pairs(_mj_asset) do
+	        	if n.card_type == card.card_type then
+	        		tempPaiPool = n
+	        	end
+	        end
+	        for i, m in pairs(card.cards) do
+	        	paiCount = paiCount + 1
+	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+	        	if _player_pai_pool._forward_card[paiCount] then
+	        		Destroy(_player_pai_pool._forward_card[paiCount])
+	        	end
+	        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+	        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
+	        	_player_pai_pool._forward_card[paiCount].layer = 0
+	        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
+	        end
+		end
+		_player_pai_pool._forward_pai_number = paiCount
+	end
     MahJong.SortPushDownPai()
-    AudioPlayer.PlaySound(AudioPlayer._audio_name.PushPai,false,1)
 end
 
 function MahJong.PlayBackPlayerPai(player_list)
@@ -1958,6 +1955,66 @@ function MahJong.PlayBackPlayerPai(player_list)
 		else
 
 		end
+	end
+end
+
+function MahJong.PlayBackNextOperation( ... )
+	-- body
+	if Player.currentQueueIndex >= Player.queueLength then
+		return
+	else
+		Player.currentQueueIndex = Player.currentQueueIndex + 1
+	end
+	local operationTemp = Player.operationQueue[Player.currentQueueIndex]
+	if operationTemp then
+		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
+			Player.MahJong.DeleteOtherPai(message.position,1)
+	        Player.MahJong.DaPaiPoolShow(operationTemp)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
+	        Player.MahJong.UpdateWhoseTurn(operationTemp.position)
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
+	        Player.MahJong.UpdateWhoseTurn(operationTemp.position)
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
+	        Player.MahJong.UpdateWhoseTurn(operationTemp.position)
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        Player.LogWarning("give up operation")
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
+	        Player.MahJong.UpdateWhoseTurn(operationTemp.position)
+	        Player.MahJong.OperationPaiShow(operationTemp)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
+	        Player.MahJong.TingPai(operationTemp)
+	        Player.MahJong.DaPaiPoolShow(operationTemp)
+	        Player.MahJong.DeleteOtherPai(operationTemp.position,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
+	    else
+	        return
+	    end
 	end
 end
 ---------------------------------------------------------------------------

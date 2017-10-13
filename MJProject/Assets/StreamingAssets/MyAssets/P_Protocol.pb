@@ -1,5 +1,5 @@
 
-ÜŸ
+õŸ
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -648,7 +648,7 @@ ERROR_CODE
 RECHARGE_TYPE_ANDROID*3
 	CHAT_TYPE
 CHAT_TYPE_TEXT
-CHAT_TYPE_FACE*Ž
+CHAT_TYPE_FACE*§
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -664,7 +664,8 @@ ERROR_CODE
 
 PAI_OPER_TYPE_BAOPAI
 PAI_OPER_TYPE_QIANGGANG
-PAI_OPER_TYPE_COUNT*š
+PAI_OPER_TYPE_FAPAI
+PAI_OPER_TYPE_COUNT*š
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START

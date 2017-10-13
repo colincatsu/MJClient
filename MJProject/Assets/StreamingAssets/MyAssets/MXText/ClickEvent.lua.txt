@@ -960,7 +960,7 @@ function ClickEvent.ShowToast(content)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._toast_ui)
 	end
-	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.Close)
+	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.CloseToast)
 	if popPanelIndex > 0 and _popPanel[popPanelIndex] then
 		if ClickEvent.ErrorChangeTable(content) ~= -1 then
 			if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
@@ -972,6 +972,11 @@ function ClickEvent.ShowToast(content)
 			end
 		end
 	end
+end
+
+function ClickEvent.CloseToast( ... )
+	-- body
+	ClickEvent.CloseByName(ClickEvent.panelTable._toast_ui)
 end
 
 function ClickEvent.ShowNotMoveToast(content,deleteTime)

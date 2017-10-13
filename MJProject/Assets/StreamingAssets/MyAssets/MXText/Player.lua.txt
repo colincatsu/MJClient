@@ -147,6 +147,13 @@ Player.voiceNumber = {}
 Player.isGameStop = false
 Player.canShowPlayButton = false
 
+Player.isPlayBack = false
+Player.queueLength = 0
+Player.currentQueueIndex = 0
+Player.operationQueue = {}
+Player.playBackCountDown = 0
+Player.playBackInterval = 0.7
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then
@@ -492,6 +499,14 @@ function Player.myUpdate( ... )
     if Player.isWaitingList == true then
         ClickEvent._play_ui.waitingPopTime.text = math.modf(CS.UnityEngine.Time.time - Player.waitingTimestamp)
     end
+    if Player.isPlayBack then
+        if Player.playBackCountDown < Player.playBackInterval then
+            Player.playBackCountDown = Player.playBackCountDown + CS.UnityEngine.Time.time
+        else
+            Player.playBackCountDown = 0
+            Player.MahJong.PlayBackNextOperation()
+        end
+    end
 end
 
 function Player.SayHiTest()
@@ -786,6 +801,12 @@ function Player.OnPlayBack(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PlayBack",stuff)
     Player.MahJong.PlayBackPlayerPai(message.player_list)
+    Player.operationQueue = message.oper_list
+    Player.currentQueueIndex = 0
+    for k,v in pairs(Player.operationQueue) do
+        Player.queueLength = Player.queueLength + 1
+    end
+    Player.isPlayBack = true
 end
 
 function Player.OnBuySomething( ... )
@@ -1239,7 +1260,7 @@ function Player.OnEnterRoom(type_t,stuff)
         Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         Player._player_data.room_id = 0
-        ClickEvent.ShowSingleYesWindow(2010)
+        --ClickEvent.ShowSingleYesWindow(2010)
         Player.LogWarning("no found")
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
         ClickEvent.ShowSingleYesWindow(2008)
