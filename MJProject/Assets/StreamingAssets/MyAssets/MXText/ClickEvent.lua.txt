@@ -848,8 +848,12 @@ function ClickEvent.PaiOperationState()
 	    	Player.LogWarning(m)
 	    	ClickEvent._play_ui.passButton.visible = true
 			if m == "PAI_OPER_TYPE_HUPAI" then
+				Player.isQiangGangAlert = false
 				ClickEvent.AddOperationButton("GameHuButton")
 		        --Player.MahJong.SetCurrentState(operationState.HU)
+		    elseif m == "PAI_OPER_TYPE_QIANGGANG" then
+		    	Player.isQiangGangAlert = true
+		    	ClickEvent.AddOperationButton("GameHuButton")
 			elseif m == "PAI_OPER_TYPE_GANGPAI" then
 				ClickEvent.AddOperationButton("GameGangButton")
 		        Player.MahJong.SetCurrentState(operationState.GANG)
@@ -1431,8 +1435,12 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 1 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
-							singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							if Player.isZiMo == true and Player.huPaiPosition == 1 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+								Player.isZiMo = false
+							else
+								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
+								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							end
 						end
 					end
 				end
@@ -1521,8 +1529,12 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 2 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
-							singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							if Player.isZiMo == true and Player.huPaiPosition == 2 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+								Player.isZiMo = false
+							else
+								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
+								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							end
 						end
 					end
 				end
@@ -1611,8 +1623,12 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 3 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
-							singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							if Player.isZiMo == true and Player.huPaiPosition == 3 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+								Player.isZiMo = false
+							else
+								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
+								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							end
 						end
 					end
 				end
@@ -1701,8 +1717,12 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 0 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
-							singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							if Player.isZiMo == true and Player.huPaiPosition == 0 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+								Player.isZiMo = false
+							else
+								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
+								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
+							end
 						end
 					end
 				end
@@ -2079,7 +2099,7 @@ function ClickEvent.ShowDissolvePanel(data)
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo4"):GetController("YesOrNo").selectedIndex = 1
 			end
 		end
-		if v.position == Player._my_player_data.position then
+		if Player._my_player_data and v.position == Player._my_player_data.position then
 			_popPanel[popPanelIndex].panel:GetChild("AgreeText").visible = true
 			_popPanel[popPanelIndex].panel:GetChild("Agree").visible = false
 			_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = false
@@ -2138,11 +2158,19 @@ end
 function ClickEvent.Agree( ... )
 	-- body
 	Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+	if ClickEvent._play_ui.playerAlready.visible == true then
+		ClickEvent._play_ui.playerAlready.visible = false
+		ClickEvent._play_ui.gamePlayButton.visible = true
+	end
 end
 
 function ClickEvent.Disagree( ... )
 	-- body
 	Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_DISAGREE")
+	if ClickEvent._play_ui.playerAlready.visible == true then
+		ClickEvent._play_ui.playerAlready.visible = false
+		ClickEvent._play_ui.gamePlayButton.visible = true
+	end
 end
 
 function ClickEvent.ShowDissmiss( ... )
@@ -2210,6 +2238,10 @@ function ClickEvent.ShowDissmiss( ... )
 		--_popPanel[popPanelIndex].panel:GetChild("Agree").visible = false
 		--_popPanel[popPanelIndex].panel:GetChild("Disagree").visible = false
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+		if ClickEvent._play_ui.playerAlready.visible == true then
+			ClickEvent._play_ui.playerAlready.visible = false
+			ClickEvent._play_ui.gamePlayButton.visible = true
+		end
 		--Player.dismissHasClicked = true
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
@@ -3037,6 +3069,10 @@ function ClickEvent.YesButton( ... )
 		CS.UnityEngine.Application.Quit()
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
 		Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+		if ClickEvent._play_ui.playerAlready.visible == true then
+			ClickEvent._play_ui.playerAlready.visible = false
+			ClickEvent._play_ui.gamePlayButton.visible = true
+		end
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2041) then
 		ClickEvent.Close()
 		ClickEvent.ShowDissmiss()

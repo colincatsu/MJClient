@@ -29,6 +29,7 @@ Effect._effect_name = {
 	pengShow = "Effect_status_display_peng",
 	chiShow = "Effect_status_display_chi",
 	gangShow = "Effect_status_display_gang",
+	qiangGangHu = "Effect_status_display_QiangGangHu",
 	roundEndShow = "Effect_status_display_DuiJuJieShu",
 	gangKaiShow = "Effect_status_display_GangShangKaiHua",
 	seaMoonShow = "Effect_status_display_HaiDiLaoYue",

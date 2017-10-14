@@ -91,6 +91,9 @@ Player.playerScore = {--游戏每家分数保存
 }
 
 Player.roomall_player_brief = nil
+Player.isZiMo = false
+Player.isQiangGang = false
+Player.isQiangGangAlert = false
 
 Player.operation_calculate_data = {
     [0] = {operationNumber = 0,},
@@ -123,7 +126,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1001"
+Player.pc_version = "1.0.3.1015"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -456,6 +459,9 @@ function Player.myUpdate( ... )
     end
 
     if CS.UnityEngine.Input.GetKeyDown(CS.UnityEngine.KeyCode.Escape) then
+        if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
+            return
+        end
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._vote_ui) == true then
             return
         end
@@ -1436,7 +1442,7 @@ function Player.OnRoomAll(type_t,stuff)
         Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     end
 
-    Player.MahJong.ReturnRoomSync(message.player_list)
+    Player.MahJong.ReturnRoomSync(message.player_list,message.curr_operator_position)
     --重排序
     if message.zhuapai and message.zhuapai.card_value ~= 0 then
         Player.MahJong.ReSortPlayerPai(message.zhuapai)
@@ -1575,6 +1581,9 @@ function Player.OnPaiOperation(type_t,stuff)
     elseif message.oper_type == "PAI_OPER_TYPE_HUPAI" then
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
+        Player.MahJong.OperationPaiShow(message)
+        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
+    elseif message.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
     elseif message.oper_type == "PAI_OPER_TYPE_GANGPAI" then
