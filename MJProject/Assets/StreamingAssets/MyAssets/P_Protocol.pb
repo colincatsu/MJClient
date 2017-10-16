@@ -1,5 +1,5 @@
 
-õŸ
+þŸ
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -305,14 +305,14 @@ PlayerList>
 wechat (2.Adoter.Asset.WechatUnion"}
 PlayerInformationB
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_PLAYER_INFO$
-player (2.Adoter.Asset.Player"æ
+player (2.Adoter.Asset.Player"Ì
 AlertMessageB
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ALERT_ERROR,
 
 error_type (2.Adoter.Asset.ERROR_TYPE6
-error_show_type (2.Adoter.Asset.ERROR_SHOW_TYPE,
+error_show_type (2.Adoter.Asset.ERROR_SHOW_TYPE
 
-error_code (2.Adoter.Asset.ERROR_CODE"½
+error_code ("½
 LiuJu<
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_LIUJU/
 elements (2.Adoter.Asset.LiuJu.LJElementE
@@ -534,9 +534,10 @@ inner_meta ("ƒ
 
 ERROR_TYPE
 ERROR_TYPE_NORMAL
-ERROR_TYPE_INVENTORY_FULL*+
-ERROR_SHOW_TYPE
-ERROR_SHOW_TYPE_CHAT*ò
+ERROR_TYPE_INVENTORY_FULL*N
+ERROR_SHOW_TYPE
+ERROR_SHOW_TYPE_NORMAL
+ERROR_SHOW_TYPE_MESSAGE_BOX*ò
 
 ERROR_CODE
 ERROR_SUCCESS 

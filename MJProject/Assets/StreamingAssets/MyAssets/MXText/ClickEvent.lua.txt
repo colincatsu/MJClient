@@ -966,15 +966,17 @@ function ClickEvent.ShowToast(content)
 	end
 	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.CloseToast)
 	if popPanelIndex > 0 and _popPanel[popPanelIndex] then
+		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
+			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
+		end
+		--[[
 		if ClickEvent.ErrorChangeTable(content) ~= -1 then
-			if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
-				_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
-			end
 		else
 			if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
 				_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
 			end
 		end
+		--]]
 	end
 end
 
