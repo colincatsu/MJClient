@@ -2068,8 +2068,28 @@ end
 
 function MahJong.PlayBackFaPai(operationData)
 	-- body
-	local playerPos = ClickEvent.PlayerPosition(positon)
+	local playerPos = ClickEvent.PlayerPosition(operationTemp.position)
 	if playerPos == 0 then
+		if not _player_father then
+			return
+		end
+		local paiCount = 0
+		for paiKey, paiData in pairs(playerData.pai_list)do
+	        local tempPaiPool = {}
+	        for j,n in pairs(_mj_asset) do
+	       		--Player.LogWarning("_mj_asset::"..n.card_type) 	
+	        	if n.card_type == paiData.card_type then
+	        		tempPaiPool = n
+	        	end
+	        end
+	        if tempPaiPool and tempPaiPool ~= {} then
+		        for i, m in pairs(paiData.cards) do
+		        	paiCount = paiCount + 1
+					MahJong.PlayBackCreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+		        end
+	        end
+	    end
+	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 1 then
 	elseif playerPos == 2 then
 	elseif playerPos == 3 then
@@ -2111,8 +2131,71 @@ function MahJong.PlayBackSortZhuaOtherPai(playerPos)
 	local index = 0
 	local tempCard
 	if playerPos == 1 then
+		tempCard = _player_pai_pool._next_card[_player_pai_pool._next_pai_number]
+		for k,v in pairs(_player_pai_pool._next_card) do
+			if v.card_type == tempCard.card_type then
+				hasType = true
+				if v.card_value >= tempCard.card_value then
+					index = k
+					break
+				end
+			elseif _pai_type_table[v.card_type] > _pai_type_table[tempCard.card_type] then
+				index = k
+				break
+			elseif hasType then 
+				index = k
+				break
+			end
+		end
+
+		for i = _player_pai_pool._next_pai_number, index+1, -1 do
+			_player_pai_pool._next_card[i] =  _player_pai_pool._next_card[i-1]
+		end
+		_player_pai_pool._next_card[index] = tempCard
 	elseif playerPos == 2 then
+		tempCard = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number]
+		for k,v in pairs(_player_pai_pool._opposite_card) do
+			if v.card_type == tempCard.card_type then
+				hasType = true
+				if v.card_value >= tempCard.card_value then
+					index = k
+					break
+				end
+			elseif _pai_type_table[v.card_type] > _pai_type_table[tempCard.card_type] then
+				index = k
+				break
+			elseif hasType then 
+				index = k
+				break
+			end
+		end
+
+		for i = _player_pai_pool._opposite_pai_number, index+1, -1 do
+			_player_pai_pool._opposite_card[i] =  _player_pai_pool._opposite_card[i-1]
+		end
+		_player_pai_pool._opposite_card[index] = tempCard
 	elseif playerPos == 3 then
+		tempCard = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number]
+		for k,v in pairs(_player_pai_pool._forward_card) do
+			if v.card_type == tempCard.card_type then
+				hasType = true
+				if v.card_value >= tempCard.card_value then
+					index = k
+					break
+				end
+			elseif _pai_type_table[v.card_type] > _pai_type_table[tempCard.card_type] then
+				index = k
+				break
+			elseif hasType then 
+				index = k
+				break
+			end
+		end
+
+		for i = _player_pai_pool._forward_pai_number, index+1, -1 do
+			_player_pai_pool._forward_card[i] =  _player_pai_pool._forward_card[i-1]
+		end
+		_player_pai_pool._forward_card[index] = tempCard
 	end
 end
 
