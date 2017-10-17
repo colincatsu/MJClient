@@ -967,7 +967,7 @@ function ClickEvent.ShowToast(content)
 	_popPanel[popPanelIndex].panel:GetTransition("ToastMove"):Play(ClickEvent.CloseToast)
 	if popPanelIndex > 0 and _popPanel[popPanelIndex] then
 		if _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("n0") then
-			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = StringTable.Get(ClickEvent.ErrorChangeTable(content))
+			_popPanel[popPanelIndex].panel:GetChild("n0"):GetChild("Text").text = content
 		end
 		--[[
 		if ClickEvent.ErrorChangeTable(content) ~= -1 then
@@ -1335,6 +1335,15 @@ function ClickEvent.ShowCalculate( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._calculate_ui)
 	Player.LogWarning("setTrue")
 	Player.canShowPlayButton = true
+	Player.isJinBao = false
+	for k,v in pairs(Player._calculate_data.record.list) do
+		for countKey,countNum in pairs(v.details) do
+			if countNum.fan_type == "FAN_TYPE_JIN_BAO" then
+				Player.isJinBao = true
+			end
+		end
+	end
+
 	if Player._banker_position then
 		_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("Zhuang").visible = false
 		_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("Zhuang").visible = false
@@ -1437,8 +1446,9 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 1 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							if Player.isZiMo == true and Player.huPaiPosition == 1 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+							if Player.isZiMo == true and Player.isJinBao == false and Player.huPaiPosition == 1 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
 								Player.isZiMo = false
+								Player.isJinBao = true
 							else
 								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
 								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
@@ -1531,8 +1541,9 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 2 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							if Player.isZiMo == true and Player.huPaiPosition == 2 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+							if Player.isZiMo == true and Player.isJinBao == false and Player.huPaiPosition == 2 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
 								Player.isZiMo = false
+								Player.isJinBao = true
 							else
 								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
 								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
@@ -1625,8 +1636,9 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 3 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							if Player.isZiMo == true and Player.huPaiPosition == 3 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+							if Player.isZiMo == true and Player.isJinBao == false and Player.huPaiPosition == 3 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
 								Player.isZiMo = false
+								Player.isJinBao = true
 							else
 								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
 								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
@@ -1719,8 +1731,9 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 0 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
-							if Player.isZiMo == true and Player.huPaiPosition == 0 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+							if Player.isZiMo == true and Player.isJinBao == false and Player.huPaiPosition == 0 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
 								Player.isZiMo = false
+								Player.isJinBao = true
 							else
 								local singleChild = paiSingleList:AddItemFromPool(UIPackage.GetItemURL("MXUI","PaiSingleInList"))
 								singleChild:GetChild("ChiPaiLoader01").url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..value)
@@ -3650,6 +3663,7 @@ function ClickEvent.CreateRoomButton( ... )
 	for i=1,7 do
 		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
 	end
+	_popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
 	_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")

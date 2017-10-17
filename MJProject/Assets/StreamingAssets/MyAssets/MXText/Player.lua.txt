@@ -92,6 +92,7 @@ Player.playerScore = {--游戏每家分数保存
 
 Player.roomall_player_brief = nil
 Player.isZiMo = false
+Player.isJinBao = false
 Player.isQiangGang = false
 Player.isQiangGangAlert = false
 
@@ -126,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.4.1015"
+Player.pc_version = "1.0.1.1017"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1794,7 +1795,7 @@ function Player.OnAlertMessage(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
     Player.LogWarning(message.error_code)
     if message.error_show_type == "ERROR_SHOW_TYPE_NORMAL" then
-        ClickEvent.ShowToast(message.error_code)
+        ClickEvent.ShowToast(StringTable.Get(message.error_code))
     elseif message.error_show_type == "ERROR_SHOW_TYPE_MESSAGE_BOX" then
         ClickEvent.ShowSingleYesWindow(message.error_code)
     end
