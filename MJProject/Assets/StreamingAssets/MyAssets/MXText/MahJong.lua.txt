@@ -138,8 +138,10 @@ function MahJong.Start()
 	Player._all_calculate_data = {}
 	Player._calculate_table_number = 0
 	Player._room_calculate_data = nil
-	ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
-	ClickEvent.CreateOperationButton()
+	if Player.isPlayBack == false then
+		ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
+		ClickEvent.CreateOperationButton()
+	end
 	MahJong.ModelPoolInit()
 	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
@@ -176,22 +178,26 @@ function MahJong.Start()
 	}
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
-	ClickEvent._play_ui.baopaiLoader.url = ""
 	Player._all_players_data = {}
 	Player.allPaisShow = {}
 	Player.allPaisShowIndex = 0
 	Player.room_current_round = 0
 
-	Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
-	Player.LogWarning("voice")
-	Player.LogWarning(Player._room_information.options.voice_open)
-	if Player.isFriendRoom and Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
-		GVoicePlatform:InitGVoice("1411132483","272fe31b387d1cb6327f525977619d64",tostring(Player._player_data.common_prop.player_id),"udp://cn.voice.gcloudcs.com:10001")
-		GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
-		GVoicePlatform:SetCallBack(MahJong.OnJoinRoomComplete,MahJong.OnQuitRoomComplete,MahJong.OnMemberVoice)
-		GVoicePlatform.m_voiceengine:JoinTeamRoom(tostring(Player._roomId),15000)
+	if Player.isPlayBack == false then
+		ClickEvent._play_ui.baopaiLoader.url = ""
+		Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
+		Player.LogWarning("voice")
+		Player.LogWarning(Player._room_information.options.voice_open)
+		if Player.isFriendRoom and Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
+			GVoicePlatform:InitGVoice("1411132483","272fe31b387d1cb6327f525977619d64",tostring(Player._player_data.common_prop.player_id),"udp://cn.voice.gcloudcs.com:10001")
+			GVoicePlatform.m_voiceengine:SetMode(CS.gcloud_voice.GCloudVoiceMode.RealTime)
+			GVoicePlatform:SetCallBack(MahJong.OnJoinRoomComplete,MahJong.OnQuitRoomComplete,MahJong.OnMemberVoice)
+			GVoicePlatform.m_voiceengine:JoinTeamRoom(tostring(Player._roomId),15000)
+		else
+			--hideVoiceButton
+		end
 	else
-		--hideVoiceButton
+		MahJong.PlayBackPlayerPai(Player.playBackPaiList)
 	end
 	--[[
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,nil,Effect.currentDapaiPointOffset)

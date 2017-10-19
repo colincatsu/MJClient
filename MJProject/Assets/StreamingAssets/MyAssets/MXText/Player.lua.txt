@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1017"
+Player.pc_version = "1.0.1.1018"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -155,6 +155,7 @@ Player.isPlayBack = false
 Player.queueLength = 0
 Player.currentQueueIndex = 0
 Player.operationQueue = {}
+Player.playBackPaiList = {}
 Player.playBackCountDown = 0
 Player.playBackInterval = 0.7
 
@@ -377,7 +378,7 @@ function Player.LoadScene(senceName, buffer)
         end
     end
     Player._tosence_name = senceName
-    if senceName == "PlaySence" then
+    if senceName == "PlaySence" and Player.isPlayBack == false then
         Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     end
     Effect.DestroyObj()
@@ -506,7 +507,7 @@ function Player.myUpdate( ... )
     if Player.isWaitingList == true then
         ClickEvent._play_ui.waitingPopTime.text = math.modf(CS.UnityEngine.Time.time - Player.waitingTimestamp)
     end
-    if Player.isPlayBack then
+    if Player.isPlayBack and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
         if Player.playBackCountDown < Player.playBackInterval then
             Player.playBackCountDown = Player.playBackCountDown + CS.UnityEngine.Time.time
         else
@@ -756,6 +757,7 @@ function Player.CmdPlayBack(roomID,gameIndex)
         room_id = roomID,
         game_index = gameIndex,
     }
+    this.SendProtocol("PlayBack",playBack)
 end
 
 ---------------------------------------------------------------------------
@@ -807,13 +809,22 @@ function Player.OnPlayBack(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PlayBack",stuff)
-    Player.MahJong.PlayBackPlayerPai(message.player_list)
+    Player.playBackPaiList = message.player_list
+    for k,v in pairs(message.player_list) do
+        Player.LogWarning(v.player_id)
+        Player.LogWarning(v.position)
+    end
+    --Player.MahJong.PlayBackPlayerPai(message.player_list)
     Player.operationQueue = message.oper_list
     Player.currentQueueIndex = 0
     for k,v in pairs(Player.operationQueue) do
+        Player.LogWarning(v.position)
+        Player.LogWarning(v.pai.card_type)
+        Player.LogWarning(v.pai.card_value)
         Player.queueLength = Player.queueLength + 1
     end
     Player.isPlayBack = true
+    Player.LoadScene("PlaySence")
 end
 
 function Player.OnBuySomething( ... )

@@ -290,6 +290,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.playerAvatarInfo:AddChild(x)
 		--]]
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
+		Player.isPlayBack = false
 		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 			_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
 		else
@@ -3911,10 +3912,13 @@ end
 
 function ClickEvent.GetinButton( ... )
 	-- body
+	Player.CmdPlayBack(345291,1)
+	--[[
 	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	Player.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	Player.isFriendRoom = true
+	--]]
 	ClickEvent.Close()
 end
 --数字
