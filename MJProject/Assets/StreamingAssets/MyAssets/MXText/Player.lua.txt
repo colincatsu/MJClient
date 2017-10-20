@@ -818,6 +818,9 @@ function Player.OnPlayBack(type_t,stuff)
     Player.operationQueue = message.oper_list
     Player.currentQueueIndex = 0
     
+    for k,v in pairs(Player.operationQueue) do
+        
+    end
     Player.isPlayBack = true
     Player._my_player_data = {}
     Player._my_player_data.position = "POSITION_TYPE_EAST"
