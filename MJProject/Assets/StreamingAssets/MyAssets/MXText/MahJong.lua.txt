@@ -141,11 +141,11 @@ function MahJong.Start()
 	if Player.isPlayBack == false then
 		ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 		ClickEvent.CreateOperationButton()
+		MahJong.ModelPoolInit()
+		MahJong.AnimationPlay()
 	else
 		ClickEvent.Start(ClickEvent.panelTable._replay_ui)
 	end
-	MahJong.ModelPoolInit()
-	MahJong.AnimationPlay()
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()
 	Player.isTingPaied = false
@@ -2015,17 +2015,18 @@ function MahJong.PlayBackNextOperation( ... )
 	else
 		Player.currentQueueIndex = Player.currentQueueIndex + 1
 	end
+	Player.LogWarning(Player.currentQueueIndex)
 	local operationTemp = Player.operationQueue[Player.currentQueueIndex]
 	Player.LogWarning(operationTemp.oper_type)
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
-	        MahJong.DaPaiPoolShow(operationTemp,true)
+	        MahJong.DaPaiPoolShow(operationTemp)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
-	        MahJong.OperationPaiShow(operationTemp)
+	        MahJong.OperationPaiShow(operationTemp,true)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
-	        MahJong.OperationPaiShow(operationTemp)
+	        MahJong.OperationPaiShow(operationTemp,true)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
@@ -2066,7 +2067,7 @@ function MahJong.PlayBackNextOperation( ... )
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
 	        MahJong.TingPai(operationTemp)
 	        MahJong.DaPaiPoolShow(operationTemp)
-	        Player.MahJong.PlayBackDeletePai(operationTemp.position,1)
+	        MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
         	MahJong.PlayBackFaPai(operationTemp)
@@ -2223,8 +2224,8 @@ function MahJong.PlayBackFaPai(operationData)
 			local modelTemp = Load("MJModel/"..tempPaiPool.cards[operationData.pai.card_value].model_path)
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = {}
-        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
+        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.transform.localEulerAngles = newVector3(180,180,0)
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.layer = 0
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_type = operationData.pai.card_type
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_value = operationData.pai.card_value
@@ -2241,8 +2242,8 @@ function MahJong.PlayBackFaPai(operationData)
 			local modelTemp = Load("MJModel/"..tempPaiPool.cards[operationData.pai.card_value].model_path)
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = {}
-        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
+        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.transform.localEulerAngles = newVector3(180,90,0)
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.layer = 0
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_type = operationData.pai.card_type
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_value = operationData.pai.card_value
@@ -2367,14 +2368,9 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 				for i=1,4 do
 					for k,v in pairs(_player_father.cards) do
 						if v.paiType == paiData.card_type and v.paiValue == i then
-							CS.UnityEngine.Object.Destroy(v.parent)
-							for i=k,_player_father.currentPaiNumber - 1 do
-								_player_father.cards[i] = _player_father.cards[i+1]
-								_player_father.cards[i].parent.name = tostring(i)
-							end
-							_player_father.cards[_player_father.currentPaiNumber] = nil
-							_player_father.currentPaiNumber = _player_father.currentPaiNumber - 1
-							MahJong.SortPlayerPai()
+							_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+							CS.UnityEngine.Object.Destroy(_player_father.cards[k].parent)
+							MahJong.SortPlayerPai(k)
 							break
 						end
 					end
@@ -2384,29 +2380,19 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 				for i=1,3 do
 					for k,v in pairs(_player_father.cards) do
 						if v.paiType == paiData.card_type and v.paiValue == i then
-							CS.UnityEngine.Object.Destroy(v.parent)
-							for i=k,_player_father.currentPaiNumber - 1 do
-								_player_father.cards[i] = _player_father.cards[i+1]
-								_player_father.cards[i].parent.name = tostring(i)
-							end
-							_player_father.cards[_player_father.currentPaiNumber] = nil
-							_player_father.currentPaiNumber = _player_father.currentPaiNumber - 1
-							MahJong.SortPlayerPai()
+							_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+							CS.UnityEngine.Object.Destroy(_player_father.cards[k].parent)
+							MahJong.SortPlayerPai(k)
 							break
 						end
 					end
 				end
 			else
 				for k,v in pairs(_player_father.cards) do
-					if v.paiType == paiData.card_type and v.paiValue == i then
-						CS.UnityEngine.Object.Destroy(v.parent)
-						for i=k,_player_father.currentPaiNumber - 1 do
-							_player_father.cards[i] = _player_father.cards[i+1]
-							_player_father.cards[i].parent.name = tostring(i)
-						end
-						_player_father.cards[_player_father.currentPaiNumber] = nil
-						_player_father.currentPaiNumber = _player_father.currentPaiNumber - 1
-						MahJong.SortPlayerPai()
+					if v.paiType == paiData.card_type and v.paiValue == paiData.card_value then
+						_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+						CS.UnityEngine.Object.Destroy(_player_father.cards[k].parent)
+						MahJong.SortPlayerPai(k)
 						break
 					end
 				end
@@ -2414,21 +2400,12 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 		end
 		if paisData then
 			for k,v in pairs(paisData) do
-				if _current_dapai and _current_dapai.card_type and _current_dapai.card_type == v.card_type and _current_dapai.card_value then
-					MahJong.DelUsedDaPai()
-				else
-					for j,c in pairs(_player_father.cards) do
-						if c.paiType == v.card_type and c.paiValue == v.card_value then
-							CS.UnityEngine.Object.Destroy(c.parent)
-							for i=k,_player_father.currentPaiNumber - 1 do
-								_player_father.cards[i] = _player_father.cards[i+1]
-								_player_father.cards[i].parent.name = tostring(i)
-							end
-							_player_father.cards[_player_father.currentPaiNumber] = nil
-							_player_father.currentPaiNumber = _player_father.currentPaiNumber - 1
-							MahJong.SortPlayerPai()
-							break
-						end
+				for j,c in pairs(_player_father.cards) do
+					if c.paiType == v.card_type and c.paiValue == v.card_value then
+						_player_father.currentPaiNumber = _player_father.currentPaiNumber-1
+						CS.UnityEngine.Object.Destroy(_player_father.cards[j].parent)
+						MahJong.SortPlayerPai(j)
+						break
 					end
 				end
 			end
@@ -2484,20 +2461,16 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 		end
 		if paisData then
 			for k,v in pairs(paisData) do
-				if _current_dapai and _current_dapai.card_type and _current_dapai.card_type == v.card_type and _current_dapai.card_value then
-					MahJong.DelUsedDaPai()
-				else
-					for j,c in pairs(_player_pai_pool._next_card) do
-						if c.card_type == paiData.card_type and c.card_value == paiData.card_value then
-							CS.UnityEngine.Object.Destroy(c.obj)
-							for i=k,_player_pai_pool._next_pai_number - 1 do
-								_player_pai_pool._next_card[i] = _player_pai_pool._next_card[i+1]
-							end
-							_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = nil
-							_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number - 1
-							MahJong.PlayBackSortOtherPai()
-							break
+				for j,c in pairs(_player_pai_pool._next_card) do
+					if c.card_type == v.card_type and c.card_value == v.card_value then
+						CS.UnityEngine.Object.Destroy(c.obj)
+						for i=j,_player_pai_pool._next_pai_number - 1 do
+							_player_pai_pool._next_card[i] = _player_pai_pool._next_card[i+1]
 						end
+						_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = nil
+						_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number - 1
+						MahJong.PlayBackSortOtherPai()
+						break
 					end
 				end
 			end
@@ -2553,20 +2526,16 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 		end
 		if paisData then
 			for k,v in pairs(paisData) do
-				if _current_dapai and _current_dapai.card_type and _current_dapai.card_type == v.card_type and _current_dapai.card_value then
-					MahJong.DelUsedDaPai()
-				else
-					for j,c in pairs(_player_pai_pool._opposite_card) do
-						if c.card_type == paiData.card_type and c.card_value == paiData.card_value then
-							CS.UnityEngine.Object.Destroy(c.obj)
-							for i=k,_player_pai_pool._opposite_pai_number - 1 do
-								_player_pai_pool._opposite_card[i] = _player_pai_pool._opposite_card[i+1]
-							end
-							_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = nil
-							_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number - 1
-							MahJong.PlayBackSortOtherPai()
-							break
+				for j,c in pairs(_player_pai_pool._opposite_card) do
+					if c.card_type == v.card_type and c.card_value == v.card_value then
+						CS.UnityEngine.Object.Destroy(c.obj)
+						for i=j,_player_pai_pool._opposite_pai_number - 1 do
+							_player_pai_pool._opposite_card[i] = _player_pai_pool._opposite_card[i+1]
 						end
+						_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = nil
+						_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number - 1
+						MahJong.PlayBackSortOtherPai()
+						break
 					end
 				end
 			end
@@ -2622,20 +2591,16 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 		end
 		if paisData then
 			for k,v in pairs(paisData) do
-				if _current_dapai and _current_dapai.card_type and _current_dapai.card_type == v.card_type and _current_dapai.card_value then
-					MahJong.DelUsedDaPai()
-				else
-					for j,c in pairs(_player_pai_pool._forward_card) do
-						if c.card_type == paiData.card_type and c.card_value == paiData.card_value then
-							CS.UnityEngine.Object.Destroy(c.obj)
-							for i=k,_player_pai_pool._forward_pai_number - 1 do
-								_player_pai_pool._forward_card[i] = _player_pai_pool._forward_card[i+1]
-							end
-							_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = nil
-							_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number - 1
-							MahJong.PlayBackSortOtherPai()
-							break
+				for j,c in pairs(_player_pai_pool._forward_card) do
+					if c.card_type == v.card_type and c.card_value == v.card_value then
+						CS.UnityEngine.Object.Destroy(c.obj)
+						for i=j,_player_pai_pool._forward_pai_number - 1 do
+							_player_pai_pool._forward_card[i] = _player_pai_pool._forward_card[i+1]
 						end
+						_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = nil
+						_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number - 1
+						MahJong.PlayBackSortOtherPai()
+						break
 					end
 				end
 			end

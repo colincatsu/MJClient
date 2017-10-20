@@ -157,7 +157,7 @@ Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackPaiList = {}
 Player.playBackCountDown = 0
-Player.playBackInterval = 2
+Player.playBackInterval = 0.5
 
 function Player.LoadData( ... )
     -- body
@@ -507,10 +507,11 @@ function Player.myUpdate( ... )
     if Player.isWaitingList == true then
         ClickEvent._play_ui.waitingPopTime.text = math.modf(CS.UnityEngine.Time.time - Player.waitingTimestamp)
     end
-    if Player.isPlayBack and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+    if Player.isPlayBack == true and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
         if Player.playBackCountDown < Player.playBackInterval then
-            Player.playBackCountDown = Player.playBackCountDown + CS.UnityEngine.Time.time
+            Player.playBackCountDown = Player.playBackCountDown + CS.UnityEngine.Time.deltaTime
         else
+            --Player.LogWarning("readOperation")
             Player.playBackCountDown = 0
             Player.MahJong.PlayBackNextOperation()
         end
@@ -819,7 +820,7 @@ function Player.OnPlayBack(type_t,stuff)
     Player.currentQueueIndex = 0
     
     for k,v in pairs(Player.operationQueue) do
-        
+        Player.queueLength = Player.queueLength + 1
     end
     Player.isPlayBack = true
     Player._my_player_data = {}
