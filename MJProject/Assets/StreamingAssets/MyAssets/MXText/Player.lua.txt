@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1018"
+Player.pc_version = "1.0.1.1019"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -157,7 +157,7 @@ Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackPaiList = {}
 Player.playBackCountDown = 0
-Player.playBackInterval = 0.7
+Player.playBackInterval = 2
 
 function Player.LoadData( ... )
     -- body
@@ -817,13 +817,10 @@ function Player.OnPlayBack(type_t,stuff)
     --Player.MahJong.PlayBackPlayerPai(message.player_list)
     Player.operationQueue = message.oper_list
     Player.currentQueueIndex = 0
-    for k,v in pairs(Player.operationQueue) do
-        Player.LogWarning(v.position)
-        Player.LogWarning(v.pai.card_type)
-        Player.LogWarning(v.pai.card_value)
-        Player.queueLength = Player.queueLength + 1
-    end
+    
     Player.isPlayBack = true
+    Player._my_player_data = {}
+    Player._my_player_data.position = "POSITION_TYPE_EAST"
     Player.LoadScene("PlaySence")
 end
 

@@ -141,6 +141,8 @@ function MahJong.Start()
 	if Player.isPlayBack == false then
 		ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 		ClickEvent.CreateOperationButton()
+	else
+		ClickEvent.Start(ClickEvent.panelTable._replay_ui)
 	end
 	MahJong.ModelPoolInit()
 	MahJong.AnimationPlay()
@@ -1900,7 +1902,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._next_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._next_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._next_card[paiCount].card_value = m
-	        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -1924,7 +1926,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._opposite_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._opposite_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._opposite_card[paiCount].card_value = m
-	        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -1948,7 +1950,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._forward_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._forward_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._forward_card[paiCount].card_value = m
-	        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -2007,12 +2009,14 @@ end
 
 function MahJong.PlayBackNextOperation( ... )
 	-- body
+	Player.LogWarning("playbackOperation")
 	if Player.currentQueueIndex >= Player.queueLength then
 		return
 	else
 		Player.currentQueueIndex = Player.currentQueueIndex + 1
 	end
 	local operationTemp = Player.operationQueue[Player.currentQueueIndex]
+	Player.LogWarning(operationTemp.oper_type)
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
@@ -2072,13 +2076,114 @@ function MahJong.PlayBackNextOperation( ... )
 	end
 end
 
+function MahJong.PlayBackDaPaiDelete(position)
+	-- body
+	if position == "POSITION_TYPE_EAST" then
+		if not _pai_pool_show.point_d.cards or _pai_pool_show.point_d.paiNumber < 1 then
+			return
+		end
+		if MahJong.self:IsNull(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber]) == false then
+			CS.UnityEngine.Object.Destroy(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber])
+			_pai_pool_show.point_d.paiNumber = _pai_pool_show.point_d.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_SOUTH" then
+		if not _pai_pool_show.point_n.cards or _pai_pool_show.point_n.paiNumber < 1 then
+			return
+		end
+		if MahJong.self:IsNull(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber]) == false then
+			CS.UnityEngine.Object.Destroy(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber])
+			_pai_pool_show.point_n.paiNumber = _pai_pool_show.point_n.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_WEST" then
+		if not _pai_pool_show.point_x.cards or _pai_pool_show.point_x.paiNumber < 1 then
+			return
+		end
+		if MahJong.self:IsNull(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber]) == false then
+			CS.UnityEngine.Object.Destroy(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber])
+			_pai_pool_show.point_x.paiNumber = _pai_pool_show.point_x.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_NORTH" then
+		if not _pai_pool_show.point_b.cards or _pai_pool_show.point_b.paiNumber < 1 then
+			return
+		end
+		if MahJong.self:IsNull(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber]) == false then
+			CS.UnityEngine.Object.Destroy(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber])
+			_pai_pool_show.point_b.paiNumber = _pai_pool_show.point_b.paiNumber - 1
+		end
+	end
+end
+
+function MahJong.PlayBackPrevious( ... )
+	-- body
+	local operationTemp
+	if Player.currentQueueIndex > 0 then
+		return
+	else
+		operationTemp = Player.operationQueue[Player.currentQueueIndex]
+		Player.currentQueueIndex = Player.currentQueueIndex - 1
+	end
+	if operationTemp then
+		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
+			MahJong.PlayBackFaPai(operationTemp)
+	        MahJong.PlayBackDaPaiDelete(position)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
+	        
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
+	        
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        Player.LogWarning("give up operation")
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
+	    	isXuanFeng = true
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
+	    	isXuanFeng = true
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
+	        MahJong.OperationPaiShow(operationTemp,true)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
+	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
+	        MahJong.TingPai(operationTemp)
+	        MahJong.DaPaiPoolShow(operationTemp)
+	        Player.MahJong.PlayBackDeletePai(operationTemp.position,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
+        elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
+        	MahJong.PlayBackFaPai(operationTemp)
+	    else
+	        return
+	    end
+	end
+end
+
 function MahJong.PlayBackFaPai(operationData)
 	-- body
 	local playerPos = ClickEvent.PlayerPosition(operationData.position)
     local tempPaiPool = {}
     for j,n in pairs(_mj_asset) do
    		--Player.LogWarning("_mj_asset::"..n.card_type) 	
-    	if n.card_type == operationData.card_type then
+    	if n.card_type == operationData.pai.card_type then
     		tempPaiPool = n
     	end
     end
@@ -2087,7 +2192,7 @@ function MahJong.PlayBackFaPai(operationData)
 			return
 		end
         if tempPaiPool and tempPaiPool ~= {} then
-			MahJong.PlayBackCreatePlayerModel(""..tempPaiPool.cards[m].model_path,_player_father.currentPaiNumber+1,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+			MahJong.PlayBackCreatePlayerModel(""..tempPaiPool.cards[operationData.pai.card_value].model_path,_player_father.currentPaiNumber+1,tempPaiPool.card_type,operationData.pai.card_value)
         end
         MahJong.PlayBackSortZhuaPlayerPai()
         MahJong.SortPlayerPai()
@@ -2097,51 +2202,51 @@ function MahJong.PlayBackFaPai(operationData)
 			return
 		end
 		if tempPaiPool and tempPaiPool ~= {} then
-			local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			local modelTemp = Load("MJModel/"..tempPaiPool.cards[operationData.pai.card_value].model_path)
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = {}
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj.layer = 0
-        	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].card_type = card.card_type
-        	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].card_value = m
-        	MahJong.AddModelShadow(_player_pai_pool._next_card[_player_pai_pool._next_pai_number],-_modelSize.length/2+_modelSize.shadowShift,1)
+        	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].card_type = operationData.pai.card_type
+        	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].card_value = operationData.pai.card_value
+        	MahJong.AddModelShadow(_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
 	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 2 then
-		if not _player_pai_pool or not _player_pai_pool._next_card then
+		if not _player_pai_pool or not _player_pai_pool._opposite_card then
 			return
 		end
 		if tempPaiPool and tempPaiPool ~= {} then
-			local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			local modelTemp = Load("MJModel/"..tempPaiPool.cards[operationData.pai.card_value].model_path)
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = {}
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.layer = 0
-        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_type = card.card_type
-        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_value = m
-        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number],-_modelSize.length/2+_modelSize.shadowShift,1)
+        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_type = operationData.pai.card_type
+        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_value = operationData.pai.card_value
+        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
 	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 3 then
-		if not _player_pai_pool or not _player_pai_pool._next_card then
+		if not _player_pai_pool or not _player_pai_pool._forward_card then
 			return
 		end
 		if tempPaiPool and tempPaiPool ~= {} then
-			local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			local modelTemp = Load("MJModel/"..tempPaiPool.cards[operationData.pai.card_value].model_path)
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = {}
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.layer = 0
-        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_type = card.card_type
-        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_value = m
-        	MahJong.AddModelShadow(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number],-_modelSize.length/2+_modelSize.shadowShift,1)
+        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_type = operationData.pai.card_type
+        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_value = operationData.pai.card_value
+        	MahJong.AddModelShadow(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
@@ -2313,8 +2418,8 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 					MahJong.DelUsedDaPai()
 				else
 					for j,c in pairs(_player_father.cards) do
-						if c.paiType == paiData.card_type and c.paiValue == paiData.card_value then
-							CS.UnityEngine.Object.Destroy(v.parent)
+						if c.paiType == v.card_type and c.paiValue == v.card_value then
+							CS.UnityEngine.Object.Destroy(c.parent)
 							for i=k,_player_father.currentPaiNumber - 1 do
 								_player_father.cards[i] = _player_father.cards[i+1]
 								_player_father.cards[i].parent.name = tostring(i)
@@ -2874,7 +2979,9 @@ function MahJong.DaPaiPoolShow(message)
 	end
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,_current_dapai.object,Effect.currentDapaiPointOffset)
-	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
+	if Player.isPlayBack == false then
+		ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
+	end
 end
 
 function MahJong.DapaiUIHide(position)

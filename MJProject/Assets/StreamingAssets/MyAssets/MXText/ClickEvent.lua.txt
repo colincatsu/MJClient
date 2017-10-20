@@ -33,6 +33,7 @@ ClickEvent.panelTable = {
 	_vote_ui = "Vote",
 	_share_calculate_ui = "Share",
 	_only_yes_ui = "RoomClosedPop",
+	_replay_ui = "ReplaySence",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -289,6 +290,84 @@ function ClickEvent.CreateNewPanel(panelName)
 			ClickEvent._play_ui.playerAvatarInfo:TransformPoint(ClickEvent._play_ui.playerAvatarInfo.xy,nil).y,0.35)
 		ClickEvent._play_ui.playerAvatarInfo:AddChild(x)
 		--]]
+	elseif panelName == ClickEvent.panelTable._replay_ui then
+		ClickEvent._play_ui.oppositePlayerTing = _currentPanel.panel:GetChild("OppositePlayerTing")
+		ClickEvent._play_ui.frontPlayerTing = _currentPanel.panel:GetChild("FrontPlayerTing")
+		ClickEvent._play_ui.behindPlayerTing = _currentPanel.panel:GetChild("BehindPlayerTing")
+		ClickEvent._play_ui.playerTing = _currentPanel.panel:GetChild("PlayerTing")
+		ClickEvent._play_ui.oppositePlayerTing.visible = false
+		ClickEvent._play_ui.frontPlayerTing.visible = false
+		ClickEvent._play_ui.behindPlayerTing.visible = false
+		ClickEvent._play_ui.playerTing.visible = false
+		ClickEvent._play_ui.uselessRound = _currentPanel.panel:GetChild("Draw")
+		ClickEvent._play_ui.uselessRound.visible = false
+		--[[
+		ClickEvent._play_ui.frontPaiShow = _currentPanel.panel:GetChild("FrontPaiShow")
+		ClickEvent._play_ui.frontPaiShow.visible = false
+		ClickEvent._play_ui.behindPaiShow = _currentPanel.panel:GetChild("BehindPaiShow")
+		ClickEvent._play_ui.behindPaiShow.visible = false
+		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
+		ClickEvent._play_ui.oppositePaiShow.visible = false
+		--]]
+		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
+		ClickEvent._play_ui.behindPlayerAvatarInfo = _currentPanel.panel:GetChild("BehindPlayerAvatarInfo")
+		ClickEvent._play_ui.oppositePlayerAvatarInfo = _currentPanel.panel:GetChild("OppositePlayerAvatarInfo")
+		ClickEvent._play_ui.frontPlayerAvatarInfo = _currentPanel.panel:GetChild("FrontPlayerAvatarInfo")
+		ClickEvent._play_ui.selfBanker = ClickEvent._play_ui.playerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.nextBanker = ClickEvent._play_ui.behindPlayerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.oppositeBanker = ClickEvent._play_ui.oppositePlayerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.forwardBanker = ClickEvent._play_ui.frontPlayerAvatarInfo:GetChild("Zhuang")
+		ClickEvent._play_ui.selfBanker.visible = false
+		ClickEvent._play_ui.nextBanker.visible = false
+		ClickEvent._play_ui.oppositeBanker.visible = false
+		ClickEvent._play_ui.forwardBanker.visible = false
+		ClickEvent._play_ui.remainNum = _currentPanel.panel:GetChild("RemainNum")
+		ClickEvent._play_ui.remainNum.text = "136"
+		ClickEvent._play_ui.timeShow = _currentPanel.panel:GetChild("Wlan"):GetChild("Time")
+		ClickEvent._play_ui.wlanShow = _currentPanel.panel:GetChild("Wlan"):GetController("WLan")
+		WeChatPlatform.onSignalLevel = ClickEvent.OnSignalLevel
+		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
+
+		--_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
+
+		--Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
+
+		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("PaiSingle"):GetChild("BaoPaiLoader")
+		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
+		--[[
+		local hasBaoPai = false
+		for k,v in pairs(Player._room_information.options.extend_type) do
+			if v == "ROOM_EXTEND_TYPE_BAOPAI" then
+				hasBaoPai = true
+			end
+		end
+		if hasBaoPai == true then
+			_currentPanel.panel:GetChild("BaoPai").visible = true
+		else
+			_currentPanel.panel:GetChild("BaoPai").visible = false
+		end
+		--]]
+		------特效
+		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.oppositePlayerAvatarInfo)
+		ClickEvent._play_ui.frontPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.frontPlayerAvatarInfo)
+		ClickEvent._play_ui.playerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = false
+		---------------
+		ClickEvent._play_ui.playerAvatarInfo.visible = false
+		ClickEvent._play_ui.behindPlayerAvatarInfo.visible = false
+		ClickEvent._play_ui.oppositePlayerAvatarInfo.visible = false
+		ClickEvent._play_ui.frontPlayerAvatarInfo.visible = false
+
+		ClickEvent._play_ui.titleFather = _currentPanel.panel:GetChild("Inform")
+		ClickEvent._play_ui.moveTitleText = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetChild("txtMove")
+		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
+		ClickEvent._play_ui.titleFather.visible = false
+		ClickEvent._play_ui.gameMoreControl = _currentPanel.panel:GetController("Menu")
+
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
 		Player.isPlayBack = false
 		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
@@ -565,7 +644,7 @@ end
 function ClickEvent.PlayerPosition(position)
 	-- body
 	Player.LogWarning(position)
-	if Player._my_player_data.position then
+	if Player._my_player_data and Player._my_player_data.position then
 		local tempX = _position_index[position] - _position_index[Player._my_player_data.position]
 		return tempX
 	end
@@ -3912,7 +3991,7 @@ end
 
 function ClickEvent.GetinButton( ... )
 	-- body
-	Player.CmdPlayBack(345291,1)
+	Player.CmdPlayBack(346262,1)
 	--[[
 	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	Player.LogWarning(tonumber(Player._roomId))
