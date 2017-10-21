@@ -2114,6 +2114,59 @@ function MahJong.PlayBackDaPaiDelete(position)
 	end
 end
 
+function MahJong.PlayBackDeleteOperation( position ,isDeleteOne)
+	-- body
+	if position == "POSITION_TYPE_EAST" then
+		if not _operation_pai_show.point_d.group then
+			return
+		end
+		if isDeleteOne and isDeleteOne == true then
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber])
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber = _operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].showNumber - 1
+		else
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father)
+			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber] = {}
+			_operation_pai_show.point_d.paiNumber = _operation_pai_show.point_d.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_SOUTH" then
+		if not _operation_pai_show.point_n.group then
+			return
+		end
+		if isDeleteOne and isDeleteOne == true then
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber])
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber = _operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].showNumber - 1
+		else
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father)
+			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber] = {}
+			_operation_pai_show.point_n.paiNumber = _operation_pai_show.point_n.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_WEST" then
+		if not _operation_pai_show.point_x.group then
+			return
+		end
+		if isDeleteOne and isDeleteOne == true then
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber])
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber = _operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].showNumber - 1
+		else
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father)
+			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber] = {}
+			_operation_pai_show.point_x.paiNumber = _operation_pai_show.point_x.paiNumber - 1
+		end
+	elseif position == "POSITION_TYPE_NORTH" then
+		if not _operation_pai_show.point_b.group then
+			return
+		end
+		if isDeleteOne and isDeleteOne == true then
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber])
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber = _operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].showNumber - 1
+		else
+			CS.UnityEngine.Object.Destroy(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father)
+			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber] = {}
+			_operation_pai_show.point_b.paiNumber = _operation_pai_show.point_b.paiNumber - 1
+		end
+	end
+end
+
 function MahJong.PlayBackPrevious( ... )
 	-- body
 	local operationTemp
@@ -2126,52 +2179,86 @@ function MahJong.PlayBackPrevious( ... )
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackFaPai(operationTemp)
-	        MahJong.PlayBackDaPaiDelete(position)
+	        MahJong.PlayBackDaPaiDelete(operationTemp.position)
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
 	        
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
 	        
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        	for i=1,3 do
+	        		MahJong.PlayBackFaPai(operationTemp)
+	        	end
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
+	        else
+	        	MahJong.PlayBackDeleteOperation( operationTemp.position ,true)
+	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        	for i=1,2 do
+	        		MahJong.PlayBackFaPai(operationTemp)
+	        	end
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
+	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        	for k,v in pairs(operationTemp.pais) do
+		        	operationTemp.pai = v
+	        		MahJong.PlayBackFaPai(operationTemp)
+	        	end
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
+	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
 	        Player.LogWarning("give up operation")
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
-	    	isXuanFeng = true
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    	MahJong.UpdateWhoseTurn(operationTemp.position)
+        	for i=1,4 do
+        		operationTemp.pai.card_type = "CARD_TYPE_FENG"
+        		operationTemp.pai.card_value = i
+        		MahJong.PlayBackFaPai(operationTemp)
+        	end
+        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
-	    	isXuanFeng = true
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
+	    	MahJong.UpdateWhoseTurn(operationTemp.position)
+        	for i=1,3 do
+        		operationTemp.pai.card_type = "CARD_TYPE_JIAN"
+        		operationTemp.pai.card_value = i
+        		MahJong.PlayBackFaPai(operationTemp)
+        	end
+        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
+	        for i=1,4 do
+        		MahJong.PlayBackFaPai(operationTemp)
+        	end
+        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
-	        MahJong.TingPai(operationTemp)
-	        MahJong.DaPaiPoolShow(operationTemp)
-	        Player.MahJong.PlayBackDeletePai(operationTemp.position,1)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
+	        MahJong.PlayBackFaPai(operationTemp)
+	        MahJong.PlayBackDaPaiDelete(operationTemp.position)
+	        MahJong.UpdateWhoseTurn(operationTemp.position)
+	        local whichPlayer = ClickEvent.PlayerPosition(operationTemp.position)
+			if whichPlayer == 0 then
+				ClickEvent._play_ui.playerTing.visible = false
+			elseif whichPlayer == 1 then
+				ClickEvent._play_ui.behindPlayerTing.visible = false
+			elseif whichPlayer == 2 then
+				ClickEvent._play_ui.oppositePlayerTing.visible = false
+			elseif whichPlayer == 3 then
+				ClickEvent._play_ui.frontPlayerTing.visible = false
+			else
+				Player.LogWarning("position nil")
+			end
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
-        	MahJong.PlayBackFaPai(operationTemp)
+        	MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
 	    else
 	        return
 	    end
