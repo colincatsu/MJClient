@@ -2065,7 +2065,7 @@ function MahJong.PlayBackNextOperation( ... )
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
-	        MahJong.TingPai(operationTemp)
+	        MahJong.TingPai(operationTemp,true)
 	        MahJong.DaPaiPoolShow(operationTemp)
 	        MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
@@ -3734,7 +3734,7 @@ function MahJong.HuPai(paiTable)
 	end
 end
 
-function MahJong.TingPai(message)
+function MahJong.TingPai(message,isPlayBack)
 	-- body
 	local operationPaiShowData = message
 	if not operationPaiShowData then
@@ -3749,15 +3749,21 @@ function MahJong.TingPai(message)
 	elseif whichPlayer == 1 then
 		tempPosition = Effect.nextPosition
 		ClickEvent._play_ui.behindPlayerTing.visible = true
-		_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
+		if not isPlayBack then
+			_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
+		end
 	elseif whichPlayer == 2 then
 		tempPosition = Effect.oppositePosition
 		ClickEvent._play_ui.oppositePlayerTing.visible = true
-		_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
+		if not isPlayBack then
+			_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
+		end
 	elseif whichPlayer == 3 then
 		tempPosition = Effect.forwardPosition
 		ClickEvent._play_ui.frontPlayerTing.visible = true
-		_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
+		if not isPlayBack then
+			_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
+		end
 	else
 		Player.LogWarning("position nil")
 	end
@@ -4067,6 +4073,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		for i=1,4 do
     		paiValue[i] = operationPaiShowData.pai.card_value
     		if isPlayBack and isPlayBack == true then
+    			myAnGangOpration = true
 				MahJong.PlayBackDeletePai(whichPlayer,operationPaiShowData.pai)
 			end
     	end
@@ -4086,6 +4093,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
 		paiType = "CARD_TYPE_FENG"
 		if isPlayBack and isPlayBack == true then
+			operationPaiShowData.pai.card_type = "CARD_TYPE_FENG"
 			MahJong.PlayBackDeletePai(whichPlayer,operationPaiShowData.pai)
 		end
 		for i=1,4 do
@@ -4102,6 +4110,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		Player.isGangPaiing = true
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 		if isPlayBack and isPlayBack == true then
+			operationPaiShowData.pai.card_type = "CARD_TYPE_JIAN"
 			MahJong.PlayBackDeletePai(whichPlayer,operationPaiShowData.pai)
 		end
 		paiType = "CARD_TYPE_JIAN"

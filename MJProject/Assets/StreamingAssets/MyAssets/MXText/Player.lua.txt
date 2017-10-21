@@ -127,11 +127,11 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1019"
+Player.pc_version = "1.0.1.1022"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
-Player.sayHiTimestarmp = nil
+Player.sayHiTimestarmp = nils
 Player._pings_count = 0--断线计数
 Player.max_allowed = 3
 
@@ -157,7 +157,7 @@ Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackPaiList = {}
 Player.playBackCountDown = 0
-Player.playBackInterval = 0.5
+Player.playBackInterval = 1
 
 function Player.LoadData( ... )
     -- body

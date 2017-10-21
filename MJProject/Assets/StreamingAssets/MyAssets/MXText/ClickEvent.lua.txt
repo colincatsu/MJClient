@@ -3991,13 +3991,13 @@ end
 
 function ClickEvent.GetinButton( ... )
 	-- body
-	Player.CmdPlayBack(346262,1)
 	--[[
+	Player.CmdPlayBack(346392,3)
+	--]]
 	Player._roomId = tonumber(_popPanel[popPanelIndex].panel:GetChild("InputText").text)
 	Player.LogWarning(tonumber(Player._roomId))
 	Player.CmdEnterRoom("ROOM_TYPE_FRIEND",Player._roomId)
 	Player.isFriendRoom = true
-	--]]
 	ClickEvent.Close()
 end
 --数字
