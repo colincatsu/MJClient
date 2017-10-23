@@ -127,11 +127,11 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1022"
+Player.pc_version = "1.0.1.1023"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
-Player.sayHiTimestarmp = nils
+Player.sayHiTimestarmp = nil
 Player._pings_count = 0--断线计数
 Player.max_allowed = 3
 
@@ -151,13 +151,15 @@ Player.voiceNumber = {}
 Player.isGameStop = false
 Player.canShowPlayButton = false
 
+Player.playBackRoomID = 0
 Player.isPlayBack = false
+Player.isReplayFastBackward = false
 Player.queueLength = 0
 Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackPaiList = {}
 Player.playBackCountDown = 0
-Player.playBackInterval = 1
+Player.playBackInterval = 1.5
 
 function Player.LoadData( ... )
     -- body
@@ -513,7 +515,11 @@ function Player.myUpdate( ... )
         else
             --Player.LogWarning("readOperation")
             Player.playBackCountDown = 0
-            Player.MahJong.PlayBackNextOperation()
+            if Player.isReplayFastBackward == true then
+                Player.MahJong.PlayBackPrevious()
+            else
+                Player.MahJong.PlayBackNextOperation()
+            end
         end
     end
 end

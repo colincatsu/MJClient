@@ -149,6 +149,9 @@ public class Platform : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern bool isWXAppInstalled();
 
+    [DllImport("__Internal")]
+    private static extern string wxReadPaste();
+
     public static Platform Instance
     {
         get
@@ -275,7 +278,6 @@ public class Platform : MonoBehaviour {
 
     IEnumerator DownloadImage(string url, int code)
     {
-        Debug.Log("downloading new image:" + path + url.GetHashCode());//url转换HD5作为名字  
         WWW www = new WWW(url);
         yield return www;
 
@@ -284,13 +286,17 @@ public class Platform : MonoBehaviour {
         //byte[] pngData = tex2d.EncodeToPNG();                         //将材质压缩成byte流  
         //File.WriteAllBytes(path + url.GetHashCode(), pngData);        //然后保存到本地  
         //myWXPic = (Texture)tex2d;
-        code2PicID[code] = spriteCnt;
-        myWXPic[spriteCnt] = (Texture)tex2d;
-        if(func != null)
+        if (!code2PicID.ContainsKey(code))
         {
-            func();
+        Debug.Log("downloading new image:" + path + url.GetHashCode());//url转换HD5作为名字  
+            code2PicID[code] = spriteCnt;
+            myWXPic[spriteCnt] = (Texture)tex2d;
+            if (func != null)
+            {
+                func();
+            }
+            ++spriteCnt;
         }
-        ++spriteCnt;
     }
 
     IEnumerator LoadLocalImage(string url)
@@ -411,6 +417,17 @@ public class Platform : MonoBehaviour {
         }
         if (LuaCommon.isIos)
             wxCopyRoom(roomid);
+    }
+
+    public string ReadPaste()
+    {
+        if (currentActivity != null)
+        {
+            return currentActivity.Call<string>("wxReadPaste");
+        }
+        if (LuaCommon.isIos)
+            return wxReadPaste();
+        return "";
     }
 
     public bool isInstalledWX()

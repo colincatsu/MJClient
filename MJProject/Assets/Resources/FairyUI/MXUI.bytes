@@ -570,10 +570,10 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
       <item/>
     </list>
     <component id="n2_ised" name="Close" src="w61cj0" xy="1097,85" group="n13_ised"/>
-    <group id="n13_ised" name="Btns" xy="1097,85" size="67,67" group="n14_lq2g" advanced="true"/>
+    <component id="n16_kftt" name="ReplayOthersRound" src="kftti53z" xy="825,70" group="n13_ised"/>
+    <group id="n13_ised" name="Btns" xy="825,70" size="352,95" group="n14_lq2g" advanced="true"/>
     <image id="n15_r8qd" name="n15" src="r8qd4t9" xy="289,48" group="n14_lq2g"/>
-    <component id="n16_kftt" name="ReplayOthersRound" src="kftti53z" xy="825,70" group="n14_lq2g"/>
-    <group id="n14_lq2g" name="VIPNote" xy="207,28" size="957,661" advanced="true">
+    <group id="n14_lq2g" name="VIPNote" xy="207,28" size="970,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
   </displayList>
@@ -908,7 +908,7 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <image id="n4_kftt" name="n4" src="kftti538" xy="0,0"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>kftti541.xml|3310|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>kftti541.xml|3326|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <image id="n27_l2po" name="n27" src="i0jko9" xy="214,10" size="922,713" group="n22_q2o3"/>
     <image id="n28_l2po" name="n28" src="i0jko8" xy="244,122" size="866,582" group="n22_q2o3"/>
@@ -930,9 +930,9 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <component id="n15_k35j" name="BackSpaceButton" src="w61ccq" xy="890,469" group="n21_fb5y"/>
     <component id="n20_k35j" name="Close" src="w61cj0" xy="1074,73" group="n21_fb5y"/>
     <image id="n26_l2po" name="n26" src="l2po4wc" xy="503,137" size="450,77" group="n21_fb5y"/>
-    <component id="n34_kftt" name="n34" src="kftti542" xy="890,217" group="n21_fb5y"/>
+    <component id="n34_kftt" name="ButtonPaste" src="kftti542" xy="890,217" group="n21_fb5y"/>
     <image id="n35_kftt" name="n35" src="kftti53e" xy="388,161" group="n21_fb5y"/>
-    <component id="n37_kftt" name="n37" src="kftti543" xy="540,597" group="n21_fb5y"/>
+    <component id="n37_kftt" name="WatchButton" src="kftti543" xy="540,597" group="n21_fb5y"/>
     <group id="n21_fb5y" name="Btns" xy="258,73" size="896,617" group="n22_q2o3" advanced="true"/>
     <text id="n17_k35j" name="InputText" xy="508,145" size="439,63" group="n22_q2o3" input="true" prompt="请在此输入或粘贴已复制的回放码" maxLength="6" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" bold="true" text=""/>
     <image id="n36_kftt" name="n36" src="kftti53d" xy="296,36" group="n22_q2o3"/>
@@ -1133,11 +1133,11 @@ ldfsqh.xml|446|<component size="50,31">
       <gearDisplay controller="PlayerLineStateChoose" pages="1"/>
     </image>
   </displayList>
-</component>ldfsqk.xml|1193|<component size="801,107">
+</component>ldfsqk.xml|1209|<component size="801,107">
   <displayList>
     <image id="n0_ised" name="Bg" src="isedoz" xy="0,-1" size="801,112"/>
     <image id="n23_kftt" name="n23" src="kftti539" xy="17,10" size="78,78"/>
-    <text id="n3_ised" name="RoundNum" xy="36,31" size="39,37" fontSize="33" color="#ffffff" align="center" vAlign="middle" text="99"/>
+    <text id="n3_ised" name="RoundNum" xy="36,31" size="39,37" fontSize="33" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="99"/>
     <text id="n20_ldfs" name="n1" xy="71,38" size="23,22" fontSize="18" color="#ffffff" align="center" vAlign="middle" text="局"/>
     <text id="n21_ldfs" name="n2" xy="18,38" size="23,22" fontSize="18" color="#ffffff" align="center" vAlign="middle" text="第"/>
     <image id="n26_kftt" name="n26" src="l2po4wc" xy="110,10" size="405,77"/>

@@ -1,12 +1,12 @@
 
-’T
+ÈT
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
 version (2.Adoter.Asset.VERSION_TYPE
 name (
 	show_name (
-desc ("œ
+desc ("„
 RoomOptions,
 model (2.Adoter.Asset.ROOM_MODEL_TYPE
 extend_type_count (:103
@@ -15,7 +15,9 @@
 
 open_rands (:8
 
-voice_open ("Ÿ
+voice_open (
+
+gmt_opened ("Ÿ
 	RoomLimit9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM2
 common_prop (2.Adoter.Asset.AssetCommonProp*

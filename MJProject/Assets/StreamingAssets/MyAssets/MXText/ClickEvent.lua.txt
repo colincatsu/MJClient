@@ -34,6 +34,7 @@ ClickEvent.panelTable = {
 	_share_calculate_ui = "Share",
 	_only_yes_ui = "RoomClosedPop",
 	_replay_ui = "ReplaySence",
+	_watch_other_round = "WatchOthersRound",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -41,6 +42,8 @@ ClickEvent.scale = nil
 
 ClickEvent._createObject = {}
 ClickEvent._play_ui = {}
+
+ClickEvent.isReplayClick = false
 
 local _position_index = {
 	POSITION_TYPE_EAST = 1,
@@ -301,13 +304,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.playerTing.visible = false
 		ClickEvent._play_ui.uselessRound = _currentPanel.panel:GetChild("Draw")
 		ClickEvent._play_ui.uselessRound.visible = false
-		--[[
 		ClickEvent._play_ui.frontPaiShow = _currentPanel.panel:GetChild("FrontPaiShow")
 		ClickEvent._play_ui.frontPaiShow.visible = false
 		ClickEvent._play_ui.behindPaiShow = _currentPanel.panel:GetChild("BehindPaiShow")
 		ClickEvent._play_ui.behindPaiShow.visible = false
 		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
 		ClickEvent._play_ui.oppositePaiShow.visible = false
+		--[[
 		--]]
 		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
 		ClickEvent._play_ui.behindPlayerAvatarInfo = _currentPanel.panel:GetChild("BehindPlayerAvatarInfo")
@@ -367,6 +370,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.moveTitle = _currentPanel.panel:GetChild("Inform"):GetChild("InformText"):GetTransition("Txt")
 		ClickEvent._play_ui.titleFather.visible = false
 		ClickEvent._play_ui.gameMoreControl = _currentPanel.panel:GetController("Menu")
+
+		ClickEvent._play_ui.replayProgress = _currentPanel.panel:GetChild("ReplayProgressBar")
+		ClickEvent._play_ui.replayProgress.value = 0
+
+		ClickEvent._play_ui.playPauseControl = _currentPanel.panel:GetController("PlayAndPause")
+		ClickEvent._play_ui.playPauseControl.selectedIndex = 1
 
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
 		Player.isPlayBack = false
@@ -557,6 +566,17 @@ function ClickEvent.ShowAlready(playerID)
 	end
 end
 
+function ClickEvent.SetPlayBackProgress(progress)
+	-- body
+	local progessInt = math.floor(progress * 100)
+	ClickEvent._play_ui.replayProgress.value = progessInt
+end
+
+function ClickEvent.DeleteShowBaoPai( ... )
+	-- body
+	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
+end
+
 function ClickEvent.ShowBaoPai(paiData)
 	-- body
 	if paiData and paiData ~= {} and paiData.card_value ~= 0 then
@@ -568,16 +588,18 @@ function ClickEvent.ShowBaoPai(paiData)
 
 function ClickEvent.UpdateTime( ... )
 	-- body
-	if _currentPanel and _currentPanel.panel and _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
-		local hour = tostring(CS.System.DateTime.Now.Hour)
-		local minute = tostring(CS.System.DateTime.Now.Minute)
-		if CS.System.DateTime.Now.Hour < 10 then
-			hour = "0"..tostring(CS.System.DateTime.Now.Hour)
+	if _currentPanel and _currentPanel.panel and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+		if _currentPanel.panel.name == ClickEvent.panelTable._play_game_ui or _currentPanel.panel.name == ClickEvent.panelTable._replay_ui then
+			local hour = tostring(CS.System.DateTime.Now.Hour)
+			local minute = tostring(CS.System.DateTime.Now.Minute)
+			if CS.System.DateTime.Now.Hour < 10 then
+				hour = "0"..tostring(CS.System.DateTime.Now.Hour)
+			end
+			if CS.System.DateTime.Now.Minute < 10 then
+				minute = "0"..tostring(CS.System.DateTime.Now.Minute)
+			end
+			ClickEvent._play_ui.timeShow.text = hour..":"..minute
 		end
-		if CS.System.DateTime.Now.Minute < 10 then
-			minute = "0"..tostring(CS.System.DateTime.Now.Minute)
-		end
-		ClickEvent._play_ui.timeShow.text = hour..":"..minute
 	end
 end
 
@@ -2245,6 +2267,97 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.ReplayFastForward( ... )
+	-- body
+	CS.UnityEngine.Time.timeScale = 2
+	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
+	Player.isReplayFastBackward = false
+end
+
+function ClickEvent.ReplayFastBackward( ... )
+	-- body
+	CS.UnityEngine.Time.timeScale = 2
+	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
+	Player.isReplayFastBackward = true
+end
+
+function ClickEvent.ReplayPlayButton( ... )
+	-- body
+	ClickEvent._play_ui.playPauseControl.selectedIndex = 1
+	CS.UnityEngine.Time.timeScale = 1
+	Player.isReplayFastBackward = false
+end
+
+function ClickEvent.ReplayPauseButton( ... )
+	-- body
+	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
+	CS.UnityEngine.Time.timeScale = 0
+	Player.isReplayFastBackward = false
+end
+
+function ClickEvent.ButtonPaste( ... )
+	-- body
+	_popPanel[popPanelIndex].panel:GetChild("InputText").text = WeChatPlatform:ReadPaste()
+end
+
+function ClickEvent.WatchButton( ... )
+	-- body
+
+	local roomNumber = 0
+	local roundNumber = 0
+	roomNumber = tonumber(string.sub(_popPanel[popPanelIndex].panel:GetChild("InputText").text,1,-3))
+	if string.sub(_popPanel[popPanelIndex].panel:GetChild("InputText").text,-2) == "0" then
+		roundNumber = tonumber(string.sub(_popPanel[popPanelIndex].panel:GetChild("InputText").text,-1))
+	else
+		roundNumber = tonumber(string.sub(_popPanel[popPanelIndex].panel:GetChild("InputText").text,-2))
+	end
+	if roundNumber and roomNumber then
+		Player.CmdPlayBack(roomNumber,roundNumber)
+	end
+end
+
+function ClickEvent.ReplayOthersRound( ... )
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._watch_other_round)
+end
+
+function ClickEvent.PlayThisRound(gameObject)
+	-- body
+	ClickEvent.Close()
+	local roundNumber = 0
+	roundNumber = tonumber(gameObject.parent:GetChild("RoundNum").text)
+	Player.LogWarning(Player.playBackRoomID)
+	Player.LogWarning(roundNumber)
+	if Player.playBackRoomID and Player.playBackRoomID ~= 0 and roundNumber and roundNumber <= 16 and roundNumber ~= 0 then
+		Player.CmdPlayBack(Player.playBackRoomID,roundNumber)
+	end
+end
+
+function ClickEvent.ShareReplay(gameObject)
+	-- body
+	local roundNumber = 0
+	local shareStr = ""
+	shareStr = tostring(Player.playBackRoomID)
+	roundNumber = tonumber(gameObject.parent:GetChild("RoundNum").text)
+	if tonumber(roundNumber) < 10 then
+		shareStr = shareStr.."0"..tostring(roundNumber)
+	else
+		shareStr = shareStr..tostring(roundNumber)
+	end
+	WeChatPlatform:CopyRoomID(shareStr)
+	ClickEvent.ShowToast(StringTable.Get(2031))
+end
+
+function ClickEvent.Replay(gameObject)
+	-- body
+	if ClickEvent.IsPopPanel(ClickEvent.panelTable._history_score_ui) == true then
+		_popPanel[popPanelIndex].panel:GetController("HistorySecenSelect").selectedIndex = 1
+	else
+		ClickEvent.isReplayClick = true
+	end
+	--gameObject.parent:GetChild()
+end
+
 function ClickEvent.BigButton( ... )
 	-- body
 	ClickEvent._play_ui.gameMoreControl.selectedIndex = 0
@@ -2346,7 +2459,7 @@ end
 
 function ClickEvent.GameDissolveButton(gameObject)
 	-- body
-	if Player.roomHasBegin == false then
+	if Player.roomHasBegin == false and Player._room_information.options and Player._room_information.options.gmt_opened == false then
 		if Player._my_player_data.position == "POSITION_TYPE_EAST" then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2006)
@@ -2488,6 +2601,7 @@ function ClickEvent.VipNoteList(gameObject)
 		if v.room_id == tonumber(gameObject.gameObjectName) then
 			--[[
 			--]]
+			Player.playBackRoomID = v.room_id
 			if v.options.model == "ROOM_MODEL_TYPE_CLASSICAL" then
 				_popPanel[popPanelIndex].panel:GetChild("ModeText").text = "经典模式"
 			else
@@ -2515,6 +2629,7 @@ function ClickEvent.VipNoteList(gameObject)
 			fanxing = string.sub(fanxing, 1, -2)
 			_popPanel[popPanelIndex].panel:GetChild("FanText").text = fanxing
 			_popPanel[popPanelIndex].panel:GetChild("RoundText").text = tostring(v.options.open_rands).."局"
+			_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = gameObject.gameObjectName
 			if v.options.top_mutiple == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("MultipleText").text = "不封顶"
 			else
@@ -2534,6 +2649,8 @@ function ClickEvent.VipNoteList(gameObject)
 				local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
 				obj.name = "VipNoteListInRound"
 				obj:GetChild("RoundNum").text = tostring(j)
+				obj:GetChild("ShareReplay").onClick:Add(ClickEvent.registerButtonClick)
+				obj:GetChild("PlayThisRound").onClick:Add(ClickEvent.registerButtonClick)
 				roundCount = roundCount + 1
 				local playerNumber = 1
 				for roundKey,roundData in pairs(c.list) do
@@ -2546,6 +2663,7 @@ function ClickEvent.VipNoteList(gameObject)
 					countScore[playerNumber].allScore = countScore[playerNumber].allScore + roundData.score
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("PlayerName").text = tostring(countScore[playerNumber].nickname)
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("WinLoseNum").text = tostring(roundData.score)
+					--[[
 					obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url  = UIPackage.GetItemURL("MXUI","Touxiang01")
 					if countScore[playerNumber].headimgurl and countScore[playerNumber].headimgurl ~= "" then
 						obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").url = ""
@@ -2554,6 +2672,7 @@ function ClickEvent.VipNoteList(gameObject)
 							obj:GetChild("VipNoteListRountUnit"..tostring(playerNumber)):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 						end
 					end
+					--]]
 					playerNumber = playerNumber + 1
 				end
 			end
@@ -2599,7 +2718,10 @@ function ClickEvent.VipNoteList(gameObject)
 			--]]
 		end
 	end
-	
+	if ClickEvent.isReplayClick == true then
+		_popPanel[popPanelIndex].panel:GetController("HistorySecenSelect").selectedIndex = 1
+		ClickEvent.isReplayClick = false
+	end
 end
 
 function ClickEvent.GameSettingButton( ... )
@@ -2694,10 +2816,12 @@ function ClickEvent.VIPRecordButton( ... )
 		obj.name = "VipNoteList"
 		obj.gameObjectName = tostring(v.room_id)
 		obj.onClick:Add(ClickEvent.registerButtonClick)
+		obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
 		local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
 		local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
 		obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
 		obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
+		obj:GetChild("RoomID").text = tostring(v.room_id)
 		local countScore = 0
 		local headimgurlTable = {}
 		local imgCount = 0
@@ -2757,10 +2881,12 @@ function ClickEvent.OnReceiveHistory()
 				obj.name = "VipNoteList"
 				obj.gameObjectName = tostring(v.room_id)
 				obj.onClick:Add(ClickEvent.registerButtonClick)
+				obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
 				local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
 				local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
 				obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
 				obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
+				obj:GetChild("RoomID").text = tostring(v.room_id)
 				local countScore = 0
 				local headimgurlTable = {}
 				local imgCount = 0
@@ -3160,6 +3286,11 @@ function ClickEvent.YesButton( ... )
 			Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 			--Player.LoadScene("FairyMainUI")
 		end
+	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2042) then
+		Player.returnMainUI = true
+		CS.UnityEngine.Time.timeScale = 1
+		Player.LoadScene("FairyMainUI")
+		return
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
 		CS.UnityEngine.Application.Quit()
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2006) then
@@ -3170,7 +3301,11 @@ function ClickEvent.YesButton( ... )
 		end
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2041) then
 		ClickEvent.Close()
-		ClickEvent.ShowDissmiss()
+		if Player.roomHasBegin == false and Player._room_information.options and Player._room_information.options.gmt_opened == true then
+			Player.CmdGameOperation("GAME_OPER_TYPE_DISMISS_AGREE")
+		else
+			ClickEvent.ShowDissmiss()
+		end
 		return
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2009) then
 		Player.LoadScene("FairyMainUI")
@@ -4103,6 +4238,7 @@ function ClickEvent.GameBillButton(gameObject)
 	fanxing = string.sub(fanxing, 1, -2)
 	_popPanel[popPanelIndex].panel:GetChild("FanText").text = fanxing
 	_popPanel[popPanelIndex].panel:GetChild("RoundText").text = tostring(Player._room_information.options.open_rands).."局"
+	_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = tostring(Player._roomId)
 	if Player._room_information.options.top_mutiple == 0 then
 		_popPanel[popPanelIndex].panel:GetChild("MultipleText").text = "不封顶"
 	else
@@ -4262,6 +4398,10 @@ function ClickEvent.GameBackButton(gameObject)
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
 		ClickEvent.Close()
 	else
+		if Player.isPlayBack == true then
+			ClickEvent.ShowSmallWindow(2042)
+			return
+		end
 		if Player.roomHasBegin == false then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)

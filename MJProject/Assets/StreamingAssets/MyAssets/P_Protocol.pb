@@ -1,5 +1,5 @@
 
-þŸ
+Ù 
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -248,18 +248,20 @@ click_push ("‡
 recharge_type (2.Adoter.Asset.RECHARGE_TYPE
 
 product_id (
-price ("Ý
+price ("¸
 PlayBackB
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_PLAY_BACK
 room_id (
 
 game_index (9
 player_list (2$.Adoter.Asset.PlayBack.PlayerElement-
-	oper_list (2.Adoter.Asset.PaiOperation~
+	oper_list (2.Adoter.Asset.PaiOperationØ
 PlayerElement
 	player_id (-
-position (2.Adoter.Asset.POSITION_TYPE+
-pai_list (2.Adoter.Asset.MultiplePai"û
+position (2.Adoter.Asset.POSITION_TYPE-
+common_prop (2.Adoter.Asset.CommonProp)
+wechat (2.Adoter.Asset.WechatUnion+
+pai_list (2.Adoter.Asset.MultiplePai"û
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON

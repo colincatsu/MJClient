@@ -139,6 +139,7 @@ function MahJong.Start()
 	Player._calculate_table_number = 0
 	Player._room_calculate_data = nil
 	if Player.isPlayBack == false then
+		Player.isReplayFastBackward = false
 		ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 		ClickEvent.CreateOperationButton()
 		MahJong.ModelPoolInit()
@@ -279,7 +280,7 @@ end
 
 function MahJong.QuitVoiceRoom()
 	-- body
-	if Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
+	if Player._room_information and Player._room_information.options and Player._room_information.options.voice_open and Player._room_information.options.voice_open ~= 0 then
 		GVoicePlatform.m_voiceengine:QuitRoom(Player.voiceRoomName,15000)
 	end
 end
@@ -2015,6 +2016,7 @@ function MahJong.PlayBackNextOperation( ... )
 	else
 		Player.currentQueueIndex = Player.currentQueueIndex + 1
 	end
+	ClickEvent.SetPlayBackProgress(Player.currentQueueIndex/Player.queueLength)
 	Player.LogWarning(Player.currentQueueIndex)
 	local operationTemp = Player.operationQueue[Player.currentQueueIndex]
 	Player.LogWarning(operationTemp.oper_type)
@@ -2071,6 +2073,8 @@ function MahJong.PlayBackNextOperation( ... )
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
         	MahJong.PlayBackFaPai(operationTemp)
+        elseif operationTemp.oper_type == "PAI_OPER_TYPE_BAOPAI" then
+        	ClickEvent.ShowBaoPai(operationTemp.pai)
 	    else
 	        return
 	    end
@@ -2170,12 +2174,14 @@ end
 function MahJong.PlayBackPrevious( ... )
 	-- body
 	local operationTemp
-	if Player.currentQueueIndex > 0 then
+	if Player.currentQueueIndex <= 1 then
 		return
 	else
 		operationTemp = Player.operationQueue[Player.currentQueueIndex]
 		Player.currentQueueIndex = Player.currentQueueIndex - 1
 	end
+	ClickEvent.SetPlayBackProgress(Player.currentQueueIndex/Player.queueLength)
+
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackFaPai(operationTemp)
@@ -2259,6 +2265,8 @@ function MahJong.PlayBackPrevious( ... )
 			end
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
         	MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
+        elseif operationTemp.oper_type == "PAI_OPER_TYPE_BAOPAI" then
+        	ClickEvent.DeleteShowBaoPai()
 	    else
 	        return
 	    end
@@ -2696,13 +2704,26 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 end
 ---------------------------------------------------------------------------
 
+function MahJong.ShouldDaPai( cardCount )
+	-- body
+	if cardCount == 14 or cardCount == 11 or cardCount == 8 or cardCount == 5 or cardCount == 2 then
+		return true
+	end
+	return false
+end
+
 function MahJong.ClickPaiEvent(gameObject)
 	-- body
 
 	if MahJong._current_click_pai and MahJong.self:IsNull(MahJong._current_click_pai) == false then
 		if MahJong._current_click_pai == gameObject then
+			--[[
 			if currentOperationState ~= operationState.DAPAI and currentOperationState ~= operationState.TINGPAI then
 				return
+			end
+			--]]
+			if MahJong.ShouldDaPai(_player_father.currentPaiNumber) == false then
+				return 
 			end
 			Player.LogWarning("jxy_check_dapai count number")
 			local paiNumber = tonumber(gameObject.transform.parent.name)
@@ -3031,9 +3052,7 @@ function MahJong.DaPaiPoolShow(message)
 	end
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,_current_dapai.object,Effect.currentDapaiPointOffset)
-	if Player.isPlayBack == false then
-		ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
-	end
+	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
 end
 
 function MahJong.DapaiUIHide(position)
@@ -3772,7 +3791,9 @@ end
 
 function MahJong.SortPlayerPai(deleteNumber,isZhuaPai)
 	-- body
-
+	if not _player_father then
+		return
+	end
 	if deleteNumber then
 		for i=deleteNumber,_player_father.currentPaiNumber do
 			_player_father.cards[i] = _player_father.cards[i+1]
