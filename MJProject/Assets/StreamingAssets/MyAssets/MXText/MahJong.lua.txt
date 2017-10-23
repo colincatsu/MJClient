@@ -146,6 +146,7 @@ function MahJong.Start()
 		MahJong.AnimationPlay()
 	else
 		ClickEvent.Start(ClickEvent.panelTable._replay_ui)
+		ClickEvent.RoomInformationUpdate()
 	end
 	MahJong.PlayerModelCameraPos()
 	MahJong.MjLoader()

@@ -818,8 +818,12 @@ function Player.OnPlayBack(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.PlayBack",stuff)
     Player.playBackPaiList = message.player_list
     for k,v in pairs(message.player_list) do
-        Player.LogWarning(v.player_id)
-        Player.LogWarning(v.position)
+        if v.position == "POSITION_TYPE_EAST" then
+            Player._my_player_data = v
+            Player._my_player_data.pai_list = {}
+        end
+        Player._all_players_data[k] = v
+        Player._all_players_data[k].pai_list = {}
     end
     --Player.MahJong.PlayBackPlayerPai(message.player_list)
     Player.operationQueue = message.oper_list
