@@ -182,12 +182,12 @@ function MahJong.Start()
 	}
 	Player.pai_push_down = {}
 	Player.hupai_calculate_data = {}
-	Player._all_players_data = {}
 	Player.allPaisShow = {}
 	Player.allPaisShowIndex = 0
 	Player.room_current_round = 0
 
 	if Player.isPlayBack == false then
+		Player._all_players_data = {}
 		ClickEvent._play_ui.baopaiLoader.url = ""
 		Player.CmdLoadScene("LOAD_SCENE_TYPE_SUCCESS")
 		Player.LogWarning("voice")
@@ -201,7 +201,7 @@ function MahJong.Start()
 			--hideVoiceButton
 		end
 	else
-		MahJong.PlayBackPlayerPai(Player.playBackPaiList)
+		MahJong.PlayBackPlayerPai(Player._all_players_data)
 	end
 	--[[
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,nil,Effect.currentDapaiPointOffset)
@@ -2024,7 +2024,7 @@ function MahJong.PlayBackNextOperation( ... )
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
-	        MahJong.DaPaiPoolShow(operationTemp)
+	        MahJong.DaPaiPoolShow(operationTemp,true)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
 	        MahJong.OperationPaiShow(operationTemp,true)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
@@ -2069,7 +2069,7 @@ function MahJong.PlayBackNextOperation( ... )
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
 	        MahJong.TingPai(operationTemp,true)
-	        MahJong.DaPaiPoolShow(operationTemp)
+	        MahJong.DaPaiPoolShow(operationTemp,true)
 	        MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
@@ -2198,7 +2198,7 @@ function MahJong.PlayBackPrevious( ... )
 	        	for i=1,3 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        else
 	        	MahJong.PlayBackDeleteOperation( operationTemp.position ,true)
@@ -2209,7 +2209,7 @@ function MahJong.PlayBackPrevious( ... )
 	        	for i=1,2 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
@@ -2219,7 +2219,7 @@ function MahJong.PlayBackPrevious( ... )
 		        	operationTemp.pai = v
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
@@ -2231,7 +2231,7 @@ function MahJong.PlayBackPrevious( ... )
         		operationTemp.pai.card_value = i
         		MahJong.PlayBackFaPai(operationTemp)
         	end
-        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
         	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 	    	MahJong.UpdateWhoseTurn(operationTemp.position)
@@ -2240,7 +2240,7 @@ function MahJong.PlayBackPrevious( ... )
         		operationTemp.pai.card_value = i
         		MahJong.PlayBackFaPai(operationTemp)
         	end
-        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex])
+        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
         	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
@@ -2293,7 +2293,7 @@ function MahJong.PlayBackFaPai(operationData)
         end
         MahJong.PlayBackSortZhuaPlayerPai()
         MahJong.SortPlayerPai()
-	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
+	    --AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 1 then
 		if not _player_pai_pool or not _player_pai_pool._next_card then
 			return
@@ -2311,7 +2311,7 @@ function MahJong.PlayBackFaPai(operationData)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
-	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
+	    --AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 2 then
 		if not _player_pai_pool or not _player_pai_pool._opposite_card then
 			return
@@ -2329,7 +2329,7 @@ function MahJong.PlayBackFaPai(operationData)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
-	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
+	    --AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	elseif playerPos == 3 then
 		if not _player_pai_pool or not _player_pai_pool._forward_card then
 			return
@@ -2347,7 +2347,7 @@ function MahJong.PlayBackFaPai(operationData)
         end
         MahJong.PlayBackSortZhuaOtherPai(playerPos)
         MahJong.PlayBackSortOtherPai()
-	    AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
+	    --AudioPlayer.PlaySound(AudioPlayer._audio_name.FaPai,false,1)
 	end
 end
 
@@ -2938,7 +2938,7 @@ function MahJong.DaPai(paiNumber)
 	currentOperationState = operationState.WAIT
 end
 
-function MahJong.DaPaiPoolShow(message)
+function MahJong.DaPaiPoolShow(message,isPlayBack)
 	-- body
 	local daPaiCacheData = message
 	if not daPaiCacheData then
@@ -3053,7 +3053,7 @@ function MahJong.DaPaiPoolShow(message)
 	end
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.AddNormalEffect(Effect._effect_name.currentDapaiPoint,nil,_current_dapai.object,Effect.currentDapaiPointOffset)
-	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue)
+	ClickEvent.DapaiUIShow(whichPlayer,paiType,paiValue,isPlayBack)
 end
 
 function MahJong.DapaiUIHide(position)

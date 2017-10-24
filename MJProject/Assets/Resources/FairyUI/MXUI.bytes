@@ -963,7 +963,7 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <image id="n4_kftt" name="n4" src="kftti53g" xy="0,0"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>kftti544.xml|6021|<component size="1334,750" adaptationTest="FitSize">
+</component>kftti544.xml|6036|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <controller name="ReplayControler" pages="0,,1,,2,,3," selected="0"/>
@@ -1037,7 +1037,7 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
       <gearDisplay controller="Menu" pages="0,1"/>
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <component id="n70_ynma" name="ReplayPauseButton" src="ynmai548" xy="589,488" group="n25_fb5y">
+    <component id="n70_ynma" name="ReplayPauseButton" src="ynmai548" xy="590,488" group="n25_fb5y">
       <gearDisplay controller="PlayAndPause" pages="1"/>
       <Button controller="ReplayControler" page="1"/>
     </component>
@@ -1047,12 +1047,12 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <component id="n72_ynma" name="ReplayFastForward" src="ynmai546" xy="754,502" group="n25_fb5y">
       <Button controller="ReplayControler" page="2"/>
     </component>
-    <component id="n73_ynma" name="ReplayProgressBar" src="ynmai549" xy="460,618" size="415,54" group="n25_fb5y">
+    <component id="n73_ynma" name="ReplayProgressBar" src="ynmai549" xy="459,618" size="415,54" group="n25_fb5y">
       <ProgressBar value="78" max="100"/>
     </component>
     <component id="n69_kftt" name="ReplayPlayButton" src="kftti545" xy="590,488" group="n25_fb5y">
       <gearDisplay controller="PlayAndPause" pages="0"/>
-      <Button controller="ReplayControler" page="0"/>
+      <Button checked="true" controller="ReplayControler" page="0"/>
     </component>
     <group id="n25_fb5y" name="Btns" xy="1,10" size="1319,662" advanced="true"/>
     <component id="n66_r8my" name="BaoPai" src="r8my4uo" xy="9,97">
@@ -1072,17 +1072,17 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
   <transition name="SlideOut" options="1">
     <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
   </transition>
-</component>kftti545.xml|479|<component size="154,123" extention="Button">
+</component>kftti545.xml|451|<component size="154,123" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_kftt" name="n4" src="kftti53m" xy="0,0">
       <gearDisplay controller="button" pages="0,2"/>
     </image>
-    <image id="n5_kftt" name="n5" src="kftti53n" xy="0,0">
+    <image id="n7_ep3d" name="n7" src="kftti53k" xy="0,0">
       <gearDisplay controller="button" pages="1,3"/>
     </image>
   </displayList>
-  <Button downEffect="dark" downEffectValue="0.80"/>
+  <Button mode="Radio"/>
 </component>l2jdkp.xml|815|<component size="100,50" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="1"/>
   <displayList>
@@ -1518,7 +1518,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n4_rg70" name="n4" src="rg704us" xy="0,0"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|66825|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|66744|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1929,7 +1929,6 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="kftti53k" name="huifang_013" path="/UIPIC/回放切图/" size="154,123"/>
     <image id="kftti53l" name="huifang_014" path="/UIPIC/回放切图/" size="154,123"/>
     <image id="kftti53m" name="huifang_015" path="/UIPIC/回放切图/" size="154,123"/>
-    <image id="kftti53n" name="huifang_016" path="/UIPIC/回放切图/" size="154,123"/>
     <image id="kftti53o" name="huifang_017" path="/UIPIC/回放切图/" size="119,96"/>
     <image id="kftti53p" name="huifang_018" path="/UIPIC/回放切图/" size="119,96"/>
     <image id="kftti53q" name="huifang_019" path="/UIPIC/回放切图/" size="119,96"/>
@@ -4829,7 +4828,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="XY" target="n0_xgtz" tween="true" startValue="150,257" endValue="150,156" duration="84" ease="Linear"/>
     <item time="60" type="Alpha" target="n0_xgtz" tween="true" startValue="1" endValue="0" duration="24"/>
   </transition>
-</component>ynmai546.xml|605|<component size="119,96" extention="Button">
+</component>ynmai546.xml|618|<component size="119,96" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_ynma" name="n4" src="kftti53o" xy="0,0">
@@ -4842,8 +4841,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="button" pages="1,3"/>
     </image>
   </displayList>
-  <Button downEffect="dark" downEffectValue="0.80"/>
-</component>ynmai547.xml|604|<component size="119,96" extention="Button">
+  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
+</component>ynmai547.xml|617|<component size="119,96" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_ynma" name="n4" src="kftti53q" xy="0,0">
@@ -4856,8 +4855,8 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="button" pages="1,3"/>
     </image>
   </displayList>
-  <Button downEffect="dark" downEffectValue="0.80"/>
-</component>ynmai548.xml|479|<component size="154,123" extention="Button">
+  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
+</component>ynmai548.xml|492|<component size="154,123" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n4_ynma" name="n4" src="kftti53k" xy="0,0">
@@ -4867,7 +4866,7 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
       <gearDisplay controller="button" pages="1,3"/>
     </image>
   </displayList>
-  <Button downEffect="dark" downEffectValue="0.80"/>
+  <Button mode="Radio" downEffect="dark" downEffectValue="0.80"/>
 </component>ynmai549.xml|546|<component size="415,54" extention="ProgressBar">
   <displayList>
     <image id="n1" name="n1" src="kftti53i" xy="0,0" size="415,54">

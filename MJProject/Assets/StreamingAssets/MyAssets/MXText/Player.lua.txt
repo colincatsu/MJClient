@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1023"
+Player.pc_version = "1.0.1.1024"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -157,7 +157,6 @@ Player.isReplayFastBackward = false
 Player.queueLength = 0
 Player.currentQueueIndex = 0
 Player.operationQueue = {}
-Player.playBackPaiList = {}
 Player.playBackCountDown = 0
 Player.playBackInterval = 1.5
 
@@ -816,15 +815,8 @@ function Player.OnPlayBack(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.PlayBack",stuff)
-    Player.playBackPaiList = message.player_list
-    for k,v in pairs(message.player_list) do
-        if v.position == "POSITION_TYPE_EAST" then
-            Player._my_player_data = v
-            Player._my_player_data.pai_list = {}
-        end
-        Player._all_players_data[k] = v
-        Player._all_players_data[k].pai_list = {}
-    end
+    Player._all_players_data = message.player_list
+    
     --Player.MahJong.PlayBackPlayerPai(message.player_list)
     Player.operationQueue = message.oper_list
     Player.currentQueueIndex = 0
