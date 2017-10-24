@@ -2670,8 +2670,12 @@ function ClickEvent.VipNoteList(gameObject)
 				local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
 				obj.name = "VipNoteListInRound"
 				obj:GetChild("RoundNum").text = tostring(j)
-				obj:GetChild("ShareReplay").onClick:Add(ClickEvent.registerButtonClick)
-				obj:GetChild("PlayThisRound").onClick:Add(ClickEvent.registerButtonClick)
+				if obj:GetChild("ShareReplay") and obj:GetChild("PlayThisRound") then
+					obj:GetChild("ShareReplay").visible = true
+					obj:GetChild("PlayThisRound").visible = true
+					obj:GetChild("ShareReplay").onClick:Add(ClickEvent.registerButtonClick)
+					obj:GetChild("PlayThisRound").onClick:Add(ClickEvent.registerButtonClick)
+				end
 				roundCount = roundCount + 1
 				local playerNumber = 1
 				for roundKey,roundData in pairs(c.list) do
@@ -2839,7 +2843,9 @@ function ClickEvent.VIPRecordButton( ... )
 		obj.name = "VipNoteList"
 		obj.gameObjectName = tostring(v.room_id)
 		obj.onClick:Add(ClickEvent.registerButtonClick)
-		obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
+		if obj:GetChild("Replay") then
+			obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
+		end
 		local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
 		local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
 		obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
@@ -2906,12 +2912,16 @@ function ClickEvent.OnReceiveHistory()
 				obj.name = "VipNoteList"
 				obj.gameObjectName = tostring(v.room_id)
 				obj.onClick:Add(ClickEvent.registerButtonClick)
-				obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
+				if obj:GetChild("Replay") then
+					obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
+				end
 				local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
 				local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
 				obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
 				obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
-				obj:GetChild("RoomID").text = tostring(v.room_id)
+				if obj:GetChild("RoomID") then
+					obj:GetChild("RoomID").text = tostring(v.room_id)
+				end
 				local countScore = 0
 				local headimgurlTable = {}
 				local imgCount = 0
@@ -4305,6 +4315,10 @@ function ClickEvent.GameBillButton(gameObject)
 			obj.name = "VipNoteListInRound"
 			roundCount = roundCount + 1
 			obj:GetChild("RoundNum").text = tostring(roundCount)
+			if obj:GetChild("ShareReplay") and obj:GetChild("PlayThisRound") then
+				obj:GetChild("ShareReplay").visible = false
+				obj:GetChild("PlayThisRound").visible = false
+			end
 			local playerNumber = 1
 			for roundKey,roundData in pairs(Player._all_calculate_data[c].list) do
 				if not roundData.nickname or roundData.nickname == "" then
