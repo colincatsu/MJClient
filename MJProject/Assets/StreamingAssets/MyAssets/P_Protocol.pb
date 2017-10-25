@@ -1,5 +1,5 @@
 
-Ù 
+ž¡
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -248,14 +248,15 @@ click_push ("‡
 recharge_type (2.Adoter.Asset.RECHARGE_TYPE
 
 product_id (
-price ("¸
+price ("ä
 PlayBackB
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_PLAY_BACK
-room_id (
+room_id (*
+options (2.Adoter.Asset.RoomOptions
 
-game_index (9
-player_list (2$.Adoter.Asset.PlayBack.PlayerElement-
-	oper_list (2.Adoter.Asset.PaiOperationØ
+game_index (9
+player_list (2$.Adoter.Asset.PlayBack.PlayerElement-
+	oper_list (2.Adoter.Asset.PaiOperationØ
 PlayerElement
 	player_id (-
 position (2.Adoter.Asset.POSITION_TYPE-
@@ -651,7 +652,7 @@ ERROR_CODE
 RECHARGE_TYPE_ANDROID*3
 	CHAT_TYPE
 CHAT_TYPE_TEXT
-CHAT_TYPE_FACE*§
+CHAT_TYPE_FACE*À
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
@@ -668,7 +669,8 @@ ERROR_CODE
 PAI_OPER_TYPE_BAOPAI
 PAI_OPER_TYPE_QIANGGANG
 PAI_OPER_TYPE_FAPAI
-PAI_OPER_TYPE_COUNT*š
+PAI_OPER_TYPE_LIUJU
+PAI_OPER_TYPE_COUNT*š
 GAME_OPER_TYPE
 GAME_OPER_TYPE_NULL
 GAME_OPER_TYPE_START

@@ -146,6 +146,7 @@ function MahJong.Start()
 		MahJong.AnimationPlay()
 	else
 		ClickEvent.Start(ClickEvent.panelTable._replay_ui)
+		MahJong.UpdateMyDataState()
 		ClickEvent.RoomInformationUpdate()
 	end
 	MahJong.PlayerModelCameraPos()
@@ -1905,6 +1906,8 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._next_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._next_card[paiCount].card_value = m
 	        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	Player.playBackRemainCard = Player.playBackRemainCard - 1
+				ClickEvent.SetRemainNum(Player.playBackRemainCard)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -1929,6 +1932,8 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._opposite_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._opposite_card[paiCount].card_value = m
 	        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	Player.playBackRemainCard = Player.playBackRemainCard - 1
+				ClickEvent.SetRemainNum(Player.playBackRemainCard)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -1953,6 +1958,8 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	_player_pai_pool._forward_card[paiCount].card_type = card.card_type
 	        	_player_pai_pool._forward_card[paiCount].card_value = m
 	        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
+	        	Player.playBackRemainCard = Player.playBackRemainCard - 1
+				ClickEvent.SetRemainNum(Player.playBackRemainCard)
 	        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 	        end
 		end
@@ -1998,6 +2005,8 @@ function MahJong.PlayBackPlayerPai(player_list)
 			        for i, m in pairs(paiData.cards) do
 			        	paiCount = paiCount + 1
 						MahJong.PlayBackCreatePlayerModel(""..tempPaiPool.cards[m].model_path,paiCount,tempPaiPool.card_type,tempPaiPool.cards[m].value)
+						Player.playBackRemainCard = Player.playBackRemainCard - 1
+						ClickEvent.SetRemainNum(Player.playBackRemainCard)
 			        end
 		        end
 		    end
@@ -2194,32 +2203,32 @@ function MahJong.PlayBackPrevious( ... )
 	        
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" then
 	        	for i=1,3 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        else
 	        	MahJong.PlayBackDeleteOperation( operationTemp.position ,true)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" then
 	        	for i=1,2 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex].oper_type == "PAI_OPER_TYPE_DAPAI" then
+	        if Player.currentQueueIndex > 1 and Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" then
 	        	for k,v in pairs(operationTemp.pais) do
 		        	operationTemp.pai = v
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
+	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
@@ -2231,7 +2240,7 @@ function MahJong.PlayBackPrevious( ... )
         		operationTemp.pai.card_value = i
         		MahJong.PlayBackFaPai(operationTemp)
         	end
-        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
+        	--MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
         	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 	    	MahJong.UpdateWhoseTurn(operationTemp.position)
@@ -2240,7 +2249,7 @@ function MahJong.PlayBackPrevious( ... )
         		operationTemp.pai.card_value = i
         		MahJong.PlayBackFaPai(operationTemp)
         	end
-        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
+        	--MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex],true)
         	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)

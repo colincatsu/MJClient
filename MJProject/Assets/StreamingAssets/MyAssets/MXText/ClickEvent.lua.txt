@@ -329,11 +329,11 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.timeShow = _currentPanel.panel:GetChild("Wlan"):GetChild("Time")
 		ClickEvent._play_ui.wlanShow = _currentPanel.panel:GetChild("Wlan"):GetController("WLan")
 		WeChatPlatform.onSignalLevel = ClickEvent.OnSignalLevel
-		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = "0"
+		_currentPanel.panel:GetChild("RoundNumber"):GetChild("CurrentRoundNum").text = tostring(Player.playBackRoundIndex)
 
-		--_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
+		_currentPanel.panel:GetChild("RoundNumber"):GetChild("TotalRoundNum").text = tostring(Player._room_information.options.open_rands)
 
-		--Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
+		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
 		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("PaiSingle"):GetChild("BaoPaiLoader")
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
@@ -2316,7 +2316,11 @@ end
 
 function ClickEvent.ButtonPaste( ... )
 	-- body
-	_popPanel[popPanelIndex].panel:GetChild("InputText").text = WeChatPlatform:ReadPaste()
+	local pasteContent = WeChatPlatform:ReadPaste()
+	if pasteContent and pasteContent ~= "" then
+		_popPanel[popPanelIndex].panel:GetChild("InputText").text = pasteContent
+	end
+	Player._roomId = nil
 end
 
 function ClickEvent.WatchButton( ... )
@@ -2330,6 +2334,9 @@ function ClickEvent.WatchButton( ... )
 		roundNumber = tonumber(string.sub(_popPanel[popPanelIndex].panel:GetChild("InputText").text,-2))
 	end
 	if roundNumber and roomNumber then
+		Player.playBackRoomID = roomNumber
+		Player._roomId = roomNumber
+		Player.playBackRoundIndex = roundNumber
 		Player.CmdPlayBack(roomNumber,roundNumber)
 	end
 end
@@ -2348,6 +2355,7 @@ function ClickEvent.PlayThisRound(gameObject)
 	Player.LogWarning(Player.playBackRoomID)
 	Player.LogWarning(roundNumber)
 	if Player.playBackRoomID and Player.playBackRoomID ~= 0 and roundNumber and roundNumber <= 16 and roundNumber ~= 0 then
+		Player.playBackRoundIndex = roundNumber
 		Player.CmdPlayBack(Player.playBackRoomID,roundNumber)
 	end
 end
@@ -2364,7 +2372,7 @@ function ClickEvent.ShareReplay(gameObject)
 		shareStr = shareStr..tostring(roundNumber)
 	end
 	WeChatPlatform:CopyRoomID(shareStr)
-	ClickEvent.ShowToast(StringTable.Get(2031))
+	ClickEvent.ShowToast(StringTable.Get(2047))
 end
 
 function ClickEvent.Replay(gameObject)

@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1024"
+Player.pc_version = "1.0.1.1025"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -152,13 +152,15 @@ Player.isGameStop = false
 Player.canShowPlayButton = false
 
 Player.playBackRoomID = 0
+Player.playBackRoundIndex = 0
+Player.playBackRemainCard = 0
 Player.isPlayBack = false
 Player.isReplayFastBackward = false
 Player.queueLength = 0
 Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackCountDown = 0
-Player.playBackInterval = 1.5
+Player.playBackInterval = 1
 
 function Player.LoadData( ... )
     -- body
@@ -827,6 +829,14 @@ function Player.OnPlayBack(type_t,stuff)
     Player.isPlayBack = true
     Player._my_player_data = {}
     Player._my_player_data.position = "POSITION_TYPE_EAST"
+    for k,v in pairs(Player._all_players_data) do
+        if v.player_id == Player._player_data.common_prop.player_id then
+            Player._my_player_data.position = v.position
+        end
+    end
+    Player._room_information = {}
+    Player._room_information.options = message.options
+    Player.playBackRemainCard = 136
     Player.LoadScene("PlaySence")
 end
 
