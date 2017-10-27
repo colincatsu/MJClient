@@ -76,13 +76,21 @@ end
 
 function update( ... )
 	-- body
+	LoadingSence.SetLoadingBar(CS.AssetsHandle.progress)
+	if isReloadData == true then
+		if CS.AssetsHandle.progress >= 1 then
+			isReloadData = false
+			LoadingSence.BeginGame()
+		end
+	end
+	--[[
 	if isReloadData and isReloadData == true then
 		LoadingSence.BeginGame()
 		isReloadData = false
 	else
-		LoadingSence.SetLoadingBar(loadingBarProgress)
+		LoadingSence.SetLoadingBar(CS.AssetsHandle.progress)
 	end
-	--[[
+
 	if currentWWW and currentWWW.isDone == false then
 		LoadingSence.SetLoadingBar(loadingBarProgress * 100)
 		--downloadProgress.text = string.format("%.1f", downloadSize * currentWWW.progress /1024).."kb/"..string.format("%.1f",downloadSize/1024).."kb"
@@ -100,6 +108,7 @@ function LoadingSence.DownloadData( ... )
 	-- body
 	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 	if not folder.Exists then
+		isReloadData = true
 		local co = coroutine.create(function()
 			local header = {}
 			header.jwt = httpToken
@@ -120,19 +129,21 @@ function LoadingSence.DownloadData( ... )
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
+				--[[
 				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
 					--LoadingSence.SetLoadingBar(progress * 100)
 					loadingBarProgress = progress
 					if progress == 1 then
-						local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
-				        mFile:write(serveMd5)
-				        mFile:close()
 						CS.AssetsHandle.dataFinish = nil
 						isReloadData = true
 					end
 				end
+				--]]
 				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
+				local mFile = io.open(dataPath.."hotfixMd5.txt" ,"w")
+		        mFile:write(serveMd5)
+		        mFile:close()
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
 		        --currentWWW = nil
 		        --loadingBar.value = 0
@@ -153,6 +164,7 @@ function LoadingSence.CopyAndroidRes()
 	local needCopy = true
 	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 	if not folder.Exists then
+		isReloadData = true
 		local co = coroutine.create(function()
 			local www = CS.UnityEngine.WWW(CS.LuaCommon.resultPath.."MyAssets.upk")
 			yield_return(www)
@@ -161,6 +173,7 @@ function LoadingSence.CopyAndroidRes()
 				if not CS.System.IO.Directory:Exists(path)then
 					CS.System.IO.Directory.CreateDirectory(path)
 				end
+				--[[
 				CS.AssetsHandle.dataFinish = function (progress)
 					-- body
 					--LoadingSence.SetLoadingBar(progress * 100)
@@ -170,6 +183,7 @@ function LoadingSence.CopyAndroidRes()
 						isReloadData = true
 					end
 				end
+				--]]
 				CS.AssetsHandle.CreateNewAsset(www.bytes,path.."/MyAssets.upk")
 		        CS.AssetsHandle.UnPackAssetFolder(path.."/MyAssets.upk",path.."/")
 		        --[[

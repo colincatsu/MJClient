@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.2.1027"
+Player.pc_version = "1.0.3.1027"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1116,25 +1116,27 @@ function Player.OnRoomCalculate(type_t,stuff)
         --ClickEvent.ShowRoomCalculate()
     end
 
-    Player.current_history_index = Player.current_history_index + 1
-    Player.history_data[Player.current_history_index] = {}
-    Player.history_data[Player.current_history_index].room_id = Player._roomId
-    Player.history_data[Player.current_history_index].create_time = os.time()
-    Player.history_data[Player.current_history_index].options = Player._room_information.options
-    Player.history_data[Player.current_history_index].list = Player._all_calculate_data
-    Player.history_data[Player.current_history_index].player_brief_list = {}
-    local playerCount = 0
-    for k,v in pairs(Player._all_calculate_data[1].record.list) do
-        playerCount = playerCount + 1
-        Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
-        Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
-        Player.history_data[Player.current_history_index].player_brief_list[playerCount].nickname = v.nickname
-        Player.history_data[Player.current_history_index].player_brief_list[playerCount].headimgurl = v.headimgurl
+    if Player._all_calculate_data and Player._all_calculate_data[1] then
+        Player.current_history_index = Player.current_history_index + 1
+        Player.history_data[Player.current_history_index] = {}
+        Player.history_data[Player.current_history_index].room_id = Player._roomId
+        Player.history_data[Player.current_history_index].create_time = os.time()
+        Player.history_data[Player.current_history_index].options = Player._room_information.options
+        Player.history_data[Player.current_history_index].list = Player._all_calculate_data
+        Player.history_data[Player.current_history_index].player_brief_list = {}
+        local playerCount = 0
+        for k,v in pairs(Player._all_calculate_data[1].record.list) do
+            playerCount = playerCount + 1
+            Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
+            Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
+            Player.history_data[Player.current_history_index].player_brief_list[playerCount].nickname = v.nickname
+            Player.history_data[Player.current_history_index].player_brief_list[playerCount].headimgurl = v.headimgurl
+        end
+
+        table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
+
+        Player.history_end = Player.current_history_index
     end
-
-    table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
-
-    Player.history_end = Player.current_history_index
 
     if message.calculte_type == "CALCULATE_TYPE_DISMISS" then
        ClickEvent.ShowRoomCalculate()

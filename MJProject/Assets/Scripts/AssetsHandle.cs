@@ -19,18 +19,18 @@ public class AssetsHandle : MonoBehaviour {
     public static void ShowProgress(long all, long now)
     {
         progress = (float)now / all;
-        //Debug.Log("当前进度为: " + progress);
-        if(dataFinish != null && progress == 1)
-        {
-            progressTemp = progress;
-            dataFinish(progress);
-            return;
-        }
-        if(dataFinish != null && progress - progressTemp >= 0.1f)
-        {
-            progressTemp = progress;
-            dataFinish(progress);
-        }
+        ////Debug.Log("当前进度为: " + progress);
+        //if(dataFinish != null && progress == 1)
+        //{
+        //    progressTemp = progress;
+        //    dataFinish(progress);
+        //    return;
+        //}
+        //if(dataFinish != null && progress - progressTemp >= 0.1f)
+        //{
+        //    progressTemp = progress;
+        //    dataFinish(progress);
+        //}
     }
     public static void CreateNewAsset(byte[] stream,string path)
     {

@@ -4232,7 +4232,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
     	MahJong.DelUsedDaPai()
     	for i=1,3 do
     		paiValue[i] = operationPaiShowData.pai.card_value
-    		if isPlayBack and isPlayBack == true then
+    		if isPlayBack and isPlayBack == true and i > 1 then
 				MahJong.PlayBackDeletePai(whichPlayer,operationPaiShowData.pai)
 			end
     	end
@@ -4785,7 +4785,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     	Player.startOperation = false
     end
     MahJong.PlayerPaiSetActive(true)
-    if ClickEvent._play_ui and ClickEvent._play_ui.hintBar then
+    if ClickEvent._play_ui and ClickEvent._play_ui.hintBar and _player_father.currentPaiNumber == 14 then
         ClickEvent._play_ui.hintBar.visible = true
     end
     MahJong.OtherPlayerPaiInit()
