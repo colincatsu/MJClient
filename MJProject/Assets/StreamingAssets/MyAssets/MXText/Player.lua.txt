@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1025"
+Player.pc_version = "1.0.2.1027"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -811,6 +811,20 @@ end
 ---------------------------------------------
 --
 
+function Player.OnSystemBroadcasting(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SystemBroadcasting",stuff)
+    if message.broad_cast_type == "SYSTEM_BROADCAST_TYPE_SCROLL" then
+        Player.LogWarning(message.content)
+        Player.moveTitleTimestamp = CS.UnityEngine.Time.time
+        ClickEvent.PlayMoveTitle(message.content)
+    elseif message.broad_cast_type == "SYSTEM_BROADCAST_TYPE_CHAT" then
+    end
+end
+
 function Player.OnPlayBack(type_t,stuff)
     -- body
     if not stuff then
@@ -820,11 +834,12 @@ function Player.OnPlayBack(type_t,stuff)
     Player._all_players_data = message.player_list
     
     --Player.MahJong.PlayBackPlayerPai(message.player_list)
-    Player.operationQueue = message.oper_list
+    Player.operationQueue = {}
     Player.currentQueueIndex = 0
-    
-    for k,v in pairs(Player.operationQueue) do
+    Player.queueLength = 0
+    for k,v in pairs(message.oper_list) do
         Player.queueLength = Player.queueLength + 1
+        Player.operationQueue[Player.queueLength] = v
     end
     Player.isPlayBack = true
     Player._my_player_data = {}
@@ -1100,6 +1115,27 @@ function Player.OnRoomCalculate(type_t,stuff)
     if Player._calculate_table_number >= Player._room_information.options.open_rands then
         --ClickEvent.ShowRoomCalculate()
     end
+
+    Player.current_history_index = Player.current_history_index + 1
+    Player.history_data[Player.current_history_index] = {}
+    Player.history_data[Player.current_history_index].room_id = Player._roomId
+    Player.history_data[Player.current_history_index].create_time = os.time()
+    Player.history_data[Player.current_history_index].options = Player._room_information.options
+    Player.history_data[Player.current_history_index].list = Player._all_calculate_data
+    Player.history_data[Player.current_history_index].player_brief_list = {}
+    local playerCount = 0
+    for k,v in pairs(Player._all_calculate_data[1].record.list) do
+        playerCount = playerCount + 1
+        Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
+        Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
+        Player.history_data[Player.current_history_index].player_brief_list[playerCount].nickname = v.nickname
+        Player.history_data[Player.current_history_index].player_brief_list[playerCount].headimgurl = v.headimgurl
+    end
+
+    table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
+
+    Player.history_end = Player.current_history_index
+
     if message.calculte_type == "CALCULATE_TYPE_DISMISS" then
        ClickEvent.ShowRoomCalculate()
     end

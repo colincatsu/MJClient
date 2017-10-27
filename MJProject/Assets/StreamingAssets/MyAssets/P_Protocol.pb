@@ -1,5 +1,5 @@
 
-ž¡
+‹¡
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -410,14 +410,11 @@ headimgurl (
 activity_list (2*.Adoter.Asset.SyncActivity.ActivityElement4
 ActivityElement
 activity_id (
-open ("š
+open ("¬
 SystemBroadcastingG
-type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_SYSTEM_BROADCASTO
-broad_cast_type (26.Adoter.Asset.SystemBroadcasting.SYSTEM_BROADCAST_TYPE
-content ("Y
-SYSTEM_BROADCAST_TYPE 
-SYSTEM_BROADCAST_TYPE_SCROLL
-SYSTEM_BROADCAST_TYPE_CHAT"H
+type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_SYSTEM_BROADCAST<
+broad_cast_type (2#.Adoter.Asset.SYSTEM_BROADCAST_TYPE
+content ("H
 MultiplePai*
 	card_type (2.Adoter.Asset.CARD_TYPE
 cards ("‘
@@ -694,7 +691,10 @@ ERROR_CODE
 KICK_OUT_REASON_DISCONNECT
 KICK_OUT_REASON_OTHER_LOGIN!
 KICK_OUT_REASON_CHANGE_SERVER
-KICK_OUT_REASON_LOGOUT*P
+KICK_OUT_REASON_LOGOUT*Y
+SYSTEM_BROADCAST_TYPE 
+SYSTEM_BROADCAST_TYPE_SCROLL
+SYSTEM_BROADCAST_TYPE_CHAT*P
 	ROLE_TYPE
 ROLE_TYPE_NULL 
 ROLE_TYPE_PLAYER

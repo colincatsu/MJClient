@@ -963,7 +963,7 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
     <image id="n4_kftt" name="n4" src="kftti53g" xy="0,0"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>kftti544.xml|6036|<component size="1334,750" adaptationTest="FitSize">
+</component>kftti544.xml|6500|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <controller name="ReplayControler" pages="0,,1,,2,,3," selected="0"/>
@@ -1059,6 +1059,7 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
       <relation target="" sidePair="left-left,top-top"/>
     </component>
     <component id="n61_w0fr" name="Inform" src="j3uokm" xy="133,82"/>
+    <component id="n77_pj9z" name="ReplayFinish" src="pj9zi54a" xy="457,305"/>
   </displayList>
   <transition name="Draw">
     <item time="0" type="Scale" target="n32_j3uo" tween="true" startValue="0,0" endValue="1.1,1.1" duration="4"/>
@@ -1071,6 +1072,11 @@ char id=21738 img=11iui52y xoffset=0 yoffset=0 xadvance=0
   </transition>
   <transition name="SlideOut" options="1">
     <item time="0" type="Alpha" target="n17_algd" tween="true" startValue="1" endValue="0" duration="2"/>
+  </transition>
+  <transition name="FinishIn">
+    <item time="0" type="Alpha" target="n77_pj9z" tween="true" startValue="0" endValue="1" duration="7"/>
+    <item time="0" type="Scale" target="n77_pj9z" tween="true" startValue="0.3,0.3" endValue="1.2,1.2" duration="4"/>
+    <item time="4" type="Scale" target="n77_pj9z" tween="true" startValue="1.2,1.2" endValue="1,1" duration="3"/>
   </transition>
 </component>kftti545.xml|451|<component size="154,123" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -1518,7 +1524,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n4_rg70" name="n4" src="rg704us" xy="0,0"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|66744|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|67029|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1579,6 +1585,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="nxeh4sp" name="HelloEmojiListButton" path="/UIPIC/表情框/" size="100,100"/>
     <component id="nxeh4ss" name="HelloTextListButton" path="/UIPIC/表情框/" size="399,78"/>
     <component id="oorx4s8" name="ShareRank" path="/UIPIC/投票/" size="229,84"/>
+    <component id="pj9zi54a" name="ReplayFinish" path="/UIPIC/回放切图/" size="420,140"/>
     <component id="qnb54uq" name="BigButton" path="/UIPIC/ClearRound/" size="1334,750"/>
     <component id="qpkkjt" name="GameCancelButton" path="/UIPIC/游戏页面/" size="112,112"/>
     <component id="r8my4uo" name="BaoPai" path="/" size="76,120"/>
@@ -1993,6 +2000,8 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="olvj4ur" name="pai2" path="/UIPIC/xinzeng/" size="129,163"/>
     <image id="p13j4s7" name="yxnei_yuyinguan" path="/UIPIC/游戏页面/" size="72,73"/>
+    <image id="pj9zi54b" name="huifang_021" path="/UIPIC/回放切图/" size="408,126"/>
+    <image id="pj9zi54c" name="huifang_022" path="/UIPIC/回放切图/" size="61,60" scale="9grid" scale9grid="16,15,32,30"/>
     <image id="qpkkju" name="ui_Youxijiemian_23" path="/UIPIC/游戏页面/" size="112,112"/>
     <image id="r8my4um" name="bao_01" path="/UIPIC/xinzeng/" size="33,33" scale="9grid" scale9grid="9,9,13,12"/>
     <image id="r8my4un" name="bao_02" path="/UIPIC/xinzeng/" size="58,34"/>
@@ -2328,7 +2337,13 @@ ldfsqh.xml|446|<component size="50,31">
     <atlas id="atlas100" size="2048,2048" file="atlas0_1.png"/>
     <atlas id="atlas3" size="2048,1024" file="atlas3.png"/>
   </resources>
-</packageDescription>qnb54uq.xml|173|<component size="1334,750" extention="Button">
+</packageDescription>pj9zi54a.xml|253|<component size="420,140" pivot="0.5,0.5">
+  <displayList>
+    <image id="n1_pj9z" name="n1" src="pj9zi54c" xy="0,0" size="420,140"/>
+    <image id="n2_pj9z" name="n2" src="pj9zi54b" xy="5,7"/>
+  </displayList>
+  <transition name="Showin"/>
+</component>qnb54uq.xml|173|<component size="1334,750" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList/>
   <Button/>

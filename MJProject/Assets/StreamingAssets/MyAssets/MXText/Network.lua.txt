@@ -103,6 +103,7 @@ function Network.AddEventListener()
     FLibEvent.AddEvent(Player.OnRoomDisMiss,"META_TYPE_S2C_ROOM_DISMISS")
     FLibEvent.AddEvent(Player.OnRoomAll,"META_TYPE_S2C_ROOM_ALL")
     FLibEvent.AddEvent(Player.OnRoomBeenIn,"META_TYPE_S2C_ROOM_IN")
+    FLibEvent.AddEvent(Player.OnSystemBroadcasting,"META_TYPE_S2C_SYSTEM_BROADCAST")
 end
 
 ---------------------------------------------------------------------------
@@ -213,6 +214,7 @@ function Network.DelEventListener()
     FLibEvent.DelEvent(Player.OnRoomDisMiss,"META_TYPE_S2C_ROOM_DISMISS")
     FLibEvent.DelEvent(Player.OnRoomAll,"META_TYPE_S2C_ROOM_ALL")
     FLibEvent.DelEvent(Player.OnRoomBeenIn,"META_TYPE_S2C_ROOM_IN")
+    FLibEvent.DelEvent(Player.OnSystemBroadcasting,"META_TYPE_S2C_SYSTEM_BROADCAST")
 end
 
 ---------------------------------------------------------------------------

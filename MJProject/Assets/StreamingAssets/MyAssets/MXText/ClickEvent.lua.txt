@@ -310,6 +310,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPaiShow.visible = false
 		ClickEvent._play_ui.oppositePaiShow = _currentPanel.panel:GetChild("OppositePaiShow")
 		ClickEvent._play_ui.oppositePaiShow.visible = false
+		ClickEvent._play_ui.replayFinish = _currentPanel.panel:GetChild("ReplayFinish")
+		ClickEvent._play_ui.replayFinish.visible = false
+		ClickEvent._play_ui.replayFinishTransition = _currentPanel.panel:GetTransition("FinishIn")
 		--[[
 		--]]
 		ClickEvent._play_ui.playerAvatarInfo = _currentPanel.panel:GetChild("PlayerAvatarInfo")
@@ -337,6 +340,7 @@ function ClickEvent.CreateNewPanel(panelName)
 
 		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("PaiSingle"):GetChild("BaoPaiLoader")
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
+
 		--[[
 		local hasBaoPai = false
 		for k,v in pairs(Player._room_information.options.extend_type) do
@@ -603,7 +607,7 @@ function ClickEvent.UpdateTime( ... )
 	end
 end
 
-function ClickEvent.PlayMoveTitle()
+function ClickEvent.PlayMoveTitle(BroadcastingContent)
 	-- body
 	if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "FairyMainUI" then
 		return
@@ -615,14 +619,18 @@ function ClickEvent.PlayMoveTitle()
 		return
 	end
 	ClickEvent._play_ui.titleFather.visible = true
-	if ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2050) then
-		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2051)
-	elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2051) then
-		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2052)
-	elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2052) then
-		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+	if not BroadcastingContent then
+		if ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2050) then
+			ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2051)
+		elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2051) then
+			ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2052)
+		elseif ClickEvent._play_ui.moveTitleText.text == StringTable.Get(2052) then
+			ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+		else
+			ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+		end
 	else
-		ClickEvent._play_ui.moveTitleText.text = StringTable.Get(2050)
+		ClickEvent._play_ui.moveTitleText.text = tostring(BroadcastingContent)
 	end
 	ClickEvent._play_ui.moveTitle:SetValue("Time",-ClickEvent._play_ui.moveTitleText.width,16)
 	ClickEvent._play_ui.moveTitle:SetHook("Time",function()
@@ -2355,6 +2363,7 @@ function ClickEvent.PlayThisRound(gameObject)
 	Player.LogWarning(Player.playBackRoomID)
 	Player.LogWarning(roundNumber)
 	if Player.playBackRoomID and Player.playBackRoomID ~= 0 and roundNumber and roundNumber <= 16 and roundNumber ~= 0 then
+		Player._roomId = Player.playBackRoomID
 		Player.playBackRoundIndex = roundNumber
 		Player.CmdPlayBack(Player.playBackRoomID,roundNumber)
 	end

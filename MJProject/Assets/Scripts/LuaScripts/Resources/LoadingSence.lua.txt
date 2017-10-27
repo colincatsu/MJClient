@@ -114,7 +114,7 @@ function LoadingSence.DownloadData( ... )
 			--]]
 			--downloadSize = www.bytesDownloaded
 			yield_return(www)
-			downloadProgress.text = math.ceil(www.bytesDownloaded/1024).."kb/"..math.ceil(www.bytesDownloaded/1024).."kb"
+			downloadProgress.text = tostring(math.ceil(www.bytesDownloaded/1024)).."kb/"..tostring(math.ceil(www.bytesDownloaded/1024)).."kb"
 			if not www.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then

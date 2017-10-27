@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 class Rename {
-    [UnityEditor.MenuItem("Tools/Rename")]
+    //[UnityEditor.MenuItem("Tools/Rename")]
     static void RenameFile()
     {
         Object[] selects = Selection.GetFiltered(typeof(Object), SelectionMode.DeepAssets);
