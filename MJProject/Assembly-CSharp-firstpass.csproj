@@ -45,6 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\BuglyPlugins\BuglyAgent.cs" />
+     <Compile Include="Assets\Plugins\BuglyPlugins\BuglyCallback.cs" />
+     <Compile Include="Assets\Plugins\BuglyPlugins\BuglyInit.cs" />
      <Compile Include="Assets\Plugins\iOS\EasyStoreKit.cs" />
      <None Include="Assets\Shader\AlphaTest-Diffuse 1.shader" />
      <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\message_box.lua.txt" />

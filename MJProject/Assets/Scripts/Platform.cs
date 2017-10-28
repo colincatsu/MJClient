@@ -28,6 +28,8 @@ public class Platform : MonoBehaviour {
     //public static string[] GOODS_MONEY = new string[GOODS_COUNT_PRICE] { "6", "30", "68", "128", "298", "618"};
     private StoreKitProduct[] products;
 
+    private const string BuglyAppIDForAndroid = "8cb1c6ad59";
+
     public void startBilling()
     {
         ConfigureStoreKitEvents();
@@ -218,6 +220,7 @@ public class Platform : MonoBehaviour {
             currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
         }
         Debug.Log("**************Platform Unity InitX:" + currentActivity);
+        InitBuglySDK(false);
     }
 
     public void InitGVoice(string appID, string appKey, string openID, string udpUrl)
@@ -230,6 +233,22 @@ public class Platform : MonoBehaviour {
             m_voiceengine.Init();
         }
     }
+
+    public void InitBuglySDK(bool openSdk)
+    {
+#if DEBUG
+        BuglyAgent.ConfigDebugMode(openSdk);
+#endif
+        BuglyAgent.ConfigDebugMode(openSdk);
+#if UNITY_ANDROID
+        BuglyAgent.InitWithAppId(BuglyAppIDForAndroid);
+#endif
+
+        // TODO Required. If you do not need call 'InitWithAppId(string)' to initialize the sdk(may be you has initialized the sdk it associated Android or iOS project),
+        // please call this method to enable c# exception handler only.
+        BuglyAgent.EnableExceptionHandler();
+    }
+
     [LuaCallCSharp]
     public void SetCallBack(IGCloudVoice.JoinRoomCompleteHandler OnJoinRoomComplete, IGCloudVoice.QuitRoomCompleteHandler OnQuitRoomComplete, IGCloudVoice.MemberVoiceHandler OnMemberVoice)
     {
