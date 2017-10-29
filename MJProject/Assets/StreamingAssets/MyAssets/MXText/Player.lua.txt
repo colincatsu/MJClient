@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.3.1027"
+Player.pc_version = "1.0.1.1029"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -479,6 +479,9 @@ function Player.myUpdate( ... )
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._not_move_toast_ui) == true then
             return
         end
+        if ClickEvent.CurrentSingleText(StringTable.Get(2009)) == true then
+            return
+        end
         if ClickEvent.Close() == false then
             if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
                 ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -707,7 +710,7 @@ function Player.CmdEnterGame(id)
     this.SendProtocol("EnterGame",enterGame)
 end
 
-function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_open_rands, voiceOpen)
+function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_open_rands, voiceOpen, payType)
     -- body
     local createRoom ={
         room = {
@@ -717,6 +720,7 @@ function Player.CmdCreateRoom(room_model,room_extend_type,room_top_mutiple,room_
                 top_mutiple = room_top_mutiple,
                 open_rands = room_open_rands,
                 voice_open = voiceOpen,
+                pay_type = payType,
             },
             --room_id = roomId,--1,
             --room_name = name,--"123",
@@ -1125,7 +1129,7 @@ function Player.OnRoomCalculate(type_t,stuff)
         Player.history_data[Player.current_history_index].list = Player._all_calculate_data
         Player.history_data[Player.current_history_index].player_brief_list = {}
         local playerCount = 0
-        for k,v in pairs(Player._all_calculate_data[1].record.list) do
+        for k,v in pairs(Player._all_calculate_data[1].list) do
             playerCount = playerCount + 1
             Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
             Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
@@ -1477,8 +1481,10 @@ function Player.OnRoomAll(type_t,stuff)
                         break
                     end
                 end
-                local tempX = ClickEvent.PlayerPosition(currentPositionData.position)
-                Player.playerScore[tempX] = Player.playerScore[tempX] + data.score
+                if currentPositionData then
+                    local tempX = ClickEvent.PlayerPosition(currentPositionData.position)
+                    Player.playerScore[tempX] = Player.playerScore[tempX] + data.score
+                end
             end
         end
         ClickEvent._play_ui.playerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[0])

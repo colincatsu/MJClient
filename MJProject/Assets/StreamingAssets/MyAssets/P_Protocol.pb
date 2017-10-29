@@ -1,5 +1,5 @@
 
-ã°
+è¢
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -15,12 +15,13 @@ card_index ("e
 ItemElement4
 inventory_type (2.Adoter.Asset.INVENTORY_TYPE
 index (
-	global_id ("£
+	global_id ("π
 User&
 account (2.Adoter.Asset.Account
 player_list ()
 wechat (2.Adoter.Asset.WechatUnion3
-client_info (2.Adoter.Asset.ClientInfomation"ã
+client_info (2.Adoter.Asset.ClientInfomation
+created_time ("ã
 
 PlayerProp-
 position (2.Adoter.Asset.POSITION_TYPE
@@ -505,11 +506,12 @@ inner_meta ("É
 ERR_USE_ITEM_TYPE_LEVEL_UP*J
 ITEM_CHANGED_TYPE
 ITEM_CHANGED_TYPE_GMT
-ITEM_CHANGED_TYPE_MALL*|
+ITEM_CHANGED_TYPE_MALL*†
 DIAMOND_CHANGED_TYPE
 DIAMOND_CHANGED_TYPE_GMT
 DIAMOND_CHANGED_TYPE_MALL'
-#DIAMOND_CHANGED_TYPE_GENERAL_REWARD*Õ
+#DIAMOND_CHANGED_TYPE_GENERAL_REWARD"
+DIAMOND_CHANGED_TYPE_OPEN_ROOM*Õ
 HUANLEDOU_CHANGED_TYPE
 HUANLEDOU_CHANGED_TYPE_GMT
 HUANLEDOU_CHANGED_TYPE_MALL)
@@ -537,7 +539,7 @@ ERROR_TYPE
 ERROR_TYPE_INVENTORY_FULL*N
 ERROR_SHOW_TYPE
 ERROR_SHOW_TYPE_NORMAL
-ERROR_SHOW_TYPE_MESSAGE_BOX*Ú
+ERROR_SHOW_TYPE_MESSAGE_BOX*ª
 
 ERROR_CODE
 ERROR_SUCCESS 
@@ -567,7 +569,9 @@ ERROR_CODE
 ERROR_ROOM_CARD_GAMES_FULL
 ERROR_ROOM_DISMISS_COOLDOWN
 ERROR_ROOM_BEEN_OVER 
-ERROR_ROOM_BEEN_DISMISS!
+ERROR_ROOM_BEEN_DISMISS!!
+ERROR_ROOM_PLAYBACK_NO_RECORD"$
+ ERROR_ROOM_AA_DIAMOND_NOT_ENOUGH#
 ERROR_GAME_NO_PERMISSION(
 ERROR_GAME_PAI_UNSATISFIED)
 ERROR_COMMON_REWARD_DATA2

@@ -1,12 +1,12 @@
 
-éT
+øU
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
 version (2.Adoter.Asset.VERSION_TYPE
 name (
 	show_name (
-desc ("ã
+desc ("’
 RoomOptions,
 model (2.Adoter.Asset.ROOM_MODEL_TYPE
 extend_type_count (:103
@@ -17,7 +17,8 @@ open_rands (:8
 
 voice_open (
 
-gmt_opened ("Ù
+gmt_opened (-
+pay_type (2.Adoter.Asset.ROOM_PAY_TYPE"Ù
 	RoomLimit9
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_ROOM2
 common_prop (2.Adoter.Asset.AssetCommonProp*
@@ -71,7 +72,7 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("¼
+voice_path ("Û
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -91,7 +92,8 @@ voice_path ("¼
 guest_forbid_friend_room (
 mall_activity_id (!
 room_dismiss_timeout (:120"
-room_dismiss_cooldown (:180"Ô
+room_dismiss_cooldown (:180
+room_aapay_diamond (:3"Ô
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -344,7 +346,10 @@ ASSET_TYPE
 ROOM_EXTEND_TYPE_BAOSANJIA*N
 ROOM_MODEL_TYPE
 ROOM_MODEL_TYPE_CLASSICAL
-ROOM_MODEL_TYPE_MULTIPLE*t
+ROOM_MODEL_TYPE_MULTIPLE*?
+ROOM_PAY_TYPE
+ROOM_PAY_TYPE_HOSTER
+ROOM_PAY_TYPE_AA*t
 	CARD_TYPE
 CARD_TYPE_WANZI
 CARD_TYPE_BINGZI

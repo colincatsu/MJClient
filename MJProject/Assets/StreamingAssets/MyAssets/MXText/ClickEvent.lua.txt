@@ -2145,6 +2145,14 @@ function ClickEvent.IsPopPanel(name)
 	return false
 end
 
+function ClickEvent.CurrentSingleText(content)
+	-- body
+	if _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._only_yes_ui and _popPanel[popPanelIndex].panel:GetChild("TPopText") and _popPanel[popPanelIndex].panel:GetChild("TPopText").text == content then
+		return true
+	end
+	return false
+end
+
 function ClickEvent.ShowDissolveTime(time)
 	-- body
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
@@ -3943,7 +3951,11 @@ function ClickEvent.CreateRoomButton( ... )
 		costCard = "2/"
 	end
 	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = false
-	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
+	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.diamond)
+	end
 	for i=1,7 do
 		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
 	end
@@ -3955,12 +3967,20 @@ end
 
 function ClickEvent.Round4( ... )
 	-- body
-	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.room_card_count)
+	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.room_card_count)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.diamond)
+	end
 end
 
 function ClickEvent.Round8( ... )
 	-- body
-	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.room_card_count)
+	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.room_card_count)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.diamond)
+	end
 end
 
 function ClickEvent.FreshHandButton( ... )
@@ -4078,6 +4098,30 @@ function ClickEvent.CreateRoomId( gameObject )
 	Player.LogWarning(gameObject.name)
 end
 
+function ClickEvent.RoomOwnerPay( ... )
+	-- body
+	_popPanel[popPanelIndex].panel:GetChild("Troomcardnum").text = "拥有房卡:"
+	local usedCount = ""
+	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected == true then
+		usedCount = "1/"
+	else
+		usedCount = "2/"
+	end
+	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = usedCount..tostring(Player._player_data.common_prop.room_card_count)
+end
+
+function ClickEvent.AAPay( ... )
+	-- body
+	_popPanel[popPanelIndex].panel:GetChild("Troomcardnum").text = "拥有钻石:"
+	local usedCount = ""
+	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected == true then
+		usedCount = "1/"
+	else
+		usedCount = "2/"
+	end
+	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = usedCount..tostring(Player._player_data.common_prop.diamond)
+end
+
 function ClickEvent.ClassicMode( ... )
 	-- body
 	for i=1,7 do
@@ -4174,12 +4218,22 @@ function ClickEvent.CreateButton( )
 		Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open)
 		Player.isFriendRoom = true
 	else
-		if Player._player_data.common_prop.room_card_count >= costCard then
-			Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open)
-			Player.isFriendRoom = true
+		if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
+			if Player._player_data.common_prop.room_card_count >= costCard then
+				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_HOSTER")
+				Player.isFriendRoom = true
+			else
+				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
+			end
 		else
-			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
+			if Player._player_data.common_prop.room_card_count >= costCard then
+				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_AA")
+				Player.isFriendRoom = true
+			else
+				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(35)
+			end
 		end
 	end
 	--[[

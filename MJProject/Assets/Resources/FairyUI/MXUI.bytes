@@ -1524,7 +1524,7 @@ ldfsqh.xml|446|<component size="50,31">
     <image id="n4_rg70" name="n4" src="rg704us" xy="0,0"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>package.xml|67029|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|67099|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1599,6 +1599,7 @@ ldfsqh.xml|446|<component size="50,31">
     <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="72,71"/>
     <component id="uejtqw" name="HowToPlayButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqx" name="HowToPlayText" path="/UIPIC/xinzeng/" size="795,454"/>
+    <component id="uy7ei54e" name="RoomCost" path="/" size="113,22"/>
     <component id="v7wh4sh" name="ShowTable" path="/UIPIC/匹配房结算/" size="176,82"/>
     <component id="w61ca9" name="VIPRecordButton" path="/UIPIC/xinzeng/" size="66,85"/>
     <component id="w61cai" name="ServiceTerm1" path="/UIPIC/个人信息/" size="119,50"/>
@@ -2665,7 +2666,15 @@ char id=54 img=uejtrl xoffset=0 yoffset=0 xadvance=0
 char id=55 img=uejtrm xoffset=0 yoffset=0 xadvance=0
 char id=56 img=uejtrn xoffset=0 yoffset=0 xadvance=0
 char id=57 img=uejtro xoffset=0 yoffset=0 xadvance=0
-v7wh4sh.xml|418|<component size="176,82" opaque="false">
+uy7ei54e.xml|385|<component size="113,22">
+  <controller name="PayType" pages="0,,1," selected="0"/>
+  <displayList>
+    <text id="n69_uy7e" name="Troundcost4" xy="-4,0" size="123,22" fontSize="18" color="#ffffff" text="(消耗     *1)">
+      <gearDisplay controller="PayType" pages="0"/>
+    </text>
+    <image id="n70_uy7e" name="n70" src="w61cba" xy="44,-6" size="42,33"/>
+  </displayList>
+</component>v7wh4sh.xml|418|<component size="176,82" opaque="false">
   <displayList>
     <image id="n24_ised" name="SeeTipsBg" src="isedou" xy="174,81" size="175,80" rotation="180"/>
     <text id="n25_ised" name="SeeTipsText" xy="6,6" size="163,69" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="按住灰色位置可查看牌桌">
@@ -3990,99 +3999,123 @@ v7wh4sh.xml|418|<component size="176,82" opaque="false">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|8471|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|10263|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <controller name="c1" pages="0,,1," selected="0"/>
   <controller name="ChooseMultiple" pages="1,,2," selected="0"/>
+  <controller name="PayType" pages="0,,1," selected="0"/>
   <displayList>
     <component id="n50_i0jk" name="Bg" src="i0jkoe" xy="195,43" group="n53_kz0f"/>
-    <image id="n6_nw08" name="n6" src="w61ce2" xy="463,185" size="581,62" group="n53_kz0f"/>
-    <image id="n7_nw08" name="n7" src="w61ce2" xy="463,266" size="581,124" group="n53_kz0f"/>
-    <image id="n8_nw08" name="n8" src="w61ce2" xy="463,481" size="274,62" group="n53_kz0f"/>
-    <image id="n9_nw08" name="n9" src="w61ce2" xy="463,405" size="581,62" group="n53_kz0f"/>
-    <text id="n10_nw08" name="Tmodechoose" xy="279,190" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" leading="0" autoSize="none" text="模式选择:"/>
-    <text id="n11_nw08" name="Tchoosefan" xy="279,270" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="额外番型:"/>
-    <text id="n12_nw08" name="Tmultiple" xy="279,488" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="封顶倍数:"/>
-    <text id="n13_nw08" name="Tround" xy="279,415" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="开设局数:"/>
-    <text id="n27_nw08" name="Tclassicmode" xy="518,202" size="130,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="经典模式"/>
-    <text id="n28_nw08" name="Thighriskmode" xy="696,202" size="109,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="高番模式">
+    <image id="n6_nw08" name="n6" src="w61ce2" xy="463,166" size="581,62" group="n53_kz0f"/>
+    <image id="n7_nw08" name="n7" src="w61ce2" xy="463,301" size="581,124" group="n53_kz0f"/>
+    <image id="n8_nw08" name="n8" src="w61ce2" xy="463,500" size="274,62" group="n53_kz0f"/>
+    <image id="n9_nw08" name="n9" src="w61ce2" xy="463,431" size="581,62" group="n53_kz0f"/>
+    <text id="n10_nw08" name="Tmodechoose" xy="279,171" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" leading="0" autoSize="none" text="模式选择:"/>
+    <text id="n11_nw08" name="Tchoosefan" xy="279,305" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="额外番型:"/>
+    <text id="n12_nw08" name="Tmultiple" xy="279,507" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="封顶倍数:"/>
+    <text id="n13_nw08" name="Tround" xy="279,441" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="开设局数:"/>
+    <text id="n27_nw08" name="Tclassicmode" xy="518,183" size="130,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="经典模式"/>
+    <text id="n28_nw08" name="Thighriskmode" xy="696,183" size="109,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="高番模式">
       <relation target="n6_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n29_nw08" name="Tchoosefan01" xy="647,283" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="站立胡"/>
-    <text id="n30_nw08" name="Tchoosefan02" xy="795,283" size="205,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="带夹胡（夹、边）"/>
-    <text id="n31_nw08" name="Tchoosefan03" xy="791,344" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="旋风杠">
+    <text id="n29_nw08" name="Tchoosefan01" xy="647,318" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="站立胡"/>
+    <text id="n30_nw08" name="Tchoosefan02" xy="795,318" size="205,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="带夹胡（夹、边）"/>
+    <text id="n31_nw08" name="Tchoosefan03" xy="791,379" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="旋风杠">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n32_nw08" name="Tchoosefan04" xy="520,283" size="55,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="宝牌">
+    <text id="n32_nw08" name="Tchoosefan04" xy="520,318" size="55,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="宝牌">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n33_nw08" name="Tchoosefan05" xy="518,344" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="可断门">
+    <text id="n33_nw08" name="Tchoosefan05" xy="518,379" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="可断门">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n35_nw08" name="Tmultiple32" xy="522,498" size="56,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="32倍"/>
-    <text id="n36_nw08" name="Tmultiplenolimit" xy="649,498" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="不封顶"/>
-    <text id="n37_nw08" name="Tround4" xy="524,423" size="43,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="8局">
+    <text id="n35_nw08" name="Tmultiple32" xy="522,517" size="56,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="32倍"/>
+    <text id="n36_nw08" name="Tmultiplenolimit" xy="649,517" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="不封顶"/>
+    <text id="n37_nw08" name="Tround4" xy="524,449" size="43,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="8局">
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n38_nw08" name="Tround8" xy="792,423" size="56,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="16局">
+    <text id="n38_nw08" name="Tround8" xy="792,449" size="56,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="16局">
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n39_nw08" name="Tchoosefan06" xy="645,344" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="清一色">
+    <text id="n39_nw08" name="Tchoosefan06" xy="645,379" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="清一色">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n40_nw08" name="Troundcost4" xy="568,429" size="113,22" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗房卡*1)">
+    <text id="n40_nw08" name="Troundcost4" xy="565,454" size="118,23" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗房卡*1)">
+      <gearDisplay controller="PayType" pages="0"/>
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n41_nw08" name="Troundcost8" xy="844,429" size="113,22" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗房卡*2)">
+    <text id="n41_nw08" name="Troundcost8" xy="841,454" size="118,23" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗房卡*2)">
+      <gearDisplay controller="PayType" pages="0"/>
       <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n42_nw08" name="Troomcardnum" xy="794,595" size="133,28" group="n53_kz0f" fontSize="24" color="#5c2c16" align="right" vAlign="middle" autoSize="height" text="拥有房卡:">
+    <text id="n42_nw08" name="Troomcardnum" xy="794,599" size="133,28" group="n53_kz0f" fontSize="24" color="#5c2c16" align="right" vAlign="middle" autoSize="height" text="拥有房卡:">
       <relation target="n2_k35j" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n43_nw08" name="RoomCardNum" xy="931,595" size="85,29" group="n53_kz0f" fontSize="25" color="#5c2c16" ubb="true" autoSize="height" text="999">
+    <text id="n43_nw08" name="RoomCardNum" xy="931,599" size="85,29" group="n53_kz0f" fontSize="25" color="#5c2c16" ubb="true" autoSize="height" text="999">
       <relation target="n42_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n48_mc24" name="Tchoosefan07" xy="935,344" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="包三家">
+    <image id="n59_uy7e" name="n59" src="w61ce2" xy="463,233" size="581,62" group="n53_kz0f"/>
+    <text id="n60_uy7e" name="Tmodechoose" xy="279,238" size="184,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="right" vAlign="middle" leading="0" autoSize="none" text="开设方式:"/>
+    <text id="n61_uy7e" name="Tclassicmode" xy="518,250" size="130,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="房主付卡"/>
+    <text id="n62_uy7e" name="Thighriskmode" xy="696,250" size="109,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" autoSize="none" text="AA制付卡">
+      <relation target="n59_uy7e" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n65_uy7e" name="Troundcostg4" xy="568,455" size="113,22" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗钻石*1)">
+      <gearDisplay controller="PayType" pages="1"/>
+      <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n66_uy7e" name="Troundcostg8" xy="844,455" size="113,22" group="n53_kz0f" fontSize="18" color="#ffffff" text="(消耗钻石*2)">
+      <gearDisplay controller="PayType" pages="1"/>
+      <relation target="n9_nw08" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n48_mc24" name="Tchoosefan07" xy="935,379" size="80,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" vAlign="middle" text="包三家">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </text>
-    <image id="n54_jfse" name="n54" src="w61ce2" xy="850,480" size="192,62" group="n53_kz0f"/>
-    <text id="n55_jfse" name="TVoice" xy="746,488" size="110,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="语音:"/>
-    <text id="n56_jfse" name="TRealTimeVoice" xy="916,498" size="105,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="实时语音"/>
-    <image id="n44_algd" name="n44" src="w61ce5" xy="475,327" group="n53_kz0f">
+    <image id="n54_jfse" name="n54" src="w61ce2" xy="850,499" size="192,62" group="n53_kz0f"/>
+    <text id="n55_jfse" name="TVoice" xy="746,507" size="110,52" group="n53_kz0f" fontSize="37" color="#5c2c16" align="center" vAlign="middle" autoSize="none" text="语音:"/>
+    <text id="n56_jfse" name="TRealTimeVoice" xy="916,517" size="105,29" group="n53_kz0f" fontSize="25" color="#ffe3bd" text="实时语音"/>
+    <image id="n44_algd" name="n44" src="w61ce5" xy="475,362" group="n53_kz0f">
       <relation target="n7_nw08" sidePair="center-center,middle-middle"/>
     </image>
-    <component id="n2_k35j" name="CreateButton" src="w61ce8" xy="528,563" group="n45_fb5y"/>
+    <component id="n2_k35j" name="CreateButton" src="w61ce8" xy="528,567" group="n45_fb5y"/>
     <component id="n4_k35j" name="Close" src="w61cj0" xy="1079,95" group="n45_fb5y"/>
-    <component id="n14_nw08" name="ClassicMode" src="w61cea" xy="480,193" group="n45_fb5y">
+    <component id="n14_nw08" name="ClassicMode" src="w61cea" xy="480,174" group="n45_fb5y">
       <Button checked="true" controller="ChooseMode" page="0"/>
     </component>
-    <component id="n15_nw08" name="HighRiskMode" src="w61cea" xy="663,193" group="n45_fb5y">
+    <component id="n15_nw08" name="HighRiskMode" src="w61cea" xy="663,174" group="n45_fb5y">
       <Button controller="ChooseMode" page="1"/>
     </component>
-    <component id="n17_nw08" name="Multiple32" src="w61cea" xy="480,489" group="n45_fb5y">
+    <component id="n17_nw08" name="Multiple32" src="w61cea" xy="480,508" group="n45_fb5y">
       <Button checked="true" controller="ChooseMultiple" page="1"/>
     </component>
-    <component id="n18_nw08" name="MultipleNolimit" src="w61cea" xy="611,489" group="n45_fb5y">
+    <component id="n18_nw08" name="MultipleNolimit" src="w61cea" xy="611,508" group="n45_fb5y">
       <Button controller="ChooseMultiple" page="2"/>
     </component>
-    <component id="n19_nw08" name="Round4" src="w61cea" xy="480,415" group="n45_fb5y">
+    <component id="n19_nw08" name="Round4" src="w61cea" xy="480,440" group="n45_fb5y">
       <Button checked="true" controller="ChooseRound" page="0"/>
     </component>
-    <component id="n20_nw08" name="Round8" src="w61cea" xy="756,415" group="n45_fb5y">
+    <component id="n20_nw08" name="Round8" src="w61cea" xy="756,440" group="n45_fb5y">
       <Button controller="ChooseRound" page="1"/>
     </component>
-    <component id="n21_nw08" name="ChooseFan01" src="w61ceb" xy="611,274" group="n45_fb5y"/>
-    <component id="n22_nw08" name="ChooseFan02" src="w61ceb" xy="756,274" group="n45_fb5y"/>
-    <component id="n23_nw08" name="ChooseFan03" src="w61ceb" xy="756,336" group="n45_fb5y"/>
-    <component id="n24_nw08" name="ChooseFan04" src="w61ceb" xy="480,274" group="n45_fb5y"/>
-    <component id="n25_nw08" name="ChooseFan05" src="w61ceb" xy="480,336" group="n45_fb5y"/>
-    <component id="n26_nw08" name="ChooseFan06" src="w61ceb" xy="611,336" group="n45_fb5y"/>
-    <component id="n47_mc24" name="ChooseFan07" src="w61ceb" xy="897,336" group="n45_fb5y"/>
+    <component id="n21_nw08" name="ChooseFan01" src="w61ceb" xy="611,309" group="n45_fb5y"/>
+    <component id="n22_nw08" name="ChooseFan02" src="w61ceb" xy="756,309" group="n45_fb5y"/>
+    <component id="n23_nw08" name="ChooseFan03" src="w61ceb" xy="756,371" group="n45_fb5y"/>
+    <component id="n24_nw08" name="ChooseFan04" src="w61ceb" xy="480,309" group="n45_fb5y"/>
+    <component id="n25_nw08" name="ChooseFan05" src="w61ceb" xy="480,371" group="n45_fb5y"/>
+    <component id="n26_nw08" name="ChooseFan06" src="w61ceb" xy="611,371" group="n45_fb5y"/>
+    <component id="n47_mc24" name="ChooseFan07" src="w61ceb" xy="897,371" group="n45_fb5y"/>
     <component id="n52_lidq" name="ServiceTerm6" src="lidq4u0" xy="255,627" group="n45_fb5y"/>
-    <component id="n58_jfse" name="RealTimeVoice" src="w61ceb" xy="876,489" group="n45_fb5y"/>
+    <component id="n58_jfse" name="RealTimeVoice" src="w61ceb" xy="876,508" group="n45_fb5y"/>
+    <component id="n67_uy7e" name="RoomOwnerPay" src="w61cea" xy="479,242" group="n45_fb5y">
+      <Button checked="true" controller="PayType" page="0"/>
+    </component>
+    <component id="n68_uy7e" name="AAPay" src="w61cea" xy="663,242" group="n45_fb5y">
+      <Button controller="PayType" page="1"/>
+    </component>
     <group id="n45_fb5y" name="Btns" xy="255,95" size="904,582" group="n53_kz0f" advanced="true"/>
     <image id="n51_r8qd" name="n51" src="r8qd4sv" xy="277,64" group="n53_kz0f"/>
+    <component id="n70_uy7e" name="Troundcost4" src="uy7ei54e" xy="676,455" group="n53_kz0f"/>
     <group id="n53_kz0f" name="CreateRoom" xy="195,43" size="964,661" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
