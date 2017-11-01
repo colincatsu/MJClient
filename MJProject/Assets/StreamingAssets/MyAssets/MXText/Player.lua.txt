@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1029"
+Player.pc_version = "1.0.4.1101"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -464,6 +464,9 @@ function Player.myUpdate( ... )
     end
 
     if CS.UnityEngine.Input.GetKeyDown(CS.UnityEngine.KeyCode.Escape) then
+        if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FairyMainUI" then
+            WeChatPlatform:MatTrackCutomEvent("Button","MainMenuPhoneback")
+        end
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
             return
         end

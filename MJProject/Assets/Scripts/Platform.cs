@@ -552,6 +552,22 @@ public class Platform : MonoBehaviour {
         return destString;
     }
 
+    public void MatTrackCutomKVEvent(string event_id, string key, string value)
+    {
+        if (currentActivity != null)
+        {
+            currentActivity.Call("MatTrackCutomKVEvent", event_id, key, value);
+        }
+    }
+
+    public void MatTrackCutomEvent(string event_id, string args)
+    {
+        if (currentActivity != null)
+        {
+            currentActivity.Call("MatTrackCutomEvent", event_id, args);
+        }
+    }
+
     // Use this for initialization
     void Start () {
 	
@@ -587,4 +603,5 @@ public class Platform : MonoBehaviour {
             //s_strLog += "\r\n resume:"+ret;
         }
     }
+
 }

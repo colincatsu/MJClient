@@ -2328,11 +2328,20 @@ function MahJong.PlayBackPrevious( ... )
 	        ClickEvent._play_ui.replayFinish.visible = false
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI") then
+	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP") then
 	        	for i=1,3 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	if Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        		MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-2],true)
+	        	else
+		        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	end
+	        	if Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        		MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-2],true)
+	        	else
+		        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	end
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        else
 	        	MahJong.PlayBackFaPai(operationTemp)
@@ -2340,23 +2349,31 @@ function MahJong.PlayBackPrevious( ... )
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI") then
+	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP") then
 	        	for i=1,2 do
 	        		MahJong.PlayBackFaPai(operationTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	if Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        		MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-2],true)
+	        	else
+		        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	end
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
-	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI") then
+	        if Player.currentQueueIndex > 1 and (Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_DAPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_TINGPAI" or Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP") then
 	        	for k,v in pairs(operationTemp.pais) do
 	        		local chipaiTemp = {}
 	        		chipaiTemp.position = operationTemp.position
 		        	chipaiTemp.pai = v
 	        		MahJong.PlayBackFaPai(chipaiTemp)
 	        	end
-	        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	if Player.operationQueue[Player.currentQueueIndex-1].oper_type == "PAI_OPER_TYPE_GIVEUP" then
+	        		MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-2],true)
+	        	else
+		        	MahJong.DaPaiPoolShow(Player.operationQueue[Player.currentQueueIndex-1],true)
+	        	end
 	        	MahJong.PlayBackDeleteOperation(operationTemp.position)
 	        end
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then

@@ -2136,7 +2136,7 @@ function ClickEvent.IsPopPanel(name)
 	-- body
 	if popPanelIndex > 0 then
 		for i=1,popPanelIndex do
-			if _popPanel[i].panel.name == name then
+			if _popPanel[i].panel and _popPanel[i].panel.name == name then
 				return true
 			end
 		end
@@ -2361,6 +2361,7 @@ function ClickEvent.ReplayOthersRound( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._watch_other_round)
 	Player._roomId = nil
+	WeChatPlatform:MatTrackCutomEvent("Button","HistoryChectOthersReplay")
 end
 
 function ClickEvent.PlayThisRound(gameObject)
@@ -2375,6 +2376,7 @@ function ClickEvent.PlayThisRound(gameObject)
 		Player.playBackRoundIndex = roundNumber
 		Player.CmdPlayBack(Player.playBackRoomID,roundNumber)
 	end
+	WeChatPlatform:MatTrackCutomEvent("Button","HistoryReplay")
 end
 
 function ClickEvent.ShareReplay(gameObject)
@@ -2564,12 +2566,14 @@ function ClickEvent.InviteWechatFriends(gameObject)
 	fanxing = string.sub(fanxing, 1, -2)
 	local description = "局数:"..tostring(Player._room_information.options.open_rands)..fanxing
 	WeChatPlatform:WXShare(title,description,"http://m.cloudbm.wang/download_app.html")
+	WeChatPlatform:MatTrackCutomEvent("Button","InviteFriend")
 end
 
 function ClickEvent.CopyRoomNum( ... )
 	-- body
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
 	ClickEvent.ShowToast(StringTable.Get(2031))
+	WeChatPlatform:MatTrackCutomEvent("Button","CopyRoomNum")
 end
 
 function ClickEvent.ChangeAccount(gameObject)
@@ -2585,30 +2589,35 @@ function ClickEvent.ChangeAccount(gameObject)
 	Player.LogWarning(Player._string_id)
 	Player.LogWarning(Player._player_data.common_prop.player_id)
 	Player.CmdSwitchAccount(Player._string_id,Player._player_data.common_prop.player_id)
+	WeChatPlatform:MatTrackCutomEvent("Button","SettingChangeAccount")
 end
 
 function ClickEvent.ServiveTerm1(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3004)
+	WeChatPlatform:MatTrackCutomEvent("Button","PersonalSecret")
 end
 
 function ClickEvent.ServiveTerm2(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3003)
+	WeChatPlatform:MatTrackCutomEvent("Button","PersonalServe")
 end
 
 function ClickEvent.ServiveTerm3(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3005)
+	WeChatPlatform:MatTrackCutomEvent("Button","PersonalUser")
 end
 
 function ClickEvent.ServiveTerm4(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3006)
+	WeChatPlatform:MatTrackCutomEvent("Button","PersonalUser")
 end
 
 function ClickEvent.ServiveTerm5(gameObject)
@@ -2621,6 +2630,7 @@ function ClickEvent.ServiceTerm6( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3001)
+	WeChatPlatform:MatTrackCutomEvent("Button","CreateRoomNotice")
 end
 
 function ClickEvent.FeedBackButton(gameObject)
@@ -2842,17 +2852,20 @@ function ClickEvent.Shop( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuMall")
 end
 
 function ClickEvent.Instruction( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._instruction_ui)
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuHowtoplay")
 end
 
 function ClickEvent.Mail( ... )
 	-- body
 	Player.LogWarning("mail")
 	ClickEvent.PopPanel(ClickEvent.panelTable._mail_ui)
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuMail")
 end
 
 function ClickEvent.VIPRecordButton( ... )
@@ -2922,6 +2935,7 @@ function ClickEvent.VIPRecordButton( ... )
 	if dataCount <= 5 and dataCount < Player.history_count then
 		ClickEvent.OnPullUpRefresh()
 	end
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuHistory")
 end
 
 function ClickEvent.OnReceiveHistory()
@@ -3022,12 +3036,14 @@ function ClickEvent.Promotion( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._activity_ui)
 	_popPanel[popPanelIndex].panel:GetChild("UnlimitedRoomCardButton").visible = false
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuCustomService")
 end
 
 function ClickEvent.Welfare( ... )
 	-- body
 	--ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
 	ClickEvent.ShowSingleYesWindow(3000)
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuWelfare")
 end
 
 function ClickEvent.Setting( ... )
@@ -3064,6 +3080,7 @@ function ClickEvent.Setting( ... )
 	_popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
 	_popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
 	--_popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuMall")
 end
 
 function ClickEvent.More( ... )
@@ -3075,18 +3092,21 @@ function ClickEvent.RoomCardNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallItemButton").selected = true
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuRoomCard")
 end
 
 function ClickEvent.DouNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuCoins")
 end
 
 function ClickEvent.GemsNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallGemsButton").selected = true
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuGems")
 end
 
 function ClickEvent.PriceButtonGems1( ... )
@@ -3298,6 +3318,7 @@ function ClickEvent.Avatar( ... )
 	else
 		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = ""
 	end
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuAvatar")
 end
 
 function ClickEvent.NextRoundButton( ... )
@@ -3692,6 +3713,7 @@ function ClickEvent.GuestLogin( gameObject )
         Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_GUEST")
 	end
 	Player.LogWarning("ClickEvent.GuestLogin")
+	WeChatPlatform:MatTrackCutomEvent("Button","GuestLogin")
 end
 
 function ClickEvent.WechatLogin(gameObject)
@@ -3761,6 +3783,7 @@ function ClickEvent.WechatLogin(gameObject)
 		ClickEvent.GetWeChatByHttp(nil,Player._string_id)
 		--Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
 	end
+	WeChatPlatform:MatTrackCutomEvent("Button","WechatLogin")
 end
 
 function ClickEvent.GetWeChatByHttp(paraCode,openId)
@@ -3816,6 +3839,7 @@ function ClickEvent.GetUserInfoByCode(wechatCode,openId)
 		        Player.wechat_headimgurl = jsonData.data.headimgurl
 		        Player.CmdWechatLogin(Player._string_id,Player.wechat_nickname,Player.wechat_sex,Player.wechat_headimgurl)
 		        Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
+		        WeChatPlatform:MatTrackCutomEvent("Button","WechatLoginSuccess")
 			elseif jsonData.code == 200201 or jsonData.code == 200200 then
 				Player.LogWarning("resetWechat")
 				os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
@@ -3920,6 +3944,7 @@ function ClickEvent.DouRoomButton( ... )
 	--]]
 
 	ClickEvent.ShowSingleYesWindow(3000)
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuMatchRoom")
 end
 
 function ClickEvent.GetintoRoomButton( ... )
@@ -3933,6 +3958,7 @@ function ClickEvent.GetintoRoomButton( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 	Player._roomId = ""
 	_popPanel[popPanelIndex].panel:GetChild("InputText").text = ""
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuJoinRoom")
 end
 
 function ClickEvent.CreateRoomButton( ... )
@@ -3951,10 +3977,10 @@ function ClickEvent.CreateRoomButton( ... )
 		costCard = "2/"
 	end
 	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = false
-	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
-	else
+	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.diamond)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
 	end
 	for i=1,7 do
 		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
@@ -3962,24 +3988,25 @@ function ClickEvent.CreateRoomButton( ... )
 	_popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
 	_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
+	WeChatPlatform:MatTrackCutomEvent("Button","MainMenuCreateRoom")
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 
 function ClickEvent.Round4( ... )
 	-- body
-	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.room_card_count)
-	else
+	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.diamond)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.room_card_count)
 	end
 end
 
 function ClickEvent.Round8( ... )
 	-- body
-	if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.room_card_count)
-	else
+	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.diamond)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.room_card_count)
 	end
 end
 
@@ -4213,26 +4240,28 @@ function ClickEvent.CreateButton( )
 			end
 		end
 	end
-	ClickEvent.Close()
 	if cardActivity == true then
+		ClickEvent.Close()
 		Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open)
 		Player.isFriendRoom = true
 	else
-		if _popPanel[popPanelIndex].panel:GetChild("RoomOwnerPay").selected == true then
+		if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
+			ClickEvent.Close()
+			if Player._player_data.common_prop.diamond >= costCard then
+				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_AA")
+				Player.isFriendRoom = true
+			else
+				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(35)
+			end
+		else
+			ClickEvent.Close()
 			if Player._player_data.common_prop.room_card_count >= costCard then
 				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_HOSTER")
 				Player.isFriendRoom = true
 			else
 				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
-			end
-		else
-			if Player._player_data.common_prop.room_card_count >= costCard then
-				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_AA")
-				Player.isFriendRoom = true
-			else
-				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(35)
 			end
 		end
 	end
