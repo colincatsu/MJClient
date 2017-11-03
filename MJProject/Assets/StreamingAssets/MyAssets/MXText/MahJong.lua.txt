@@ -2331,6 +2331,9 @@ function MahJong.PlayBackPrevious( ... )
 	local operationTemp
 	operationTemp = Player.operationQueue[Player.currentQueueIndex]
 	if Player.currentQueueIndex < 1 or not operationTemp then
+		if Player.currentQueueIndex > Player.queueLength then
+			Player.currentQueueIndex = Player.currentQueueIndex - 1
+		end
 		return
 	end
 	

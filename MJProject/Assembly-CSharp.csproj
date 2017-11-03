@@ -286,7 +286,7 @@
      <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\test_libevent.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\Enum.lua.txt" />
-     <None Include="Assets\StreamingAssets\MyAssets\1.0.1.1103.txt" />
+     <None Include="Assets\StreamingAssets\MyAssets\1.0.1.1104.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaRegister.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaInterfaceBridge.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaClassWrap.tpl.txt" />
