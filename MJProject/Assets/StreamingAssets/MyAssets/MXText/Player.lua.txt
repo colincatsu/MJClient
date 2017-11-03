@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.3.1102"
+Player.pc_version = "1.0.1.1103"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -161,6 +161,7 @@ Player.currentQueueIndex = 0
 Player.operationQueue = {}
 Player.playBackCountDown = 0
 Player.playBackInterval = 1
+Player.hasFinishReplay = false
 
 function Player.LoadData( ... )
     -- body
@@ -465,7 +466,7 @@ function Player.myUpdate( ... )
 
     if CS.UnityEngine.Input.GetKeyDown(CS.UnityEngine.KeyCode.Escape) then
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FairyMainUI" then
-            WeChatPlatform:MatTrackCutomKVEvent("Button","MainMenuPhoneback")
+            Player.CmdMatTrackCutomKVEvent("Button","MainMenuPhoneback","1")
         end
         if ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == true then
             return
@@ -563,6 +564,11 @@ end
 ---------------------------------------------------------------------------
 --数据封装
 ---------------------------------------------------------------------------
+
+function Player.CmdMatTrackCutomKVEvent(event_id,key,value)
+    -- body
+    WeChatPlatform:MatTrackCutomKVEvent(event_id,key,value)
+end
 
 function Player.CmdUpdateRoom(memberID)
     -- body
@@ -849,12 +855,21 @@ function Player.OnPlayBack(type_t,stuff)
         Player.operationQueue[Player.queueLength] = v
     end
     Player.isPlayBack = true
+    Player.hasFinishReplay = false
+    Player.isReplayFastBackward = false
     Player._my_player_data = {}
     Player._my_player_data.position = "POSITION_TYPE_EAST"
+    local isMyself = false
     for k,v in pairs(Player._all_players_data) do
         if v.player_id == Player._player_data.common_prop.player_id then
             Player._my_player_data.position = v.position
+            isMyself = true
         end
+    end
+    if isMyself == true then
+        Player.CmdMatTrackCutomKVEvent("Replay","ReplayRound","1")
+    else
+        Player.CmdMatTrackCutomKVEvent("Replay","ReplayOthers","1")
     end
     Player._room_information = {}
     Player._room_information.options = message.options
@@ -966,6 +981,7 @@ function Player.OnRoomState(type_t,stuff)
             Player.returnMainUI = true
             Player.MahJong.QuitVoiceRoom()
             ClickEvent.ShowSingleYesWindow(2009)
+            Player.CmdMatTrackCutomKVEvent("DissolvedRoomSuccess","NotInRound","1")
         end
     elseif message.oper_type == "GAME_OPER_TYPE_DISMISS_DISAGREE" then
         if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
@@ -1146,7 +1162,8 @@ function Player.OnRoomCalculate(type_t,stuff)
     end
 
     if message.calculte_type == "CALCULATE_TYPE_DISMISS" then
-       ClickEvent.ShowRoomCalculate()
+        ClickEvent.ShowRoomCalculate()
+        Player.CmdMatTrackCutomKVEvent("DissolvedRoomSuccess","Round"..tostring(Player.room_current_round),"1")
     end
 end
 
@@ -1795,6 +1812,7 @@ function Player.OnCreateRoom(type_t,stuff)
     this._roomId = message.room.room_id
     Player._room_information = message.room
     Player.CmdEnterRoom("ROOM_TYPE_FRIEND",this._roomId)
+    Player.CmdMatTrackCutomKVEvent("Button","SuccessIn","1")
     --Player.LoadScene("PlaySence")
     --this._roomType = message.room.room_type
 end
@@ -1865,6 +1883,11 @@ function Player.OnAlertMessage(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.AlertMessage", stuff)
     Player.LogWarning(message.error_code)
+    if message.error_code == 20 then
+        Player.CmdMatTrackCutomKVEvent("NotFoundRoom","NotFoundRoom","1")
+    elseif message.error_code == 34 then
+        Player.CmdMatTrackCutomKVEvent("Replay","ReplayFail","1")
+    end
     if message.error_show_type == "ERROR_SHOW_TYPE_NORMAL" then
         ClickEvent.ShowToast(StringTable.Get(message.error_code))
     elseif message.error_show_type == "ERROR_SHOW_TYPE_MESSAGE_BOX" then

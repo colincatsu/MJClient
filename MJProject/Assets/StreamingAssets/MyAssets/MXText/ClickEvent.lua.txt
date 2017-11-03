@@ -1419,10 +1419,12 @@ function ClickEvent.ShareRank( ... )
 			obj:GetChild("No1").visible = false
 		end
 	end
+	Player.CmdMatTrackCutomKVEvent("Share","Round","1")
 end
 
 function ClickEvent.ShareToWeChatFriends( ... )
 	-- body
+	Player.CmdMatTrackCutomKVEvent("Share","ShareToMoments","1")
 	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
@@ -1435,6 +1437,7 @@ end
 
 function ClickEvent.ShareToWeChat( ... )
 	-- body
+	Player.CmdMatTrackCutomKVEvent("Share","ShareToFriend","1")
 	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChatFriends").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("ShareToWeChat").visible = false
@@ -2309,6 +2312,7 @@ function ClickEvent.ReplayFastForward( ... )
 	CS.UnityEngine.Time.timeScale = 2
 	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
 	Player.isReplayFastBackward = false
+	Player.CmdMatTrackCutomKVEvent("Replay","QuickForward","1")
 end
 
 function ClickEvent.ReplayFastBackward( ... )
@@ -2316,6 +2320,7 @@ function ClickEvent.ReplayFastBackward( ... )
 	CS.UnityEngine.Time.timeScale = 2
 	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
 	Player.isReplayFastBackward = true
+	Player.CmdMatTrackCutomKVEvent("Replay","QuickBackward","1")
 end
 
 function ClickEvent.ReplayPlayButton( ... )
@@ -2323,6 +2328,7 @@ function ClickEvent.ReplayPlayButton( ... )
 	ClickEvent._play_ui.playPauseControl.selectedIndex = 1
 	CS.UnityEngine.Time.timeScale = 1
 	Player.isReplayFastBackward = false
+	Player.CmdMatTrackCutomKVEvent("Replay","Play","1")
 end
 
 function ClickEvent.ReplayPauseButton( ... )
@@ -2330,6 +2336,7 @@ function ClickEvent.ReplayPauseButton( ... )
 	ClickEvent._play_ui.playPauseControl.selectedIndex = 0
 	CS.UnityEngine.Time.timeScale = 0
 	Player.isReplayFastBackward = false
+	Player.CmdMatTrackCutomKVEvent("Replay","Pause","1")
 end
 
 function ClickEvent.ButtonPaste( ... )
@@ -2363,7 +2370,7 @@ function ClickEvent.ReplayOthersRound( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._watch_other_round)
 	Player._roomId = nil
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","HistoryChectOthersReplay")
+	Player.CmdMatTrackCutomKVEvent("Button","HistoryChectOthersReplay","1")
 end
 
 function ClickEvent.PlayThisRound(gameObject)
@@ -2378,7 +2385,7 @@ function ClickEvent.PlayThisRound(gameObject)
 		Player.playBackRoundIndex = roundNumber
 		Player.CmdPlayBack(Player.playBackRoomID,roundNumber)
 	end
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","HistoryReplay")
+	Player.CmdMatTrackCutomKVEvent("Button","HistoryReplay","1")
 end
 
 function ClickEvent.ShareReplay(gameObject)
@@ -2498,6 +2505,7 @@ function ClickEvent.ShowDissmiss( ... )
 			ClickEvent._play_ui.playerAlready.visible = false
 			ClickEvent._play_ui.gamePlayButton.visible = true
 		end
+		Player.CmdMatTrackCutomKVEvent("DissolvedRoom","Round"..tostring(Player.room_current_round),"1")
 		--Player.dismissHasClicked = true
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._only_yes_ui)
@@ -2508,6 +2516,7 @@ end
 function ClickEvent.GameDissolveButton(gameObject)
 	-- body
 	if Player.roomHasBegin == false and Player._room_information.options and Player._room_information.options.gmt_opened == false then
+		Player.CmdMatTrackCutomKVEvent("DissolvedRoom","NotInRound","1")
 		if Player._my_player_data.position == "POSITION_TYPE_EAST" then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2006)
@@ -2568,14 +2577,14 @@ function ClickEvent.InviteWechatFriends(gameObject)
 	fanxing = string.sub(fanxing, 1, -2)
 	local description = "局数:"..tostring(Player._room_information.options.open_rands)..fanxing
 	WeChatPlatform:WXShare(title,description,"http://m.cloudbm.wang/download_app.html")
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","InviteFriend")
+	Player.CmdMatTrackCutomKVEvent("Button","InviteFriend","1")
 end
 
 function ClickEvent.CopyRoomNum( ... )
 	-- body
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
 	ClickEvent.ShowToast(StringTable.Get(2031))
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","CopyRoomNum")
+	Player.CmdMatTrackCutomKVEvent("Button","CopyRoomNum","1")
 end
 
 function ClickEvent.ChangeAccount(gameObject)
@@ -2591,35 +2600,35 @@ function ClickEvent.ChangeAccount(gameObject)
 	Player.LogWarning(Player._string_id)
 	Player.LogWarning(Player._player_data.common_prop.player_id)
 	Player.CmdSwitchAccount(Player._string_id,Player._player_data.common_prop.player_id)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","SettingChangeAccount")
+	Player.CmdMatTrackCutomKVEvent("Button","SettingChangeAccount","1")
 end
 
 function ClickEvent.ServiveTerm1(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3004)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","PersonalSecret")
+	Player.CmdMatTrackCutomKVEvent("Button","PersonalSecret","1")
 end
 
 function ClickEvent.ServiveTerm2(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3003)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","PersonalServe")
+	Player.CmdMatTrackCutomKVEvent("Button","PersonalServe","1")
 end
 
 function ClickEvent.ServiveTerm3(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3005)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","PersonalUser")
+	Player.CmdMatTrackCutomKVEvent("Button","PersonalUser","1")
 end
 
 function ClickEvent.ServiveTerm4(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3006)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","PersonalUser")
+	Player.CmdMatTrackCutomKVEvent("Button","PersonalUser","1")
 end
 
 function ClickEvent.ServiveTerm5(gameObject)
@@ -2632,7 +2641,7 @@ function ClickEvent.ServiceTerm6( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_mid)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsMidShowText"):GetChild("Text").text = StringTable.Get(3001)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","CreateRoomNotice")
+	Player.CmdMatTrackCutomKVEvent("Button","CreateRoomNotice","1")
 end
 
 function ClickEvent.FeedBackButton(gameObject)
@@ -2854,20 +2863,20 @@ function ClickEvent.Shop( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuMall")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMall","1")
 end
 
 function ClickEvent.Instruction( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._instruction_ui)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuHowtoplay")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuHowtoplay","1")
 end
 
 function ClickEvent.Mail( ... )
 	-- body
 	Player.LogWarning("mail")
 	ClickEvent.PopPanel(ClickEvent.panelTable._mail_ui)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuMail")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMail","1")
 end
 
 function ClickEvent.VIPRecordButton( ... )
@@ -2937,7 +2946,7 @@ function ClickEvent.VIPRecordButton( ... )
 	if dataCount <= 5 and dataCount < Player.history_count then
 		ClickEvent.OnPullUpRefresh()
 	end
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuHistory")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuHistory","1")
 end
 
 function ClickEvent.OnReceiveHistory()
@@ -3038,14 +3047,14 @@ function ClickEvent.Promotion( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._activity_ui)
 	_popPanel[popPanelIndex].panel:GetChild("UnlimitedRoomCardButton").visible = false
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuCustomService")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuCustomService","1")
 end
 
 function ClickEvent.Welfare( ... )
 	-- body
 	--ClickEvent.PopPanel(ClickEvent.panelTable._welfare_ui)
 	ClickEvent.ShowSingleYesWindow(3000)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuWelfare")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuWelfare","1")
 end
 
 function ClickEvent.Setting( ... )
@@ -3082,7 +3091,7 @@ function ClickEvent.Setting( ... )
 	_popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
 	_popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
 	--_popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuMall")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMall","1")
 end
 
 function ClickEvent.More( ... )
@@ -3094,21 +3103,21 @@ function ClickEvent.RoomCardNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallItemButton").selected = true
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuRoomCard")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuRoomCard","1")
 end
 
 function ClickEvent.DouNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuCoins")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuCoins","1")
 end
 
 function ClickEvent.GemsNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallGemsButton").selected = true
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuGems")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuGems","1")
 end
 
 function ClickEvent.PriceButtonGems1( ... )
@@ -3320,7 +3329,7 @@ function ClickEvent.Avatar( ... )
 	else
 		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = ""
 	end
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuAvatar")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuAvatar","1")
 end
 
 function ClickEvent.NextRoundButton( ... )
@@ -3329,6 +3338,7 @@ function ClickEvent.NextRoundButton( ... )
 	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
 	Player.MahJong.ResetGameState()
 	ClickEvent.ShowRoomCalculate()
+	Player.CmdMatTrackCutomKVEvent("NextRound","Round"..tostring(Player.room_current_round),"1")
 	--if Player._calculate_table_number >= Player._room_information.options.open_rands then
 	--end
 end
@@ -3373,6 +3383,9 @@ function ClickEvent.YesButton( ... )
 		Player.returnMainUI = true
 		CS.UnityEngine.Time.timeScale = 1
 		Player.isReplayFastBackward = true
+		if Player.hasFinishReplay == false then
+			Player.CmdMatTrackCutomKVEvent("Replay","ReplayNotFinish","1")
+		end
 		Player.LoadScene("FairyMainUI")
 		return
 	elseif _popPanel[popPanelIndex] and _popPanel[popPanelIndex].panel and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText") and _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text == StringTable.Get(2002) then
@@ -3716,7 +3729,7 @@ function ClickEvent.GuestLogin( gameObject )
         Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_GUEST")
 	end
 	Player.LogWarning("ClickEvent.GuestLogin")
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","GuestLogin")
+	Player.CmdMatTrackCutomKVEvent("Button","GuestLogin","1")
 end
 
 function ClickEvent.WechatLogin(gameObject)
@@ -3786,7 +3799,7 @@ function ClickEvent.WechatLogin(gameObject)
 		ClickEvent.GetWeChatByHttp(nil,Player._string_id)
 		--Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
 	end
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","WechatLogin")
+	Player.CmdMatTrackCutomKVEvent("Button","WechatLogin","1")
 end
 
 function ClickEvent.GetWeChatByHttp(paraCode,openId)
@@ -3842,7 +3855,7 @@ function ClickEvent.GetUserInfoByCode(wechatCode,openId)
 		        Player.wechat_headimgurl = jsonData.data.headimgurl
 		        Player.CmdWechatLogin(Player._string_id,Player.wechat_nickname,Player.wechat_sex,Player.wechat_headimgurl)
 		        Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
-		        WeChatPlatform:MatTrackCutomKVEvent("Button","name","WechatLoginSuccess")
+		        Player.CmdMatTrackCutomKVEvent("Button","WechatLoginSuccess","1")
 			elseif jsonData.code == 200201 or jsonData.code == 200200 then
 				Player.LogWarning("resetWechat")
 				os.remove(CS.UnityEngine.Application.persistentDataPath.."/openID.txt")
@@ -3947,7 +3960,7 @@ function ClickEvent.DouRoomButton( ... )
 	--]]
 
 	ClickEvent.ShowSingleYesWindow(3000)
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuMatchRoom")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMatchRoom","1")
 end
 
 function ClickEvent.GetintoRoomButton( ... )
@@ -3961,7 +3974,7 @@ function ClickEvent.GetintoRoomButton( ... )
 	ClickEvent.PopPanel(ClickEvent.panelTable._join_room_ui)
 	Player._roomId = ""
 	_popPanel[popPanelIndex].panel:GetChild("InputText").text = ""
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuJoinRoom")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuJoinRoom","1")
 end
 
 function ClickEvent.CreateRoomButton( ... )
@@ -3991,7 +4004,7 @@ function ClickEvent.CreateRoomButton( ... )
 	_popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
 	_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
-	WeChatPlatform:MatTrackCutomKVEvent("Button","name","MainMenuCreateRoom")
+	Player.CmdMatTrackCutomKVEvent("Button","MainMenuCreateRoom","1")
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
 
@@ -4263,6 +4276,7 @@ function ClickEvent.CreateButton( )
 				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_HOSTER")
 				Player.isFriendRoom = true
 			else
+				Player.CmdMatTrackCutomKVEvent("NotEnoughRoomCard","NotEnoughRoomCard","1")
 				ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 				_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
 			end
@@ -4272,6 +4286,59 @@ function ClickEvent.CreateButton( )
 	Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands)
 	Player.isFriendRoom = true
 	--]]
+end
+
+function ClickEvent.MatModelCheck( ... )
+	-- body
+	if _popPanel[popPanelIndex].panel:GetChild("ClassicMode").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","ClassicMode","1")
+	elseif _popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","HighriskMode","1")
+	end
+
+	if _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","Mulit32","1")
+	elseif _popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","MulitNoLimit","1")
+	end
+
+	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","Round8","1")
+	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","Round16","1")
+	end
+
+	if _popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","Gvoice","1")
+	end
+
+	local extend_type_count = 1
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan01").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","ZhanLiHu","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan02").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","DaiJiaHu","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan03").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","XuanFengGang","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan04").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","BaoPai","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","KeDuanMen","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan06").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","QingYiSe","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("ChooseFan07").selected then
+		Player.CmdMatTrackCutomKVEvent("Button","BaoSanJia","1")
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
+		Player.CmdMatTrackCutomKVEvent("Button","AAPay","1")
+	else
+		Player.CmdMatTrackCutomKVEvent("Button","RoomOwnerPay","1")
+	end
 end
 
 function ClickEvent.JoinRoomId( gameObject )
@@ -4508,8 +4575,10 @@ function ClickEvent.GameListenButton(gameObject)
 	-- body
 	if _currentPanel.panel:GetChild("GameListenButton").selected then
 		WeChatPlatform.m_voiceengine:CloseSpeaker()
+		Player.CmdMatTrackCutomKVEvent("Gvoice","CloseReceiver","1")
 	else
 		WeChatPlatform.m_voiceengine:OpenSpeaker()
+		Player.CmdMatTrackCutomKVEvent("Gvoice","OpenReceiver","1")
 	end
 end
 
@@ -4518,6 +4587,7 @@ function ClickEvent.GameVoiceButton(gameObject)
 	if _currentPanel.panel:GetChild("GameVoiceButton").selected then
 		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 0
 		WeChatPlatform.m_voiceengine:CloseMic()
+		Player.CmdMatTrackCutomKVEvent("Gvoice","CloseMicrophone","1")
 	else
 		if CS.LuaCommon.isAndroid then
 			Player._player_data.game_setting.music = false
@@ -4527,6 +4597,7 @@ function ClickEvent.GameVoiceButton(gameObject)
 		end
 		ClickEvent._play_ui.playerAvatarInfo:GetChild("VoiceState"):GetController("State").selectedIndex = 1
 		WeChatPlatform.m_voiceengine:OpenMic()
+		Player.CmdMatTrackCutomKVEvent("Gvoice","OpenMicrophone","1")
 	end
 end
 
@@ -4568,8 +4639,10 @@ function ClickEvent.GameBackButton(gameObject)
 		if Player.roomHasBegin == false then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2003)
+			Player.CmdMatTrackCutomKVEvent("Back","BackNotInRound","1")
 		else
 			ClickEvent.ShowSingleYesWindow(2003)
+			Player.CmdMatTrackCutomKVEvent("Back","BackInRound","1")
 		end
 	end
 end

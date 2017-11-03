@@ -2127,6 +2127,10 @@ function MahJong.PlayBackNextOperation( ... )
 	Player.LogWarning(Player.currentQueueIndex)
 	local operationTemp = Player.operationQueue[Player.currentQueueIndex]
 	Player.LogWarning(operationTemp.oper_type)
+	if Player.currentQueueIndex == Player.queueLength then
+		Player.hasFinishReplay = true
+		Player.CmdMatTrackCutomKVEvent("Replay","ReplayFinish","1")
+	end
 	if operationTemp then
 		if operationTemp.oper_type == "PAI_OPER_TYPE_DAPAI" then
 			MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
