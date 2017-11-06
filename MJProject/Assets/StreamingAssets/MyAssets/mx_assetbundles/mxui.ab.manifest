@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 730375021
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 453c42f4619455608fb56ea392b46d74
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: eb6b06b1b3e2dbe026521de7a467fcd7
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/FairyUI/MXUI@atlas0_1.png
+- Assets/Resources/FairyUI/MXUI@atlas3.png
+- Assets/Resources/FairyUI/MXUI@atlas0.png
+- Assets/Resources/FairyUI/MXUI.bytes
+- Assets/Resources/FairyUI/MXUI@sprites.bytes
+Dependencies: []

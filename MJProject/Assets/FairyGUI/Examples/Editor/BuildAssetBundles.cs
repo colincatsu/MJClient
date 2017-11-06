@@ -8,16 +8,13 @@ public class BuildAssetBundles
 	public static void Builde()
 	{
 #if UNITY_5
-		for (int i = 0; i < 10; i++)
-		{
-			AssetImporter.GetAtPath("Assets/FairyGUI/Examples/Resources/Icons/i" + i + ".png").assetBundleName = "fairygui-examples/i" + i + ".ab";
-		}
+        AssetImporter.GetAtPath("Assets/Resources/FairyUI/MXUI.bytes").assetBundleName = "mx_assetbundles/mxui.ab";
+        AssetImporter.GetAtPath("Assets/Resources/FairyUI/MXUI@sprites.bytes").assetBundleName = "mx_assetbundles/mxui.ab";
+        AssetImporter.GetAtPath("Assets/Resources/FairyUI/MXUI@atlas0.png").assetBundleName = "mx_assetbundles/mxui.ab";
+        AssetImporter.GetAtPath("Assets/Resources/FairyUI/MXUI@atlas0_1.png").assetBundleName = "mx_assetbundles/mxui.ab";
+        AssetImporter.GetAtPath("Assets/Resources/FairyUI/MXUI@atlas3.png").assetBundleName = "mx_assetbundles/mxui.ab";
 
-		AssetImporter.GetAtPath("Assets/FairyGUI/Examples/Resources/UI/BundleUsage.bytes").assetBundleName = "fairygui-examples/bundleusage.ab";
-		AssetImporter.GetAtPath("Assets/FairyGUI/Examples/Resources/UI/BundleUsage@sprites.bytes").assetBundleName = "fairygui-examples/bundleusage.ab";
-		AssetImporter.GetAtPath("Assets/FairyGUI/Examples/Resources/UI/BundleUsage@atlas0.png").assetBundleName = "fairygui-examples/bundleusage.ab";
-
-		BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.None, BuildTarget.Android);
+        BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.None, BuildTarget.Android);
 #else
 		for (int i = 0; i < 10; i++)
 		{

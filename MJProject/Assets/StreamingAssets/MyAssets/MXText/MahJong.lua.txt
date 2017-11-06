@@ -2929,6 +2929,14 @@ function MahJong.PlayBackDeletePai(positon,paiData,paisData)
 end
 ---------------------------------------------------------------------------
 
+function MahJong.ShouldTingPai( ... )
+	-- body
+	if _player_father and _player_father.currentPaiNumber then
+		return MahJong.ShouldDaPai(_player_father.currentPaiNumber)
+	end
+	return true
+end
+
 function MahJong.ShouldDaPai( cardCount )
 	-- body
 	if cardCount == 14 or cardCount == 11 or cardCount == 8 or cardCount == 5 or cardCount == 2 then

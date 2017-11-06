@@ -1,5 +1,5 @@
 
-¯U
+èV
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -72,7 +72,7 @@ limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 
 model_path (
 
-voice_path ("€
+voice_path ("Ú
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -93,7 +93,8 @@ voice_path ("€
 mall_activity_id (!
 room_dismiss_timeout (:120"
 room_dismiss_cooldown (:180
-room_aapay_diamond (:3"‘
+room_aapay_diamond (:3
+limit_version ("‘
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp

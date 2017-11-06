@@ -1,0 +1,32 @@
+OnlyLoadSence = {}
+local util = require "xlua.util"
+local function AsyncYieldReturn(to_yield, cb)
+    self:YieldAndCallback(to_yield, cb)
+end
+local yield_return = util.async_to_sync(AsyncYieldReturn)
+
+function awake()
+	-- body
+	UIConfig.defaultFont = "MJFont"
+end
+
+function start()
+	-- body
+	if Player then
+		OnlyLoadSence.BeginGame()
+	end
+end
+
+function update( ... )
+	-- body
+end
+
+function OnlyLoadSence.BeginGame( ... )
+	-- body
+	local LoadingCT = require "LoadingCT"
+	LoadingCT.self = self
+	LoadingCT.Awake()
+	LoadingCT.Start()
+end
+
+return OnlyLoadSence

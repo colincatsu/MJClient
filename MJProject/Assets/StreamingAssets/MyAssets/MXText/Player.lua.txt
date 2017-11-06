@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1104"
+Player.pc_version = "1.0.1.1106"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -887,8 +887,8 @@ function Player.OnUpdateClientData(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.UpdateClientData",stuff)
-    Player.LogWarning("ip_address:"..message.client_info.client_ip)
-    if message.client_info.client_ip and message.client_info.client_ip ~= "" then
+    Player.LogWarning("ip_address:"..message.client_info.ip_address)
+    if message.client_info.ip_address and message.client_info.ip_address ~= "" then
         Player._client_infomation = message.client_info
     end
 end

@@ -77,7 +77,7 @@ local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
-	UIPackage.AddPackage("FairyUI/MXUI")
+	ClickEvent.AddPackage(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/mx_assetbundles/mxui.ab")
 	UIConfig.defaultFont = "MJFont"
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
 	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
@@ -88,6 +88,13 @@ function ClickEvent.Awake( ... )
 		ClickEvent.panelTable._choose_ui = ClickEvent.panelTable._choose_ui_ios
 	end
 end
+
+function ClickEvent.AddPackage(uiPath)
+	-- body
+	local bundle = CS.UnityEngine.AssetBundle.LoadFromFile(uiPath)
+	UIPackage.AddPackage(bundle)
+end
+
 function ClickEvent.Start(loadUI)
 	-- body
 	ClickEvent.uiPanel.ui.visible = false
@@ -1021,7 +1028,9 @@ function ClickEvent.PaiOperationState()
 				end
 			elseif m == "PAI_OPER_TYPE_TINGPAI" then
 				Player.LogWarning("tingpai")
-				Player.MahJong.SetCurrentState(operationState.TINGPAI)
+				if MahJong.ShouldTingPai() == true then
+					Player.MahJong.SetCurrentState(operationState.TINGPAI)
+				end
 			elseif m == "PAI_OPER_TYPE_BAOPAI" then
 				
 			else
@@ -1032,7 +1041,7 @@ function ClickEvent.PaiOperationState()
     	end
     end
     Player.LogWarning("tingpaiCount"..tingpaiCount)
-    if tingpaiCount > 0 then
+    if tingpaiCount > 0 and MahJong.ShouldTingPai() == true then
     	ClickEvent._play_ui.cancelButton.visible = true
     	ClickEvent._play_ui.passButton.visible = false
 		ClickEvent.AddOperationButton("GameTingButton")
@@ -3325,7 +3334,7 @@ function ClickEvent.Avatar( ... )
 	end
 	if Player._client_infomation ~= {} then
 		Player.LogWarning("hasIp")
-		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = Player._client_infomation.client_ip
+		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = Player._client_infomation.ip_address
 	else
 		_popPanel[popPanelIndex].panel:GetChild("IPAddress").text = ""
 	end

@@ -36,6 +36,8 @@ local downloadSize = 0
 local currentWWW = nil
 local loadingBarProgress = 0
 
+local www = nil
+
 function awake()
 	-- body
 	UIConfig.defaultFont = "MJFont"
@@ -76,12 +78,17 @@ end
 
 function update( ... )
 	-- body
-	LoadingSence.SetLoadingBar(CS.AssetsHandle.progress)
 	if isReloadData == true then
 		if CS.AssetsHandle.progress >= 1 then
 			isReloadData = false
 			LoadingSence.BeginGame()
 		end
+	end
+
+	if www then
+		LoadingSence.SetLoadingBar(www.progress)
+		downloadProgress.text = tostring(math.ceil(www.bytesDownloaded * www.progress/1024)).."kb/"..tostring(math.ceil(www.bytesDownloaded/1024)).."kb"
+		--CS.UnityEngine.Debug.LogWarning(www.bytesDownloaded)
 	end
 	--[[
 	if isReloadData and isReloadData == true then
@@ -113,7 +120,7 @@ function LoadingSence.DownloadData( ... )
 			local header = {}
 			header.jwt = httpToken
 			header["User-Agent"] = "BH-MJProject1.0.2.0916"
-			local www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
+			www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
 			--[[
 			while currentWWW.isDone == false do
 				loadingBarProgress = currentWWW.progress
@@ -123,7 +130,6 @@ function LoadingSence.DownloadData( ... )
 			--]]
 			--downloadSize = www.bytesDownloaded
 			yield_return(www)
-			downloadProgress.text = tostring(math.ceil(www.bytesDownloaded/1024)).."kb/"..tostring(math.ceil(www.bytesDownloaded/1024)).."kb"
 			if not www.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
 				if not CS.System.IO.Directory:Exists(path)then
@@ -209,8 +215,7 @@ function LoadingSence.BeginGame( ... )
 	-- body
 	local LoadingCT = require "LoadingCT"
 	LoadingCT.self = self
-	LoadingCT.Awake()
-	LoadingCT.Start()
+	LoadingCT.ToSence("FairyMainUI")
 end
 
 function LoadingSence.GetServerMd5( ... )

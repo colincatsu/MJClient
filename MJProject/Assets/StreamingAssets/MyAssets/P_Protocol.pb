@@ -1,5 +1,5 @@
 
-±¢
+ì¢
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -56,7 +56,7 @@ headimgurl (
 create_time (*
 options (2.Adoter.Asset.RoomOptions&
 list (2.Adoter.Asset.GameRecord4
-player_brief_list (2.Adoter.Asset.PlayerBrief"Ù
+player_brief_list (2.Adoter.Asset.PlayerBrief"ó
 
 CommonProp
 	player_id (
@@ -73,7 +73,8 @@ CommonProp
 room_card_rounds (
 total_win_rounds (
 streak_wins (
-score ("•
+score (
+score_win_rounds ("•
 PlayerCommonLimit9
 elements (2'.Adoter.Asset.PlayerCommonLimit.ElementE
 Element
@@ -89,13 +90,16 @@ time_stamp (
 time_stamp ("/
 Location
 	longitude (
-latitude ("s
-ClientInfomation
-	client_ip (
+latitude ("“
+ClientInfomation
+
+ip_address (
 system (
 
 phone_type ((
-location (2.Adoter.Asset.Location"Ã
+location (2.Adoter.Asset.Location
+version (
+imei ("Ã
 Mail
 title (E
 send_player (:0\347\263\273\347\273\237\351\202\256\344\273\266

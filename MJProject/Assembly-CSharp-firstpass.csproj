@@ -54,10 +54,10 @@
      <None Include="Assets\Scripts\LuaScripts\Resources\PlaySence.lua.txt" />
      <None Include="Assets\XLua\Examples\06_Coroutine\Resources\cs_coroutine.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\StringTable.lua.txt" />
-     <None Include="Assets\Resources\FairyUI\MXText.xml" />
      <None Include="Assets\XLua\Src\Editor\LinkXmlGen\LinkXmlGen.tpl.txt" />
      <None Include="Assets\XLua\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\AddOn\FairyGUI-BlurFilter.shader" />
+     <None Include="Assets\Scripts\LuaScripts\Resources\OnlyLoadSence.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\LoadingCT.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-Text.shader" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\Effect.lua.txt" />
@@ -93,7 +93,7 @@
      <None Include="Assets\XLua\Resources\perf\memory.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\test_libevent.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\Enum.lua.txt" />
-     <None Include="Assets\StreamingAssets\MyAssets\1.0.1.1104.txt" />
+     <None Include="Assets\StreamingAssets\MyAssets\1.0.1.1106.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaRegister.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaInterfaceBridge.tpl.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\LuaClassWrap.tpl.txt" />
