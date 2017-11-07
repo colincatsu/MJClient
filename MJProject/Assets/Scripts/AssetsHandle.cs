@@ -14,7 +14,7 @@ public class AssetsHandle : MonoBehaviour {
     public static OnFinish dataFinish;
     public static void UnPackAssetFolder(string inpath ,string outpath)
     {
-        UPKFolder.UnPackFolderAsync(inpath, outpath, ShowProgress);
+        UPKFolder.UnPackFolder(inpath, outpath, ShowProgress);
     }
     public static void ShowProgress(long all, long now)
     {
