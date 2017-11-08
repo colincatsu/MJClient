@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1107"
+Player.pc_version = "1.0.1.1108"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -162,6 +162,10 @@ Player.operationQueue = {}
 Player.playBackCountDown = 0
 Player.playBackInterval = 1
 Player.hasFinishReplay = false
+
+Player.isBeginRound = false
+Player.saiziNumber1 = 0
+Player.saiziNumber2 = 0
 
 function Player.LoadData( ... )
     -- body
@@ -1449,7 +1453,10 @@ function Player.OnRandomSaizi(type_t,stuff)
                 number2 = v
             end
         end
-        Player.MahJong.PlayDoubleDices(number1,number2)
+        Player.isBeginRound = true
+        Player.saiziNumber1 = number1
+        Player.saiziNumber2 = number2
+        Player.MahJong.AnimationPlay()
     elseif message.reason_type == "REASON_TYPE_TINGPAI" then
         for k,v in pairs(message.random_result) do
             Player.LogWarning("Player.isTingPaied:")

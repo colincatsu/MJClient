@@ -39,14 +39,14 @@ local _chi_pai_father = {}--吃牌父节点
 _chi_pai_father.cards = {}
 local _gang_pai_father = {}--杠牌父节点
 _gang_pai_father.cards = {}
-local _pai_bigger = 0.915--player牌放大倍数
-local _pai_gap = 1.015--player牌间隔
+local _pai_bigger = 1--player牌放大倍数
+local _pai_gap = 1.01--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
 local _gai_obj--盖子
 local _pointFather = {}--牌池父节点
-local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036,zhuaGap = 0.005,shadowShift = 0.00005}
+local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036,zhuaGap = 0.01,shadowShift = 0.00005}
 local _modelPool = {}--没抓的牌池
 local zhuaPaiBeginPos = 0
 local modelPoolFrontPointer = 0--抓牌指针
@@ -89,8 +89,8 @@ local _dice_red = nil
 local _dice_white = nil
 local _red_dice_animation = nil
 local _white_dice_animation = nil
-local _rotate_speed = 2000
-local _play_dice_animation_time = 2--dice旋转时间
+local _rotate_speed = 4000
+local _play_dice_animation_time = 0.3--dice旋转时间
 local diceCountDown = _play_dice_animation_time
 local redDicePoints = 1
 local whiteDicePoints = 1
@@ -122,6 +122,19 @@ local _my_position = ""
 local diceHasPlay = false
 
 local isPlayersTurnNew = false
+--倒计时材质偏移
+local countDownOffset = {
+	[0] = {x = 0.8,y = 0.5},
+	[1] = {x = 0,y = 0},
+	[2] = {x = 0.2,y = 0},
+	[3] = {x = 0.4,y = 0},
+	[4] = {x = 0.6,y = 0},
+	[5] = {x = 0.8,y = 0.5},
+	[6] = {x = 0,y = 0.5},
+	[7] = {x = 0.2,y = 0.5},
+	[8] = {x = 0.4,y = 0.5},
+	[9] = {x = 0.6,y = 0.5},
+}
 
 function MahJong.Awake( ... )
 	-- body
@@ -145,7 +158,7 @@ function MahJong.Start()
 		ClickEvent.Start(ClickEvent.panelTable._play_game_ui)
 		ClickEvent.CreateOperationButton()
 		MahJong.ModelPoolInit()
-		MahJong.AnimationPlay()
+		--MahJong.AnimationPlay()
 	else
 		ClickEvent.Start(ClickEvent.panelTable._replay_ui)
 		MahJong.UpdateMyDataState()
@@ -176,6 +189,7 @@ function MahJong.Start()
 	Player.hasShowIPSame = false
 	Player.roomall_player_brief = nil
 	Player.canShowPlayButton = true
+	Player.isBeginRound = false
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -220,18 +234,6 @@ function MahJong.Start()
 	_modelPool[1]:SetActive(false)
 	_modelPool[2]:SetActive(false)
 	MahJong.ModelPoolDelete()
-	if not _player_father then
-		_player_father = {}
-		_player_father.cards = {}
-		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
-		_player_father.father.transform:SetParent(self.transform)
-	end
-	local paiCount = 0
-    for i=1, 14 do
-    	paiCount = paiCount + 1
-		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
-    end
-	MahJong.SortPlayerPai()
 	MahJong.CreateOtherPai("next",9)
 	paisData = {
 		{
@@ -248,6 +250,20 @@ function MahJong.Start()
 	MahJong.LiuJuPai(paisData)
 	MahJong.CreateGangPai({card_type = "CARD_TYPE_WANZI",card_value = 1)
 	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
+	Player._banker_position = 1
+	MahJong.PlayDoubleDices(1,2)
+	if not _player_father then
+		_player_father = {}
+		_player_father.cards = {}
+		_player_father.father = CS.UnityEngine.GameObject("PlayerFather")
+		_player_father.father.transform:SetParent(MahJong.self.transform)
+	end
+	local paiCount = 0
+    for i=1, 14 do
+    	paiCount = paiCount + 1
+		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
+    end
+	MahJong.SortPlayerPai()
 	--]]
 	
 end
@@ -384,13 +400,13 @@ end
 function MahJong.PlayerModelCameraPos()
 	-- body
 	if string.format("%.1f", Camera.main.aspect) == "1.3" then
-		Camera.main.orthographicSize = 0.15
 		Camera.main.transform.parent:GetComponent("Camera").fieldOfView = 38
 		--Camera.main.transform.parent:GetComponent("Camera").aspect = 5/3
 		--Camera.main.aspect = 5/3--CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
 	end
+	Camera.main.orthographicSize = 0.2 * Camera.main.pixelHeight/Camera.main.pixelWidth
 	Player.LogWarning("jxyCamera:"..Camera.main.aspect)
-	_player_middle_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth*13/28,Camera.main.pixelHeight/100,0.35))
+	_player_middle_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth*4.9/11,Camera.main.pixelHeight/100,0.35))
 	_player_third_pos = Camera.main:ScreenToWorldPoint(newVector3(Camera.main.pixelWidth*2/5,Camera.main.pixelHeight/100,0.35))
 	_player_base_pos = _player_middle_pos
 end
@@ -1369,6 +1385,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 	Player.isPlayerPaiShowing = true
 	Player.LogWarning("ReturnRoomSync")
 	Player.LogWarning(paiData)
+	MahJong.AnimationPlay()
 	_current_dapai.whichPlayer = whoseTurn
 	if paiData == {} then
 		Player.LogWarning("paiData nil")
@@ -1806,16 +1823,16 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
         end
 	end
 	local paiPoolCount = 0
-	if whoseTurn == "POSITION_TYPE_EAST" then
+	if whoseTurn == "POSITION_TYPE_EAST" and _pai_pool_show.point_d.cards then
 		_current_dapai.object = _pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber]
 		paiPoolCount = _pai_pool_show.point_d.paiNumber
-	elseif whoseTurn == "POSITION_TYPE_SOUTH" then
+	elseif whoseTurn == "POSITION_TYPE_SOUTH" and _pai_pool_show.point_n.cards then
 		_current_dapai.object = _pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber]
 		paiPoolCount = _pai_pool_show.point_n.paiNumber
-	elseif whoseTurn == "POSITION_TYPE_WEST" then
+	elseif whoseTurn == "POSITION_TYPE_WEST" and _pai_pool_show.point_x.cards then
 		_current_dapai.object = _pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber]
 		paiPoolCount = _pai_pool_show.point_x.paiNumber
-	elseif whoseTurn == "POSITION_TYPE_NORTH" then
+	elseif whoseTurn == "POSITION_TYPE_NORTH" and _pai_pool_show.point_b.cards then
 		_current_dapai.object = _pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber]
 		paiPoolCount = _pai_pool_show.point_b.paiNumber
 	end
@@ -2072,6 +2089,22 @@ function MahJong.PlayBackSortOtherPai( ... )
 		else
 			v.obj.transform.localPosition = newVector3(-(_player_pai_pool._opposite_pai_number-1)*_modelSize.width/2 + (k-1)*_modelSize.width,_modelSize.length/2,_modelSize.length/2)
 		end
+	end
+end
+
+function MahJong.PLayBackSetWhiteColor( ... )
+	-- body
+	for k,v in pairs(_player_pai_pool._next_card) do
+		v.obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+	end
+	for k,v in pairs(_player_pai_pool._forward_card) do
+		v.obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+	end
+	for k,v in pairs(_player_pai_pool._opposite_card) do
+		v.obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+	end
+	for k,v in pairs(_player_father.cards) do
+		v.child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
 	end
 end
 
@@ -2494,6 +2527,8 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
         if isNotSort and isNotSort == true then
         	_player_father.cards[_player_father.currentPaiNumber].parent.transform.localPosition = _player_father.cards[_player_father.currentPaiNumber-1].parent.transform.localPosition
 			- newVector3(_modelSize.width+_modelSize.zhuaGap,0,0)
+			MahJong.PLayBackSetWhiteColor()
+			_player_father.cards[_player_father.currentPaiNumber].child:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
 			MahJong.PlayBackSortZhuaPlayerPai()
         else
 	        MahJong.PlayBackSortZhuaPlayerPai()
@@ -2516,6 +2551,8 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
         	MahJong.AddModelShadow(_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         if isNotSort and isNotSort == true then
+        	MahJong.PLayBackSetWhiteColor()
+        	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj.transform.localPosition = _player_pai_pool._next_card[_player_pai_pool._next_pai_number - 1].obj.transform.localPosition +
         	newVector3(0,0,-_modelSize.width - _modelSize.zhuaGap)
         	MahJong.PlayBackSortZhuaOtherPai(playerPos)
@@ -2540,6 +2577,8 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
         	MahJong.AddModelShadow(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         if isNotSort and isNotSort == true then
+        	MahJong.PLayBackSetWhiteColor()
+        	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.transform.localPosition = _player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number - 1].obj.transform.localPosition +
         	newVector3(_modelSize.width + _modelSize.zhuaGap,0,0)
         	MahJong.PlayBackSortZhuaOtherPai(playerPos)
@@ -2564,6 +2603,8 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
         	MahJong.AddModelShadow(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj,-_modelSize.length/2+_modelSize.shadowShift,1)
         end
         if isNotSort and isNotSort == true then
+        	MahJong.PLayBackSetWhiteColor()
+        	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj:GetComponent("Renderer").material:SetColor("_MainTint",CS.UnityEngine.Color(0.45,0.74,0.93,1))
 	        _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.transform.localPosition = _player_pai_pool._forward_card[_player_pai_pool._forward_pai_number - 1].obj.transform.localPosition + 
 	        newVector3(0,0,_modelSize.width + _modelSize.zhuaGap)
 	        MahJong.PlayBackSortZhuaOtherPai(playerPos)
@@ -4778,9 +4819,9 @@ function MahJong.AnimationPlay()
 	switch = {
 		[_animationName.stepDown] = function( ... )
 			-- body
-			MahJong.ModelPoolSetActive(true)
 			_myAnimation:Play(_animationName.stepMiddle)
 			_animationState = _animationName.stepMiddle
+			MahJong.ModelPoolSetActive(true)
 		end,
 		[_animationName.stepMiddle] = function( ... )
 			-- body
@@ -4791,6 +4832,10 @@ function MahJong.AnimationPlay()
 			-- body
 			_animationState = ""
 			Player.LogWarning("startGame")
+			if Player.isBeginRound and Player.isBeginRound == true then
+				Player.isBeginRound = false
+				Player.MahJong.PlayDoubleDices(Player.saiziNumber1,Player.saiziNumber2)
+			end
 		end,
 	}
 	local fSwitch = switch[_animationState]
@@ -4952,6 +4997,8 @@ function MahJong.Update()
 		diceCountDown = diceCountDown + CS.UnityEngine.Time.deltaTime
 		_dice_obj.transform:Rotate(newVector3.up * CS.UnityEngine.Time.deltaTime * _rotate_speed)
 		if diceCountDown + CS.UnityEngine.Time.deltaTime >= _play_dice_animation_time then
+			_red_dice_animation[tostring(redDicePoints)].speed = 2
+			_white_dice_animation[tostring(whiteDicePoints)].speed = 2
 			_red_dice_animation:Play(tostring(redDicePoints))
 			_white_dice_animation:Play(tostring(whiteDicePoints))
 			AudioPlayer.PlaySound(AudioPlayer._audio_name.Dice,false,1)

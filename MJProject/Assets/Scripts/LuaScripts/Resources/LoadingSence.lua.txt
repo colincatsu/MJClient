@@ -35,6 +35,9 @@ local loadingUI = nil
 local loadingBar = nil
 local downloadProgress = nil
 local downloadSize = 0
+local hotPackageTable = nil
+local tableLength = 0
+local tableIndex = 0
 
 local www = nil
 
@@ -79,8 +82,7 @@ function update( ... )
 	-- body
 	if www then
 		LoadingSence.SetLoadingBar(www.progress)
-		downloadProgress.text = tostring(math.ceil(100 * www.progress/1024)).."kb/"..tostring(math.ceil(100/1024)).."kb"
-		CS.UnityEngine.Debug.LogWarning(www.bytesDownloaded)
+		downloadProgress.text = tostring(math.ceil(downloadSize * www.progress/1024)).."kb/"..tostring(math.ceil(downloadSize/1024)).."kb"
 	end
 end
 
@@ -90,8 +92,16 @@ function LoadingSence.SetLoadingBar(progress)
 	loadingBar.value = progessInt
 end
 
-function LoadingSence.DownloadData( ... )
+function LoadingSence.DownloadData()
 	-- body
+	tableIndex = tableIndex + 1
+	if tableIndex > tableLength then
+		return
+	end
+	os.remove(dataPath.."hotfixVersion.txt")
+	os.remove(dataPath.."MyAssets.upk")
+	serveVersion = tostring(hotPackageTable[tableIndex].version)
+	downloadSize = hotPackageTable[tableIndex].size
 	local folder = CS.System.IO.FileInfo(CS.UnityEngine.Application.persistentDataPath.."/MyAssets.upk")
 	if not folder.Exists then
 		--isReloadData = true
@@ -99,7 +109,7 @@ function LoadingSence.DownloadData( ... )
 			local header = {}
 			header.jwt = httpToken
 			header["User-Agent"] = "BH-MJProject1.0.2.0916"
-			www = CS.UnityEngine.WWW(HotFixUrl, rapidjson.encode(header.jwt), header)
+			www = CS.UnityEngine.WWW(HotFixUrl.."?ver="..serveVersion, rapidjson.encode(header.jwt), header)
 			yield_return(www)
 			if not www.error then
 				local path = CS.UnityEngine.Application.persistentDataPath
@@ -112,7 +122,13 @@ function LoadingSence.DownloadData( ... )
 				local mFile = io.open(dataPath.."hotfixVersion.txt" ,"w")
 		        mFile:write(serveVersion)
 		        mFile:close()
-		        LoadingSence.BeginGame()
+		        localVersion = serveVersion
+		        if tonumber(localVersion) >= hotPackageTable[tableLength].version then
+					LoadingSence.BeginGame()
+				else
+			        LoadingSence.DownloadData()
+				end
+		        --LoadingSence.BeginGame()
 			else
 				CS.UnityEngine.Debug.LogWarning('error:'..www.error)
 			end
@@ -233,21 +249,29 @@ function LoadingSence.RequestServerVersion( ... )
 		local header = {}
 		header.jwt = httpToken
 		header["User-Agent"] = "BH-MJProject1.0.2.0916"
-		local www = CS.UnityEngine.WWW(Md5Url, rapidjson.encode(header.jwt), header)
+		local www = CS.UnityEngine.WWW(Md5Url.."?ver="..localVersion, rapidjson.encode(header.jwt), header)
 		yield_return(www)
 		if not www.error then
 			print(www.text)
 			local jsonData = rapidjson.decode(www.text)
 			if jsonData.code == 0 then
-				serveMd5 = jsonData.data.md5
-				if serveMd5 == localMd5 then
+				hotPackageTable = jsonData.data.issues
+				tableLength = 0
+				for k,v in pairs(hotPackageTable) do
+					print(k,v)
+					tableLength = tableLength + 1
+				end
+				if tableLength == 0 then
+					if LoadingSence.CopyAndroidRes() == false then
+						LoadingSence.BeginGame()
+					end
+					return
+				end
+				if tonumber(localVersion) == hotPackageTable[tableLength].version then
 					if LoadingSence.CopyAndroidRes() == false then
 						LoadingSence.BeginGame()
 					end
 				else
-					print("jxydelete")
-					os.remove(dataPath.."hotfixVersion.txt")
-					os.remove(dataPath.."MyAssets.upk")
 			        LoadingSence.DownloadData()
 				end
 			elseif jsonData.code == 200101 then
