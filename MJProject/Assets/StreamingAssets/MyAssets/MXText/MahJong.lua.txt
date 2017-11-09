@@ -136,6 +136,12 @@ local countDownOffset = {
 	[9] = {x = 0.6,y = 0.5},
 }
 
+local _count_down_father = nil
+local _count_down_left = nil
+local _count_down_right = nil
+local _current_left_number = 0
+local _current_right_number = 0
+
 function MahJong.Awake( ... )
 	-- body
 	Player.self = MahJong.self
@@ -335,6 +341,39 @@ end
 function MahJong.GetCurrentState( ... )
 	-- body
 	return currentOperationState
+end
+
+function MahJong.SetCountDownNumber(leftNumber,rightNumber)
+	-- body
+	if _current_left_number ~= leftNumber then
+		_current_left_number = leftNumber
+		if _count_down_left and MahJong.self:IsNull(_count_down_left) == false then
+			_count_down_left:GetComponent("Renderer").material:SetTextureOffset("_MainTex",CS.UnityEngine.Vector2(countDownOffset[leftNumber].x,countDownOffset[leftNumber].y))
+		end
+	end
+	if _current_right_number ~= rightNumber then
+		_current_right_number = rightNumber
+		if _count_down_right and MahJong.self:IsNull(_count_down_right) == false then
+			_count_down_right:GetComponent("Renderer").material:SetTextureOffset("_MainTex",CS.UnityEngine.Vector2(countDownOffset[rightNumber].x,countDownOffset[rightNumber].y))
+		end
+	end
+end
+
+function MahJong.ResetCountDownNumber( ... )
+	-- body
+	Player.playCountDownTime = CS.UnityEngine.Time.realtimeSinceStartup
+end
+
+function MahJong.PlayCountDownTwinkle(isPlay)
+	-- body
+	if isPlay and isPlay == true then
+		--twinkle
+	else
+		--stop
+		--_count_down_father.stop
+		_count_down_left = nil
+		_count_down_right = nil
+	end
 end
 
 function MahJong.SetAllPaiShow(gameObject)

@@ -167,6 +167,9 @@ Player.isBeginRound = false
 Player.saiziNumber1 = 0
 Player.saiziNumber2 = 0
 
+Player.playCountDownTime = 0
+Player.playCountDownTimeMax = 8
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then
@@ -371,6 +374,19 @@ function Player.ResetGameState()
     ClickEvent._play_ui.gamePlayButton.visible = true
 end
 
+function Player.SetPlayCountDown( ... )
+    -- body
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "PlaySence" then
+        return
+    end
+
+    local tempTime = Player.playCountDownTimeMax - (CS.UnityEngine.Time.realtimeSinceStartup - Player.playCountDownTime)
+    if tempTime > 0 then
+        Player.MahJong.SetCountDownNumber(0,math.ceil(tempTime))
+    else
+        Player.MahJong.SetCountDownNumber(0,0)
+    end
+end
 
 ---------------------------------------------------------------------------
 --加载场景!!!!!!!type_t，记得添加
@@ -401,6 +417,7 @@ local movePos = CS.UnityEngine.Vector3(0,0,0)
 function Player.myUpdate( ... )
     -- body
     ClickEvent.UpdateTime()
+    Player.SetPlayCountDown()
     if Player.reConnect and Player.reConnect == true and Player.disConnetedTime then
         if (CS.UnityEngine.Time.time - Player.disConnetedTime) >= Player.connectCountDownTime then
             Network.Start()
