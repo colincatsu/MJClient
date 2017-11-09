@@ -449,6 +449,17 @@ public class Platform : MonoBehaviour {
         return "";
     }
 
+    public string GetImei()
+    {
+        if (currentActivity != null)
+        {
+            return currentActivity.Call<string>("GetImei");
+        }
+        if (LuaCommon.isIos)
+            return "";
+        return "";
+    }
+
     public bool isInstalledWX()
     {
         if (LuaCommon.isIos)
