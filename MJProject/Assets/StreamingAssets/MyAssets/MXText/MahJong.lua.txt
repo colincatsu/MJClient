@@ -142,6 +142,8 @@ local _count_down_right = nil
 local _current_left_number = 0
 local _current_right_number = 0
 
+local currentTurn = nil
+
 function MahJong.Awake( ... )
 	-- body
 	Player.self = MahJong.self
@@ -208,6 +210,7 @@ function MahJong.Start()
 	Player.allPaisShow = {}
 	Player.allPaisShowIndex = 0
 	Player.room_current_round = 0
+	currentTurn = nil
 
 	if Player.isPlayBack == false then
 		Player._all_players_data = {}
@@ -368,11 +371,12 @@ function MahJong.PlayCountDownTwinkle(isPlay)
 	-- body
 	if isPlay and isPlay == true then
 		--twinkle
+		--play
 	else
 		--stop
 		--_count_down_father.stop
-		_count_down_left = nil
-		_count_down_right = nil
+		_count_down_left.material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+		_count_down_right.material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
 	end
 end
 
@@ -570,6 +574,7 @@ end
 --重置游戏
 function MahJong.ResetGameState(resetPlayButton)
     -- 按钮
+    currentTurn = nil
     ClickEvent._play_ui.oppositePlayerTing.visible = false
     ClickEvent._play_ui.frontPlayerTing.visible = false
     ClickEvent._play_ui.behindPlayerTing.visible = false
@@ -1229,6 +1234,14 @@ end
 function MahJong.UpdateWhoseTurn(whichPlayer)
 	-- body
 	Player.LogWarning("UpdateWhoseTurn")
+	if not currentTurn then
+		currentTurn = whichPlayer
+	else
+		if currentTurn == whichPlayer then
+			return
+		end
+	end
+	MahJong.ResetCountDownNumber()
 	if isPlayersTurnNew == true then
 		Player.LogWarning("SetActive")
 		if whichPlayer == "POSITION_TYPE_EAST" then
