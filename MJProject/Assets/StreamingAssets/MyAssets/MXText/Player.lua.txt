@@ -170,6 +170,8 @@ Player.saiziNumber2 = 0
 Player.playCountDownTime = 0
 Player.playCountDownTimeMax = 8
 
+Player.paiSizeSet = 0
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then

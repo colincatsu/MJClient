@@ -129,7 +129,7 @@ local countDownOffset = {
 	[2] = {x = 0.2,y = 0},
 	[3] = {x = 0.4,y = 0},
 	[4] = {x = 0.6,y = 0},
-	[5] = {x = 0.8,y = 0.5},
+	[5] = {x = 0.8,y = 0},
 	[6] = {x = 0,y = 0.5},
 	[7] = {x = 0.2,y = 0.5},
 	[8] = {x = 0.4,y = 0.5},
@@ -459,6 +459,10 @@ function MahJong.Init()
 	_white_dice_animation = MahJong.self.transform:Find("Dice/White/Dice").gameObject:GetComponent("Animation")
 	_dice_red = MahJong.self.transform:Find("Dice/Red").gameObject
 	_dice_white = MahJong.self.transform:Find("Dice/White").gameObject
+	_count_down_father = MahJong.self.transform:Find("CountDown").gameObject
+	_count_down_left = MahJong.self.transform:Find("CountDown/Left").gameObject
+	_count_down_right = MahJong.self.transform:Find("CountDown/Right").gameObject
+
 	if Player.isPlayBack == true then
 		_dice_red:SetActive(false)
 		_dice_white:SetActive(false)
@@ -773,6 +777,7 @@ function MahJong.ModelPoolInit()
 			((i-_modelPoolLineCount*3)%2)*newVector3(0,_modelSize.length,0) + 
 			math.modf((i-_modelPoolLineCount*3-1)/2)*newVector3(0,0,_modelSize.width)
 		end
+		MahJong.SetPaiSize(_modelPool[i],false)
 		if (i%2) == 0 then
 			MahJong.AddModelShadow(_modelPool[i],-_modelSize.length/2+_modelSize.shadowShift,1)
 		end
@@ -819,6 +824,23 @@ function MahJong.ModelPoolSetActive(bool)
 	-- body
 	for k, v in pairs(_pointFather) do  
     	v:SetActive(bool)
+	end
+end
+
+function MahJong.SetPaiSize(mjModel,isPLayer)
+	-- body
+	if Player.paiSizeSet == 0 then
+		if isPLayer == true then
+			mjModel.GetComponent("Renderer").material = Load("Material/MjNoReflB")
+		else
+			mjModel.GetComponent("Renderer").material = Load("Material/MjReflB")
+		end
+	else
+		if isPLayer == true then
+			mjModel.GetComponent("Renderer").material = Load("Material/MjNoRefl")
+		else
+			mjModel.GetComponent("Renderer").material = Load("Material/MjRefl")
+		end
 	end
 end
 
@@ -929,6 +951,7 @@ function MahJong.CreateOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._next_card[_player_pai_pool._next_pai_number],false)
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localEulerAngles = newVector3(90,90,0)
 			MahJong.AddModelShadow(_player_pai_pool._next_card[_player_pai_pool._next_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -937,6 +960,7 @@ function MahJong.CreateOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number],false)
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localEulerAngles = newVector3(90,-90,0)
 			MahJong.AddModelShadow(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -945,6 +969,7 @@ function MahJong.CreateOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number],false)
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localEulerAngles = newVector3(90,0,0)
 			MahJong.AddModelShadow(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1001,6 +1026,7 @@ function MahJong.AddOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._next_card[_player_pai_pool._next_pai_number],false)
 			_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localEulerAngles = newVector3(90,90,0)
 			MahJong.AddModelShadow(_player_pai_pool._next_card[_player_pai_pool._next_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1009,6 +1035,7 @@ function MahJong.AddOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number],false)
 			_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localEulerAngles = newVector3(90,0,0)
 			MahJong.AddModelShadow(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1017,6 +1044,7 @@ function MahJong.AddOtherPai(whichPlayer,paiCount)
 		for i=1,paiCount do
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+			MahJong.SetPaiSize(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number],false)
 			_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localEulerAngles = newVector3(90,-90,0)
 			MahJong.AddModelShadow(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number],-_modelSize.height/2+_modelSize.shadowShift,2)
 			--_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -1044,6 +1072,7 @@ function MahJong.LiuJuPai(paisData)
 			        	end
 			        end
 			        _hand_cards._next_card = Instantiate(modelTemp)
+			        MahJong.SetPaiSize(_hand_cards._next_card,true)
 			        _hand_cards._next_card.layer = 0
 			        _hand_cards._next_card.transform.position = newVector3(_player_pai_pool._next_player_father.transform.position.x,_modelSize.length/2,_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.position.z-2*_modelSize.width)
 			        _hand_cards._next_card.transform.eulerAngles = newVector3(180,-90,0) --_player_pai_pool._next_card[_player_pai_pool._next_pai_number].transform.eulerAngles
@@ -1058,6 +1087,7 @@ function MahJong.LiuJuPai(paisData)
 			        	end
 			        end
 			        _hand_cards._opposite_card = Instantiate(modelTemp)
+			        MahJong.SetPaiSize(_hand_cards._opposite_card,true)
 			        _hand_cards._opposite_card.layer = 0
 			        _hand_cards._opposite_card.transform.position = newVector3(_player_pai_pool._opposite_card[1].transform.position.x+2*_modelSize.width,_modelSize.length/2,_player_pai_pool._opposite_player_father.transform.position.z)
 			        _hand_cards._opposite_card.transform.eulerAngles = newVector3(180,-180,0) --_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].transform.eulerAngles
@@ -1072,6 +1102,7 @@ function MahJong.LiuJuPai(paisData)
 			        	end
 			        end
 			        _hand_cards._forward_card = Instantiate(modelTemp)
+			        MahJong.SetPaiSize(_hand_cards._forward_card,true)
 			        _hand_cards._forward_card.layer = 0
 			        _hand_cards._forward_card.transform.position = newVector3(_player_pai_pool._forward_player_father.transform.position.x,_modelSize.length/2,_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.position.z+2*_modelSize.width)
 			        _hand_cards._forward_card.transform.eulerAngles = newVector3(180,90,0) --_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].transform.eulerAngles
@@ -1086,6 +1117,7 @@ function MahJong.LiuJuPai(paisData)
 			        	end
 			        end
 			        _hand_cards._my_card = Instantiate(modelTemp)
+			        MahJong.SetPaiSize(_hand_cards._my_card,true)
 			        _hand_cards._my_card.layer = 0
 			        _hand_cards._my_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.27)
 			        _hand_cards._my_card.transform.eulerAngles = newVector3(180,0,0)
@@ -1130,6 +1162,7 @@ function MahJong.PaiPushDown(paisData)
 		        		Destroy(_player_pai_pool._next_card[paiCount])
 		        	end
 		        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+		        	MahJong.SetPaiSize(_player_pai_pool._next_card[paiCount],true)
 		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
 		        	_player_pai_pool._next_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
@@ -1154,6 +1187,7 @@ function MahJong.PaiPushDown(paisData)
 		        		Destroy(_player_pai_pool._opposite_card[paiCount])
 		        	end
 		        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+		        	MahJong.SetPaiSize(_player_pai_pool._opposite_card[paiCount],true)
 		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
 		        	_player_pai_pool._opposite_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
@@ -1178,6 +1212,7 @@ function MahJong.PaiPushDown(paisData)
 		        		Destroy(_player_pai_pool._forward_card[paiCount])
 		        	end
 		        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+		        	MahJong.SetPaiSize(_player_pai_pool._forward_card[paiCount],true)
 		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
 		        	_player_pai_pool._forward_card[paiCount].layer = 0
 		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
@@ -1600,6 +1635,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				for k,v in pairs(modelName) do
 					modelTemp = Load("MJModel/"..v)
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
+					MahJong.SetPaiSize(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k],true)
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 					MahJong.SetAllPaiShow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k])
@@ -1644,6 +1680,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				for k,v in pairs(modelName) do
 					modelTemp = Load("MJModel/"..v)
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
+					MahJong.SetPaiSize(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k],true)
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 					MahJong.SetAllPaiShow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k])
@@ -1688,6 +1725,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				for k,v in pairs(modelName) do
 					modelTemp = Load("MJModel/"..v)
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
+					MahJong.SetPaiSize(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k],true)
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 					MahJong.SetAllPaiShow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k])
@@ -1732,6 +1770,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				for k,v in pairs(modelName) do
 					modelTemp = Load("MJModel/"..v)
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
+					MahJong.SetPaiSize(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k],true)
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 					_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 					MahJong.SetAllPaiShow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k])
@@ -1788,6 +1827,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				end
 				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
 				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
+				MahJong.SetPaiSize(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],true)
 				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
 				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
 				_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
@@ -1803,6 +1843,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				end
 				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
 				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_n.father.transform)
+				MahJong.SetPaiSize(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],true)
 				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].layer = 0
 				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].name = modelName
 				_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].transform.localEulerAngles = _pai_pool_show.point_n.startRotation
@@ -1818,6 +1859,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				end
 				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
 				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_x.father.transform)
+				MahJong.SetPaiSize(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],true)
 				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].layer = 0
 				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].name = modelName
 				_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].transform.localEulerAngles = _pai_pool_show.point_x.startRotation
@@ -1833,6 +1875,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				end
 				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_b.father.transform)
+				MahJong.SetPaiSize(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],true)
 				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].layer = 0
 				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].name = modelName
 				_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].transform.localEulerAngles = _pai_pool_show.point_b.startRotation
@@ -1972,6 +2015,7 @@ function MahJong.CreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].parent = CS.UnityEngine.GameObject(""..paiNumber)
 		_player_father.cards[paiNumber].parent.transform:SetParent(_player_father.father.transform)
 		_player_father.cards[paiNumber].child = Instantiate(modelTemp,_player_father.cards[paiNumber].parent.transform)
+		MahJong.SetPaiSize(_player_father.cards[paiNumber].child,true)
 		_player_father.cards[paiNumber].child.name = modelName
 		_player_father.cards[paiNumber].touchCT = _player_father.cards[paiNumber].child:AddComponent(typeof(CS.TouchCT))
 		_player_father.cards[paiNumber].touchCT.onClick = MahJong.ClickPaiEvent
@@ -2000,6 +2044,7 @@ function MahJong.PlayBackCreatePlayerModel(modelName,paiNumber,paiType,paiValue)
 		_player_father.cards[paiNumber].parent = CS.UnityEngine.GameObject(""..paiNumber)
 		_player_father.cards[paiNumber].parent.transform:SetParent(_player_father.father.transform)
 		_player_father.cards[paiNumber].child = Instantiate(modelTemp,_player_father.cards[paiNumber].parent.transform)
+		MahJong.SetPaiSize(_player_father.cards[paiNumber].child,true)
 		_player_father.cards[paiNumber].child.name = modelName
 		_player_father.cards[paiNumber].child.transform.localEulerAngles = newVector3(-90,0,0)
 		_player_father.cards[paiNumber].child.transform.localPosition = newVector3(0,_modelSize.height/2,0)
@@ -2030,6 +2075,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 	        	_player_pai_pool._next_card[paiCount] = {}
 	        	_player_pai_pool._next_card[paiCount].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+	        	MahJong.SetPaiSize(_player_pai_pool._next_card[paiCount].obj,true)
 	        	_player_pai_pool._next_card[paiCount].obj.transform.localEulerAngles = newVector3(180,-90,0)
 	        	_player_pai_pool._next_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._next_card[paiCount].card_type = card.card_type
@@ -2059,6 +2105,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 	        	_player_pai_pool._opposite_card[paiCount] = {}
 	        	_player_pai_pool._opposite_card[paiCount].obj = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+	        	MahJong.SetPaiSize(_player_pai_pool._opposite_card[paiCount].obj,true)
 	        	_player_pai_pool._opposite_card[paiCount].obj.transform.localEulerAngles = newVector3(180,180,0)
 	        	_player_pai_pool._opposite_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._opposite_card[paiCount].card_type = card.card_type
@@ -2088,6 +2135,7 @@ function MahJong.PlayBackCreateOtherPai(paisData,position)
 	        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
 	        	_player_pai_pool._forward_card[paiCount] = {}
 	        	_player_pai_pool._forward_card[paiCount].obj = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+	        	MahJong.SetPaiSize(_player_pai_pool._forward_card[paiCount].obj,true)
 	        	_player_pai_pool._forward_card[paiCount].obj.transform.localEulerAngles = newVector3(180,90,0)
 	        	_player_pai_pool._forward_card[paiCount].obj.layer = 0
 	        	_player_pai_pool._forward_card[paiCount].card_type = card.card_type
@@ -2583,6 +2631,7 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
 			_player_pai_pool._next_pai_number = _player_pai_pool._next_pai_number + 1
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number] = {}
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+        	MahJong.SetPaiSize(_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj,true)
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj.transform.localEulerAngles = newVector3(180,-90,0)
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].obj.layer = 0
         	_player_pai_pool._next_card[_player_pai_pool._next_pai_number].card_type = operationData.pai.card_type
@@ -2609,6 +2658,7 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
 			_player_pai_pool._opposite_pai_number = _player_pai_pool._opposite_pai_number + 1
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number] = {}
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+        	MahJong.SetPaiSize(_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj,true)
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.transform.localEulerAngles = newVector3(180,180,0)
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].obj.layer = 0
         	_player_pai_pool._opposite_card[_player_pai_pool._opposite_pai_number].card_type = operationData.pai.card_type
@@ -2635,6 +2685,7 @@ function MahJong.PlayBackFaPai(operationData,isNotSort)
 			_player_pai_pool._forward_pai_number = _player_pai_pool._forward_pai_number + 1
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number] = {}
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+        	MahJong.SetPaiSize(_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj,true)
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.transform.localEulerAngles = newVector3(180,90,0)
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].obj.layer = 0
         	_player_pai_pool._forward_card[_player_pai_pool._forward_pai_number].card_type = operationData.pai.card_type
@@ -3308,6 +3359,7 @@ function MahJong.DaPaiPoolShow(message,isPlayBack)
 		end
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = {}
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_d.father.transform)
+		MahJong.SetPaiSize(_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber],true)
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].layer = 0
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].name = modelName
 		_pai_pool_show.point_d.cards[_pai_pool_show.point_d.paiNumber].transform.localEulerAngles = _pai_pool_show.point_d.startRotation
@@ -3324,6 +3376,7 @@ function MahJong.DaPaiPoolShow(message,isPlayBack)
 		end
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = {}
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_n.father.transform)
+		MahJong.SetPaiSize(_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber],true)
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].layer = 0
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].name = modelName
 		_pai_pool_show.point_n.cards[_pai_pool_show.point_n.paiNumber].transform.localEulerAngles = _pai_pool_show.point_n.startRotation
@@ -3340,6 +3393,7 @@ function MahJong.DaPaiPoolShow(message,isPlayBack)
 		end
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = {}
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_x.father.transform)
+		MahJong.SetPaiSize(_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber],true)
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].layer = 0
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].name = modelName
 		_pai_pool_show.point_x.cards[_pai_pool_show.point_x.paiNumber].transform.localEulerAngles = _pai_pool_show.point_x.startRotation
@@ -3356,6 +3410,7 @@ function MahJong.DaPaiPoolShow(message,isPlayBack)
 		end
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = {}
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber] = Instantiate(modelTemp,_pai_pool_show.point_b.father.transform)
+		MahJong.SetPaiSize(_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber],true)
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].layer = 0
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].name = modelName
 		_pai_pool_show.point_b.cards[_pai_pool_show.point_b.paiNumber].transform.localEulerAngles = _pai_pool_show.point_b.startRotation
@@ -3494,6 +3549,7 @@ function MahJong.CreateChiPaiModel(paiGroup,modelName,paiType,paiValue,sortValue
 			_chi_pai_father.cards[paiGroup].parent.transform.localEulerAngles = newVector3(-45,0,0)
 		end
 		_chi_pai_father.cards[paiGroup].child[paiValue] = Instantiate(modelTemp,_chi_pai_father.cards[paiGroup].parent.transform)
+		MahJong.SetPaiSize(_chi_pai_father.cards[paiGroup].child[paiValue],true)
 		_chi_pai_father.cards[paiGroup].child[paiValue].name = ""..paiValue
 		_chi_pai_father.cards[paiGroup].child[paiValue]:AddComponent(typeof(CS.TouchCT))
 		_chi_pai_father.cards[paiGroup].child[paiValue]:GetComponent("TouchCT").onClick = MahJong.ClickChiPaiEvent
@@ -4014,6 +4070,7 @@ function MahJong.CreateGangPaiModel(modelName,paiType,paiValue,paiGroup,sortValu
 			_gang_pai_father.cards[paiGroup].parent.transform.localEulerAngles = newVector3(-45,0,0)
 		end
 		_gang_pai_father.cards[paiGroup].child[paiValue] = Instantiate(modelTemp,_gang_pai_father.cards[paiGroup].parent.transform)
+		MahJong.SetPaiSize(_gang_pai_father.cards[paiGroup].child[paiValue],true)
 		_gang_pai_father.cards[paiGroup].child[paiValue].name = ""..paiValue
 		_gang_pai_father.cards[paiGroup].child[paiValue]:AddComponent(typeof(CS.TouchCT))
 		_gang_pai_father.cards[paiGroup].child[paiValue]:GetComponent("TouchCT").onClick = MahJong.ClickGangPaiEvent
@@ -4524,6 +4581,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 	    			if v.cards[1].name == modelName[1] then
 	    				v.showNumber = v.showNumber + 1
 	    				v.cards[v.showNumber] = Instantiate(modelTemp,v.father.transform)
+	    				MahJong.SetPaiSize(v.cards[v.showNumber],true)
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(_modelSize.width,0,0)
@@ -4556,6 +4614,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 	    			if v.cards[1].name == modelName[1] then
 	    				v.showNumber = v.showNumber + 1
 	    				v.cards[v.showNumber] = Instantiate(modelTemp,v.father.transform)
+	    				MahJong.SetPaiSize(v.cards[v.showNumber],true)
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,_modelSize.width)
@@ -4587,6 +4646,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 	    			if v.cards[1].name == modelName[1] then
 	    				v.showNumber = v.showNumber + 1
 	    				v.cards[v.showNumber] = Instantiate(modelTemp,v.father.transform)
+	    				MahJong.SetPaiSize(v.cards[v.showNumber],true)
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(-_modelSize.width,0,0)
@@ -4618,6 +4678,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 	    			if v.cards[1].name == modelName[1] then
 	    				v.showNumber = v.showNumber + 1
 	    				v.cards[v.showNumber] = Instantiate(modelTemp,v.father.transform)
+	    				MahJong.SetPaiSize(v.cards[v.showNumber],true)
 	    				v.cards[v.showNumber].layer = 0
 	    				v.cards[v.showNumber].name = modelName[1]
 	    				v.cards[v.showNumber].transform.localPosition = v.cards[v.showNumber-1].transform.localPosition + newVector3(0,0,-_modelSize.width)
@@ -4659,6 +4720,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		for k,v in pairs(modelName) do
 			modelTemp = Load("MJModel/"..v)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].father.transform)
+			MahJong.SetPaiSize(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k],true)
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k].name = v
 			MahJong.SetAllPaiShow(_operation_pai_show.point_d.group[_operation_pai_show.point_d.paiNumber].cards[k])
@@ -4707,6 +4769,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		for k,v in pairs(modelName) do
 			modelTemp = Load("MJModel/"..v)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].father.transform)
+			MahJong.SetPaiSize(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k],true)
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k].name = v
 			MahJong.SetAllPaiShow(_operation_pai_show.point_n.group[_operation_pai_show.point_n.paiNumber].cards[k])
@@ -4755,6 +4818,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		for k,v in pairs(modelName) do
 			modelTemp = Load("MJModel/"..v)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].father.transform)
+			MahJong.SetPaiSize(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k],true)
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k].name = v
 			MahJong.SetAllPaiShow(_operation_pai_show.point_x.group[_operation_pai_show.point_x.paiNumber].cards[k])
@@ -4803,6 +4867,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		for k,v in pairs(modelName) do
 			modelTemp = Load("MJModel/"..v)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k] = Instantiate(modelTemp,_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].father.transform)
+			MahJong.SetPaiSize(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k],true)
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].layer = 0
 			_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k].name = v
 			MahJong.SetAllPaiShow(_operation_pai_show.point_b.group[_operation_pai_show.point_b.paiNumber].cards[k])

@@ -2591,6 +2591,7 @@ end
 
 function ClickEvent.CopyRoomNum( ... )
 	-- body
+	Player.MahJong.ResetCountDownNumber()
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
 	ClickEvent.ShowToast(StringTable.Get(2031))
 	Player.CmdMatTrackCutomKVEvent("Button","CopyRoomNum","1")
