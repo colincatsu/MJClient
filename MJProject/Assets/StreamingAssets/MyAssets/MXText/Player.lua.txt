@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1108"
+Player.pc_version = "1.0.1.1111"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -458,7 +458,7 @@ function Player.myUpdate( ... )
     end
     --[[
     --]]
-    if Player.sayHiTimestarmp and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" and ClickEvent.IsMainUI(ClickEvent.panelTable._main_ui) == false then
+    if Player.sayHiTimestarmp and ClickEvent.IsMainUI(ClickEvent.panelTable._main_ui) == false then-- and CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name ~= "LoadingSence" then
         if not Player.testSayHiStarmp then
             Player.testSayHiStarmp = CS.UnityEngine.Time.realtimeSinceStartup
         end

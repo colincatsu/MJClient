@@ -46,7 +46,7 @@ end
 
 function LoadingCT.Update( ... )
 	-- body
-	
+	Player.myUpdate()
 end
 
 function LoadingCT.CopyAndroidRes()

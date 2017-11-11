@@ -141,6 +141,7 @@ local _count_down_left = nil
 local _count_down_right = nil
 local _current_left_number = 0
 local _current_right_number = 0
+local twinkleAnimation = nil
 
 local currentTurn = nil
 
@@ -348,6 +349,8 @@ end
 
 function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	-- body
+	_count_down_left:GetComponent("Renderer").material:SetColor("_MainColor",CS.UnityEngine.Color(0,0,0,1))
+	_count_down_right:GetComponent("Renderer").material:SetColor("_MainColor",CS.UnityEngine.Color(0,0,0,1))
 	if _current_left_number ~= leftNumber then
 		_current_left_number = leftNumber
 		if _count_down_left and MahJong.self:IsNull(_count_down_left) == false then
@@ -357,6 +360,11 @@ function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	if _current_right_number ~= rightNumber then
 		_current_right_number = rightNumber
 		if _count_down_right and MahJong.self:IsNull(_count_down_right) == false then
+			if _current_right_number == 0 then
+				MahJong.PlayCountDownTwinkle(true)
+			else
+				MahJong.PlayCountDownTwinkle(false)
+			end
 			_count_down_right:GetComponent("Renderer").material:SetTextureOffset("_MainTex",CS.UnityEngine.Vector2(countDownOffset[rightNumber].x,countDownOffset[rightNumber].y))
 		end
 	end
@@ -369,14 +377,21 @@ end
 
 function MahJong.PlayCountDownTwinkle(isPlay)
 	-- body
+	if not twinkleAnimation then
+		return
+	end
 	if isPlay and isPlay == true then
 		--twinkle
-		--play
+		Player.LogWarning("Play")
+		if twinkleAnimation.isPlaying == false then
+			Player.LogWarning("PlayNow")
+			twinkleAnimation:Play("CountDown")
+		end
 	else
 		--stop
-		--_count_down_father.stop
-		_count_down_left.material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
-		_count_down_right.material:SetColor("_MainTint",CS.UnityEngine.Color(1,1,1,1))
+		twinkleAnimation:Stop("CountDown")
+		_count_down_left:GetComponent("Renderer").material:SetColor("_Color",CS.UnityEngine.Color(1,1,1,1))
+		_count_down_right:GetComponent("Renderer").material:SetColor("_Color",CS.UnityEngine.Color(1,1,1,1))
 	end
 end
 
@@ -466,6 +481,7 @@ function MahJong.Init()
 	_count_down_father = MahJong.self.transform:Find("CountDown").gameObject
 	_count_down_left = MahJong.self.transform:Find("CountDown/Left").gameObject
 	_count_down_right = MahJong.self.transform:Find("CountDown/Right").gameObject
+	twinkleAnimation = _count_down_father:GetComponent("Animation")
 
 	if Player.isPlayBack == true then
 		_dice_red:SetActive(false)
@@ -836,15 +852,15 @@ function MahJong.SetPaiSize(mjModel,isPLayer)
 	-- body
 	if Player.paiSizeSet == 0 then
 		if isPLayer == true then
-			mjModel.GetComponent("Renderer").material = Load("Material/MjNoReflB")
+			mjModel:GetComponent("Renderer").material = Load("Material/MjNoReflB")
 		else
-			mjModel.GetComponent("Renderer").material = Load("Material/MjReflB")
+			mjModel:GetComponent("Renderer").material = Load("Material/MjReflB")
 		end
 	else
 		if isPLayer == true then
-			mjModel.GetComponent("Renderer").material = Load("Material/MjNoRefl")
+			mjModel:GetComponent("Renderer").material = Load("Material/MjNoRefl")
 		else
-			mjModel.GetComponent("Renderer").material = Load("Material/MjRefl")
+			mjModel:GetComponent("Renderer").material = Load("Material/MjRefl")
 		end
 	end
 end
