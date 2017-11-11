@@ -349,8 +349,6 @@ end
 
 function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	-- body
-	_count_down_left:GetComponent("Renderer").material:SetColor("_MainColor",CS.UnityEngine.Color(0,0,0,1))
-	_count_down_right:GetComponent("Renderer").material:SetColor("_MainColor",CS.UnityEngine.Color(0,0,0,1))
 	if _current_left_number ~= leftNumber then
 		_current_left_number = leftNumber
 		if _count_down_left and MahJong.self:IsNull(_count_down_left) == false then
@@ -389,9 +387,11 @@ function MahJong.PlayCountDownTwinkle(isPlay)
 		end
 	else
 		--stop
-		twinkleAnimation:Stop("CountDown")
-		_count_down_left:GetComponent("Renderer").material:SetColor("_Color",CS.UnityEngine.Color(1,1,1,1))
-		_count_down_right:GetComponent("Renderer").material:SetColor("_Color",CS.UnityEngine.Color(1,1,1,1))
+		if twinkleAnimation.isPlaying == true then
+			twinkleAnimation:Stop("CountDown")
+			twinkleAnimation["CountDown"].time = 0
+			twinkleAnimation:Sample()
+		end
 	end
 end
 
