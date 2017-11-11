@@ -388,9 +388,9 @@ function MahJong.PlayCountDownTwinkle(isPlay)
 	else
 		--stop
 		if twinkleAnimation.isPlaying == true then
-			twinkleAnimation:Stop("CountDown")
 			twinkleAnimation["CountDown"].time = 0
 			twinkleAnimation:Sample()
+			twinkleAnimation:Stop("CountDown")
 		end
 	end
 end

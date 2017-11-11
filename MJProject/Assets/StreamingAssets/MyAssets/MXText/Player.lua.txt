@@ -193,7 +193,19 @@ function Player.LoadData( ... )
         WeChatPlatform:startBilling()
         message = AssetManager.GetMessagesByType("ASSET_TYPE_MALL")
         Player.storeDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Mall")
-        Player.CmdUpdateClientData(tostring(CS.UnityEngine.SystemInfo.operatingSystem),nil,nil)
+        local platformSystem = ""
+        if CS.LuaCommon.isAndroid == true then
+            platformSystem = "Android"
+        elseif CS.LuaCommon.isIos == true then
+            platformSystem = "IOS"
+        end
+        local localVersion = ""
+        local hotfixVersion = io.open(dataPath.."hotfixVersion.txt")
+        if hotfixVersion then
+            localVersion = hotfixVersion:read "*a"
+            hotfixVersion:close()
+        end
+        Player.CmdUpdateClientData(platformSystem..WeChatPlatform:GetSystemVersion(),WeChatPlatform:GetSystemModel(),tonumber(localVersion),WeChatPlatform:GetImei(),nil,nil)
         --[[
         AssetManager.PrintMessage(Player.storeDataTable)
         message = AssetManager.GetMessagesByType("ASSET_TYPE_ROOM_FAN")
@@ -272,7 +284,7 @@ function Player.GpsCallBack(latitude,longitude)
 
     else
         --Player.CmdUpdateClientData(38.115556395496299,13.361389338970184)
-        Player.CmdUpdateClientData(Player.latitude,Player.longitude)
+        --Player.CmdUpdateClientData(Player.latitude,Player.longitude)
     end
 end
 
@@ -675,11 +687,14 @@ function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
     this.SendProtocol("GameSetting",gameSetting)
 end
 
-function Player.CmdUpdateClientData(systemType,latitudeInfo,longitudeInfo)
+function Player.CmdUpdateClientData(systemType,phoneType,versionPara,imeiPara,latitudeInfo,longitudeInfo)
     -- body
     updateClientData = {
         client_info = {
             system = systemType,
+            phone_type = phoneType,
+            version = versionPara,
+            imei = imeiPara,
             location = {
                 longitude = longitudeInfo,
                 latitude = latitudeInfo,

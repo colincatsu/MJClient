@@ -294,6 +294,17 @@ public class Platform : MonoBehaviour {
             onWeChatCallBack(userCode);
         }
     }
+    [CSharpCallLua]
+    public delegate void shareDelegate();
+    public shareDelegate onShareCallBack;
+
+    public void OnShareSuccess()
+    {
+        if(onShareCallBack != null)
+        {
+            onShareCallBack();
+        }
+    }
 
     IEnumerator DownloadImage(string url, int code)
     {
@@ -395,6 +406,41 @@ public class Platform : MonoBehaviour {
         }
     }
 
+    //系统
+    public string GetSystemVersion()
+    {
+        if (currentActivity != null)
+        {
+            return currentActivity.Call<string>("getSystemVersion");
+        }
+        if (LuaCommon.isIos)
+            return "";
+        return "";
+    }
+
+    //型号
+    public string GetSystemModel()
+    {
+        if (currentActivity != null)
+        {
+            return currentActivity.Call<string>("getSystemModel");
+        }
+        if (LuaCommon.isIos)
+            return "";
+        return "";
+    }
+
+    public string GetImei()
+    {
+        if (currentActivity != null)
+        {
+            return currentActivity.Call<string>("getImei");
+        }
+        if (LuaCommon.isIos)
+            return "";
+        return "";
+    }
+
     public void GetWeChatMethod(string methodName)
     {
         if(currentActivity != null)
@@ -446,17 +492,6 @@ public class Platform : MonoBehaviour {
         }
         if (LuaCommon.isIos)
             return wxReadPaste();
-        return "";
-    }
-
-    public string GetImei()
-    {
-        if (currentActivity != null)
-        {
-            return currentActivity.Call<string>("GetImei");
-        }
-        if (LuaCommon.isIos)
-            return "";
         return "";
     }
 
