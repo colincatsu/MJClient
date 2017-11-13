@@ -39,14 +39,14 @@ local _chi_pai_father = {}--吃牌父节点
 _chi_pai_father.cards = {}
 local _gang_pai_father = {}--杠牌父节点
 _gang_pai_father.cards = {}
-local _pai_bigger = 1--player牌放大倍数
+local _pai_bigger = 0.93--player牌放大倍数
 local _pai_gap = 1.01--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
 local _gai_obj--盖子
 local _pointFather = {}--牌池父节点
-local _modelSize = {length = 0.0171,width = 0.02566,height = 0.036,zhuaGap = 0.01,shadowShift = 0.00005}
+local _modelSize = {length = 0.0157,width = 0.0279,height = 0.03619,zhuaGap = 0.01,shadowShift = 0.00005}
 local _modelPool = {}--没抓的牌池
 local zhuaPaiBeginPos = 0
 local modelPoolFrontPointer = 0--抓牌指针
@@ -57,7 +57,7 @@ local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
-	east = newVector3(-0.31,0,0.31),
+	east = newVector3(-0.31,0,0.295),
 	south = newVector3(-0.4,0,-0.22),
 	west = newVector3(0.36,0,-0.31),
 	north = newVector3(0.4,0,0.18),

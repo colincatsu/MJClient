@@ -172,6 +172,8 @@ Player.playCountDownTimeMax = 8
 
 Player.paiSizeSet = 0
 
+Player.isRewardShare = false
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then
@@ -199,8 +201,8 @@ function Player.LoadData( ... )
         elseif CS.LuaCommon.isIos == true then
             platformSystem = "IOS"
         end
-        local localVersion = ""
-        local hotfixVersion = io.open(dataPath.."hotfixVersion.txt")
+        local localVersion = "0"
+        local hotfixVersion = io.open(CS.UnityEngine.Application.persistentDataPath.."/".."hotfixVersion.txt")
         if hotfixVersion then
             localVersion = hotfixVersion:read "*a"
             hotfixVersion:close()
