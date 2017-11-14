@@ -1,0 +1,12 @@
+PaiAnimation = {}
+local AnimationCurve = CS.UnityEngine.AnimationCurve
+local Animation = CS.UnityEngine.Animation
+local AnimationClip = CS.UnityEngine.AnimationClip
+
+local pai_in_up_time = 1--抬起
+local pai_in_sort_time = 1--插入移动
+local pai_in_down_time = 1--落下
+local pai_shift_time = 1--其他牌横移
+
+
+return PaiAnimation
