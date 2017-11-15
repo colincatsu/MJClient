@@ -10,6 +10,7 @@ local Network = require "Network"
 local protobuf = require "protobuf"
 local FairyGUI = require "FairyGUI"
 local Effect = require "Effect"
+local PaiAnimation = require "PaiAnimation"
 local util = require "xlua.util"
 local function AsyncYieldReturn(to_yield, cb)
     MahJong.self:YieldAndCallback(to_yield, cb)
@@ -262,6 +263,7 @@ function MahJong.Start()
 	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
 	Player._banker_position = 1
 	MahJong.PlayDoubleDices(1,2)
+	--]]
 	if not _player_father then
 		_player_father = {}
 		_player_father.cards = {}
@@ -274,8 +276,11 @@ function MahJong.Start()
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
     end
 	MahJong.SortPlayerPai()
-	--]]
-	
+end
+
+function MahJong.TestAnimation( ... )
+	-- body
+	PaiAnimation.SetPaiInSort(MahJong.self,_player_father.cards[_player_father.currentPaiNumber].parent)
 end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)

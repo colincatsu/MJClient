@@ -103,6 +103,7 @@
      <None Include="Assets\XLua\Resources\tdr\tdr.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\protobuf.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\Template\PackUnpack.tpl.txt" />
+     <None Include="Assets\StreamingAssets\MyAssets\MXText\PaiAnimation.lua.txt" />
      <None Include="Assets\Scripts\LuaScripts\Resources\FLibEvent.lua.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>F:/Unity5.4.2/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
