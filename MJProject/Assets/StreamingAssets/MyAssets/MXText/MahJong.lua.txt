@@ -281,6 +281,9 @@ end
 function MahJong.TestAnimation( ... )
 	-- body
 	PaiAnimation.SetPaiInSort(MahJong.self,_player_father.cards[_player_father.currentPaiNumber].parent,_player_father.cards[1].parent.transform.position.x)
+	for i=1,_player_father.currentPaiNumber-1 do
+		PaiAnimation.SetPaiShift(MahJong.self,v.parent,v.parent.transform.position.x - _modelSize.width)
+	end
 end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)

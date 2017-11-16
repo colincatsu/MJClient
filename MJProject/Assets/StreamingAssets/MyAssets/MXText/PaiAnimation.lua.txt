@@ -33,7 +33,7 @@ local pai_in_down = {--落下
 	rotation_offset_z = 1,
 }
 local pai_shift = {--其他牌横移
-	time = 1,
+	time = 1.5,
 	position_offset_x = 1,
 	position_offset_y = 1,
 	position_offset_z = 1,
@@ -66,11 +66,19 @@ function PaiAnimation.SetPaiInSort(self,object,toPositionX)
 	curvePostionZ:AddKey(pai_in_up.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
 	--横移
 	curvePostionX:AddKey(pai_in_sort.time,toPositionX)
+	curvePostionY:AddKey(pai_in_sort.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)))
+	curvePostionZ:AddKey(pai_in_sort.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
 	--横移转角
 	curveRotationX:AddKey(0,object.transform.localEulerAngles.x)
 	curveRotationY:AddKey(0,object.transform.localEulerAngles.y)
 	curveRotationZ:AddKey(0,0)
 	curveRotationZ:AddKey(pai_in_up.time,pai_in_sort.rotation_offset_z)
+	--落下
+	curvePostionY:AddKey(pai_in_down.time,object.transform.localPosition.y)
+	curvePostionZ:AddKey(pai_in_down.time,object.transform.localPosition.z)
+
+	curveRotationZ:AddKey(pai_in_down.time,0)
+	
 
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionX)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.y", curvePostionY)
@@ -95,7 +103,7 @@ function PaiAnimation.SetPaiInSort(self,object,toPositionX)
 	myAnimation:Play("Up")
 end
 
-function PaiAnimation.SetPaiShift(self,object)
+function PaiAnimation.SetPaiShift(self,object,toPositionX)
 	-- body
 	local myAnimation = object:GetComponent("Animation")
 	if self:IsNull(myAnimation) == true then
@@ -107,11 +115,16 @@ function PaiAnimation.SetPaiShift(self,object)
 	local curvePostionZ = AnimationCurve()
 
 	curvePostionX:AddKey(0,object.transform.localPosition.x)
-	curvePostionX:AddKey(pai_in_up.time,object.transform.localPosition.x)
+	curvePostionX:AddKey(pai_in_sort.time,object.transform.localPosition.x)
+	curvePostionX:AddKey(pai_shift.time,toPositionX)
 	curvePostionY:AddKey(0,object.transform.localPosition.y)
-	curvePostionY:AddKey(pai_in_up.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)))
 	curvePostionZ:AddKey(0,object.transform.localPosition.z)
-	curvePostionZ:AddKey(pai_in_up.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
+	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionX)
+	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.y", curvePostionY)
+	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.z", curvePostionZ)
+
+	myAnimation:AddClip(myAnimationClip, "Shift")
+	myAnimation:Play("Shift")
 end
 
 function PaiAnimation.PlayNextAnimation( ... )
