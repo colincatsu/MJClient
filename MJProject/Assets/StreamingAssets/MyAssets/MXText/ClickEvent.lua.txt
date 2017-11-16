@@ -393,9 +393,9 @@ function ClickEvent.CreateNewPanel(panelName)
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
 		Player.isPlayBack = false
 		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
-			_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
+			_currentPanel.panel:GetChild("Avatar"):GetChild("Name"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
 		else
-			_currentPanel.panel:GetChild("Name"):GetChild("PlayerName").text = tostring(Player._player_data.common_prop.name)
+			_currentPanel.panel:GetChild("Avatar"):GetChild("Name"):GetChild("PlayerName").text = tostring(Player._player_data.common_prop.name)
 		end
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
@@ -4002,7 +4002,7 @@ function ClickEvent.CreateRoomButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
 		costCard = "2/"
 	end
-	_popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected = false
+	_popPanel[popPanelIndex].panel:GetChild("GvoiceClose").selected = false
 	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.diamond)
 	else
@@ -4202,11 +4202,13 @@ function ClickEvent.CreateButton( )
 	local costCard = 0
 	local cardActivity = false
 
+	--[[
 	if _popPanel[popPanelIndex].panel:GetChild("ClassicMode").selected then
 		model = "ROOM_MODEL_TYPE_CLASSICAL"
 	elseif _popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected then
 		model = "ROOM_MODEL_TYPE_MULTIPLE"
 	end
+	--]]
 
 	if _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
 		top_mutiple = 32
@@ -4223,7 +4225,7 @@ function ClickEvent.CreateButton( )
 	end
 
 	local voice_open = 0
-	if _popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("GvoiceOn").selected then
 		voice_open = 1
 	end
 
@@ -4318,7 +4320,7 @@ function ClickEvent.MatModelCheck( ... )
 		Player.CmdMatTrackCutomKVEvent("Button","Round16","1")
 	end
 
-	if _popPanel[popPanelIndex].panel:GetChild("RealTimeVoice").selected then
+	if _popPanel[popPanelIndex].panel:GetChild("GvoiceOn").selected then
 		Player.CmdMatTrackCutomKVEvent("Button","Gvoice","1")
 	end
 

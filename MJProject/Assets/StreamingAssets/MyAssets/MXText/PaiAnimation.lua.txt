@@ -3,6 +3,7 @@ local AnimationCurve = CS.UnityEngine.AnimationCurve
 local Animation = CS.UnityEngine.Animation
 local AnimationClip = CS.UnityEngine.AnimationClip
 local Transform = CS.UnityEngine.Transform
+local AnimationEvent = CS.UnityEngine.AnimationEvent
 
 local pai_in_up = {--抬起
 	time = 0.5,
@@ -20,7 +21,7 @@ local pai_in_sort = {--插入移动
 	position_offset_z = 1,
 	rotation_offset_x = 1,
 	rotation_offset_y = 1,
-	rotation_offset_z = -20,
+	rotation_offset_z = 20,
 }
 local pai_in_down = {--落下
 	time = 1.5,
@@ -66,18 +67,57 @@ function PaiAnimation.SetPaiInSort(self,object,toPositionX)
 	--横移
 	curvePostionX:AddKey(pai_in_sort.time,toPositionX)
 	--横移转角
+	curveRotationX:AddKey(0,object.transform.localEulerAngles.x)
+	curveRotationY:AddKey(0,object.transform.localEulerAngles.y)
 	curveRotationZ:AddKey(0,0)
 	curveRotationZ:AddKey(pai_in_up.time,pai_in_sort.rotation_offset_z)
 
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionX)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.y", curvePostionY)
-	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionZ)
+	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.z", curvePostionZ)
+	myAnimationClip:SetCurve("", typeof(Transform), "localEulerAngles.x", curveRotationX)
+	myAnimationClip:SetCurve("", typeof(Transform), "localEulerAngles.y", curveRotationY)
 	myAnimationClip:SetCurve("", typeof(Transform), "localEulerAngles.z", curveRotationZ)
+
+	--[[
+	local myAnimationEvent = AnimationEvent()
+	local myAnimationRegister = object:GetComponent("AnimationRegister")
+	if self:IsNull(myAnimationRegister) == true then
+		myAnimationRegister = object:AddComponent(typeof(CS.AnimationRegister))
+	end
+	myAnimationRegister.animationEvent = PaiAnimation.PlayNextAnimation
+	myAnimationEvent.time = pai_in_sort.time
+	myAnimationEvent.functionName = "animationListener"
+	myAnimationClip:AddEvent(myAnimationEvent)
+	--]]
 
 	myAnimation:AddClip(myAnimationClip, "Up")
 	myAnimation:Play("Up")
 end
 
+function PaiAnimation.SetPaiShift(self,object)
+	-- body
+	local myAnimation = object:GetComponent("Animation")
+	if self:IsNull(myAnimation) == true then
+		myAnimation = object:AddComponent(typeof(Animation))
+	end
+	local myAnimationClip = AnimationClip()
+	local curvePostionX = AnimationCurve()
+	local curvePostionY = AnimationCurve()
+	local curvePostionZ = AnimationCurve()
+
+	curvePostionX:AddKey(0,object.transform.localPosition.x)
+	curvePostionX:AddKey(pai_in_up.time,object.transform.localPosition.x)
+	curvePostionY:AddKey(0,object.transform.localPosition.y)
+	curvePostionY:AddKey(pai_in_up.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)))
+	curvePostionZ:AddKey(0,object.transform.localPosition.z)
+	curvePostionZ:AddKey(pai_in_up.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
+end
+
+function PaiAnimation.PlayNextAnimation( ... )
+	-- body
+	Player.LogWarning("success")
+end
 
 
 return PaiAnimation

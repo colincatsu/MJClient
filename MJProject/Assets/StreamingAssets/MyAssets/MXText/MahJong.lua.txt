@@ -273,14 +273,14 @@ function MahJong.Start()
 	local paiCount = 0
     for i=1, 14 do
     	paiCount = paiCount + 1
-		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"bignzi",1)
+		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"CARD_TYPE_BINGZI",1)
     end
 	MahJong.SortPlayerPai()
 end
 
 function MahJong.TestAnimation( ... )
 	-- body
-	PaiAnimation.SetPaiInSort(MahJong.self,_player_father.cards[_player_father.currentPaiNumber].parent)
+	PaiAnimation.SetPaiInSort(MahJong.self,_player_father.cards[_player_father.currentPaiNumber].parent,_player_father.cards[1].parent.transform.position.x)
 end
 
 function MahJong.OnJoinRoomComplete(code,roomName, memberID)

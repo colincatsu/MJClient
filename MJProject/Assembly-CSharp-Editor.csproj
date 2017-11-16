@@ -45,10 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Editor\BuildAssetBundles.cs" />
      <Compile Include="Assets\Editor\PackageData.cs" />
      <Compile Include="Assets\Editor\PerformBuild.cs" />
      <Compile Include="Assets\Editor\Rename.cs" />
-     <Compile Include="Assets\FairyGUI\Examples\Editor\BuildAssetBundles.cs" />
      <Compile Include="Assets\Scripts\Editor\ParticleAndAnimationInspector.cs" />
      <Compile Include="Assets\XLua\Src\Editor\Generator.cs" />
      <Compile Include="Assets\XLua\Src\Editor\Hotfix.cs" />

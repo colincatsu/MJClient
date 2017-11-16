@@ -11,7 +11,7 @@ class PerformBuild
 	//here it means ../android
 	static string androidFolderName = "MJAndroid/MJProject";
 
-	[UnityEditor.MenuItem("Tools/Build Android &2")]
+	[UnityEditor.MenuItem("XLua/Build Android &2")]
 	static void CommandLineBuildAndroid()
 	{
 		Debug.Log("Command line build android version\n------------------\n------------------");
