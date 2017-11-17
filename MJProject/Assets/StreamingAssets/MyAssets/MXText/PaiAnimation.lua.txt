@@ -4,9 +4,10 @@ local Animation = CS.UnityEngine.Animation
 local AnimationClip = CS.UnityEngine.AnimationClip
 local Transform = CS.UnityEngine.Transform
 local AnimationEvent = CS.UnityEngine.AnimationEvent
+local Keyframe = CS.UnityEngine.Keyframe
 
 local pai_in_up = {--抬起
-	time = 0.5,
+	time = 0.3,
 	position_offset_x = 1,
 	position_offset_y = 0.03619,
 	position_offset_z = 0.03619,
@@ -33,7 +34,7 @@ local pai_in_down = {--落下
 	rotation_offset_z = 1,
 }
 local pai_shift = {--其他牌横移
-	time = 1.5,
+	time = 1.2,
 	position_offset_x = 1,
 	position_offset_y = 1,
 	position_offset_z = 1,
@@ -58,28 +59,27 @@ function PaiAnimation.SetPaiInSort(self,object,toPositionX)
 
 	myAnimationClip.legacy = true
 	--抬起
-	curvePostionX:AddKey(0,object.transform.localPosition.x)
-	curvePostionX:AddKey(pai_in_up.time,object.transform.localPosition.x)
-	curvePostionY:AddKey(0,object.transform.localPosition.y)
-	curvePostionY:AddKey(pai_in_up.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)))
-	curvePostionZ:AddKey(0,object.transform.localPosition.z)
-	curvePostionZ:AddKey(pai_in_up.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
+	curvePostionX:AddKey(Keyframe(0,object.transform.localPosition.x,0,0))
+	curvePostionX:AddKey(Keyframe(pai_in_up.time,object.transform.localPosition.x,0,0))
+	curvePostionY:AddKey(Keyframe(0,object.transform.localPosition.y,0,0))
+	curvePostionY:AddKey(Keyframe(pai_in_up.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)),0,0))
+	curvePostionZ:AddKey(Keyframe(0,object.transform.localPosition.z,0,0))
+	curvePostionZ:AddKey(Keyframe(pai_in_up.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)),0,0))
 	--横移
-	curvePostionX:AddKey(pai_in_sort.time,toPositionX)
-	curvePostionY:AddKey(pai_in_sort.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)))
-	curvePostionZ:AddKey(pai_in_sort.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)))
+	curvePostionX:AddKey(Keyframe(pai_in_sort.time,toPositionX,0,0))
+	curvePostionY:AddKey(Keyframe(pai_in_sort.time,object.transform.localPosition.y+pai_in_up.position_offset_y*math.cos(math.rad(object.transform.localEulerAngles.x)),0,0))
+	curvePostionZ:AddKey(Keyframe(pai_in_sort.time,object.transform.localPosition.z+pai_in_up.position_offset_z*math.sin(math.rad(object.transform.localEulerAngles.x)),0,0))
 	--横移转角
-	curveRotationX:AddKey(0,object.transform.localEulerAngles.x)
-	curveRotationY:AddKey(0,object.transform.localEulerAngles.y)
-	curveRotationZ:AddKey(0,0)
-	curveRotationZ:AddKey(pai_in_up.time,pai_in_sort.rotation_offset_z)
+	curveRotationX:AddKey(Keyframe(0,object.transform.localEulerAngles.x,0,0))
+	curveRotationY:AddKey(Keyframe(0,object.transform.localEulerAngles.y,0,0))
+	curveRotationZ:AddKey(Keyframe(0,0,0,0))
+	curveRotationZ:AddKey(Keyframe(pai_in_up.time,pai_in_sort.rotation_offset_z,0,0))
 	--落下
-	curvePostionY:AddKey(pai_in_down.time,object.transform.localPosition.y)
-	curvePostionZ:AddKey(pai_in_down.time,object.transform.localPosition.z)
+	curvePostionY:AddKey(Keyframe(pai_in_down.time,object.transform.localPosition.y,0,0))
+	curvePostionZ:AddKey(Keyframe(pai_in_down.time,object.transform.localPosition.z,0,0))
 
-	curveRotationZ:AddKey(pai_in_down.time,0)
+	curveRotationZ:AddKey(Keyframe(pai_in_down.time,0,0,0))
 	
-
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionX)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.y", curvePostionY)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.z", curvePostionZ)
@@ -113,12 +113,14 @@ function PaiAnimation.SetPaiShift(self,object,toPositionX)
 	local curvePostionX = AnimationCurve()
 	local curvePostionY = AnimationCurve()
 	local curvePostionZ = AnimationCurve()
+	myAnimationClip.legacy = true
 
-	curvePostionX:AddKey(0,object.transform.localPosition.x)
-	curvePostionX:AddKey(pai_in_sort.time,object.transform.localPosition.x)
-	curvePostionX:AddKey(pai_shift.time,toPositionX)
-	curvePostionY:AddKey(0,object.transform.localPosition.y)
-	curvePostionZ:AddKey(0,object.transform.localPosition.z)
+	curvePostionX:AddKey(Keyframe(0,object.transform.localPosition.x,0,0))
+	curvePostionX:AddKey(Keyframe(pai_in_sort.time,object.transform.localPosition.x,0,0))
+	curvePostionX:AddKey(Keyframe(pai_shift.time,toPositionX,0,0))
+	curvePostionY:AddKey(Keyframe(0,object.transform.localPosition.y,0,0))
+	curvePostionZ:AddKey(Keyframe(0,object.transform.localPosition.z,0,0))
+	
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.x", curvePostionX)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.y", curvePostionY)
 	myAnimationClip:SetCurve("", typeof(Transform), "localPosition.z", curvePostionZ)

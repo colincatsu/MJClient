@@ -144,6 +144,7 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(UnityEngine.Application),
                 typeof(UnityEngine.SceneManagement.SceneManager),
                 typeof(UnityEngine.SceneManagement.Scene),
+                typeof(UnityEngine.Keyframe),
             };
         }
     }

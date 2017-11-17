@@ -91,8 +91,11 @@ end
 
 function ClickEvent.AddPackage(uiPath)
 	-- body
-	local bundle = CS.UnityEngine.AssetBundle.LoadFromFile(uiPath)
-	UIPackage.AddPackage(bundle)
+	if Player.hasLoadUIPackage == false then
+		Player.hasLoadUIPackage = true
+		local bundle = CS.UnityEngine.AssetBundle.LoadFromFile(uiPath)
+		UIPackage.AddPackage(bundle)
+	end
 end
 
 function ClickEvent.Start(loadUI)
@@ -1005,7 +1008,9 @@ function ClickEvent.PaiOperationState()
 			elseif m == "PAI_OPER_TYPE_ANGANGPAI" then
 				Player.LogWarning("ANGANG")
 				--Player.MahJong.SetCurrentState(operationState.ANGANG)
-				ClickEvent.AddOperationButton("GameGangButton")
+				if xuanfengCount == 0 then
+					ClickEvent.AddOperationButton("GameGangButton")
+				end
 			elseif m == "PAI_OPER_TYPE_XUANFENG_FENG" then
 				Player.LogWarning("XuanFengButton")
 				--Player.MahJong.SetCurrentState(operationState.XUANFENGGANGFENG)
@@ -2316,6 +2321,31 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.GreenDesk( ... )
+	-- body
+	Player.tablecloth = 0
+end
+
+function ClickEvent.BlueDesk( ... )
+	-- body
+	Player.tablecloth = 1
+end
+
+function ClickEvent.RedDesk( ... )
+	-- body
+	Player.tablecloth = 2
+end
+
+function ClickEvent.GreenBack( ... )
+	-- body
+	Player.paiSizeSet = 0
+end
+
+function ClickEvent.BlueBack( ... )
+	-- body
+	Player.paiSizeSet = 1
+end
+
 function ClickEvent.ReplayFastForward( ... )
 	-- body
 	CS.UnityEngine.Time.timeScale = 2
@@ -3100,6 +3130,17 @@ function ClickEvent.Setting( ... )
 	_popPanel[popPanelIndex].panel:GetChild("MusicSlideButton").selected = Player._player_data.game_setting.music
 	_popPanel[popPanelIndex].panel:GetChild("EffectSlideButton").selected = Player._player_data.game_setting.audio
 	_popPanel[popPanelIndex].panel:GetChild("GameVoiceSlideButton").selected = Player._player_data.game_setting.voice
+
+	if Player.paiSizeSet == 0 then
+		_popPanel[popPanelIndex].panel:GetChild("GreenBack").selected = true
+	end
+	if Player.tablecloth == 1 then
+		_popPanel[popPanelIndex].panel:GetChild("BlueDesk").selected = true
+	elseif Player.tablecloth == 2 then
+		_popPanel[popPanelIndex].panel:GetChild("RedDesk").selected = true
+	else
+		_popPanel[popPanelIndex].panel:GetChild("GreenDesk").selected = true
+	end
 	--_popPanel[popPanelIndex].panel:GetChild("ClickOutSlideButton").selected = Player._player_data.game_setting.click_push
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMall","1")
 end
@@ -3331,7 +3372,7 @@ function ClickEvent.Avatar( ... )
 	if Player._player_data.common_prop.total_rounds == 0 then
 		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 	else
-		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf(Player._player_data.common_prop.total_win_rounds*100/Player._player_data.common_prop.total_rounds)).."%"
+		_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf((Player._player_data.common_prop.total_win_rounds+Player._player_data.common_prop.score_win_rounds/2)*100/Player._player_data.common_prop.total_rounds*2)+25).."%"
 	end
 	if Player._client_infomation ~= {} then
 		Player.LogWarning("hasIp")
@@ -3460,7 +3501,7 @@ function ClickEvent.PlayerAvatarInfo( ... )
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf((v.common_prop.total_win_rounds+v.common_prop.score_win_rounds/2)*100/v.common_prop.total_rounds*2)+25).."%"
 			end
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = ""
@@ -3498,14 +3539,14 @@ function ClickEvent.BehindPlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			end
-			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			--_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf((v.common_prop.total_win_rounds+v.common_prop.score_win_rounds/2)*100/v.common_prop.total_rounds*2)+25).."%"
 			end
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -3564,14 +3605,14 @@ function ClickEvent.OppositePlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			end
-			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			--_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf((v.common_prop.total_win_rounds+v.common_prop.score_win_rounds/2)*100/v.common_prop.total_rounds*2)+25).."%"
 			end
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -3630,14 +3671,14 @@ function ClickEvent.FrontPlayerAvatarInfo( ... )
 			else
 				_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("PlayerName").text = tostring(v.common_prop.name)
 			end
-			_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
+			--_popPanel[popPanelIndex].panel:GetChild("DouNum").text = tostring(v.common_prop.huanledou)
 			_popPanel[popPanelIndex].panel:GetChild("TotalWin").text = tostring(v.common_prop.streak_wins)
 			_popPanel[popPanelIndex].panel:GetChild("TotalPlay").text = tostring(v.common_prop.total_rounds)
 			_popPanel[popPanelIndex].panel:GetChild("RoomCardPlay").text = tostring(v.common_prop.room_card_rounds)
 			if v.common_prop.total_rounds == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = "100%"
 			else
-				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = math.modf(v.common_prop.total_win_rounds*100/v.common_prop.total_rounds).."%"
+				_popPanel[popPanelIndex].panel:GetChild("WinRate").text = tostring(math.modf((v.common_prop.total_win_rounds+v.common_prop.score_win_rounds/2)*100/v.common_prop.total_rounds*2)+25).."%"
 			end
 			_popPanel[popPanelIndex].panel:GetChild("PlayerInformation"):GetChild("AvatarLoader").url = UIPackage.GetItemURL("MXUI","Touxiang01")
 			if v.wechat ~= {} and v.wechat.headimgurl and v.wechat.headimgurl ~= "" then
@@ -4002,7 +4043,7 @@ function ClickEvent.CreateRoomButton( ... )
 	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
 		costCard = "2/"
 	end
-	_popPanel[popPanelIndex].panel:GetChild("GvoiceClose").selected = false
+	_popPanel[popPanelIndex].panel:GetChild("GvoiceClose").selected = true
 	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.diamond)
 	else

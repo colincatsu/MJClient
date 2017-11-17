@@ -127,7 +127,7 @@ Player.connectTimes = 3
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1115"
+Player.pc_version = "1.0.1.1117.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -171,8 +171,10 @@ Player.playCountDownTime = 0
 Player.playCountDownTimeMax = 8
 
 Player.paiSizeSet = 0
+Player.tablecloth = 0
 
 Player.isRewardShare = false
+Player.hasLoadUIPackage = false
 
 function Player.LoadData( ... )
     -- body

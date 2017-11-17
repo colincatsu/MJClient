@@ -282,7 +282,7 @@ function MahJong.TestAnimation( ... )
 	-- body
 	PaiAnimation.SetPaiInSort(MahJong.self,_player_father.cards[_player_father.currentPaiNumber].parent,_player_father.cards[1].parent.transform.position.x)
 	for i=1,_player_father.currentPaiNumber-1 do
-		PaiAnimation.SetPaiShift(MahJong.self,v.parent,v.parent.transform.position.x - _modelSize.width)
+		PaiAnimation.SetPaiShift(MahJong.self,_player_father.cards[i].parent,_player_father.cards[i].parent.transform.position.x - _modelSize.width*_pai_bigger)
 	end
 end
 
@@ -490,6 +490,19 @@ function MahJong.Init()
 	_count_down_left = MahJong.self.transform:Find("CountDown/Left").gameObject
 	_count_down_right = MahJong.self.transform:Find("CountDown/Right").gameObject
 	twinkleAnimation = _count_down_father:GetComponent("Animation")
+	if Player.tablecloth == 1 then
+		MahJong.self.transform:Find("StaticModel/DNXB").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
+		MahJong.self.transform:Find("StaticModel/zhuo").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
+		MahJong.self.transform:Find("Gai/GaiModel").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
+	elseif Player.tablecloth == 2 then
+		MahJong.self.transform:Find("StaticModel/DNXB").gameObject:GetComponent("Renderer").material = Load("Material/tietu_2")
+		MahJong.self.transform:Find("StaticModel/zhuo").gameObject:GetComponent("Renderer").material = Load("Material/tietu_2")
+		MahJong.self.transform:Find("Gai/GaiModel").gameObject:GetComponent("Renderer").material = Load("Material/tietu_2")
+	else
+		MahJong.self.transform:Find("StaticModel/DNXB").gameObject:GetComponent("Renderer").material = Load("Material/tietu_0")
+		MahJong.self.transform:Find("StaticModel/zhuo").gameObject:GetComponent("Renderer").material = Load("Material/tietu_0")
+		MahJong.self.transform:Find("Gai/GaiModel").gameObject:GetComponent("Renderer").material = Load("Material/tietu_0")
+	end
 
 	if Player.isPlayBack == true then
 		_dice_red:SetActive(false)
@@ -860,15 +873,15 @@ function MahJong.SetPaiSize(mjModel,isPLayer)
 	-- body
 	if Player.paiSizeSet == 0 then
 		if isPLayer == true then
-			mjModel:GetComponent("Renderer").material = Load("Material/MjNoReflB")
-		else
-			mjModel:GetComponent("Renderer").material = Load("Material/MjReflB")
-		end
-	else
-		if isPLayer == true then
 			mjModel:GetComponent("Renderer").material = Load("Material/MjNoRefl")
 		else
 			mjModel:GetComponent("Renderer").material = Load("Material/MjRefl")
+		end
+	else
+		if isPLayer == true then
+			mjModel:GetComponent("Renderer").material = Load("Material/MjNoReflB")
+		else
+			mjModel:GetComponent("Renderer").material = Load("Material/MjReflB")
 		end
 	end
 end
