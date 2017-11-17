@@ -123,7 +123,7 @@ Player.moveInterval = 45
 
 Player.reConnect = false
 Player.disConnetedTime = nil
-Player.connectTimes = 3
+Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
@@ -425,6 +425,7 @@ function Player.LoadScene(senceName, buffer)
     end
     Effect.DestroyObj()
     CS.UnityEngine.Resources.UnloadUnusedAssets()
+    CS.System.GC.Collect()
     CS.UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("LoadingSence")
 end
 
@@ -442,7 +443,7 @@ function Player.myUpdate( ... )
             Network.ConnetServer()
             --Player.sayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
             Player.disConnetedTime = CS.UnityEngine.Time.time
-            --Player.hasConnectTimes = Player.hasConnectTimes + 1
+            Player.hasConnectTimes = Player.hasConnectTimes + 1
         end
         if Player.hasConnectTimes >= Player.connectTimes then
             Player.hasConnectTimes = 0
@@ -579,7 +580,9 @@ function Player.SayHiTest()
     if duration_pass <= 0 then
         return
     end
-
+    if duration_pass >= 10 then
+        Player.CmdSayHi
+    end
     if duration_pass > 5 then
         Player._pings_count = Player._pings_count + 1
         if Player.max_allowed and Player._pings_count >= Player.max_allowed then
@@ -1904,7 +1907,7 @@ function Player.OnSayHi( type_t,stuff )
         return
     end
     local tempHertCount = message.heart_count + 1
-    Player.CmdSayHi(tempHertCount)
+    --Player.CmdSayHi(tempHertCount)
     --[[
     --]]
     

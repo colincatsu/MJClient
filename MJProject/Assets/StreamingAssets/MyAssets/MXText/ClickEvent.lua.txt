@@ -95,6 +95,7 @@ function ClickEvent.AddPackage(uiPath)
 		Player.hasLoadUIPackage = true
 		local bundle = CS.UnityEngine.AssetBundle.LoadFromFile(uiPath)
 		UIPackage.AddPackage(bundle)
+		bundle:Unload(false)
 	end
 end
 
@@ -510,6 +511,24 @@ function ClickEvent.UpdateSignalLevel(signalLevel)
 			ClickEvent._play_ui.wlanShow.selectedIndex = 2
 		end
 	end
+end
+
+function ClickEvent.LoadActivityTexture(textureID)
+	-- body
+	local texturePath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/ActivityTexture/"
+	local fileStream = CS.System.IO.FileStream(texturePath..textureID..".jpg", CS.System.IO.FileMode.Open, CS.System.IO.FileAccess.Read)
+    fileStream:Seek(0, CS.System.IO.SeekOrigin.Begin)
+    local bytes = nil
+    fileStream:Read(bytes, 0, fileStream.Length)
+    fileStream:Close()
+    fileStream:Dispose()
+    fileStream = nil
+
+    local width = 400
+    local height = 500
+    local texture = CS.UnityEngine.Texture2D(width, height)
+    texture.LoadImage(bytes)
+    return NTexture(texture)
 end
 
 function ClickEvent.CommonPropertyUpdate( ... )
