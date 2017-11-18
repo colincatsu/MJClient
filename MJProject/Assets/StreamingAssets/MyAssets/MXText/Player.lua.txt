@@ -127,7 +127,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "1.0.1.1117.2"
+Player.pc_version = "1.0.1.1118.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -576,12 +576,19 @@ function Player.SayHiTest()
     -- body
     local curr_time = CS.UnityEngine.Time.realtimeSinceStartup
     local duration_pass = curr_time - Player.sayHiTimestarmp
-
+    Player.LogWarning("jxyTime")
+    Player.LogWarning(duration_pass)
     if duration_pass <= 0 then
         return
     end
-    if duration_pass >= 10 then
-        Player.CmdSayHi
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if duration_pass >= (5-1) then--网络延迟
+            Player.CmdSayHi(1)
+        end
+    else
+        if duration_pass >= (10-1) then--网络延迟
+            Player.CmdSayHi(7)
+        end
     end
     if duration_pass > 5 then
         Player._pings_count = Player._pings_count + 1
@@ -1915,6 +1922,7 @@ end
 
 function Player.CmdSayHi( heart_count_client )
     -- body
+    Player.LogWarning("sendSuccess")
     local sayHi = {
         heart_count = heart_count_client,
     }

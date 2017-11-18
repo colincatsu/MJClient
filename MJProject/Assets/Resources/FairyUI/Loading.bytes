@@ -1,0 +1,97 @@
+package.xml|1009|<packageDescription id="181u7g8l" name="Loading">
+  <resources>
+    <component id="t3tk3" name="LoadingBar" path="/UIPIC/主界面/" size="1251,114"/>
+    <component id="t3tk6" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
+    <image id="t3tk1" name="ui_Zhujiemian_02" path="/UIPIC/功能界面/" size="1334,750"/>
+    <image id="t3tk2" name="Di" path="/UIPIC/匹配房结算/" size="256,256" scale="9grid" scale9grid="64,64,128,128"/>
+    <image id="t3tk4" name="jindutiao_3" path="/UIPIC/主界面/" size="769,114" scale="9grid" scale9grid="193,54,386,2"/>
+    <image id="t3tk5" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31"/>
+    <image id="t3tk7" name="jiazailaba" path="/UIPIC/xinzeng/" size="86,42" scale="9grid" scale9grid="22,20,44,1"/>
+    <component id="t3tk0" name="Loading" path="/" size="1334,750" exported="true"/>
+    <component id="t3tk8" name="InformText" path="/UIPIC/功能界面/" size="1000,69" exported="true"/>
+    <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
+  </resources>
+</packageDescription>t3tk0.xml|3368|<component size="1334,750" adaptationTest="FitSize">
+  <displayList>
+    <image id="n0_j3uo" name="Bg" src="t3tk1" xy="0,0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3_j3uo" name="Di" src="t3tk2" xy="0,0" size="1334,750" alpha="0.6">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n2_j3uo" name="n2" xy="132,642" size="1069,39" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" text="抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </text>
+    <text id="n4_j3uo" name="n4" xy="97,680" size="1138,39" fontSize="14" color="#999999" align="center" vAlign="middle" autoSize="none" text="本网络游戏适合年满10岁以上的用户使用。为了您的健康，请合理控制游戏时间。抵制不良游戏，拒绝盗版游戏。 注意自我保护，谨防受骗上当。 适度游戏益脑，沉迷游戏伤身。 合理安排时间，享受健康生活。">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </text>
+    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" font="幼圆" fontSize="35" color="#ffe3bd" align="center" vAlign="middle" autoSize="shrink" text="正在加载中">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n6_lt1c" name="n6" xy="754,477" size="18,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n7_lt1c" name="n7" xy="772,478" size="19,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n8_lt1c" name="n8" xy="791,478" size="88,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </text>
+    <component id="n9_uejt" name="LoadingBar" src="t3tk3" xy="45,508" size="1251,114">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+      <ProgressBar value="100" max="100"/>
+    </component>
+    <component id="n10_10p14" name="InformNoHorn" src="t3tk6" xy="133,532">
+      <relation target="" sidePair="center-center,bottom-bottom"/>
+    </component>
+  </displayList>
+  <transition name="LoadingDDD" autoPlay="true" autoPlayRepeat="-1">
+    <item time="0" type="Visible" target="n6_lt1c" value="false"/>
+    <item time="0" type="Visible" target="n7_lt1c" value="false"/>
+    <item time="0" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="6" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="6" type="Visible" target="n7_lt1c" value="false"/>
+    <item time="6" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="12" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="12" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="12" type="Visible" target="n8_lt1c" value="false"/>
+    <item time="18" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="18" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="18" type="Visible" target="n8_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n6_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n7_lt1c" value="true"/>
+    <item time="24" type="Visible" target="n8_lt1c" value="true"/>
+  </transition>
+</component>t3tk3.xml|1345|<component size="1251,114" extention="ProgressBar">
+  <displayList>
+    <image id="n1" name="Bg" src="t3tk4" xy="-41,1" size="1334,114">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="bar" src="t3tk5" xy="0,41" size="1249,31"/>
+    <text id="n3" name="title" xy="584,44" size="83,24" fontSize="20" color="#ffffff" align="center" vAlign="middle" autoSize="height" text="50%">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+    <text id="n4_ghpf" name="n4" xy="994,0" size="145,24" fontSize="20" color="#ffffff" text="当前更新进度："/>
+    <text id="n5_ghpf" name="n5" xy="0,0" size="105,24" fontSize="20" color="#ffffff" text="下载速度："/>
+    <text id="n6_ghpf" name="DownloadSpeed" xy="93,0" size="75,24" fontSize="20" color="#ffffff" text="00.00kb"/>
+    <text id="n9_ghpf" name="Schedule" xy="1128,0" size="75,24" fontSize="20" color="#ffffff" text="0.0/0.0"/>
+    <text id="n10_ghpf" name="n10" xy="438,86" size="375,24" fontSize="20" color="#ffffff" align="center" vAlign="middle" text="正在下载最新文件,下载中请不要退出游戏"/>
+    <text id="n11_uaih" name="n11" xy="836,0" size="107,25" fontSize="20" color="#ffffff" text="更新文件："/>
+    <text id="n12_uaih" name="Files" xy="930,1" size="38,25" fontSize="20" color="#ffffff" text="0/0"/>
+  </displayList>
+  <ProgressBar/>
+</component>t3tk6.xml|234|<component size="1068,69" overflow="hidden">
+  <displayList>
+    <image id="n7_gepq" name="n7" src="t3tk7" xy="28,14" size="1000,42"/>
+    <component id="n6_j3uo" name="InformText" src="t3tk8" xy="27,0"/>
+  </displayList>
+</component>t3tk8.xml|748|<component size="1000,69" overflow="hidden">
+  <displayList>
+    <text id="n0_j3uo" name="txtMove" xy="1007,16" size="1077,37" font="幼圆" fontSize="32" color="#ffe3bd" vAlign="middle" ubb="true" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>
+    <text id="n1_j3uo" name="txtFixed" xy="0,0" size="993,69" fontSize="32" color="#ffffff" align="center" vAlign="middle" ubb="true" autoSize="shrink" text=""/>
+  </displayList>
+  <transition name="Txt" autoPlayRepeat="-1">
+    <item time="0" type="XY" target="n0_j3uo" tween="true" startValue="1007,-" endValue="-1255,-" duration="240" label2="Time" ease="Linear"/>
+    <item time="240" type="XY" target="n0_j3uo" label="Time" tween="true" startValue="-1255,-" ease="Linear"/>
+  </transition>
+</component>

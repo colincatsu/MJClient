@@ -12,9 +12,11 @@ ClickEvent.panelTable = {
 	_player_message_ui = "PlayerMessageUI",
 	_mall_ui = "Mall",
 	_mail_ui = "Mail",
-	_setting_ui = "Setting",
+	_setting_ui = "SettingMainMenu",
+	_setting_play_ui = "Setting",
 	_vip_note_ui = "VIPNote",
 	_history_score_ui = "HistoryScene",
+	_history_score_play_ui = "HistorySceneInGame",
 	_store_ui = "StoreUI",
 	_play_game_ui = "PlaySence",
 	_player_info = "PlayerInfo",
@@ -95,7 +97,7 @@ function ClickEvent.AddPackage(uiPath)
 		Player.hasLoadUIPackage = true
 		local bundle = CS.UnityEngine.AssetBundle.LoadFromFile(uiPath)
 		UIPackage.AddPackage(bundle)
-		bundle:Unload(false)
+		--bundle:Unload(false)
 	end
 end
 
@@ -254,6 +256,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		else
 			_currentPanel.panel:GetChild("BaoPai").visible = false
 		end
+		_currentPanel.panel:GetChild("BaoPaiInRound").visible = false
+		_currentPanel.panel:GetChild("ShaiZiStopLoader").visible = false
+		_currentPanel.panel:GetChild("BaoPaiInRound").visible = false
+		_currentPanel.panel:GetChild("ZhuangStart").visible = false
+		_currentPanel.panel:GetChild("ZhuangChange").visible = false
+		_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
@@ -474,7 +482,7 @@ function ClickEvent.CreateNewPanel(panelName)
 				_currentPanel.panel:GetChild("LoginButton").visible = false
 			end
 			local x = 1/ClickEvent.scale
-			Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.48,_currentPanel.panel:GetChild("n20").height*0.5))
+			Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.455,_currentPanel.panel:GetChild("n20").height*0.67))
 	end
 	
 	--[[
@@ -2340,6 +2348,11 @@ end
 -------------点击功能函数
 ---------------------------------------------------------------------------
 
+function ClickEvent.GameMoreButton( ... )
+	-- body
+	ClickEvent._play_ui.gameMoreControl.selectedIndex = 1
+end
+
 function ClickEvent.GreenDesk( ... )
 	-- body
 	Player.tablecloth = 0
@@ -2640,7 +2653,7 @@ end
 
 function ClickEvent.CopyRoomNum( ... )
 	-- body
-	Player.MahJong.TestAnimation()
+	--Player.MahJong.TestAnimation()
 	WeChatPlatform:CopyRoomID(tostring(Player._roomId))
 	ClickEvent.ShowToast(StringTable.Get(2031))
 	Player.CmdMatTrackCutomKVEvent("Button","CopyRoomNum","1")
@@ -4073,7 +4086,7 @@ function ClickEvent.CreateRoomButton( ... )
 	end
 	_popPanel[popPanelIndex].panel:GetChild("ChooseFan05").selected = false
 	_popPanel[popPanelIndex].panel:GetChild("MultipleNolimit").selected = true
-	_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
+	--_popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected = true
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuCreateRoom","1")
 	--CS.UnityEngine.Application.LoadLevel("PlaySence")
 end
@@ -4362,11 +4375,6 @@ end
 
 function ClickEvent.MatModelCheck( ... )
 	-- body
-	if _popPanel[popPanelIndex].panel:GetChild("ClassicMode").selected then
-		Player.CmdMatTrackCutomKVEvent("Button","ClassicMode","1")
-	elseif _popPanel[popPanelIndex].panel:GetChild("HighRiskMode").selected then
-		Player.CmdMatTrackCutomKVEvent("Button","HighriskMode","1")
-	end
 
 	if _popPanel[popPanelIndex].panel:GetChild("Multiple32").selected then
 		Player.CmdMatTrackCutomKVEvent("Button","Mulit32","1")
@@ -4553,7 +4561,7 @@ function ClickEvent.GameBillButton(gameObject)
 	WeChatPlatform.func = nil
 	if Player._all_calculate_data then
 		for c=1,Player._calculate_table_number do
-			local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
+			local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRoundNoButton"))
 			obj.name = "VipNoteListInRound"
 			roundCount = roundCount + 1
 			obj:GetChild("RoundNum").text = tostring(roundCount)

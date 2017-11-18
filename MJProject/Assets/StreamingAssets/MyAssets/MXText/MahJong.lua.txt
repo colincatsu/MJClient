@@ -263,7 +263,6 @@ function MahJong.Start()
 	Effect.AddNormalEffect(Effect._effect_name.haiDiLaoYue,nil,nil,tempPosition,5)
 	Player._banker_position = 1
 	MahJong.PlayDoubleDices(1,2)
-	--]]
 	if not _player_father then
 		_player_father = {}
 		_player_father.cards = {}
@@ -276,6 +275,7 @@ function MahJong.Start()
 		MahJong.CreatePlayerModel("bing_1_Model",paiCount,"CARD_TYPE_BINGZI",1)
     end
 	MahJong.SortPlayerPai()
+	--]]
 end
 
 function MahJong.TestAnimation( ... )
@@ -490,6 +490,7 @@ function MahJong.Init()
 	_count_down_left = MahJong.self.transform:Find("CountDown/Left").gameObject
 	_count_down_right = MahJong.self.transform:Find("CountDown/Right").gameObject
 	twinkleAnimation = _count_down_father:GetComponent("Animation")
+	_count_down_father:SetActive(false)
 	if Player.tablecloth == 1 then
 		MahJong.self.transform:Find("StaticModel/DNXB").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
 		MahJong.self.transform:Find("StaticModel/zhuo").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
@@ -507,6 +508,7 @@ function MahJong.Init()
 	if Player.isPlayBack == true then
 		_dice_red:SetActive(false)
 		_dice_white:SetActive(false)
+		_count_down_father:SetActive(true)
 	end
 	_gai_obj = MahJong.self.transform:Find("Gai").gameObject
 	_pointFather.D = _gai_obj.transform:Find("Point_D/Father").gameObject
@@ -1549,6 +1551,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 			end
 		    _dice_red:SetActive(false)
 		    _dice_white:SetActive(false)
+		    _count_down_father:SetActive(true)
         else
         	Player.LogWarning(playerData.pai_count_inhand)
         	if playerPos == 1 then
@@ -5027,6 +5030,7 @@ function MahJong.PlayDoubleDices(number1,number2)
 	--]]
 	_dice_red:SetActive(true)
     _dice_white:SetActive(true)
+    _count_down_father:SetActive(false)
 	redDicePoints =	number1
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
@@ -5053,6 +5057,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     MahJong.OtherPlayerPaiInit()
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
+    _count_down_father:SetActive(true)
 	end)
 	coroutine.resume(co)
 end
@@ -5111,8 +5116,8 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 		_modelPool[diceNumber]:SetActive(false)
 	end
 	if isPlayDice and isPlayDice == true then
-		diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
-		_dice_red:SetActive(true)
+		--diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
+		--_dice_red:SetActive(true)
 	end
 	Player.LogWarning("playdice::"..tostring(diceNumber))
 	if diceNumber and diceNumber%2 == 0 then
