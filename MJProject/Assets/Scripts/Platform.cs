@@ -154,6 +154,15 @@ public class Platform : MonoBehaviour {
     [DllImport("__Internal")]
     private static extern string wxReadPaste();
 
+    [DllImport("__Internal")]
+    private static extern string getSystemVersion();
+
+    [DllImport("__Internal")]
+    private static extern string getSystemModel();
+
+    [DllImport("__Internal")]
+    private static extern string getImei();
+
     public static Platform Instance
     {
         get
@@ -422,7 +431,7 @@ public class Platform : MonoBehaviour {
             return currentActivity.Call<string>("getSystemVersion");
         }
         if (LuaCommon.isIos)
-            return "";
+            return getSystemVersion();
         return "";
     }
 
@@ -434,7 +443,7 @@ public class Platform : MonoBehaviour {
             return currentActivity.Call<string>("getSystemModel");
         }
         if (LuaCommon.isIos)
-            return "";
+            return getSystemModel();
         return "";
     }
 
@@ -445,7 +454,7 @@ public class Platform : MonoBehaviour {
             return currentActivity.Call<string>("getImei");
         }
         if (LuaCommon.isIos)
-            return "";
+            return getImei();
         return "";
     }
 
