@@ -41,7 +41,7 @@ _chi_pai_father.cards = {}
 local _gang_pai_father = {}--杠牌父节点
 _gang_pai_father.cards = {}
 local _pai_bigger = 0.93--player牌放大倍数
-local _pai_gap = 1.01--player牌间隔
+local _pai_gap = 1--player牌间隔
 local _chi_pai_smaller = 0.5--吃牌缩小倍数
 local _chi_pai_pos_height = 1.7--吃牌高度
 local _current_click_pai
@@ -59,15 +59,17 @@ local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
 	east = newVector3(-0.31,0,0.295),
-	south = newVector3(-0.4,0,-0.22),
+	south = newVector3(-0.34,0,-0.15),
 	west = newVector3(0.36,0,-0.31),
-	north = newVector3(0.4,0,0.18),
+	north = newVector3(0.34,0,0.13),
 }
 local _player_pai_position = {
 ---[[
-	nextPlayer = newVector3(-0.35,0,0),
+	nextPlayer = newVector3(-0.395,0,0),
 	oppositePlayer = newVector3(0,0,-0.32),
-	forwardPlayer = newVector3(0.35,0,0),
+	forwardPlayer = newVector3(0.395,0,0),
+	nextPlayerDown = newVector3(-0.38,0,0),
+	forwardPlayerDown = newVector3(0.38,0,0),
 --]]
 }
 local _player_pai_pool = {}--其他玩家手牌
@@ -143,6 +145,8 @@ local _count_down_right = nil
 local _current_left_number = 0
 local _current_right_number = 0
 local twinkleAnimation = nil
+
+local huPositionAudio = "POSITION_TYPE_EAST"
 
 local currentTurn = nil
 
@@ -751,7 +755,7 @@ function MahJong.ResetGameState(resetPlayButton)
     	v:SetActive(true)
     end
     MahJong.ModelPoolSetActive(false)
-    MahJong.AnimationPlay()
+    --MahJong.AnimationPlay()
 
     MahJong._current_click_pai = nil
     Player._ting_pai_cache = nil
@@ -1065,6 +1069,8 @@ function MahJong.AddOtherPai(whichPlayer,paiCount)
 	-- body
 	local modelTemp = Load("MJModel/null_Model")
 	--local countTemp = 0
+	_player_pai_pool._next_player.transform.position = _player_pai_position.nextPlayer
+	_player_pai_pool._forward_player.transform.position = _player_pai_position.forwardPlayer
 	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
 	if playerPos == 1 then
 		for i=1,paiCount do
@@ -1278,6 +1284,8 @@ function MahJong.UpdateWhoseTurn(whichPlayer)
 	else
 		if currentTurn == whichPlayer then
 			return
+		else
+			currentTurn = whichPlayer
 		end
 	end
 	MahJong.ResetCountDownNumber()
@@ -1326,7 +1334,7 @@ function MahJong.UpdateWhoseTurn(whichPlayer)
 	ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
 	ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = false
 	local playerPos = ClickEvent.PlayerPosition(whichPlayer)
-	---[[
+	--[[
 	ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist").autoPlayRepeat = 0
 	ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist").autoPlay = false
 	ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist").autoPlayRepeat = 0
@@ -1339,30 +1347,30 @@ function MahJong.UpdateWhoseTurn(whichPlayer)
 	ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist"):Stop()
 	ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist"):Stop()
 	ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist"):Stop()
-	--]]
-	if playerPos == 0 then
-		--ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist"):Play()
 		ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist").autoPlayDelay = 8
 		ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist").autoPlayRepeat = -1
 		ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist").autoPlay = true
-		ClickEvent._play_ui.playerAvatarInfoEffect.visible = true
-	elseif playerPos  == 1 then
-		--ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist"):Play()
 		ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist").autoPlayDelay = 8
 		ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist").autoPlayRepeat = -1
 		ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist").autoPlay = true
-		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = true
-	elseif playerPos  == 2 then
-		--ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist"):Play()
 		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist").autoPlayDelay = 8
 		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist").autoPlayRepeat = -1
 		ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist").autoPlay = true
-		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = true
-	elseif playerPos  == 3 then
-		--ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist"):Play()
 		ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist").autoPlayDelay = 8
 		ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist").autoPlayRepeat = -1
 		ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist").autoPlay = true
+	--]]
+	if playerPos == 0 then
+		--ClickEvent._play_ui.playerAvatarInfo:GetTransition("twist"):Play()
+		ClickEvent._play_ui.playerAvatarInfoEffect.visible = true
+	elseif playerPos  == 1 then
+		--ClickEvent._play_ui.behindPlayerAvatarInfo:GetTransition("twist"):Play()
+		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = true
+	elseif playerPos  == 2 then
+		--ClickEvent._play_ui.oppositePlayerAvatarInfo:GetTransition("twist"):Play()
+		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = true
+	elseif playerPos  == 3 then
+		--ClickEvent._play_ui.frontPlayerAvatarInfo:GetTransition("twist"):Play()
 		ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = true
 	end
 end
@@ -1511,7 +1519,8 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 	Player.isPlayerPaiShowing = true
 	Player.LogWarning("ReturnRoomSync")
 	Player.LogWarning(paiData)
-	MahJong.AnimationPlay()
+	MahJong.ModelPoolSetActive(true)
+	--MahJong.AnimationPlay()
 	_current_dapai.whichPlayer = whoseTurn
 	if paiData == {} then
 		Player.LogWarning("paiData nil")
@@ -1945,12 +1954,14 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 				ClickEvent._play_ui.playerTing.visible = true
 			elseif playerPos == 1 then
 				ClickEvent._play_ui.behindPlayerTing.visible = true
+				_player_pai_pool._next_player.transform.position = _player_pai_position.nextPlayerDown
 				_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3(0,0,90)
 			elseif playerPos == 2 then
 				ClickEvent._play_ui.oppositePlayerTing.visible = true
 				_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3(-90,0,0)
 			elseif playerPos == 3 then
 				ClickEvent._play_ui.frontPlayerTing.visible = true
+				_player_pai_pool._forward_player.transform.position = _player_pai_position.forwardPlayerDown
 				_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3(0,0,-90)
 			else
 				Player.LogWarning("position nil")
@@ -2310,7 +2321,7 @@ function MahJong.PlayBackNextOperation( ... )
 	        MahJong.DaPaiPoolShow(operationTemp,true)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_HUPAI" then
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1,operationTemp.position)
 	        local tempPosition = newVector3.zero
 	        local whichPlayer = ClickEvent.PlayerPosition(operationTemp.position)
 			if whichPlayer == 0 then
@@ -2328,51 +2339,51 @@ function MahJong.PlayBackNextOperation( ... )
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.QiangGangHu,false,1,operationTemp.position)
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	        ClickEvent._play_ui.replayFinish.visible = true
 	        ClickEvent._play_ui.replayFinishTransition:Play()
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_PENGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Peng,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_CHIPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Chi,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_GIVEUP" then
 	        Player.LogWarning("give up operation")
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_FENG" then
 	    	isXuanFeng = true
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_XUANFENG_JIAN" then
 	    	isXuanFeng = true
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.MingGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_ANGANGPAI" then
 	        MahJong.UpdateWhoseTurn(operationTemp.position)
 	        MahJong.OperationPaiShow(operationTemp,true)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Gang,false,1,operationTemp.position)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Down,false,1)
 	        AudioPlayer.PlaySound(AudioPlayer._audio_name.AnGang,false,1)
 	    elseif operationTemp.oper_type == "PAI_OPER_TYPE_TINGPAI" then
 	        MahJong.TingPai(operationTemp,true)
 	        MahJong.DaPaiPoolShow(operationTemp,true)
 	        MahJong.PlayBackDeletePai(operationTemp.position,operationTemp.pai,nil)
-	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1)
+	        AudioPlayer.PlaySound(AudioPlayer._audio_name.Ting,false,1,operationTemp.position)
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_FAPAI" then
         	Player.LogWarning(operationTemp.pai.card_type)
         	Player.LogWarning(operationTemp.pai.card_value)
@@ -4367,29 +4378,42 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	elseif Player.huPaiPosition  == 3 then
 		tempPosition = Effect.forwardPosition
 	end
+	local effectWords = 1.5
 	if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" and Player.isQiangGang == false then
 		if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
-            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,2)
+			AudioPlayer.PlaySound(AudioPlayer._audio_name.GangShangKaiHua,false,1,huPositionAudio)
+            Effect.AddNormalEffect(Effect._effect_name.gangKaiShow,nil,nil,tempPosition,effectWords)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
-	        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,2)
+	    	AudioPlayer.PlaySound(AudioPlayer._audio_name.MingPiao,false,1,huPositionAudio)
+	        Effect.AddNormalEffect(Effect._effect_name.mingPiaoShow,nil,nil,tempPosition,effectWords)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_QING_YI_SE" then
-	        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,2)
+	    	AudioPlayer.PlaySound(AudioPlayer._audio_name.QingYiSe,false,1,huPositionAudio)
+	        Effect.AddNormalEffect(Effect._effect_name.qingYiSeShow,nil,nil,tempPosition,effectWords)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_ZI_MO" then
-	        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,2)
+	    	AudioPlayer.PlaySound(AudioPlayer._audio_name.Zimo,false,1,huPositionAudio)
+	        Effect.AddNormalEffect(Effect._effect_name.ziMoShow,nil,nil,tempPosition,effectWords)
 	    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
-	        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,2)
+	    	AudioPlayer.PlaySound(AudioPlayer._audio_name.HaiDiLaoYue,false,1,huPositionAudio)
+	        Effect.AddNormalEffect(Effect._effect_name.seaMoonShow,nil,nil,tempPosition,effectWords)
 	    else
-			Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,2)
+	    	if operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.JinBao,false,1,huPositionAudio)
+    		elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.LouBao,false,1,huPositionAudio)
+			elseif operationPaiShowData.max_fan_type == "FAN_TYPE_PIAO_HU" then
+		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.Piao,false,1,huPositionAudio)
+	    	end
+			Effect.AddNormalEffect(Effect._effect_name.huShow,nil,nil,tempPosition,effectWords)
 	    end
 	elseif operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_LIUJU" then
 		ClickEvent._play_ui.uselessRound.visible = true
 	end
     local co = coroutine.create(function()
-    	yield_return(CS.UnityEngine.WaitForSeconds(2))
+    	yield_return(CS.UnityEngine.WaitForSeconds(effectWords))
     	local bigEffectShowTime = 0
 		if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" then
 			if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
-				bigEffectShowTime = 5
+				bigEffectShowTime = 2.1
 				AudioPlayer.PlaySound(AudioPlayer._audio_name.YuanBao,false,1)
 	        	Effect.AddSpecialEffect(Effect._effect_name.gangShangKaiHua,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_MING_PIAO" then
@@ -4397,15 +4421,15 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.Dragon,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.dragonMingPiao,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_LOU_BAO" then
-		    	bigEffectShowTime = 5
+		    	bigEffectShowTime = 2.1
 		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.YuanBao,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.goldIngot,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_JIN_BAO" then
-		    	bigEffectShowTime = 3
+		    	bigEffectShowTime = 2.1
 	    		AudioPlayer.PlaySound(AudioPlayer._audio_name.FallingGold,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.fallMoney,bigEffectShowTime)
 		    elseif operationPaiShowData.max_fan_type == "FAN_TYPE_HAI_DI_LAO" then
-		    	bigEffectShowTime = 5
+		    	bigEffectShowTime = 2.1
 		    	AudioPlayer.PlaySound(AudioPlayer._audio_name.LaoYue,false,1)
 	    		Effect.AddSpecialEffect(Effect._effect_name.haiDiLaoYue,bigEffectShowTime)
 		    else
@@ -4416,7 +4440,7 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	        yield_return(CS.UnityEngine.WaitForSeconds(bigEffectShowTime))
 		end
         Effect.AddNormalEffect(Effect._effect_name.roundEndShow,nil,nil,nil,nil)
-        yield_return(CS.UnityEngine.WaitForSeconds(2))
+        yield_return(CS.UnityEngine.WaitForSeconds(1.5))
         Effect.DeleteEffect(Effect._effect_name.roundEndShow)
         Player.hasPlayedRoundEnd = true
         ClickEvent.ShowCalculate()
@@ -4573,6 +4597,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		Player.operation_calculate_data[playerPos][Player.operation_calculate_data[playerPos].operationNumber].card_value = paiValue
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_HUPAI" then
 		Player.huPaiPosition = playerPos
+		huPositionAudio = whichPlayer
 		Player.hupai_calculate_data = operationPaiShowData.pai
 		Player.isQiangGang = false
 		if _current_dapai.card_type == operationPaiShowData.pai.card_type and _current_dapai.card_value == operationPaiShowData.pai.card_value then
@@ -4584,6 +4609,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		return
 	elseif operationPaiShowData.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
 		Player.huPaiPosition = playerPos
+		huPositionAudio = whichPlayer
 		Player.hupai_calculate_data = operationPaiShowData.pai
 		Player.isQiangGang = true
 		Effect.AddNormalEffect(Effect._effect_name.qiangGangHu,nil,nil,tempPosition,2)

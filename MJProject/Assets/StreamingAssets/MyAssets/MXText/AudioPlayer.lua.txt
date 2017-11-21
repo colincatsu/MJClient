@@ -26,6 +26,14 @@ AudioPlayer._audio_name = {
 	Dragon = "Dragon",
 	YuanBao = "yuanbao",
 	LaoYue = "laoyue",
+	GangShangKaiHua = "gangShangKaiHua",
+	HaiDiLaoYue = "haiDiLaoYue",
+	JinBao = "jinBao",
+	LouBao = "louBao",
+	MingPiao = "mingPiao",
+	Piao = "piao",
+	QiangGangHu = "qiangGangHu",
+	QingYiSe = "qingYiSe",
 }
 local AudioClip = CS.UnityEngine.AudioClip
 local AudioSource = CS.UnityEngine.AudioSource
@@ -35,11 +43,27 @@ local Load = CS.UnityEngine.Resources.Load
 local audioFather = nil
 local soundAudioSource = {}
 
-function AudioPlayer.PlaySound(soundName,isLoop,volume)
+function AudioPlayer.PlaySound(soundName,isLoop,volume,position)
 	-- body
 	if not Player._player_data then
 		return
 	end
+	if position then
+		for k,v in pairs(Player._all_players_data) do
+			if v.position == position then
+				if next(v.wechat) == nil then
+					if v.common_prop.gender == "GENDER_TYPE_MAN" then
+						soundName = soundName.."_1"
+					else
+						soundName = soundName.."_2"
+					end
+				else
+					soundName = soundName.."_"..tostring(v.wechat.sex)
+				end
+			end
+		end
+	end
+
 	if soundName == AudioPlayer._audio_name.Dice or soundName == AudioPlayer._audio_name.FaPai or
 		soundName == AudioPlayer._audio_name.Down or soundName == AudioPlayer._audio_name.Dapai or
 		soundName == AudioPlayer._audio_name.CloseUI or soundName == AudioPlayer._audio_name.PushPai or

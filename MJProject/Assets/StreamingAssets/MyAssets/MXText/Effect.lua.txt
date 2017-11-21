@@ -41,6 +41,8 @@ Effect._effect_name = {
 	mainUI = "Effects_ZhuJieMian_01",
 	xuanfengGang = "Effect_Tornado_001",
 	dianpaoThunder = "Effect_thunder_01_Position",
+	datingButton = "Effect_daTing_1120",
+	zhuangStar = "Effect_UI_zhuang_1119",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)
@@ -100,6 +102,35 @@ function Effect.DestroyObj( ... )
 	_disableObjPool_rear = 0
 end
 
+function Effect.AddUIGraphEffect(effectName,effectScale,effectFather,effectPos,deleteTime)
+	-- body
+	if not prefabTable[effectName] then
+		prefabTable[effectName] = Load("Effect/"..effectName)
+	end
+	if effectName == Effect._effect_name.head_ui then
+		objectTable[effectName] = Instantiate(prefabTable[effectName])
+		effectFather:SetNativeObject(GoWrapper(objectTable[effectName]))
+		if effectPos then
+			effectFather.displayObject.xy = effectPos
+		end
+		objectTable[effectName].transform.localScale = effectScale
+	end
+	if not objectTable[effectName] then
+		objectTable[effectName] = Instantiate(prefabTable[effectName])
+		effectFather:SetNativeObject(GoWrapper(objectTable[effectName]))
+		if effectPos then
+			effectFather.displayObject.xy = effectPos
+		end
+		objectTable[effectName].transform.localScale = effectScale
+	end
+	if deleteTime then
+		local co = coroutine.create(function()
+	    yield_return(CS.UnityEngine.WaitForSeconds(deleteTime))
+	    Effect.DeleteEffect(effectName)
+		end)
+		coroutine.resume(co)
+	end
+end
 
 function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,deleteTime)
 	-- body
@@ -127,6 +158,7 @@ function Effect.AddUIEffect(effectName,effectScale,effectFather,effectPos,delete
 			x.displayObject.xy = effectPos
 		end
 		objectTable[effectName].transform.localScale = effectScale
+		return x
 	end
 	if deleteTime then
 		local co = coroutine.create(function()

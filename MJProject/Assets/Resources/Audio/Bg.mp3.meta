@@ -5,10 +5,10 @@ licenseType: Pro
 AudioImporter:
   serializedVersion: 6
   defaultSettings:
-    loadType: 1
+    loadType: 0
     sampleRateSetting: 1
     sampleRateOverride: 44100
-    compressionFormat: 1
+    compressionFormat: 2
     quality: 0.29999998
     conversionMode: 0
   platformSettingOverrides: {}

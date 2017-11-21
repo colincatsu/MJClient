@@ -140,7 +140,7 @@ public class Platform : MonoBehaviour {
     private static extern void wxCopyRoom(string roomID);
 
     [DllImport("__Internal")]
-    private static extern void wxShare(string title, string desc, string url);
+    private static extern void wxShare(string title, string desc, string url, int scene);
 
     [DllImport("__Internal")]
     private static extern void wxShareTexture(byte[] bytes,int byteLength, int scene);
@@ -295,14 +295,22 @@ public class Platform : MonoBehaviour {
         }
     }
     [CSharpCallLua]
-    public delegate void shareDelegate();
+    public delegate void shareDelegate(string para);
     public shareDelegate onShareCallBack;
 
     public void OnShareSuccess()
     {
         if(onShareCallBack != null)
         {
-            onShareCallBack();
+            onShareCallBack("success");
+        }
+    }
+
+    public void OnShareFail()
+    {
+        if (onShareCallBack != null)
+        {
+            onShareCallBack("fail");
         }
     }
 
@@ -464,14 +472,14 @@ public class Platform : MonoBehaviour {
         return 0;
     }
 
-    public void WXShare(string title,string description,string url)
+    public void WXShare(string title,string description,string url,int scene)
     {
         if(currentActivity != null)
         {
-            currentActivity.Call("wxShare",title,description,url);
+            currentActivity.Call("wxShare",title,description,url, scene);
         }
         if (LuaCommon.isIos)
-            wxShare(title, description, url);
+            wxShare(title, description, url, scene);
     }
 
     public void CopyRoomID(string roomid)
@@ -535,6 +543,11 @@ public class Platform : MonoBehaviour {
         if (currentActivity != null)
             return currentActivity.Call<string>(methodName);
         return "";
+    }
+
+    public byte[] BufferCreate(int length)
+    {
+        return new byte[length];
     }
 
     public void ShareTexture(Camera camera, Rect rect, int scene)

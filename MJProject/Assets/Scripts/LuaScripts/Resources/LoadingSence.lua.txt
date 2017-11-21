@@ -34,6 +34,7 @@ local serveVersion = ""
 local loadingUI = nil
 local loadingBar = nil
 local downloadProgress = nil
+local downloadNumber = nil
 local downloadSize = 0
 local hotPackageTable = nil
 local tableLength = 0
@@ -51,6 +52,7 @@ function awake()
 	loadingBar:GetChild("DownloadSpeed").visible = false
 	loadingBar:GetChild("n5").visible = false
 	downloadProgress = loadingBar:GetChild("Schedule")
+	downloadNumber = loadingBar:GetChild("Files")
 	--downloadProgress.visible = false
 	CS.UnityEngine.Application.targetFrameRate = 30
 end
@@ -92,6 +94,11 @@ function LoadingSence.SetLoadingBar(progress)
 	loadingBar.value = progessInt
 end
 
+function LoadingSence.SetLoadedFilesNum(currentIndex)
+	-- body
+	downloadNumber.text = tostring(currentIndex).."/"..tostring(tableLength)
+end
+
 function LoadingSence.DownloadData()
 	-- body
 	tableIndex = tableIndex + 1
@@ -123,6 +130,7 @@ function LoadingSence.DownloadData()
 		        mFile:write(serveVersion)
 		        mFile:close()
 		        localVersion = serveVersion
+		        LoadingSence.SetLoadedFilesNum(tableIndex)
 		        if tonumber(localVersion) >= hotPackageTable[tableLength].version then
 					LoadingSence.BeginGame()
 				else
@@ -258,9 +266,9 @@ function LoadingSence.RequestServerVersion( ... )
 				hotPackageTable = jsonData.data.issues
 				tableLength = 0
 				for k,v in pairs(hotPackageTable) do
-					print(k,v)
 					tableLength = tableLength + 1
 				end
+				LoadingSence.SetLoadedFilesNum(0)
 				if tableLength == 0 then
 					if LoadingSence.CopyAndroidRes() == false then
 						LoadingSence.BeginGame()
