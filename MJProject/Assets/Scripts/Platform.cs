@@ -227,9 +227,9 @@ public class Platform : MonoBehaviour {
         {
             jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             currentActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            InitBuglySDK(false);
         }
         Debug.Log("**************Platform Unity InitX:" + currentActivity);
-        InitBuglySDK(false);
     }
 
     public void InitGVoice(string appID, string appKey, string openID, string udpUrl)
