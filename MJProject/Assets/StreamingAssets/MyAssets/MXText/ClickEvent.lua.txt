@@ -414,6 +414,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		else
 			_currentPanel.panel:GetChild("Avatar"):GetChild("Name"):GetChild("PlayerName").text = tostring(Player._player_data.common_prop.name)
 		end
+		_currentPanel.panel:GetChild("Avatar"):GetChild("PlayerID").text = tostring(Player._player_data.common_prop.player_id)
 		_currentPanel.panel:GetChild("DouNum"):GetChild("DouNum").text = tostring(Player._player_data.common_prop.huanledou)
 		_currentPanel.panel:GetChild("GemsNum"):GetChild("GemsNum").text = tostring(Player._player_data.common_prop.diamond)
 		_currentPanel.panel:GetChild("RoomCardNum"):GetChild("RoomCardNum").text = tostring(Player._player_data.common_prop.room_card_count)
@@ -2597,11 +2598,13 @@ end
 
 function ClickEvent.Replay(gameObject)
 	-- body
+	--[[
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._history_score_ui) == true then
 		_popPanel[popPanelIndex].panel:GetController("HistorySecenSelect").selectedIndex = 1
 	else
 		ClickEvent.isReplayClick = true
 	end
+	--]]
 	--gameObject.parent:GetChild()
 end
 
@@ -2983,10 +2986,6 @@ function ClickEvent.VipNoteList(gameObject)
 			end
 			--]]
 		end
-	end
-	if ClickEvent.isReplayClick == true then
-		_popPanel[popPanelIndex].panel:GetController("HistorySecenSelect").selectedIndex = 1
-		ClickEvent.isReplayClick = false
 	end
 end
 
