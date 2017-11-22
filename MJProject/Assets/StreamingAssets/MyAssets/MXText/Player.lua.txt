@@ -127,7 +127,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1121.2"
+Player.pc_version = "2.0.3.1122.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次

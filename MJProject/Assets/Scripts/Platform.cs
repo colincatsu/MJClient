@@ -245,17 +245,7 @@ public class Platform : MonoBehaviour {
 
     public void InitBuglySDK(bool openSdk)
     {
-#if DEBUG
-        BuglyAgent.ConfigDebugMode(openSdk);
-#endif
-        BuglyAgent.ConfigDebugMode(openSdk);
-#if UNITY_ANDROID
-        BuglyAgent.InitWithAppId(BuglyAppIDForAndroid);
-#endif
 
-        // TODO Required. If you do not need call 'InitWithAppId(string)' to initialize the sdk(may be you has initialized the sdk it associated Android or iOS project),
-        // please call this method to enable c# exception handler only.
-        BuglyAgent.EnableExceptionHandler();
     }
 
     [LuaCallCSharp]

@@ -81,7 +81,13 @@ local wechatHttpUrl = "http://testapi.cloudbm.wang/wechat/userinfo?"
 
 function ClickEvent.Awake( ... )
 	-- body
-	ClickEvent.AddPackage(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/mx_assetbundles/mxui.ab")
+	if CS.LuaCommon.isIos == true then
+		ClickEvent.AddPackage(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/mx_assetbundles_ios/mxui.ab")
+	else
+		ClickEvent.AddPackage(CS.UnityEngine.Application.persistentDataPath.."/MyAssets/mx_assetbundles_android/mxui.ab")
+	end
+	--[[
+	--]]
 	UIConfig.defaultFont = "MJFont"
 	ClickEvent.uiPanel = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel")
 	ClickEvent.scale = ClickEvent.uiPanel.transform.localScale.x
@@ -453,9 +459,15 @@ function ClickEvent.CreateNewPanel(panelName)
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
-		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph1"),_currentPanel.panel:GetChild("ButtonEffectGraph1").xy+_currentPanel.panel:GetChild("ButtonEffectGraph1").size/2 - CS.UnityEngine.Vector2(0,-50))
-		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph2"),_currentPanel.panel:GetChild("ButtonEffectGraph2").xy+_currentPanel.panel:GetChild("ButtonEffectGraph2").size/2 - CS.UnityEngine.Vector2(0,-50))
-		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
+		if _currentPanel.panel:GetChild("ButtonEffectGraph1") then
+			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph1"),_currentPanel.panel:GetChild("ButtonEffectGraph1").xy+_currentPanel.panel:GetChild("ButtonEffectGraph1").size/2 - CS.UnityEngine.Vector2(0,-50))
+		end
+		if _currentPanel.panel:GetChild("ButtonEffectGraph2") then
+			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph2"),_currentPanel.panel:GetChild("ButtonEffectGraph2").xy+_currentPanel.panel:GetChild("ButtonEffectGraph2").size/2 - CS.UnityEngine.Vector2(0,-50))
+		end
+		if _currentPanel.panel:GetChild("ButtonEffectGraph3") then
+			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
+		end
 		--Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
@@ -572,8 +584,8 @@ end
 function ClickEvent.LoadActivityTexture(textureID,loader)
 	-- body
 	local texturePath = "file:///"..CS.UnityEngine.Application.persistentDataPath.."/MyAssets/ActivityTexture/"..textureID..".png"
-	if CS.LuaCommon.isIos == true or CS.LuaCommon.isAndroid == true then
-		texturePath = CS.UnityEngine.Application.persistentDataPath.."/MyAssets/ActivityTexture/"..textureID..".png"
+	if CS.LuaCommon.isAndroid == true or CS.LuaCommon.isIos == true then
+		texturePath = "file://"..CS.UnityEngine.Application.persistentDataPath.."/MyAssets/ActivityTexture/"..textureID..".png"
 	end
 	local co = coroutine.create(function()
 		local www = CS.UnityEngine.WWW(texturePath)
@@ -1696,6 +1708,7 @@ function ClickEvent.ShowCalculate( ... )
 			end
 
 			local allFanNumber = 0
+			local gangScore = 0
 			local detailList = _popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("FanList")
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
@@ -1728,16 +1741,10 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						--[[
 						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
-							if c.score > 0 then
-								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
-							else
-								listChild:GetChild("FanNum").text = tostring(c.score)
-							end
-						else
-							listChild:GetChild("FanNum").text = tostring(fanNum).."番"
+							gangScore = gangScore + c.score
 						end
+						--[[
 						--]]
 					end
 				end
@@ -1752,6 +1759,8 @@ function ClickEvent.ShowCalculate( ... )
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 			_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("TotalFanNum").text = tostring(allFanNumber)
+			_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("GangNum").text = tostring(gangScore)
+			_popPanel[popPanelIndex].panel:GetChild("BehindPlayerClearInfo"):GetChild("HuNum").text = tostring(v.score-gangScore)
 		elseif tempX == 2 then
 			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(v.nickname)))
 			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("DouNum").text = tostring(v.score)
@@ -1793,6 +1802,7 @@ function ClickEvent.ShowCalculate( ... )
 			end
 
 			local allFanNumber = 0
+			local gangScore = 0
 			local detailList = _popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("FanList")
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
@@ -1825,16 +1835,10 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						--[[
 						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
-							if c.score > 0 then
-								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
-							else
-								listChild:GetChild("FanNum").text = tostring(c.score)
-							end
-						else
-							listChild:GetChild("FanNum").text = tostring(fanNum).."番"
+							gangScore = gangScore + c.score
 						end
+						--[[
 						--]]
 					end
 				end
@@ -1849,6 +1853,8 @@ function ClickEvent.ShowCalculate( ... )
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("TotalFanNum").text = tostring(allFanNumber)
+			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("GangNum").text = tostring(gangScore)
+			_popPanel[popPanelIndex].panel:GetChild("OppositePlayerClearInfo"):GetChild("HuNum").text = tostring(v.score-gangScore)
 		elseif tempX == 3 then
 			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(v.nickname)))
 			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("DouNum").text = tostring(v.score)
@@ -1890,6 +1896,7 @@ function ClickEvent.ShowCalculate( ... )
 			end
 
 			local allFanNumber = 0
+			local gangScore = 0
 			local detailList = _popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("FanList")
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
@@ -1922,16 +1929,10 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						--[[
 						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
-							if c.score > 0 then
-								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
-							else
-								listChild:GetChild("FanNum").text = tostring(c.score)
-							end
-						else
-							listChild:GetChild("FanNum").text = tostring(fanNum).."番"
+							gangScore = gangScore + c.score
 						end
+						--[[
 						--]]
 					end
 				end
@@ -1946,6 +1947,8 @@ function ClickEvent.ShowCalculate( ... )
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("TotalFanNum").text = tostring(allFanNumber)
+			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("GangNum").text = tostring(gangScore)
+			_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("HuNum").text = tostring(v.score-gangScore)
 		else
 			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(v.nickname)))
 			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("DouNum").text = tostring(v.score)
@@ -1987,6 +1990,7 @@ function ClickEvent.ShowCalculate( ... )
 			end
 
 			local allFanNumber = 0
+			local gangScore = 0
 			local detailList = _popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("FanList")
 			detailList:RemoveChildrenToPool()
 			local typeNumber = 0
@@ -2019,16 +2023,10 @@ function ClickEvent.ShowCalculate( ... )
 						local listChild = detailList:AddItemFromPool(_currentPanel.buttonList["ClearShowFan"])
 						listChild.name = ""..i
 						listChild:GetChild("FanName").text = gbk.toutf8(fanName)
-						--[[
 						if c.fan_type == "FAN_TYPE_AN_GANG" or c.fan_type == "FAN_TYPE_MING_GANG" or c.fan_type == "FAN_TYPE_XUAN_FENG_GANG" then
-							if c.score > 0 then
-								listChild:GetChild("FanNum").text = "+"..tostring(c.score)
-							else
-								listChild:GetChild("FanNum").text = tostring(c.score)
-							end
-						else
-							listChild:GetChild("FanNum").text = tostring(fanNum).."番"
+							gangScore = gangScore + c.score
 						end
+						--[[
 						--]]
 					end
 				end
@@ -2043,6 +2041,8 @@ function ClickEvent.ShowCalculate( ... )
 				--listChild:GetChild("FanPlayer").text = "+"..c.score
 			end
 			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("TotalFanNum").text = tostring(allFanNumber)
+			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("GangNum").text = tostring(gangScore)
+			_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("HuNum").text = tostring(v.score-gangScore)
 		end
 	end
 	ClickEvent._play_ui.playerAvatarInfo:GetChild("DouNum").text = tostring(Player.playerScore[0])
@@ -4202,17 +4202,17 @@ function ClickEvent.CreateRoomButton( ... )
 		return
 	end
 	ClickEvent.PopPanel(ClickEvent.panelTable._create_room_ui)
-	local costCard = ""
+	local costCard = 0
 	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected then
-		costCard = "1/"
+		costCard = 1
 	elseif _popPanel[popPanelIndex].panel:GetChild("Round8").selected then
-		costCard = "2/"
+		costCard = 2
 	end
 	_popPanel[popPanelIndex].panel:GetChild("GvoiceClose").selected = true
 	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.diamond)
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = tostring(costCard).."/"..tostring(Player._player_data.common_prop.room_card_count)
 	else
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = costCard..tostring(Player._player_data.common_prop.room_card_count)
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = tostring(costCard*4).."/"..tostring(Player._player_data.common_prop.room_card_count)
 	end
 	for i=1,7 do
 		_popPanel[popPanelIndex].panel:GetChild("ChooseFan0"..tostring(i)).selected = true
@@ -4227,18 +4227,18 @@ end
 function ClickEvent.Round4( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.diamond)
-	else
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "1/"..tostring(Player._player_data.common_prop.room_card_count)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "4/"..tostring(Player._player_data.common_prop.room_card_count)
 	end
 end
 
 function ClickEvent.Round8( ... )
 	-- body
 	if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
-		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.diamond)
-	else
 		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "2/"..tostring(Player._player_data.common_prop.room_card_count)
+	else
+		_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = "8/"..tostring(Player._player_data.common_prop.room_card_count)
 	end
 end
 
@@ -4366,9 +4366,9 @@ function ClickEvent.RoomOwnerPay( ... )
 	--_popPanel[popPanelIndex].panel:GetChild("Troomcardnum").text = "拥有房卡:"
 	local usedCount = ""
 	if _popPanel[popPanelIndex].panel:GetChild("Round4").selected == true then
-		usedCount = "1/"
+		usedCount = "4/"
 	else
-		usedCount = "2/"
+		usedCount = "8/"
 	end
 	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = usedCount..tostring(Player._player_data.common_prop.room_card_count)
 end
@@ -4382,7 +4382,7 @@ function ClickEvent.AAPay( ... )
 	else
 		usedCount = "2/"
 	end
-	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = usedCount..tostring(Player._player_data.common_prop.diamond)
+	_popPanel[popPanelIndex].panel:GetChild("RoomCardNum").text = usedCount..tostring(Player._player_data.common_prop.room_card_count)
 end
 
 function ClickEvent.ClassicMode( ... )
@@ -4485,7 +4485,7 @@ function ClickEvent.CreateButton( )
 	else
 		if _popPanel[popPanelIndex].panel:GetChild("AAPay") and _popPanel[popPanelIndex].panel:GetChild("AAPay").selected == true then
 			ClickEvent.Close()
-			if Player._player_data.common_prop.diamond >= costCard then
+			if Player._player_data.common_prop.room_card_count >= costCard then
 				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_AA")
 				Player.isFriendRoom = true
 			else
@@ -4494,7 +4494,7 @@ function ClickEvent.CreateButton( )
 			end
 		else
 			ClickEvent.Close()
-			if Player._player_data.common_prop.room_card_count >= costCard then
+			if Player._player_data.common_prop.room_card_count >= costCard*4 then
 				Player.CmdCreateRoom(model,extend_type,top_mutiple,open_rands,voice_open,"ROOM_PAY_TYPE_HOSTER")
 				Player.isFriendRoom = true
 			else
