@@ -1,5 +1,5 @@
 
-…£
+é¥
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -106,7 +106,7 @@ phone_type ((
 content (
 	send_time (
 readed (1
-attachments (2.Adoter.Asset.MailAttachment"Ñ
+attachments (2.Adoter.Asset.MailAttachment"ô
 Player-
 common_prop (2.Adoter.Asset.CommonProp
 account (
@@ -123,7 +123,8 @@ login_time (
 mail_list_customized (2.Adoter.Asset.Mail1
 game_setting (2.Adoter.Asset.PlayerSetting
 room_history (
-room_id ("¨
+room_id (!
+card_count_changed (:false"¨
 	Inventory2
 	inventory (2.Adoter.Asset.Inventory.Elementg
 Element4
@@ -239,10 +240,12 @@ GuestLoginD
 voice (:true
 audio (:true
 
-click_push ("‡
+click_push ("ï
 GameSettingE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GAME_SETTING1
-game_setting (2.Adoter.Asset.PlayerSetting"¯
+game_setting (2.Adoter.Asset.PlayerSetting.
+zhuobu_type (2.Adoter.Asset.ZHUOBU_TYPE6
+card_color_type (2.Adoter.Asset.CARD_COLOR_TYPE"¯
 BattleHistoryE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_ROOM_HISTORY
 start_index (
@@ -521,11 +524,12 @@ inner_meta ("ƒ
 HUANLEDOU_CHANGED_TYPE_MALL)
 %HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD&
 "HUANLEDOU_CHANGED_TYPE_ROOM_TICKET
-HUANLEDOU_CHANGED_TYPE_GAME*
+HUANLEDOU_CHANGED_TYPE_GAME*¢
 ROOM_CARD_CHANGED_TYPE
 ROOM_CARD_CHANGED_TYPE_GMT
 ROOM_CARD_CHANGED_TYPE_MALL$
- ROOM_CARD_CHANGED_TYPE_OPEN_ROOM*‰
+ ROOM_CARD_CHANGED_TYPE_OPEN_ROOM!
+ROOM_CARD_CHANGED_TYPE_FANBEI*‰
 POSITION_TYPE
 POSITION_TYPE_NULL 
 POSITION_TYPE_EAST
@@ -659,7 +663,15 @@ ERROR_CODE
 RECHARGE_TYPE_ANDROID*3
 	CHAT_TYPE
 CHAT_TYPE_TEXT
-CHAT_TYPE_FACE*À
+CHAT_TYPE_FACE*O
+ZHUOBU_TYPE
+ZHUOBU_TYPE_GREEN
+ZHUOBU_TYPE_BLUE
+ZHUOBU_TYPE_RED*b
+CARD_COLOR_TYPE
+CARD_COLOR_TYPE_GREEN
+CARD_COLOR_TYPE_BLUE
+CARD_COLOR_TYPE_GOLDEN*À
 PAI_OPER_TYPE
 PAI_OPER_TYPE_BEGIN 
 PAI_OPER_TYPE_DAPAI
