@@ -268,7 +268,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("ShaiZiStopLoader").visible = false
 		_currentPanel.panel:GetChild("ZhuangStart").visible = false
 		_currentPanel.panel:GetChild("ZhuangChange").visible = false
-		_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
+		--_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
 
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
@@ -1507,7 +1507,7 @@ function ClickEvent.ShareRank( ... )
 	for i=1,4 do
 		local obj = scoreList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInTotal"))
 		obj.name = "VipNoteListInTotal"
-		obj:GetChild("Rank").text = tostring(i)
+		--obj:GetChild("Rank").text = tostring(i)
 		if countScore[i].allScore < 0 then
 			local loseFont = obj:GetChild("VipNoteListTotalUnit"):GetChild("WinLoseNum").textFormat
 			loseFont.font = UIPackage.GetItemURL("MXUI","LoseFont")
@@ -1534,11 +1534,13 @@ function ClickEvent.ShareRank( ... )
 		else
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = ""
 		end
+		--[[
 		if i == 1 then
 			obj:GetChild("No1").visible = true
 		else
 			obj:GetChild("No1").visible = false
 		end
+		--]]
 	end
 	Player.CmdMatTrackCutomKVEvent("Share","Round","1")
 end
@@ -1620,6 +1622,12 @@ function ClickEvent.ShowCalculate( ... )
 	_popPanel[popPanelIndex].panel:GetChild("FrontPlayerClearInfo"):GetChild("HuZhang").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("ClearState"):GetController("ClearState").selectedIndex = 2
 	_popPanel[popPanelIndex].panel:GetChild("MyClearInfo"):GetChild("HuZhang").visible = false
+
+	if Player.room_current_round > 10 then
+		_popPanel[popPanelIndex].panel:GetChild("ClearRoundTitle").text = "第0"..tostring(Player.room_current_round % 10).."局结算"
+	else
+		_popPanel[popPanelIndex].panel:GetChild("ClearRoundTitle").text = "第"..tostring(Player.room_current_round % 10).."局结算"
+	end
 
 	if Player._calculate_data.dianpao_player_position and Player._calculate_data.dianpao_player_position ~= "" and Player._calculate_data.dianpao_player_position ~= "POSITION_TYPE_NULL" then
 		local dianpaoPosition = ClickEvent.PlayerPosition(Player._calculate_data.dianpao_player_position)
