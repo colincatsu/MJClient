@@ -268,7 +268,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("ShaiZiStopLoader").visible = false
 		_currentPanel.panel:GetChild("ZhuangStart").visible = false
 		_currentPanel.panel:GetChild("ZhuangChange").visible = false
-		--_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
+		_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
 
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
