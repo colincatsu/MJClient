@@ -492,22 +492,22 @@ function ClickEvent.CreateNewPanel(panelName)
 			end
 		end
 		--]]
-		elseif panelName == ClickEvent.panelTable._main_ui then
-			if WeChatPlatform:isInstalledWX() == false then
-				_currentPanel.panel:GetChild("WechatLogin").visible = false
-			end
+	elseif panelName == ClickEvent.panelTable._main_ui then
+		if WeChatPlatform:isInstalledWX() == false then
+			_currentPanel.panel:GetChild("WechatLogin").visible = false
+		end
 
-			if _currentPanel.panel:GetChild("Version") then
-				_currentPanel.panel:GetChild("Version").text = Player.pc_version
-			end
-			if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
-				_currentPanel.panel:GetChild("Title").visible = false
-				_currentPanel.panel:GetChild("Account").visible = false
-				_currentPanel.panel:GetChild("LoginButton").visible = false
-			end
-			_currentPanel.panel:GetChild("ServiceCheck").selected = true
-			local x = 1/ClickEvent.scale
-			Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.455,_currentPanel.panel:GetChild("n20").height*0.67))
+		if _currentPanel.panel:GetChild("Version") then
+			_currentPanel.panel:GetChild("Version").text = Player.pc_version
+		end
+		if CS.LuaCommon.isAndroid or CS.LuaCommon.isIos then
+			_currentPanel.panel:GetChild("Title").visible = false
+			_currentPanel.panel:GetChild("Account").visible = false
+			_currentPanel.panel:GetChild("LoginButton").visible = false
+		end
+		_currentPanel.panel:GetChild("ServiceCheck").selected = true
+		local x = 1/ClickEvent.scale
+		Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.455,_currentPanel.panel:GetChild("n20").height*0.67))
 	end
 	
 	--[[
@@ -1451,6 +1451,7 @@ function ClickEvent.ShareRank( ... )
 		countScore[i].allScore = 0
 		countScore[i].roundNumber = 0
 		countScore[i].bigWinShow = 0
+		countScore[i].player_id = 0
 	end
 
 	local bigWinScore = nil
@@ -1486,6 +1487,7 @@ function ClickEvent.ShareRank( ... )
 		countScore[playerNumber].headimgurl = v.headimgurl
 		countScore[playerNumber].allScore = v.score
 		countScore[playerNumber].roundNumber = v.pk_count
+		countScore[playerNumber].player_id = v.player_id
 		if superPaoCountNumber > 0 and superPaoCountNumber <= 2 and v.dianpao_count >= superPaoCount then
 			countScore[playerNumber].bigWinShow = 1
 		end
@@ -1526,7 +1528,7 @@ function ClickEvent.ShareRank( ... )
 				obj:GetChild("VipNoteListTotalUnit"):GetChild("AvatarLoader").texture = NTexture(tempTexture)
 			end
 		end
-		obj:GetChild("VipNoteListTotalUnit"):GetChild("TotalRoundNum").text = tostring(countScore[i].roundNumber)
+		obj:GetChild("VipNoteListTotalUnit"):GetChild("PlayerID").text = tostring(countScore[i].player_id)
 		if countScore[i].bigWinShow == 1 then
 			obj:GetChild("VipNoteListTotalUnit"):GetChild("MedalLoaderSmall").url = UIPackage.GetItemURL("MXUI","tubiao_paoshen")
 		elseif countScore[i].bigWinShow == 2 then
@@ -1542,6 +1544,13 @@ function ClickEvent.ShareRank( ... )
 		end
 		--]]
 	end
+	_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = ""
+	_popPanel[popPanelIndex].panel:GetChild("TotalRoundNum").text = tostring(countScore[1].roundNumber)
+	local nowTime = os.time()
+	local year,month,day = ClickEvent.ChangeSecondToDate(nowTime)
+	local hour,minute = ClickEvent.ChangeSecondToTime(nowTime)
+	_popPanel[popPanelIndex].panel:GetChild("RoomDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
+	_popPanel[popPanelIndex].panel:GetChild("RoomTime").text = tostring(hour)..":"..tostring(minute)
 	Player.CmdMatTrackCutomKVEvent("Share","Round","1")
 end
 
@@ -2427,6 +2436,12 @@ end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
+
+function ClickEvent.ShareClearRoundButton( ... )
+	-- body
+	local radio = CS.UnityEngine.Screen.width/CS.UnityEngine.Screen.height
+	WeChatPlatform:ShareTexture(StageCamera.main, CS.UnityEngine.Rect(0,0,600 * radio,600),1)
+end
 
 function ClickEvent.UserService( ... )
 	-- body
