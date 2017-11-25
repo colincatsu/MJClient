@@ -264,10 +264,10 @@ function ClickEvent.CreateNewPanel(panelName)
 		else
 			_currentPanel.panel:GetChild("BaoPai").visible = false
 		end
+		ClickEvent._play_ui.zhuangStarItem = _currentPanel.panel:GetChild("ZhuangStart")
+		ClickEvent._play_ui.zhuangStarItem.visible = false
 		_currentPanel.panel:GetChild("BaoPaiInRound").visible = false
 		_currentPanel.panel:GetChild("ShaiZiStopLoader").visible = false
-		_currentPanel.panel:GetChild("ZhuangStart").visible = false
-		_currentPanel.panel:GetChild("ZhuangChange").visible = false
 		_currentPanel.panel:GetChild("ShaiZiSprite").visible = false
 
 		------特效
@@ -275,11 +275,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
 		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.oppositePlayerAvatarInfo)
 		ClickEvent._play_ui.frontPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.frontPlayerAvatarInfo)
-		--ClickEvent._play_ui.changeZhuang = Effect.AddUIEffect(Effect._effect_name.zhuangStar,CS.UnityEngine.Vector3(110,110,110),_currentPanel.panel,ClickEvent._play_ui.playerAvatarInfo.xy + ClickEvent._play_ui.selfBanker.xy)
+		ClickEvent._play_ui.changeZhuang = Effect.AddUIEffect(Effect._effect_name.zhuangStar,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.zhuangStarItem)
 		ClickEvent._play_ui.playerAvatarInfoEffect.visible = false
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = false
 		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
 		ClickEvent._play_ui.frontPlayerAvatarInfoEffect.visible = false
+		ClickEvent._play_ui.changeZhuang.visible = false
 		---------------
 		--ClickEvent._play_ui.changeZhuang.visible = false
 		ClickEvent._play_ui.playerAvatarInfo.visible = false
@@ -1031,33 +1032,83 @@ function ClickEvent.UpdatePlayersHeadImg( ... )
 	end
 end
 
+function ClickEvent.BankerStarShow( ... )
+	-- body
+	ClickEvent._play_ui.changeZhuang.visible = true
+	local co = coroutine.create(function()
+    yield_return(CS.UnityEngine.WaitForSeconds(0.8))
+    ClickEvent._play_ui.changeZhuang.visible = false
+	end)
+	coroutine.resume(co)
+end
+
 function ClickEvent.BankerStateUpdate(bankerPos)
 	-- body
 	Player.MahJong.UpdateWhoseTurn(bankerPos)
+	local isLianZhuang = false
+	if Player._banker_position and Player._banker_position == ClickEvent.PlayerPosition(bankerPos) then
+		isLianZhuang = true
+	end
 	Player._banker_position = ClickEvent.PlayerPosition(bankerPos)
+	ClickEvent._play_ui.zhuangStarItem.visible = true
+	if Player.room_current_round == 0 then
+		if Player._banker_position == 0 then
+			_currentPanel.panel:GetTransition("ZhuangStart"):Play(ClickEvent.BankerStarShow)
+		elseif Player._banker_position == 1 then
+			_currentPanel.panel:GetTransition("ZhuangBehind"):Play(ClickEvent.BankerStarShow)
+		elseif Player._banker_position == 2 then
+			_currentPanel.panel:GetTransition("ZhuangOpposite"):Play(ClickEvent.BankerStarShow)
+		elseif Player._banker_position == 3 then
+			_currentPanel.panel:GetTransition("ZhuangFront"):Play(ClickEvent.BankerStarShow)
+		else
+			Player.LogWarning("bankerPos nil")
+		end
+	else
+		if isLianZhuang == false then
+			if Player._banker_position == 0 then
+				_currentPanel.panel:GetTransition("ZhuangFtoP"):Play(ClickEvent.BankerStarShow)
+			elseif Player._banker_position == 1 then
+				_currentPanel.panel:GetTransition("ZhuangPtoB"):Play(ClickEvent.BankerStarShow)
+			elseif Player._banker_position == 2 then
+				_currentPanel.panel:GetTransition("ZhuangBtoO"):Play(ClickEvent.BankerStarShow)
+			elseif Player._banker_position == 3 then
+				_currentPanel.panel:GetTransition("ZhuangOtoF"):Play(ClickEvent.BankerStarShow)
+			else
+				Player.LogWarning("bankerPos nil")
+			end
+		end
+	end
 	if Player._banker_position == 0 then
+		--[[
 		ClickEvent._play_ui.selfBanker.visible = true
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		--]]
 		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34*2)
 	elseif Player._banker_position == 1 then
+		--[[
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = true
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = false
+		--]]
 		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34)
 	elseif Player._banker_position == 2 then
+		--[[
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = true
 		ClickEvent._play_ui.forwardBanker.visible = false
+		--]]
 		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer())
 	elseif Player._banker_position == 3 then
+		--[[
 		ClickEvent._play_ui.selfBanker.visible = false
 		ClickEvent._play_ui.nextBanker.visible = false
 		ClickEvent._play_ui.oppositeBanker.visible = false
 		ClickEvent._play_ui.forwardBanker.visible = true
+		--]]
 		Player.MahJong.SetModelPoolFrontPointer(Player.MahJong.GetModelPoolFrontPointer() + 34*3)
 	else
 		Player.LogWarning("bankerPos nil")

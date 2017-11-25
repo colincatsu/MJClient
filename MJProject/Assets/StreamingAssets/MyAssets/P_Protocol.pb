@@ -1,5 +1,5 @@
 
-é¥
+ë¥
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -277,10 +277,10 @@ game_index (9
 	reward_id ("]
 GET_REWARD_REASON!
 GET_REWARD_REASON_DAILY_BONUS%
-!GET_REWARD_REASON_DAILY_ALLOWANCE"Ô
+!GET_REWARD_REASON_DAILY_ALLOWANCE"Ö
 PaiOperationCache
-	player_id (
-from_player_id (
+	player_id (
+source_player_id (
 time_out (%
 pai (2.Adoter.Asset.PaiElement.
 	oper_list (2.Adoter.Asset.PAI_OPER_TYPE+

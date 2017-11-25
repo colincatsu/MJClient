@@ -444,41 +444,41 @@ i0jkod.xml|604|<component size="1113,723">
       <gearDisplay controller="ClearState" pages="1"/>
     </image>
   </displayList>
-</component>ics64uc.xml|361|<component size="85,109">
+</component>ics64uc.xml|367|<component size="85,109">
   <displayList>
     <image id="n21_ics6" name="n21" src="oc2llr" xy="0,0" size="84,108"/>
     <loader id="n22_ics6" name="BaoPaiLoader" xy="15,17" size="54,71" align="center" vAlign="middle" fill="scale"/>
-    <component id="n23_huzt" name="n23" src="r701i57x" xy="4,-1" size="103,156" scale="0.75,0.75"/>
+    <component id="n23_huzt" name="WeiYaoBao" src="r701i57x" xy="4,-1" size="103,156" scale="0.75,0.75"/>
   </displayList>
 </component>ics64ud.xml|259|<component size="65,84">
   <displayList>
     <image id="n21_ics6" name="n21" src="oc2llr" xy="0,0" size="57,74"/>
     <loader id="n22_ics6" name="BaoPaiLoader" xy="10,11" size="38,51" align="center" vAlign="middle" fill="scale"/>
   </displayList>
-</component>ics64ue.xml|733|<component size="130,67">
+</component>ics64ue.xml|733|<component size="130,66">
   <displayList>
-    <image id="n8_k0vi" name="n8" src="oc2llr" xy="37,0" size="42,53" scale="1.4,1.4"/>
-    <image id="n9_k0vi" name="n9" src="oc2llr" xy="78,0" size="42,53" scale="1.4,1.4"/>
-    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-4,0" size="42,53" scale="1.4,1.4"/>
-    <loader id="n0_urom" name="ChiPaiLoader01" xy="6,10" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <loader id="n5_urom" name="ChiPaiLoader02" xy="47,10" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <loader id="n6_urom" name="ChiPaiLoader03" xy="88,10" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <image id="n8_k0vi" name="n8" src="oc2llr" xy="37,-4" size="42,53" scale="1.4,1.4"/>
+    <image id="n9_k0vi" name="n9" src="oc2llr" xy="78,-4" size="42,53" scale="1.4,1.4"/>
+    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-4,-4" size="42,53" scale="1.4,1.4"/>
+    <loader id="n0_urom" name="ChiPaiLoader01" xy="6,6" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n5_urom" name="ChiPaiLoader02" xy="47,6" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n6_urom" name="ChiPaiLoader03" xy="88,6" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
-</component>ics64uf.xml|957|<component size="130,67">
+</component>ics64uf.xml|957|<component size="130,68">
   <displayList>
-    <image id="n8_k0vi" name="n8" src="oc2llr" xy="37,0" size="42,53" scale="1.4,1.4"/>
-    <image id="n9_k0vi" name="n9" src="oc2llr" xy="79,0" size="42,53" scale="1.4,1.4"/>
-    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-5,0" size="42,53" scale="1.4,1.4"/>
-    <loader id="n5_urom" name="ChiPaiLoader02" xy="47,11" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <image id="n10_ngmx" name="n10" src="oc2llr" xy="41,-5" size="42,53" scale="1.4,1.4"/>
-    <loader id="n0_urom" name="ChiPaiLoader01" xy="5,11" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <loader id="n6_urom" name="ChiPaiLoader03" xy="88,11" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
-    <loader id="n11_ngmx" name="ChiPaiLoader04" xy="50,4" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <image id="n8_k0vi" name="n8" src="oc2llr" xy="37,-4" size="42,53" scale="1.4,1.4"/>
+    <image id="n9_k0vi" name="n9" src="oc2llr" xy="79,-4" size="42,53" scale="1.4,1.4"/>
+    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-5,-4" size="42,53" scale="1.4,1.4"/>
+    <loader id="n5_urom" name="ChiPaiLoader02" xy="47,7" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <image id="n10_ngmx" name="n10" src="oc2llr" xy="40,-8" size="42,53" scale="1.4,1.4"/>
+    <loader id="n0_urom" name="ChiPaiLoader01" xy="5,7" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n6_urom" name="ChiPaiLoader03" xy="88,7" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <loader id="n11_ngmx" name="ChiPaiLoader04" xy="49,1" size="28,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
-</component>ics64ug.xml|290|<component size="44,59">
+</component>ics64ug.xml|290|<component size="44,64">
   <displayList>
-    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-8,-8" size="43,53" scale="1.4,1.4"/>
-    <loader id="n0_urom" name="ChiPaiLoader01" xy="1,1" size="29,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
+    <image id="n7_k0vi" name="n7" src="oc2llr" xy="-8,-4" size="43,53" scale="1.4,1.4"/>
+    <loader id="n0_urom" name="ChiPaiLoader01" xy="1,5" size="29,37" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
 </component>isedp5.xml|1664|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
@@ -1362,7 +1362,7 @@ ldfsqh.xml|446|<component size="65,35">
     </image>
   </displayList>
   <Button/>
-</component>lyzmi553.xml|2771|<component size="1238,118">
+</component>lyzmi553.xml|2578|<component size="1238,118">
   <displayList>
     <image id="n46_lyzm" name="n46" src="ics64u8" xy="0,0" size="1236,118"/>
     <image id="n26_lyzm" name="AvatarBg" src="w61ccv" xy="4,16" size="83,83"/>
@@ -1386,21 +1386,7 @@ ldfsqh.xml|446|<component size="65,35">
     <text id="n36_lyzm" name="n36" xy="908,7" size="23,22" fontSize="18" color="#8e6948" text="番"/>
     <text id="n37_lyzm" name="TotalFanNum" xy="873,7" size="32,22" fontSize="18" color="#8e6948" align="center" vAlign="middle" text="999"/>
     <text id="n38_lyzm" name="n38" xy="1100,59" size="55,24" fontSize="20" color="#8e6948" text="总分:"/>
-    <list id="n39_lyzm" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1" defaultItem="ui://krtoytc1ics64ug">
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-    </list>
+    <list id="n39_lyzm" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1" defaultItem="ui://krtoytc1ics64ug"/>
     <component id="n40_lyzm" name="HuZhang" src="ics64ud" xy="714,44" size="66,78"/>
     <text id="n42_lyzm" name="n42" xy="1108,27" size="35,24" fontSize="20" color="#8e6948" text="胡:"/>
     <text id="n43_lyzm" name="n43" xy="1172,26" size="35,24" fontSize="20" color="#8e6948" text="杠:"/>
@@ -1603,7 +1589,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="n14_uaih" name="n14" src="p3ipi559" xy="353,18"/>
     <image id="n15_uaih" name="n15" src="p3ipi559" xy="774,18" scale="-1,1"/>
   </displayList>
-</component>package.xml|75398|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|75067|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1775,6 +1761,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="80xdi56o" name="zongJieSuan_diHuaWen" path="/UIPIC/ClearRound/" size="226,225"/>
     <image id="80xdi56p" name="chuangJianFangJian_banTou" path="/UIPIC/开设房间/" size="92,73" scale="9grid" scale9grid="23,19,46,38"/>
     <image id="97aai5l1" name="huangSeAnNiu" path="/UIPIC/游戏页面/" size="267,93"/>
+    <image id="c64ii5lb" name="youXiJieMian_baoPai_di" path="/UIPIC/xinzeng/" size="56,56" scale="9grid" scale9grid="22,24,10,7"/>
     <image id="febl4ul" name="002" path="/UIPIC/表情框/" size="77,75" scale="9grid" scale9grid="20,19,40,38"/>
     <image id="gepqlt" name="jiazailaba" path="/UIPIC/xinzeng/" size="86,42" scale="9grid" scale9grid="22,20,44,1"/>
     <image id="ghpfqc" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31"/>
@@ -2018,6 +2005,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="jde84tj" name="ui_Fuli_01" path="/UIPIC/福利/" size="141,59"/>
     <image id="jde84tu" name="ui_Youjian_02" path="/UIPIC/邮件/" size="128,65"/>
     <image id="jde84tv" name="ui_Youjian_01" path="/UIPIC/邮件/" size="199,200"/>
+    <image id="jfb7i5ks" name="shaiziz_common_lobby_1" path="/UIPIC/0821/" size="128,128"/>
     <image id="jsh6i530" name="x098" path="/UIPIC/0821/" size="61,41"/>
     <image id="jsh6i531" name="x099" path="/UIPIC/0821/" size="68,37"/>
     <image id="jx2c4ui" name="fuzhitubiao" path="/UIPIC/xinzeng/" size="282,104"/>
@@ -2112,6 +2100,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="nnbzkj" name="ui_Xinzeng_Liuju" path="/UIPIC/游戏页面/" size="250,95"/>
     <image id="oc2llr" name="pai" path="/UIPIC/麻将牌/" size="129,163"/>
     <image id="oc2lls" name="pai_2" path="/UIPIC/麻将牌/" size="129,163"/>
+    <image id="ocpei5la" name="youXiJieMian_baoPai03" path="/UIPIC/xinzeng/" size="107,144"/>
     <image id="olvj4ur" name="pai2" path="/UIPIC/xinzeng/" size="107,144"/>
     <image id="p13j4s7" name="yxnei_yuyinguan" path="/UIPIC/游戏页面/" size="70,73"/>
     <image id="p3ipi554" name="faCaiDiaoZhui" path="/UIPIC/弹窗/" size="105,258"/>
@@ -2349,9 +2338,9 @@ ldfsqh.xml|446|<component size="65,35">
     <component id="ghpfq8" name="FinishBalanceUnitIcon" path="/UIPIC/战绩记录/" size="188,188" exported="true"/>
     <component id="ics64uc" name="PaiSingle" path="/UIPIC/ClearRound/" size="85,109" exported="true"/>
     <component id="ics64ud" name="PaiSingleSmall" path="/UIPIC/ClearRound/" size="65,84" exported="true"/>
-    <component id="ics64ue" name="ChiPaiInList" path="/UIPIC/xinzeng/" size="130,67" exported="true"/>
-    <component id="ics64uf" name="GangPaiInList" path="/UIPIC/xinzeng/" size="130,67" exported="true"/>
-    <component id="ics64ug" name="PaiSingleInList" path="/UIPIC/ClearRound/" size="44,59" exported="true"/>
+    <component id="ics64ue" name="ChiPaiInList" path="/UIPIC/xinzeng/" size="130,66" exported="true"/>
+    <component id="ics64uf" name="GangPaiInList" path="/UIPIC/xinzeng/" size="130,68" exported="true"/>
+    <component id="ics64ug" name="PaiSingleInList" path="/UIPIC/ClearRound/" size="44,64" exported="true"/>
     <component id="isedp5" name="VIPNote" path="/" size="1334,750" exported="true"/>
     <component id="isedp7" name="VipNoteList" path="/UIPIC/战绩记录/" size="959,120" exported="true"/>
     <component id="isedp9" name="WelfareScene" path="/" size="1334,750" exported="true"/>
@@ -2439,12 +2428,6 @@ ldfsqh.xml|446|<component size="65,35">
     <font id="ysjnog" name="NumberA" path="/UIPIC/xinzeng/" size="0,0" exported="true" file="ysjnog.fnt"/>
     <image id="ghpfq9" name="tubiao_dayingjia" path="/UIPIC/战绩记录/" size="188,188" exported="true"/>
     <image id="ghpfqa" name="tubiao_paoshen" path="/UIPIC/战绩记录/" size="104,99" exported="true"/>
-    <image id="jfb7i5ks" name="shaiziz_common_lobby_1" path="/UIPIC/0821/" size="128,128" exported="true"/>
-    <image id="jfb7i5kt" name="shaiziz_common_lobby_2" path="/UIPIC/0821/" size="128,128" exported="true"/>
-    <image id="jfb7i5ku" name="shaiziz_common_lobby_3" path="/UIPIC/0821/" size="128,128" exported="true"/>
-    <image id="jfb7i5kv" name="shaiziz_common_lobby_4" path="/UIPIC/0821/" size="128,128" exported="true"/>
-    <image id="jfb7i5kw" name="shaiziz_common_lobby_5" path="/UIPIC/0821/" size="128,128" exported="true"/>
-    <image id="jfb7i5kx" name="shaiziz_common_lobby_6" path="/UIPIC/0821/" size="128,128" exported="true"/>
     <image id="nnbzjv" name="Touxiang01" path="/UIPIC/选择头像/" size="160,160" exported="true"/>
     <image id="nnbzjw" name="Touxiang01_s" path="/UIPIC/选择头像/" size="103,103" exported="true"/>
     <image id="r701i57y" name="gongXiHuoDe_xiangLeBi" path="/UIPIC/商城/" size="149,149" exported="true"/>
@@ -2587,10 +2570,13 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
   <displayList>
     <image id="n0_qpkk" name="n0" src="qpkkju" xy="0,0"/>
   </displayList>
-</component>r701i57x.xml|516|<component size="107,144">
+</component>r701i57x.xml|647|<component size="107,144">
   <controller name="BaoPaiShow" pages="0,,1," selected="0"/>
-  <controller name="BackColor" pages="0,,1," selected="0"/>
+  <controller name="BackColor" pages="0,,1,,2," selected="2"/>
   <displayList>
+    <image id="n70_ocpe" name="n70" src="ocpei5la" xy="0,0">
+      <gearDisplay controller="BackColor" pages="2"/>
+    </image>
     <image id="n67_olvj" name="WeiYaoBao" src="olvj4ur" xy="0,0">
       <gearDisplay controller="BackColor" pages="0"/>
     </image>
@@ -2626,9 +2612,9 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>r701i583.xml|4907|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>r701i583.xml|5257|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="DeskColor" pages="0,,1,,2," selected="0"/>
-  <controller name="BackColor" pages="0,,1," selected="0"/>
+  <controller name="BackColor" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n28_i0jk" name="Bg" src="i0jkoe" xy="229,115" group="n27_s5h9"/>
     <image id="n34_r701" name="n34" src="p3ipi556" xy="322,234" size="691,330" group="n27_s5h9"/>
@@ -2662,7 +2648,10 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     </component>
     <component id="n30_lidq" name="ServiveTerm4" src="lidq4ty" xy="578,567" size="122,50" group="n25_jujv"/>
     <component id="n31_lidq" name="ServiveTerm5" src="lidq4tz" xy="432,566" size="117,50" group="n25_jujv"/>
-    <group id="n25_jujv" name="Btns" xy="308,129" size="764,488" group="n27_s5h9" advanced="true"/>
+    <component id="n61_c64i" name="BlueBack" src="w61cea" xy="800,418" group="n25_jujv">
+      <Button controller="BackColor" page="2"/>
+    </component>
+    <group id="n25_jujv" name="Btns" xy="423,129" size="649,488" group="n27_s5h9" advanced="true"/>
     <image id="n29_r8qd" name="n29" src="r8qd4tc" xy="570,127" group="n27_s5h9"/>
     <group id="n27_s5h9" name="Setting" xy="229,115" size="876,519" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
@@ -2688,6 +2677,9 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <text id="n55_g1yc" name="Teffect" xy="844,369" size="61,32" fontSize="28" color="#7c604c" text="红色">
       <relation target="n27_s5h9" sidePair="center-center,middle-middle"/>
     </text>
+    <text id="n62_c64i" name="Teffect" xy="844,425" size="61,32" fontSize="28" color="#7c604c" text="金色">
+      <relation target="n27_s5h9" sidePair="center-center,middle-middle"/>
+    </text>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -2702,13 +2694,14 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <text id="n0_kew4" name="Text" xy="11,5" size="902,24" fontSize="20" color="#663300" ubb="true" autoSize="height" text=""/>
     <loader id="n1_kew4" name="ImgLoader" xy="15,6" size="900,448" fill="scaleMatchWidth"/>
   </displayList>
-</component>r8my4uo.xml|370|<component size="83,132">
+</component>r8my4uo.xml|451|<component size="83,132">
   <controller name="BaoPaiShow" pages="0,,1," selected="0"/>
   <displayList>
     <component id="n70_ucls" name="BaoPaiInRound" src="uclsi5ep" xy="-2,4" size="92,118"/>
     <component id="n69_r701" name="WeiYaoBao" src="r701i57x" xy="-12,-11">
       <gearDisplay controller="BaoPaiShow" pages="0"/>
     </component>
+    <image id="n71_c64i" name="n71" src="c64ii5lb" xy="-15,-11" size="113,144"/>
   </displayList>
 </component>r8qd4ti.xml|567|<component size="76,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -2911,7 +2904,7 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     </image>
     <component id="n23_t5ci" name="VipNoteListTotalUnit" src="t5cirt" xy="-1,-1" size="637,94"/>
   </displayList>
-</component>t5cirt.xml|1335|<component size="633,88">
+</component>t5cirt.xml|1340|<component size="633,88">
   <displayList>
     <image id="n0_ldfs" name="AvatarBg" src="isedp2" xy="86,14" size="60,60"/>
     <text id="n1_ldfs" name="WinLoseNum" xy="416,17" size="92,47" font="ui://krtoytc1uejtrq" fontSize="34" color="#ffffff" align="center" vAlign="middle" letterSpacing="-5" autoSize="shrink" text="9999"/>
@@ -2922,8 +2915,8 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
       <relation target="n1_ldfs" sidePair="right-left"/>
     </text>
     <loader id="n10_t5ci" name="MedalLoaderSmall" xy="542,-2" pivot="0.5,0.5" size="90,90" align="center" vAlign="middle" fill="scale"/>
-    <text id="n12_h0iu" name="n12" xy="157,43" size="39,25" fontSize="21" color="#7d5437" text="ID:"/>
-    <text id="n13_h0iu" name="n13" xy="194,43" size="73,25" fontSize="21" color="#7d5437" vAlign="middle" text="999999"/>
+    <text id="n12_h0iu" name="n12" xy="157,43" size="38,25" fontSize="21" color="#7d5437" text="ID:"/>
+    <text id="n13_h0iu" name="PlayerID" xy="194,43" size="71,25" fontSize="21" color="#7d5437" vAlign="middle" text="999999"/>
   </displayList>
 </component>t5cirv.xml|287|<component size="302,95" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -2944,7 +2937,7 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <image id="n2_lyzm" name="Reddot" src="lyzmi54f" xy="54,12"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>uaihi56d.xml|11320|<component size="1334,750" adaptationTest="FitSize">
+</component>uaihi56d.xml|11325|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_npla" name="Bg" src="w61cbq" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
@@ -3026,7 +3019,7 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <image id="n43_lyzm" name="n43" src="lyzmi54o" xy="1177,115" group="n27_fb5y">
       <relation target="" sidePair="right-right,top-top"/>
     </image>
-    <component id="n51_uaih" name="n51" src="uaihi56c" xy="427,668" pivot="0.5,0.5" group="n27_fb5y">
+    <component id="n51_uaih" name="Activity" src="uaihi56c" xy="427,668" pivot="0.5,0.5" group="n27_fb5y">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
     <group id="n27_fb5y" name="Btns" xy="9,13" size="2412,735" advanced="true"/>
@@ -3048,10 +3041,10 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="21" type="XY" target="n25_nw08" tween="true" startValue="2070.83,205" endValue="862,205" duration="12"/>
   </transition>
   <transition name="ShowFriendMode">
-    <item time="0" type="XY" target="n22_k35j" value="2070,204"/>
+    <item time="0" type="XY" target="n25_nw08" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
     <item time="0" type="XY" target="n21_k35j" value="1764,204"/>
     <item time="0" type="XY" target="n24_nw08" value="253,204"/>
-    <item time="0" type="XY" target="n25_nw08" tween="true" startValue="862,204" endValue="2071,204" duration="18"/>
+    <item time="0" type="XY" target="n22_k35j" value="2070,204"/>
     <item time="0" type="XY" target="n26_nw08" value="559,204"/>
     <item time="3" type="XY" target="n26_nw08" tween="true" startValue="559,204" endValue="1766,204" duration="15"/>
     <item time="6" type="XY" target="n24_nw08" tween="true" startValue="559,204" endValue="1766,204" duration="12"/>
@@ -3059,7 +3052,7 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="21" type="XY" target="n22_k35j" tween="true" startValue="2070.83,205" endValue="862,205" duration="12"/>
   </transition>
   <transition name="Popup" autoPlay="true">
-    <item time="0" type="Alpha" target="n43_lyzm" tween="true" startValue="0" endValue="1" duration="4"/>
+    <item time="0" type="Alpha" target="n22_k35j" tween="true" startValue="0" endValue="1" duration="14"/>
     <item time="0" type="Alpha" target="n2_npla" tween="true" startValue="0" endValue="1" duration="14"/>
     <item time="0" type="Alpha" target="n8_npla" tween="true" startValue="0" endValue="1" duration="7"/>
     <item time="0" type="Alpha" target="n10_k35j" tween="true" startValue="0" endValue="1" duration="7"/>
@@ -3067,17 +3060,17 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="0" type="Alpha" target="n49_lyzm" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="0" type="Alpha" target="n9_npla" tween="true" startValue="0" endValue="1" duration="7"/>
     <item time="0" type="Alpha" target="n4_npla" tween="true" startValue="0" endValue="1" duration="7"/>
-    <item time="0" type="Alpha" target="n22_k35j" tween="true" startValue="0" endValue="1" duration="14"/>
+    <item time="0" type="Alpha" target="n43_lyzm" tween="true" startValue="0" endValue="1" duration="4"/>
     <item time="0" type="Alpha" target="n44_lyzm" tween="true" startValue="0" endValue="1" duration="14"/>
-    <item time="0" type="Scale" target="n17_k35j" value="0,0"/>
+    <item time="0" type="Scale" target="n12_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n15_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n28_urom" value="0,0"/>
-    <item time="0" type="Scale" target="n12_k35j" value="0,0"/>
+    <item time="0" type="Scale" target="n17_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n18_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n13_k35j" value="0,0"/>
     <item time="0" type="Scale" target="n51_uaih" value="0,0"/>
     <item time="0" type="Scale" target="n40_lyzm" value="0,0"/>
-    <item time="0" type="XY" target="n8_npla" tween="true" startValue="212,12"/>
+    <item time="0" type="XY" target="n8_npla" tween="true" startValue="212,12" endValue="258.98,12.66" duration="7"/>
     <item time="0" type="XY" target="n21_k35j" value="357,167"/>
     <item time="0" type="XY" target="n22_k35j" value="931,167"/>
     <item time="0" type="XY" target="n43_lyzm" tween="true" startValue="1203.09,115" endValue="1176.09,115" duration="4"/>
@@ -3085,7 +3078,7 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="0" type="XY" target="n10_k35j" tween="true" startValue="1147,17" endValue="1104.05,17.94" duration="7"/>
     <item time="0" type="XY" target="n4_npla" tween="true" startValue="-14,11" endValue="9,11" duration="7"/>
     <item time="0" type="XY" target="n49_lyzm" tween="true" startValue="520,58" endValue="520,26" duration="4"/>
-    <item time="0" type="XY" target="n8_npla" tween="true" startValue="212,12" endValue="258.98,12.66" duration="7"/>
+    <item time="0" type="XY" target="n8_npla" tween="true" startValue="212,12"/>
     <item time="0" type="XY" target="n9_npla" tween="true" startValue="940,17"/>
     <item time="0" type="XY" target="n21_k35j" tween="true" startValue="357,167" endValue="184,167" duration="12"/>
     <item time="2" type="Scale" target="n12_k35j" tween="true" startValue="0,0" endValue="1,1" duration="6"/>
@@ -3094,8 +3087,8 @@ q7opi58j.xml|3679|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <item time="4" type="Scale" target="n51_uaih" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="6" type="Scale" target="n28_urom" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="7" type="Scale" target="n15_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
-    <item time="8" type="Scale" target="n18_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="8" type="Scale" target="n17_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
+    <item time="8" type="Scale" target="n18_k35j" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
     <item time="9" type="Scale" target="n40_lyzm" tween="true" startValue="0,0" endValue="1,1" duration="7"/>
   </transition>
   <transition name="WaitingPopIn">
@@ -3699,7 +3692,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     </text>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61ccz.xml|2771|<component size="1238,118">
+</component>w61ccz.xml|2543|<component size="1238,118">
   <displayList>
     <image id="n41_lyzm" name="n41" src="ics64u9" xy="0,0" size="1236,118"/>
     <image id="n26_lyzm" name="AvatarBg" src="w61ccv" xy="4,16" size="83,83"/>
@@ -3723,28 +3716,14 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <text id="n36_lyzm" name="n36" xy="908,7" size="23,22" fontSize="18" color="#8e6948" text="番"/>
     <text id="n37_lyzm" name="TotalFanNum" xy="873,7" size="32,22" fontSize="18" color="#8e6948" align="center" vAlign="middle" text="999"/>
     <text id="n38_lyzm" name="n38" xy="1100,59" size="55,24" fontSize="20" color="#8e6948" text="总分:"/>
-    <list id="n39_lyzm" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1" defaultItem="ui://krtoytc1ics64ug">
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-    </list>
+    <list id="n39_lyzm" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1"/>
     <component id="n40_lyzm" name="HuZhang" src="ics64ud" xy="714,44" size="66,78"/>
     <text id="n42_lyzm" name="n42" xy="1108,27" size="35,24" fontSize="20" color="#8e6948" text="胡:"/>
     <text id="n43_lyzm" name="n43" xy="1172,26" size="35,24" fontSize="20" color="#8e6948" text="杠:"/>
     <text id="n44_lyzm" name="HuNum" xy="1136,28" size="32,22" fontSize="18" color="#8e6948" align="center" vAlign="middle" text="999"/>
     <text id="n45_lyzm" name="GangNum" xy="1202,27" size="23,22" fontSize="18" color="#8e6948" text="99"/>
   </displayList>
-</component>w61cd0.xml|2763|<component size="1238,118">
+</component>w61cd0.xml|2535|<component size="1238,118">
   <displayList>
     <image id="n13_ics6" name="Bg" src="ics64u8" xy="0,0" size="1236,118"/>
     <image id="n1_w3hs" name="AvatarBg" src="w61ccv" xy="4,16" size="83,83"/>
@@ -3764,34 +3743,20 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <text id="n14_ics6" name="PlayerID" xy="147,14" size="100,36" fontSize="22" color="#5c2c16" vAlign="middle" autoSize="none" text="2548661"/>
     <text id="n15_ics6" name="ID" xy="100,14" size="48,36" fontSize="22" color="#5c2c16" vAlign="middle" autoSize="none" text="ID:"/>
     <component id="n16_ics6" name="ClearState" src="ics64ub" xy="634,0"/>
-    <text id="n8_uejt" name="n8" xy="791,7" size="77,22" fontSize="18" color="#8e6948" text="合计番数"/>
-    <text id="n9_uejt" name="n9" xy="907,7" size="23,22" fontSize="18" color="#8e6948" text="番"/>
-    <text id="n10_uejt" name="TotalFanNum" xy="873,7" size="32,22" fontSize="18" color="#8e6948" align="center" vAlign="middle" text="999"/>
-    <text id="n18_ics6" name="n18" xy="1101,57" size="55,24" fontSize="20" color="#8e6948" text="总分:"/>
-    <list id="n24_ics6" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1" defaultItem="ui://krtoytc1ics64ug">
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-      <item/>
-    </list>
+    <text id="n8_uejt" name="n8" xy="791,7" size="77,22" fontSize="18" color="#5c2c16" text="合计番数"/>
+    <text id="n9_uejt" name="n9" xy="907,7" size="23,22" fontSize="18" color="#5c2c16" text="番"/>
+    <text id="n10_uejt" name="TotalFanNum" xy="873,7" size="32,22" fontSize="18" color="#5c2c16" align="center" vAlign="middle" text="999"/>
+    <text id="n18_ics6" name="n18" xy="1101,57" size="55,24" fontSize="20" color="#5c2c16" text="总分:"/>
+    <list id="n24_ics6" name="PaiList" xy="99,46" size="617,70" layout="row" overflow="scroll" scroll="horizontal" margin="6,0,0,0" colGap="-1"/>
     <component id="n26_ics6" name="HuZhang" src="ics64ud" xy="714,44" size="66,78"/>
-    <text id="n29_lyzm" name="n29" xy="1108,24" size="35,24" fontSize="20" color="#8e6948" text="胡:"/>
-    <text id="n30_lyzm" name="n30" xy="1173,23" size="35,24" fontSize="20" color="#8e6948" text="杠:"/>
-    <text id="n31_lyzm" name="HuNum" xy="1137,25" size="32,22" fontSize="18" color="#8e6948" align="center" vAlign="middle" text="999"/>
-    <text id="n32_lyzm" name="GangNum" xy="1203,24" size="23,22" fontSize="18" color="#8e6948" text="99"/>
+    <text id="n29_lyzm" name="n29" xy="1108,24" size="35,24" fontSize="20" color="#5c2c16" text="胡:"/>
+    <text id="n30_lyzm" name="n30" xy="1173,23" size="35,24" fontSize="20" color="#5c2c16" text="杠:"/>
+    <text id="n31_lyzm" name="HuNum" xy="1137,25" size="32,22" fontSize="18" color="#5c2c16" align="center" vAlign="middle" text="999"/>
+    <text id="n32_lyzm" name="GangNum" xy="1203,24" size="23,22" fontSize="18" color="#5c2c16" text="99"/>
   </displayList>
 </component>w61cd1.xml|206|<component size="93,24">
   <displayList>
-    <text id="n0_w3hs" name="FanName" xy="0,0" size="94,24" fontSize="20" color="#8e6948" vAlign="middle" autoSize="none" text="海底捞月"/>
+    <text id="n0_w3hs" name="FanName" xy="0,0" size="94,24" fontSize="20" color="#5c2c16" vAlign="middle" autoSize="none" text="海底捞月"/>
   </displayList>
 </component>w61cd3.xml|442|<component size="262,91" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -4622,7 +4587,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|13624|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|13864|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
@@ -4645,7 +4610,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <component id="n37_g09n" name="RoundNumber" src="g09nlu" xy="270,-2">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <text id="n12_algd" name="RemainNum" xy="188,5" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
+    <text id="n12_algd" name="RemainNum" xy="188,6" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
     <component id="n14_algd" name="Wlan" src="w61cg9" xy="4,0">
@@ -4784,10 +4749,10 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <image id="n39_ldfs" name="OppositeAlready" src="ldfsqg" xy="604,91">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <text id="n73_ipmc" name="RemainText" xy="144,6" size="68,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="剩余：">
+    <text id="n73_ipmc" name="RemainText" xy="144,7" size="68,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="剩余：">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n74_ipmc" name="RemainText" xy="223,6" size="42,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="张">
+    <text id="n74_ipmc" name="RemainText" xy="223,7" size="42,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="张">
       <relation target="n11_algd" sidePair="center-center,middle-middle"/>
     </text>
     <movieclip id="n82_jfb7" name="ShaiZiSprite" src="jfb7i5ky" xy="603,311">
@@ -4798,9 +4763,6 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     </loader>
     <image id="n78_h44f" name="ZhuangStart" src="w61cfk" xy="647,355" size="40,40">
       <relation target="" sidePair="center-center,middle-middle"/>
-    </image>
-    <image id="n80_h44f" name="ZhuangChange" src="w61cfk" xy="71,477" size="40,40">
-      <relation target="n5_algd" sidePair="center-center,middle-middle"/>
     </image>
     <component id="n81_h44f" name="BaoPaiInRound" src="uclsi5ep" xy="624,318" pivot="0.5,0.5" size="85,109">
       <relation target="" sidePair="center-center,middle-middle"/>
@@ -4837,16 +4799,25 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
   <transition name="ZhuangBehind">
     <item time="0" type="XY" target="n78_h44f" tween="true" startValue="647,355" endValue="1295.8,193" duration="6"/>
   </transition>
-  <transition name="ZhuangP2B">
-    <item time="0" type="XY" target="n80_h44f" tween="true" startValue="71.25,477.75" endValue="1295.19,192.3" duration="6"/>
-    <item time="6" type="XY" target="n80_h44f" tween="true" startValue="1295.19,192.3" endValue="996.11,-0.91" duration="6"/>
-    <item time="12" type="XY" target="n80_h44f" tween="true" startValue="996.11,-0.91" endValue="70.73,192.02" duration="6"/>
-    <item time="18" type="XY" target="n80_h44f" tween="true" startValue="70.73,192.02" endValue="71,477" duration="6"/>
+  <transition name="ZhuangPtoB">
+    <item time="0" type="XY" target="n78_h44f" tween="true" startValue="71.25,477.75" endValue="1295.19,192.3" duration="6"/>
+    <item time="6" type="XY" target="n78_h44f" tween="true" startValue="1295.19,192.3"/>
   </transition>
   <transition name="BaoPai">
     <item time="0" type="Scale" target="n81_h44f" tween="true" startValue="0,0" endValue="1.2,1.2" duration="4"/>
     <item time="4" type="Scale" target="n81_h44f" tween="true" startValue="1.2,1.2" endValue="1,1" duration="2"/>
     <item time="6" type="XY" target="n81_h44f" tween="true" startValue="626,318" endValue="7.44,66.98" duration="4"/>
+  </transition>
+  <transition name="ZhuangBtoO">
+    <item time="0" type="XY" target="n78_h44f" tween="true" startValue="1295.19,192.3" endValue="996.11,-0.91" duration="6"/>
+    <item time="6" type="XY" target="n78_h44f" tween="true" startValue="996.11,-0.91"/>
+  </transition>
+  <transition name="ZhuangOtoF">
+    <item time="0" type="XY" target="n78_h44f" tween="true" startValue="996.11,-0.91" endValue="70.73,192.02" duration="6"/>
+    <item time="6" type="XY" target="n78_h44f" tween="true" startValue="70.73,192.02"/>
+  </transition>
+  <transition name="ZhuangFtoP">
+    <item time="0" type="XY" target="n78_h44f" tween="true" startValue="70.73,192.02" endValue="71,477" duration="6"/>
   </transition>
 </component>w61cjd.xml|11303|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="MallFunctionSelect" pages="0,,1,,2," selected="2"/>

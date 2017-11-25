@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1694361935
+CRC: 2922763327
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: mx_assetbundles/mxui.ab
+      Name: mx_assetbundles_android/mxui.ab
       Dependencies: {}
