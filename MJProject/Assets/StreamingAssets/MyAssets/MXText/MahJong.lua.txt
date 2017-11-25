@@ -883,11 +883,17 @@ function MahJong.SetPaiSize(mjModel,isPLayer)
 		else
 			mjModel:GetComponent("Renderer").material = Load("Material/MjRefl")
 		end
-	else
+	elseif Player.paiSizeSet == 1 then
 		if isPLayer == true then
 			mjModel:GetComponent("Renderer").material = Load("Material/MjNoReflB")
 		else
 			mjModel:GetComponent("Renderer").material = Load("Material/MjReflB")
+		end
+	else
+		if isPLayer == true then
+			mjModel:GetComponent("Renderer").material = Load("Material/MjNoReflJ")
+		else
+			mjModel:GetComponent("Renderer").material = Load("Material/MjReflJ")
 		end
 	end
 end

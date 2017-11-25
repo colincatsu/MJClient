@@ -2574,6 +2574,11 @@ function ClickEvent.BlueBack( ... )
 	Player.paiSizeSet = 1
 end
 
+function ClickEvent.GoldBack( ... )
+	-- body
+	Player.paiSizeSet = 2
+end
+
 function ClickEvent.ReplayFastForward( ... )
 	-- body
 	CS.UnityEngine.Time.timeScale = 2
