@@ -1,5 +1,5 @@
 
-¼W
+ñX
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -32,7 +32,7 @@ base_count (/
 room_options (2.Adoter.Asset.RoomOptions
 reconnect_timeout	 (
 reconnect_count
- ("Ñ
+ ("ð
 CommonLimitA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_LIMIT2
 common_prop (2.Adoter.Asset.AssetCommonProp?
@@ -40,11 +40,12 @@ base_count (/
 limit_type (2+.Adoter.Asset.CommonLimit.COMMON_LIMIT_TYPE@
 cool_down_type (2(.Adoter.Asset.CommonLimit.COOL_DOWN_TYPEL
 cool_down_clear_type (2..Adoter.Asset.CommonLimit.COOL_DOWN_CLEAR_TYPE
-	max_count ("v
+	max_count ("”
 COMMON_LIMIT_TYPE
 COMMON_LIMIT_TYPE_PLANT!
 COMMON_LIMIT_TYPE_LUCKY_PLATE!
-COMMON_LIMIT_TYPE_DIALY_BONUS"Ž
+COMMON_LIMIT_TYPE_DIALY_BONUS
+COMMON_LIMIT_TYPE_SHARED"Ž
 COOL_DOWN_TYPE
 COOL_DOWN_TYPE_DAY
 COOL_DOWN_TYPE_WEEK
@@ -76,7 +77,7 @@ voice_path ("C
 ActivityPage
 activity_id (
 	page_name (
-url ("Ú
+url ("ô
 CommonConstA
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONST2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -101,13 +102,15 @@ voice_path ("C
 limit_version (
 page_list_count (:5-
 	page_list (2.Adoter.Asset.ActivityPage
-room_card_beishu (:4"Ô
+room_card_beishu (:4
+shared_reward_id ("Ð
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
 rewards_count (:102
 rewards (2!.Adoter.Asset.CommonReward.Reward
-common_limit_id (Š
+common_limit_id (=
+deliver_type (2'.Adoter.Asset.CommonReward.DELIVER_TYPEŠ
 Reward;
 reward_type (2&.Adoter.Asset.CommonReward.REWARD_TYPE
 comments (
@@ -117,7 +120,10 @@ voice_path ("C
 REWARD_TYPE
 REWARD_TYPE_DIAMOND
 REWARD_TYPE_HUANLEDOU
-REWARD_TYPE_ITEM"ª
+REWARD_TYPE_ITEM";
+DELIVER_TYPE
+DELIVER_TYPE_AUTO
+DELIVER_TYPE_GET"ª
 CommonConsumeC
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_CONSUME2
 common_prop (2.Adoter.Asset.AssetCommonProp

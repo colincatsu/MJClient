@@ -1,5 +1,5 @@
 
-ë¥
+É¦
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -234,18 +234,18 @@ ENTER_TYPE
 
 GuestLoginD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GUEST_LOGIN
-account ("b
+account ("Ê
 PlayerSetting
 music (:true
 voice (:true
 audio (:true
 
-click_push ("ï
+click_push (.
+zhuobu_type (2.Adoter.Asset.ZHUOBU_TYPE6
+card_color_type (2.Adoter.Asset.CARD_COLOR_TYPE"‡
 GameSettingE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_GAME_SETTING1
-game_setting (2.Adoter.Asset.PlayerSetting.
-zhuobu_type (2.Adoter.Asset.ZHUOBU_TYPE6
-card_color_type (2.Adoter.Asset.CARD_COLOR_TYPE"¯
+game_setting (2.Adoter.Asset.PlayerSetting"¯
 BattleHistoryE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_SHARE_ROOM_HISTORY
 start_index (
@@ -270,14 +270,15 @@ game_index (9
 position (2.Adoter.Asset.POSITION_TYPE-
 common_prop (2.Adoter.Asset.CommonProp)
 wechat (2.Adoter.Asset.WechatUnion+
-pai_list (2.Adoter.Asset.MultiplePai"û
+pai_list (2.Adoter.Asset.MultiplePai"™
 	GetRewardA
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_C2S_GET_REWARD9
 reason (2).Adoter.Asset.GetReward.GET_REWARD_REASON
-	reward_id ("]
+	reward_id ("{
 GET_REWARD_REASON!
 GET_REWARD_REASON_DAILY_BONUS%
-!GET_REWARD_REASON_DAILY_ALLOWANCE"Ö
+!GET_REWARD_REASON_DAILY_ALLOWANCE
+GET_REWARD_REASON_SHARED"Ö
 PaiOperationCache
 	player_id (
 source_player_id (
@@ -367,20 +368,21 @@ card_value ("a
 common_limit (2.Adoter.Asset.PlayerCommonLimit"r
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("Í
+common_reward_id ("à
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO/
 	sync_type (2.Adoter.Asset.ROOM_SYNC_TYPE9
-player_list (2$.Adoter.Asset.RoomInformation.Player‹
+player_list (2$.Adoter.Asset.RoomInformation.Playerž
 Player-
-position (2.Adoter.Asset.POSITION_TYPE/
-	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
-common_prop (2.Adoter.Asset.CommonProp)
-wechat (2.Adoter.Asset.WechatUnion
+position (2.Adoter.Asset.POSITION_TYPE
+	player_id (/
+	oper_type (2.Adoter.Asset.GAME_OPER_TYPE-
+common_prop (2.Adoter.Asset.CommonProp)
+wechat (2.Adoter.Asset.WechatUnion
 
-ip_address (F
-dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElement
-voice_member_id (R
+ip_address (F
+dis_list (24.Adoter.Asset.RoomInformation.Player.DistanceElement
+voice_member_id (R
 DistanceElement-
 position (2.Adoter.Asset.POSITION_TYPE
 distance ("Ë
@@ -390,7 +392,7 @@ ip_address (F
 dianpao_player_position (2.Adoter.Asset.POSITION_TYPE(
 baopai (2.Adoter.Asset.PaiElement(
 record (2.Adoter.Asset.GameRecord,
-max_fan_type (2.Adoter.Asset.FAN_TYPE"¦
+max_fan_type (2.Adoter.Asset.FAN_TYPE"Ò
 
 RoomRecord
 	player_id (
@@ -401,7 +403,10 @@ headimgurl (
 pk_count (
 banker_count (
 	win_count (
-dianpao_count ("µ
+dianpao_count (
+loubao_count	 (
+jinbao_count
+ ("µ
 RoomCalculateE
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_CALCULATE3
 calculte_type (2.Adoter.Asset.CALCULATE_TYPE(

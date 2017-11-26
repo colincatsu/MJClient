@@ -127,7 +127,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.4.1122.2"
+Player.pc_version = "2.0.1.1126.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -177,6 +177,11 @@ Player.isRewardShare = false
 Player.hasLoadUIPackage = false
 Player.hasShowActivity = false
 
+Player.baoPaiCache = {}
+
+Player.rewardData = {}--奖励数据
+Player.commonLimitData = {}--限制数据
+
 function Player.LoadData( ... )
     -- body
     if next(Player.activityDataTable) == nil then
@@ -188,6 +193,9 @@ function Player.LoadData( ... )
         for k,v in pairs(data) do
             Player.activityDataTable =  v
         end
+
+        Player.rewardData = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonReward")
+        Player.commonLimitData = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonLimit")
 
         message = AssetManager.GetMessagesByType("ASSET_TYPE_RECHARGE")
         Player.purchaseDataTable = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.Recharge")
@@ -218,6 +226,48 @@ function Player.LoadData( ... )
         --]]
         --Player.LogWarning(Player.activityDataTable.room_card_limit_free_activity_id)
     end
+end
+
+function Player.GetMyLimitCount(limitID)
+    -- body
+    if not Player._player_data or Player._player_data.common_limit or Player._player_data.common_limit.elements then
+        return nil
+    end
+    for k,v in pairs(Player._player_data.common_limit.elements) do
+        if v.common_limit_id == limitID then
+            return v.count
+        end
+    end
+    return nil
+end
+
+function Player.GetRewardItemTable(rewardID)
+    -- body
+    if not rewardID or rewardID == 0 then
+        return {}
+    end
+    for k,v in pairs(Player.rewardData) do
+        if v.common_prop.global_id == rewardID then
+            return v
+        end
+    end
+    return {}
+end
+
+function Player.isRewardLimited(rewardID)
+    -- body
+    local limitID = Player.GetRewardCommonLimitID(rewardID)
+    if not limitID or limitID == {} then
+        return {}
+    end
+    for k,v in pairs(Player.commonLimitData) do
+        if limitID.common_limit_id == v.common_prop.global_id then
+            if Player.GetMyLimitCount(limitID.common_limit_id) and v.max_count > Player.GetMyLimitCount(limitID.common_limit_id) then
+                return limitID
+            end
+        end
+    end
+    return {}
 end
 
 function Player.LogWarning(para)
@@ -615,6 +665,15 @@ end
 --数据封装
 ---------------------------------------------------------------------------
 
+function Player.CmdGetReward(reasonID,rewardID)
+    -- body
+    getReward = {
+        reason = reasonID,
+        reward_id = rewardID,
+    }
+    this.SendProtocol("GetReward",getReward)
+end
+
 function Player.CmdMatTrackCutomKVEvent(event_id,key,value)
     -- body
     WeChatPlatform:MatTrackCutomKVEvent(event_id,key,value)
@@ -689,7 +748,7 @@ function Player.CmdReConnect()
     this.SendProtocol("ReConnect",reConnect)
 end
 
-function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
+function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet,zhuobu,PaiColor)
     -- body
     gameSetting = {
         game_setting = {
@@ -697,6 +756,8 @@ function Player.CmdGameSetting(musicSet,voiceSet,audioSet,click_pushSet)
             voice = voiceSet,
             audio = audioSet,
             click_push = click_pushSet,
+            zhuobu_type = zhuobu,
+            card_color_type = PaiColor,
         },
     }
     this.SendProtocol("GameSetting",gameSetting)
@@ -1072,6 +1133,20 @@ function Player.OnGameSetting(type_t,stuff)
     Player._player_data.game_setting.voice = message.game_setting.voice
     Player._player_data.game_setting.audio = message.game_setting.audio
     Player._player_data.game_setting.click_push = message.game_setting.click_push
+    if message.game_setting.zhuobu_type == "ZHUOBU_TYPE_BLUE" then
+        Player.tablecloth = 1
+    elseif message.game_setting.zhuobu_type == "ZHUOBU_TYPE_RED" then
+        Player.tablecloth = 2
+    else
+        Player.tablecloth = 0
+    end
+    if message.game_setting.card_color_type == "CARD_COLOR_TYPE_BLUE" then
+        Player.paiSizeSet = 1
+    elseif message.game_setting.card_color_type == "CARD_COLOR_TYPE_GOLDEN" then
+        Player.paiSizeSet = 2
+    else
+        Player.paiSizeSet = 0
+    end
 end
 
 function Player.OnGuestLogin(type_t,stuff)
@@ -1121,6 +1196,17 @@ function Player.OnWeChatInfo(type_t,stuff)
         Player.wechat_sex = message.wechat.sex
         Player.wechat_headimgurl = message.wechat.headimgurl
         Player.CmdLogin(Player._string_id,nil,"ACCOUNT_TYPE_WECHAT")
+    end
+end
+
+function Player.OnSyncCommonLimit(type_t,stuff)
+    -- body
+    if not stuff then
+        return
+    end
+    local message = protobuf.decode("Adoter.Asset.SyncCommonLimit",stuff)
+    if Player._player_data then
+        Player._player_data.common_limit = message.common_limit
     end
 end
 
@@ -1352,10 +1438,39 @@ function Player.OnPlayerInformation(type_t,stuff)
         mMusic = Player._player_data.game_setting.music
         mVoice = Player._player_data.game_setting.voice
         mAudio = Player._player_data.game_setting.audio
+        if Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_BLUE" then
+            Player.tablecloth = 1
+        elseif Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_RED" then
+            Player.tablecloth = 2
+        else
+            Player.tablecloth = 0
+        end
+        if Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_BLUE" then
+            Player.paiSizeSet = 1
+        elseif Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_GOLDEN" then
+            Player.paiSizeSet = 2
+        else
+            Player.paiSizeSet = 0
+        end
     end
     Player._player_data.game_setting.music = mMusic
     Player._player_data.game_setting.voice = mVoice
     Player._player_data.game_setting.audio = mAudio
+    if Player.tablecloth == 1 then
+        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_BLUE"
+    elseif Player.tablecloth == 2 then
+        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_RED"
+    else
+        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_GREEN"
+    end
+    if Player.paiSizeSet == 1 then
+        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_BLUE"
+    elseif Player.paiSizeSet == 2 then
+        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GOLDEN"
+    else
+        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GREEN"
+    end
+
     Player.history_count = 0
     for k,v in pairs(Player._player_data.room_history) do
         Player.history_count = Player.history_count + 1
@@ -1402,9 +1517,25 @@ function Player.OnEnterRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
     if message.error_code == "ERROR_SUCCESS" then
-        Player._room_information = message.room
-        this._roomId = message.room.room_id
-        Player.LoadScene("PlaySence")
+        if message.room.options.pay_type == "ROOM_PAY_TYPE_AA" then
+            ClickEvent.Close()
+            local costCard = 1
+            if message.room.options.open_rands == 16 then
+                costCard = 2
+            end
+            if Player._player_data.common_prop.room_card_count >= costCard then
+                Player._room_information = message.room
+                this._roomId = message.room.room_id
+                Player.LoadScene("PlaySence")
+            else
+                ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
+                _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
+            end
+        else
+            Player._room_information = message.room
+            this._roomId = message.room.room_id
+            Player.LoadScene("PlaySence")
+        end
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         Player._player_data.room_id = 0
         --ClickEvent.ShowSingleYesWindow(2010)

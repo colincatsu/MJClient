@@ -1,4 +1,4 @@
-package.xml|1009|<packageDescription id="181u7g8l" name="Loading">
+package.xml|1010|<packageDescription id="181u7g8l" name="Loading">
   <resources>
     <component id="t3tk3" name="LoadingBar" path="/UIPIC/主界面/" size="1251,114"/>
     <component id="t3tk6" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
@@ -6,7 +6,7 @@ package.xml|1009|<packageDescription id="181u7g8l" name="Loading">
     <image id="t3tk2" name="Di" path="/UIPIC/匹配房结算/" size="256,256" scale="9grid" scale9grid="64,64,128,128"/>
     <image id="t3tk4" name="jindutiao_3" path="/UIPIC/主界面/" size="769,114" scale="9grid" scale9grid="193,54,386,2"/>
     <image id="t3tk5" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31"/>
-    <image id="t3tk7" name="jiazailaba" path="/UIPIC/xinzeng/" size="86,42" scale="9grid" scale9grid="22,20,44,1"/>
+    <image id="t3tk7" name="jiazailaba" path="/UIPIC/xinzeng/" size="109,42" scale="9grid" scale9grid="22,20,44,1"/>
     <component id="t3tk0" name="Loading" path="/" size="1334,750" exported="true"/>
     <component id="t3tk8" name="InformText" path="/UIPIC/功能界面/" size="1000,69" exported="true"/>
     <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
@@ -25,16 +25,16 @@ package.xml|1009|<packageDescription id="181u7g8l" name="Loading">
     <text id="n4_j3uo" name="n4" xy="97,680" size="1138,39" fontSize="14" color="#999999" align="center" vAlign="middle" autoSize="none" text="本网络游戏适合年满10岁以上的用户使用。为了您的健康，请合理控制游戏时间。抵制不良游戏，拒绝盗版游戏。 注意自我保护，谨防受骗上当。 适度游戏益脑，沉迷游戏伤身。 合理安排时间，享受健康生活。">
       <relation target="" sidePair="center-center,bottom-bottom"/>
     </text>
-    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" font="幼圆" fontSize="35" color="#ffe3bd" align="center" vAlign="middle" autoSize="shrink" text="正在加载中">
+    <text id="n5_j3uo" name="n5" xy="535,456" size="263,76" font="幼圆" fontSize="35" color="#ffffff" align="center" vAlign="middle" autoSize="shrink" text="正在加载中">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n6_lt1c" name="n6" xy="754,477" size="18,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+    <text id="n6_lt1c" name="n6" xy="754,478" size="18,32" fontSize="26" color="#ffffff" vAlign="bottom" autoSize="none" bold="true" text=".">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n7_lt1c" name="n7" xy="772,478" size="19,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+    <text id="n7_lt1c" name="n7" xy="772,478" size="19,32" fontSize="26" color="#ffffff" vAlign="bottom" autoSize="none" bold="true" text=".">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n8_lt1c" name="n8" xy="791,478" size="88,32" fontSize="26" color="#ffe3bd" vAlign="bottom" autoSize="none" bold="true" text=".">
+    <text id="n8_lt1c" name="n8" xy="791,478" size="88,32" fontSize="26" color="#ffffff" vAlign="bottom" autoSize="none" bold="true" text=".">
       <relation target="" sidePair="center-center,middle-middle"/>
     </text>
     <component id="n9_uejt" name="LoadingBar" src="t3tk3" xy="45,508" size="1251,114">

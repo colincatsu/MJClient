@@ -58,7 +58,7 @@ local _pai_pool_show_line = 6--打牌每行的牌数
 local _current_dapai = {}
 local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
-	east = newVector3(-0.31,0,0.295),
+	east = newVector3(-0.31,0,0.297),
 	south = newVector3(-0.34,0,-0.15),
 	west = newVector3(0.36,0,-0.31),
 	north = newVector3(0.34,0,0.13),
@@ -784,6 +784,7 @@ function MahJong.ResetGameState(resetPlayButton)
 	Player.huPaiPosition = -1
 	diceHasPlay = false
 	ClickEvent.notPushPassMsg = false
+	_count_down_father:SetActive(false)
 
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
@@ -1175,7 +1176,7 @@ function MahJong.LiuJuPai(paisData)
 			        _hand_cards._my_card = Instantiate(modelTemp)
 			        MahJong.SetPaiSize(_hand_cards._my_card,true)
 			        _hand_cards._my_card.layer = 0
-			        _hand_cards._my_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.27)
+			        _hand_cards._my_card.transform.position = newVector3(-0.27,_modelSize.length/2,0.26)
 			        _hand_cards._my_card.transform.eulerAngles = newVector3(180,0,0)
 		        	MahJong.AddModelShadow(_hand_cards._my_card,-_modelSize.length/2+_modelSize.shadowShift,1)
 				end
@@ -5090,6 +5091,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
     _count_down_father:SetActive(true)
+    MahJong.ResetCountDownNumber()
 	end)
 	coroutine.resume(co)
 end
@@ -5097,10 +5099,11 @@ end
 function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	-- body
     if baopai and baopai.card_value ~= 0 then
-		ClickEvent.ShowBaoPai(baopai)
 		Player.LogWarning("jxyHasPlay:")
 		Player.LogWarning(diceHasPlay)
+		Player.baoPaiCache = baopai
 		if diceHasPlay and diceHasPlay == true then
+			ClickEvent.ShowBaoPai(baopai)
 			diceHasPlay = false
 			return
 		end
@@ -5150,6 +5153,7 @@ function MahJong.PlayerSingleDice(number,baopai,isPlayDice)
 	if isPlayDice and isPlayDice == true then
 		--diceCountDown = _play_dice_animation_time - CS.UnityEngine.Time.deltaTime * 2
 		--_dice_red:SetActive(true)
+		ClickEvent.PlaySingleDice(redDicePoints)
 	end
 	Player.LogWarning("playdice::"..tostring(diceNumber))
 	if diceNumber and diceNumber%2 == 0 then
