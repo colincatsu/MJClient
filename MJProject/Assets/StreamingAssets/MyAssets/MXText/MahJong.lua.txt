@@ -217,6 +217,7 @@ function MahJong.Start()
 	Player.allPaisShowIndex = 0
 	Player.room_current_round = 0
 	currentTurn = nil
+	Player.baoPaiCache = nil
 
 	if Player.isPlayBack == false then
 		Player._all_players_data = {}
@@ -369,6 +370,9 @@ function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	end
 	if _current_right_number ~= rightNumber then
 		_current_right_number = rightNumber
+		if rightNumber == 3 then
+			AudioPlayer.PlaySound(AudioPlayer._audio_name.NoTime,false,1)
+		end
 		if _count_down_right and MahJong.self:IsNull(_count_down_right) == false then
 			if _current_right_number == 0 then
 				MahJong.PlayCountDownTwinkle(true)
@@ -785,6 +789,7 @@ function MahJong.ResetGameState(resetPlayButton)
 	diceHasPlay = false
 	ClickEvent.notPushPassMsg = false
 	_count_down_father:SetActive(false)
+	Player.baoPaiCache = nil
 
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
@@ -2399,7 +2404,7 @@ function MahJong.PlayBackNextOperation( ... )
         	MahJong.PlayBackFaPai(operationTemp,true)
         	MahJong.UpdateWhoseTurn(operationTemp.position)
         elseif operationTemp.oper_type == "PAI_OPER_TYPE_BAOPAI" then
-        	ClickEvent.ShowBaoPai(operationTemp.pai)
+        	ClickEvent.PlayBackBaoPaiShow(operationTemp.pai)
     	elseif operationTemp.oper_type == "PAI_OPER_TYPE_LIUJU" then
     		for i=1,4 do
 	    		Player.playBackRemainCard = Player.playBackRemainCard - 1

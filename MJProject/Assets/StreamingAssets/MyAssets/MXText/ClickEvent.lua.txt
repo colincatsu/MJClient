@@ -40,6 +40,7 @@ ClickEvent.panelTable = {
 	_home_share_ui = "HomeShare",
 	_custom_servive_ui = "CustomServive",
 	_getreward_ui = "GetReward",
+	_loading_ui = "Loading",
 }
 ClickEvent.uiPanel = nil
 ClickEvent.isInDouRoom = false
@@ -276,13 +277,16 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.shaiZiStopLoader.visible = false
 		ClickEvent._play_ui.baoPaiAnimation.visible = false
 
+		--------红点
+		--_currentPanel.panel:GetChild("Shop"):GetChild("")
+
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.behindPlayerAvatarInfo)
 		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.oppositePlayerAvatarInfo)
 		ClickEvent._play_ui.frontPlayerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.frontPlayerAvatarInfo)
 		ClickEvent._play_ui.changeZhuang = _currentPanel.panel:GetChild("ZhuangGraph")
-		Effect.AddUIGraphEffect(Effect._effect_name.zhuangStar,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.changeZhuang)
+		Effect.AddUIGraphEffect(Effect._effect_name.zhuangStar,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.changeZhuang,ClickEvent._play_ui.changeZhuang.xy+ClickEvent._play_ui.changeZhuang.size/2)
 		ClickEvent._play_ui.playerAvatarInfoEffect.visible = false
 		ClickEvent._play_ui.behindPlayerAvatarInfoEffect.visible = false
 		ClickEvent._play_ui.oppositePlayerAvatarInfoEffect.visible = false
@@ -466,15 +470,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
-		if _currentPanel.panel:GetChild("ButtonEffectGraph1") then
-			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph1"),_currentPanel.panel:GetChild("ButtonEffectGraph1").xy+_currentPanel.panel:GetChild("ButtonEffectGraph1").size/2 - CS.UnityEngine.Vector2(0,-50))
-		end
-		if _currentPanel.panel:GetChild("ButtonEffectGraph2") then
-			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph2"),_currentPanel.panel:GetChild("ButtonEffectGraph2").xy+_currentPanel.panel:GetChild("ButtonEffectGraph2").size/2 - CS.UnityEngine.Vector2(0,-50))
-		end
-		if _currentPanel.panel:GetChild("ButtonEffectGraph3") then
-			Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
-		end
+		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
 		--Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
@@ -515,6 +511,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		_currentPanel.panel:GetChild("ServiceCheck").selected = true
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.mainUI,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel,_currentPanel.panel:GetChild("n20").xy+CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("n20").width*0.5,_currentPanel.panel:GetChild("n20").height*0.5))
+	elseif panelName == ClickEvent.panelTable._loading_ui then
+		_currentPanel.panel:GetChild("InformNoHorn").visible = false
+		_currentPanel.panel:GetChild("LoadingBar").visible = false
 	end
 	
 	--[[
@@ -705,6 +704,14 @@ end
 function ClickEvent.DeleteShowBaoPai( ... )
 	-- body
 	_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
+end
+
+function ClickEvent.PlayBackBaoPaiShow( paiData )
+	-- body
+	if paiData and paiData ~= {} and paiData.card_value ~= 0 then
+		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 1
+		ClickEvent._play_ui.baopaiLoader.url = UIPackage.GetItemURL("MXUI",paiData.card_type.."_"..paiData.card_value)
+	end
 end
 
 function ClickEvent.BaoPaiFinalShow( ... )
@@ -1635,7 +1642,7 @@ function ClickEvent.ShareRank( ... )
 		end
 		--]]
 	end
-	_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = ""
+	_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = tostring(Player._roomId)
 	_popPanel[popPanelIndex].panel:GetChild("TotalRoundNum").text = tostring(countScore[1].roundNumber)
 	local nowTime = os.time()
 	local year,month,day = ClickEvent.ChangeSecondToDate(nowTime)
@@ -3299,6 +3306,11 @@ function ClickEvent.VIPRecordButton( ... )
 			obj:GetChild("WinLoseNum").text = tostring(countScore)
 		end
 	end
+	if dataCount == 0 then
+		_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = true
+	else
+		_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
+	end
 	Player.history_start = dataCount + 1
 	if dataCount <= 5 and dataCount < Player.history_count then
 		ClickEvent.OnPullUpRefresh()
@@ -3369,6 +3381,11 @@ function ClickEvent.OnReceiveHistory()
 					obj:GetChild("WinLoseNum").text = tostring(countScore)
 				end
 			end
+		end
+		if dataCount == 0 then
+			_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = true
+		else
+			_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
 		end
 		Player.history_start = dataCount + Player.history_start
 	end
