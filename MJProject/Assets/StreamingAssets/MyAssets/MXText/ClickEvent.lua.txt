@@ -277,8 +277,6 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.shaiZiStopLoader.visible = false
 		ClickEvent._play_ui.baoPaiAnimation.visible = false
 
-		--------红点
-		--_currentPanel.panel:GetChild("Shop"):GetChild("")
 
 		------特效
 		ClickEvent._play_ui.playerAvatarInfoEffect = Effect.AddUIEffect(Effect._effect_name.head_ui,CS.UnityEngine.Vector3(110,110,110),ClickEvent._play_ui.playerAvatarInfo)
@@ -467,6 +465,12 @@ function ClickEvent.CreateNewPanel(panelName)
 		else
 			ClickEvent._play_ui.avatarLoader.url = UIPackage.GetItemURL("MXUI","Touxiang01")
 		end
+		--------红点
+		_currentPanel.panel:GetChild("Shop"):GetChild("Reddot").visible = false
+		_currentPanel.panel:GetChild("Mail"):GetChild("Reddot").visible = false
+		_currentPanel.panel:GetChild("VIPRecordButton"):GetChild("Reddot").visible = false
+		_currentPanel.panel:GetChild("Promotion"):GetChild("Reddot").visible = false
+
 		local x = 1/ClickEvent.scale
 		Effect.AddUIEffect(Effect._effect_name.gold_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("DouNum"),_currentPanel.panel:GetChild("DouNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("DouNum"):GetChild("n7").size/2)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
@@ -476,6 +480,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 			_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2036)
+		end
+		if Player.hasClickActivity == true then
+			_currentPanel.panel:GetChild("Activity"):GetChild("Reddot").visible = false
 		end
 		if Player.hasShowActivity == false then
 			ClickEvent.ShowActivity()
@@ -554,6 +561,9 @@ end
 
 function ClickEvent.ShowActivity( ... )
 	-- body
+	if next(Player.activityTable) == nil then
+		return
+	end
 	if _currentPanel.panel.name ~= ClickEvent.panelTable._choose_ui then
 		return
 	end
@@ -574,7 +584,10 @@ function ClickEvent.ShowActivity( ... )
 						pageCount = pageCount + 1
 						_popPanel[popPanelIndex].panel:GetChild("Choose"..tostring(pageCount)).visible = true
 						_popPanel[popPanelIndex].panel:GetChild("ActivityShow"..tostring(pageCount)).visible = true
-						_popPanel[popPanelIndex].panel:GetChild("Choose"..tostring(pageCount)):GetChild("title").text = gbk.toutf8(activityValue.page_name)
+						_popPanel[popPanelIndex].panel:GetChild("Choose"..tostring(pageCount)):GetChild("title").text = ""--gbk.toutf8(activityValue.page_name)
+						if tostring(type(_popPanel[popPanelIndex].panel:GetChild("Choose"..tostring(pageCount)):GetChild("icon").texture)) == "nil" then
+							ClickEvent.LoadActivityTexture(tostring(activityValue.activity_id).."_1",_popPanel[popPanelIndex].panel:GetChild("Choose"..tostring(pageCount)):GetChild("icon"))
+						end
 						if tostring(type(_popPanel[popPanelIndex].panel:GetChild("ActivityShow"..tostring(pageCount)):GetChild("ImgLoader").texture)) == "nil" then
 							ClickEvent.LoadActivityTexture(tostring(activityValue.activity_id),_popPanel[popPanelIndex].panel:GetChild("ActivityShow"..tostring(pageCount)):GetChild("ImgLoader"))
 						end
@@ -739,6 +752,13 @@ function ClickEvent.ShowSingleDice( ... )
 	ClickEvent._play_ui.shaiZiStopLoader.visible = true
 	ClickEvent._play_ui.shaiZiStopLoader.url = UIPackage.GetItemURL("MXUI","shaiziz_common_lobby_"..tostring(currentSingleDice))
 	_currentPanel.panel:GetTransition("ShaiZiStop"):Play(ClickEvent.FinishSingleDice)
+end
+
+function ClickEvent.testDiceShow( ... )
+	-- body
+	ClickEvent._play_ui.shaiZiStopLoader.visible = true
+	ClickEvent._play_ui.shaiZiStopLoader.url = UIPackage.GetItemURL("MXUI","shaiziz_common_lobby_4")
+	_currentPanel.panel:GetTransition("ShaiZiStop"):Play()
 end
 
 function ClickEvent.FinishSingleDice( ... )
@@ -2221,11 +2241,17 @@ function ClickEvent.DapaiUIShow(position,card_type,card_value,isPlayBack)
 	if whichPlayer == 1 then
 		ClickEvent._play_ui.behindPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
 		ClickEvent._play_ui.behindPaiShow.visible = true
+		ClickEvent._play_ui.oppositePaiShow.visible = false
+		ClickEvent._play_ui.frontPaiShow.visible = false
 	elseif whichPlayer == 2 then
 		ClickEvent._play_ui.oppositePaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
+		ClickEvent._play_ui.behindPaiShow.visible = false
 		ClickEvent._play_ui.oppositePaiShow.visible = true
+		ClickEvent._play_ui.frontPaiShow.visible = false
 	elseif whichPlayer == 3 then
 		ClickEvent._play_ui.frontPaiShow:GetChild("PaiLoader").url = UIPackage.GetItemURL("MXUI",card_type.."_"..card_value)
+		ClickEvent._play_ui.behindPaiShow.visible = false
+		ClickEvent._play_ui.oppositePaiShow.visible = false
 		ClickEvent._play_ui.frontPaiShow.visible = true
 	else
 		Player.LogWarning("position nil")
@@ -2605,6 +2631,10 @@ end
 
 function ClickEvent.Activity( ... )
 	-- body
+	if Player.hasClickActivity == false then
+		Player.hasClickActivity = true
+		_currentPanel.panel:GetChild("Activity"):GetChild("Reddot").visible = false
+	end
 	ClickEvent.ShowActivity()
 	--[[
 	ClickEvent.PopPanel(ClickEvent.panelTable._activity_ui)
@@ -3028,8 +3058,10 @@ end
 function ClickEvent.VipNoteList(gameObject)
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+	Player.LogWarning(gameObject.gameObjectName)
+	_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
 	for k,v in pairs(Player.history_data) do
-		if v.room_id == tonumber(gameObject.gameObjectName) then
+		if tostring(v.room_id) == gameObject.gameObjectName then
 			--[[
 			if v.options.model == "ROOM_MODEL_TYPE_CLASSICAL" then
 				_popPanel[popPanelIndex].panel:GetChild("ModeText").text = "经典模式"
@@ -3039,20 +3071,20 @@ function ClickEvent.VipNoteList(gameObject)
 			--]]
 			Player.playBackRoomID = v.room_id
 			local fanxing = ""
-			for k,v in pairs(v.options.extend_type) do
-				if v == "ROOM_EXTEND_TYPE_ZHANLIHU" then
+			for kFan,vFan in pairs(v.options.extend_type) do
+				if vFan == "ROOM_EXTEND_TYPE_ZHANLIHU" then
 					fanxing = fanxing.."站立胡"
-				elseif v == "ROOM_EXTEND_TYPE_JIAHU" then
+				elseif vFan == "ROOM_EXTEND_TYPE_JIAHU" then
 					fanxing = fanxing.."带夹胡"
-				elseif v == "ROOM_EXTEND_TYPE_XUANFENGGANG" then
+				elseif vFan == "ROOM_EXTEND_TYPE_XUANFENGGANG" then
 					fanxing = fanxing.."旋风杠"
-				elseif v == "ROOM_EXTEND_TYPE_BAOPAI" then
+				elseif vFan == "ROOM_EXTEND_TYPE_BAOPAI" then
 					fanxing = fanxing.."宝牌"
-				elseif v == "ROOM_EXTEND_TYPE_DUANMEN" then
+				elseif vFan == "ROOM_EXTEND_TYPE_DUANMEN" then
 					fanxing = fanxing.."可断门"
-				elseif v == "ROOM_EXTEND_TYPE_QIYISE" then
+				elseif vFan == "ROOM_EXTEND_TYPE_QIYISE" then
 					fanxing = fanxing.."清一色"
-				elseif v == "ROOM_EXTEND_TYPE_BAOSANJIA" then
+				elseif vFan == "ROOM_EXTEND_TYPE_BAOSANJIA" then
 					fanxing = fanxing.."点炮包三家"
 				end
 				fanxing = fanxing.."、"
@@ -3081,7 +3113,11 @@ function ClickEvent.VipNoteList(gameObject)
 			for j,c in pairs(v.list) do
 				local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRound"))
 				obj.name = "VipNoteListInRound"
-				obj:GetChild("RoundNum").text = tostring(j)
+				if j > 10 then
+					obj:GetChild("RoundNum").text = "0"..tostring(j % 10)
+				else
+					obj:GetChild("RoundNum").text = tostring(j % 10)
+				end
 				if obj:GetChild("ShareReplay") and obj:GetChild("PlayThisRound") then
 					obj:GetChild("ShareReplay").visible = true
 					obj:GetChild("PlayThisRound").visible = true
@@ -3227,6 +3263,9 @@ function ClickEvent.Shop( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuMall","1")
 end
 
@@ -3382,9 +3421,7 @@ function ClickEvent.OnReceiveHistory()
 				end
 			end
 		end
-		if dataCount == 0 then
-			_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = true
-		else
+		if dataCount > 0 then
 			_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
 		end
 		Player.history_start = dataCount + Player.history_start
@@ -3490,9 +3527,35 @@ function ClickEvent.More( ... )
 	ClickEvent.ShowSingleYesWindow(3000)
 end
 
+function ClickEvent.MallDouButton( ... )
+	-- body
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
+end
+
+function ClickEvent.MallGemsButton( ... )
+	-- body
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
+end
+
+function ClickEvent.MallItemButton( ... )
+	-- body
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
+	_popPanel[popPanelIndex].panel:GetChild("MallItemBg2"):GetChild("SaleHint").visible = true
+end
+
 function ClickEvent.RoomCardNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
+	_popPanel[popPanelIndex].panel:GetChild("MallItemBg2"):GetChild("SaleHint").visible = true
 	_popPanel[popPanelIndex].panel:GetChild("MallItemButton").selected = true
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuRoomCard","1")
 end
@@ -3500,6 +3563,9 @@ end
 function ClickEvent.DouNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
 	_popPanel[popPanelIndex].panel:GetChild("MallDouButton").selected = true
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuCoins","1")
 end
@@ -3507,6 +3573,9 @@ end
 function ClickEvent.GemsNum( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._mall_ui)
+	for i=1,5 do
+		_popPanel[popPanelIndex].panel:GetChild("MallItemBg"..tostring(i)):GetChild("SaleHint").visible = false
+	end
 	_popPanel[popPanelIndex].panel:GetChild("MallGemsButton").selected = true
 	Player.CmdMatTrackCutomKVEvent("Button","MainMenuGems","1")
 end
@@ -3667,7 +3736,7 @@ function ClickEvent.PriceButtonItem1( ... )
 		Player.CmdBuySomething(655373)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
 	end
 end
 function ClickEvent.PriceButtonItem2( ... )
@@ -3676,7 +3745,7 @@ function ClickEvent.PriceButtonItem2( ... )
 		Player.CmdBuySomething(655374)
 	else
 		ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2027)
+		_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
 	end
 end
 
@@ -4846,7 +4915,7 @@ end
 
 function ClickEvent.GameBillButton(gameObject)
 	-- body
-	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_ui)
+	ClickEvent.PopPanel(ClickEvent.panelTable._history_score_play_ui)
 	--[[
 	if Player._room_information.options.model == "ROOM_MODEL_TYPE_CLASSICAL" then
 		_popPanel[popPanelIndex].panel:GetChild("ModeText").text = "经典模式"
@@ -4874,6 +4943,7 @@ function ClickEvent.GameBillButton(gameObject)
 		fanxing = fanxing.."  "
 	end
 	fanxing = string.sub(fanxing, 1, -2)
+	_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("FanText").text = fanxing
 	_popPanel[popPanelIndex].panel:GetChild("RoundText").text = tostring(Player._room_information.options.open_rands).."局"
 	if _popPanel[popPanelIndex].panel:GetChild("RoomIDText") then
@@ -4900,7 +4970,11 @@ function ClickEvent.GameBillButton(gameObject)
 			local obj = historyList:AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteListInRoundNoButton"))
 			obj.name = "VipNoteListInRound"
 			roundCount = roundCount + 1
-			obj:GetChild("RoundNum").text = tostring(roundCount)
+			if roundCount > 10 then
+				obj:GetChild("RoundNum").text = "0"..tostring(roundCount % 10)
+			else
+				obj:GetChild("RoundNum").text = tostring(roundCount % 10)
+			end
 			if obj:GetChild("ShareReplay") and obj:GetChild("PlayThisRound") then
 				obj:GetChild("ShareReplay").visible = false
 				obj:GetChild("PlayThisRound").visible = false

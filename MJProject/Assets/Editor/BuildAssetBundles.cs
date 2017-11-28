@@ -12,7 +12,7 @@ public class BuildAssetBundles
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@sprites.bytes").assetBundleName = "mx_assetbundles_android/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0.png").assetBundleName = "mx_assetbundles_android/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_1.png").assetBundleName = "mx_assetbundles_android/mxui.ab";
-        AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_2.png").assetBundleName = "mx_assetbundles_android/mxui.ab";
+        //AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_2.png").assetBundleName = "mx_assetbundles_android/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas3.png").assetBundleName = "mx_assetbundles_android/mxui.ab";
 
         BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.None, BuildTarget.Android);
@@ -44,7 +44,7 @@ public class BuildAssetBundles
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@sprites.bytes").assetBundleName = "mx_assetbundles_ios/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0.png").assetBundleName = "mx_assetbundles_ios/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_1.png").assetBundleName = "mx_assetbundles_ios/mxui.ab";
-        AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_2.png").assetBundleName = "mx_assetbundles_ios/mxui.ab";
+        //AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas0_2.png").assetBundleName = "mx_assetbundles_ios/mxui.ab";
         AssetImporter.GetAtPath("Assets/FairyGUI/FairyUI/MXUI@atlas3.png").assetBundleName = "mx_assetbundles_ios/mxui.ab";
 
         BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.None, BuildTarget.iOS);

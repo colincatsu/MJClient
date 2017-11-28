@@ -1,22 +1,16 @@
-package.xml|1010|<packageDescription id="181u7g8l" name="Loading">
+package.xml|738|<packageDescription id="181u7g8l" name="Loading">
   <resources>
     <component id="t3tk3" name="LoadingBar" path="/UIPIC/主界面/" size="1251,114"/>
-    <component id="t3tk6" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <image id="t3tk1" name="ui_Zhujiemian_02" path="/UIPIC/功能界面/" size="1334,750"/>
-    <image id="t3tk2" name="Di" path="/UIPIC/匹配房结算/" size="256,256" scale="9grid" scale9grid="64,64,128,128"/>
     <image id="t3tk4" name="jindutiao_3" path="/UIPIC/主界面/" size="769,114" scale="9grid" scale9grid="193,54,386,2"/>
-    <image id="t3tk5" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31"/>
-    <image id="t3tk7" name="jiazailaba" path="/UIPIC/xinzeng/" size="109,42" scale="9grid" scale9grid="22,20,44,1"/>
+    <image id="t3tk5" name="jindutiao_2" path="/UIPIC/主界面/" size="677,31" scale="9grid" scale9grid="21,7,628,16"/>
     <component id="t3tk0" name="Loading" path="/" size="1334,750" exported="true"/>
     <component id="t3tk8" name="InformText" path="/UIPIC/功能界面/" size="1000,69" exported="true"/>
     <atlas id="atlas0" size="2048,1024" file="atlas0.png"/>
   </resources>
-</packageDescription>t3tk0.xml|3368|<component size="1334,750" adaptationTest="FitSize">
+</packageDescription>t3tk0.xml|3046|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_j3uo" name="Bg" src="t3tk1" xy="0,0">
-      <relation target="" sidePair="width-width,height-height"/>
-    </image>
-    <image id="n3_j3uo" name="Di" src="t3tk2" xy="0,0" size="1334,750" alpha="0.6">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
     <text id="n2_j3uo" name="n2" xy="132,642" size="1069,39" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" text="抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活">
@@ -40,9 +34,6 @@ package.xml|1010|<packageDescription id="181u7g8l" name="Loading">
     <component id="n9_uejt" name="LoadingBar" src="t3tk3" xy="45,508" size="1251,114">
       <relation target="" sidePair="center-center,bottom-bottom"/>
       <ProgressBar value="100" max="100"/>
-    </component>
-    <component id="n10_10p14" name="InformNoHorn" src="t3tk6" xy="133,532">
-      <relation target="" sidePair="center-center,bottom-bottom"/>
     </component>
   </displayList>
   <transition name="LoadingDDD" autoPlay="true" autoPlayRepeat="-1">
@@ -80,11 +71,6 @@ package.xml|1010|<packageDescription id="181u7g8l" name="Loading">
     <text id="n12_uaih" name="Files" xy="930,1" size="38,25" fontSize="20" color="#ffffff" text="0/0"/>
   </displayList>
   <ProgressBar/>
-</component>t3tk6.xml|234|<component size="1068,69" overflow="hidden">
-  <displayList>
-    <image id="n7_gepq" name="n7" src="t3tk7" xy="28,14" size="1000,42"/>
-    <component id="n6_j3uo" name="InformText" src="t3tk8" xy="27,0"/>
-  </displayList>
 </component>t3tk8.xml|748|<component size="1000,69" overflow="hidden">
   <displayList>
     <text id="n0_j3uo" name="txtMove" xy="1007,16" size="1077,37" font="幼圆" fontSize="32" color="#ffe3bd" vAlign="middle" ubb="true" text="重大通知，史上最正宗朝阳麻将上线啦，免费做代理，更有机会获得iphone7"/>

@@ -370,7 +370,7 @@ function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	end
 	if _current_right_number ~= rightNumber then
 		_current_right_number = rightNumber
-		if rightNumber == 3 then
+		if rightNumber == 3 and Player.hasBeginned == true then
 			AudioPlayer.PlaySound(AudioPlayer._audio_name.NoTime,false,1)
 		end
 		if _count_down_right and MahJong.self:IsNull(_count_down_right) == false then

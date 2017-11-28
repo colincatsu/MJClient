@@ -23,7 +23,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentVersion = "3"
+local currentVersion = "4"
 
 --local currentMd5 = "9af6ad141df0f43fa4222acfa69e9dcb"--版本md5
 --local isReloadData = false
@@ -46,7 +46,7 @@ function awake()
 	-- body
 	UIConfig.defaultFont = "MJFont"
 	loadingUI = CS.UnityEngine.GameObject.Find("UIPanel"):GetComponent("UIPanel").ui
-	loadingUI:GetChild("InformNoHorn").visible = false
+	--loadingUI:GetChild("InformNoHorn").visible = false
 	loadingBar = loadingUI:GetChild("LoadingBar")
 	loadingBar.value = 0
 	loadingBar:GetChild("DownloadSpeed").visible = false

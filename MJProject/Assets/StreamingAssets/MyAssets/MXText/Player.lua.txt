@@ -127,7 +127,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1127.2"
+Player.pc_version = "2.0.1.1128.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -181,6 +181,7 @@ Player.baoPaiCache = nil
 
 Player.rewardData = {}--奖励数据
 Player.commonLimitData = {}--限制数据
+Player.hasClickActivity = false
 
 function Player.LoadData( ... )
     -- body
@@ -1040,6 +1041,7 @@ function Player.OnBattleHistory(type_t,stuff)
             Player.current_history_index = Player.current_history_index + 1
             Player.history_data[Player.current_history_index] = v
         end
+        Player.LogWarning(v.room_id)
     end
 
     table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
@@ -1047,7 +1049,7 @@ function Player.OnBattleHistory(type_t,stuff)
     Player.history_start = message.start_index
     Player.history_end = Player.current_history_index
     Player.LogWarning("battleHistoryCurrent:"..Player.current_history_index)
-    Player.LogWarning("battleHistoryStart:"..Player.history_start.."battleHistoryEnd:"..Player.history_end)
+    Player.LogWarning("battleHistoryStart:"..Player.history_start.."battleHistoryEnd:"..message.end_index)
     ClickEvent.OnReceiveHistory()
 end
 
@@ -1515,7 +1517,9 @@ function Player.OnSyncActivity(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.SyncActivity",stuff)
     Player.activityTable = message.activity_list
-    ClickEvent.ShowActivity()
+    if Player.hasShowActivity == false then
+        ClickEvent.ShowActivity()
+    end
 end
 
 function Player.OnEnterRoom(type_t,stuff)
