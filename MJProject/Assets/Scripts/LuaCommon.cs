@@ -142,6 +142,7 @@ public class TestCaseGenConfig : XLua.GenConfig
                 typeof(UnityEngine.Camera),
                 typeof(TouchCT),
                 typeof(UnityEngine.Application),
+                typeof(UnityEngine.AnimationState),
                 typeof(UnityEngine.SceneManagement.SceneManager),
                 typeof(UnityEngine.SceneManagement.Scene),
                 typeof(UnityEngine.Keyframe),
