@@ -127,7 +127,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1128.2"
+Player.pc_version = "2.0.1.1129.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1033,13 +1033,16 @@ function Player.OnBattleHistory(type_t,stuff)
     for k,v in pairs(message.history_list) do
         local hasSameData = false
         for j,c in pairs(Player.history_data) do
-            if c.room_id == v.room_id then
+            if tostring(c.room_id) == tostring(v.room_id) then
                 hasSameData = true
             end
         end
         if hasSameData == false then
             Player.current_history_index = Player.current_history_index + 1
             Player.history_data[Player.current_history_index] = v
+            if not Player.history_data[Player.current_history_index].create_time then
+                Player.history_data[Player.current_history_index].create_time = 0
+            end
         end
         Player.LogWarning(v.room_id)
     end
@@ -1085,7 +1088,7 @@ function Player.OnRoomState(type_t,stuff)
             Player.MahJong.QuitVoiceRoom()
             --Player.LoadScene("FairyMainUI")
             Player.LogWarning(ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui))
-            if ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false then
+            if ClickEvent.IsPopPanel(ClickEvent.panelTable._room_calculate_ui) == false and ClickEvent.IsPopPanel(ClickEvent.panelTable._share_calculate_ui) == false then
                 Player.LogWarning(ClickEvent.panelTable._room_calculate_ui)
                 ClickEvent.ShowSingleYesWindow(2034)
             end
@@ -1282,7 +1285,7 @@ function Player.OnRoomCalculate(type_t,stuff)
 
     local hasSameData = false
     for j,c in pairs(Player.history_data) do
-        if c.room_id == tonumber(Player._roomId) then
+        if tostring(c.room_id) == tostring(Player._roomId) then
             hasSameData = true
         end
     end

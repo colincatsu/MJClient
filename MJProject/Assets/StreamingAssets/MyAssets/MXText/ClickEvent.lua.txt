@@ -3291,58 +3291,60 @@ function ClickEvent.VIPRecordButton( ... )
 	local dataCount = 0
 	for k,v in pairs(Player.history_data) do
 		dataCount = dataCount + 1
-		local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
-		obj.name = "VipNoteList"
-		obj.gameObjectName = tostring(v.room_id)
-		obj.onClick:Add(ClickEvent.registerButtonClick)
-		if obj:GetChild("Replay") then
-			obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
-		end
-		local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
-		local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
-		obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
-		obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
-		if obj:GetChild("RoomID") then
-			obj:GetChild("RoomID").text = tostring(v.room_id)
-		end
-		local countScore = 0
-		local headimgurlTable = {}
-		local imgCount = 0
-		for j,c in pairs(v.list) do
-			imgCount = 0
-			for roundKey,roundData in pairs(c.list) do
-				imgCount = imgCount + 1
-				if not headimgurlTable[imgCount] then
-					for playerKey,playerData in pairs(v.player_brief_list) do
-						if playerData.player_id == roundData.player_id then
-							headimgurlTable[imgCount] = playerData.headimgurl
+		if v.create_time and v.create_time ~= 0 then
+			local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
+			obj.name = "VipNoteList"
+			obj.gameObjectName = tostring(v.room_id)
+			obj.onClick:Add(ClickEvent.registerButtonClick)
+			if obj:GetChild("Replay") then
+				obj:GetChild("Replay").onClick:Add(ClickEvent.registerButtonClick)
+			end
+			local year,month,day = ClickEvent.ChangeSecondToDate(v.create_time)
+			local hour,minute = ClickEvent.ChangeSecondToTime(v.create_time)
+			obj:GetChild("FinishDate").text = tostring(year).."/"..tostring(month).."/"..tostring(day)
+			obj:GetChild("FinishTime").text = tostring(hour)..":"..tostring(minute)
+			if obj:GetChild("RoomID") then
+				obj:GetChild("RoomID").text = tostring(v.room_id)
+			end
+			local countScore = 0
+			local headimgurlTable = {}
+			local imgCount = 0
+			for j,c in pairs(v.list) do
+				imgCount = 0
+				for roundKey,roundData in pairs(c.list) do
+					imgCount = imgCount + 1
+					if not headimgurlTable[imgCount] then
+						for playerKey,playerData in pairs(v.player_brief_list) do
+							if playerData.player_id == roundData.player_id then
+								headimgurlTable[imgCount] = playerData.headimgurl
+							end
 						end
 					end
-				end
-				if roundData.player_id == Player._player_data.common_prop.player_id then
-					countScore = countScore + roundData.score
+					if roundData.player_id == Player._player_data.common_prop.player_id then
+						countScore = countScore + roundData.score
+					end
 				end
 			end
-		end
-		for i=1,4 do
-			local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-			if tempTexture then
-				obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
-			end
-		end
-		WeChatPlatform:SetFuncDelegate(function ( ... )
-			-- body
 			for i=1,4 do
 				local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
 				if tempTexture then
 					obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
 				end
 			end
-		end)
-		if countScore > 0 then
-			obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
-		else
-			obj:GetChild("WinLoseNum").text = tostring(countScore)
+			WeChatPlatform:SetFuncDelegate(function ( ... )
+				-- body
+				for i=1,4 do
+					local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+					if tempTexture then
+						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+					end
+				end
+			end)
+			if countScore > 0 then
+				obj:GetChild("WinLoseNum").text = "+"..tostring(countScore)
+			else
+				obj:GetChild("WinLoseNum").text = tostring(countScore)
+			end
 		end
 	end
 	if dataCount == 0 then
@@ -3363,9 +3365,9 @@ function ClickEvent.OnReceiveHistory()
 		local dataCount = 0
 		for i=Player.history_start,Player.history_end do
 			local v = Player.history_data[i]
-			if v and v.room_id then
+			dataCount = dataCount + 1
+			if v and v.room_id and v.create_time and v.create_time ~= 0 then
 				Player.LogWarning("currentDataIndex:"..i)
-				dataCount = dataCount + 1
 				local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
 				obj.name = "VipNoteList"
 				obj.gameObjectName = tostring(v.room_id)
@@ -5141,6 +5143,7 @@ end
 
 function ClickEvent.GameBackButtonShare(gameObject)
 	-- body
+	ClickEvent.Close()
 	Player.CmdGameOperation("GAME_OPER_TYPE_LEAVE")
 end
 

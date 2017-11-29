@@ -389,6 +389,12 @@ function MahJong.ResetCountDownNumber( ... )
 	Player.playCountDownTime = CS.UnityEngine.Time.realtimeSinceStartup
 end
 
+function MahJong.ShowCountDownNumber(isShow)
+	-- body
+	_count_down_left:SetActive(isShow)
+	_count_down_right:SetActive(isShow)
+end
+
 function MahJong.PlayCountDownTwinkle(isPlay)
 	-- body
 	if not twinkleAnimation then
@@ -397,9 +403,9 @@ function MahJong.PlayCountDownTwinkle(isPlay)
 	if isPlay and isPlay == true then
 		--twinkle
 		Player.LogWarning("Play")
+		twinkleAnimation:Play("CountDown")
 		if twinkleAnimation.isPlaying == false then
 			Player.LogWarning("PlayNow")
-			twinkleAnimation:Play("CountDown")
 		end
 	else
 		--stop
@@ -498,7 +504,7 @@ function MahJong.Init()
 	_count_down_left = MahJong.self.transform:Find("CountDown/Left").gameObject
 	_count_down_right = MahJong.self.transform:Find("CountDown/Right").gameObject
 	twinkleAnimation = _count_down_father:GetComponent("Animation")
-	_count_down_father:SetActive(false)
+	MahJong.ShowCountDownNumber(false)
 	if Player.tablecloth == 1 then
 		MahJong.self.transform:Find("StaticModel/DNXB").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
 		MahJong.self.transform:Find("StaticModel/zhuo").gameObject:GetComponent("Renderer").material = Load("Material/tietu_1")
@@ -516,7 +522,7 @@ function MahJong.Init()
 	if Player.isPlayBack == true then
 		_dice_red:SetActive(false)
 		_dice_white:SetActive(false)
-		_count_down_father:SetActive(true)
+		MahJong.ShowCountDownNumber(true)
 	end
 	_gai_obj = MahJong.self.transform:Find("Gai").gameObject
 	_pointFather.D = _gai_obj.transform:Find("Point_D/Father").gameObject
@@ -788,7 +794,7 @@ function MahJong.ResetGameState(resetPlayButton)
 	Player.huPaiPosition = -1
 	diceHasPlay = false
 	ClickEvent.notPushPassMsg = false
-	_count_down_father:SetActive(false)
+	MahJong.ShowCountDownNumber(false)
 	Player.baoPaiCache = nil
 
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
@@ -1572,7 +1578,7 @@ function MahJong.ReturnRoomSync(paiData,whoseTurn)
 			end
 		    _dice_red:SetActive(false)
 		    _dice_white:SetActive(false)
-		    _count_down_father:SetActive(true)
+		    MahJong.ShowCountDownNumber(true)
         else
         	Player.LogWarning(playerData.pai_count_inhand)
         	if playerPos == 1 then
@@ -5068,7 +5074,7 @@ function MahJong.PlayDoubleDices(number1,number2)
 	--]]
 	_dice_red:SetActive(true)
     _dice_white:SetActive(true)
-    _count_down_father:SetActive(false)
+    MahJong.ShowCountDownNumber(false)
 	redDicePoints =	number1
 	whiteDicePoints = number2
 	zhuaPaiBeginPos = redDicePoints + whiteDicePoints
@@ -5095,7 +5101,8 @@ function MahJong.PlayDoubleDices(number1,number2)
     MahJong.OtherPlayerPaiInit()
     _dice_red:SetActive(false)
     _dice_white:SetActive(false)
-    _count_down_father:SetActive(true)
+    MahJong.ShowCountDownNumber(true)
+
     MahJong.ResetCountDownNumber()
 	end)
 	coroutine.resume(co)
