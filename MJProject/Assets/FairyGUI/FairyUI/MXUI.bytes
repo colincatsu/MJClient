@@ -918,11 +918,11 @@ i0jkod.xml|604|<component size="1113,723">
     <image id="n4_kftt" name="n4" src="kftti53g" xy="59,21"/>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>kftti544.xml|7500|<component size="1334,750" adaptationTest="FitSize">
+</component>kftti544.xml|6765|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <controller name="ReplayControler" pages="0,,1,,2,,3," selected="0"/>
-  <controller name="PlayAndPause" pages="0,,1," selected="1"/>
+  <controller name="PlayAndPause" pages="0,,1," selected="0"/>
   <displayList>
     <image id="n7_algd" name="OppositePlayerTing" src="w61cfm" xy="1015,66">
       <relation target="n3_algd" sidePair="right-left"/>
@@ -1010,18 +1010,9 @@ i0jkod.xml|604|<component size="1113,723">
     <component id="n80_r701" name="RoundNumber" src="g09nlu" xy="270,-2">
       <relation target="" sidePair="top-top,right-right"/>
     </component>
-    <text id="n81_r701" name="RemainNum" xy="-299,-353" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136">
-      <relation target="n79_r701" sidePair="center-center,middle-middle"/>
-    </text>
     <component id="n82_r701" name="Wlan" src="w61cg9" xy="4,0">
       <relation target="" sidePair="top-top,left-left"/>
     </component>
-    <text id="n83_r701" name="RemainText" xy="-343,-353" size="68,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="剩余：">
-      <relation target="n79_r701" sidePair="center-center,middle-middle"/>
-    </text>
-    <text id="n84_r701" name="RemainText" xy="-264,-353" size="42,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="张">
-      <relation target="n79_r701" sidePair="center-center,middle-middle"/>
-    </text>
     <text id="n85_r701" name="RemainNum" xy="191,6" size="49,30" fontSize="24" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="136"/>
     <text id="n86_r701" name="RemainText" xy="147,7" size="68,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="剩余："/>
     <text id="n87_r701" name="RemainText" xy="226,7" size="42,30" fontSize="19" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="张"/>
@@ -3467,13 +3458,13 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
   <displayList>
     <text id="n0_npla" name="PlayerName" xy="22,15" size="434,30" font="幼圆" fontSize="26" color="#314871" vAlign="middle" text="对方正在输入.ssssssssssssssssssss"/>
   </displayList>
-</component>w61cbw.xml|579|<component size="207,73" extention="Button">
+</component>w61cbw.xml|580|<component size="207,73" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
     <image id="n5_npla" name="n5" src="w61cb8" xy="26,12" size="181,53"/>
     <image id="n4_npla" name="n4" src="w61cba" xy="13,0" size="48,73"/>
     <image id="n6_npla" name="n6" src="w61cb9" xy="162,18"/>
-    <text id="n7_k35j" name="RoomCardNum" xy="63,20" size="94,32" font="ui://krtoytc1l2po4xd" fontSize="28" color="#ffffff" align="right" vAlign="middle" autoSize="height" text="222"/>
+    <text id="n7_k35j" name="RoomCardNum" xy="57,20" size="105,32" font="ui://krtoytc1l2po4xd" fontSize="28" color="#ffffff" align="right" vAlign="middle" autoSize="height" text="222"/>
   </displayList>
   <Button/>
 </component>w61cbx.xml|580|<component size="216,66" extention="Button">
@@ -4637,7 +4628,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|14165|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|14214|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
@@ -4696,12 +4687,6 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <component id="n58_doyw" name="OppositeEmojiShow" src="doyw4su" xy="615,76">
       <relation target="" sidePair="top-top"/>
     </component>
-    <graph id="n87_e1gf" name="ZhuangGraph" xy="646,354" size="42,41">
-      <relation target="n78_h44f" sidePair="center-center,middle-middle"/>
-    </graph>
-    <image id="n78_h44f" name="ZhuangStart" src="w61cfk" xy="647,355" size="40,40">
-      <relation target="" sidePair="center-center,middle-middle"/>
-    </image>
     <component id="n59_doyw" name="BehindEmojiShow" src="doyw4su" xy="916,307">
       <relation target="" sidePair="right-right"/>
     </component>
@@ -4755,6 +4740,12 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <component id="n2_algd" name="GamePlayButton" src="w61cg6" xy="535,512" group="n25_fb5y">
       <relation target="" sidePair="center-center,middle-middle"/>
     </component>
+    <graph id="n87_e1gf" name="ZhuangGraph" xy="646,354" pivot="0.5,0.5" size="42,41" group="n25_fb5y">
+      <relation target="n78_h44f" sidePair="center-center,middle-middle"/>
+    </graph>
+    <image id="n78_h44f" name="ZhuangStart" src="w61cfk" xy="647,355" size="40,40" group="n25_fb5y">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
     <image id="n71_ipmc" name="n71" src="ipmci57p" xy="1707,-182" size="371,1190" group="n25_fb5y" scale="-1,1">
       <gearDisplay controller="Menu" pages="1"/>
       <gearXY controller="Menu" pages="0,1" values="1707,-182|1334,-182" tween="true"/>
@@ -4839,7 +4830,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
   <transition name="ShaiZiStop">
     <item time="0" type="Alpha" target="n77_q7op" value="1"/>
     <item time="0" type="Scale" target="n77_q7op" tween="true" startValue="1,1" endValue="1.5,1.5" duration="5" ease="Quint.In"/>
-    <item time="6" type="Alpha" target="n77_q7op" tween="true" startValue="1" endValue="0" duration="12" ease="Cubic.In"/>
+    <item time="5" type="Alpha" target="n77_q7op" tween="true" startValue="1" endValue="0" duration="11" ease="Expo.In"/>
   </transition>
   <transition name="ZhuangStart">
     <item time="0" type="XY" target="n78_h44f" tween="true" startValue="647,355" endValue="71.5,477.75" duration="6"/>
