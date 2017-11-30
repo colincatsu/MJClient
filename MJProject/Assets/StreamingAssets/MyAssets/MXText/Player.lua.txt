@@ -105,6 +105,7 @@ Player.operation_calculate_data = {
 Player.baopai_calculate_data = {}
 Player.hupai_calculate_data = {}
 Player.pai_push_down = {}
+Player.pai_liu_ju = {}
 
 Player.history_data = {}
 Player.history_count = 0
@@ -127,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1129.2"
+Player.pc_version = "2.0.1.1130.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -980,6 +981,7 @@ function Player.OnPlayBack(type_t,stuff)
             Player._my_player_data.position = v.position
             isMyself = true
         end
+        --Player.LogWarning(v.common_prop.gender)
     end
     if isMyself == true then
         Player.CmdMatTrackCutomKVEvent("Replay","ReplayRound","1")
@@ -1032,7 +1034,9 @@ function Player.OnBattleHistory(type_t,stuff)
     local message = protobuf.decode("Adoter.Asset.BattleHistory",stuff)
     for k,v in pairs(message.history_list) do
         local hasSameData = false
+        Player.LogWarning(tostring(v.room_id))
         for j,c in pairs(Player.history_data) do
+            Player.LogWarning("---------------jjjjjjjjjjjjjjjjjj"..tostring(c.room_id))
             if tostring(c.room_id) == tostring(v.room_id) then
                 hasSameData = true
             end
@@ -1044,7 +1048,6 @@ function Player.OnBattleHistory(type_t,stuff)
                 Player.history_data[Player.current_history_index].create_time = 0
             end
         end
-        Player.LogWarning(v.room_id)
     end
 
     table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
@@ -1235,6 +1238,7 @@ function Player.OnLiuJu(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.LiuJu",stuff)
     ClickEvent.SetRemainNum(16)
+    Player.pai_liu_ju = message.elements
     Player.MahJong.LiuJuPai(message.elements)
 end
 
@@ -1298,13 +1302,17 @@ function Player.OnRoomCalculate(type_t,stuff)
             Player.history_data[Player.current_history_index].options = Player._room_information.options
             Player.history_data[Player.current_history_index].list = Player._all_calculate_data
             Player.history_data[Player.current_history_index].player_brief_list = {}
-            local playerCount = 0
-            for k,v in pairs(Player._all_calculate_data[1].list) do
-                playerCount = playerCount + 1
-                Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
-                Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
-                Player.history_data[Player.current_history_index].player_brief_list[playerCount].nickname = v.nickname
-                Player.history_data[Player.current_history_index].player_brief_list[playerCount].headimgurl = v.headimgurl
+            if Player.roomall_player_brief then
+                Player.history_data[Player.current_history_index].player_brief_list = Player.roomall_player_brief
+            else
+                local playerCount = 0
+                for k,v in pairs(Player._all_calculate_data[1].list) do
+                    playerCount = playerCount + 1
+                    Player.history_data[Player.current_history_index].player_brief_list[playerCount] = {}
+                    Player.history_data[Player.current_history_index].player_brief_list[playerCount].player_id = v.player_id
+                    Player.history_data[Player.current_history_index].player_brief_list[playerCount].nickname = v.nickname
+                    Player.history_data[Player.current_history_index].player_brief_list[playerCount].headimgurl = v.headimgurl
+                end
             end
 
             table.sort(Player.history_data,function(a,b) return a.create_time>b.create_time end)
@@ -1336,6 +1344,7 @@ function Player.OnGameCalculate(type_t,stuff)
     end
     Player.isPlaying = false
     Player.MahJong.OnRoundEndShowEffect(Player._calculate_data)
+    AudioPlayer.StopSound(AudioPlayer._audio_name.NoTime)
 end
 
 function Player.OnSyncCommonReward(type_t,stuff)

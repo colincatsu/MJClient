@@ -256,6 +256,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
 		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("BaoPaiInRound"):GetChild("BaoPaiLoader")
+		_currentPanel.panel:GetChild("BaoPai"):GetChild("WeiYaoBao"):GetController("BackColor").selectedIndex = Player.paiSizeSet
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
 		local hasBaoPai = false
 		for k,v in pairs(Player._room_information.options.extend_type) do
@@ -1789,7 +1790,7 @@ function ClickEvent.ShowCalculate( ... )
 	else
 	end
 
-	if Player._calculate_data.baopai and Player._calculate_data.baopai ~= {} then
+	if Player._calculate_data.baopai and Player._calculate_data.baopai ~= {} and Player._calculate_data.baopai.card_value ~= 0 then
 		_popPanel[popPanelIndex].panel:GetChild("BaoPai").visible = true
 		_popPanel[popPanelIndex].panel:GetChild("BaoPai"):GetChild("WeiYaoBao").visible = false
 		_popPanel[popPanelIndex].panel:GetChild("BaoPai"):GetChild("BaoPaiLoader").url = UIPackage.GetItemURL("MXUI",Player._calculate_data.baopai.card_type.."_"..Player._calculate_data.baopai.card_value)
@@ -2420,6 +2421,7 @@ end
 function ClickEvent.ShowDissolveTime(time)
 	-- body
 	if _popPanel[popPanelIndex].panel.name == ClickEvent.panelTable._vote_ui then
+		_popPanel[popPanelIndex].panel:GetChild("count").text = tostring(time)
 		_popPanel[popPanelIndex].panel:GetChild("Agree"):GetChild("count").text = tostring(time)--
 		_popPanel[popPanelIndex].panel:GetChild("AgreeText").text = string.format(StringTable.Get(2040),math.ceil(time))
 	end
@@ -3363,11 +3365,10 @@ function ClickEvent.OnReceiveHistory()
 	-- body
 	if ClickEvent.IsPopPanel(ClickEvent.panelTable._vip_note_ui) == true then
 		local dataCount = 0
-		for i=Player.history_start,Player.history_end do
-			local v = Player.history_data[i]
+		_popPanel[popPanelIndex].panel:GetChild("NoteList"):RemoveChildrenToPool()
+		for k,v in pairs(Player.history_data) do
 			dataCount = dataCount + 1
 			if v and v.room_id and v.create_time and v.create_time ~= 0 then
-				Player.LogWarning("currentDataIndex:"..i)
 				local obj = _popPanel[popPanelIndex].panel:GetChild("NoteList"):AddItemFromPool(UIPackage.GetItemURL("MXUI","VipNoteList"))
 				obj.name = "VipNoteList"
 				obj.gameObjectName = tostring(v.room_id)
@@ -4945,7 +4946,6 @@ function ClickEvent.GameBillButton(gameObject)
 		fanxing = fanxing.."  "
 	end
 	fanxing = string.sub(fanxing, 1, -2)
-	_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
 	_popPanel[popPanelIndex].panel:GetChild("FanText").text = fanxing
 	_popPanel[popPanelIndex].panel:GetChild("RoundText").text = tostring(Player._room_information.options.open_rands).."局"
 	if _popPanel[popPanelIndex].panel:GetChild("RoomIDText") then
@@ -5022,6 +5022,11 @@ function ClickEvent.GameBillButton(gameObject)
 				playerNumber = playerNumber + 1
 			end
 		end
+	end
+	if roundCount > 0 then
+		_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = false
+	else
+		_popPanel[popPanelIndex].panel:GetChild("NoHistory").visible = true
 	end
 	--[[
 	local historyShareList = _popPanel[popPanelIndex].panel:GetChild("HistoryShareList")

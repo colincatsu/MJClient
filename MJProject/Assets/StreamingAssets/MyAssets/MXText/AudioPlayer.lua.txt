@@ -77,7 +77,7 @@ function AudioPlayer.PlaySound(soundName,isLoop,volume,position)
 						soundName = soundName.."_2"
 					end
 				else
-					if v.wechat.sex == 2 then
+					if v.wechat and v.wechat.sex and v.wechat.sex == 2 then
 						soundName = soundName.."_2"
 					else
 						soundName = soundName.."_1"
