@@ -381,6 +381,7 @@ function ClickEvent.CreateNewPanel(panelName)
 		Player.MahJong.UpdateRoomNumber(tostring(Player._roomId))
 
 		ClickEvent._play_ui.baopaiLoader = _currentPanel.panel:GetChild("BaoPai"):GetChild("BaoPaiInRound"):GetChild("BaoPaiLoader")
+		_currentPanel.panel:GetChild("BaoPai"):GetChild("WeiYaoBao"):GetController("BackColor").selectedIndex = Player.paiSizeSet
 		_currentPanel.panel:GetChild("BaoPai"):GetController("BaoPaiShow").selectedIndex = 0
 		--[[
 		local hasBaoPai = false
@@ -477,6 +478,9 @@ function ClickEvent.CreateNewPanel(panelName)
 		Effect.AddUIEffect(Effect._effect_name.gem_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("GemsNum"),_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").xy+_currentPanel.panel:GetChild("GemsNum"):GetChild("n7").size/2)
 		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
 		--Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
+		if _currentPanel.panel:GetChild("DouRoomButton") then
+			--Effect.AddUIEffect(Effect._effect_name.coinRoomButton,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel:GetChild("DouRoomButton"))
+		end
 
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
 			ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
@@ -1536,7 +1540,7 @@ function ClickEvent.ShowRoomCalculate( ... )
 				obj:GetChild("AvatarLoader").texture = NTexture(delegateTex)
 			end
 		end
-
+		obj:GetChild("RoomLord").visible = false
 		for j,c in pairs(Player._all_players_data) do
 			if v.player_id == c.common_prop.player_id then
 				if c.position == "POSITION_TYPE_EAST" then
@@ -1727,6 +1731,9 @@ function ClickEvent.ShowCalculate( ... )
 				Player.isJinBao = true
 			end
 		end
+	end
+	if ClickEvent.PlayerPosition(Player._calculate_data.dianpao_player_position) == Player.huPaiPosition then
+		Player.isZiMo = true
 	end
 
 	if Player._banker_position then
@@ -2449,6 +2456,11 @@ function ClickEvent.ShowDissolvePanel(data)
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader1").texture = NTexture(tempTexture)
 					end
 				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName1").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName1").text = tostring(v.common_prop.name)
+				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo1"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_SOUTH" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").url = UIPackage.GetItemURL("MXUI","Touxiang01")
@@ -2458,6 +2470,11 @@ function ClickEvent.ShowDissolvePanel(data)
 					if tempTexture then
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").texture = NTexture(tempTexture)
 					end
+				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName2").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName2").text = tostring(v.common_prop.name)
 				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo2"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_WEST" then
@@ -2469,6 +2486,11 @@ function ClickEvent.ShowDissolvePanel(data)
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader3").texture = NTexture(tempTexture)
 					end
 				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName3").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName3").text = tostring(v.common_prop.name)
+				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo3"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_NORTH" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").url = UIPackage.GetItemURL("MXUI","Touxiang01")
@@ -2478,6 +2500,11 @@ function ClickEvent.ShowDissolvePanel(data)
 					if tempTexture then
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").texture = NTexture(tempTexture)
 					end
+				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName4").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName4").text = tostring(v.common_prop.name)
 				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo4"):GetController("YesOrNo").selectedIndex = 2
 			end
@@ -2593,7 +2620,18 @@ function ClickEvent.HomeShareMoments( ... )--朋友圈
 	-- body
 	local rewardItem = Player.isRewardLimited(Player.activityDataTable.shared_reward_id)
 	if rewardItem and rewardItem ~= {} then
-		Player.isRewardShare = true
+		if rewardItem.activity_id and rewardItem.activity_id ~= 0 then
+			for k,v in pairs(Player.activityTable) do
+				if v.activity_id == rewardItem.activity_id then
+					if v.open == true then
+						Player.isRewardShare = true
+					end
+					break
+				end
+			end
+		else
+			Player.isRewardShare = true
+		end
 	end
 	if Player.isRewardShare == true then
 		WeChatPlatform.onShareCallBack = function(errorCode)
@@ -2856,6 +2894,11 @@ function ClickEvent.ShowDissmiss( ... )
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader1").texture = NTexture(tempTexture)
 					end
 				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName1").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName1").text = tostring(v.common_prop.name)
+				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo1"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_SOUTH" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").url = UIPackage.GetItemURL("MXUI","Touxiang01")
@@ -2865,6 +2908,11 @@ function ClickEvent.ShowDissmiss( ... )
 					if tempTexture then
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader2").texture = NTexture(tempTexture)
 					end
+				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName2").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName2").text = tostring(v.common_prop.name)
 				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo2"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_WEST" then
@@ -2876,6 +2924,11 @@ function ClickEvent.ShowDissmiss( ... )
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader3").texture = NTexture(tempTexture)
 					end
 				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName3").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName3").text = tostring(v.common_prop.name)
+				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo3"):GetController("YesOrNo").selectedIndex = 2
 			elseif v.position == "POSITION_TYPE_NORTH" then
 				_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").url = UIPackage.GetItemURL("MXUI","Touxiang01")
@@ -2885,6 +2938,11 @@ function ClickEvent.ShowDissmiss( ... )
 					if tempTexture then
 						_popPanel[popPanelIndex].panel:GetChild("PlayAvatarLoader4").texture = NTexture(tempTexture)
 					end
+				end
+				if v.wechat ~= {} and v.wechat.nickname and v.wechat.nickname ~= "" then
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName4").text = tostring(gbk.toutf8(gbk.fromutf8(v.wechat.nickname)))
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PlayerName4").text = tostring(v.common_prop.name)
 				end
 				_popPanel[popPanelIndex].panel:GetChild("YesOrNo4"):GetController("YesOrNo").selectedIndex = 2
 			end

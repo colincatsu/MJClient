@@ -55,6 +55,7 @@
      <None Include="Assets\XLua\Examples\06_Coroutine\Resources\cs_coroutine.lua.txt" />
      <None Include="Assets\StreamingAssets\MyAssets\MXText\StringTable.lua.txt" />
      <None Include="Assets\XLua\Src\Editor\LinkXmlGen\LinkXmlGen.tpl.txt" />
+     <None Include="Assets\XLua\Gen\link.xml" />
      <None Include="Assets\XLua\Examples\02_U3DScripting\LuaTestScript.lua.txt" />
      <None Include="Assets\FairyGUI\Resources\Shaders\AddOn\FairyGUI-BlurFilter.shader" />
      <None Include="Assets\Scripts\LuaScripts\Resources\OnlyLoadSence.lua.txt" />

@@ -249,6 +249,8 @@ function LoadingSence.GetHttpToken()
 			end
 		else
 			CS.UnityEngine.Debug.LogWarning('error:'..wwwToken.error)
+			yield_return(CS.UnityEngine.WaitForSeconds(5))
+			LoadingSence.GetHttpToken()
 		end
     end)
     coroutine.resume(co)
@@ -293,6 +295,8 @@ function LoadingSence.RequestServerVersion( ... )
 			end
 		else
 			CS.UnityEngine.Debug.LogWarning('error:'..www.error)
+			yield_return(CS.UnityEngine.WaitForSeconds(5))
+			LoadingSence.RequestServerVersion()
 		end
     end)
     coroutine.resume(co)

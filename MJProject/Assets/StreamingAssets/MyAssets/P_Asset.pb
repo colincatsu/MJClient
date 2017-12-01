@@ -1,5 +1,5 @@
 
-ÒX
+ÜY
 P_Asset.protoAdoter.Asset"Ä
 AssetCommonProp
 	global_id (+
@@ -103,14 +103,15 @@ voice_path ("C
 page_list_count (:5-
 	page_list (2.Adoter.Asset.ActivityPage
 room_card_beishu (:4
-shared_reward_id ("–
+shared_reward_id ("Â
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
 rewards_count (:102
 rewards (2!.Adoter.Asset.CommonReward.Reward
 common_limit_id (=
-deliver_type (2'.Adoter.Asset.CommonReward.DELIVER_TYPEä
+deliver_type (2'.Adoter.Asset.CommonReward.DELIVER_TYPE
+activity_id (ä
 Reward;
 reward_type (2&.Adoter.Asset.CommonReward.REWARD_TYPE
 comments (

@@ -128,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1130.2"
+Player.pc_version = "2.0.1.1201.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -183,6 +183,7 @@ Player.baoPaiCache = nil
 Player.rewardData = {}--奖励数据
 Player.commonLimitData = {}--限制数据
 Player.hasClickActivity = false
+Player.currentBanker = nil
 
 function Player.LoadData( ... )
     -- body
@@ -1543,18 +1544,9 @@ function Player.OnEnterRoom(type_t,stuff)
     if message.error_code == "ERROR_SUCCESS" then
         if message.room.options.pay_type == "ROOM_PAY_TYPE_AA" then
             ClickEvent.Close()
-            local costCard = 1
-            if message.room.options.open_rands == 16 then
-                costCard = 2
-            end
-            if Player._player_data.common_prop.room_card_count >= costCard then
-                Player._room_information = message.room
-                this._roomId = message.room.room_id
-                Player.LoadScene("PlaySence")
-            else
-                ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
-                _popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(2032)
-            end
+            Player._room_information = message.room
+            this._roomId = message.room.room_id
+            Player.LoadScene("PlaySence")
         else
             Player._room_information = message.room
             this._roomId = message.room.room_id
@@ -1567,6 +1559,8 @@ function Player.OnEnterRoom(type_t,stuff)
     elseif message.error_code == "ERROR_ROOM_IS_FULL" then
         ClickEvent.ShowSingleYesWindow(2008)
         Player.LogWarning("is full")
+    elseif message.error_code == "ERROR_ROOM_CARD_NOT_ENOUGH" then
+        ClickEvent.ShowSingleYesWindow(2032)
     end
     Player.LogWarning(message.error_code)
 end
@@ -1736,6 +1730,7 @@ function Player.OnRoomAll(type_t,stuff)
         end
     end
     ClickEvent.CloseOperationPanel()
+    Player.currentBanker = message.zhuang_position
     ClickEvent.BankerStateUpdate(message.zhuang_position)
     Player.MahJong.SynDoubleDices(number1,number2)
     ClickEvent.SetRemainNum(message.remain_cards_count)

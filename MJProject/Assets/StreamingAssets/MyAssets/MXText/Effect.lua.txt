@@ -43,6 +43,9 @@ Effect._effect_name = {
 	dianpaoThunder = "Effect_thunder_01_Position",
 	datingButton = "Effect_daTing_1120",
 	zhuangStar = "Effect_UI_zhuang_1119",
+	joinButton = "Effects_UI_daTing_JRFJ_liuGuang",
+	coinRoomButton = "Effects_UI_daTing_JBC_liuGuang",
+	createRoomButton = "Effects_UI_daTing_CJFJ_liuGuang",
 }
 Effect.operationShowSmokeOffset = NewVector3(0,-0.0072,0)
 Effect.currentDapaiPointOffset = NewVector3(0,0.0386,0)

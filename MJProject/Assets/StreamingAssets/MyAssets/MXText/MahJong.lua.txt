@@ -60,7 +60,7 @@ local _operation_pai_show = {}--碰牌的牌池
 local _operation_pai_show_position = {
 	east = newVector3(-0.31,0,0.297),
 	south = newVector3(-0.34,0,-0.15),
-	west = newVector3(0.36,0,-0.31),
+	west = newVector3(0.38,0,-0.3023),
 	north = newVector3(0.34,0,0.13),
 }
 local _player_pai_position = {
@@ -204,6 +204,7 @@ function MahJong.Start()
 	Player.roomall_player_brief = nil
 	Player.canShowPlayButton = true
 	Player.isBeginRound = false
+	Player.currentBanker = nil
 	currentOperationState = operationState.WAIT
 	Player.operation_calculate_data = {
 	    [0] = {operationNumber = 0,},
@@ -799,6 +800,7 @@ function MahJong.ResetGameState(resetPlayButton)
 	ClickEvent.notPushPassMsg = false
 	MahJong.ShowCountDownNumber(false)
 	Player.baoPaiCache = nil
+	Player.currentBanker = nil
 
 	Effect.DeleteEffect(Effect._effect_name.currentDapaiPoint)
 	Effect.DeleteEffect(Effect._effect_name.maybeOperationShowCircle)
@@ -4709,9 +4711,13 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		huPositionAudio = whichPlayer
 		Player.hupai_calculate_data = operationPaiShowData.pai
 		Player.isQiangGang = false
-		if _current_dapai.card_type == operationPaiShowData.pai.card_type and _current_dapai.card_value == operationPaiShowData.pai.card_value then
-			Effect.AddNormalEffect(Effect._effect_name.dianpaoThunder,nil,_current_dapai.object,Effect.maybeOperationShowCircleOffset,2)
-			Player.isZiMo = false
+		if _current_dapai and _current_dapai.card_type == operationPaiShowData.pai.card_type and _current_dapai.card_value == operationPaiShowData.pai.card_value then
+			if currentTurn and ClickEvent.PlayerPosition(currentTurn) == Player.huPaiPosition then
+				Player.isZiMo = true
+			else
+				Effect.AddNormalEffect(Effect._effect_name.dianpaoThunder,nil,_current_dapai.object,Effect.maybeOperationShowCircleOffset,2)
+				Player.isZiMo = false
+			end
 		else
 			Player.isZiMo = true
 		end
@@ -4722,8 +4728,12 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 		Player.hupai_calculate_data = operationPaiShowData.pai
 		Player.isQiangGang = true
 		Effect.AddNormalEffect(Effect._effect_name.qiangGangHu,nil,nil,tempPosition,2)
-		if _current_dapai.card_type == operationPaiShowData.pai.card_type and _current_dapai.card_value == operationPaiShowData.pai.card_value then
-			Player.isZiMo = false
+		if _current_dapai and _current_dapai.card_type == operationPaiShowData.pai.card_type and _current_dapai.card_value == operationPaiShowData.pai.card_value then
+			if currentTurn and ClickEvent.PlayerPosition(currentTurn) == Player.huPaiPosition then
+				Player.isZiMo = true
+			else
+				Player.isZiMo = false
+			end
 		else
 			Player.isZiMo = true
 		end
@@ -5188,6 +5198,9 @@ function MahJong.PlayDoubleDices(number1,number2)
     MahJong.PlayerPaiSetActive(true)
     if ClickEvent._play_ui and ClickEvent._play_ui.hintBar and _player_father.currentPaiNumber == 14 then
         ClickEvent._play_ui.hintBar.visible = true
+        if Player.currentBanker and ClickEvent.PlayerPosition(Player.currentBanker) ~= 0 then
+        	ClickEvent._play_ui.hintBar.visible = false
+        end 
     end
     MahJong.OtherPlayerPaiInit()
     _dice_red:SetActive(false)
