@@ -128,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1201.2"
+Player.pc_version = "2.0.2.1202.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -196,8 +196,10 @@ function Player.LoadData( ... )
         for k,v in pairs(data) do
             Player.activityDataTable =  v
         end
-
+        message = AssetManager.GetMessagesByType("ASSET_TYPE_COMMON_REWARD")
         Player.rewardData = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonReward")
+
+        message = AssetManager.GetMessagesByType("ASSET_TYPE_COMMON_LIMIT")
         Player.commonLimitData = AssetManager.PrintDecodeMessage(message,"Adoter.Asset.CommonLimit")
 
         message = AssetManager.GetMessagesByType("ASSET_TYPE_RECHARGE")
@@ -259,7 +261,7 @@ end
 
 function Player.isRewardLimited(rewardID)
     -- body
-    local limitID = Player.GetRewardCommonLimitID(rewardID)
+    local limitID = Player.GetRewardItemTable(rewardID)
     if not limitID or limitID == {} then
         return {}
     end
@@ -1270,6 +1272,7 @@ function Player.OnGameInformation(type_t,stuff)
 
     for k,v in pairs(Player._all_players_data) do
         if message.banker_player_id == v.common_prop.player_id then
+            Player.currentBanker = v.position
             ClickEvent.BankerStateUpdate(v.position)
             break
         end
@@ -1734,6 +1737,7 @@ function Player.OnRoomAll(type_t,stuff)
     ClickEvent.BankerStateUpdate(message.zhuang_position)
     Player.MahJong.SynDoubleDices(number1,number2)
     ClickEvent.SetRemainNum(message.remain_cards_count)
+    ClickEvent._play_ui.newerTeach.visible = false
     if message.curr_operator_position ~= "POSITION_TYPE_NULL" then
         Player.MahJong.UpdateWhoseTurn(message.curr_operator_position)
     end
@@ -1789,6 +1793,7 @@ function Player.OnPaiNotify(type_t,stuff)
     if message.data_type == "CARDS_DATA_TYPE_START" then
         Player.hasBeginned = true
         Player.roomHasBegin = true
+        ClickEvent._play_ui.newerTeach.visible = false
         --[[
         Player._invoke_table_test = message
         Player.ThreadFunction(Player.MahJong.CreatePlayerPaiTest)

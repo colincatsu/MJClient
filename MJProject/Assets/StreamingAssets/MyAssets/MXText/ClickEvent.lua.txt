@@ -304,6 +304,8 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.gameMoreControl = _currentPanel.panel:GetController("Menu")
 		ClickEvent._play_ui.gameEmojiControl = _currentPanel.panel:GetController("Emoji")
 
+		ClickEvent._play_ui.newerTeach = _currentPanel.panel:GetChild("TipsInPlayScene")
+
 		local emojiList = _currentPanel.panel:GetChild("Emoji"):GetChild("HelloEmojiList")--.onClickItem:Add(ClickEvent.registerButtonClick)
 		for i=0,emojiList.numChildren-1 do
 			local obj = emojiList:GetChildAt(i)
@@ -479,7 +481,13 @@ function ClickEvent.CreateNewPanel(panelName)
 		--Effect.AddUIGraphEffect(Effect._effect_name.datingButton,CS.UnityEngine.Vector3(375,375,375),_currentPanel.panel:GetChild("ButtonEffectGraph3"),_currentPanel.panel:GetChild("ButtonEffectGraph3").xy+_currentPanel.panel:GetChild("ButtonEffectGraph3").size/2 - CS.UnityEngine.Vector2(0,-50))
 		--Effect.AddUIEffect(Effect._effect_name.shangcheng_ui,CS.UnityEngine.Vector3(x,x,x),_currentPanel.panel:GetChild("Shop"),CS.UnityEngine.Vector2(_currentPanel.panel:GetChild("Shop").width*0.7,_currentPanel.panel:GetChild("Shop").height*0.52))
 		if _currentPanel.panel:GetChild("DouRoomButton") then
-			--Effect.AddUIEffect(Effect._effect_name.coinRoomButton,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel:GetChild("DouRoomButton"))
+			Effect.AddUIEffect(Effect._effect_name.coinRoomButton,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel:GetChild("DouRoomButton"),_currentPanel.panel:GetChild("DouRoomButton").size/2)
+		end
+		if _currentPanel.panel:GetChild("GetintoRoomButton") then
+			Effect.AddUIEffect(Effect._effect_name.joinButton,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel:GetChild("GetintoRoomButton"),_currentPanel.panel:GetChild("GetintoRoomButton").size/2)
+		end
+		if _currentPanel.panel:GetChild("CreateRoomButton") then
+			Effect.AddUIEffect(Effect._effect_name.createRoomButton,CS.UnityEngine.Vector3(100,100,100),_currentPanel.panel:GetChild("CreateRoomButton"),_currentPanel.panel:GetChild("CreateRoomButton").size/2)
 		end
 
 		if Player._player_data.room_id and Player._player_data.room_id ~= 0 then
@@ -864,7 +872,7 @@ end
 function ClickEvent.PlayerPosition(position)
 	-- body
 	Player.LogWarning(position)
-	if Player._my_player_data and Player._my_player_data.position then
+	if Player._my_player_data and Player._my_player_data.position and position ~= "POSITION_TYPE_NULL" then
 		local tempX = _position_index[position] - _position_index[Player._my_player_data.position]
 		return tempX
 	end
@@ -1732,7 +1740,7 @@ function ClickEvent.ShowCalculate( ... )
 			end
 		end
 	end
-	if ClickEvent.PlayerPosition(Player._calculate_data.dianpao_player_position) == Player.huPaiPosition then
+	if Player._calculate_data.dianpao_player_position and ClickEvent.PlayerPosition(Player._calculate_data.dianpao_player_position) and ClickEvent.PlayerPosition(Player._calculate_data.dianpao_player_position) == Player.huPaiPosition then
 		Player.isZiMo = true
 	end
 
@@ -2633,6 +2641,7 @@ function ClickEvent.HomeShareMoments( ... )--朋友圈
 			Player.isRewardShare = true
 		end
 	end
+	Player.LogWarning(Player.isRewardShare)
 	if Player.isRewardShare == true then
 		WeChatPlatform.onShareCallBack = function(errorCode)
 			-- body
@@ -2701,6 +2710,7 @@ function ClickEvent.GameMoreButtonDown( ... )
 	-- body
 	ClickEvent._play_ui.gameMoreControl.selectedIndex = 1
 	ClickEvent._play_ui.gameEmojiControl.selectedIndex = 0
+	ClickEvent._play_ui.newerTeach.visible = false
 end
 
 function ClickEvent.GreenDesk( ... )

@@ -679,9 +679,9 @@ i0jkod.xml|604|<component size="1113,723">
   <displayList>
     <image id="n0_j3uo" name="n0" src="nnbzkj" xy="0,0"/>
   </displayList>
-</component>j3uokl.xml|3210|<component size="1334,750" adaptationTest="FitSize">
+</component>j3uokl.xml|3211|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
-    <image id="n0_j3uo" name="Bg" src="w61cbq" xy="0,0">
+    <image id="n12_rbt5" name="Bg" src="w61cbq" xy="0,0">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
     <text id="n2_j3uo" name="n2" xy="132,642" size="1069,39" fontSize="20" color="#cccccc" align="center" vAlign="middle" autoSize="none" text="抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活">
@@ -1762,7 +1762,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="n14_uaih" name="n14" src="p3ipi559" xy="353,18"/>
     <image id="n15_uaih" name="n15" src="p3ipi559" xy="774,18" scale="-1,1"/>
   </displayList>
-</component>package.xml|76105|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|76311|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1836,6 +1836,7 @@ ldfsqh.xml|446|<component size="65,35">
     <component id="r701i57x" name="WeiYaoBao" path="/UIPIC/xinzeng/" size="107,144"/>
     <component id="r8my4uo" name="BaoPai" path="/" size="83,132"/>
     <component id="r8qd4ti" name="GameListenButton" path="/UIPIC/游戏页面/" size="76,74"/>
+    <component id="rbt5i5ln" name="TipsInPlayScene" path="/UIPIC/开房界面/" size="158,55"/>
     <component id="s1q8o2" name="ServerSelectButton" path="/UIPIC/xinzeng/" size="100,100"/>
     <component id="t5cirt" name="VipNoteListTotalUnit" path="/UIPIC/战绩记录/" size="633,88"/>
     <component id="t5cirv" name="ShareToWeChatFriends" path="/UIPIC/Share/" size="302,95"/>
@@ -2437,6 +2438,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="w61cdk" name="ui_Shangchengjiemian_16" path="/UIPIC/商城/" size="199,200"/>
     <image id="w61cdl" name="ui_Shangchengjiemian_17" path="/UIPIC/商城/" size="200,200"/>
     <image id="w61cdy" name="ui_Kaifang_01" path="/UIPIC/开房界面/" size="52,39"/>
+    <image id="w61ce0" name="ui_Kaifang_03" path="/UIPIC/开房界面/" size="85,55" scale="9grid" scale9grid="22,31,14,11"/>
     <image id="w61ce2" name="ui_Kaifangjiemian_01" path="/UIPIC/开设房间/" size="64,62" scale="9grid" scale9grid="16,16,32,32"/>
     <image id="w61ce3" name="ui_Kaifangjiemian_02" path="/UIPIC/开设房间/" size="31,26"/>
     <image id="w61ce9" name="ui_Kaifangjiemian_06" path="/UIPIC/开设房间/" size="41,41"/>
@@ -2896,6 +2898,13 @@ q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     </image>
   </displayList>
   <Button mode="Check"/>
+</component>rbt5i5ln.xml|348|<component size="158,55">
+  <displayList>
+    <image id="n0_rbt5" name="n0" src="w61ce0" xy="0,0" size="158,55">
+      <relation target="n1_rbt5" sidePair="width-width"/>
+    </image>
+    <text id="n1_rbt5" name="n1" xy="7,27" size="145,24" fontSize="20" color="#7d5437" align="center" vAlign="middle" text="点这里查看玩法"/>
+  </displayList>
 </component>ro1n4u3.xml|188|<component size="1334,750">
   <displayList>
     <component id="n1_ro1n" name="n0" src="g09nlv" xy="150,360"/>
@@ -4628,7 +4637,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjc.xml|14214|<component size="1334,750" adaptationTest="FitSize">
+</component>w61cjc.xml|14389|<component size="1334,750" adaptationTest="FitSize">
   <controller name="Menu" pages="0,,1," selected="0"/>
   <controller name="Emoji" pages="0,,1," selected="0"/>
   <displayList>
@@ -4780,7 +4789,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
       <relation target="" sidePair="top-top"/>
     </component>
     <group id="n25_fb5y" name="Btns" xy="0,-182" size="1481,1190" advanced="true">
-      <relation target="" sidePair="right-right,middle-middle"/>
+      <relation target="" sidePair="center-center,middle-middle"/>
     </group>
     <component id="n62_febl" name="Emoji" src="nxeh4sm" xy="736,183">
       <gearDisplay controller="Emoji" pages="1"/>
@@ -4810,6 +4819,9 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     </loader>
     <component id="n81_h44f" name="BaoPaiInRound" src="uclsi5ep" xy="624,318" pivot="0.5,0.5" size="85,109">
       <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+    <component id="n88_rbt5" name="TipsInPlayScene" src="rbt5i5ln" xy="1153,86">
+      <relation target="n83_97aa" sidePair="center-center,middle-middle"/>
     </component>
   </displayList>
   <transition name="Draw">

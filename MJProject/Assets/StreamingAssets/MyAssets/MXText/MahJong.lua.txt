@@ -4489,6 +4489,32 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 	elseif Player.huPaiPosition  == 3 then
 		tempPosition = Effect.forwardPosition
 	end
+	local hasMaxFan = false
+	for k,v in pairs(operationPaiShowData.record.list) do
+		if hasMaxFan == false then
+			for countKey,countNum in pairs(v.details) do
+				if hasMaxFan == false then
+					if countNum.fan_type == "FAN_TYPE_HAI_DI_LAO" then
+						operationPaiShowData.max_fan_type = countNum.fan_type
+						hasMaxFan = true
+					elseif countNum.fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
+						operationPaiShowData.max_fan_type = countNum.fan_type
+						hasMaxFan = true
+					elseif countNum.fan_type == "FAN_TYPE_LOU_BAO" then
+						operationPaiShowData.max_fan_type = countNum.fan_type
+						hasMaxFan = true
+					elseif countNum.fan_type == "FAN_TYPE_JIN_BAO" then
+						operationPaiShowData.max_fan_type = countNum.fan_type
+						hasMaxFan = true
+					elseif countNum.fan_type == "FAN_TYPE_MING_PIAO" then
+						operationPaiShowData.max_fan_type = countNum.fan_type
+						hasMaxFan = true
+					end
+				end
+			end
+		end
+	end
+
 	local effectWords = 1.5
 	if operationPaiShowData.calculte_type and operationPaiShowData.calculte_type == "CALCULATE_TYPE_HUPAI" and Player.isQiangGang == false then
 		if operationPaiShowData.max_fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
@@ -5198,6 +5224,7 @@ function MahJong.PlayDoubleDices(number1,number2)
     MahJong.PlayerPaiSetActive(true)
     if ClickEvent._play_ui and ClickEvent._play_ui.hintBar and _player_father.currentPaiNumber == 14 then
         ClickEvent._play_ui.hintBar.visible = true
+        Player.LogWarning("currentBanker:"..Player.currentBanker)
         if Player.currentBanker and ClickEvent.PlayerPosition(Player.currentBanker) ~= 0 then
         	ClickEvent._play_ui.hintBar.visible = false
         end 

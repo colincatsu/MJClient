@@ -1,5 +1,5 @@
 
-É¦
+Ë¦
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -56,15 +56,15 @@ headimgurl (
 create_time (*
 options (2.Adoter.Asset.RoomOptions&
 list (2.Adoter.Asset.GameRecord4
-player_brief_list (2.Adoter.Asset.PlayerBrief"ó
+player_brief_list (2.Adoter.Asset.PlayerBrief"õ
 
 CommonProp
 	player_id (
 local_server_id (
 name (
 iphoto (
-level (:1:
-gender (2.Adoter.Asset.GENDER_TYPE:GENDER_TYPE_MAN
+level (:1<
+gender (2.Adoter.Asset.GENDER_TYPE:GENDER_TYPE_WOMAN
 diamond (
 	huanledou (:10000
 room_card_count	 (:2

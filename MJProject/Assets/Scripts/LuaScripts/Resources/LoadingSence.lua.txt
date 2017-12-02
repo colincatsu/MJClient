@@ -23,7 +23,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentVersion = "4"
+local currentVersion = "15"
 
 --local currentMd5 = "9af6ad141df0f43fa4222acfa69e9dcb"--版本md5
 --local isReloadData = false
@@ -105,6 +105,7 @@ function LoadingSence.DownloadData()
 	if tableIndex > tableLength then
 		return
 	end
+    LoadingSence.SetLoadedFilesNum(tableIndex)
 	os.remove(dataPath.."hotfixVersion.txt")
 	os.remove(dataPath.."MyAssets.upk")
 	serveVersion = tostring(hotPackageTable[tableIndex].version)
@@ -130,7 +131,6 @@ function LoadingSence.DownloadData()
 		        mFile:write(serveVersion)
 		        mFile:close()
 		        localVersion = serveVersion
-		        LoadingSence.SetLoadedFilesNum(tableIndex)
 		        if tonumber(localVersion) >= hotPackageTable[tableLength].version then
 					LoadingSence.BeginGame()
 				else
