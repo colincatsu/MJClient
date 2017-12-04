@@ -1,5 +1,5 @@
 
-À¶
+ãß
 P_Protocol.protoAdoter.AssetP_Asset.proto"_
 Account
 username (
@@ -365,10 +365,12 @@ card_value ("a
 	oper_list (2.Adoter.Asset.PAI_OPER_TYPE"ç
 SyncCommonLimitC
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_LIMIT5
-common_limit (2.Adoter.Asset.PlayerCommonLimit"r
+common_limit (2.Adoter.Asset.PlayerCommonLimit"Ü
 SyncCommonRewardD
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_COMMON_REWARD
-common_reward_id ("‡
+common_reward_id (
+
+error_code ("‡
 RoomInformation@
 type_t (2.Adoter.Asset.META_TYPE:META_TYPE_S2C_ROOM_INFO/
 	sync_type (2.Adoter.Asset.ROOM_SYNC_TYPE9
@@ -529,12 +531,13 @@ inner_meta ("É
 HUANLEDOU_CHANGED_TYPE_MALL)
 %HUANLEDOU_CHANGED_TYPE_GENERAL_REWARD&
 "HUANLEDOU_CHANGED_TYPE_ROOM_TICKET
-HUANLEDOU_CHANGED_TYPE_GAME*¢
+HUANLEDOU_CHANGED_TYPE_GAME*Õ
 ROOM_CARD_CHANGED_TYPE
 ROOM_CARD_CHANGED_TYPE_GMT
 ROOM_CARD_CHANGED_TYPE_MALL$
  ROOM_CARD_CHANGED_TYPE_OPEN_ROOM!
-ROOM_CARD_CHANGED_TYPE_FANBEI*â
+ROOM_CARD_CHANGED_TYPE_FANBEI)
+%ROOM_CARD_CHANGED_TYPE_GENERAL_REWARD*â
 POSITION_TYPE
 POSITION_TYPE_NULL 
 POSITION_TYPE_EAST
