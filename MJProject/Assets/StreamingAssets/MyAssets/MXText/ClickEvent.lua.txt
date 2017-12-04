@@ -428,6 +428,7 @@ function ClickEvent.CreateNewPanel(panelName)
 
 	elseif panelName == ClickEvent.panelTable._choose_ui and Player._player_data then
 		Player.isPlayBack = false
+
 		if Player.wechat_nickname and Player.wechat_nickname ~= "" then
 			_currentPanel.panel:GetChild("Avatar"):GetChild("Name"):GetChild("PlayerName").text = tostring(gbk.toutf8(gbk.fromutf8(Player.wechat_nickname)))
 		else
@@ -782,6 +783,7 @@ end
 
 function ClickEvent.PlaySingleDice(dicePoint)
 	-- body
+	AudioPlayer.PlaySound(AudioPlayer._audio_name.Dice,false,1)
 	ClickEvent._play_ui.baoPaiShaiZi.visible = true
 	currentSingleDice = dicePoint
 	ClickEvent._play_ui.baoPaiShaiZi.onPlayEnd:Add(ClickEvent.ShowSingleDice)
@@ -814,6 +816,9 @@ function ClickEvent.PlayMoveTitle(BroadcastingContent)
 		return
 	end
 	if _currentPanel.panel.name ~= ClickEvent.panelTable._choose_ui and _currentPanel.panel.name ~= ClickEvent.panelTable._play_game_ui then
+		return
+	end
+	if not ClickEvent._play_ui.titleFather then
 		return
 	end
 	ClickEvent._play_ui.titleFather.visible = true
@@ -2599,6 +2604,25 @@ function ClickEvent.ShowLeaveRoom(contentId)
 	ClickEvent.PopPanel(ClickEvent.panelTable._window_small)
 	_popPanel[popPanelIndex].panel:GetChild("PopWindowsSmallShowText").text = StringTable.Get(contentId)
 end
+
+function ClickEvent.ShowReward(rewardItem)
+	-- body
+	ClickEvent.PopPanel(ClickEvent.panelTable._getreward_ui)
+	local rewardList = _popPanel[popPanelIndex].panel:GetChild("GetRewardList")
+	rewardList:RemoveChildrenToPool()
+	for k,v in pairs(rewardItem.rewards) do
+		if v.count > 0 then
+			local obj = rewardList:AddItemFromPool(UIPackage.GetItemURL("MXUI","GetRewardItem"))
+			if v.reward_type == "REWARD_TYPE_DIAMOND" then
+				obj:GetChild("GetRewardLoader").url = UIPackage.GetItemURL("MXUI","gongXiHuoDe_zuanShi")
+			elseif v.reward_type == "REWARD_TYPE_HUANLEDOU" then
+				obj:GetChild("GetRewardLoader").url = UIPackage.GetItemURL("MXUI","gongXiHuoDe_xiangLeBi")
+			elseif v.reward_type == "REWARD_TYPE_ITEM" then
+			end
+			obj:GetChild("GetRewardNum").text = tostring(v.count)
+		end
+	end
+end
 ---------------------------------------------------------------------------
 -------------点击功能函数
 ---------------------------------------------------------------------------
@@ -2627,6 +2651,7 @@ end
 function ClickEvent.HomeShareMoments( ... )--朋友圈
 	-- body
 	local rewardItem = Player.isRewardLimited(Player.activityDataTable.shared_reward_id)
+	Player.isRewardShare = false
 	if rewardItem and rewardItem ~= {} then
 		if rewardItem.activity_id and rewardItem.activity_id ~= 0 then
 			for k,v in pairs(Player.activityTable) do
@@ -2637,30 +2662,16 @@ function ClickEvent.HomeShareMoments( ... )--朋友圈
 					break
 				end
 			end
-		else
-			Player.isRewardShare = true
 		end
 	end
 	Player.LogWarning(Player.isRewardShare)
+
 	if Player.isRewardShare == true then
 		WeChatPlatform.onShareCallBack = function(errorCode)
 			-- body
 			if Player.isRewardShare == true then
 				if errorCode == "success" then
 					Player.CmdGetReward("GET_REWARD_REASON_SHARED",Player.activityDataTable.shared_reward_id)
-					ClickEvent.PopPanel(ClickEvent.panelTable._getreward_ui)
-					local rewardList = _popPanel[popPanelIndex].panel:GetChild("GetRewardList")
-					rewardList:RemoveChildrenToPool()
-					for k,v in pairs(rewardItem.rewards) do
-						local obj = rewardList:AddItemFromPool(UIPackage.GetItemURL("MXUI","GetRewardItem"))
-						if v.reward_type == "REWARD_TYPE_DIAMOND" then
-							obj:GetChild("GetRewardLoader").url = UIPackage.GetItemURL("MXUI","gongXiHuoDe_xiangLeBi")
-						elseif v.reward_type == "REWARD_TYPE_HUANLEDOU" then
-							obj:GetChild("GetRewardLoader").url = UIPackage.GetItemURL("MXUI","gongXiHuoDe_zuanShi")
-						elseif v.reward_type == "REWARD_TYPE_ITEM" then
-						end
-						obj:GetChild("GetRewardNum").text = tostring(v.count)
-					end
 				else
 				end
 			end
@@ -3042,7 +3053,7 @@ function ClickEvent.InviteWechatFriends(gameObject)
 		isAACreate = ""
 	end
 	local description = isAACreate.."局数:"..tostring(Player._room_information.options.open_rands)..fanxing
-	WeChatPlatform:WXShare(title,description,"http://m.cloudbm.wang/download_app.html")
+	WeChatPlatform:WXShare(title,description,"http://m.cloudbm.wang/download_app.html",1)
 	Player.CmdMatTrackCutomKVEvent("Button","InviteFriend","1")
 end
 

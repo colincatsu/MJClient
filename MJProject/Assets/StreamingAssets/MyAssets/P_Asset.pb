@@ -1,5 +1,5 @@
 
-†Y
+¡Y
 P_Asset.protoAdoter.Asset"€
 AssetCommonProp
 	global_id (+
@@ -103,7 +103,7 @@ voice_path ("C
 page_list_count (:5-
 	page_list (2.Adoter.Asset.ActivityPage
 room_card_beishu (:4
-shared_reward_id ("å
+shared_reward_id ("€
 CommonRewardB
 type_t (2.Adoter.Asset.ASSET_TYPE:ASSET_TYPE_COMMON_REWARD2
 common_prop (2.Adoter.Asset.AssetCommonProp
@@ -117,11 +117,12 @@ voice_path ("C
 comments (
 	icon_name (
 item_id (
-count ("W
+count ("r
 REWARD_TYPE
 REWARD_TYPE_DIAMOND
-REWARD_TYPE_HUANLEDOU
-REWARD_TYPE_ITEM";
+REWARD_TYPE_HUANLEDOU
+REWARD_TYPE_ROOM_CARD
+REWARD_TYPE_ITEM";
 DELIVER_TYPE
 DELIVER_TYPE_AUTO
 DELIVER_TYPE_GET"ª

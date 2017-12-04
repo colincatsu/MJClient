@@ -128,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.2.1202.2"
+Player.pc_version = "2.0.1.1204.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -169,7 +169,7 @@ Player.saiziNumber1 = 0
 Player.saiziNumber2 = 0
 
 Player.playCountDownTime = 0
-Player.playCountDownTimeMax = 8
+Player.playCountDownTimeMax = 10
 
 Player.paiSizeSet = 0
 Player.tablecloth = 0
@@ -267,7 +267,7 @@ function Player.isRewardLimited(rewardID)
     end
     for k,v in pairs(Player.commonLimitData) do
         if limitID.common_limit_id == v.common_prop.global_id then
-            if Player.GetMyLimitCount(limitID.common_limit_id) and v.max_count > Player.GetMyLimitCount(limitID.common_limit_id) then
+            if (Player.GetMyLimitCount(limitID.common_limit_id) and v.max_count > Player.GetMyLimitCount(limitID.common_limit_id)) or not Player.GetMyLimitCount(limitID.common_limit_id) then
                 return limitID
             end
         end
@@ -456,7 +456,11 @@ function Player.SetPlayCountDown( ... )
 
     local tempTime = Player.playCountDownTimeMax - (CS.UnityEngine.Time.realtimeSinceStartup - Player.playCountDownTime)
     if tempTime > 0 then
-        Player.MahJong.SetCountDownNumber(0,math.ceil(tempTime))
+        if tempTime > 9 then
+            Player.MahJong.SetCountDownNumber(1,0)
+        else
+            Player.MahJong.SetCountDownNumber(0,math.ceil(tempTime))
+        end
     else
         Player.MahJong.SetCountDownNumber(0,0)
     end
@@ -476,6 +480,18 @@ function Player.LoadScene(senceName, buffer)
         end
     end
     Player._tosence_name = senceName
+    if senceName == "FairyMainUI" then
+        Player._all_players_data = nil
+        Player.operationQueue = nil
+        Player._calculate_data = nil
+        Player._all_calculate_data = nil
+        Player._room_calculate_data = nil
+        Player.roomall_player_brief = nil
+        Player.pai_push_down = nil
+        Player.pai_liu_ju = nil
+        Player.hupai_calculate_data = nil
+        Player.allPaisShow = nil
+    end
     if senceName == "PlaySence" and Player.isPlayBack == false then
         Player.CmdLoadScene("LOAD_SCENE_TYPE_START",this._roomId)
     end
@@ -1306,7 +1322,7 @@ function Player.OnRoomCalculate(type_t,stuff)
             Player.history_data[Player.current_history_index].options = Player._room_information.options
             Player.history_data[Player.current_history_index].list = Player._all_calculate_data
             Player.history_data[Player.current_history_index].player_brief_list = {}
-            if Player.roomall_player_brief then
+            if Player.roomall_player_brief and next(Player.roomall_player_brief) ~= nil then
                 Player.history_data[Player.current_history_index].player_brief_list = Player.roomall_player_brief
             else
                 local playerCount = 0
@@ -1357,6 +1373,11 @@ function Player.OnSyncCommonReward(type_t,stuff)
         return
     end
     local message = protobuf.decode("Adoter.Asset.SyncCommonReward",stuff)
+    if message.error_code == 0 and message.common_reward_id then
+        ClickEvent.ShowReward(Player.GetRewardItemTable(message.common_reward_id))
+    else
+        
+    end
 end
 
 function Player.OnRoomInformation(type_t,stuff)
@@ -1545,16 +1566,10 @@ function Player.OnEnterRoom(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.EnterRoom",stuff)
     if message.error_code == "ERROR_SUCCESS" then
-        if message.room.options.pay_type == "ROOM_PAY_TYPE_AA" then
-            ClickEvent.Close()
-            Player._room_information = message.room
-            this._roomId = message.room.room_id
-            Player.LoadScene("PlaySence")
-        else
-            Player._room_information = message.room
-            this._roomId = message.room.room_id
-            Player.LoadScene("PlaySence")
-        end
+        ClickEvent.Close()
+        Player._room_information = message.room
+        this._roomId = message.room.room_id
+        Player.LoadScene("PlaySence")
     elseif message.error_code == "ERROR_ROOM_NOT_FOUNT" then
         Player._player_data.room_id = 0
         --ClickEvent.ShowSingleYesWindow(2010)
@@ -1563,7 +1578,11 @@ function Player.OnEnterRoom(type_t,stuff)
         ClickEvent.ShowSingleYesWindow(2008)
         Player.LogWarning("is full")
     elseif message.error_code == "ERROR_ROOM_CARD_NOT_ENOUGH" then
-        ClickEvent.ShowSingleYesWindow(2032)
+        if message.room.options.pay_type == "ROOM_PAY_TYPE_AA" then
+            ClickEvent.ShowSingleYesWindow(2082)
+        else
+            ClickEvent.ShowSingleYesWindow(2032)
+        end
     end
     Player.LogWarning(message.error_code)
 end
@@ -2100,6 +2119,8 @@ function Player.OnAlertMessage(type_t,stuff)
         Player.CmdMatTrackCutomKVEvent("NotFoundRoom","NotFoundRoom","1")
     elseif message.error_code == 34 then
         Player.CmdMatTrackCutomKVEvent("Replay","ReplayFail","1")
+    elseif message.error_code == 51 then
+        return
     end
     if message.error_show_type == "ERROR_SHOW_TYPE_NORMAL" then
         ClickEvent.ShowToast(StringTable.Get(message.error_code))

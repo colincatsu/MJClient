@@ -65,6 +65,7 @@ function start()
 		local hotfixVersion = io.open(dataPath.."hotfixVersion.txt")
 		if not hotfixVersion then
 			--localVersion，数据里没有version
+			os.remove(dataPath.."MyAssets.upk")
 			local mFile = io.open(dataPath.."hotfixVersion.txt" ,"w")
 	        mFile:write(currentVersion)
 	        mFile:close()

@@ -1707,7 +1707,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="n4_rg70" name="n4" src="rg704us" xy="53,21"/>
   </displayList>
   <Button downEffect="scale" downEffectValue="0.80"/>
-</component>p3ipi55j.xml|2332|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>p3ipi55j.xml|2342|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <displayList>
     <component id="n1_p3ip" name="n1" src="i0jkoe" xy="229,115" group="n19_qsh5"/>
     <image id="n16_h0iu" name="n16" src="h0iui565" xy="395,288" size="252,261" group="n19_qsh5"/>
@@ -1724,7 +1724,7 @@ ldfsqh.xml|446|<component size="65,35">
     <component id="n14_p3ip" name="Close" src="w61cj0" xy="1016,130" group="n15_p3ip"/>
     <group id="n15_p3ip" name="Btns" xy="746,130" size="332,419" group="n19_qsh5" advanced="true"/>
     <image id="n17_uaih" name="n17" src="r8qd4sw" xy="598,127" group="n19_qsh5"/>
-    <text id="n18_97aa" name="n18" xy="435,574" size="465,27" group="n19_qsh5" fontSize="22" color="#532a0d" text="成功分享到朋友圈领取2张房卡(每天仅限一次)"/>
+    <text id="n18_97aa" name="ShareTipsText" xy="435,574" size="456,26" group="n19_qsh5" fontSize="22" color="#532a0d" text="成功分享到朋友圈领取2张房卡(每天仅限一次)"/>
     <group id="n19_qsh5" name="HomeShare" xy="229,115" size="876,519" advanced="true">
       <relation target="" sidePair="center-center,middle-middle"/>
     </group>
@@ -1762,7 +1762,7 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="n14_uaih" name="n14" src="p3ipi559" xy="353,18"/>
     <image id="n15_uaih" name="n15" src="p3ipi559" xy="774,18" scale="-1,1"/>
   </displayList>
-</component>package.xml|76311|<packageDescription id="krtoytc1" name="MXUI">
+</component>package.xml|76309|<packageDescription id="krtoytc1" name="MXUI">
   <resources>
     <component id="10p14s0" name="InformNoHorn" path="/UIPIC/功能界面/" size="1068,69"/>
     <component id="10p14s4" name="CopyRoomNum" path="/UIPIC/游戏页面/" size="301,99"/>
@@ -1949,12 +1949,12 @@ ldfsqh.xml|446|<component size="65,35">
     <image id="h0iui55y" name="zongJieSuanFenXiang_erWeiMa" path="/UIPIC/Share/" size="27,28" scale="9grid" scale9grid="9,10,10,9"/>
     <image id="h0iui55z" name="zongJieSuan_diTiao01" path="/UIPIC/Share/" size="90,90" scale="9grid" scale9grid="32,23,27,46"/>
     <image id="h0iui560" name="zongJieSuan_diTiao02" path="/UIPIC/Share/" size="90,90" scale="9grid" scale9grid="36,23,19,35"/>
-    <image id="h0iui563" name="zongJieSuanFenXiang_diTuYou" path="/UIPIC/Share/" size="358,522"/>
-    <image id="h0iui564" name="zongJieSuanFenXiang_diTuZuo" path="/UIPIC/Share/" size="357,522"/>
+    <image id="h0iui563" name="zongJieSuanFenXiang_diTuYou" path="/UIPIC/Share/" size="329,479"/>
+    <image id="h0iui564" name="zongJieSuanFenXiang_diTuZuo" path="/UIPIC/Share/" size="342,460"/>
     <image id="h0iui565" name="fenXiang_erWeiMaDiKuang" path="/UIPIC/HomeShare/" size="54,56" scale="9grid" scale9grid="21,17,12,14"/>
     <image id="h0iui566" name="yuHaoYouYiQiDaMaJiangBa" path="/UIPIC/Share/" size="198,73"/>
-    <image id="h0iui567" name="zongJieSuanFenXiang_diTuShang" path="/UIPIC/Share/" size="1333,114"/>
-    <image id="h0iui568" name="zongJieSuanFenXiang_diTuXia" path="/UIPIC/Share/" size="1333,110"/>
+    <image id="h0iui567" name="zongJieSuanFenXiang_diTuShang" path="/UIPIC/Share/" size="885,127"/>
+    <image id="h0iui568" name="zongJieSuanFenXiang_diTuXia" path="/UIPIC/Share/" size="177,127"/>
     <image id="h44fi5ex" name="BQZ_01" path="/UIPIC/俏皮话/表情字/" size="27,28"/>
     <image id="h44fi5ey" name="BQZ_02" path="/UIPIC/俏皮话/表情字/" size="27,28"/>
     <image id="h44fi5ez" name="BQZ_03" path="/UIPIC/俏皮话/表情字/" size="27,28"/>
@@ -2903,7 +2903,7 @@ q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <image id="n0_rbt5" name="n0" src="w61ce0" xy="0,0" size="158,55">
       <relation target="n1_rbt5" sidePair="width-width"/>
     </image>
-    <text id="n1_rbt5" name="n1" xy="7,27" size="145,24" fontSize="20" color="#7d5437" align="center" vAlign="middle" text="点这里查看玩法"/>
+    <text id="n1_rbt5" name="n1" xy="7,27" size="145,24" fontSize="20" color="#70482d" align="center" vAlign="middle" text="点这里查看玩法"/>
   </displayList>
 </component>ro1n4u3.xml|188|<component size="1334,750">
   <displayList>
@@ -3036,15 +3036,15 @@ q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <loader id="n1_kew4" name="ImgLoader" xy="0,0" size="894,439" fill="scaleMatchWidth"/>
   </displayList>
   <Button/>
-</component>t5cirr.xml|3575|<component size="1334,750" adaptationTest="FitSize">
+</component>t5cirr.xml|3580|<component size="1334,750" adaptationTest="FitSize">
   <displayList>
     <image id="n0_t5ci" name="n0" src="w61cbq" xy="0,0" group="n17_fuyq">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
-    <image id="n30_h0iu" name="n30" src="h0iui563" xy="975,115" group="n17_fuyq"/>
-    <image id="n36_h0iu" name="n36" src="h0iui567" xy="0,0" group="n17_fuyq"/>
+    <image id="n30_h0iu" name="n30" src="h0iui563" xy="1006,117" group="n17_fuyq"/>
+    <image id="n36_h0iu" name="n36" src="h0iui567" xy="164,2" group="n17_fuyq"/>
     <image id="n31_h0iu" name="n31" src="h0iui564" xy="0,114" group="n17_fuyq"/>
-    <image id="n35_h0iu" name="n35" src="h0iui568" xy="0,636" group="n17_fuyq"/>
+    <image id="n35_h0iu" name="n35" src="h0iui568" xy="622,623" group="n17_fuyq"/>
     <image id="n20_h0iu" name="n20" src="h0iui55x" xy="233,103" group="n17_fuyq"/>
     <image id="n22_h0iu" name="n22" src="h0iui55x" xy="1106,104" group="n17_fuyq" scale="-1,1"/>
     <list id="n2_t5ci" name="HistoryShareList" xy="358,185" size="632,353" group="n17_fuyq" overflow="scroll" lineGap="-4" defaultItem="ui://krtoytc1t5cirs">
@@ -3080,7 +3080,7 @@ q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
     <text id="n38_lerb" name="RoomDate" xy="361,540" size="107,23" group="n17_fuyq" fontSize="19" color="#ffc773" vAlign="middle" autoSize="height" text="2017/11/11"/>
     <text id="n39_lerb" name="RoomTime" xy="477,540" size="63,23" group="n17_fuyq" fontSize="19" color="#ffc773" vAlign="middle" autoSize="height" text="24:00"/>
     <image id="n41_lerb" name="n41" src="lyzmi54h" xy="1025,11" group="n17_fuyq"/>
-    <group id="n17_fuyq" name="Share" xy="0,0" size="1334,750" advanced="true"/>
+    <group id="n17_fuyq" name="Share" xy="0,0" size="1335,750" advanced="true"/>
   </displayList>
 </component>t5cirs.xml|512|<component size="636,93">
   <controller name="LoseOrWin" pages="0,,1," selected="0"/>
@@ -3358,11 +3358,11 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <loader id="n5_urom" name="ChiPaiLoader02" xy="67,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
     <loader id="n6_urom" name="ChiPaiLoader03" xy="121,10" size="38,49" scale="1.4,1.4" align="center" vAlign="middle" fill="scale"/>
   </displayList>
-</component>w61cae.xml|499|<component size="191,157">
+</component>w61cae.xml|549|<component size="191,157" adaptationTest="FitSize">
   <displayList>
     <loader id="n4_urom" name="GetRewardLoader" xy="50,23" size="89,76" url="ui://krtoytc1w61cdm" align="center" vAlign="middle"/>
-    <text id="n5_urom" name="Tmultiply" xy="50,160" size="24,27" fontSize="20" color="#5c2c16" align="right" vAlign="middle" autoSize="none" text="*"/>
-    <text id="n6_urom" name="GetRewardNum" xy="84,160" size="86,27" fontSize="20" color="#5c2c16" vAlign="middle" autoSize="none" text="9999"/>
+    <text id="n5_urom" name="Tmultiply" xy="51,160" size="24,35" fontSize="30" color="#ffffff" align="right" vAlign="middle" autoSize="none" strokeColor="#000000" text="*"/>
+    <text id="n6_urom" name="GetRewardNum" xy="97,160" size="21,35" fontSize="30" color="#ffffff" vAlign="middle" strokeColor="#000000" text="2"/>
   </displayList>
 </component>w61cai.xml|453|<component size="119,50" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
@@ -3473,7 +3473,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <image id="n5_npla" name="n5" src="w61cb8" xy="26,12" size="181,53"/>
     <image id="n4_npla" name="n4" src="w61cba" xy="13,0" size="48,73"/>
     <image id="n6_npla" name="n6" src="w61cb9" xy="162,18"/>
-    <text id="n7_k35j" name="RoomCardNum" xy="57,20" size="105,32" font="ui://krtoytc1l2po4xd" fontSize="28" color="#ffffff" align="right" vAlign="middle" autoSize="height" text="222"/>
+    <text id="n7_k35j" name="RoomCardNum" xy="52,20" size="112,32" font="ui://krtoytc1l2po4xd" fontSize="28" color="#ffffff" align="right" vAlign="middle" autoSize="height" text="222"/>
   </displayList>
   <Button/>
 </component>w61cbx.xml|580|<component size="216,66" extention="Button">

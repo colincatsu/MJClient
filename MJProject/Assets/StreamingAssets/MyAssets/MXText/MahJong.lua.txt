@@ -372,11 +372,11 @@ function MahJong.SetCountDownNumber(leftNumber,rightNumber)
 	end
 	if _current_right_number ~= rightNumber then
 		_current_right_number = rightNumber
-		if rightNumber == 3 and Player.hasBeginned == true then
+		if rightNumber == 2 and Player.hasBeginned == true then
 			AudioPlayer.PlaySound(AudioPlayer._audio_name.NoTime,false,1)
 		end
 		if _count_down_right and MahJong.self:IsNull(_count_down_right) == false then
-			if _current_right_number == 0 then
+			if _current_right_number == 0 and _current_left_number == 0 then
 				MahJong.PlayCountDownTwinkle(true)
 			else
 				MahJong.PlayCountDownTwinkle(false)
@@ -4494,19 +4494,20 @@ function MahJong.OnRoundEndShowEffect(operationPaiShowData)
 		if hasMaxFan == false then
 			for countKey,countNum in pairs(v.details) do
 				if hasMaxFan == false then
-					if countNum.fan_type == "FAN_TYPE_HAI_DI_LAO" then
+					if countNum.fan_type == "FAN_TYPE_HAI_DI_LAO" or countNum.fan_type == "FAN_TYPE_GANG_SHANG_KAI" or countNum.fan_type == "FAN_TYPE_LOU_BAO"
+					or countNum.fan_type == "FAN_TYPE_JIN_BAO" or countNum.fan_type == "FAN_TYPE_MING_PIAO" then
 						operationPaiShowData.max_fan_type = countNum.fan_type
 						hasMaxFan = true
-					elseif countNum.fan_type == "FAN_TYPE_GANG_SHANG_KAI" then
-						operationPaiShowData.max_fan_type = countNum.fan_type
-						hasMaxFan = true
-					elseif countNum.fan_type == "FAN_TYPE_LOU_BAO" then
-						operationPaiShowData.max_fan_type = countNum.fan_type
-						hasMaxFan = true
-					elseif countNum.fan_type == "FAN_TYPE_JIN_BAO" then
-						operationPaiShowData.max_fan_type = countNum.fan_type
-						hasMaxFan = true
-					elseif countNum.fan_type == "FAN_TYPE_MING_PIAO" then
+					end
+				end
+			end
+		end
+	end
+	for k,v in pairs(operationPaiShowData.record.list) do
+		if hasMaxFan == false then
+			for countKey,countNum in pairs(v.details) do
+				if hasMaxFan == false then
+					if countNum.fan_type == "FAN_TYPE_QING_YI_SE" or countNum.fan_type == "FAN_TYPE_ZI_MO" or countNum.fan_type == "FAN_TYPE_PIAO_HU" then
 						operationPaiShowData.max_fan_type = countNum.fan_type
 						hasMaxFan = true
 					end
