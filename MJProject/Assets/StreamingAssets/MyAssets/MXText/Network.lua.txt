@@ -157,7 +157,6 @@ function Network.OnConnect()
             Player.LogWarning("JXYreConnect")
             Player.CmdReConnect()
             if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
-                Player.MahJong.ResetGameState(true)
                 Player.CmdGetRoomData(Player._roomId)
             end
         end

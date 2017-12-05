@@ -128,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1204.2"
+Player.pc_version = "2.0.2.1204.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -1159,6 +1159,8 @@ function Player.OnGameSetting(type_t,stuff)
     Player._player_data.game_setting.music = message.game_setting.music
     Player._player_data.game_setting.voice = message.game_setting.voice
     Player._player_data.game_setting.audio = message.game_setting.audio
+    Player._player_data.game_setting.card_color_type = message.game_setting.card_color_type
+    Player._player_data.game_setting.zhuobu_type = message.game_setting.zhuobu_type
     Player._player_data.game_setting.click_push = message.game_setting.click_push
     if message.game_setting.zhuobu_type == "ZHUOBU_TYPE_BLUE" then
         Player.tablecloth = 1
@@ -1474,55 +1476,57 @@ function Player.OnPlayerInformation(type_t,stuff)
     --]]
     Player._player_data = message.player
     Player.GetGpsInformation()
-    local mMusic = true
-    local mVoice = true
-    local mAudio = true
-    if Player._player_data and Player._player_data.game_setting ~= {} then
-        Player.LogWarning("jxyjxyjxy")
-        Player.LogWarning(Player._player_data.game_setting.music)
-        Player.LogWarning(Player._player_data.game_setting.voice)
-        Player.LogWarning(Player._player_data.game_setting.audio)
-        mMusic = Player._player_data.game_setting.music
-        mVoice = Player._player_data.game_setting.voice
-        mAudio = Player._player_data.game_setting.audio
-        if Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_BLUE" then
-            Player.tablecloth = 1
-        elseif Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_RED" then
-            Player.tablecloth = 2
-        else
-            Player.tablecloth = 0
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FairyMainUI" then
+        local mMusic = true
+        local mVoice = true
+        local mAudio = true
+        if Player._player_data and Player._player_data.game_setting ~= {} then
+            Player.LogWarning("jxyjxyjxy")
+            Player.LogWarning(Player._player_data.game_setting.music)
+            Player.LogWarning(Player._player_data.game_setting.voice)
+            Player.LogWarning(Player._player_data.game_setting.audio)
+            mMusic = Player._player_data.game_setting.music
+            mVoice = Player._player_data.game_setting.voice
+            mAudio = Player._player_data.game_setting.audio
+            if Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_BLUE" then
+                Player.tablecloth = 1
+            elseif Player._player_data.game_setting.zhuobu_type == "ZHUOBU_TYPE_RED" then
+                Player.tablecloth = 2
+            else
+                Player.tablecloth = 0
+            end
+            if Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_BLUE" then
+                Player.paiSizeSet = 1
+            elseif Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_GOLDEN" then
+                Player.paiSizeSet = 2
+            else
+                Player.paiSizeSet = 0
+            end
         end
-        if Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_BLUE" then
-            Player.paiSizeSet = 1
-        elseif Player._player_data.game_setting.card_color_type == "CARD_COLOR_TYPE_GOLDEN" then
-            Player.paiSizeSet = 2
+        Player._player_data.game_setting.music = mMusic
+        Player._player_data.game_setting.voice = mVoice
+        Player._player_data.game_setting.audio = mAudio
+        if Player.tablecloth == 1 then
+            Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_BLUE"
+        elseif Player.tablecloth == 2 then
+            Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_RED"
         else
-            Player.paiSizeSet = 0
+            Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_GREEN"
         end
-    end
-    Player._player_data.game_setting.music = mMusic
-    Player._player_data.game_setting.voice = mVoice
-    Player._player_data.game_setting.audio = mAudio
-    if Player.tablecloth == 1 then
-        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_BLUE"
-    elseif Player.tablecloth == 2 then
-        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_RED"
-    else
-        Player._player_data.game_setting.zhuobu_type = "ZHUOBU_TYPE_GREEN"
-    end
-    if Player.paiSizeSet == 1 then
-        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_BLUE"
-    elseif Player.paiSizeSet == 2 then
-        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GOLDEN"
-    else
-        Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GREEN"
-    end
+        if Player.paiSizeSet == 1 then
+            Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_BLUE"
+        elseif Player.paiSizeSet == 2 then
+            Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GOLDEN"
+        else
+            Player._player_data.game_setting.zhuobu_type = "CARD_COLOR_TYPE_GREEN"
+        end
 
-    Player.history_count = 0
-    for k,v in pairs(Player._player_data.room_history) do
-        Player.history_count = Player.history_count + 1
+        Player.history_count = 0
+        for k,v in pairs(Player._player_data.room_history) do
+            Player.history_count = Player.history_count + 1
+        end
+        Player.LogWarning("historyCount:"..Player.history_count)
     end
-    Player.LogWarning("historyCount:"..Player.history_count)
     --[[
     if not Player._player_data.game_setting.music or Player._player_data.game_setting == {} then
     end
@@ -1700,6 +1704,8 @@ function Player.OnRoomAll(type_t,stuff)
     if not stuff then
         return
     end
+    Player.MahJong.ResetGameState(true)
+
     local message = protobuf.decode("Adoter.Asset.RoomAll",stuff)
     local playerPos = -1
     if message.curr_operator_position ~= "POSITION_TYPE_NULL" then

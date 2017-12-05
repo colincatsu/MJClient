@@ -1846,7 +1846,7 @@ ldfsqh.xml|446|<component size="65,35">
     <component id="uclsi5ev" name="UserService" path="/UIPIC/开设房间/" size="225,27"/>
     <component id="uejtqm" name="NoticeButton" path="/UIPIC/游戏公告/" size="265,107"/>
     <component id="uejtqn" name="UnlimitedRoomCardButton" path="/UIPIC/游戏公告/" size="265,107"/>
-    <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="124,54"/>
+    <component id="uejtqt" name="GameDissolveButton" path="/UIPIC/游戏页面/" size="124,74"/>
     <component id="uejtqx" name="HowToPlayText" path="/UIPIC/xinzeng/" size="841,462"/>
     <component id="w61ca9" name="VIPRecordButton" path="/UIPIC/xinzeng/" size="119,82"/>
     <component id="w61cai" name="ServiceTerm1" path="/UIPIC/个人信息/" size="119,50"/>
@@ -1910,10 +1910,10 @@ ldfsqh.xml|446|<component size="65,35">
     <component id="w61cg5" name="Getin" path="/UIPIC/游戏页面/" size="262,91"/>
     <component id="w61cg6" name="PlayButton" path="/UIPIC/游戏页面/" size="262,91"/>
     <component id="w61cg7" name="GamePlayerAvatarInfo" path="/UIPIC/游戏页面/" size="81,105"/>
-    <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="124,54"/>
+    <component id="w61cg8" name="GameBackButton" path="/UIPIC/游戏页面/" size="124,74"/>
     <component id="w61cg9" name="Wlan" path="/UIPIC/游戏页面/" size="117,44"/>
-    <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="125,54"/>
-    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="123,54"/>
+    <component id="w61cgb" name="GameSettingButton" path="/UIPIC/游戏页面/" size="125,74"/>
+    <component id="w61cgc" name="GameBillButton" path="/UIPIC/游戏页面/" size="123,74"/>
     <component id="w61cgd" name="GameEmojiButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cge" name="GameVoiceButton" path="/UIPIC/游戏页面/" size="76,74"/>
     <component id="w61cgf" name="GameHintBar" path="/UIPIC/游戏页面/" size="367,63"/>
@@ -2672,7 +2672,7 @@ char id=54 img=q7opi58e xoffset=0 yoffset=0 xadvance=0
 char id=55 img=q7opi58f xoffset=0 yoffset=0 xadvance=0
 char id=56 img=q7opi58g xoffset=0 yoffset=0 xadvance=0
 char id=57 img=q7opi58h xoffset=0 yoffset=0 xadvance=0
-q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+q7opi58j.xml|4323|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n17_i0jk" name="Bg" src="i0jkod" xy="110,13" group="n16_s5h9"/>
@@ -2706,18 +2706,26 @@ q7opi58j.xml|3770|<component size="1334,750" pivot="0.5,0.5" adaptationTest="Fit
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n28_uejt" name="MultipleText" xy="771,115" size="122,28" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="不封顶">
+    <text id="n28_uejt" name="MultipleText" xy="735,116" size="122,28" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="不封顶">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <image id="n32_r8qd" name="n32" src="r8qd4td" xy="570,25">
       <relation target="" sidePair="center-center,middle-middle"/>
     </image>
-    <text id="n37_ipmc" name="n37" xy="649,116" size="125,28" fontSize="24" color="#5c2c16" text="封顶倍数：">
+    <text id="n37_ipmc" name="n37" xy="619,116" size="125,28" fontSize="24" color="#5c2c16" text="封顶倍数：">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n39_oagc" name="NoHistory" xy="552,359" size="229,32" fontSize="28" color="#532a0d" text="当前没有历史战绩"/>
+    <text id="n40_hapk" name="PayTypeText" xy="971,116" size="122,28" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="房主付卡">
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
+      <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n41_hapk" name="n41" xy="856,116" size="125,28" fontSize="24" color="#5c2c16" text="支付方式：">
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
+      <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
+    </text>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
@@ -3214,10 +3222,10 @@ uclsi5ep.xml|265|<component size="85,109">
     <image id="n16_r701" name="n16" src="r701i582" xy="597,231"/>
     <text id="n17_huzt" name="n17" xy="301,255" size="34,25" fontSize="20" color="#663300" autoSize="height" text="或"/>
   </displayList>
-</component>uejtqt.xml|358|<component size="124,54" extention="Button">
+</component>uejtqt.xml|359|<component size="124,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="uejtqp" xy="0,0">
+    <image id="n1" name="n1" src="uejtqp" xy="0,10">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -4049,10 +4057,10 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="0" type="Alpha" target="n13_y6eo" tween="true" startValue="1" endValue="0.3" duration="12"/>
     <item time="12" type="Alpha" target="n13_y6eo" tween="true" startValue="0.3" endValue="1" duration="12"/>
   </transition>
-</component>w61cg8.xml|358|<component size="124,54" extention="Button">
+</component>w61cg8.xml|359|<component size="124,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfr" xy="0,0">
+    <image id="n1" name="n1" src="w61cfr" xy="0,10">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -4071,18 +4079,18 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     </image>
     <text id="n3_algd" name="Time" xy="45,10" size="73,29" fontSize="20" color="#ffffff" autoSize="none" text="24:00"/>
   </displayList>
-</component>w61cgb.xml|358|<component size="125,54" extention="Button">
+</component>w61cgb.xml|359|<component size="125,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfu" xy="0,0">
+    <image id="n1" name="n1" src="w61cfu" xy="0,10">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
   <Button downEffect="dark" downEffectValue="0.80"/>
-</component>w61cgc.xml|359|<component size="123,54" extention="Button">
+</component>w61cgc.xml|360|<component size="123,74" extention="Button">
   <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <image id="n1" name="n1" src="w61cfv" xy="-1,0">
+    <image id="n1" name="n1" src="w61cfv" xy="-1,10">
       <relation target="" sidePair="width-width,height-height"/>
     </image>
   </displayList>
@@ -4528,7 +4536,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="0" type="Alpha" tween="true" startValue="1" endValue="0" duration="5"/>
     <item time="0" type="Scale" tween="true" startValue="1,1" endValue="0.3,0.3" duration="5"/>
   </transition>
-</component>w61cjb.xml|8719|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjb.xml|8720|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="ChooseMode" pages="0,,1," selected="0"/>
   <controller name="ChooseRound" pages="0,,1," selected="0"/>
   <controller name="c1" pages="0,,1," selected="0"/>
@@ -4561,7 +4569,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <text id="n42_nw08" name="Troomcardnum" xy="802,620" size="133,28" group="n53_kz0f" fontSize="24" color="#5c2c16" align="right" vAlign="middle" autoSize="height" text="拥有房卡:">
       <relation target="n2_k35j" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n43_nw08" name="RoomCardNum" xy="939,620" size="85,29" group="n53_kz0f" fontSize="25" color="#5c2c16" ubb="true" autoSize="height" text="999">
+    <text id="n43_nw08" name="RoomCardNum" xy="939,620" size="191,29" group="n53_kz0f" fontSize="25" color="#5c2c16" ubb="true" autoSize="height" text="999">
       <relation target="n42_nw08" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n60_uy7e" name="Tmodechoose" xy="185,122" size="184,52" group="n53_kz0f" fontSize="32" color="#5c2c16" align="center" vAlign="middle" leading="0" autoSize="none" text="开设局数:"/>
@@ -5342,7 +5350,7 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
     <item time="6" type="XY" target="n63_lyzm" tween="true" startValue="1014,624" endValue="1014,667" duration="3"/>
     <item time="6" type="XY" target="n65_lyzm" tween="true" startValue="1133,624" endValue="1133,634" duration="3"/>
   </transition>
-</component>w61cjm.xml|3807|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
+</component>w61cjm.xml|4360|<component size="1334,750" pivot="0.5,0.5" adaptationTest="FitSize">
   <controller name="HistorySecenSelect" pages="0,,1,,2," selected="0"/>
   <displayList>
     <component id="n17_i0jk" name="Bg" src="i0jkod" xy="110,13" group="n16_s5h9"/>
@@ -5376,18 +5384,26 @@ w61ca6.xml|359|<component size="155,155" extention="Button">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
-    <text id="n28_uejt" name="MultipleText" xy="777,115" size="122,28" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="不封顶">
+    <text id="n28_uejt" name="MultipleText" xy="738,116" size="122,28" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="不封顶">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <image id="n32_r8qd" name="n32" src="r8qd4td" xy="570,25">
       <relation target="n16_s5h9" sidePair="left-left,top-top"/>
     </image>
-    <text id="n37_ipmc" name="n37" xy="655,116" size="125,28" fontSize="24" color="#5c2c16" text="封顶倍数：">
+    <text id="n37_ipmc" name="n37" xy="623,116" size="125,28" fontSize="24" color="#5c2c16" text="封顶倍数：">
       <gearDisplay controller="HistorySecenSelect" pages="0"/>
       <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
     </text>
     <text id="n39_oagc" name="NoHistory" xy="552,359" size="229,32" fontSize="28" color="#532a0d" text="当前没有历史战绩"/>
+    <text id="n40_hapk" name="PayTypeText" xy="976,116" size="122,29" fontSize="24" color="#5c2c16" vAlign="middle" autoSize="height" text="房主付卡">
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
+      <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
+    </text>
+    <text id="n41_hapk" name="n41" xy="861,116" size="125,29" fontSize="24" color="#5c2c16" text="支付方式：">
+      <gearDisplay controller="HistorySecenSelect" pages="0"/>
+      <relation target="n16_s5h9" sidePair="center-center,middle-middle"/>
+    </text>
   </displayList>
   <transition name="Popup" autoPlay="true">
     <item time="0" type="Scale" tween="true" startValue="0,0" endValue="1.1,1.1" duration="5"/>
