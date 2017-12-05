@@ -3176,6 +3176,13 @@ function ClickEvent.VipNoteList(gameObject)
 			if _popPanel[popPanelIndex].panel:GetChild("RoomIDText") then
 				_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = gameObject.gameObjectName
 			end
+			if _popPanel[popPanelIndex].panel:GetChild("PayTypeText") then
+				if v.options.pay_type == "ROOM_PAY_TYPE_HOSTER" then
+					_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "房主付卡"
+				else
+					_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "AA付卡"
+				end
+			end
 			if v.options.top_mutiple == 0 then
 				_popPanel[popPanelIndex].panel:GetChild("MultipleText").text = "不封顶"
 			else
@@ -5029,6 +5036,13 @@ function ClickEvent.GameBillButton(gameObject)
 	_popPanel[popPanelIndex].panel:GetChild("RoundText").text = tostring(Player._room_information.options.open_rands).."局"
 	if _popPanel[popPanelIndex].panel:GetChild("RoomIDText") then
 		_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = tostring(Player._roomId)
+	end
+	if _popPanel[popPanelIndex].panel:GetChild("PayTypeText") then
+		if v.options.pay_type == "ROOM_PAY_TYPE_HOSTER" then
+			_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "房主付卡"
+		else
+			_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "AA付卡"
+		end
 	end
 	if Player._room_information.options.top_mutiple == 0 then
 		_popPanel[popPanelIndex].panel:GetChild("MultipleText").text = "不封顶"
