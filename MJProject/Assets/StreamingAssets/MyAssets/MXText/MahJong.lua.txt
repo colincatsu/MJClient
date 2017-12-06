@@ -1217,9 +1217,11 @@ end
 function MahJong.PaiPushDown(paisData)
 	-- body
 	--删除分张的牌
+	--[[
+	local currentPaiData = paisData
 	if Player.pai_liu_ju and next(Player.pai_liu_ju) ~= nil then
 		for liujuKey,liujuValue in pairs(Player.pai_liu_ju) do
-			for k,v in pairs(paisData) do
+			for k,v in pairs(currentPaiData) do
 				if v.player_id == liujuValue.player_id then
 					for index,card in pairs(v.pai_list) do
 						if liujuValue.pai.card_type == card.card_type then
@@ -1235,11 +1237,22 @@ function MahJong.PaiPushDown(paisData)
 			end
 		end
 	end
+	--]]
 
 	for k, v in pairs(paisData)do
 		local playerPos = ClickEvent.PlayerPosition(v.position)
+		local currentLiuJuPai = nil
+		if Player.pai_liu_ju and next(Player.pai_liu_ju) ~= nil then
+			for liujuKey,liujuValue in pairs(Player.pai_liu_ju) do
+				if liujuValue.player_id == v.player_id then
+					currentLiuJuPai = liujuValue.pai
+					break
+				end
+			end
+		end
 		if playerPos == 1 then
 			_player_pai_pool._next_player_father.transform.localEulerAngles = newVector3.zero
+			local hasJump = false
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -1249,22 +1262,27 @@ function MahJong.PaiPushDown(paisData)
 		        	end
 		        end
 		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._next_card[paiCount] then
-		        		Destroy(_player_pai_pool._next_card[paiCount])
+		        	if card.card_type == currentLiuJuPai.card_type and m == currentLiuJuPai.card_value and hasJump == false then
+		        		hasJump = true
+		        	else
+			        	paiCount = paiCount + 1
+			        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			        	if _player_pai_pool._next_card[paiCount] then
+			        		Destroy(_player_pai_pool._next_card[paiCount])
+			        	end
+			        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
+			        	MahJong.SetPaiSize(_player_pai_pool._next_card[paiCount],true)
+			        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
+			        	_player_pai_pool._next_card[paiCount].layer = 0
+			        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	end
-		        	_player_pai_pool._next_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._next_player_father.transform)
-		        	MahJong.SetPaiSize(_player_pai_pool._next_card[paiCount],true)
-		        	_player_pai_pool._next_card[paiCount].transform.localEulerAngles = newVector3(180,-90,0)
-		        	_player_pai_pool._next_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._next_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._next_pai_number = paiCount
 		elseif playerPos == 2 then
 			_player_pai_pool._opposite_player_father.transform.localEulerAngles = newVector3.zero
+        	local hasJump = false
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -1274,22 +1292,27 @@ function MahJong.PaiPushDown(paisData)
 		        	end
 		        end
 		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._opposite_card[paiCount] then
-		        		Destroy(_player_pai_pool._opposite_card[paiCount])
+		        	if card.card_type == currentLiuJuPai.card_type and m == currentLiuJuPai.card_value and hasJump == false then
+		        		hasJump = true
+		        	else
+			        	paiCount = paiCount + 1
+			        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			        	if _player_pai_pool._opposite_card[paiCount] then
+			        		Destroy(_player_pai_pool._opposite_card[paiCount])
+			        	end
+			        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
+			        	MahJong.SetPaiSize(_player_pai_pool._opposite_card[paiCount],true)
+			        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
+			        	_player_pai_pool._opposite_card[paiCount].layer = 0
+			        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	end
-		        	_player_pai_pool._opposite_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._opposite_player_father.transform)
-		        	MahJong.SetPaiSize(_player_pai_pool._opposite_card[paiCount],true)
-		        	_player_pai_pool._opposite_card[paiCount].transform.localEulerAngles = newVector3(180,180,0)
-		        	_player_pai_pool._opposite_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._opposite_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
 			_player_pai_pool._opposite_pai_number = paiCount
 		elseif playerPos == 3 then
 			_player_pai_pool._forward_player_father.transform.localEulerAngles = newVector3.zero
+        	local hasJump = false
 			local paiCount = 0
 			for index,card in pairs(v.pai_list) do
 		        local tempPaiPool = {}
@@ -1299,16 +1322,20 @@ function MahJong.PaiPushDown(paisData)
 		        	end
 		        end
 		        for i, m in pairs(card.cards) do
-		        	paiCount = paiCount + 1
-		        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
-		        	if _player_pai_pool._forward_card[paiCount] then
-		        		Destroy(_player_pai_pool._forward_card[paiCount])
+		        	if card.card_type == currentLiuJuPai.card_type and m == currentLiuJuPai.card_value and hasJump == false then
+		        		hasJump = true
+		        	else
+			        	paiCount = paiCount + 1
+			        	local modelTemp = Load("MJModel/"..tempPaiPool.cards[m].model_path)
+			        	if _player_pai_pool._forward_card[paiCount] then
+			        		Destroy(_player_pai_pool._forward_card[paiCount])
+			        	end
+			        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
+			        	MahJong.SetPaiSize(_player_pai_pool._forward_card[paiCount],true)
+			        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
+			        	_player_pai_pool._forward_card[paiCount].layer = 0
+			        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	end
-		        	_player_pai_pool._forward_card[paiCount] = Instantiate(modelTemp,_player_pai_pool._forward_player_father.transform)
-		        	MahJong.SetPaiSize(_player_pai_pool._forward_card[paiCount],true)
-		        	_player_pai_pool._forward_card[paiCount].transform.localEulerAngles = newVector3(180,90,0)
-		        	_player_pai_pool._forward_card[paiCount].layer = 0
-		        	MahJong.AddModelShadow(_player_pai_pool._forward_card[paiCount],-_modelSize.length/2+_modelSize.shadowShift,1)
 		        	--CS.UnityEngine.Debug.LogWarning("pushdown:"..card.card_type.."//"..tostring(m))
 		        end
 			end
