@@ -128,10 +128,10 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.1.1206.2"
+Player.pc_version = "2.0.2.1206.2"
 
 Player.testSayHiStarmp = nil
-Player.sayHiTimeOut = 5--多久检测一次
+Player.sayHiTimeOut = 3--多久检测一次
 Player.sayHiTimestarmp = nil
 Player._pings_count = 0--断线计数
 Player.max_allowed = 3
@@ -654,15 +654,15 @@ function Player.SayHiTest()
         return
     end
     if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
-        if duration_pass >= (5-1) then--网络延迟
+        if duration_pass >= (3-1) then--网络延迟
             Player.CmdSayHi(1)
         end
     else
-        if duration_pass >= (10-1) then--网络延迟
+        if duration_pass >= (6-1) then--网络延迟
             Player.CmdSayHi(7)
         end
     end
-    if duration_pass > 5 then
+    if duration_pass > 3 then
         Player._pings_count = Player._pings_count + 1
         if Player.max_allowed and Player._pings_count >= Player.max_allowed then
             --Player.sayHiTimestarmp = curr_time
