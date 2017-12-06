@@ -501,6 +501,27 @@ function ClickEvent.CreateNewPanel(panelName)
 		if Player.hasShowActivity == false then
 			ClickEvent.ShowActivity()
 		end
+		local rewardItem = Player.isRewardLimited(Player.activityDataTable.shared_reward_id)
+		local isRewardShare = false
+		if rewardItem and rewardItem ~= {} then
+			if rewardItem.activity_id and rewardItem.activity_id ~= 0 then
+				for k,v in pairs(Player.activityTable) do
+					if v.activity_id == rewardItem.activity_id then
+						if v.open == true then
+							isRewardShare = true
+						end
+						break
+					end
+				end
+			end
+		end
+		if isRewardShare == true and _currentPanel.panel:GetChild("ShareTips") then
+			_currentPanel.panel:GetChild("ShareTips").visible = true
+		else
+			if _currentPanel.panel:GetChild("ShareTips") then
+				_currentPanel.panel:GetChild("ShareTips").visible = false
+			end
+		end
 		--[[
 		local image = _currentPanel.panel:GetChild("Back"):GetChild("n1")
 		Player.LogWarning(image.displayObject.gameObject:GetComponent("Renderer").bounds.size.x)
@@ -544,6 +565,31 @@ function ClickEvent.CreateNewPanel(panelName)
 		ClickEvent._play_ui.roomId.visible = false
 	end
 	--]]
+end
+
+function ClickEvent.UpdateChooseUIActivity( ... )
+	-- body
+	local rewardItem = Player.isRewardLimited(Player.activityDataTable.shared_reward_id)
+	local isRewardShare = false
+	if rewardItem and rewardItem ~= {} then
+		if rewardItem.activity_id and rewardItem.activity_id ~= 0 then
+			for k,v in pairs(Player.activityTable) do
+				if v.activity_id == rewardItem.activity_id then
+					if v.open == true then
+						isRewardShare = true
+					end
+					break
+				end
+			end
+		end
+	end
+	if isRewardShare == true and _currentPanel.panel:GetChild("ShareTips") then
+		_currentPanel.panel:GetChild("ShareTips").visible = true
+	else
+		if _currentPanel.panel:GetChild("ShareTips") then
+			_currentPanel.panel:GetChild("ShareTips").visible = false
+		end
+	end
 end
 
 function ClickEvent.OnSignalLevel(signalLevel)
@@ -2138,7 +2184,9 @@ function ClickEvent.ShowCalculate( ... )
 				if playerPos == 0 then
 					for paiKey,paiData in pairs(data.pai_list) do
 						for valueKay,value in pairs(paiData.cards) do
+							Player.LogWarning(paiData.card_type..":"..tostring(value))
 							if Player.isZiMo == true and Player.isJinBao == false and Player.huPaiPosition == 0 and Player.hupai_calculate_data.card_type == paiData.card_type and Player.hupai_calculate_data.card_value == value then
+								Player.LogWarning("jump-----------")
 								Player.isZiMo = false
 								Player.isJinBao = true
 							else
@@ -2607,6 +2655,7 @@ end
 
 function ClickEvent.ShowReward(rewardItem)
 	-- body
+	ClickEvent.Close()
 	ClickEvent.PopPanel(ClickEvent.panelTable._getreward_ui)
 	local rewardList = _popPanel[popPanelIndex].panel:GetChild("GetRewardList")
 	rewardList:RemoveChildrenToPool()
@@ -2687,6 +2736,27 @@ end
 function ClickEvent.HomeShare( ... )
 	-- body
 	ClickEvent.PopPanel(ClickEvent.panelTable._home_share_ui)
+	local rewardItem = Player.isRewardLimited(Player.activityDataTable.shared_reward_id)
+	local isRewardShare = false
+	if rewardItem and rewardItem ~= {} then
+		if rewardItem.activity_id and rewardItem.activity_id ~= 0 then
+			for k,v in pairs(Player.activityTable) do
+				if v.activity_id == rewardItem.activity_id then
+					if v.open == true then
+						isRewardShare = true
+					end
+					break
+				end
+			end
+		end
+	end
+	if isRewardShare == true and _popPanel[popPanelIndex].panel:GetChild("ShareTipsText") then
+		_popPanel[popPanelIndex].panel:GetChild("ShareTipsText").visible = true
+	else
+		if _popPanel[popPanelIndex].panel:GetChild("ShareTipsText") then
+			_popPanel[popPanelIndex].panel:GetChild("ShareTipsText").visible = false
+		end
+	end
 end
 
 function ClickEvent.Activity( ... )
@@ -3414,17 +3484,25 @@ function ClickEvent.VIPRecordButton( ... )
 				end
 			end
 			for i=1,4 do
-				local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-				if tempTexture then
-					obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+				if headimgurlTable[i] then
+					local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+					if tempTexture then
+						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+					else
+						obj:GetChild("Avatar"..tostring(i)).url = UIPackage.GetItemURL("MXUI","Touxiang01")
+					end
 				end
 			end
 			WeChatPlatform:SetFuncDelegate(function ( ... )
 				-- body
 				for i=1,4 do
-					local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-					if tempTexture then
-						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+					if headimgurlTable[i] then
+						local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+						if tempTexture then
+							obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+						end
+					else
+						obj:GetChild("Avatar"..tostring(i)).url = UIPackage.GetItemURL("MXUI","Touxiang01")
 					end
 				end
 			end)
@@ -3489,17 +3567,25 @@ function ClickEvent.OnReceiveHistory()
 					end
 				end
 				for i=1,4 do
-					local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-					if tempTexture then
-						obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+					if headimgurlTable[i] then
+						local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+						if tempTexture then
+							obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+						else
+							obj:GetChild("Avatar"..tostring(i)).url = UIPackage.GetItemURL("MXUI","Touxiang01")
+						end
 					end
 				end
 				WeChatPlatform:SetFuncDelegate(function ( ... )
 					-- body
 					for i=1,4 do
-						local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
-						if tempTexture then
-							obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+						if headimgurlTable[i] then
+							local tempTexture = WeChatPlatform:SetAsyncImage(headimgurlTable[i])
+							if tempTexture then
+								obj:GetChild("Avatar"..tostring(i)).texture = NTexture(tempTexture)
+							else
+								obj:GetChild("Avatar"..tostring(i)).url = UIPackage.GetItemURL("MXUI","Touxiang01")
+							end
 						end
 					end
 				end)
@@ -5038,7 +5124,7 @@ function ClickEvent.GameBillButton(gameObject)
 		_popPanel[popPanelIndex].panel:GetChild("RoomIDText").text = tostring(Player._roomId)
 	end
 	if _popPanel[popPanelIndex].panel:GetChild("PayTypeText") then
-		if v.options.pay_type == "ROOM_PAY_TYPE_HOSTER" then
+		if Player._room_information.options.pay_type == "ROOM_PAY_TYPE_HOSTER" then
 			_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "房主付卡"
 		else
 			_popPanel[popPanelIndex].panel:GetChild("PayTypeText").text = "AA付卡"

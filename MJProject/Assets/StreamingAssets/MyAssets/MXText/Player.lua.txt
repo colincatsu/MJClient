@@ -128,7 +128,7 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.2.1204.2"
+Player.pc_version = "2.0.1.1206.2"
 
 Player.testSayHiStarmp = nil
 Player.sayHiTimeOut = 5--多久检测一次
@@ -531,7 +531,7 @@ function Player.myUpdate( ... )
     end
 
     if Player.reConnect == false and Player._connected == false then
-        if ClickEvent.IsPopPanel(ClickEvent.panelTable._window_small) == false and ClickEvent.IsPopPanel(ClickEvent.panelTable._not_move_toast_ui) == false and ClickEvent.IsMainUI(ClickEvent.panelTable._choose_ui) then
+        if ClickEvent.IsPopPanel(ClickEvent.panelTable._window_small) == false and ClickEvent.IsPopPanel(ClickEvent.panelTable._not_move_toast_ui) == false and ClickEvent.IsMainUI(ClickEvent.panelTable._choose_ui) == true then
             ClickEvent.ShowSmallWindow(2038)
         end
     end
@@ -1270,6 +1270,15 @@ function Player.OnPaiPushDown(type_t,stuff)
     end
     local message = protobuf.decode("Adoter.Asset.PaiPushDown",stuff)
     Player.pai_push_down = message.player_list
+    for k,v in pairs(Player.pai_push_down) do
+        Player.LogWarning(v.position)
+        for c,m in pairs(v.pai_list) do
+            for j,y in pairs(m.cards) do
+                Player.LogWarning(m.card_type..":"..tostring(y))
+                
+            end
+        end
+    end
     Player.MahJong.PaiPushDown(message.player_list)
 end
 
@@ -1561,6 +1570,7 @@ function Player.OnSyncActivity(type_t,stuff)
     if Player.hasShowActivity == false then
         ClickEvent.ShowActivity()
     end
+    ClickEvent.UpdateChooseUIActivity()
 end
 
 function Player.OnEnterRoom(type_t,stuff)
