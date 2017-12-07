@@ -23,7 +23,7 @@ local httpAppSecret = "fiejfAJG%139*&sdfjNMJQA"
 
 local httpToken = ""
 
-local currentVersion = "21"
+local currentVersion = "23"
 
 --local currentMd5 = "9af6ad141df0f43fa4222acfa69e9dcb"--版本md5
 --local isReloadData = false
@@ -73,6 +73,9 @@ function start()
 		else
 			localVersion = hotfixVersion:read "*a"
 	        hotfixVersion:close()
+	        if localVersion < currentVersion then
+	        	os.remove(dataPath.."MyAssets.upk")
+	        end
 		end
 		--serveVersion
 		LoadingSence.GetServeVersion()

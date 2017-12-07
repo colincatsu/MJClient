@@ -128,13 +128,14 @@ Player.connectTimes = 10
 Player.hasConnectTimes = 0
 Player.connectCountDownTime = 3
 Player.isTimeOut = false
-Player.pc_version = "2.0.2.1206.2"
+Player.pc_version = "2.0.1.1207.2"
 
 Player.testSayHiStarmp = nil
-Player.sayHiTimeOut = 3--多久检测一次
+Player.sayHiTimeOut = 5--多久检测一次
 Player.sayHiTimestarmp = nil
 Player._pings_count = 0--断线计数
 Player.max_allowed = 3
+Player.sendSayHiTimestarmp = nil--发送心跳时间戳
 
 Player.baopaiPosition = nil
 
@@ -557,6 +558,13 @@ function Player.myUpdate( ... )
         end
     end
 
+    if not Player.sendSayHiTimestarmp then
+        Player.sendSayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+    end
+    if Player.sendSayHiTimestarmp then
+        Player.SendSayHi()
+    end
+
     if CS.LuaCommon.isIos == true and Player.updateSignalTime and CS.UnityEngine.Time.time - Player.updateSignalTime > 5 then
         Player.updateSignalTime = CS.UnityEngine.Time.time
         ClickEvent.UpdateSignalLevel(WeChatPlatform:SignalUpdate())
@@ -644,6 +652,22 @@ function Player.myUpdate( ... )
     end
 end
 
+function Player.SendSayHi()
+    -- body
+    local duration_pass = CS.UnityEngine.Time.realtimeSinceStartup - Player.sendSayHiTimestarmp
+    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
+        if duration_pass >= 3 then--网络延迟
+            Player.sendSayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+            Player.CmdSayHi(1)
+        end
+    else
+        if duration_pass >= 10 then--网络延迟
+            Player.sendSayHiTimestarmp = CS.UnityEngine.Time.realtimeSinceStartup
+            Player.CmdSayHi(7)
+        end
+    end
+end
+
 function Player.SayHiTest()
     -- body
     local curr_time = CS.UnityEngine.Time.realtimeSinceStartup
@@ -653,16 +677,7 @@ function Player.SayHiTest()
     if duration_pass <= 0 then
         return
     end
-    if CS.UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "PlaySence" then
-        if duration_pass >= (3-1) then--网络延迟
-            Player.CmdSayHi(1)
-        end
-    else
-        if duration_pass >= (6-1) then--网络延迟
-            Player.CmdSayHi(7)
-        end
-    end
-    if duration_pass > 3 then
+    if duration_pass > 5 then
         Player._pings_count = Player._pings_count + 1
         if Player.max_allowed and Player._pings_count >= Player.max_allowed then
             --Player.sayHiTimestarmp = curr_time
@@ -1056,7 +1071,7 @@ function Player.OnBattleHistory(type_t,stuff)
         Player.LogWarning(tostring(v.room_id))
         for j,c in pairs(Player.history_data) do
             Player.LogWarning("---------------jjjjjjjjjjjjjjjjjj"..tostring(c.room_id))
-            if tostring(c.room_id) == tostring(v.room_id) then
+            if tostring(c.room_id) == tostring(v.room_id) or tostring(v.room_id) == 0 then
                 hasSameData = true
             end
         end
@@ -1918,7 +1933,7 @@ function Player.OnPaiOperation(type_t,stuff)
         --Player.SetPaiOperationShowCache(message)
         --Player.ThreadFunction(
         Player.MahJong.OperationPaiShow(message)
-        AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1,message.position)
+        --AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1,message.position)
     elseif message.oper_type == "PAI_OPER_TYPE_QIANGGANG" then
         Player.MahJong.OperationPaiShow(message)
         AudioPlayer.PlaySound(AudioPlayer._audio_name.QiangGangHu,false,1,message.position)

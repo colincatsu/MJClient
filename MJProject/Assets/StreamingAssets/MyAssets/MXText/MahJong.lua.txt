@@ -4769,6 +4769,7 @@ function MahJong.OperationPaiShow(message,isPlayBack)
 			if currentTurn and ClickEvent.PlayerPosition(currentTurn) == Player.huPaiPosition then
 				Player.isZiMo = true
 			else
+				AudioPlayer.PlaySound(AudioPlayer._audio_name.Hu,false,1,message.position)
 				Effect.AddNormalEffect(Effect._effect_name.dianpaoThunder,nil,_current_dapai.object,Effect.maybeOperationShowCircleOffset,2)
 				Player.isZiMo = false
 			end
