@@ -2894,7 +2894,16 @@ function ClickEvent.PlayThisRound(gameObject)
 	-- body
 	ClickEvent.Close()
 	local roundNumber = 0
-	roundNumber = tonumber(gameObject.parent:GetChild("RoundNum").text)
+	local roundNumberText = gameObject.parent:GetChild("RoundNum").text
+	if not roundNumberText or roundNumberText == "" then
+		return
+	end
+	Player.LogWarning(string.sub(roundNumberText,1,1))
+	if string.sub(roundNumberText,1,1) == "0" then
+		roundNumber = 10 + tonumber(string.sub(roundNumberText,-1))
+	else
+		roundNumber = tonumber(roundNumberText)
+	end
 	Player.LogWarning(Player.playBackRoomID)
 	Player.LogWarning(roundNumber)
 	if Player.playBackRoomID and Player.playBackRoomID ~= 0 and roundNumber and roundNumber <= 16 and roundNumber ~= 0 then
